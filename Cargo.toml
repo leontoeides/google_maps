@@ -3,6 +3,8 @@ name = "google_maps"
 version = "0.1.0"
 authors = ["Dylan Bowker <dylan.bowker@arkiteq.ca>"]
 edition = "2018"
+description = "Unofficial Google Maps Platform API for the Rust programming language."
+license = "MIT OR Apache-2.0"
 
 [dependencies]
 percent-encoding = "2.1.0"

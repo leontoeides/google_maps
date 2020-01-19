@@ -1,5 +1,4 @@
 use serde::{Serialize, Deserialize};
-use time::PrimitiveDateTime;
 
 /// A representation of time as a Date object, a localized string, and a time
 /// zone.
