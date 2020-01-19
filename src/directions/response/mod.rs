@@ -20,15 +20,19 @@ mod transit_stop;
 mod transit_vehicle;
 pub mod status;
 
-use crate::directions::response::{
-    geocoded_waypoint::GeocodedWaypoint,
-    route::Route,
-    status::Status,
+use crate::directions::{
+    response::{
+        geocoded_waypoint::GeocodedWaypoint,
+        route::Route,
+        status::Status,
+    },
+    travel_mode::TravelMode,
 };
 use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Response {
+    available_travel_modes: Option<Vec<TravelMode>>,
     status: Status,
     geocoded_waypoints: Vec<GeocodedWaypoint>,
     routes: Vec<Route>,
