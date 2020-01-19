@@ -1,9 +1,9 @@
 [package]
 name = "google_maps"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Dylan Bowker <dylan.bowker@arkiteq.ca>"]
 edition = "2018"
-description = "Unofficial Google Maps Platform API for the Rust programming language."
+description = "An unofficial Google Maps Platform API for the Rust programming language."
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/leontoeides/google_maps"
 
