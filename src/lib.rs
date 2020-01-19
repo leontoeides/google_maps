@@ -1,15 +1,3 @@
-//! As of version 0.2.0 this crate is expected to work well, work reliably, and
-//! have the most important features implemented. There are some creature
-//! comforts and niche APIs not implemented yet. While an early release, for
-//! most people this crate should work fine as is.
-//!
-//! To do:
-//! 1. [Places API](https://developers.google.com/places/web-service/intro)
-//! 2. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
-//! 3. Automatic Rate Limiting
-//! 4. Retry on Failure
-//! 5. Asynchronous
-
 pub mod bounds;
 pub mod directions;
 pub mod elevation;
@@ -19,6 +7,12 @@ pub mod latlng;
 pub mod place_type;
 pub mod region;
 pub mod time_zone;
+
+pub use crate::bounds::Bounds as Bounds;
+pub use crate::language::Language as Language;
+pub use crate::latlng::LatLng as LatLng;
+pub use crate::place_type::PlaceType as PlaceType;
+pub use crate::region::Region as Region;
 
 pub use crate::directions::{
     request::avoid::Avoid as Avoid,
@@ -41,26 +35,6 @@ pub use crate::elevation::{
     request::Request as ElevationRequest,
     response::Response as Elevation,
     response::Status as ElevationStatus,
-};
-
-pub use crate::{
-    bounds::Bounds as Bounds,
-};
-
-pub use crate::{
-    language::Language as Language,
-};
-
-pub use crate::{
-    latlng::LatLng as LatLng,
-};
-
-pub use crate::{
-    place_type::PlaceType as PlaceType,
-};
-
-pub use crate::{
-    region::Region as Region,
 };
 
 pub use crate::geocoding::{
