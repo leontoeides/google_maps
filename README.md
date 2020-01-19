@@ -15,13 +15,12 @@ While an early release, for most people this crate should work fine as is.
 ```
 use google_maps::*;
 //!
-let google_api_key = String::from("AIzaSyDoXaNP8ttTx_q8iyz1T0lj4UwnovmjVIo");
 let directions = DirectionsRequest::new(
     // Canadian Museum of Nature
     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
     // Canada Science and Technology Museum
     Location::Address(String::from("1867 St Laurent Blvd, Ottawa, ON K1G 5A3")),
-    google_api_key
+    GOOGLE_API_KEY
 )
 .with_travel_mode(TravelMode::Transit)
 .with_arrival_time(PrimitiveDateTime::new(
