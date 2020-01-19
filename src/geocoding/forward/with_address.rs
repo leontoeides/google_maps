@@ -21,9 +21,9 @@ impl ForwardRequest {
     /// ))
     /// ```
 
-    pub fn with_address(&mut self, address: String) -> &mut ForwardRequest {
+    pub fn with_address(&mut self, address: &str) -> &mut ForwardRequest {
         // Set address in ForwardRequest struct.
-        self.address = Some(address);
+        self.address = Some(String::from(address));
         // Return modified ForwardRequest struct to caller.
         self
     } // fn

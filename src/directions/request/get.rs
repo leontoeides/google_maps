@@ -31,8 +31,6 @@ impl Request {
         // Query the Google Cloud Maps Platform using using an HTTP get request,
         // and return result to caller:
 
-        // let response = isahc::get(uri)?.json::<DirectionsResponse>()?;
-        println!("{}", uri);
         let response = reqwest::blocking::get(&*uri)?.json::<DirectionsResponse>()?;
         Ok(response)
 

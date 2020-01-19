@@ -10,35 +10,39 @@
 //!
 //! While an early release, for most people this crate should work fine as is.
 //!
-//! # Example
+//! # Example Request
 //!
 //! ```
+//! use google_maps::*;
+//!
+//! let google_api_key = String::from("AIzaSyDoXaNP8ttTx_q8iyz1T0lj4UwnovmjVIo");
 //! let directions = DirectionsRequest::new(
 //!     // Canadian Museum of Nature
 //!     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
 //!     // Canada Science and Technology Museum
 //!     Location::Address(String::from("1867 St Laurent Blvd, Ottawa, ON K1G 5A3")),
-//!     GOOGLE_API_KEY
+//!     google_api_key
 //! )
 //! .with_travel_mode(TravelMode::Transit)
 //! .with_arrival_time(PrimitiveDateTime::new(
 //!     Date::try_from_ymd(2021, 1, 10).unwrap(),
-//!     Time::midnight()
+//!     Time::try_from_hms(13, 00, 0).unwrap()
 //! ))
 //! .validate().unwrap()
 //! .build()
-//! .get();
+//! .get().unwrap();
 //!
 //! println!("{:#?}", directions);
 //! ```
 //!
 //! To do:
-//! 1. [Geolocation API](https://developers.google.com/maps/documentation/geolocation/intro)
-//! 2. [Places API](https://developers.google.com/places/web-service/intro)
-//! 3. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
-//! 4. Automatic Rate Limiting
-//! 5. Retry on Failure
-//! 6. Asynchronous
+//! 1. [Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/start)
+//! 2. [Geolocation API](https://developers.google.com/maps/documentation/geolocation/intro)
+//! 3. [Places API](https://developers.google.com/places/web-service/intro)
+//! 4. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
+//! 5. Automatic Rate Limiting
+//! 6. Retry on Failure
+//! 7. Asynchronous
 
 pub mod bounds;
 pub mod directions;
@@ -49,6 +53,9 @@ pub mod latlng;
 pub mod place_type;
 pub mod region;
 pub mod time_zone;
+
+pub extern crate time;
+pub use time::{Date, PrimitiveDateTime, Time};
 
 pub use crate::bounds::Bounds as Bounds;
 pub use crate::language::Language as Language;
