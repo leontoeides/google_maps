@@ -24,7 +24,7 @@
 //! )
 //! .with_travel_mode(TravelMode::Transit)
 //! .with_arrival_time(PrimitiveDateTime::new(
-//!     Date::try_from_ymd(2021, 1, 10).unwrap(),
+//!     Date::try_from_ymd(2020, 1, 20).unwrap(),
 //!     Time::try_from_hms(13, 00, 0).unwrap()
 //! ))
 //! .validate().unwrap()
