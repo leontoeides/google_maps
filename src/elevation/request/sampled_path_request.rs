@@ -1,5 +1,5 @@
 use crate::elevation::request::{
-    Locations,
+    locations::Locations,
     Request,
 }; // use
 

@@ -1,6 +1,6 @@
 //! Elevation API error types and error messages.
 
-use crate::elevation::response::Status;
+use crate::elevation::response::status::Status;
 
 /// Errors that may be produced by the Google Maps Elevation API client.
 #[derive(Debug)]

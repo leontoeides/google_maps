@@ -17,15 +17,19 @@ impl Request {
     /// This method accepts no arguments.
 
     pub fn validate(&mut self) -> Result<&mut Request, Error> {
+
         // If a positional request has been set...
         if let Some(_locations) = &self.locations {
             // ...a sampled path request cannot be set.
             if let Some(_path) = &self.path { return Err(Error::EitherPositionalOrSampledPath) }
         } // if
+
         // Indicated that the request passed validation.
         self.validated = true;
+
         // Return modified Request struct to caller.
         Ok(self)
+
     } // fn
 
 } // impl

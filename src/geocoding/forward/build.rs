@@ -1,5 +1,5 @@
 use crate::{
-    elevation::error::Error,
+    geocoding::error::Error,
     geocoding::forward::ForwardRequest,
 }; // use
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};

@@ -5,7 +5,7 @@ use crate::directions::request::{
 
 impl Request {
 
-    pub fn new(origin: Location, destination: Location, key: String) -> Request {
+    pub fn new(key: String, origin: Location, destination: Location) -> Request {
         Request {
             // Required parameters:
             origin,
@@ -25,6 +25,7 @@ impl Request {
             transit_modes: None,
             transit_route_preference: None,
             // Internal use only:
+            validated: false,
             query: None,
         } // struct
     } // fn

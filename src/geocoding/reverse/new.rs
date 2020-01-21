@@ -26,6 +26,7 @@ impl ReverseRequest {
             location_type: None,
             result_type: None,
             // Internal use only:
+            validated: false,
             query: None,
         } // struct
     } // fn

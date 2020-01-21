@@ -11,33 +11,93 @@
 //! Reqwest and Serde do most of the heavy lifting! While it's an early release,
 //! for most people this crate should work fine as is.
 //!
-//! I created this crate because I needed the Google Maps Platform for a project
-//! that I'm working on. So, I've decided to spin my library off into a public
-//! crate. This is a small token of gratitude and an attempt to give back to the
-//! Rust community. I hope it saves someone out there some work.
+//! I created this crate because I needed several Google Maps Platform features
+//! or a project that I'm working on. So, I've decided to spin my library off
+//! into a public crate. This is a very small token of gratitude and an attempt
+//! to give back to the Rust community. I hope it saves someone out there some
+//! work.
 //!
-//! # Example Request
+//! # Example Directions API Request
 //!
 //! ```
 //! use google_maps::*;
 //!
 //! let directions = DirectionsRequest::new(
+//!     YOUR_GOOGLE_API_KEY_HERE,
 //!     // Canadian Museum of Nature
 //!     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
 //!     // Canada Science and Technology Museum
-//!     Location::Address(String::from("1867 St Laurent Blvd, Ottawa, ON K1G 5A3")),
-//!     YOUR_GOOGLE_API_KEY_HERE
+//!     Location::LatLng { lat: 45.403509, lng: -75.618904 },
 //! )
 //! .with_travel_mode(TravelMode::Transit)
 //! .with_arrival_time(PrimitiveDateTime::new(
 //!     Date::try_from_ymd(2020, 1, 20).unwrap(),
 //!     Time::try_from_hms(13, 00, 0).unwrap()
 //! ))
-//! .validate().unwrap()
-//! .build()
-//! .get().unwrap();
+//! .execute().unwrap();
 //!
 //! println!("{:#?}", directions);
+//! ```
+//!
+//! # Example Elevation API Request
+//!
+//! ```
+//! use google_maps::*;
+//!
+//! let elevation = ElevationRequest::new(YOUR_GOOGLE_API_KEY_HERE)
+//! .positional_request(ElevationLocations::LatLngs(vec![
+//!     // Denver, Colorado, the "Mile High City"
+//!     LatLng { lat: 39.7391536, lng: -104.9847034 },
+//! ]))
+//! .execute().unwrap();
+//!
+//! println!("{:#?}", elevation);
+//! ```
+//!
+//! # Example Forward Geocoding API Request
+//!
+//! ```
+//! use google_maps::*;
+//!
+//! let location = GeocodingForwardRequest::new(YOUR_GOOGLE_API_KEY_HERE)
+//! .with_address("10 Downing Street London")
+//! .execute().unwrap();
+//!
+//! println!("{:#?}", location);
+//! ```
+//!
+//! # Example Reverse Geocoding API Request
+//!
+//! ```
+//! use google_maps::*;
+//!
+//! let location = GeocodingReverseRequest::new(
+//!     YOUR_GOOGLE_API_KEY_HERE,
+//!     // Denver, Colorado, the "Mile High City"
+//!     LatLng { lat: 39.7391536, lng: -104.9847034 }
+//! )
+//! .with_result_type(PlaceType::Locality)
+//! .execute().unwrap();
+//!
+//! println!("{:#?}", location);
+//! ```
+//!
+//! # Example Time Zone API Request
+//!
+//! ```
+//! use google_maps::*;
+//!
+//! let time_zone = TimeZoneRequest::new(
+//!     YOUR_GOOGLE_API_KEY_HERE,
+//!     // St. Vitus Cathedral in Prague, Czechia
+//!     LatLng { lat: 50.090903, lng: 14.400512 },
+//!     PrimitiveDateTime::new(
+//!         // Tuesday February 15, 2022
+//!         Date::try_from_ymd(2022, 2, 15).unwrap(),
+//!         // 6:00:00 pm
+//!         Time::try_from_hms(18, 00, 0).unwrap(),
+//!     ),
+//! ).execute().unwrap();
 //! ```
 //!
 //! To do:
@@ -88,12 +148,12 @@ pub use crate::directions::{
 pub use crate::elevation::{
     error::Error as ElevationError,
     request::{
-        Locations as ElevationLocations,
+        locations::Locations as ElevationLocations,
         Request as ElevationRequest,
     }, // request
     response::{
         Response as Elevation,
-        Status as ElevationStatus,
+        status::Status as ElevationStatus,
     }, // response
 }; // use
 

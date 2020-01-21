@@ -1,14 +1,26 @@
-use crate::directions::request::Request;
+use crate::directions::{
+    error::Error,
+    request::Request,
+}; // use
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 
 impl Request {
 
     /// Builds the query string for the Google Maps Directions API based on the
     /// input provided by the client.
+    ///
+    /// # Arguments:
+    ///
+    /// This method accepts no arguments.
 
-    pub fn build(&mut self) -> &mut Request {
+    pub fn build(&mut self) -> Result<&mut Request, Error> {
+
+        // Ensure request has been validated before building the query string:
+
+        if !self.validated { return Err(Error::RequestNotValidated) }
 
         // Builds the "required parameters" portion of the query string:
+
         let mut query = format!(
             "origin={}&destination={}&key={}",
             String::from(&self.origin), // URL-encoding performed by From trait
@@ -17,6 +29,7 @@ impl Request {
         ); // format!
 
         // Builds the "optional parameters" portion of the query string:
+
         // Travel mode key/value pair:
         if let Some(travel_mode) = &self.travel_mode {
             query.push_str("&mode=");
@@ -95,11 +108,11 @@ impl Request {
             query.push_str(&String::from(transit_route_preference))
         } // if
 
-        // Commit the query string to the structure:
+        // Set query string in Request struct.
         self.query = Some(query);
 
-        // Return the structure:
-        self
+        // Return modified Request struct to caller.
+        Ok(self)
 
     } // fn
 

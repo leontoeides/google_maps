@@ -1,6 +1,7 @@
 use crate::geocoding::forward::country::Country;
+use serde::{Serialize, Deserialize};
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Component {
 
     // Filter results:

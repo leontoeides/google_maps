@@ -2,17 +2,20 @@
 //! request.
 
 mod build;
+mod execute;
 mod get;
 mod new;
 mod positional_request;
 mod sampled_path_request;
 mod validate;
+pub mod locations;
 
-use crate::latlng::LatLng;
+use crate::elevation::request::locations::Locations;
+use serde::{Serialize, Deserialize};
 
 /// Use this structure's methods to build a Time Zone API request.
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Request {
 
     // Required parameters:
@@ -57,32 +60,3 @@ pub struct Request {
     query: Option<String>,
 
 } // struct
-
-/// Defines the location(s) on the earth from which to return elevation
-/// data. This parameter takes either a single location as a latitude/longitude
-/// pair, multiple latitude/longitude pairs, or an encoded polyline.
-
-#[derive(Clone, Debug)]
-pub enum Locations {
-
-    /// A single or multiple [latitude/longitude](https://developers.google.com/maps/documentation/elevation/intro#Locations)
-    /// pairs.
-    LatLngs(Vec<LatLng>),
-
-    /// An [encoded polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm).
-    Polyline(String),
-
-} // enum
-
-impl From<&Locations> for String {
-    /// Converts a `Locations` enum to a `String` that contains
-    /// [locations](https://developers.google.com/maps/documentation/elevation/intro#Usage).
-    fn from(locations: &Locations) -> String {
-        match locations {
-            Locations::LatLngs(latlngs) => String::from(
-                latlngs.iter().map(|latlng| String::from(latlng) + "|").collect::<String>().trim_end_matches('|')
-            ),
-            Locations::Polyline(polyline) => format!("enc:{}", polyline),
-        } // match
-    } // fn
-} // impl

@@ -3,15 +3,17 @@
 //! to a latitude/longitude.
 
 mod build;
-pub mod component;
-pub mod country;
+mod execute;
 mod get;
 mod new;
+mod validate;
 mod with_address;
 mod with_bounds;
 mod with_component;
 mod with_language;
 mod with_region;
+pub mod component;
+pub mod country;
 
 use crate::{
     bounds::Bounds,

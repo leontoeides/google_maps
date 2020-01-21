@@ -1,3 +1,5 @@
+use serde::{Serialize, Deserialize};
+
 /// Country is the national political entity and is typically the highest order
 /// type returned by the Geocoder.
 ///
@@ -13,7 +15,7 @@
 /// codes](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) or the
 /// [ISO Online Browsing Platform](https://www.iso.org/obp/ui/#search).**
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Country {
     Afghanistan,
     AlandIslands,
