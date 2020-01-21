@@ -6,7 +6,7 @@ use serde::{Serialize, Deserialize};
 /// invalid latitude or longitude value, your request will be rejected as a bad
 /// request.
 
-#[derive(Copy, Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct LatLng {
     /// Latitude. A value between -90 and 90.
     pub lat: f64,

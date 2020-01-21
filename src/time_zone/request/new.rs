@@ -33,7 +33,7 @@ impl Request {
     /// ).build().get();
     /// ```
 
-    pub fn new(location: LatLng, time: PrimitiveDateTime, key: String) -> Request {
+    pub fn new(key: String, location: LatLng, time: PrimitiveDateTime) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:
@@ -41,6 +41,7 @@ impl Request {
             time,
             key,
             // Optional parameters:
+            validated: false,
             language: None,
             query: None,
         } // struct

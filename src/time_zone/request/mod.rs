@@ -2,6 +2,7 @@
 //! request for the Google Cloud server.
 
 mod build;
+mod execute;
 mod get;
 mod new;
 mod with_language;
@@ -43,6 +44,9 @@ pub struct Request {
 
     // Internal use only:
     // ------------------
+
+    /// Has the request been validated?
+    validated: bool,
 
     /// Query string that is to be submitted to the Google Cloud Maps Platform.
     query: Option<String>,

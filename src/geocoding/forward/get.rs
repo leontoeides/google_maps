@@ -1,15 +1,18 @@
 use crate::geocoding::{
     error::Error,
     forward::ForwardRequest,
-    // Response is aliased to avoid collision with Isahc namespace.
-    response::Response as GeocodingResponse,
+    response::Response,
 }; // use
 
 impl ForwardRequest {
 
     /// Performs the HTTP get request and returns the response to the caller.
+    ///
+    /// # Arguments:
+    ///
+    /// This method accepts no arguments.
 
-    pub fn get(&self) -> Result<GeocodingResponse, Error> {
+    pub fn get(&self) -> Result<Response, Error> {
 
         // Build the URI stem for the HTTP get request:
 
@@ -27,8 +30,7 @@ impl ForwardRequest {
         // Query the Google Cloud Maps Platform using using an HTTP get request,
         // and return result to caller:
 
-        // let response = isahc::get(uri)?.json::<GeocodingResponse>()?;
-        let response = reqwest::blocking::get(&*uri)?.json::<GeocodingResponse>()?;
+        let response = reqwest::blocking::get(&*uri)?.json::<Response>()?;
         Ok(response)
 
     } // fn

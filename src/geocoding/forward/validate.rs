@@ -1,9 +1,9 @@
 use crate::geocoding::{
     error::Error,
-    request::Request,
+    forward::ForwardRequest,
 };
 
-impl Request {
+impl ForwardRequest {
 
     /// Ensures the built query is valid. This function checks the combination
     /// of parameters to ensure that they make sense together and that Google
@@ -12,15 +12,19 @@ impl Request {
     /// function does not check parameter values for validity - i.e. it will not
     /// ensure Polylines or Latitudes/Longitudes are valid and well-formed.
 
-    pub fn validate(&mut self) -> Result<&mut Request, Error> {
+    pub fn validate(&mut self) -> Result<&mut ForwardRequest, Error> {
+
         // If a positional request has been set...
         if self.address == None && self.components == None {
-            Err(Error::AddressOrComponentsRequired),
+            return Err(Error::AddressOrComponentsRequired)
         } // if
-        // Indicated that the request passed validation.
+
+        // Indicate that the request passed validation.
         self.validated = true;
+
         // Return modified Request struct to caller.
         Ok(self)
+
     } // fn
 
 } // impl

@@ -1,4 +1,5 @@
 mod build;
+mod execute;
 mod get;
 mod new;
 mod validate;
@@ -93,6 +94,8 @@ pub struct Request {
     transit_route_preference: Option<TransitRoutePreference>,
     // Internal use only:
     // ------------------
+    /// Has the request been validated?
+    validated: bool,
     /// The URL-encoded query string that is passed to the Google Maps
     /// Directions API through cURL.
     query: Option<String>

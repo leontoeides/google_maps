@@ -1,8 +1,7 @@
 use crate::time_zone::{
     error::Error,
     request::Request,
-    // Response is aliased to avoid collision with Isahc namespace.
-    response::Response as TimeZoneResponse,
+    response::Response,
 }; // use
 
 impl Request {
@@ -13,7 +12,7 @@ impl Request {
     ///
     /// This method accepts no arguments.
 
-    pub fn get(&self) -> Result<TimeZoneResponse, Error> {
+    pub fn get(&self) -> Result<Response, Error> {
 
         // Build the URI stem for the HTTP get request:
 
@@ -31,8 +30,7 @@ impl Request {
         // Query the Google Cloud Maps Platform using using an HTTP get request,
         // and return result to caller:
 
-        // let response = isahc::get(uri)?.json::<TimeZoneResponse>()?;
-        let response = reqwest::blocking::get(&*uri)?.json::<TimeZoneResponse>()?;
+        let response = reqwest::blocking::get(&*uri)?.json::<Response>()?;
         Ok(response)
 
     } // fn

@@ -12,6 +12,10 @@ impl Request {
     /// arrival time and departure time in the same query. This function does
     /// not check parameter values for validity - i.e. it will not ensure
     /// Polylines or Place ID's are valid and well-formed.
+    ///
+    /// # Arguments:
+    ///
+    /// This method accepts no arguments.
 
     pub fn validate(&mut self) -> Result<&mut Request, Error> {
 
@@ -96,6 +100,10 @@ impl Request {
 
         } // if
 
+        // Indicate that the request passed validation.
+        self.validated = true;
+
+        // Return modified Request struct to caller.
         Ok(self)
 
     } // fn

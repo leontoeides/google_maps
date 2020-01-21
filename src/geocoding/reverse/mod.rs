@@ -3,6 +3,7 @@
 //! converts a latitude/longitude to an address.
 
 mod build;
+mod execute;
 mod get;
 mod new;
 mod with_language;
@@ -60,6 +61,9 @@ pub struct ReverseRequest {
 
     // Internal use only:
     // ------------------
+
+    /// Has the request been validated?
+    validated: bool,
 
     /// Query string that is to be submitted to the Google Cloud Maps Platform.
     query: Option<String>,
