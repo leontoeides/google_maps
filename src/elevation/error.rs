@@ -1,4 +1,4 @@
-//! Resources (enums, traits) for the client to handle Elevation API errors.
+//! Elevation API error types and error messages.
 
 use crate::elevation::response::Status;
 
@@ -11,8 +11,6 @@ pub enum Error {
     /// Google Maps Elevation API server generated an error. See the `Status`
     /// enum for more information.
     GoogleMapsElevationServer(Status, Option<String>),
-    /// The dependency library Ihsahc generated an error.
-    // Isahc(isahc::Error),
     /// The query string must be built before the request may be sent to the
     /// Google Maps Elevation API server.
     QueryNotBuilt,
@@ -59,7 +57,6 @@ impl std::fmt::Display for Error {
                         Unknown error."),
                 } // match
             }, // match
-            // Error::Isahc(error) => write!(f, "Google Maps Elevation API client in the Isahc library: {}", error),
             Error::RequestNotValidated => write!(f, "Google Maps Elevation API client library: \
                 The request must be validated before a query string may be built. \
                 Ensure the validate() method is called before build()."),
@@ -81,7 +78,6 @@ impl std::error::Error for Error {
         match self {
             Error::EitherPositionalOrSampledPath => None,
             Error::GoogleMapsElevationServer(_error, _message) => None,
-            // Error::Isahc(error) => Some(error),
             Error::RequestNotValidated => None,
             Error::Reqwest(error) => Some(error),
             Error::SerdeJson(error) => Some(error),
@@ -90,18 +86,8 @@ impl std::error::Error for Error {
     } // fn
 } // impl
 
-/* impl From<isahc::Error> for Error {
-    /// This trait converts from an Isahc error type (`isahc::Error`) into a
-    /// Google Maps Elevation API error type
-    /// (`google_maps::elevation::error::Error`) by wrapping it inside. This
-    /// function is required to use the `?` operator.
-    fn from(error: isahc::Error) -> Error {
-        Error::Isahc(error)
-    } // fn
-} // impl */
-
 impl From<reqwest::Error> for Error {
-    /// This trait converts from an Isahc error type (`reqwest::Error`) into a
+    /// This trait converts from an Reqwest error type (`reqwest::Error`) into a
     /// Google Maps Elevation API error type
     /// (`google_maps::elevation::error::Error`) by wrapping it inside. This
     /// function is required to use the `?` operator.

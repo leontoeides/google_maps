@@ -1,43 +1,40 @@
-/// Specifies one or more preferred modes of transit.
-///
-/// [Transit Mode](https://developers.google.com/maps/documentation/directions/intro#optional-parameters)
+use crate::directions::error::Error;
+use serde::{Serialize, Deserialize};
+
+/// Specifies one or more preferred [modes of
+/// transit](https://developers.google.com/maps/documentation/directions/intro#optional-parameters).
 ///
 /// This parameter may only be specified for transit directions, and only if the
 /// request includes an API key or a Google Maps Platform Premium Plan client
 /// ID.
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum TransitMode {
-    /// Specifies bus as a preferred mode of transit.
+    /// Indicates that the calculated route should prefer travel by bus.
+    #[serde(alias = "bus")]
     Bus,
-    /// Specifies rail as a preferred mode of transit.
+    /// Indicates that the calculated route should prefer travel by train, tram,
+    /// light rail, and subway. This is equivalent to
+    /// `transit_mode=train|tram|subway`.
+    #[serde(alias = "rail")]
     Rail,
-    /// Specifies subway as a preferred mode of transit.
+    /// Indicates that the calculated route should prefer travel by subway.
+    #[serde(alias = "subway")]
     Subway,
-    /// Specifies train as a preferred mode of transit.
+    /// Indicates that the calculated route should prefer travel by train.
+    #[serde(alias = "train")]
     Train,
-    /// Specifies tram as a preferred mode of transit.
+    /// Indicates that the calculated route should prefer travel by tram and
+    /// light rail.
+    /// Indicates that the calculated route should prefer travel by tram and
+    /// light rail.
+    #[serde(alias = "tram")]
     Tram,
 } // enum
 
-impl TransitMode {
-    /// Converts a `TransitMode` enum to a `String` that contains a pretty
-    /// source-code-style [transit mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitMode)
-    /// code for debugging.
-    pub fn source_code_print(&self) -> String {
-        match self {
-            TransitMode::Bus => String::from("TransitMode::Bus"),
-            TransitMode::Rail => String::from("TransitMode::Rail"),
-            TransitMode::Subway => String::from("TransitMode::Subway"),
-            TransitMode::Train => String::from("TransitMode::Train"),
-            TransitMode::Tram => String::from("TransitMode::Tram"),
-        } // match
-    } // fn
-} // impl
-
-impl From<&TransitMode> for String {
-    /// Converts a `TransitMode` enum to a `String` that contains a
-    /// [transit mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitMode)
+impl std::convert::From<&TransitMode> for String {
+    /// Converts a `TransitMode` enum to a `String` that contains a [transit
+    /// mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitMode)
     /// code.
     fn from(transit_mode: &TransitMode) -> String {
         match transit_mode {
@@ -50,18 +47,42 @@ impl From<&TransitMode> for String {
     } // fn
 } // impl
 
-impl From<String> for TransitMode {
-    /// Gets a `TransitMode` enum from a `String` that contains a valid
-    /// transit mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitMode)
+impl std::convert::TryFrom<String> for TransitMode {
+    // Error definitions are contained in the
+    // `google_maps\src\directions\error.rs` module.
+    type Error = crate::directions::error::Error;
+    /// Gets a `TransitMode` enum from a `String` that contains a valid [transit
+    /// mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitMode)
     /// code.
-    fn from(transit_mode: String) -> TransitMode {
+    fn try_from(transit_mode: String) -> Result<TransitMode, Error> {
         match transit_mode.as_ref() {
-            "bus" => TransitMode::Bus,
-            "rail" => TransitMode::Rail,
-            "subway" => TransitMode::Subway,
-            "train" => TransitMode::Train,
-            "tram" => TransitMode::Tram,
-            _ => panic!("'{}' is not a valid transit mode code. Valid codes are 'bus', 'rail', 'subway', 'train', and 'tram'.", transit_mode),
+            "bus" => Ok(TransitMode::Bus),
+            "rail" => Ok(TransitMode::Rail),
+            "subway" => Ok(TransitMode::Subway),
+            "train" => Ok(TransitMode::Train),
+            "tram" => Ok(TransitMode::Tram),
+            _ => Err(Error::InvalidTransitModeCode(transit_mode)),
+        } // match
+    } // fn
+} // impl
+
+impl std::default::Default for TransitMode {
+    /// Returns a reasonable default variant for the `TransitMode` enum type.
+    fn default() -> Self {
+        TransitMode::Bus
+    } // fn
+} // impl
+
+impl std::fmt::Display for TransitMode {
+    /// Formats a `TransitMode` enum into a string that is presentable to the
+    /// end user.
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            TransitMode::Bus => write!(f, "Bus"),
+            TransitMode::Rail => write!(f, "Rail"),
+            TransitMode::Subway => write!(f, "Subway"),
+            TransitMode::Train => write!(f, "Train"),
+            TransitMode::Tram => write!(f, "Tram"),
         } // match
     } // fn
 } // impl

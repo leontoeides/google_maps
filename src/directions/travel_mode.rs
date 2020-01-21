@@ -1,47 +1,42 @@
+use crate::directions::error::Error;
 use serde::{Serialize, Deserialize};
 
-/// Specifies the mode of transportation.
+/// Specifies the [mode of
+/// transportation](https://developers.google.com/maps/documentation/directions/intro#TravelModes).
 ///
-/// [Travel Modes](https://developers.google.com/maps/documentation/directions/intro#TravelModes)
-/// =============================================================================================
+/// When you calculate directions, you may specify the transportation `mode` to
+/// use. By default, directions are calculated as `driving` directions.
 ///
 /// Note: Both walking and bicycling directions may sometimes not include
 /// clear pedestrian or bicycling paths, so these directions will return
 /// `warnings` in the returned result which you must display to the user.
 
-#[derive(PartialEq, Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum TravelMode {
-    /// Specifies a driving directions request.
+    /// (Default) Indicates standard driving directions using the road network.
     #[serde(alias = "DRIVING")]
     Driving,
-    /// Specifies a driving directions request.
+    /// Requests walking directions via pedestrian paths & sidewalks (where
+    /// available).
     #[serde(alias = "WALKING")]
     Walking,
-    /// Specifies a bicycling directions request.
+    /// Requests bicycling directions via bicycle paths & preferred streets
+    /// (where available).
     #[serde(alias = "BICYCLING")]
     Bicycling,
-    /// Specifies a bicycling directions request.
+    /// Requests directions via public transit routes (where available). If you
+    /// set the mode to `transit`, you can optionally specify either a
+    /// `departure_time` or an `arrival_time`. If neither time is specified, the
+    /// `departure_time` defaults to now (that is, the departure time defaults
+    /// to the current time). You can also optionally include a `transit_mode`
+    /// and/or a `transit_routing_preference`.
     #[serde(alias = "TRANSIT")]
     Transit,
 } // enum
 
-impl TravelMode {
-    /// Converts a `TravelMode` enum to a `String` that contains a pretty
-    /// source-code-style [travel mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TravelMode)
-    /// code for debugging.
-    pub fn source_code_print(&self) -> String {
-        match self {
-            TravelMode::Bicycling => String::from("TravelMode::Bicycling"),
-            TravelMode::Driving => String::from("TravelMode::Driving"),
-            TravelMode::Transit => String::from("TravelMode::Transit"),
-            TravelMode::Walking => String::from("TravelMode::Walking"),
-        } // match
-    } // fn
-} // impl
-
-impl From<&TravelMode> for String {
-    /// Converts a `TravelMode` enum to a `String` that contains a
-    /// [travel mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TravelMode)
+impl std::convert::From<&TravelMode> for String {
+    /// Converts a `TravelMode` enum to a `String` that contains a [travel
+    /// mode](https://developers.google.com/maps/documentation/directions/intro#TravelModes)
     /// code.
     fn from(travel_mode: &TravelMode) -> String {
         match travel_mode {
@@ -53,17 +48,40 @@ impl From<&TravelMode> for String {
     } // fn
 } // impl
 
-impl From<String> for TravelMode {
-    /// Gets a `TravelMode` enum from a `String` that contains a valid
-    /// [travel mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TravelMode)
+impl std::convert::TryFrom<String> for TravelMode {
+    // Error definitions are contained in the
+    // `google_maps\src\directions\error.rs` module.
+    type Error = crate::directions::error::Error;
+    /// Gets a `TravelMode` enum from a `String` that contains a valid [travel
+    /// mode](https://developers.google.com/maps/documentation/directions/intro#TravelModes)
     /// code.
-    fn from(travel_mode: String) -> TravelMode {
+    fn try_from(travel_mode: String) -> Result<TravelMode, Error> {
         match travel_mode.as_ref() {
-            "bicycling" => TravelMode::Bicycling,
-            "driving" => TravelMode::Driving,
-            "transit" => TravelMode::Transit,
-            "walking" => TravelMode::Walking,
-            _ => panic!("'{}' is not a valid travel mode code. Valid codes are 'bicycling', 'driving', 'transit', and 'walking'.", travel_mode),
+            "bicycling" => Ok(TravelMode::Bicycling),
+            "driving" => Ok(TravelMode::Driving),
+            "transit" => Ok(TravelMode::Transit),
+            "walking" => Ok(TravelMode::Walking),
+            _ => Err(Error::InvalidTravelModeCode(travel_mode)),
+        } // match
+    } // fn
+} // impl
+
+impl std::default::Default for TravelMode {
+    /// Returns a reasonable default variant for the `TravelMode` enum type.
+    fn default() -> Self {
+        TravelMode::Driving
+    } // fn
+} // impl
+
+impl std::fmt::Display for TravelMode {
+    /// Formats a `TravelMode` enum into a string that is presentable to the
+    /// end user.
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            TravelMode::Bicycling => write!(f, "Bicycling"),
+            TravelMode::Driving => write!(f, "Driving"),
+            TravelMode::Transit => write!(f, "Transit"),
+            TravelMode::Walking => write!(f, "Walking"),
         } // match
     } // fn
 } // impl

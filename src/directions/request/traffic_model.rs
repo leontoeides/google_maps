@@ -1,6 +1,9 @@
-/// Specifies the assumptions to use when calculating time in traffic.
-///
-/// [Traffic Models](https://developers.google.com/maps/documentation/directions/intro#optional-parameters)
+use crate::directions::error::Error;
+use serde::{Serialize, Deserialize};
+
+/// Specifies the [traffic
+/// model](https://developers.google.com/maps/documentation/directions/intro#optional-parameters)
+/// to use when calculating time in traffic.
 ///
 /// This setting affects the value returned in the `duration_in_traffic` field
 /// in the response, which contains the predicted time in traffic based on
@@ -15,37 +18,72 @@
 /// than `pessimistic`, due to the way the `best_guess` prediction model
 /// integrates live traffic information.
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum TrafficModel {
-    /// Use historical traffic data to best estimate the time spent in traffic.
+    /// Indicates that the returned `duration_in_traffic` should be the best
+    /// estimate of travel time given what is known about both historical
+    /// traffic conditions and live traffic. Live traffic becomes more important
+    /// the closer the `departure_time` is to now.
+    #[serde(alias = "best_guess")]
     BestGuess,
-    /// Use historical traffic data to make an optimistic estimate of what the
-    /// duration in traffic will be.
+    /// Indicates that the returned duration_in_traffic should be shorter than
+    /// the actual travel time on most days, though occasional days with
+    /// particularly good traffic conditions may be faster than this value.
+    #[serde(alias = "optimistic")]
     Optimistic,
-    /// Use historical traffic data to make a pessimistic estimate of what the
-    /// duration in traffic will be.
+    /// Indicates that the returned `duration_in_traffic` should be longer than
+    /// the actual travel time on most days, though occasional days with
+    /// particularly bad traffic conditions may exceed this value.
+    #[serde(alias = "pessimistic")]
     Pessimistic,
 } // enum
 
-impl From<&TrafficModel> for String {
-    /// Converts a `TrafficModel` enum to a `String` that contains a [traffic model](https://developers.google.com/maps/documentation/javascript/reference/directions#TrafficModel) code.
+impl std::convert::From<&TrafficModel> for String {
+    /// Converts a `TrafficModel` enum to a `String` that contains a [traffic
+    /// model](https://developers.google.com/maps/documentation/javascript/reference/directions#TrafficModel)
+    /// code.
     fn from(traffic_model: &TrafficModel) -> String {
         match traffic_model {
             TrafficModel::BestGuess => String::from("best_guess"),
-            TrafficModel::Pessimistic => String::from("pessimistic"),
             TrafficModel::Optimistic => String::from("optimistic"),
+            TrafficModel::Pessimistic => String::from("pessimistic"),
         } // match
     } // fn
 } // impl
 
-impl From<String> for TrafficModel {
-    /// Gets a `TrafficModel` enum from a `String` that contains a valid [traffic model](https://developers.google.com/maps/documentation/javascript/reference/directions#TrafficModel) code.
-    fn from(traffic_model: String) -> TrafficModel {
+impl std::convert::TryFrom<String> for TrafficModel {
+    // Error definitions are contained in the
+    // `google_maps\src\directions\error.rs` module.
+    type Error = crate::directions::error::Error;
+    /// Gets a `TrafficModel` enum from a `String` that contains a valid
+    /// [traffic
+    /// model](https://developers.google.com/maps/documentation/javascript/reference/directions#TrafficModel)
+    /// code.
+    fn try_from(traffic_model: String) -> Result<TrafficModel, Error> {
         match traffic_model.as_ref() {
-            "best_guess" => TrafficModel::BestGuess,
-            "pessimistic" => TrafficModel::Pessimistic,
-            "optimistic" => TrafficModel::Optimistic,
-            _ => panic!("'{}' is not a valid traffic model code. Valid codes are 'best_guess', 'pessimistic', and 'optimistic'.", traffic_model),
+            "best_guess" => Ok(TrafficModel::BestGuess),
+            "optimistic" => Ok(TrafficModel::Optimistic),
+            "pessimistic" => Ok(TrafficModel::Pessimistic),
+            _ => Err(Error::InvalidTrafficModelCode(traffic_model)),
+        } // match
+    } // fn
+} // impl
+
+impl std::default::Default for TrafficModel {
+    /// Returns a reasonable default variant for the `TrafficModel` enum type.
+    fn default() -> Self {
+        TrafficModel::BestGuess
+    } // fn
+} // impl
+
+impl std::fmt::Display for TrafficModel {
+    /// Formats a `TrafficModel` enum into a string that is presentable to the
+    /// end user.
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            TrafficModel::BestGuess => write!(f, "Best Guess"),
+            TrafficModel::Optimistic => write!(f, "Optimistic"),
+            TrafficModel::Pessimistic => write!(f, "Pessimistic"),
         } // match
     } // fn
 } // impl

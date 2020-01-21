@@ -1,37 +1,30 @@
-/// Specifies preferences for transit routes.
-///
-/// [Transit Route Preferences](https://developers.google.com/maps/documentation/directions/intro#optional-parameters)
+use crate::directions::error::Error;
+use serde::{Serialize, Deserialize};
+
+/// Specifies preferences for [transit
+/// routes](https://developers.google.com/maps/documentation/directions/intro#optional-parameters).
 ///
 /// Using this parameter, you can bias the options returned, rather than
 /// accepting the default best route chosen by the API. This parameter may only
 /// be specified for transit directions, and only if the request includes an API
 /// key or a Google Maps Platform Premium Plan client ID.
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum TransitRoutePreference {
-    /// Specifies that the calculated route should prefer a limited number of
+    /// Indicates that the calculated route should prefer a limited number of
     /// transfers.
+    #[serde(alias = "fewer_transfers")]
     FewerTransfers,
-    /// Specifies that the calculated route should prefer limited amounts of
+    /// Indicates that the calculated route should prefer limited amounts of
     /// walking.
+    #[serde(alias = "less_walking")]
     LessWalking,
 } // enum
 
-impl TransitRoutePreference {
+impl std::convert::From<&TransitRoutePreference> for String {
     /// Converts a `TransitRoutePreference` enum to a `String` that contains a
-    /// pretty source-code-style [transit route preference](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitRoutePreference)
-    /// code for debugging.
-    pub fn source_code_print(&self) -> String {
-        match self {
-            TransitRoutePreference::FewerTransfers => String::from("TransitRoutePreference::FewerTransfers"),
-            TransitRoutePreference::LessWalking => String::from("TransitRoutePreference::LessWalking"),
-        } // match
-    } // fn
-} // impl
-
-impl From<&TransitRoutePreference> for String {
-    /// Converts a `TransitRoutePreference` enum to a `String` that contains a
-    /// [transit route preference](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitRoutePreferences)
+    /// [transit route
+    /// preference](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitRoutePreferences)
     /// code.
     fn from(transit_route_preference: &TransitRoutePreference) -> String {
         match transit_route_preference {
@@ -41,15 +34,38 @@ impl From<&TransitRoutePreference> for String {
     } // fn
 } // impl
 
-impl From<String> for TransitRoutePreference {
+impl std::convert::TryFrom<String> for TransitRoutePreference {
+    // Error definitions are contained in the
+    // `google_maps\src\directions\error.rs` module.
+    type Error = crate::directions::error::Error;
     /// Gets a `TransitRoutePreference` enum from a `String` that contains a
-    /// valid [transit route preference](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitRoutePreference)
+    /// valid [transit route
+    /// preference](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitRoutePreference)
     /// code.
-    fn from(transit_route_preference: String) -> TransitRoutePreference {
+    fn try_from(transit_route_preference: String) -> Result<TransitRoutePreference, Error> {
         match transit_route_preference.as_ref() {
-            "fewer_transfers" => TransitRoutePreference::FewerTransfers,
-            "less_walking" => TransitRoutePreference::LessWalking,
-            _ => panic!("'{}' is not a valid transit route preference code. Valid codes are 'fewer_transfers' and 'less_walking'.", transit_route_preference),
+            "fewer_transfers" => Ok(TransitRoutePreference::FewerTransfers),
+            "less_walking" => Ok(TransitRoutePreference::LessWalking),
+            _ => Err(Error::InvalidTransitRoutePreferenceCode(transit_route_preference)),
+        } // match
+    } // fn
+} // impl
+
+impl std::default::Default for TransitRoutePreference {
+    /// Returns a reasonable default variant for the `TransitRoutePreference`
+    /// enum type.
+    fn default() -> Self {
+        TransitRoutePreference::FewerTransfers
+    } // fn
+} // impl
+
+impl std::fmt::Display for TransitRoutePreference {
+    /// Formats a `TransitRoutePreference` enum into a string that is
+    /// presentable to the end user.
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            TransitRoutePreference::FewerTransfers => write!(f, "Fewer Transfers"),
+            TransitRoutePreference::LessWalking => write!(f, "Less Walking"),
         } // match
     } // fn
 } // impl

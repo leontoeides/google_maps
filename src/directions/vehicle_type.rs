@@ -1,134 +1,143 @@
+use crate::directions::error::Error;
 use serde::{Serialize, Deserialize};
 
-/// Indicates the vehicle type.
-///
-/// [Vehicle Types](https://developers.google.com/maps/documentation/directions/intro#Legs)
+/// Indicates the [vehicle
+/// type](https://developers.google.com/maps/documentation/directions/intro#VehicleType)
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum VehicleType {
-    /// Rail.
-    Rail,
-    /// Light rail transit.
-    MetroRail,
-    /// Underground light rail.
-    Subway,
-    /// Above ground light rail.
-    Tram,
-    /// Monorail.
-    Monorail,
-    /// Heavy rail.
-    HeavyRail,
-    /// Commuter rail.
-    CommuterTrain,
-    /// High speed train.
-    HighSpeedTrain,
-    /// Long distance train.
-    LongDistanceTrain,
     /// Bus.
     Bus,
-    /// Intercity bus.
-    IntercityBus,
-    /// Trolleybus.
-    Trolleybus,
-    /// Share taxi is a kind of bus with the ability to drop off and pick up
-    /// passengers anywhere on its route.
-    ShareTaxi,
-    /// Ferry.
-    Ferry,
     /// A vehicle that operates on a cable, usually on the ground. Aerial cable
     /// cars may be of the type VehicleType::Gondola.
     CableCar,
-    /// An aerial cable car.
-    GondolaLift,
+    /// Commuter rail.
+    CommuterTrain,
+    /// Ferry.
+    Ferry,
     /// A vehicle that is pulled up a steep incline by a cable. A Funicular
     /// typically consists of two cars, with each car acting as a counterweight
     /// for the other.
     Funicular,
+    /// An aerial cable car.
+    GondolaLift,
+    /// Heavy rail.
+    HeavyRail,
+    /// High speed train.
+    HighSpeedTrain,
+    /// Intercity bus.
+    IntercityBus,
+    /// Long distance train.
+    LongDistanceTrain,
+    /// Light rail transit.
+    MetroRail,
+    /// Monorail.
+    Monorail,
     /// All other vehicles will return this type.
     Other,
+    /// Rail.
+    Rail,
+    /// Share taxi is a kind of bus with the ability to drop off and pick up
+    /// passengers anywhere on its route.
+    ShareTaxi,
+    /// Underground light rail.
+    Subway,
+    /// Above ground light rail.
+    Tram,
+    /// Trolleybus.
+    Trolleybus,
 } // enum
 
-impl VehicleType {
-    /// Converts a `VehicleType` enum to a `String` that contains a pretty
-    /// source-code-style [vehicle type](https://developers.google.com/maps/documentation/javascript/reference/directions#VehicleType)
-    /// code for debugging.
-    pub fn source_code_print(&self) -> String {
-        match self {
-            VehicleType::Rail => String::from("VehicleType::Rail"),
-            VehicleType::MetroRail => String::from("VehicleType::MetroRail"),
-            VehicleType::Subway => String::from("VehicleType::Subway"),
-            VehicleType::Tram => String::from("VehicleType::Tram"),
-            VehicleType::Monorail => String::from("VehicleType::Monorail"),
-            VehicleType::HeavyRail => String::from("VehicleType::HeavyRail"),
-            VehicleType::CommuterTrain => String::from("VehicleType::CommuterTrain"),
-            VehicleType::HighSpeedTrain => String::from("VehicleType::HighSpeedTrain"),
-            VehicleType::LongDistanceTrain => String::from("VehicleType::LongDistanceTrain"),
-            VehicleType::Bus => String::from("VehicleType::Bus"),
-            VehicleType::IntercityBus => String::from("VehicleType::IntercityBus"),
-            VehicleType::Trolleybus => String::from("VehicleType::Trolleybus"),
-            VehicleType::ShareTaxi => String::from("VehicleType::ShareTaxi"),
-            VehicleType::Ferry => String::from("VehicleType::Ferry"),
-            VehicleType::CableCar => String::from("VehicleType::CableCar"),
-            VehicleType::GondolaLift => String::from("VehicleType::GondolaLift"),
-            VehicleType::Funicular => String::from("VehicleType::Funicular"),
-            VehicleType::Other => String::from("VehicleType::Other"),
-        } // match
-    } // fn
-} // impl
-
-impl From<&VehicleType> for String {
-    /// Converts a `VehicleType` enum to a `String` that contains a
-    /// [vehicle type](https://developers.google.com/maps/documentation/javascript/reference/directions#VehicleType)
+impl std::convert::From<&VehicleType> for String {
+    /// Converts a `VehicleType` enum to a `String` that contains a [vehicle
+    /// type](https://developers.google.com/maps/documentation/directions/intro#VehicleType)
     /// code.
     fn from(vehicle_type: &VehicleType) -> String {
         match vehicle_type {
-            VehicleType::Rail => String::from("RAIL"),
+            VehicleType::Bus => String::from("BUS"),
+            VehicleType::CableCar => String::from("CABLE_CAR"),
+            VehicleType::CommuterTrain => String::from("COMMUTER_TRAIN"),
+            VehicleType::Ferry => String::from("FERRY"),
+            VehicleType::Funicular => String::from("FUNICULAR"),
+            VehicleType::GondolaLift => String::from("GONDOLA_LIFT"),
+            VehicleType::HeavyRail => String::from("HEAVY_RAIL"),
+            VehicleType::HighSpeedTrain => String::from("HIGH_SPEED_TRAIN"),
+            VehicleType::IntercityBus => String::from("INTERCITY_BUS"),
+            VehicleType::LongDistanceTrain => String::from("LONG_DISTANCE_TRAIN"),
             VehicleType::MetroRail => String::from("METRO_RAIL"),
+            VehicleType::Monorail => String::from("MONORAIL"),
+            VehicleType::Other => String::from("OTHER"),
+            VehicleType::Rail => String::from("RAIL"),
+            VehicleType::ShareTaxi => String::from("SHARE_TAXI"),
             VehicleType::Subway => String::from("SUBWAY"),
             VehicleType::Tram => String::from("TRAM"),
-            VehicleType::Monorail => String::from("MONORAIL"),
-            VehicleType::HeavyRail => String::from("HEAVY_RAIL"),
-            VehicleType::CommuterTrain => String::from("COMMUTER_TRAIN"),
-            VehicleType::HighSpeedTrain => String::from("HIGH_SPEED_TRAIN"),
-            VehicleType::LongDistanceTrain => String::from("LONG_DISTANCE_TRAIN"),
-            VehicleType::Bus => String::from("BUS"),
-            VehicleType::IntercityBus => String::from("INTERCITY_BUS"),
             VehicleType::Trolleybus => String::from("TROLLEYBUS"),
-            VehicleType::ShareTaxi => String::from("SHARE_TAXI"),
-            VehicleType::Ferry => String::from("FERRY"),
-            VehicleType::CableCar => String::from("CABLE_CAR"),
-            VehicleType::GondolaLift => String::from("GONDOLA_LIFT"),
-            VehicleType::Funicular => String::from("FUNICULAR"),
-            VehicleType::Other => String::from("OTHER"),
         } // match
     } // fn
 } // impl
 
-impl From<String> for VehicleType {
-    /// Gets a `VehicleType` enum from a `String` that contains a valid
-    /// [vehicle type](https://developers.google.com/maps/documentation/javascript/reference/directions#VehicleType)
+impl std::convert::TryFrom<String> for VehicleType {
+    // Error definitions are contained in the
+    // `google_maps\src\directions\error.rs` module.
+    type Error = crate::directions::error::Error;
+    /// Gets a `VehicleType` enum from a `String` that contains a valid [vehicle
+    /// type](https://developers.google.com/maps/documentation/directions/intro#VehicleType)
     /// code.
-    fn from(vehicle_type: String) -> VehicleType {
+    fn try_from(vehicle_type: String) -> Result<VehicleType, Error> {
         match vehicle_type.as_ref() {
-            "RAIL" => VehicleType::Rail,
-            "METRO_RAIL" => VehicleType::MetroRail,
-            "SUBWAY" => VehicleType::Subway,
-            "TRAM" => VehicleType::Tram,
-            "MONORAIL" => VehicleType::Monorail,
-            "HEAVY_RAIL" => VehicleType::HeavyRail,
-            "COMMUTER_TRAIN" => VehicleType::CommuterTrain,
-            "HIGH_SPEED_TRAIN" => VehicleType::HighSpeedTrain,
-            "LONG_DISTANCE_TRAIN" => VehicleType::LongDistanceTrain,
-            "BUS" => VehicleType::Bus,
-            "INTERCITY_BUS" => VehicleType::IntercityBus,
-            "TROLLEYBUS" => VehicleType::Trolleybus,
-            "SHARE_TAXI" => VehicleType::ShareTaxi,
-            "FERRY" => VehicleType::Ferry,
-            "CABLE_CAR" => VehicleType::CableCar,
-            "GONDOLA_LIFT" => VehicleType::GondolaLift,
-            "FUNICULAR" => VehicleType::Funicular,
-            "OTHER" => VehicleType::Other,
-            _ => panic!("'{}' is not a valid vehicle type code. Valid codes are `RAIL`, `METRO_RAIL`, `SUBWAY`, `TRAM`, `MONORAIL`, `HEAVY_RAIL`, `COMMUTER_TRAIN`, `HIGH_SPEED_TRAIN`, `LONG_DISTANCE_TRAIN`, `BUS`, `INTERCITY_BUS`, `TROLLEYBUS`, `SHARE_TAXI`, `FERRY`, `CABLE_CAR`, `GONDOLA_LIFT`, `FUNICULAR`, and `OTHER`.", vehicle_type)
+            "BUS" => Ok(VehicleType::Bus),
+            "CABLE_CAR" => Ok(VehicleType::CableCar),
+            "COMMUTER_TRAIN" => Ok(VehicleType::CommuterTrain),
+            "FERRY" => Ok(VehicleType::Ferry),
+            "FUNICULAR" => Ok(VehicleType::Funicular),
+            "GONDOLA_LIFT" => Ok(VehicleType::GondolaLift),
+            "HEAVY_RAIL" => Ok(VehicleType::HeavyRail),
+            "HIGH_SPEED_TRAIN" => Ok(VehicleType::HighSpeedTrain),
+            "INTERCITY_BUS" => Ok(VehicleType::IntercityBus),
+            "LONG_DISTANCE_TRAIN" => Ok(VehicleType::LongDistanceTrain),
+            "METRO_RAIL" => Ok(VehicleType::MetroRail),
+            "MONORAIL" => Ok(VehicleType::Monorail),
+            "OTHER" => Ok(VehicleType::Other),
+            "RAIL" => Ok(VehicleType::Rail),
+            "SHARE_TAXI" => Ok(VehicleType::ShareTaxi),
+            "SUBWAY" => Ok(VehicleType::Subway),
+            "TRAM" => Ok(VehicleType::Tram),
+            "TROLLEYBUS" => Ok(VehicleType::Trolleybus),
+            _ => Err(Error::InvalidVehicleTypeCode(vehicle_type)),
+        } // match
+    } // fn
+} // impl
+
+impl std::default::Default for VehicleType {
+    /// Returns a reasonable default variant for the `VehicleType` enum type.
+    fn default() -> Self {
+        VehicleType::Bus
+    } // fn
+} // impl
+
+impl std::fmt::Display for VehicleType {
+    /// Formats a `VehicleType` enum into a string that is presentable to the
+    /// end user.
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            VehicleType::Bus => write!(f, "Bus"),
+            VehicleType::CableCar => write!(f, "Cable Car"),
+            VehicleType::CommuterTrain => write!(f, "Commuter Train"),
+            VehicleType::Ferry => write!(f, "Ferry"),
+            VehicleType::Funicular => write!(f, "Funicular"),
+            VehicleType::GondolaLift => write!(f, "GondolaLift"),
+            VehicleType::HeavyRail => write!(f, "Heavy Rail"),
+            VehicleType::HighSpeedTrain => write!(f, "High Speed Train"),
+            VehicleType::IntercityBus => write!(f, "Intercity Bus"),
+            VehicleType::LongDistanceTrain => write!(f, "Long Distance Train"),
+            VehicleType::MetroRail => write!(f, "Metro Rail"),
+            VehicleType::Monorail => write!(f, "Monorail"),
+            VehicleType::Other => write!(f, "Other"),
+            VehicleType::Rail => write!(f, "Rail"),
+            VehicleType::ShareTaxi => write!(f, "Share Taxi"),
+            VehicleType::Subway => write!(f, "Subway"),
+            VehicleType::Tram => write!(f, "Tram"),
+            VehicleType::Trolleybus => write!(f, "Trolleybus"),
         } // match
     } // fn
 } // impl
