@@ -1,4 +1,4 @@
-//! Resources (enums, traits) for the client to handle Geocoding API errors.
+//! Geocoding API error types and error messages.
 
 use crate::geocoding::response::Status;
 
@@ -11,8 +11,6 @@ pub enum Error {
     /// Google Maps Geocoding API server generated an error. See the `Status`
     /// enum for more information.
     GoogleMapsGeocodingServer(Status, Option<String>),
-    /// The dependency library Ihsahc generated an error.
-    // Isahc(isahc::Error),
     /// The query string must be built before the request may be sent to the
     /// Google Maps Geocoding API server.
     QueryNotBuilt,
@@ -62,7 +60,6 @@ impl std::fmt::Display for Error {
                         This may occur if the geocoder was passed a non-existent address."),
                 } // match
             }, // match
-            // Error::Isahc(error) => write!(f, "Google Maps Geocoding API client in the Isahc library: {}", error),
             Error::RequestNotValidated => write!(f, "Google Maps Geocoding API client library: \
                 The request must be validated before a query string may be built. \
                 Ensure the validate() method is called before build()."),
@@ -84,7 +81,6 @@ impl std::error::Error for Error {
         match self {
             Error::AddressOrComponentsRequired => None,
             Error::GoogleMapsGeocodingServer(_error, _message) => None,
-            // Error::Isahc(error) => Some(error),
             Error::RequestNotValidated => None,
             Error::Reqwest(error) => Some(error),
             Error::SerdeJson(error) => Some(error),
@@ -93,18 +89,8 @@ impl std::error::Error for Error {
     } // fn
 } // impl
 
-/* impl From<isahc::Error> for Error {
-    /// This trait converts from an Isahc error type (`isahc::Error`) into a
-    /// Google Maps Geocoding API error type
-    /// (`google_maps::geocoding::error::Error`) by wrapping it inside. This
-    /// function is required to use the `?` operator.
-    fn from(error: isahc::Error) -> Error {
-        Error::Isahc(error)
-    } // fn
-} // impl */
-
 impl From<reqwest::Error> for Error {
-    /// This trait converts from an Isahc error type (`reqwest::Error`) into a
+    /// This trait converts from an Reqwest error type (`reqwest::Error`) into a
     /// Google Maps Geocoding API error type
     /// (`google_maps::geocoding::error::Error`) by wrapping it inside. This
     /// function is required to use the `?` operator.

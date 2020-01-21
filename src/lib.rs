@@ -1,14 +1,20 @@
 //! # google_maps
 //!
-//! An unofficial Google Maps Platform API for the Rust programming language.
+//! An unofficial Google Maps Platform client for the Rust programming language.
+//! This client currently implements the Directions API, Elevation API,
+//! Geocoding ApI, and Time Zone API.
 //!
 //! # Welcome
 //!
-//! As of version 0.1.0 this crate is expected to work well, work reliably, and
-//! have the most important features implemented. There are some creature
-//! comforts and specialized APIs not implemented yet.
+//! As of version 0.1.0 this crate is expected to work well and have the more
+//! important Google Maps features implemented. It should work well because
+//! Reqwest and Serde do most of the heavy lifting! While it's an early release,
+//! for most people this crate should work fine as is.
 //!
-//! While an early release, for most people this crate should work fine as is.
+//! I created this crate because I needed the Google Maps Platform for a project
+//! that I'm working on. So, I've decided to spin my library off into a public
+//! crate. This is a small token of gratitude and an attempt to give back to the
+//! Rust community. I hope it saves someone out there some work.
 //!
 //! # Example Request
 //!
@@ -20,7 +26,7 @@
 //!     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
 //!     // Canada Science and Technology Museum
 //!     Location::Address(String::from("1867 St Laurent Blvd, Ottawa, ON K1G 5A3")),
-//!     GOOGLE_API_KEY
+//!     YOUR_GOOGLE_API_KEY_HERE
 //! )
 //! .with_travel_mode(TravelMode::Transit)
 //! .with_arrival_time(PrimitiveDateTime::new(
@@ -41,7 +47,6 @@
 //! 4. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
 //! 5. Automatic Rate Limiting
 //! 6. Retry on Failure
-//! 7. Asynchronous
 
 pub mod bounds;
 pub mod directions;
@@ -54,50 +59,63 @@ pub mod region;
 pub mod time_zone;
 
 pub extern crate time;
-pub use time::{Date, PrimitiveDateTime, Time};
-
 pub use crate::bounds::Bounds as Bounds;
 pub use crate::language::Language as Language;
 pub use crate::latlng::LatLng as LatLng;
 pub use crate::place_type::PlaceType as PlaceType;
 pub use crate::region::Region as Region;
+pub use time::{Date, PrimitiveDateTime, Time};
 
 pub use crate::directions::{
-    request::avoid::Avoid as Avoid,
-    request::departure_time::DepartureTime as DepartureTime,
-    request::location::Location as Location,
-    request::Request as DirectionsRequest,
-    request::traffic_model::TrafficModel as TrafficModel,
-    request::transit_mode::TransitMode as TransitMode,
-    request::transit_route_preference::TransitRoutePreference as TransitRoutePreference,
-    request::unit_system::UnitSystem as UnitSystem,
-    request::waypoint::Waypoint as Waypoint,
-    response::Response as Directions,
-    response::status::Status as DirectionsStatus,
+    request::{
+        avoid::Avoid as Avoid,
+        departure_time::DepartureTime as DepartureTime,
+        location::Location as Location,
+        Request as DirectionsRequest,
+        traffic_model::TrafficModel as TrafficModel,
+        transit_mode::TransitMode as TransitMode,
+        transit_route_preference::TransitRoutePreference as TransitRoutePreference,
+        unit_system::UnitSystem as UnitSystem,
+        waypoint::Waypoint as Waypoint,
+    }, // request
+    response::{
+        Response as Directions,
+        status::Status as DirectionsStatus,
+    }, // response
     travel_mode::TravelMode as TravelMode,
-};
+}; // use
 
 pub use crate::elevation::{
     error::Error as ElevationError,
-    request::Locations as ElevationLocations,
-    request::Request as ElevationRequest,
-    response::Response as Elevation,
-    response::Status as ElevationStatus,
-};
+    request::{
+        Locations as ElevationLocations,
+        Request as ElevationRequest,
+    }, // request
+    response::{
+        Response as Elevation,
+        Status as ElevationStatus,
+    }, // response
+}; // use
 
 pub use crate::geocoding::{
     error::Error as GeocodingError,
-    forward::component::Component as GeocodingComponent,
-    forward::ForwardRequest as GeocodingForwardRequest,
+    forward::{
+        component::Component as GeocodingComponent,
+        ForwardRequest as GeocodingForwardRequest,
+    }, // forward
     location_type::LocationType as LocationType,
-    response::Response as Geocoding,
-    response::Status as GeocodingStatus,
+    response::{
+        Response as Geocoding,
+        Status as GeocodingStatus,
+    }, // response
     reverse::ReverseRequest as GeocodingReverseRequest,
-};
+}; // use
 
 pub use crate::time_zone::{
     error::Error as TimeZoneError,
     request::Request as TimeZoneRequest,
-    response::Response as TimeZone,
-    response::Status as TimeZoneStatus,
-};
+    response::{
+        Response as TimeZone,
+        Status as TimeZoneStatus,
+    }, // reponse
+}; // use

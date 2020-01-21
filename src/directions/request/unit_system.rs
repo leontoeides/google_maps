@@ -1,7 +1,9 @@
-/// Specifies the unit system to use when displaying results.
-///
-/// [Unit System](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
-/// ==============================================================================================
+use crate::directions::error::Error;
+use serde::{Serialize, Deserialize};
+
+/// Specifies the [unit
+/// system](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
+/// to use when displaying results.
 ///
 /// Directions results contain `text` within `distance` fields that may be
 /// displayed to the user to indicate the distance of a particular "step" of the
@@ -13,22 +15,26 @@
 /// kilometers. You may override this unit system by setting one explicitly
 /// within the request's `units` parameter, passing one of the following values:
 ///
-/// Note: this unit system setting only affects the `text` displayed within
-/// `distance` fields. The `distance` fields also contain values which are
+/// **Note**: this unit system setting only affects the `text` displayed within
+/// `distance` fields. The `distance` fields also contain `values` which are
 /// always expressed in meters.
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum UnitSystem {
     /// Specifies that distances in the response should be expressed in imperial
     /// units, miles and feet.
+    #[serde(alias = "imperial")]
     Imperial,
     /// Specifies that distances in the response should be expressed in metric
     /// units, using kilometres and metres.
+    #[serde(alias = "metric")]
     Metric,
 } // enum
 
-impl From<&UnitSystem> for String {
-    /// Converts a `UnitSystem` enum to a `String` that contains a [unit system](https://developers.google.com/maps/documentation/javascript/reference/directions#UnitSystem) code.
+impl std::convert::From<&UnitSystem> for String {
+    /// Converts a `UnitSystem` enum to a `String` that contains a [unit
+    /// system](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
+    /// code.
     fn from(units: &UnitSystem) -> String {
         match units {
             UnitSystem::Imperial => String::from("imperial"),
@@ -37,13 +43,36 @@ impl From<&UnitSystem> for String {
     } // fn
 } // impl
 
-impl From<String> for UnitSystem {
-    /// Gets a `UnitSystem` enum from a `String` that contains a valid [unit system](https://developers.google.com/maps/documentation/javascript/reference/directions#UnitSystem) code.
-    fn from(units: String) -> UnitSystem {
+impl std::convert::TryFrom<String> for UnitSystem {
+    // Error definitions are contained in the
+    // `google_maps\src\directions\error.rs` module.
+    type Error = crate::directions::error::Error;
+    /// Gets a `UnitSystem` enum from a `String` that contains a valid [unit
+    /// system](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
+    /// code.
+    fn try_from(units: String) -> Result<UnitSystem, Error> {
         match units.as_ref() {
-            "imperial" => UnitSystem::Imperial,
-            "metric" => UnitSystem::Metric,
-            _ => panic!("'{}' is not a valid unit system code. Valid codes are 'metric', and 'imperial'.", units),
+            "imperial" => Ok(UnitSystem::Imperial),
+            "metric" => Ok(UnitSystem::Metric),
+            _ => Err(Error::InvalidUnitSystemCode(units)),
+        } // match
+    } // fn
+} // impl
+
+impl std::default::Default for UnitSystem {
+    /// Returns a reasonable default variant for the `UnitSystem` enum type.
+    fn default() -> Self {
+        UnitSystem::Metric
+    } // fn
+} // impl
+
+impl std::fmt::Display for UnitSystem {
+    /// Formats a `UnitSystem` enum into a string that is presentable to the
+    /// end user.
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            UnitSystem::Imperial => write!(f, "Imperial"),
+            UnitSystem::Metric => write!(f, "Metric"),
         } // match
     } // fn
 } // impl

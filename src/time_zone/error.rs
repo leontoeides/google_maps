@@ -1,4 +1,4 @@
-//! Resources (enums, traits) for the client to handle Time Zone API errors.
+//! Time Zone API error types and error messages.
 
 use crate::time_zone::response::Status;
 
@@ -8,8 +8,6 @@ pub enum Error {
     /// Google Maps Time Zone API server generated an error. See the `Status`
     /// enum for more information.
     GoogleMapsTimeZoneServer(Status, Option<String>),
-    /// The dependency library Ihsahc generated an error.
-    // Isahc(isahc::Error),
     /// The query string must be built before the request may be sent to the
     /// Google Maps Time Zone API server.
     QueryNotBuilt,
@@ -54,7 +52,6 @@ impl std::fmt::Display for Error {
                         This may occur if the geocoder was passed a non-existent address."),
                 } // match
             }, // match
-            // Error::Isahc(error) => write!(f, "Google Maps Time Zone API client in the Isahc library: {}", error),
             Error::Reqwest(error) => write!(f, "Google Maps Time Zone API client in the Reqwest library: {}", error),
             Error::SerdeJson(error) => write!(f, "Google Maps Time Zone API client in the Serde JSON library: {}", error),
             Error::QueryNotBuilt => write!(f, "Google Maps Time Zone API client library: \
@@ -72,7 +69,6 @@ impl std::error::Error for Error {
     fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
         match self {
             Error::GoogleMapsTimeZoneServer(_error, _message) => None,
-            // Error::Isahc(error) => Some(error),
             Error::Reqwest(error) => Some(error),
             Error::SerdeJson(error) => Some(error),
             Error::QueryNotBuilt => None,
@@ -80,18 +76,8 @@ impl std::error::Error for Error {
     } // fn
 } // impl
 
-/* impl From<isahc::Error> for Error {
-    /// This trait converts from an Isahc error type (`isahc::Error`) into a
-    /// Google Maps Time Zone API error type
-    /// (`google_maps::time_zone::error::Error`) by wrapping it inside. This
-    /// function is required to use the `?` operator.
-    fn from(error: isahc::Error) -> Error {
-        Error::Isahc(error)
-    } // fn
-} // impl */
-
 impl From<reqwest::Error> for Error {
-    /// This trait converts from an Isahc error type (`reqwest::Error`) into a
+    /// This trait converts from an Reqwest error type (`reqwest::Error`) into a
     /// Google Maps Time Zone API error type
     /// (`google_maps::time_zone::error::Error`) by wrapping it inside. This
     /// function is required to use the `?` operator.
