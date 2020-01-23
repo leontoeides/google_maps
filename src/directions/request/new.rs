@@ -8,25 +8,25 @@ impl Request {
     pub fn new(key: String, origin: Location, destination: Location) -> Request {
         Request {
             // Required parameters:
-            origin,
             destination,
             key,
+            origin,
             // Optional parameters:
-            travel_mode: None,
-            waypoints: None,
             alternatives: None,
-            restrictions: None,
-            language: None,
-            unit_system: None,
-            region: None,
             arrival_time: None,
             departure_time: None,
+            language: None,
+            region: None,
+            restrictions: None,
             traffic_model: None,
             transit_modes: None,
             transit_route_preference: None,
+            travel_mode: None,
+            unit_system: None,
+            waypoints: None,
             // Internal use only:
-            validated: false,
             query: None,
+            validated: false,
         } // struct
     } // fn
 

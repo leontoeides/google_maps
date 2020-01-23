@@ -45,14 +45,14 @@ pub struct Request {
     // Required parameters:
     // --------------------
 
+    /// The address, latitude/longitude, or place ID to which you wish to
+    /// calculate directions.
+    destination: Location,
+
     /// Application's API key. Learn how to
     /// [get a
     /// key](https://developers.google.com/maps/documentation/directions/get-api-key).
     key: String,
-
-    /// The address, latitude/longitude, or place ID to which you wish to
-    /// calculate directions.
-    destination: Location,
 
     /// The address, latitude/longitude, or place ID from which you wish to
     /// calculate directions.
@@ -90,10 +90,6 @@ pub struct Request {
     /// information.
     traffic_model: Option<TrafficModel>,
 
-    /// Mode of transportation. See file `travel_mode.rs` and method
-    /// `with_travel_mode()` for more information.
-    travel_mode: Option<TravelMode>,
-
     /// Preferred modes of transit. See file `transit_mode.rs` and method
     /// `with_transit_modes()` for more information.
     transit_modes: Option<Vec<TransitMode>>,
@@ -101,6 +97,10 @@ pub struct Request {
     /// Preferences for transit routes. See file `transit_route_preference.rs`
     /// and method `with_transit_route_preference()` for more information.
     transit_route_preference: Option<TransitRoutePreference>,
+
+    /// Mode of transportation. See file `travel_mode.rs` and method
+    /// `with_travel_mode()` for more information.
+    travel_mode: Option<TravelMode>,
 
     /// Unit system to use when displaying results. See file `unit_system.rs`
     /// and method `with_unit_system()` for more information.
