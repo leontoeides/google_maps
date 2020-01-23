@@ -43,7 +43,7 @@ pub enum DepartureTime {
 
 } // enum
 
-impl From<&DepartureTime> for String {
+impl std::convert::From<&DepartureTime> for String {
     /// Converts a `DepartureTime` enum to a `String` that contains a [departure
     /// time](https://developers.google.com/maps/documentation/directions/intro#optional-parameters).
     fn from(departure_time: &DepartureTime) -> String {

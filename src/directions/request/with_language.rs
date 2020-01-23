@@ -7,10 +7,15 @@ impl Request {
 
     /// Specify the language in which to return results.
     ///
-    /// Description
-    /// -----------
+    /// ## Arguments:
     ///
-    /// * [See the list of supported languages](https://developers.google.com/maps/faq#languagesupport).
+    /// * `language` · The language that Google's response should be presented
+    /// in.
+    ///
+    /// ## Description:
+    ///
+    /// * [See the list of supported
+    /// languages](https://developers.google.com/maps/faq#languagesupport).
     /// Google often updates the supported languages, so this list may not be
     /// exhaustive.
     ///
@@ -36,8 +41,8 @@ impl Request {
     /// may be valid in one language but not in another. For example, _utca_ and
     /// _tér_ are synonyms for street in Hungarian.
     ///
-    /// Example:
-    /// ---------
+    /// ## Example:
+    ///
     /// * Force language to French:
     /// ```
     /// .with_language(Language::French)

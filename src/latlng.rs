@@ -1,3 +1,7 @@
+//! Contains the `LatLng` struct and its associated traits. The `LatLng`
+//! coorindate system is used to specify a position or location on the Earth's
+//! surface.
+
 use serde::{Serialize, Deserialize};
 
 /// Latitude and longitude values must correspond to a valid location on the
@@ -14,7 +18,7 @@ pub struct LatLng {
     pub lng: f64,
 } // struct
 
-impl From<&LatLng> for String {
+impl std::convert::From<&LatLng> for String {
     /// Converts a `LatLng` struct to a `String` that contains a
     /// latitude/longitude pair.
     fn from(latlng: &LatLng) -> String {
