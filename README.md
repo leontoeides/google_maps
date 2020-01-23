@@ -16,7 +16,7 @@ back to the Rust community. I hope it saves someone out there some work.
 
 ## Example Directions API Request
 
-```
+```rust
 use google_maps::*;
 
 let directions = DirectionsRequest::new(
@@ -38,7 +38,7 @@ println!("{:#?}", directions);
 
 ## Example Elevation API Positional Request
 
-```
+```rust
 use google_maps::*;
 
 let elevation = ElevationRequest::new(YOUR_GOOGLE_API_KEY_HERE)
@@ -53,7 +53,7 @@ println!("{:#?}", elevation);
 
 ## Example Geocoding API Request
 
-```
+```rust
 use google_maps::*;
 
 // Example request:
@@ -78,7 +78,7 @@ for result in &location.results {
 
 ## Example Reverse Geocoding API Request
 
-```
+```rust
 use google_maps::*;
 
 // Example request:
@@ -107,7 +107,7 @@ for result in &location.results {
 
 ## Example Time Zone API Request
 
-```
+```rust
 use google_maps::*;
 
 let time_zone = TimeZoneRequest::new(
