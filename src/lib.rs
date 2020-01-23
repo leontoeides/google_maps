@@ -19,7 +19,7 @@
 //!
 //! ## Example Directions API Request
 //!
-//! ```
+//! ```rust
 //! use google_maps::*;
 //!
 //! let directions = DirectionsRequest::new(
@@ -41,7 +41,7 @@
 //!
 //! ## Example Elevation API Positional Request
 //!
-//! ```
+//! ```rust
 //! use google_maps::*;
 //!
 //! let elevation = ElevationRequest::new(YOUR_GOOGLE_API_KEY_HERE)
