@@ -75,11 +75,9 @@ pub enum Status {
 } // struct
 
 impl std::convert::From<&Status> for String {
-
     /// Converts a `Status` enum to a `String` that contains a
     /// [status](https://developers.google.com/maps/documentation/directions/intro#StatusCodes)
     /// code.
-
     fn from(status: &Status) -> String {
         match status {
             Status::InvalidRequest => String::from("INVALID_REQUEST"),
@@ -94,20 +92,17 @@ impl std::convert::From<&Status> for String {
             Status::ZeroResults => String::from("ZERO_RESULTS"),
         } // match
     } // fn
-
 } // impl
 
 impl std::convert::TryFrom<String> for Status {
 
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
-
     type Error = crate::directions::error::Error;
 
     /// Gets a `Status` enum from a `String` that contains a valid
     /// [status](https://developers.google.com/maps/documentation/directions/intro#StatusCodes)
     /// code.
-
     fn try_from(status: String) -> Result<Status, Error> {
         match status.as_ref() {
             "INVALID_REQUEST" => Ok(Status::InvalidRequest),
@@ -127,20 +122,15 @@ impl std::convert::TryFrom<String> for Status {
 } // impl
 
 impl std::default::Default for Status {
-
     /// Returns a reasonable default variant for the `Status` enum type.
-
     fn default() -> Self {
         Status::Ok
     } // fn
-
 } // impl
 
 impl std::fmt::Display for Status {
-
     /// Formats a `Status` enum into a string that is presentable to the end
     /// user.
-
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Status::InvalidRequest => write!(f, "Invalid Request"),
@@ -155,5 +145,4 @@ impl std::fmt::Display for Status {
             Status::ZeroResults => write!(f, "Zero Results"),
         } // match
     } // fn
-
 } // impl

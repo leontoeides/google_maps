@@ -77,9 +77,11 @@ impl std::convert::From<&VehicleType> for String {
 } // impl
 
 impl std::convert::TryFrom<String> for VehicleType {
+
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
     type Error = crate::directions::error::Error;
+
     /// Gets a `VehicleType` enum from a `String` that contains a valid [vehicle
     /// type](https://developers.google.com/maps/documentation/directions/intro#VehicleType)
     /// code.
@@ -106,6 +108,7 @@ impl std::convert::TryFrom<String> for VehicleType {
             _ => Err(Error::InvalidVehicleTypeCode(vehicle_type)),
         } // match
     } // fn
+
 } // impl
 
 impl std::default::Default for VehicleType {

@@ -1,7 +1,7 @@
 use crate::directions::response::{
-    time::Time;
-    transit_line::TransitLine;
-    transit_stop::TransitStop;
+    time::Time,
+    transit_line::TransitLine,
+    transit_stop::TransitStop,
 }; // use
 use serde::{Serialize, Deserialize};
 
