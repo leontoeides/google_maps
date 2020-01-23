@@ -56,7 +56,7 @@
 //!
 //! ## Example Geocoding API Request
 //!
-//! ```
+//! ```rust
 //! use google_maps::*;
 //!
 //! // Example request:
@@ -81,7 +81,7 @@
 //!
 //! ## Example Reverse Geocoding API Request
 //!
-//! ```
+//! ```rust
 //! use google_maps::*;
 //!
 //! // Example request:
@@ -110,8 +110,10 @@
 //!
 //! ## Example Time Zone API Request
 //!
-//! ```
+//! ```rust
 //! use google_maps::*;
+//!
+//! // Example request:
 //!
 //! let time_zone = TimeZoneRequest::new(
 //!     YOUR_GOOGLE_API_KEY_HERE,
@@ -125,7 +127,24 @@
 //!     ),
 //! ).execute().unwrap();
 //!
+//! // Dump response:
+//!
 //! println!("{:#?}", time_zone);
+//!
+//! // Parsing example:
+//!
+//! use std::time::{SystemTime, UNIX_EPOCH};
+//!
+//! let unix_timestamp =
+//!     SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs();
+//!
+//! println!("Time at your computer: {}", unix_timestamp);
+//!
+//! println!("Time in {}: {}",
+//!     time_zone.time_zone_id.unwrap(),
+//!     unix_timestamp as i64 + time_zone.dst_offset.unwrap() as i64 +
+//!         time_zone.raw_offset.unwrap() as i64
+//! );
 //! ```
 //!
 //! To do:
