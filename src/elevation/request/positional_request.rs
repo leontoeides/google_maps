@@ -7,18 +7,19 @@ impl Request {
 
     /// Adds the _positional request_ parameters to the Elevation API query.
     ///
-    /// # Arguments:
+    /// ## Arguments:
     ///
-    /// * `path` - Defines a path on the earth for which to return elevation
+    /// * `path` · Defines a path on the earth for which to return elevation
     /// data. This parameter defines a set of two or more ordered
     /// latitude/longitude pairs defining a path along the surface of the earth.
     /// For more information, see [Specifying
     /// Paths](https://developers.google.com/maps/documentation/elevation/intro#Paths).
-    /// * `samples` - Specifies the number of sample points along a path for
+    ///
+    /// * `samples` · Specifies the number of sample points along a path for
     /// which to return elevation data. The samples parameter divides the given
     /// path into an ordered set of equidistant points along the path.
     ///
-    /// # Example:
+    /// ## Example:
     ///
     /// ```
     /// let response = ElevationRequest::new(GOOGLE_API_KEY)

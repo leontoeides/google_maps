@@ -7,15 +7,15 @@ impl Request {
 
     /// Adds the _sampled path request_ parameters to the Elevation API query.
     ///
-    /// # Arguments:
+    /// ## Arguments:
     ///
-    /// * `locations` - Defines the location(s) on the earth from which to
+    /// * `locations` · Defines the location(s) on the earth from which to
     /// return elevation data. This parameter takes either a single location,
     /// as a latitude/longitude pair, multiple latitude/longitude pairs, or an
     /// encoded polyline. For more information, see [Specifying
     /// Locations](https://developers.google.com/maps/documentation/elevation/intro#Locations).
     ///
-    /// # Example:
+    /// ## Example:
     ///
     /// ```
     /// let elevation = ElevationRequest::new(GOOGLE_API_KEY)

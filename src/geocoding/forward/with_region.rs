@@ -7,12 +7,12 @@ impl ForwardRequest {
 
     /// Specifies the region bias.
     ///
-    /// # Arguments:
+    /// ## Arguments:
     ///
-    /// * `region` - The region to prefer in search results. This parameter will
+    /// * `region` · The region to prefer in search results. This parameter will
     /// only influence, not fully restrict, results from the geocoder.
     ///
-    /// # Description
+    /// ## Description
     ///
     /// [Region
     /// Biasing](https://developers.google.com/maps/documentation/geocoding/intro#RegionCodes)
@@ -32,7 +32,7 @@ impl ForwardRequest {
     /// results, because "Toledo" is interpreted as the city in Ohio and not
     /// Spain.
     ///
-    /// # Example:
+    /// ## Example:
     ///
     /// * Bias region to Canada:
     /// ```

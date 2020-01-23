@@ -4,7 +4,7 @@ impl ForwardRequest {
 
     /// Specifies the street address to geocode.
     ///
-    /// # Arguments:
+    /// ## Arguments:
     ///
     /// * `address` - The street address that you want to geocode, in the format
     /// used by the national postal service of the country concerned. Additional
@@ -13,7 +13,7 @@ impl ForwardRequest {
     /// FAQ](https://developers.google.com/maps/faq#geocoder_queryformat) for
     /// additional guidance.
     ///
-    /// # Example:
+    /// ## Example:
     ///
     /// ```
     /// .with_address(String::from(
