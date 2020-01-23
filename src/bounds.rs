@@ -1,3 +1,7 @@
+//! Contains the `Bounds` struct and its associated traits. `Bounds` is used
+//! to specify a selection box over a geographic area using two
+//! latitude/longitude pairs.
+
 use crate::latlng::LatLng;
 use serde::{Serialize, Deserialize};
 
@@ -6,13 +10,13 @@ use serde::{Serialize, Deserialize};
 /// northeast corner of the viewport bounding box. Generally the viewport is
 /// used to frame a result when displaying it to a user.
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Bounds {
     pub southwest: LatLng,
     pub northeast: LatLng,
 } // struct
 
-impl From<&Bounds> for String {
+impl std::convert::From<&Bounds> for String {
     /// Converts a `Bounds` struct to a `String` that contains two
     /// latitude/longitude pairs that represent a bounding box.
     fn from(bounds: &Bounds) -> String {

@@ -7,8 +7,15 @@ impl Request {
 
     /// Specify the mode of transportation.
     ///
+    /// ## Arguments
+    ///
+    /// * `travel_mode` · The mode of transportation that directions should be
+    /// calculated for. For example, `Transit` directions or `Driving`
+    /// directions.
+    ///
+    /// ## Description
+    ///
     /// [Travel Modes](https://developers.google.com/maps/documentation/directions/intro#TravelModes)
-    /// ---------------------------------------------------------------------------------------------
     ///
     /// When you calculate directions, you may specify the transportation mode
     /// to use. By default, directions are calculated as driving directions. The
@@ -35,8 +42,7 @@ impl Request {
     /// clear pedestrian or bicycling paths, so these directions will return
     /// `warnings` in the returned result which you must display to the user.
     ///
-    /// Example:
-    /// ---------
+    /// ## Example:
     ///
     /// * Set travel mode to transit:
     /// ```

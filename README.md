@@ -70,8 +70,8 @@ use google_maps::*;
 
 let location = GeocodingReverseRequest::new(
     YOUR_GOOGLE_API_KEY_HERE,
-    // Denver, Colorado, the "Mile High City"
-    LatLng { lat: 39.7391536, lng: -104.9847034 }
+    // 10 Downing St, Westminster, London
+    LatLng { lat: 51.5033635, lng: -0.1276248 }
 )
 .with_result_type(PlaceType::Locality)
 .execute().unwrap();

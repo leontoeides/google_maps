@@ -7,8 +7,12 @@ impl Request {
 
     /// Specify pass throughs or stopovers at intermediate locations.
     ///
-    /// Description
-    /// -----------
+    /// ## Arguments
+    ///
+    /// * `waypoints` · Specifies intermediate locations to visit before
+    /// arriving at the final destination.
+    ///
+    /// ## Description
     ///
     /// Specifies an array of intermediate locations to include along the route
     /// between the origin and destination points as pass through or stopover
@@ -80,8 +84,7 @@ impl Request {
     /// misinterpretations using place IDs. See
     /// [troubleshooting the results of my route request](https://developers.google.com/maps/documentation/directions/intro).
     ///
-    /// Examples:
-    /// ---------
+    /// ## Examples:
     ///
     /// * After departing from the `origin` location; visit the Canadian Museum
     /// of Nature, Rideau Canal National Historic Site, intersection of Bank St

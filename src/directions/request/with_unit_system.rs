@@ -7,8 +7,14 @@ impl Request {
 
     /// Specifies the unit system to use when displaying results.
     ///
+    /// ## Arguments
+    ///
+    /// * `unit_system` · Specifies intermediate locations to visit before
+    /// arriving at the final destination.
+    ///
+    /// ## Description
+    ///
     /// [Unit Systems](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
-    /// ---------------------------------------------------------------------------------------------
     ///
     /// Directions results contain `text` within `distance` fields that may be
     /// displayed to the user to indicate the distance of a particular "step" of
@@ -31,8 +37,8 @@ impl Request {
     /// within `distance` fields. The `distance` fields also contain `values`
     /// which are always expressed in meters.
     ///
-    /// Example:
-    /// ---------
+    /// ## Example:
+    ///
     /// * Force unit system to Metric:
     /// ```
     /// .with_unit_system(UnitSystem::Metric)
