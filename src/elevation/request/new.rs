@@ -2,10 +2,10 @@ use crate::elevation::request::Request;
 
 impl Request {
 
-    /// Initializes the builder pattern for a Time Zone API query with the
+    /// Initializes the builder pattern for a Elevation API query with the
     /// required, non-optional parameters.
     ///
-    /// # Arguments:
+    /// ## Arguments:
     ///
     /// * `key` - Your application's Google Cloud API key.
 
@@ -20,8 +20,8 @@ impl Request {
             path: None,
             samples: None,
             // Internal use only:
-            validated: false,
             query: None,
+            validated: false,
         } // struct
     } // fn
 

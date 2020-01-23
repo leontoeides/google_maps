@@ -11,9 +11,9 @@ impl Request {
     ///
     /// # Arguments:
     ///
+    /// * `key` - Your application's Google Cloud API key.
     /// * `location` - Latitude & longitude of the desired time zone location.
     /// * `time` - Time is used to determine if Daylight Savings is applicable.
-    /// * `key` - Your application's Google Cloud API key.
     ///
     /// # Example:
     ///
@@ -37,13 +37,14 @@ impl Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:
+            key,
             location,
             time,
-            key,
             // Optional parameters:
-            validated: false,
             language: None,
+            // Internal use only:
             query: None,
+            validated: false,
         } // struct
     } // fn
 

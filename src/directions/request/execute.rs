@@ -6,11 +6,11 @@ use crate::directions::{
 
 impl Request {
 
-    /// The earliest versions of this crate required you to call
-    /// `.validate()?.build()?.get()?` at the end of your builder pattern. You
-    /// may still wish to do this if you would like to omit validation. However,
-    /// this `.execute()` method wraps all of these steps into a single method
-    /// call for convenience.
+    /// You are not required to call the `.validate()?.build()?.get()?` chain
+    /// at the end of your builder pattern. You may still wish to do so if you
+    /// would like to manually control the method calls. For example, if you
+    /// would like to omit validation. However, this `.execute()` method wraps
+    /// all of these steps into a single method call for convenience.
     ///
     /// ## Arguments:
     ///

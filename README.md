@@ -41,6 +41,8 @@ println!("{:#?}", directions);
 ```rust
 use google_maps::*;
 
+// Example request:
+
 let elevation = ElevationRequest::new(YOUR_GOOGLE_API_KEY_HERE)
 .positional_request(ElevationLocations::LatLngs(vec![
     // Denver, Colorado, the "Mile High City"
@@ -48,7 +50,13 @@ let elevation = ElevationRequest::new(YOUR_GOOGLE_API_KEY_HERE)
 ]))
 .execute().unwrap();
 
+// Dump entire response:
+
 println!("{:#?}", elevation);
+
+// Parsing example:
+
+println!("Elevation: {} meters", elevation.results.unwrap()[0].elevation);
 ```
 
 ## Example Geocoding API Request
@@ -62,7 +70,7 @@ let location = GeocodingRequest::new(YOUR_GOOGLE_API_KEY_HERE)
 .with_address("10 Downing Street London")
 .execute().unwrap();
 
-// Dump response:
+// Dump entire response:
 
 println!("{:#?}", location);
 
@@ -91,7 +99,7 @@ let location = GeocodingReverseRequest::new(
 .with_result_type(PlaceType::StreetAddress)
 .execute().unwrap();
 
-// Dump response:
+// Dump entire response:
 
 println!("{:#?}", location);
 
@@ -124,7 +132,7 @@ let time_zone = TimeZoneRequest::new(
     ),
 ).execute().unwrap();
 
-// Dump response:
+// Dump entire response:
 
 println!("{:#?}", time_zone);
 

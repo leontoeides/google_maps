@@ -25,12 +25,6 @@ pub struct Request {
     /// [get a key](https://developers.google.com/maps/documentation/timezone/get-api-key).
     key: String,
 
-    /// The language in which to return results. See the
-    /// [list of supported domain languages](https://developers.google.com/maps/faq#languagesupport).
-    /// Note that we often update supported languages so this list may not be
-    /// exhaustive. Defaults to `Language::English`.
-    language: Option<Language>,
-
     /// The location to look up.
     location: LatLng,
 
@@ -41,6 +35,15 @@ pub struct Request {
     /// `time`, the API does not take into account the possibility that the
     /// `location` was previously in a different time zone.
     time: PrimitiveDateTime,
+
+    // Optional parameters:
+    // --------------------
+
+    /// The language in which to return results. See the
+    /// [list of supported domain languages](https://developers.google.com/maps/faq#languagesupport).
+    /// Note that we often update supported languages so this list may not be
+    /// exhaustive. Defaults to `Language::English`.
+    language: Option<Language>,
 
     // Internal use only:
     // ------------------

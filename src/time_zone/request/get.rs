@@ -8,7 +8,7 @@ impl Request {
 
     /// Performs the HTTP get request and returns the response to the caller.
     ///
-    /// # Arguments:
+    /// ## Arguments:
     ///
     /// This method accepts no arguments.
 

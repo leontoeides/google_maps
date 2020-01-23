@@ -8,7 +8,7 @@ impl Request {
     /// Builds the query string for the Google Maps Elevation API based on the
     /// input provided by the client.
     ///
-    /// # Arguments:
+    /// ## Arguments:
     ///
     /// This method accepts no arguments.
 

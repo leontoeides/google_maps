@@ -5,7 +5,7 @@ impl Request {
     /// Builds the query string for the Google Maps Time Zone API based on the
     /// input provided by the client.
     ///
-    /// # Example:
+    /// ## Example:
     ///
     /// ```
     /// let time_zone = Request::new(
@@ -29,7 +29,7 @@ impl Request {
         // string:
 
         let mut query = format!(
-            "location={}&timestamp={}&key={}",
+            "key={}&location={}&timestamp={}",
             String::from(&self.location),
             self.time.timestamp(),
             self.key

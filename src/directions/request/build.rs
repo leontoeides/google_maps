@@ -23,7 +23,7 @@ impl Request {
 
         let mut query = format!(
             "key={}&origin={}&destination={}",
-            self.key
+            self.key,
             String::from(&self.origin), // URL-encoding performed by From trait
             String::from(&self.destination), // URL-encoding performed by From trait
         ); // format!

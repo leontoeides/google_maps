@@ -44,6 +44,8 @@
 //! ```rust
 //! use google_maps::*;
 //!
+//! // Example request:
+//!
 //! let elevation = ElevationRequest::new(YOUR_GOOGLE_API_KEY_HERE)
 //! .positional_request(ElevationLocations::LatLngs(vec![
 //!     // Denver, Colorado, the "Mile High City"
@@ -51,7 +53,13 @@
 //! ]))
 //! .execute().unwrap();
 //!
+//! // Dump entire response:
+//!
 //! println!("{:#?}", elevation);
+//!
+//! // Parsing example:
+//!
+//! println!("Elevation: {} meters", elevation.results.unwrap()[0].elevation);
 //! ```
 //!
 //! ## Example Geocoding API Request
@@ -65,7 +73,7 @@
 //! .with_address("10 Downing Street London")
 //! .execute().unwrap();
 //!
-//! // Dump response:
+//! // Dump entire response:
 //!
 //! println!("{:#?}", location);
 //!
@@ -94,7 +102,7 @@
 //! .with_result_type(PlaceType::StreetAddress)
 //! .execute().unwrap();
 //!
-//! // Dump response:
+//! // Dump entire response:
 //!
 //! println!("{:#?}", location);
 //!
@@ -127,7 +135,7 @@
 //!     ),
 //! ).execute().unwrap();
 //!
-//! // Dump response:
+//! // Dump entire response:
 //!
 //! println!("{:#?}", time_zone);
 //!
