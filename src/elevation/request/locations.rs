@@ -3,8 +3,7 @@ use serde::{Serialize, Deserialize};
 
 /// Defines the
 /// [location(s)](https://developers.google.com/maps/documentation/elevation/intro#Locations)
-/// on the earth from which to return elevation
-/// data.
+/// on the earth from which to return elevation data.
 ///
 /// This parameter takes either a single location as a latitude/longitude
 /// pair, multiple latitude/longitude pairs, or an encoded polyline.
@@ -37,18 +36,5 @@ impl std::default::Default for Locations {
     /// Returns a reasonable default variant for the `Locations` enum type.
     fn default() -> Self {
         Locations::LatLngs(vec![LatLng { lat: 0.0, lng: 0.0 }])
-    } // fn
-} // impl
-
-impl std::fmt::Display for Locations {
-    /// Formats a `Locations` enum into a string that is presentable to the end
-    /// user.
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match self {
-            Locations::LatLngs(latlngs) => write!(f, "{}",
-                latlngs.iter().map(|latlng| String::from(latlng) + ",").collect::<String>().trim_end_matches(',')
-            ),
-            Locations::Polyline(polyline) => write!(f, "{}", polyline),
-        } // match
     } // fn
 } // impl

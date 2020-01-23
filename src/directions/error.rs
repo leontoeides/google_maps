@@ -1,4 +1,4 @@
-//! Time Zone API error types and error messages.
+//! Directions API error types and error messages.
 
 use crate::directions::response::status::Status;
 

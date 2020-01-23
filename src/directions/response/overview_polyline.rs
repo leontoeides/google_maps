@@ -2,5 +2,5 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct OverviewPolyline {
-    points: String,
+    pub points: String,
 } // struct

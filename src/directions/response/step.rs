@@ -24,7 +24,8 @@ use serde::{Serialize, Deserialize};
 /// step.
 ///
 /// When using the Directions API to search for transit directions, the steps
-/// array will include additional [transit details](https://developers.google.com/maps/documentation/directions/intro#TransitDetails)
+/// array will include additional [transit
+/// details](https://developers.google.com/maps/documentation/directions/intro#TransitDetails)
 /// in the form of a `transit_details` array. If the directions include multiple
 /// modes of transportation, detailed directions will be provided for walking or
 /// driving steps in an inner `steps` array. For example, a walking step will
@@ -38,33 +39,33 @@ pub struct Step {
 
     /// The distance covered by this step. This property may be undefined as the
     /// distance may be unknown.
-    distance: Distance,
+    pub distance: Distance,
 
     /// The typical time required to perform this step in seconds and in text
     /// form. This property may be undefined as the duration may be unknown.
-    duration: Duration,
+    pub duration: Duration,
 
     /// The ending location of this step.
-    end_location: LatLng,
+    pub end_location: LatLng,
 
     /// Instructions for this step.
-    html_instructions: String,
+    pub html_instructions: String,
 
     /// Contains the action to take for the current step (turn left, merge,
     /// straight, etc.). This field is used to determine which icon to display.
-    maneuver: Option<ManeuverType>,
+    pub maneuver: Option<ManeuverType>,
 
     /// Contains a single `points` object that holds an [encoded polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm) representation of the step. This polyline is an approximate (smoothed) path of the step. (Corresponds to `path` in the [Directions.Step interface](https://developers.google.com/maps/documentation/javascript/reference/directions#DirectionsStep).)
-    polyline: Polyline,
+    pub polyline: Polyline,
 
     /// The starting location of this step.
-    start_location: LatLng,
+    pub start_location: LatLng,
 
     /// Transit-specific details about this step. This property will be
     /// undefined unless the travel mode of this step is TravelMode::Transit.
-    transit_details: Option<TransitDetails>,
+    pub transit_details: Option<TransitDetails>,
 
     /// The mode of travel used in this step.
-    travel_mode: TravelMode,
+    pub travel_mode: TravelMode,
 
 } // struct

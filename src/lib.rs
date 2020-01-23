@@ -2,20 +2,20 @@
 //!
 //! An unofficial Google Maps Platform client for the Rust programming language.
 //! This client currently implements the Directions API, Elevation API,
-//! Geocoding ApI, and Time Zone API.
+//! Geocoding API, and Time Zone API.
 //!
 //! # Welcome
 //!
-//! As of version 0.1.0 this crate is expected to work well and have the more
-//! important Google Maps features implemented. It should work well because
-//! Reqwest and Serde do most of the heavy lifting! While it's an early release,
-//! for most people this crate should work fine as is.
+//! This crate is expected to work well and have the more important Google Maps
+//! features implemented. It should work well because Reqwest and Serde do most
+//! of the heavy lifting! While it's an early release, this crate should work
+//! fine as is for most people.
 //!
-//! I created this crate because I needed several Google Maps Platform features
-//! or a project that I'm working on. So, I've decided to spin my library off
-//! into a public crate. This is a very small token of gratitude and an attempt
-//! to give back to the Rust community. I hope it saves someone out there some
-//! work.
+//! I created this library because I needed several Google Maps Platform
+//! features for a project that I'm working on. So, I've decided to spin my
+//! library off into a public crate. This is a very small token of gratitude and
+//! an attempt to give back to the Rust community. I hope it saves someone out
+//! there some work.
 //!
 //! # Example Directions API Request
 //!
@@ -39,7 +39,7 @@
 //! println!("{:#?}", directions);
 //! ```
 //!
-//! # Example Elevation API Request
+//! # Example Elevation API Positional Request
 //!
 //! ```
 //! use google_maps::*;
@@ -59,7 +59,7 @@
 //! ```
 //! use google_maps::*;
 //!
-//! let location = GeocodingForwardRequest::new(YOUR_GOOGLE_API_KEY_HERE)
+//! let location = GeocodingRequest::new(YOUR_GOOGLE_API_KEY_HERE)
 //! .with_address("10 Downing Street London")
 //! .execute().unwrap();
 //!
@@ -98,6 +98,8 @@
 //!         Time::try_from_hms(18, 00, 0).unwrap(),
 //!     ),
 //! ).execute().unwrap();
+//!
+//! println!("{:#?}", time_zone);
 //! ```
 //!
 //! To do:
@@ -162,11 +164,12 @@ pub use crate::geocoding::{
     forward::{
         component::Component as GeocodingComponent,
         ForwardRequest as GeocodingForwardRequest,
+        ForwardRequest as GeocodingRequest,
     }, // forward
     location_type::LocationType as LocationType,
     response::{
         Response as Geocoding,
-        Status as GeocodingStatus,
+        status::Status as GeocodingStatus,
     }, // response
     reverse::ReverseRequest as GeocodingReverseRequest,
 }; // use
@@ -176,6 +179,6 @@ pub use crate::time_zone::{
     request::Request as TimeZoneRequest,
     response::{
         Response as TimeZone,
-        Status as TimeZoneStatus,
+        status::Status as TimeZoneStatus,
     }, // reponse
 }; // use

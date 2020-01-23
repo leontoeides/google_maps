@@ -125,7 +125,7 @@ impl std::fmt::Display for VehicleType {
             VehicleType::CommuterTrain => write!(f, "Commuter Train"),
             VehicleType::Ferry => write!(f, "Ferry"),
             VehicleType::Funicular => write!(f, "Funicular"),
-            VehicleType::GondolaLift => write!(f, "GondolaLift"),
+            VehicleType::GondolaLift => write!(f, "Gondola Lift"),
             VehicleType::HeavyRail => write!(f, "Heavy Rail"),
             VehicleType::HighSpeedTrain => write!(f, "High Speed Train"),
             VehicleType::IntercityBus => write!(f, "Intercity Bus"),

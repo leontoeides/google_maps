@@ -1,6 +1,6 @@
 //! Time Zone API error types and error messages.
 
-use crate::time_zone::response::Status;
+use crate::time_zone::response::status::Status;
 
 /// Errors that may be produced by the Google Maps Time Zone API client.
 #[derive(Debug)]
@@ -8,6 +8,10 @@ pub enum Error {
     /// Google Maps Time Zone API server generated an error. See the `Status`
     /// enum for more information.
     GoogleMapsTimeZoneServer(Status, Option<String>),
+    /// API client library attempted to parse a string that contained an invalid
+    /// status code. See `google_maps\src\time_zone\response\status.rs` for more
+    /// information.
+    InvalidStatusCode(String),
     /// The query string must be built before the request may be sent to the
     /// Google Maps Time Zone API server.
     QueryNotBuilt,
@@ -52,11 +56,16 @@ impl std::fmt::Display for Error {
                         This may occur if the geocoder was passed a non-existent address."),
                 } // match
             }, // match
-            Error::Reqwest(error) => write!(f, "Google Maps Time Zone API client in the Reqwest library: {}", error),
-            Error::SerdeJson(error) => write!(f, "Google Maps Time Zone API client in the Serde JSON library: {}", error),
+            Error::InvalidStatusCode(status_code) => write!(f, "Google Maps Time Zone API client: \
+                `{}` is not a valid status code. \
+                Valid codes are `INVALID_REQUEST`, `OK`, `OVER_DAILY_LIMIT`, \
+                `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, `UNKNOWN_ERROR`, and \
+                `ZERO_RESULTS`.", status_code),
             Error::QueryNotBuilt => write!(f, "Google Maps Time Zone API client library: \
                 The query string must be built before the request may be sent to the Google Cloud Maps Platform. \
                 Ensure the build() method is called before run()."),
+            Error::Reqwest(error) => write!(f, "Google Maps Time Zone API client in the Reqwest library: {}", error),
+            Error::SerdeJson(error) => write!(f, "Google Maps Time Zone API client in the Serde JSON library: {}", error),
         } // match
     } // fn
 } // impl
@@ -69,9 +78,10 @@ impl std::error::Error for Error {
     fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
         match self {
             Error::GoogleMapsTimeZoneServer(_error, _message) => None,
+            Error::InvalidStatusCode(_status_code) => None,
+            Error::QueryNotBuilt => None,
             Error::Reqwest(error) => Some(error),
             Error::SerdeJson(error) => Some(error),
-            Error::QueryNotBuilt => None,
         } // match
     } // fn
 } // impl

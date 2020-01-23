@@ -1,3 +1,6 @@
+//! Contains the `TravelMode` enum and its associated traits. `TravelMode`
+//! specifies the mode of transportation.
+
 use crate::directions::error::Error;
 use serde::{Serialize, Deserialize};
 
