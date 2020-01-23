@@ -6,7 +6,7 @@ use serde::{Serialize, Deserialize};
 
 /// Stores additional data about the specified location.
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum LocationType {
 
     /// Indicates that the returned result is approximate.

@@ -2,7 +2,7 @@ use serde::{Serialize, Deserialize};
 
 /// Provides information about the operator of the line.
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct TransitAgency {
 
     /// Contains the name of the transit agency.

@@ -13,7 +13,7 @@ use serde::{Serialize, Deserialize};
 /// Note that though this object is "JSON-like," it is not strictly JSON, as it
 /// directly and indirectly includes `LatLng` objects.
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Route {
 
     /// The bounds for this route.
