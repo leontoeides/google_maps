@@ -7,8 +7,13 @@ impl Request {
 
     /// Specify features that routes should avoid.
     ///
-    /// Description
-    /// -----------
+    /// ## Arguments
+    ///
+    /// * `restrictions` · A Vec containing a list of features that should be
+    /// avoided when possible when calculating the route, such as _ferries_,
+    /// _highways_, _indoor_ steps, and/or _tolls_.
+    ///
+    /// ## Description
     ///
     /// Indicates that the calculated route(s) should avoid the indicated
     /// features. This parameter supports the following arguments:
@@ -28,7 +33,6 @@ impl Request {
     /// receive indoor steps by default.
     ///
     /// [Route Restrictions](https://developers.google.com/maps/documentation/directions/intro#Restrictions)
-    /// ----------------------------------------------------------------------------------------------------
     ///
     /// Directions may be calculated that adhere to certain restrictions.
     /// Restrictions are indicated by use of the avoid parameter, and an
@@ -41,14 +45,15 @@ impl Request {
     /// include the restricted feature; it simply biases the result to more
     /// favorable routes.
     ///
-    /// Examples:
-    /// ---------
+    /// ## Examples:
+    ///
     /// * Avoid tolls and ferries:
     /// ```
     /// .with_restrictions(vec![
     ///     Avoid::Tolls,
     ///     Avoid::Ferries,
     /// ])
+    ///
     /// ```
     /// * Only avoid highways:
     /// ```

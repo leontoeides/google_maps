@@ -43,4 +43,3 @@ pub struct AddressComponent {
     pub types: Vec<PlaceType>,
 
 } // struct
-

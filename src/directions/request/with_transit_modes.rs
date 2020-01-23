@@ -7,8 +7,13 @@ impl Request {
 
     /// Specifies preferred modes of transit.
     ///
-    /// Description
-    /// -----------
+    /// ## Arguments
+    ///
+    /// * `transit_modes` · The preference of the transit rider; what mode of
+    /// transit should the directions service prioritize? _Bus_, _Subway_,
+    /// _Train_, _Tram_, or _Rail_?
+    ///
+    /// ## Description
     ///
     /// Specifies one or more preferred modes of transit. This parameter may
     /// only be specified for transit directions, and only if the request
@@ -31,13 +36,13 @@ impl Request {
     /// travel by train, tram, light rail, and subway. This is equivalent to
     /// `TransitMode::Train|Tram|Subway`.
     ///
-    /// Example:
-    /// ---------
+    /// ## Examples:
     ///
     /// * Set preferred transit mode to rail:
     /// ```
     /// .with_transit_mode((vec![TransitMode::Rail])
     /// ```
+    ///
     /// * Set preferred transit modes to bus and subway:
     /// ```
     /// .with_transit_modes(vec![

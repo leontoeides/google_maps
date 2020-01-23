@@ -5,10 +5,17 @@ use crate::{
 
 impl Request {
 
-    /// Specifies the region bias.
+    /// Specifies the region bias. There is a London in Canada and there is a
+    /// London in England. By biasing the region, you help the directions
+    /// service choose the London you intended.
+    ///
+    /// ## Arguments
+    ///
+    /// * `region` · A country to bias your geocoding results to.
+    ///
+    /// ## Description
     ///
     /// [Region Biasing](https://developers.google.com/maps/documentation/directions/intro#RegionBiasing)
-    /// -------------------------------------------------------------------------------------------------
     ///
     /// You can set the Directions service to return results from a specific
     /// region by using the `region` parameter. You may utilize any domain in
@@ -21,8 +28,7 @@ impl Request {
     /// results, because "Toledo" is interpreted as the city in Ohio and not
     /// Spain.
     ///
-    /// Example:
-    /// ---------
+    /// ## Example:
     ///
     /// * Bias region to Canada:
     /// ```
