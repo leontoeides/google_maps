@@ -14,7 +14,7 @@ for a project that I'm working on. So, I've decided to spin my library off into
 a public crate. This is a very small token of gratitude and an attempt to give
 back to the Rust community. I hope it saves someone out there some work.
 
-# Example Directions API Request
+## Example Directions API Request
 
 ```
 use google_maps::*;
@@ -36,7 +36,7 @@ let directions = DirectionsRequest::new(
 println!("{:#?}", directions);
 ```
 
-# Example Elevation API Positional Request
+## Example Elevation API Positional Request
 
 ```
 use google_maps::*;
@@ -51,7 +51,7 @@ let elevation = ElevationRequest::new(YOUR_GOOGLE_API_KEY_HERE)
 println!("{:#?}", elevation);
 ```
 
-# Example Forward Geocoding API Request
+## Example Geocoding API Request
 
 ```
 use google_maps::*;
@@ -63,7 +63,7 @@ let location = GeocodingRequest::new(YOUR_GOOGLE_API_KEY_HERE)
 println!("{:#?}", location);
 ```
 
-# Example Reverse Geocoding API Request
+## Example Reverse Geocoding API Request
 
 ```
 use google_maps::*;
@@ -79,7 +79,7 @@ let location = GeocodingReverseRequest::new(
 println!("{:#?}", location);
 ```
 
-# Example Time Zone API Request
+## Example Time Zone API Request
 
 ```
 use google_maps::*;

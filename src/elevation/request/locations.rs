@@ -10,13 +10,16 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Locations {
+
     /// A single or multiple
     /// [latitude/longitude](https://developers.google.com/maps/documentation/elevation/intro#Locations)
     /// pairs.
     LatLngs(Vec<LatLng>),
+
     /// An [encoded
     /// polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm).
     Polyline(String),
+
 } // enum
 
 impl std::convert::From<&Locations> for String {

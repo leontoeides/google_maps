@@ -11,6 +11,10 @@ pub enum Error {
     /// Google Maps Elevation API server generated an error. See the `Status`
     /// enum for more information.
     GoogleMapsElevationServer(Status, Option<String>),
+    /// API client library attempted to parse a string that contained an invalid
+    /// status code. See `google_maps\src\elevation\response\status.rs` for
+    /// more information.
+    InvalidStatusCode(String),
     /// The query string must be built before the request may be sent to the
     /// Google Maps Elevation API server.
     QueryNotBuilt,
@@ -27,7 +31,8 @@ impl std::fmt::Display for Error {
     /// to the user.
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Error::EitherPositionalOrSampledPath => write!(f, "Google Maps Elevation API client library: \
+            Error::EitherPositionalOrSampledPath => write!(f,
+                "Google Maps Elevation API client: \
                 A sampled_path_request() method cannot be used when postional_request() has been set. \
                 Try again with only a positional request or only a sampled path request."),
             Error::GoogleMapsElevationServer(status, error_message) => match error_message {
@@ -57,12 +62,20 @@ impl std::fmt::Display for Error {
                         Unknown error."),
                 } // match
             }, // match
-            Error::RequestNotValidated => write!(f, "Google Maps Elevation API client library: \
+            Error::InvalidStatusCode(status_code) => write!(f,
+                "Google Maps Directions API client: \
+                `{}` is not a valid status code. \
+                Valid codes are `INVALID_REQUEST`, `OK`, `OVER_DAILY_LIMIT`, \
+                `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, and `UNKNOWN_ERROR`."
+                , status_code),
+            Error::RequestNotValidated => write!(f,
+                "Google Maps Elevation API client: \
                 The request must be validated before a query string may be built. \
                 Ensure the validate() method is called before build()."),
             Error::Reqwest(error) => write!(f, "Google Maps Elevation API client in the Reqwest library: {}", error),
             Error::SerdeJson(error) => write!(f, "Google Maps Elevation API client in the Serde JSON library: {}", error),
-            Error::QueryNotBuilt => write!(f, "Google Maps Elevation API client library: \
+            Error::QueryNotBuilt => write!(f,
+                "Google Maps Elevation API client: \
                 The query string must be built before the request may be sent to the Google Cloud Maps Platform. \
                 Ensure the build() method is called before run()."),
         } // match
@@ -78,10 +91,11 @@ impl std::error::Error for Error {
         match self {
             Error::EitherPositionalOrSampledPath => None,
             Error::GoogleMapsElevationServer(_error, _message) => None,
+            Error::InvalidStatusCode(_status_code) => None,
+            Error::QueryNotBuilt => None,
             Error::RequestNotValidated => None,
             Error::Reqwest(error) => Some(error),
             Error::SerdeJson(error) => Some(error),
-            Error::QueryNotBuilt => None,
         } // match
     } // fn
 } // impl

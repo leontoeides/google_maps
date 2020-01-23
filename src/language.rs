@@ -1,3 +1,10 @@
+//! Contains the `Language` enum and its associated traits. `Language` is used
+//! to specify a desired language for a response. _This is not a comprehensive
+//! list of languages, it is a list of languages that Google Maps supports._
+
+use crate::error::Error;
+use serde::{Serialize, Deserialize};
+
 /// Specifies the language in which to return results.
 ///
 /// [Languages](https://developers.google.com/maps/faq#languagesupport)
@@ -46,7 +53,7 @@
 /// You can see what the map will look like in any of the languages listed above
 /// in this [sample application](https://developers.google.com/maps/documentation/javascript/demos/localization/).
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Language {
     Afrikaans,
     Albanian,
@@ -131,7 +138,7 @@ pub enum Language {
     Zulu,
 } // enum
 
-impl From<&Language> for String {
+impl std::convert::From<&Language> for String {
     /// Converts a `Language` enum to a `String` that contains a
     /// [language](https://developers.google.com/maps/faq#languagesupport) code.
     fn from(language: &Language) -> String {
@@ -221,93 +228,195 @@ impl From<&Language> for String {
     } // fn
 } // impl
 
-impl From<String> for Language {
+impl std::convert::TryFrom<String> for Language {
+
+    // Error definitions are contained in the `google_maps\src\error.rs` module.
+    type Error = crate::error::Error;
+
     /// Gets a `Language` enum from a `String` that contains a supported
     /// [language](https://developers.google.com/maps/faq#languagesupport) code.
-    fn from(language: String) -> Language {
+    fn try_from(language: String) -> Result<Language, Error> {
         match language.as_ref() {
-            "af" => Language::Afrikaans,
-            "sq" => Language::Albanian,
-            "am" => Language::Amharic,
-            "ar" => Language::Arabic,
-            "hy" => Language::Armenian,
-            "az" => Language::Azerbaijani,
-            "eu" => Language::Basque,
-            "be" => Language::Belarusian,
-            "bn" => Language::Bengali,
-            "bs" => Language::Bosnian,
-            "bg" => Language::Bulgarian,
-            "my" => Language::Burmese,
-            "ca" => Language::Catalan,
-            "zh" => Language::Chinese,
-            "zh-CN" => Language::ChineseSimplified,
-            "zh-HK" => Language::ChineseHongKong,
-            "zh-TW" => Language::ChineseTraditional,
-            "hr" => Language::Croatian,
-            "cs" => Language::Czech,
-            "da" => Language::Danish,
-            "nl" => Language::Dutch,
-            "en" => Language::English,
-            "en-AU" => Language::EnglishAustralian,
-            "en-GB" => Language::EnglishGreatBritain,
-            "et" => Language::Estonian,
-            "fa" => Language::Farsi,
-            "fi" => Language::Finnish,
-            "fil" => Language::Filipino,
-            "fr" => Language::French,
-            "fr-CA" => Language::FrenchCanada,
-            "gl" => Language::Galician,
-            "ka" => Language::Georgian,
-            "de" => Language::German,
-            "el" => Language::Greek,
-            "gu" => Language::Gujarati,
-            "iw" => Language::Hebrew,
-            "hi" => Language::Hindi,
-            "hu" => Language::Hungarian,
-            "is" => Language::Icelandic,
-            "id" => Language::Indonesian,
-            "it" => Language::Italian,
-            "ja" => Language::Japanese,
-            "kn" => Language::Kannada,
-            "kk" => Language::Kazakh,
-            "km" => Language::Khmer,
-            "ko" => Language::Korean,
-            "ky" => Language::Kyrgyz,
-            "lo" => Language::Lao,
-            "lv" => Language::Latvian,
-            "lt" => Language::Lithuanian,
-            "mk" => Language::Macedonian,
-            "ms" => Language::Malay,
-            "ml" => Language::Malayalam,
-            "mr" => Language::Marathi,
-            "mn" => Language::Mongolian,
-            "ne" => Language::Nepali,
-            "no" => Language::Norwegian,
-            "pl" => Language::Polish,
-            "pt" => Language::Portuguese,
-            "pr-BR" => Language::PortugueseBrazil,
-            "pt-PT" => Language::PortuguesePortugal,
-            "pa" => Language::Punjabi,
-            "ro" => Language::Romanian,
-            "ru" => Language::Russian,
-            "sr" => Language::Serbian,
-            "si" => Language::Sinhalese,
-            "sk" => Language::Slovak,
-            "sl" => Language::Slovenian,
-            "es" => Language::Spanish,
-            "es-419" => Language::SpanishLatinAmerica,
-            "sw" => Language::Swahili,
-            "sv" => Language::Swedish,
-            "ta" => Language::Tamil,
-            "te" => Language::Telugu,
-            "th" => Language::Thai,
-            "tr" => Language::Turkish,
-            "uk" => Language::Ukrainian,
-            "ur" => Language::Urdu,
-            "uz" => Language::Uzbek,
-            "vi" => Language::Vietnamese,
-            "zu" => Language::Zulu,
-            _ => panic!("'{}' is not a known language code. Tip: The language code must be in lowercase. For a list of supported languages see https://developers.google.com/maps/faq#languagesupport", language),
+            "af" => Ok(Language::Afrikaans),
+            "sq" => Ok(Language::Albanian),
+            "am" => Ok(Language::Amharic),
+            "ar" => Ok(Language::Arabic),
+            "hy" => Ok(Language::Armenian),
+            "az" => Ok(Language::Azerbaijani),
+            "eu" => Ok(Language::Basque),
+            "be" => Ok(Language::Belarusian),
+            "bn" => Ok(Language::Bengali),
+            "bs" => Ok(Language::Bosnian),
+            "bg" => Ok(Language::Bulgarian),
+            "my" => Ok(Language::Burmese),
+            "ca" => Ok(Language::Catalan),
+            "zh" => Ok(Language::Chinese),
+            "zh-CN" => Ok(Language::ChineseSimplified),
+            "zh-HK" => Ok(Language::ChineseHongKong),
+            "zh-TW" => Ok(Language::ChineseTraditional),
+            "hr" => Ok(Language::Croatian),
+            "cs" => Ok(Language::Czech),
+            "da" => Ok(Language::Danish),
+            "nl" => Ok(Language::Dutch),
+            "en" => Ok(Language::English),
+            "en-AU" => Ok(Language::EnglishAustralian),
+            "en-GB" => Ok(Language::EnglishGreatBritain),
+            "et" => Ok(Language::Estonian),
+            "fa" => Ok(Language::Farsi),
+            "fi" => Ok(Language::Finnish),
+            "fil" => Ok(Language::Filipino),
+            "fr" => Ok(Language::French),
+            "fr-CA" => Ok(Language::FrenchCanada),
+            "gl" => Ok(Language::Galician),
+            "ka" => Ok(Language::Georgian),
+            "de" => Ok(Language::German),
+            "el" => Ok(Language::Greek),
+            "gu" => Ok(Language::Gujarati),
+            "iw" => Ok(Language::Hebrew),
+            "hi" => Ok(Language::Hindi),
+            "hu" => Ok(Language::Hungarian),
+            "is" => Ok(Language::Icelandic),
+            "id" => Ok(Language::Indonesian),
+            "it" => Ok(Language::Italian),
+            "ja" => Ok(Language::Japanese),
+            "kn" => Ok(Language::Kannada),
+            "kk" => Ok(Language::Kazakh),
+            "km" => Ok(Language::Khmer),
+            "ko" => Ok(Language::Korean),
+            "ky" => Ok(Language::Kyrgyz),
+            "lo" => Ok(Language::Lao),
+            "lv" => Ok(Language::Latvian),
+            "lt" => Ok(Language::Lithuanian),
+            "mk" => Ok(Language::Macedonian),
+            "ms" => Ok(Language::Malay),
+            "ml" => Ok(Language::Malayalam),
+            "mr" => Ok(Language::Marathi),
+            "mn" => Ok(Language::Mongolian),
+            "ne" => Ok(Language::Nepali),
+            "no" => Ok(Language::Norwegian),
+            "pl" => Ok(Language::Polish),
+            "pt" => Ok(Language::Portuguese),
+            "pr-BR" => Ok(Language::PortugueseBrazil),
+            "pt-PT" => Ok(Language::PortuguesePortugal),
+            "pa" => Ok(Language::Punjabi),
+            "ro" => Ok(Language::Romanian),
+            "ru" => Ok(Language::Russian),
+            "sr" => Ok(Language::Serbian),
+            "si" => Ok(Language::Sinhalese),
+            "sk" => Ok(Language::Slovak),
+            "sl" => Ok(Language::Slovenian),
+            "es" => Ok(Language::Spanish),
+            "es-419" => Ok(Language::SpanishLatinAmerica),
+            "sw" => Ok(Language::Swahili),
+            "sv" => Ok(Language::Swedish),
+            "ta" => Ok(Language::Tamil),
+            "te" => Ok(Language::Telugu),
+            "th" => Ok(Language::Thai),
+            "tr" => Ok(Language::Turkish),
+            "uk" => Ok(Language::Ukrainian),
+            "ur" => Ok(Language::Urdu),
+            "uz" => Ok(Language::Uzbek),
+            "vi" => Ok(Language::Vietnamese),
+            "zu" => Ok(Language::Zulu),
+            _ => Err(Error::InvalidLanguageCode(language)),
+        } // match
+    } // fn
+
+} // impl
+
+impl std::default::Default for Language {
+    /// Returns a reasonable default variant for the `Language` enum type.
+    fn default() -> Self {
+        Language::English
+    } // fn
+} // impl
+
+impl std::fmt::Display for Language {
+    /// Formats a `Language` enum into a string that is presentable to the
+    /// end user.
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Language::Afrikaans => write!(f, "Afrikaans"),
+            Language::Albanian => write!(f, "Albanian"),
+            Language::Amharic => write!(f, "Amharic"),
+            Language::Arabic => write!(f, "Arabic"),
+            Language::Armenian => write!(f, "Armenian"),
+            Language::Azerbaijani => write!(f, "Azerbaijani"),
+            Language::Basque => write!(f, "Basque"),
+            Language::Belarusian => write!(f, "Belarusian"),
+            Language::Bengali => write!(f, "Bengali"),
+            Language::Bosnian => write!(f, "Bosnian"),
+            Language::Bulgarian => write!(f, "Bulgarian"),
+            Language::Burmese => write!(f, "Burmese"),
+            Language::Catalan => write!(f, "Catalan"),
+            Language::Chinese => write!(f, "Chinese"),
+            Language::ChineseSimplified => write!(f, "Chinese (Simplified)"),
+            Language::ChineseHongKong => write!(f, "Chinese (Hong Kong)"),
+            Language::ChineseTraditional => write!(f, "Chinese (Traditional)"),
+            Language::Croatian => write!(f, "Croatian"),
+            Language::Czech => write!(f, "Czech"),
+            Language::Danish => write!(f, "Danish"),
+            Language::Dutch => write!(f, "Dutch"),
+            Language::English => write!(f, "English"),
+            Language::EnglishAustralian => write!(f, "English (Australian)"),
+            Language::EnglishGreatBritain => write!(f, "English (Great Britain)"),
+            Language::Estonian => write!(f, "Estonian"),
+            Language::Farsi => write!(f, "Farsi"),
+            Language::Finnish => write!(f, "Finnish"),
+            Language::Filipino => write!(f, "Filipino"),
+            Language::French => write!(f, "French"),
+            Language::FrenchCanada => write!(f, "French (Canada)"),
+            Language::Galician => write!(f, "Galician"),
+            Language::Georgian => write!(f, "Georgian"),
+            Language::German => write!(f, "German"),
+            Language::Greek => write!(f, "Greek"),
+            Language::Gujarati => write!(f, "Gujarati"),
+            Language::Hebrew => write!(f, "Hebrew"),
+            Language::Hindi => write!(f, "Hindi"),
+            Language::Hungarian => write!(f, "Hungarian"),
+            Language::Icelandic => write!(f, "Icelandic"),
+            Language::Indonesian => write!(f, "Indonesian"),
+            Language::Italian => write!(f, "Italian"),
+            Language::Japanese => write!(f, "Japanese"),
+            Language::Kannada => write!(f, "Kannada"),
+            Language::Kazakh => write!(f, "Kazakh"),
+            Language::Khmer => write!(f, "Khmer"),
+            Language::Korean => write!(f, "Korean"),
+            Language::Kyrgyz => write!(f, "Kyrgyz"),
+            Language::Lao => write!(f, "Lao"),
+            Language::Latvian => write!(f, "Latvian"),
+            Language::Lithuanian => write!(f, "Lithuanian"),
+            Language::Macedonian => write!(f, "Macedonian"),
+            Language::Malay => write!(f, "Malay"),
+            Language::Malayalam => write!(f, "Malayalam"),
+            Language::Marathi => write!(f, "Marathi"),
+            Language::Mongolian => write!(f, "Mongolian"),
+            Language::Nepali => write!(f, "Nepali"),
+            Language::Norwegian => write!(f, "Norwegian"),
+            Language::Polish => write!(f, "Polish"),
+            Language::Portuguese => write!(f, "Portuguese"),
+            Language::PortugueseBrazil => write!(f, "Portuguese (Brazil)"),
+            Language::PortuguesePortugal => write!(f, "Portuguese (Portugal)"),
+            Language::Punjabi => write!(f, "Punjabi"),
+            Language::Romanian => write!(f, "Romanian"),
+            Language::Russian => write!(f, "Russian"),
+            Language::Serbian => write!(f, "Serbian"),
+            Language::Sinhalese => write!(f, "Sinhalese"),
+            Language::Slovak => write!(f, "Slovak"),
+            Language::Slovenian => write!(f, "Slovenian"),
+            Language::Spanish => write!(f, "Spanish"),
+            Language::SpanishLatinAmerica => write!(f, "Spanish (Latin America)"),
+            Language::Swahili => write!(f, "Swahili"),
+            Language::Swedish => write!(f, "Swedish"),
+            Language::Tamil => write!(f, "Tamil"),
+            Language::Telugu => write!(f, "Telugu"),
+            Language::Thai => write!(f, "Thai"),
+            Language::Turkish => write!(f, "Turkish"),
+            Language::Ukrainian => write!(f, "Ukrainian"),
+            Language::Urdu => write!(f, "Urdu"),
+            Language::Uzbek => write!(f, "Uzbek"),
+            Language::Vietnamese => write!(f, "Vietnamese"),
+            Language::Zulu => write!(f, "Zulu"),
         } // match
     } // fn
 } // impl
