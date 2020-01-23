@@ -20,17 +20,6 @@ pub struct Request {
     // Required parameters:
     // --------------------
 
-    /// The location to look up.
-    location: LatLng,
-
-    /// Specifies the desired time. The Time Zone API uses the `time` to
-    /// determine whether or not Daylight Savings should be applied, based on
-    /// the time zone of the `location`. Note that the API does not take
-    /// historical time zones into account. That is, if you specify a past
-    /// `time`, the API does not take into account the possibility that the
-    /// `location` was previously in a different time zone.
-    time: PrimitiveDateTime,
-
     /// Your application's API key. This key identifies your application for
     /// purposes of quota management. Learn how to
     /// [get a key](https://developers.google.com/maps/documentation/timezone/get-api-key).
@@ -42,13 +31,24 @@ pub struct Request {
     /// exhaustive. Defaults to `Language::English`.
     language: Option<Language>,
 
+    /// The location to look up.
+    location: LatLng,
+
+    /// Specifies the desired time. The Time Zone API uses the `time` to
+    /// determine whether or not Daylight Savings should be applied, based on
+    /// the time zone of the `location`. Note that the API does not take
+    /// historical time zones into account. That is, if you specify a past
+    /// `time`, the API does not take into account the possibility that the
+    /// `location` was previously in a different time zone.
+    time: PrimitiveDateTime,
+
     // Internal use only:
     // ------------------
 
-    /// Has the request been validated?
-    validated: bool,
-
     /// Query string that is to be submitted to the Google Cloud Maps Platform.
     query: Option<String>,
+
+    /// Has the request been validated?
+    validated: bool,
 
 } // struct

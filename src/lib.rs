@@ -17,7 +17,7 @@
 //! an attempt to give back to the Rust community. I hope it saves someone out
 //! there some work.
 //!
-//! # Example Directions API Request
+//! ## Example Directions API Request
 //!
 //! ```
 //! use google_maps::*;
@@ -39,7 +39,7 @@
 //! println!("{:#?}", directions);
 //! ```
 //!
-//! # Example Elevation API Positional Request
+//! ## Example Elevation API Positional Request
 //!
 //! ```
 //! use google_maps::*;
@@ -54,7 +54,7 @@
 //! println!("{:#?}", elevation);
 //! ```
 //!
-//! # Example Forward Geocoding API Request
+//! ## Example Geocoding API Request
 //!
 //! ```
 //! use google_maps::*;
@@ -66,7 +66,7 @@
 //! println!("{:#?}", location);
 //! ```
 //!
-//! # Example Reverse Geocoding API Request
+//! ## Example Reverse Geocoding API Request
 //!
 //! ```
 //! use google_maps::*;
@@ -82,7 +82,7 @@
 //! println!("{:#?}", location);
 //! ```
 //!
-//! # Example Time Zone API Request
+//! ## Example Time Zone API Request
 //!
 //! ```
 //! use google_maps::*;
@@ -110,6 +110,7 @@
 //! 5. Automatic Rate Limiting
 //! 6. Retry on Failure
 
+mod error;
 pub mod bounds;
 pub mod directions;
 pub mod elevation;

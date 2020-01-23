@@ -31,6 +31,7 @@ use crate::directions::{
 use serde::{Serialize, Deserialize};
 
 /// Directions responses contain the following root elements.
+
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Response {
 

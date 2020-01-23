@@ -12,6 +12,10 @@ pub enum Error {
     /// enum for more information.
     GoogleMapsGeocodingServer(Status, Option<String>),
     /// API client library attempted to parse a string that contained an invalid
+    /// country code. See `google_maps\src\geocoding\forward\country.rs` for
+    /// more information.
+    InvalidCountryCode(String),
+    /// API client library attempted to parse a string that contained an invalid
     /// location type code. See `google_maps\src\geocoding\location_type.rs` for
     /// more information.
     InvalidLocationTypeCode(String),
@@ -69,6 +73,13 @@ impl std::fmt::Display for Error {
                         This may occur if the geocoder was passed a non-existent address."),
                 } // match
             }, // match
+            Error::InvalidCountryCode(country_code) => write!(f,
+                "Google Maps Geocoding API client: \
+                `{}` is not a valid ISO 3166-1 Alpha-2 country code. \
+                Note that the country code must be in uppercase. \
+                For a list of country codes see \
+                https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes",
+                country_code),
             Error::InvalidLocationTypeCode(location_type_code) => write!(f,
                 "Google Maps Geocoding API client: \
                 `{}` is not a known location type code. \
@@ -103,6 +114,7 @@ impl std::error::Error for Error {
         match self {
             Error::AddressOrComponentsRequired => None,
             Error::GoogleMapsGeocodingServer(_error, _message) => None,
+            Error::InvalidCountryCode(_country_code) => None,
             Error::InvalidLocationTypeCode(_location_type_code) => None,
             Error::InvalidStatusCode(_status_code) => None,
             Error::QueryNotBuilt => None,

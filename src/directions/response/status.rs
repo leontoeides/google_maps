@@ -72,7 +72,7 @@ pub enum Status {
     #[serde(alias = "ZERO_RESULTS")]
     ZeroResults,
 
-} // struct
+} // enum
 
 impl std::convert::From<&Status> for String {
     /// Converts a `Status` enum to a `String` that contains a
