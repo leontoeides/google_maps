@@ -22,6 +22,10 @@ impl std::convert::From<&LatLng> for String {
     /// Converts a `LatLng` struct to a `String` that contains a
     /// latitude/longitude pair.
     fn from(latlng: &LatLng) -> String {
+        // The seventh decimal place is worth up to 11 mm: this is good for much
+        // surveying and is near the limit of what GPS-based techniques can
+        // achieve.
+        // https://gis.stackexchange.com/questions/8650/measuring-accuracy-of-latitude-and-longitude
         format!("{:.7},{:.7}", latlng.lat, latlng.lng)
     } // fn
 } // impl
