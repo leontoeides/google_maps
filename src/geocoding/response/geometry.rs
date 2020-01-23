@@ -30,4 +30,3 @@ pub struct Geometry {
     pub bounds: Option<Bounds>,
 
 } // struct
-

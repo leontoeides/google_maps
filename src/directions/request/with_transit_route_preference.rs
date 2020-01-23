@@ -7,8 +7,13 @@ impl Request {
 
     /// Specifies the preferences for transit routes.
     ///
-    /// Description
-    /// -----------
+    /// ## Arguments
+    ///
+    /// * `transit_route_preference` · The preference of the transit rider;
+    /// should the directions service try to reduce the amount of _walking_ to
+    /// reach the destination, or reduce the number of bus _transfers_?
+    ///
+    /// ## Description
     ///
     /// Specifies preferences for transit routes. Using this parameter, you can
     /// bias the options returned, rather than accepting the default best route
@@ -23,8 +28,7 @@ impl Request {
     /// * `TransitRoutePreference::FewerTransfers` indicates that the
     /// calculated route should prefer a limited number of transfers.
     ///
-    /// Example:
-    /// ---------
+    /// ## Example:
     ///
     /// * Set transit route preference to fewer transfers:
     /// ```

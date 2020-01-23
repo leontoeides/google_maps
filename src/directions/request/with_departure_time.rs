@@ -7,8 +7,12 @@ impl Request {
 
     /// Specifies the desired departure time.
     ///
-    /// Description:
-    /// ------------
+    /// ## Arguments:
+    ///
+    /// * `departure_time` · The soonest time the passenger intends to depart.
+    /// May be "now" or a specified time.
+    ///
+    /// ## Description
     ///
     /// Specifies the desired time of departure. Alternatively, you can specify
     /// a value of now, which sets the departure time to the current time
@@ -35,20 +39,22 @@ impl Request {
     /// distributed nature of the service. Results may also vary between
     /// nearly-equivalent routes at any time or frequency.
     ///
-    /// Examples:
-    /// ---------
+    /// ## Examples:
     ///
     /// * Departing now:
     /// ```
     /// .with_departure_time(DepartureTime::Now)
     /// ```
+    ///
     /// * Departing on Tuesday February 22, 2022 at 1:00:00 PM:
     /// ```
     /// .with_departure_time(DepartureTime::At(PrimitiveDateTime::new(
     ///     Date::try_from_ymd(2022, 2, 22).unwrap(),
     ///     Time::try_from_hms(13, 00, 0).unwrap(),
     /// )))
+    ///
     /// ```
+    ///
     /// * Departing on Tuesday January 1, 2030 at 12:30:00 PM:
     /// ```
     /// .with_departure_time(DepartureTime::At(PrimitiveDateTime::new(

@@ -7,8 +7,13 @@ impl Request {
 
     /// Specifies the assumptions to use when calculating time in traffic.
     ///
-    /// Description
-    /// -----------
+    /// ## Arguments
+    ///
+    /// * `traffic_model` · Which traffic model the directions service should
+    /// use when calculating the route and duration in traffic - _best guess_,
+    /// _optimistic_, or _pessimistic_?
+    ///
+    /// ## Description
     ///
     /// Specifies the assumptions to use when calculating time in traffic. This
     /// setting affects the value returned in the `duration_in_traffic` field in
@@ -40,8 +45,7 @@ impl Request {
     /// alternatively, _longer_ than `Pessimistic`, due to the way the
     /// `BestGuess` prediction model integrates live traffic information.
     ///
-    /// Example:
-    /// ---------
+    /// ## Example:
     ///
     /// * Set traffic model to pessimistic:
     /// ```

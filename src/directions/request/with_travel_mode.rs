@@ -10,7 +10,7 @@ impl Request {
     /// ## Arguments
     ///
     /// * `travel_mode` · The mode of transportation that directions should be
-    /// calculated for. For example, `Transit` directions or `Driving`
+    /// calculated for. For example, _transit_ directions or car _driving_
     /// directions.
     ///
     /// ## Description

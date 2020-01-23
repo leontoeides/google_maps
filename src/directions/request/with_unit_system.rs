@@ -9,8 +9,8 @@ impl Request {
     ///
     /// ## Arguments
     ///
-    /// * `unit_system` · Specifies intermediate locations to visit before
-    /// arriving at the final destination.
+    /// * `unit_system` · The measurement system the directions service should
+    /// supply in the response, _imperial_ or _metric_?
     ///
     /// ## Description
     ///
