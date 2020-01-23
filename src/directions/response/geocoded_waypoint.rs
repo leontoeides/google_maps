@@ -4,7 +4,7 @@ use crate::{
 }; // use
 use serde::{Serialize, Deserialize};
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct GeocodedWaypoint {
 
     /// Indicates the status code resulting from the geocoding operation.

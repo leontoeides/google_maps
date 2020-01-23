@@ -3,7 +3,7 @@ use serde::{Serialize, Deserialize};
 /// A representation of time as a Date object, a localized string, and a time
 /// zone.
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Time {
 
     /// A string representing the time's value. The time is displayed in the

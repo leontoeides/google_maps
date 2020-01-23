@@ -3,7 +3,7 @@ use serde::{Serialize, Deserialize};
 
 /// Contains information about the stop/station for this part of the trip.
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct TransitStop {
 
     /// The name of the transit station/stop. eg. "Union Square".

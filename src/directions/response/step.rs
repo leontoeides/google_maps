@@ -34,7 +34,7 @@ use serde::{Serialize, Deserialize};
 /// in the inner steps array, such as: "Head north-west", "Turn left onto
 /// Arelious Walker", and "Turn left onto Innes Ave".
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Step {
 
     /// The distance covered by this step. This property may be undefined as the

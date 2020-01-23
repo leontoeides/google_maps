@@ -4,7 +4,7 @@ use serde::{Serialize, Deserialize};
 /// this route. This property is only returned for transit requests and only for
 /// routes where fare information is available for all transit legs.
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Fare {
 
     /// An [ISO 4217 currency code](https://en.wikipedia.org/wiki/ISO_4217)

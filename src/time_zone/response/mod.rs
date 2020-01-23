@@ -19,7 +19,7 @@ use serde::{Serialize, Deserialize};
 /// The local time of a given location is the sum of the timestamp parameter,
 /// and the dstOffset and rawOffset fields from the result.
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Response {
 
     /// The offset for daylight-savings time in seconds. This will be zero if

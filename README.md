@@ -56,11 +56,24 @@ println!("{:#?}", elevation);
 ```
 use google_maps::*;
 
+// Example request:
+
 let location = GeocodingRequest::new(YOUR_GOOGLE_API_KEY_HERE)
 .with_address("10 Downing Street London")
 .execute().unwrap();
 
+// Dump response:
+
 println!("{:#?}", location);
+
+// Parsing example:
+
+for result in &location.results {
+    println!(
+        "Latitude: {:.7}, Longitude: {:.7}",
+        result.geometry.location.lat, result.geometry.location.lng
+    );
+}
 ```
 
 ## Example Reverse Geocoding API Request
@@ -68,15 +81,28 @@ println!("{:#?}", location);
 ```
 use google_maps::*;
 
+// Example request:
+
 let location = GeocodingReverseRequest::new(
     YOUR_GOOGLE_API_KEY_HERE,
     // 10 Downing St, Westminster, London
     LatLng { lat: 51.5033635, lng: -0.1276248 }
 )
-.with_result_type(PlaceType::Locality)
+.with_result_type(PlaceType::StreetAddress)
 .execute().unwrap();
 
+// Dump response:
+
 println!("{:#?}", location);
+
+// Parsing example:
+
+for result in &location.results {
+    for address_component in &result.address_components {
+        print!("{} ", address_component.short_name);
+    }
+    println!("");
+}
 ```
 
 ## Example Time Zone API Request

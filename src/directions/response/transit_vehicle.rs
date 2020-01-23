@@ -3,7 +3,7 @@ use serde::{Serialize, Deserialize};
 
 /// Contains the type of vehicle used on this line.
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct TransitVehicle {
 
     /// Contains the URL for an icon associated with this vehicle type.

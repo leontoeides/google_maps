@@ -2,7 +2,7 @@ use serde::{Serialize, Deserialize};
 
 /// A representation of duration as a numeric value and a display string.
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Duration {
 
     /// A string representation of the duration value.

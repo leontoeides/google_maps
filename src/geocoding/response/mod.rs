@@ -15,7 +15,7 @@ use serde::{Serialize, Deserialize};
 /// The response from the Google Maps Geolocation API will be stored in this
 /// structure.
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Response {
 
     /// When the geocoder returns a status code other than `OK`, there may be an
@@ -42,7 +42,7 @@ pub struct Response {
 /// When the geocoder returns results, it places them within a results array.
 /// Even if the geocoder returns no results (such as if the address doesn't
 /// exist) it still returns an empty results array.
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Geocoding {
 
     /// Array containing the separate components applicable to this address.
@@ -132,7 +132,7 @@ pub struct Geocoding {
 /// appropriate values via expressions. See the guide to [parsing a
 /// response](https://developers.google.com/maps/documentation/geocoding/web-service-best-practices#Parsing).
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct AddressComponent {
 
     /// The full text description or name of the address component as returned
@@ -152,7 +152,7 @@ pub struct AddressComponent {
 
 } // struct
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Geometry {
 
     /// Contains the geocoded latitude, longitude value. For normal address
@@ -190,7 +190,7 @@ pub struct Geometry {
 /// the result is in a remote location (for example, an ocean or desert) only
 /// the global code may be returned.
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct PlusCode {
 
     /// A 4 character area code and 6 character or longer local code
