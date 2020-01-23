@@ -8,6 +8,10 @@ impl ForwardRequest {
 
     /// Builds the query string for the Google Maps Geocoding API based on the
     /// input provided by the client.
+    ///
+    /// ## Arguments:
+    ///
+    /// This method accepts no arguments.
 
     pub fn build(&mut self) -> Result<&mut ForwardRequest, Error> {
 

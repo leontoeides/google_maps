@@ -5,9 +5,9 @@ impl ForwardRequest {
     /// Initializes the builder pattern for a Geolocation API query with the
     /// required, non-optional parameters.
     ///
-    /// # Arguments:
+    /// ## Arguments:
     ///
-    /// * `key` - Your application's Google Cloud API key.
+    /// * `key` · Your application's Google Cloud API key.
 
     pub fn new(key: String) -> ForwardRequest {
         // Instantiate struct and return it to caller:

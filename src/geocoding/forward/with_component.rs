@@ -8,11 +8,11 @@ impl ForwardRequest {
     /// Restricts the results from the geocoder to the specified component
     /// type(s).
     ///
-    /// # Arguments:
+    /// ## Arguments:
     ///
     /// * `component` - A single component filter of `Component` type.
     ///
-    /// # Description:
+    /// ## Description:
     ///
     /// [Component
     /// Filtering](https://developers.google.com/maps/documentation/geocoding/intro#ComponentFiltering)
@@ -50,7 +50,7 @@ impl ForwardRequest {
     /// parameter or in a `components` filter, but not both. Specifying the same
     /// values in both may result in `ZERO_RESULTS`.
     ///
-    /// # Examples:
+    /// ## Examples:
     ///
     /// * A single component filter. This example restricts results to Toronto:
     /// ```

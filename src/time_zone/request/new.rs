@@ -9,13 +9,13 @@ impl Request {
     /// Initializes the builder pattern for a Time Zone API query with the
     /// required, non-optional parameters.
     ///
-    /// # Arguments:
+    /// ## Arguments:
     ///
     /// * `key` - Your application's Google Cloud API key.
     /// * `location` - Latitude & longitude of the desired time zone location.
     /// * `time` - Time is used to determine if Daylight Savings is applicable.
     ///
-    /// # Example:
+    /// ## Example:
     ///
     /// ```
     /// let time_zone = Request::new(

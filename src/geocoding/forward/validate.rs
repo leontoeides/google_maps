@@ -7,10 +7,14 @@ impl ForwardRequest {
 
     /// Ensures the built query is valid. This function checks the combination
     /// of parameters to ensure that they make sense together and that Google
-    /// Maps Geocoding API will accept them - i.e. it will not allow both a
-    /// Positional Request and a Sampled Path Request in the same query. This
-    /// function does not check parameter values for validity - i.e. it will not
-    /// ensure Polylines or Latitudes/Longitudes are valid and well-formed.
+    /// Maps Geocoding API will accept them - i.e. require an address or
+    /// components to be specified. This function does not check parameter
+    /// values for validity - i.e. it will not Latitudes/Longitudes are valid
+    /// and well-formed.
+    ///
+    /// ## Arguments:
+    ///
+    /// This method accepts no arguments.
 
     pub fn validate(&mut self) -> Result<&mut ForwardRequest, Error> {
 
