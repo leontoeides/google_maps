@@ -1,5 +1,5 @@
 //! Contains the `Bounds` struct and its associated traits. `Bounds` is used
-//! to specify a selection box over a geographic area using two
+//! to specify a selection or bounding box over a geographic area using two
 //! latitude/longitude pairs.
 
 use crate::latlng::LatLng;
@@ -12,7 +12,9 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Bounds {
+    /// South-west or bottom-left corner of the bounding box.
     pub southwest: LatLng,
+    /// North-east or top-right corner of the bounding box.
     pub northeast: LatLng,
 } // struct
 
