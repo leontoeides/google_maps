@@ -1,3 +1,7 @@
+//! Contains the `DepartureTime` enum and its associated traits. `DepartureTime`
+//! is used to specify when the user would like to depart for traffic modelling
+//! and transit directions.
+
 use time::PrimitiveDateTime;
 
 /// Specifies the desired [time of
@@ -29,11 +33,14 @@ use time::PrimitiveDateTime;
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum DepartureTime {
+
     /// You can specify a value of now, which sets the departure time to the
     /// current time (correct to the nearest second).
     Now,
+
     /// Specifies the desired time of departure.
     At(PrimitiveDateTime),
+
 } // enum
 
 impl From<&DepartureTime> for String {

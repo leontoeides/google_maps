@@ -13,12 +13,10 @@ pub enum Waypoint {
     /// converts it to a latitude/longitude coordinate to calculate directions.
     /// This coordinate may be different from that returned by the Geocoding
     /// API, for example a building entrance rather than its center.
-
     Address(String),
 
     /// If you pass coordinates, they are used unchanged to calculate
     /// directions.
-
     LatLng {
         /// Latitude
         lat: f32,
@@ -34,7 +32,6 @@ pub enum Waypoint {
     /// Directions](https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-directions).
     /// For more about place IDs, see the [Place ID
     /// overview](https://developers.google.com/places/place-id).
-
     PlaceId(String),
 
     /// Alternatively, you can supply an encoded set of points using the
@@ -43,17 +40,14 @@ pub enum Waypoint {
     /// You will find an encoded set is useful for a large number of waypoints,
     /// because the URL is significantly shorter. All web services have a URL
     /// limit of 8192 characters.
-
     Polyline(String),
 
 } // enum
 
 impl std::convert::From<&Waypoint> for String {
-
     /// Converts a `Waypoint` enum to a `String` that contains a
     /// [waypoint](https://developers.google.com/maps/documentation/directions/intro#Waypoints)
     /// value.
-
     fn from(waypoint: &Waypoint) -> String {
         match waypoint {
             Waypoint::Address(address) => address.clone(),
@@ -62,5 +56,4 @@ impl std::convert::From<&Waypoint> for String {
             Waypoint::Polyline(polyline) => format!("enc:{}:", polyline),
         } // match
     } // fn
-
 } // impl

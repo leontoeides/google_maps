@@ -1,3 +1,7 @@
+//! Contains the `TransitMode` enum and its associated traits. `TransitMode` is
+//! used to prioritize certain transit modes such as _bus_ or _subway_ when
+//! generating transit directions.
+
 use crate::directions::error::Error;
 use serde::{Serialize, Deserialize};
 
@@ -10,26 +14,32 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum TransitMode {
+
     /// Indicates that the calculated route should prefer travel by bus.
     #[serde(alias = "bus")]
     Bus,
+
     /// Indicates that the calculated route should prefer travel by train, tram,
     /// light rail, and subway. This is equivalent to
     /// `transit_mode=train|tram|subway`.
     #[serde(alias = "rail")]
     Rail,
+
     /// Indicates that the calculated route should prefer travel by subway.
     #[serde(alias = "subway")]
     Subway,
+
     /// Indicates that the calculated route should prefer travel by train.
     #[serde(alias = "train")]
     Train,
+
     /// Indicates that the calculated route should prefer travel by tram and
     /// light rail.
     /// Indicates that the calculated route should prefer travel by tram and
     /// light rail.
     #[serde(alias = "tram")]
     Tram,
+
 } // enum
 
 impl std::convert::From<&TransitMode> for String {
@@ -48,9 +58,11 @@ impl std::convert::From<&TransitMode> for String {
 } // impl
 
 impl std::convert::TryFrom<String> for TransitMode {
+
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
     type Error = crate::directions::error::Error;
+
     /// Gets a `TransitMode` enum from a `String` that contains a valid [transit
     /// mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitMode)
     /// code.
@@ -64,6 +76,7 @@ impl std::convert::TryFrom<String> for TransitMode {
             _ => Err(Error::InvalidTransitModeCode(transit_mode)),
         } // match
     } // fn
+
 } // impl
 
 impl std::default::Default for TransitMode {

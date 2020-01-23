@@ -15,12 +15,10 @@ pub enum Location {
     /// converts it to a latitude/longitude coordinate to calculate directions.
     /// This coordinate may be different from that returned by the Geocoding
     /// API, for example a building entrance rather than its center.
-
     Address(String),
 
     /// If you pass coordinates, they are used unchanged to calculate
     /// directions.
-
     LatLng {
         /// Latitude
         lat: f32,
@@ -34,17 +32,14 @@ pub enum Location {
     /// Autocomplete). For an example using place IDs from Place Autocomplete,
     /// see [Place Autocomplete and Directions](https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-directions).
     /// For more about place IDs, see the [Place ID overview](https://developers.google.com/places/place-id).
-
     PlaceId(String),
 
 } // enum
 
 impl std::convert::From<&Location> for String {
-
     /// Converts a `Location` enum to a `String` that contains a URL-encoded
     /// [location](https://developers.google.com/maps/documentation/directions/intro#required-parameters)
     /// value.
-
     fn from(location: &Location) -> String {
         match location {
             Location::Address(address) => utf8_percent_encode(&address, NON_ALPHANUMERIC).to_string(),
@@ -52,5 +47,4 @@ impl std::convert::From<&Location> for String {
             Location::PlaceId(place_id) => utf8_percent_encode(&format!("place_id:{}", place_id), NON_ALPHANUMERIC).to_string(),
         } // match
     } // fn
-
 } // impl

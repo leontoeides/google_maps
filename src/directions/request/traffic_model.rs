@@ -1,3 +1,7 @@
+//! Contains the `TrafficModel` enum and its associated traits. `TrafficModel`
+//! is used to select a traffic model that is as accurate as possible,
+//! optimistic, or pessimistic.
+
 use crate::directions::error::Error;
 use serde::{Serialize, Deserialize};
 
@@ -20,22 +24,26 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum TrafficModel {
+
     /// Indicates that the returned `duration_in_traffic` should be the best
     /// estimate of travel time given what is known about both historical
     /// traffic conditions and live traffic. Live traffic becomes more important
     /// the closer the `departure_time` is to now.
     #[serde(alias = "best_guess")]
     BestGuess,
+
     /// Indicates that the returned duration_in_traffic should be shorter than
     /// the actual travel time on most days, though occasional days with
     /// particularly good traffic conditions may be faster than this value.
     #[serde(alias = "optimistic")]
     Optimistic,
+
     /// Indicates that the returned `duration_in_traffic` should be longer than
     /// the actual travel time on most days, though occasional days with
     /// particularly bad traffic conditions may exceed this value.
     #[serde(alias = "pessimistic")]
     Pessimistic,
+
 } // enum
 
 impl std::convert::From<&TrafficModel> for String {
@@ -52,9 +60,11 @@ impl std::convert::From<&TrafficModel> for String {
 } // impl
 
 impl std::convert::TryFrom<String> for TrafficModel {
+
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
     type Error = crate::directions::error::Error;
+
     /// Gets a `TrafficModel` enum from a `String` that contains a valid
     /// [traffic
     /// model](https://developers.google.com/maps/documentation/javascript/reference/directions#TrafficModel)
@@ -67,6 +77,7 @@ impl std::convert::TryFrom<String> for TrafficModel {
             _ => Err(Error::InvalidTrafficModelCode(traffic_model)),
         } // match
     } // fn
+
 } // impl
 
 impl std::default::Default for TrafficModel {

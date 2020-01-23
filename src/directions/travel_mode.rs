@@ -16,17 +16,21 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum TravelMode {
+
     /// (Default) Indicates standard driving directions using the road network.
     #[serde(alias = "DRIVING")]
     Driving,
+
     /// Requests walking directions via pedestrian paths & sidewalks (where
     /// available).
     #[serde(alias = "WALKING")]
     Walking,
+
     /// Requests bicycling directions via bicycle paths & preferred streets
     /// (where available).
     #[serde(alias = "BICYCLING")]
     Bicycling,
+
     /// Requests directions via public transit routes (where available). If you
     /// set the mode to `transit`, you can optionally specify either a
     /// `departure_time` or an `arrival_time`. If neither time is specified, the
@@ -35,6 +39,7 @@ pub enum TravelMode {
     /// and/or a `transit_routing_preference`.
     #[serde(alias = "TRANSIT")]
     Transit,
+
 } // enum
 
 impl std::convert::From<&TravelMode> for String {
@@ -52,9 +57,11 @@ impl std::convert::From<&TravelMode> for String {
 } // impl
 
 impl std::convert::TryFrom<String> for TravelMode {
+
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
     type Error = crate::directions::error::Error;
+
     /// Gets a `TravelMode` enum from a `String` that contains a valid [travel
     /// mode](https://developers.google.com/maps/documentation/directions/intro#TravelModes)
     /// code.
@@ -67,6 +74,7 @@ impl std::convert::TryFrom<String> for TravelMode {
             _ => Err(Error::InvalidTravelModeCode(travel_mode)),
         } // match
     } // fn
+
 } // impl
 
 impl std::default::Default for TravelMode {

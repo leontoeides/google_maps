@@ -27,12 +27,10 @@ use serde::{Serialize, Deserialize};
 pub enum Avoid {
 
     /// Indicates that the calculated route should avoid ferries.
-
     #[serde(alias = "ferries")]
     Ferries,
 
     /// Indicates that the calculated route should avoid highways.
-
     #[serde(alias = "highways")]
     Highways,
 
@@ -40,23 +38,19 @@ pub enum Avoid {
     /// walking and transit directions. Only requests that include an API key or
     /// a Google Maps Platform Premium Plan client ID will receive indoor steps
     /// by default.
-
     #[serde(alias = "indoor")]
     Indoor,
 
     /// Indicates that the calculated route should avoid toll roads/bridges.
-
     #[serde(alias = "tolls")]
     Tolls,
 
 } // enum
 
 impl std::convert::From<&Avoid> for String {
-
     /// Converts an `Avoid` enum to a `String` that contains a
     /// [restrictions](https://developers.google.com/maps/documentation/directions/intro#Restrictions)
     /// code.
-
     fn from(avoid: &Avoid) -> String {
         match avoid {
             Avoid::Ferries => String::from("ferries"),
@@ -65,20 +59,17 @@ impl std::convert::From<&Avoid> for String {
             Avoid::Tolls => String::from("tolls"),
         } // match
     } // fn
-
 } // impl
 
 impl std::convert::TryFrom<String> for Avoid {
 
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
-
     type Error = crate::directions::error::Error;
 
     /// Gets an `Avoid` enum from a `String` that contains a valid
     /// [restrictions](https://developers.google.com/maps/documentation/directions/intro#Restrictions)
     /// code.
-
     fn try_from(avoid: String) -> Result<Avoid, Error> {
         match avoid.as_ref() {
             "ferries" => Ok(Avoid::Ferries),
@@ -92,20 +83,15 @@ impl std::convert::TryFrom<String> for Avoid {
 } // impl
 
 impl std::default::Default for Avoid {
-
     /// Returns a reasonable default variant for the `Avoid` enum type.
-
     fn default() -> Self {
         Avoid::Tolls
     } // fn
-
 } // impl
 
 impl std::fmt::Display for Avoid {
-
     /// Formats a `Avoid` enum into a string that is presentable to the end
     /// user.
-
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Avoid::Ferries => write!(f, "Ferries"),
@@ -114,5 +100,4 @@ impl std::fmt::Display for Avoid {
             Avoid::Tolls => write!(f, "Tolls"),
         } // match
     } // fn
-
 } // impl

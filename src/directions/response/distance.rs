@@ -1,6 +1,7 @@
 use serde::{Serialize, Deserialize};
 
 /// A representation of distance as a numeric value and a display string.
+
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Distance {
 
