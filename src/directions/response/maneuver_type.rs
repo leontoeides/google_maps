@@ -1,3 +1,6 @@
+//! Contains the `ManeuverType` enum and its associated traits. `ManeuverType`
+//! is often used to determine which icon to display for the current step.
+
 use crate::directions::error::Error;
 use serde::{Serialize, Deserialize};
 
@@ -51,9 +54,11 @@ pub enum ManeuverType {
 } // enum
 
 impl std::convert::From<&ManeuverType> for String {
+
     /// Converts a `ManeuverType` enum to a `String` that contains a [maneuver
     /// type](https://developers.google.com/maps/documentation/directions/intro#Steps)
     /// code.
+
     fn from(maneuver_type: &ManeuverType) -> String {
         match maneuver_type {
             ManeuverType::Ferry => String::from("ferry"),
@@ -78,15 +83,20 @@ impl std::convert::From<&ManeuverType> for String {
             ManeuverType::UturnRight => String::from("uturn-right"),
         } // match
     } // fn
+
 } // impl
 
 impl std::convert::TryFrom<String> for ManeuverType {
+
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
+
     type Error = crate::directions::error::Error;
+
     /// Gets a `ManeuverType` enum from a `String` that contains a valid [maneuver
     /// type](https://developers.google.com/maps/documentation/directions/intro#Steps)
     /// code.
+
     fn try_from(maneuver_type: String) -> Result<ManeuverType, Error> {
         match maneuver_type.as_ref() {
             "ferry" => Ok(ManeuverType::Ferry),
@@ -112,18 +122,24 @@ impl std::convert::TryFrom<String> for ManeuverType {
             _ => Err(Error::InvalidManeuverTypeCode(maneuver_type)),
         } // match
     } // fn
+
 } // impl
 
 impl std::default::Default for ManeuverType {
+
     /// Returns a reasonable default variant for the `ManeuverType` enum type.
+
     fn default() -> Self {
         ManeuverType::Straight
     } // fn
+
 } // impl
 
 impl std::fmt::Display for ManeuverType {
+
     /// Formats a `ManeuverType` enum into a string that is presentable to the
     /// end user.
+
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             ManeuverType::Ferry => write!(f, "Ferry"),
@@ -148,4 +164,5 @@ impl std::fmt::Display for ManeuverType {
             ManeuverType::UturnRight => write!(f, "U-turn Right"),
         } // match
     } // fn
+
 } // impl

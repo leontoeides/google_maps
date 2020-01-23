@@ -8,14 +8,14 @@ pub struct Time {
 
     /// A string representing the time's value. The time is displayed in the
     /// time zone of the transit stop.
-    text: String,
+    pub text: String,
 
     /// The time zone in which this stop lies. The value is the name of the time
     /// zone as defined in the [IANA Time Zone
     /// Database](http://www.iana.org/time-zones), e.g. "America/New_York".
-    time_zone: String,
+    pub time_zone: String,
 
     /// The time of this departure or arrival.
-    value: u32,
+    pub value: u32,
 
 } // struct

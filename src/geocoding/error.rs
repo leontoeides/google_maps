@@ -1,6 +1,6 @@
 //! Geocoding API error types and error messages.
 
-use crate::geocoding::response::Status;
+use crate::geocoding::response::status::Status;
 
 /// Errors that may be produced by the Google Maps Geocoding API client.
 #[derive(Debug)]
@@ -11,6 +11,14 @@ pub enum Error {
     /// Google Maps Geocoding API server generated an error. See the `Status`
     /// enum for more information.
     GoogleMapsGeocodingServer(Status, Option<String>),
+    /// API client library attempted to parse a string that contained an invalid
+    /// location type code. See `google_maps\src\geocoding\location_type.rs` for
+    /// more information.
+    InvalidLocationTypeCode(String),
+    /// API client library attempted to parse a string that contained an invalid
+    /// status code. See `google_maps\src\geocoding\response\status.rs` for more
+    /// information.
+    InvalidStatusCode(String),
     /// The query string must be built before the request may be sent to the
     /// Google Maps Geocoding API server.
     QueryNotBuilt,
@@ -27,7 +35,8 @@ impl std::fmt::Display for Error {
     /// to the user.
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Error::AddressOrComponentsRequired => write!(f, "Google Maps Geocoding API client library: \
+            Error::AddressOrComponentsRequired => write!(f,
+                "Google Maps Geocoding API client: \
                 Forward geocoding requests must specify an `address` or at least one `component`. \
                 Ensure that the with_address() and/or with_component methods are being called before run()."),
             Error::GoogleMapsGeocodingServer(status, error_message) => match error_message {
@@ -60,14 +69,27 @@ impl std::fmt::Display for Error {
                         This may occur if the geocoder was passed a non-existent address."),
                 } // match
             }, // match
-            Error::RequestNotValidated => write!(f, "Google Maps Geocoding API client library: \
+            Error::InvalidLocationTypeCode(location_type_code) => write!(f,
+                "Google Maps Geocoding API client: \
+                `{}` is not a known location type code. \
+                Valid codes are `APPROXIMATE`, `GEOMETRIC_CENTER`, \
+                `RANGE_INTERPOLATED`, and `ROOFTOP`.", location_type_code),
+            Error::InvalidStatusCode(status_code) => write!(f,
+                "Google Maps Geocoding API client: \
+                `{}` is not a valid status code. \
+                Valid codes are `INVALID_REQUEST`, `OK`, `OVER_DAILY_LIMIT`, \
+                `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, `UNKNOWN_ERROR`, and \
+                `ZERO_RESULTS`.", status_code),
+            Error::QueryNotBuilt => write!(f,
+                "Google Maps Geocoding API client: \
+                The query string must be built before the request may be sent to the Google Cloud Maps Platform. \
+                Ensure the build() method is called before run()."),
+            Error::RequestNotValidated => write!(f,
+                "Google Maps Geocoding API client: \
                 The request must be validated before a query string may be built. \
                 Ensure the validate() method is called before build()."),
             Error::Reqwest(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {}", error),
             Error::SerdeJson(error) => write!(f, "Google Maps Geocoding API client in the Serde JSON library: {}", error),
-            Error::QueryNotBuilt => write!(f, "Google Maps Geocoding API client library: \
-                The query string must be built before the request may be sent to the Google Cloud Maps Platform. \
-                Ensure the build() method is called before run()."),
         } // match
     } // fn
 } // impl
@@ -81,10 +103,12 @@ impl std::error::Error for Error {
         match self {
             Error::AddressOrComponentsRequired => None,
             Error::GoogleMapsGeocodingServer(_error, _message) => None,
+            Error::InvalidLocationTypeCode(_location_type_code) => None,
+            Error::InvalidStatusCode(_status_code) => None,
+            Error::QueryNotBuilt => None,
             Error::RequestNotValidated => None,
             Error::Reqwest(error) => Some(error),
             Error::SerdeJson(error) => Some(error),
-            Error::QueryNotBuilt => None,
         } // match
     } // fn
 } // impl

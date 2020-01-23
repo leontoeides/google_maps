@@ -1,36 +1,37 @@
 use crate::geocoding::forward::country::Country;
 use serde::{Serialize, Deserialize};
 
+/// The components filter is accepted as an _optional_ parameter if an address
+/// is provided. In a Geocoding response, the Geocoding API can return address
+/// results restricted to a specific area. You can specify the restriction using
+/// the `components` filter. A filter consists of a list of `component:value`
+/// pairs separated by a pipe (|). Filter values support the same methods of
+/// spelling correction and partial matching as other Geocoding requests. If the
+/// geocoder finds a partial match for a component filter, the response will
+/// contain a `partial_match` field.
+
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Component {
-
     // Filter results:
-    // -----------------------
-
+    // ---------------
     /// Country matches a country name or a two letter [ISO
     /// 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) country code. The API
     /// follows the ISO standard for defining countries, and the filtering works
     /// best when using the corresponding ISO code of the country.
     Country(Country),
-
     /// Matches `postal_code` and `postal_code_prefix`.
     PostalCode(String),
-
     // Bias results:
-    // --------------------------
-
+    // -------------
     /// Matches all the `administrative_area` levels.
     AdministrativeArea(String),
-
     /// Matches against `locality` and `sublocality` types.
     Locality(String),
-
     /// Matches the long or short name of a route.
     Route(String),
-
 } // enum
 
-impl From<&Component> for String {
+impl std::convert::From<&Component> for String {
     /// Converts a `Component` struct to a `String` that contains a
     /// component:value pair for filtering results.
     fn from(component: &Component) -> String {
@@ -41,5 +42,12 @@ impl From<&Component> for String {
             Component::Locality(locality) => format!("locality:{}", locality),
             Component::Route(route) => format!("route:{}", route),
         } // match
+    } // fn
+} // impl
+
+impl std::default::Default for Component {
+    /// Returns a reasonable default variant for the `Component` enum type.
+    fn default() -> Self {
+        Component::Country(Country::UnitedStates)
     } // fn
 } // impl
