@@ -9,7 +9,7 @@ impl Request {
     ///
     /// ## Arguments
     ///
-    /// * `waypoints` · Specifies intermediate locations to visit before
+    /// * `waypoints` ‧ Specifies intermediate locations to visit before
     /// arriving at the final destination.
     ///
     /// ## Description

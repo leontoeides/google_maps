@@ -9,7 +9,7 @@ impl Request {
     ///
     /// ## Arguments:
     ///
-    /// * `locations` · Defines the location(s) on the earth from which to
+    /// * `locations` ‧ Defines the location(s) on the earth from which to
     /// return elevation data. This parameter takes either a single location,
     /// as a latitude/longitude pair, multiple latitude/longitude pairs, or an
     /// encoded polyline. For more information, see [Specifying

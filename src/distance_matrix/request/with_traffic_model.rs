@@ -1,7 +1,5 @@
-use crate::directions::request::{
-    Request,
-    traffic_model::TrafficModel,
-}; // use
+use crate::directions::request::traffic_model::TrafficModel;
+use crate::distance_matrix::request::Request;
 
 impl Request {
 

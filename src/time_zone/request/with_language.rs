@@ -9,7 +9,7 @@ impl Request {
     ///
     /// ## Arguments:
     ///
-    /// * `language` · The language that Google's response should be presented
+    /// * `language` ‧ The language that Google's response should be presented
     /// in.
     ///
     /// ## Example:

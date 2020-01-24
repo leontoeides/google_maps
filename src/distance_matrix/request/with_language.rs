@@ -1,7 +1,5 @@
-use crate::{
-    directions::request::Request,
-    language::Language,
-}; // use
+use crate::distance_matrix::request::Request;
+use crate::language::Language;
 
 impl Request {
 

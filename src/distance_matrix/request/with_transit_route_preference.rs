@@ -1,7 +1,5 @@
-use crate::directions::request::{
-    Request,
-    transit_route_preference::TransitRoutePreference,
-}; // use
+use crate::directions::request::transit_route_preference::TransitRoutePreference;
+use crate::distance_matrix::request::Request;
 
 impl Request {
 

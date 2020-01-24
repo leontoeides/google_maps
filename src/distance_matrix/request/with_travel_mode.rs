@@ -1,7 +1,5 @@
-use crate::directions::{
-    request::Request,
-    travel_mode::TravelMode,
-}; // use
+use crate::directions::travel_mode::TravelMode;
+use crate::distance_matrix::request::Request;
 
 impl Request {
 
@@ -9,8 +7,8 @@ impl Request {
     ///
     /// ## Arguments
     ///
-    /// * `travel_mode` ‧ The mode of transportation that directions should be
-    /// calculated for. For example, _transit_ directions or car _driving_
+    /// * `travel_mode` ‧ The mode of transportation that distance matrix should
+    /// be calculated for. For example, _transit_ directions or car _driving_
     /// directions.
     ///
     /// ## Description

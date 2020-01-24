@@ -1,7 +1,5 @@
-use crate::directions::request::{
-    Request,
-    unit_system::UnitSystem,
-}; // use
+use crate::directions::request::unit_system::UnitSystem;
+use crate::distance_matrix::request::Request;
 
 impl Request {
 
@@ -9,8 +7,8 @@ impl Request {
     ///
     /// ## Arguments
     ///
-    /// * `unit_system` ‧ The measurement system the directions service should
-    /// supply in the response, _imperial_ or _metric_?
+    /// * `unit_system` ‧ The measurement system the distance matrix service
+    /// should supply in the response, _imperial_ or _metric_?
     ///
     /// ## Description
     ///
