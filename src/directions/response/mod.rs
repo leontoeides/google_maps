@@ -1,9 +1,6 @@
 //! Resources (enums, structs) for the client process the Directions API
 //! response from the Google Cloud server.
 
-mod distance;
-mod duration;
-mod fare;
 mod geocoded_waypoint;
 mod geocoder_status;
 mod leg;
@@ -18,6 +15,9 @@ mod transit_details;
 mod transit_line;
 mod transit_stop;
 mod transit_vehicle;
+pub mod distance;
+pub mod duration;
+pub mod fare;
 pub mod status;
 
 use crate::directions::{

@@ -1,7 +1,5 @@
-use crate::directions::request::{
-    departure_time::DepartureTime,
-    Request,
-}; // use
+use crate::directions::request::departure_time::DepartureTime;
+use crate::distance_matrix::request::Request;
 
 impl Request {
 

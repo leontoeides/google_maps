@@ -7,7 +7,7 @@ impl Request {
     ///
     /// ## Arguments:
     ///
-    /// * `alternatives` · Whether more than one route should be in Google's
+    /// * `alternatives` ‧ Whether more than one route should be in Google's
     /// response.
     ///
     /// ## Description

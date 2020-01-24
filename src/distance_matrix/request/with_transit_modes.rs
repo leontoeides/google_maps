@@ -1,7 +1,5 @@
-use crate::directions::request::{
-    Request,
-    transit_mode::TransitMode,
-}; // use
+use crate::directions::request::transit_mode::TransitMode;
+use crate::distance_matrix::request::Request;
 
 impl Request {
 

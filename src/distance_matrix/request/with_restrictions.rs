@@ -1,7 +1,5 @@
-use crate::directions::request::{
-    avoid::Avoid,
-    Request,
-}; // use
+use crate::directions::request::avoid::Avoid;
+use crate::distance_matrix::request::Request;
 
 impl Request {
 

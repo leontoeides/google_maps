@@ -1,7 +1,5 @@
-use crate::{
-    directions::request::Request,
-    region::Region,
-}; // use
+use crate::distance_matrix::request::Request;
+use crate::region::Region;
 
 impl Request {
 

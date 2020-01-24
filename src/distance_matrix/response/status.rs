@@ -1,13 +1,14 @@
 //! Contains the `Status` enum and its associated traits. `Status` may contain
 //! debugging information to help you track down why the service request failed.
 
-use crate::directions::error::Error;
+use crate::distance_matrix::error::Error;
 use serde::{Serialize, Deserialize};
 
-/// The `status` field within the Directions response object contains the
-/// [status](https://developers.google.com/maps/documentation/directions/intro#StatusCodes)
-/// of the request, and may contain debugging information to help you track down
-/// why the Directions service failed.
+/// The `status` fields within the response object contain the status of the
+/// request, and may contain useful debugging information. The Distance Matrix
+/// API returns a top-level status field, with information about the request in
+/// general, as well as a status field for each element field, with information
+/// about that particular origin-destination pairing.
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Status {
@@ -17,24 +18,11 @@ pub enum Status {
     #[serde(alias = "INVALID_REQUEST")]
     InvalidRequest,
 
-    /// Indicates the requested route is too long and cannot be processed. This
-    /// error occurs when more complex directions are returned. Try reducing the
-    /// number of waypoints, turns, or instructions.
-    #[serde(alias = "MAX_ROUTE_LENGTH_EXCEEDED")]
-    MaxRouteLengthExceeded,
-
-    /// Indicates that too many `waypoints` were provided in the request. For
-    /// applications using the Directions API as a web service, or the
-    /// [directions service in the Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/directions),
-    /// the maximum allowed number of `waypoints` is 25, plus the origin and
-    /// destination.
-    #[serde(alias = "MAX_WAYPOINTS_EXCEEDED")]
-    MaxWaypointsExceeded,
-
-    /// Indicates at least one of the locations specified in the request's
-    /// origin, destination, or waypoints could not be geocoded.
-    #[serde(alias = "NOT_FOUND")]
-    NotFound,
+    /// Indicates that the product of origins and destinations exceeds the
+    /// per-query
+    /// [limit](https://developers.google.com/maps/documentation/distance-matrix/usage-and-billing).
+    #[serde(alias = "MAX_ELEMENTS_EXCEEDED")]
+    MaxElementsExceeded,
 
     /// Indicates the response contains a valid `result`.
     #[serde(alias = "OK")]
@@ -58,38 +46,31 @@ pub enum Status {
     #[serde(alias = "OVER_QUERY_LIMIT")]
     OverQueryLimit,
 
-    /// Indicates that the service denied use of the directions service by your
-    /// application.
+    /// Indicates that the service denied use of the Distance Matrix service by
+    /// your application.
     #[serde(alias = "REQUEST_DENIED")]
     RequestDenied,
 
-    /// Indicates a directions request could not be processed due to a server
-    /// error. The request may succeed if you try again.
+    /// Indicates a Distance Matrix request could not be processed due to a
+    /// server error. The request may succeed if you try again.
     #[serde(alias = "UNKNOWN_ERROR")]
     UnknownError,
-
-    /// Indicates no route could be found between the origin and destination.
-    #[serde(alias = "ZERO_RESULTS")]
-    ZeroResults,
 
 } // enum
 
 impl std::convert::From<&Status> for String {
     /// Converts a `Status` enum to a `String` that contains a
-    /// [status](https://developers.google.com/maps/documentation/directions/intro#StatusCodes)
+    /// [status](https://developers.google.com/maps/documentation/distance-matrix/intro#top-level-status-codes)
     /// code.
     fn from(status: &Status) -> String {
         match status {
             Status::InvalidRequest => String::from("INVALID_REQUEST"),
-            Status::MaxRouteLengthExceeded => String::from("MAX_ROUTE_LENGTH_EXCEEDED"),
-            Status::MaxWaypointsExceeded => String::from("MAX_WAYPOINTS_EXCEEDED"),
-            Status::NotFound => String::from("NOT_FOUND"),
+            Status::MaxElementsExceeded => String::from("MAX_ELEMENTS_EXCEEDED"),
             Status::Ok => String::from("OK"),
             Status::OverDailyLimit => String::from("OVER_DAILY_LIMIT"),
             Status::OverQueryLimit => String::from("OVER_QUERY_LIMIT"),
             Status::RequestDenied => String::from("REQUEST_DENIED"),
             Status::UnknownError => String::from("UNKNOWN_ERROR"),
-            Status::ZeroResults => String::from("ZERO_RESULTS"),
         } // match
     } // fn
 } // impl
@@ -97,24 +78,21 @@ impl std::convert::From<&Status> for String {
 impl std::convert::TryFrom<String> for Status {
 
     // Error definitions are contained in the
-    // `google_maps\src\directions\error.rs` module.
-    type Error = crate::directions::error::Error;
+    // `google_maps\src\distance_matrix\error.rs` module.
+    type Error = crate::distance_matrix::error::Error;
 
     /// Gets a `Status` enum from a `String` that contains a valid
-    /// [status](https://developers.google.com/maps/documentation/directions/intro#StatusCodes)
+    /// [status](https://developers.google.com/maps/documentation/distance-matrix/intro#top-level-status-codes)
     /// code.
     fn try_from(status: String) -> Result<Status, Error> {
         match status.as_ref() {
             "INVALID_REQUEST" => Ok(Status::InvalidRequest),
-            "MAX_ROUTE_LENGTH_EXCEEDED" => Ok(Status::MaxRouteLengthExceeded),
-            "MAX_WAYPOINTS_EXCEEDED" => Ok(Status::MaxWaypointsExceeded),
-            "NOT_FOUND" => Ok(Status::NotFound),
+            "MAX_ELEMENTS_EXCEEDED" => Ok(Status::MaxElementsExceeded),
             "OK" => Ok(Status::Ok),
             "OVER_DAILY_LIMIT" => Ok(Status::OverDailyLimit),
             "OVER_QUERY_LIMIT" => Ok(Status::OverQueryLimit),
             "REQUEST_DENIED" => Ok(Status::RequestDenied),
             "UNKNOWN_ERROR" => Ok(Status::UnknownError),
-            "ZERO_RESULTS" => Ok(Status::ZeroResults),
             _ => Err(Error::InvalidStatusCode(status)),
         } // match
     } // fn
@@ -134,15 +112,12 @@ impl std::fmt::Display for Status {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Status::InvalidRequest => write!(f, "Invalid Request"),
-            Status::MaxRouteLengthExceeded => write!(f, "Maximum Route Length Exceeded"),
-            Status::MaxWaypointsExceeded => write!(f, "Maximum Waypoints Exceeded"),
-            Status::NotFound => write!(f, "Not Found"),
+            Status::MaxElementsExceeded => write!(f, "Maximum Elements Exceeded"),
             Status::Ok => write!(f, "OK"),
             Status::OverDailyLimit => write!(f, "Over Daily Limit"),
             Status::OverQueryLimit => write!(f, "Over Query Limit"),
             Status::RequestDenied => write!(f, "Request Denied"),
             Status::UnknownError => write!(f, "Unknown Error"),
-            Status::ZeroResults => write!(f, "Zero Results"),
         } // match
     } // fn
 } // impl

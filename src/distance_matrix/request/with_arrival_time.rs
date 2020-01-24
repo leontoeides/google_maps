@@ -1,4 +1,4 @@
-use crate::directions::request::Request;
+use crate::distance_matrix::request::Request;
 use time::PrimitiveDateTime;
 
 impl Request {

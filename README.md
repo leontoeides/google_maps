@@ -1,6 +1,6 @@
 An unofficial Google Maps Platform client for the Rust programming language.
-This client currently implements the Directions API, Elevation API, Geocoding
-API, and Time Zone API.
+This client currently implements the Directions API, Distance Matrix API,
+Elevation API, Geocoding API, and Time Zone API.
 
 # Welcome
 
@@ -34,6 +34,36 @@ let directions = DirectionsRequest::new(
 .execute().unwrap();
 
 println!("{:#?}", directions);
+```
+
+## Example Distance Matrix API Request
+
+```rust
+use google_maps::*;
+
+// Example request:
+
+let distance_matrix = DistanceMatrixRequest::new(
+    YOUR_GOOGLE_API_KEY_HERE,
+    // Origins
+    vec![
+        // Microsoft
+        Waypoint::Address(String::from("One Microsoft Way, Redmond, WA 98052, United States")),
+        // Apple
+        Waypoint::Address(String::from("Infinite Loop, Cupertino, CA 95014, United States")),
+    ],
+    // Destinations
+    vec![
+        // Google
+        Waypoint::Address(String::from("601 N 34th St, Seattle, WA 98103, United States")),
+        // Mozilla
+        Waypoint::Address(String::from("331 E Evelyn Ave, Mountain View, CA 94041, United States")),
+    ],
+).execute().unwrap();
+
+// Dump entire response:
+
+println!("{:#?}", distance_matrix);
 ```
 
 ## Example Elevation API Positional Request
@@ -154,9 +184,8 @@ println!("Time in {}: {}",
 
 # To do
 
-1. [Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/start)
-2. [Geolocation API](https://developers.google.com/maps/documentation/geolocation/intro)
-3. [Places API](https://developers.google.com/places/web-service/intro)
-4. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
+1. [Geolocation API](https://developers.google.com/maps/documentation/geolocation/intro)
+2. [Places API](https://developers.google.com/places/web-service/intro)
+3. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
+4. Retry on Failure
 5. Automatic Rate Limiting
-6. Retry on Failure
