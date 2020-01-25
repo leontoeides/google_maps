@@ -21,6 +21,15 @@ pub struct Response {
     /// request. As with `origin_addresses`, these are localized if appropriate.
     pub destination_addresses: Vec<String>,
 
+    /// When the status code is other than `OK`, there may be an additional
+    /// `error_message` field within the Directions response object. This field
+    /// contains more detailed information about the reasons behind the given
+    /// status code.
+    ///
+    /// **Note**: This field is not guaranteed to be always present, and its
+    /// content is subject to change.
+    pub error_message: Option<String>,
+
     /// Contains an array of addresses as returned by the API from your original
     /// request. These are formatted by the
     /// [geocoder](https://developers.google.com/maps/documentation/geocoding/)
