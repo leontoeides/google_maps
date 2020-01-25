@@ -12,7 +12,7 @@ impl Request {
     ///
     /// ## Description
     ///
-    /// [Unit Systems](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
+    /// [Unit Systems](https://developers.google.com/maps/documentation/distance-matrix/intro#unit_systems)
     ///
     /// Directions results contain `text` within `distance` fields that may be
     /// displayed to the user to indicate the distance of a particular "step" of

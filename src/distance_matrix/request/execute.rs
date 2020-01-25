@@ -1,6 +1,8 @@
-use crate::distance_matrix::error::Error;
-use crate::distance_matrix::request::Request;
-use crate::distance_matrix::response::Response;
+use crate::distance_matrix::{
+    error::Error,
+    request::Request,
+    response::Response,
+}; // use
 
 impl Request {
 

@@ -14,18 +14,22 @@ mod with_transit_route_preference;
 mod with_travel_mode;
 mod with_unit_system;
 
-use crate::directions::request::{
-    avoid::Avoid,
-    departure_time::DepartureTime,
-    traffic_model::TrafficModel,
-    transit_mode::TransitMode,
-    transit_route_preference::TransitRoutePreference,
-    unit_system::UnitSystem,
-};
-use crate::directions::request::waypoint::Waypoint;
-use crate::directions::travel_mode::TravelMode;
-use crate::language::Language;
-use crate::region::Region;
+use crate::{
+    language::Language,
+    region::Region,
+    directions::{
+        travel_mode::TravelMode,
+        request::{
+            avoid::Avoid,
+            departure_time::DepartureTime,
+            traffic_model::TrafficModel,
+            transit_mode::TransitMode,
+            transit_route_preference::TransitRoutePreference,
+            unit_system::UnitSystem,
+            waypoint::Waypoint,
+        } // request
+    } // directions
+}; // use
 use time::PrimitiveDateTime;
 
 #[derive(Clone, Debug)]
@@ -41,7 +45,7 @@ pub struct Request {
 
     /// Application's API key. Learn how to
     /// [get a
-    /// key](https://developers.google.com/maps/documentation/directions/get-api-key).
+    /// key](https://developers.google.com/maps/documentation/distance-matrix/get-api-key).
     key: String,
 
     /// The starting point for calculating travel distance and time. You can
