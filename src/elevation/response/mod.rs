@@ -15,8 +15,13 @@ use serde::{Serialize, Deserialize};
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Response {
 
-    /// More detailed information about the reasons behind the given status
-    /// code, if other than `OK`.
+    /// When the status code is other than `OK`, there may be an additional
+    /// `error_message` field within the Elevation response object. This field
+    /// contains more detailed information about the reasons behind the given
+    /// status code.
+    ///
+    /// **Note**: This field is not guaranteed to be always present, and its
+    /// content is subject to change.
     pub error_message: Option<String>,
 
     /// If there was only one `location` in the query, there will only be one

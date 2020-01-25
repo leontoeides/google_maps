@@ -30,6 +30,9 @@ pub struct Response {
 
     /// More detailed information about the reasons behind the given status
     /// code, if other than `OK`.
+    ///
+    /// **Note**: This field is not guaranteed to be always present, and its
+    /// content is subject to change.
     #[serde(alias = "errorMessage")]
     pub error_message: Option<String>,
 

@@ -40,7 +40,11 @@ impl Request {
         if response.status == Status::Ok {
             return Ok(response)
         } else {
-            return Err(Error::GoogleMapsServer(response.status, None))
+            if response.error_message == None {
+                return Err(Error::GoogleMapsServer(response.status, None))
+            } else {
+                return Err(Error::GoogleMapsServer(response.status, response.error_message))
+            } // if
         }; // if
 
     } // fn
