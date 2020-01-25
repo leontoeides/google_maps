@@ -2,6 +2,7 @@ use crate::geocoding::{
     error::Error,
     forward::ForwardRequest,
     response::Response,
+    response::status::Status,
 }; // use
 
 impl ForwardRequest {
@@ -31,7 +32,15 @@ impl ForwardRequest {
         // and return result to caller:
 
         let response = reqwest::blocking::get(&*uri)?.json::<Response>()?;
-        Ok(response)
+
+        // If the response structure was successfully parsed, check the response
+        // status before returning it to the caller:
+
+        if response.status == Status::Ok {
+            return Ok(response)
+        } else {
+            return Err(Error::GoogleMapsServer(response.status, None))
+        }; // if
 
     } // fn
 

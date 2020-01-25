@@ -55,9 +55,9 @@ let distance_matrix = DistanceMatrixRequest::new(
     // Destinations
     vec![
         // Google
-        Waypoint::Address(String::from("601 N 34th St, Seattle, WA 98103, United States")),
+        Waypoint::PlaceId(String::from("ChIJj61dQgK6j4AR4GeTYWZsKWw")),
         // Mozilla
-        Waypoint::Address(String::from("331 E Evelyn Ave, Mountain View, CA 94041, United States")),
+        Waypoint::LatLng { lat: 37.387316, lng: -122.060008 },
     ],
 ).execute().unwrap();
 
@@ -139,7 +139,7 @@ for result in &location.results {
     for address_component in &result.address_components {
         print!("{} ", address_component.short_name);
     }
-    println!("");
+    println!(""); // New line.
 }
 ```
 

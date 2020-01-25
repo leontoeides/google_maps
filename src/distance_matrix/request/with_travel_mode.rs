@@ -8,36 +8,36 @@ impl Request {
     /// ## Arguments
     ///
     /// * `travel_mode` ‧ The mode of transportation that distance matrix should
-    /// be calculated for. For example, _transit_ directions or car _driving_
-    /// directions.
+    /// be calculated for. For example, _transit_ distances or car _driving_
+    /// distances.
     ///
     /// ## Description
     ///
-    /// [Travel Modes](https://developers.google.com/maps/documentation/directions/intro#TravelModes)
+    /// [Travel Modes](https://developers.google.com/maps/documentation/distance-matrix/intro#travel_modes)
     ///
-    /// When you calculate directions, you may specify the transportation mode
-    /// to use. By default, directions are calculated as driving directions. The
-    /// following travel modes are supported:
+    /// For the calculation of distances, you may specify the transportation
+    /// mode to use. By default, distances are calculated for driving mode.
     ///
-    /// * `TravelMode::Driving` (default) indicates standard driving directions
-    /// using the road network.
+    /// * `TravelMode::Driving` (default) indicates distance calculation using
+    /// the road network.
     ///
-    /// * `TravelMode::Walking` requests walking directions via pedestrian paths
-    /// & sidewalks (where available).
+    /// * `TravelMode::Walking` requests distance calculation for walking via
+    /// pedestrian paths & sidewalks (where available).
     ///
-    /// * `TravelMode::Bicycling` requests bicycling directions via bicycle
-    /// paths & preferred streets (where available).
+    /// * `TravelMode::Bicycling` requests distance calculation for bicycling
+    /// via bicycle paths & preferred streets (where available).
     ///
-    /// * `TravelMode::Transit` requests directions via public transit routes
-    /// (where available). If you set the travel mode to `TravelMode::Transit`,
-    /// you can optionally use either `with_departure_time()` or
-    /// `with_arrival_time()` methods. If neither time is specified, the
-    /// departure time defaults to now (that is, the departure time defaults to
-    /// the current time). You can also optionally use `with_transit_mode()`
-    /// and/or `with_transit_route_preference()` methods.
+    /// * `TravelMode::Transit` requests distance calculation via public transit
+    /// routes (where available). If you set the travel mode to
+    /// `TravelMode::Transit`, you can optionally use either
+    /// `with_departure_time()` or `with_arrival_time()` methods. If neither
+    /// time is specified, the departure time defaults to now (that is, the
+    /// departure time defaults to the current time). You can also optionally
+    /// use `with_transit_mode()` and/or `with_transit_route_preference()`
+    /// methods.
     ///
-    /// _Note_: Both walking and bicycling directions may sometimes not include
-    /// clear pedestrian or bicycling paths, so these directions will return
+    /// _Note_: Both walking and bicycling routes may sometimes not include
+    /// clear pedestrian or bicycling paths, so these responses will return
     /// `warnings` in the returned result which you must display to the user.
     ///
     /// ## Example:

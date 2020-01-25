@@ -1,6 +1,9 @@
-use crate::distance_matrix::error::Error;
-use crate::distance_matrix::request::Request;
-use crate::distance_matrix::response::Response;
+use crate::distance_matrix::{
+    error::Error,
+    request::Request,
+    response::Response,
+    response::status::Status,
+}; // use
 
 impl Request {
 
@@ -30,7 +33,15 @@ impl Request {
 
         println!("{}", uri);
         let response = reqwest::blocking::get(&*uri)?.json::<Response>()?;
-        Ok(response)
+
+        // If the response structure was successfully parsed, check the response
+        // status before returning it to the caller:
+
+        if response.status == Status::Ok {
+            return Ok(response)
+        } else {
+            return Err(Error::GoogleMapsServer(response.status, None))
+        }; // if
 
     } // fn
 

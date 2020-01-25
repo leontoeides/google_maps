@@ -1,5 +1,7 @@
-use crate::distance_matrix::error::Error;
-use crate::distance_matrix::request::Request;
+use crate::distance_matrix::{
+    error::Error,
+    request::Request,
+}; // use
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 
 impl Request {

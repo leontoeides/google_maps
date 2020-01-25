@@ -12,7 +12,7 @@ impl Request {
     ///
     /// ## Description:
     ///
-    /// Specifies the desired time of arrival for _transit_ directions. You can
+    /// Specifies the desired time of arrival for _transit_ distances. You can
     /// use either the `.with_departure_time()` or the `.with_arrival_time()`
     /// method, but not both together.
     ///

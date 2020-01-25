@@ -1,6 +1,8 @@
 use crate::directions::travel_mode::TravelMode;
-use crate::distance_matrix::error::Error;
-use crate::distance_matrix::request::Request;
+use crate::distance_matrix::{
+    error::Error,
+    request::Request,
+}; // use
 
 impl Request {
 

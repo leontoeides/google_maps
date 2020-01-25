@@ -1,6 +1,6 @@
 //! Distance Matrix API error types and error messages.
 
-use crate::directions::response::status::Status;
+use crate::distance_matrix::response::status::Status;
 
 /// Errors that may be produced by the Google Maps Distance Matrix API client.
 
@@ -19,7 +19,7 @@ pub enum Error {
     EitherWaypointsOrTransitMode(usize),
     /// Google Maps Distance Matrix API server generated an error. See the
     /// `Status` enum for more information.
-    GoogleMapsDirectionsServer(Status, Option<String>),
+    GoogleMapsServer(Status, Option<String>),
     /// API client library attempted to parse a string that contained an invalid
     /// avoid/restrictions code. See
     /// `google_maps\src\directions\request\avoid.rs` for more information.
@@ -121,7 +121,7 @@ impl std::fmt::Display for Error {
                 {} waypoint(s) are set. \
                 Try again either with a different travel mode or no waypoints.",
                 waypoint_count),
-            Error::GoogleMapsDirectionsServer(status, error_message) => match error_message {
+            Error::GoogleMapsServer(status, error_message) => match error_message {
                 // If the Google Maps Distance Matrix API server generated an error
                 // message, return that:
                 Some(error_message) => write!(f, "Google Maps Distance Matrix API server: {}", error_message),
@@ -129,29 +129,33 @@ impl std::fmt::Display for Error {
                 // error message, return a generic message derived from the
                 // response status:
                 None => match status {
-                    Status::InvalidRequest => write!(f, "Google Maps Distance Matrix API server: \
+                    Status::InvalidRequest => write!(f,
+                        "Google Maps Distance Matrix API server: \
                         Invalid request. \
                         This may indicate that the query (address, components, or latlng) is missing, an invalid result type, or an invalid location type."),
-                    Status::MaxRouteLengthExceeded => write!(f, "Google Maps Distance Matrix API server:"),
-                    Status::MaxWaypointsExceeded => write!(f, "Google Maps Distance Matrix API server:"),
-                    Status::NotFound => write!(f, "Google Maps Distance Matrix API server:"),
-                    Status::Ok => write!(f, "Google Maps Directions server: \
+                    Status::MaxElementsExceeded => write!(f,
+                        "Google Maps Distance Matrix API server: \
+                        Maximum elements exceeded. \
+                        The product of origins and destinations exceeds the per-query limit."),
+                    Status::Ok => write!(f,
+                        "Google Maps Distance Matrix API server: \
                         Ok. \
                         The request was successful."),
-                    Status::OverDailyLimit => write!(f, "Google Maps Distance Matrix API server: \
+                    Status::OverDailyLimit => write!(f,
+                        "Google Maps Distance Matrix API server: \
                         Over daily limit. \
                         Usage cap has been exceeded, API key is invalid, billing has not been enabled, or method of payment is no longer valid."),
-                    Status::OverQueryLimit => write!(f, "Google Maps Distance Matrix API server: \
+                    Status::OverQueryLimit => write!(f,
+                        "Google Maps Distance Matrix API server: \
                         Over query limit. \
                         Requestor has exceeded quota."),
-                    Status::RequestDenied => write!(f, "Google Maps Distance Matrix API server: \
-                        Request denied \
+                    Status::RequestDenied => write!(f,
+                        "Google Maps Distance Matrix API server: \
+                        Request denied. \
                         Service did not complete the request."),
-                    Status::UnknownError => write!(f, "Google Maps Distance Matrix API server: \
+                    Status::UnknownError => write!(f,
+                        "Google Maps Distance Matrix API server: \
                         Unknown error."),
-                    Status::ZeroResults => write!(f, "Google Maps Distance Matrix API server: \
-                        Zero results.
-                        This may occur if the geocoder was passed a non-existent address."),
                 } // match
             }, // match
             Error::InvalidAvoidCode(avoid_code) => write!(f,
@@ -258,7 +262,7 @@ impl std::error::Error for Error {
             Error::EitherDepartureTimeOrArrivalTime(_arrival_time, _departure_time) => None,
             Error::EitherRestrictionsOrWaypoints(_waypoint_count, _restrictions) => None,
             Error::EitherWaypointsOrTransitMode(_waypoint_count) => None,
-            Error::GoogleMapsDirectionsServer(_error, _message) => None,
+            Error::GoogleMapsServer(_error, _message) => None,
             Error::InvalidAvoidCode(_avoid_code) => None,
             Error::InvalidElementStatusCode(_element_status_code) => None,
             Error::InvalidManeuverTypeCode(_maneuver_type_code) => None,
