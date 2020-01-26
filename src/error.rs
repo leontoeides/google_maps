@@ -7,6 +7,14 @@ pub enum Error {
     /// API client library attempted to parse a string that contained an invalid
     /// language code. See `google_maps\src\language.rs` for more information.
     InvalidLanguageCode(String),
+    /// API client library attempted to convert a latitude/longitude pair that
+    /// contained an invalid latitude. See `google_maps\src\latlng.rs` for more
+    /// information.
+    InvalidLatitude(f64),
+    /// API client library attempted to convert a latitude/longitude pair that
+    /// contained an invalid longitude. See `google_maps\src\latlng.rs` for more
+    /// information.
+    InvalidLongitude(f64),
     /// API client library attempted to parse a string that contained an invalid
     /// place type code. See `google_maps\src\place_type.rs` for more
     /// information.
@@ -27,6 +35,16 @@ impl std::fmt::Display for Error {
                 For a list of supported languages see \
                 https://developers.google.com/maps/faq#languagesupport",
                 language_code),
+            Error::InvalidLatitude(latitude) => write!(f,
+                "Google Maps Platform API client: \
+                `{}` is an invalid latitudinal value.
+                A latitude must be between -90.0° and 90.0°.",
+                latitude),
+            Error::InvalidLongitude(longitude) => write!(f,
+                "Google Maps Platform API client: \
+                `{}` is an invalid longitudinal value.
+                A longitude must be between -180.0° and 180.0°.",
+                longitude),
             Error::InvalidPlaceTypeCode(place_type_code) => write!(f,
                 "Google Maps Platform API client: \
                 `{}` is not a recognized place type code.
@@ -51,6 +69,8 @@ impl std::error::Error for Error {
     fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
         match self {
             Error::InvalidLanguageCode(_language_code) => None,
+            Error::InvalidLatitude(_latitude) => None,
+            Error::InvalidLongitude(_longitude) => None,
             Error::InvalidPlaceTypeCode(_place_type_code) => None,
             Error::InvalidRegionCode(_region_code) => None,
         } // match
