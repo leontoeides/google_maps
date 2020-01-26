@@ -1,5 +1,6 @@
 use crate::latlng::LatLng;
 use serde::{Serialize, Deserialize};
+use std::convert::TryFrom;
 
 /// Defines the
 /// [location(s)](https://developers.google.com/maps/documentation/elevation/intro#Locations)
@@ -28,7 +29,7 @@ impl std::convert::From<&Locations> for String {
     fn from(locations: &Locations) -> String {
         match locations {
             Locations::LatLngs(latlngs) => String::from(
-                latlngs.iter().map(|latlng| String::from(latlng) + "|").collect::<String>().trim_end_matches('|')
+                latlngs.iter().map(|latlng| String::try_from(latlng).unwrap() + "|").collect::<String>().trim_end_matches('|')
             ),
             Locations::Polyline(polyline) => format!("enc:{}", polyline),
         } // match

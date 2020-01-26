@@ -14,6 +14,11 @@ for a project that I'm working on. So, I've decided to spin my library off into
 a public crate. This is a very small token of gratitude and an attempt to give
 back to the Rust community. I hope it saves someone out there some work.
 
+I would like for you to be successful with your project! If this crate is not
+working for you, doesn't work how you think it should, you have requests, or
+suggestions - please contact me. I'm not always fast at responding but I will
+respond. Thanks!
+
 ## Example Directions API Request
 
 ```rust
@@ -185,7 +190,8 @@ println!("Time in {}: {}",
 # To do
 
 1. [Geolocation API](https://developers.google.com/maps/documentation/geolocation/intro)
-2. [Places API](https://developers.google.com/places/web-service/intro)
-3. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
-4. Retry on Failure
-5. Automatic Rate Limiting
+2. Convert explicit query validation to session types wherever reasonable.
+3. [Places API](https://developers.google.com/places/web-service/intro)
+4. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
+5. Retry on Failure
+6. Automatic Rate Limiting
