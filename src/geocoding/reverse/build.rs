@@ -1,6 +1,5 @@
 use crate::geocoding::reverse::ReverseRequest;
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
-use std::convert::TryFrom;
 
 impl ReverseRequest {
 
@@ -19,7 +18,7 @@ impl ReverseRequest {
         let mut query = format!(
             "key={}&latlng={}",
             self.key,
-            String::try_from(&self.latlng).unwrap()
+            String::from(&self.latlng)
         ); // format!
 
         // This section builds the "optional parameters" portion of the query

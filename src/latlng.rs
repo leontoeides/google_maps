@@ -2,7 +2,6 @@
 //! coorindate system is used to specify a position or location on the Earth's
 //! surface.
 
-use crate::error::Error;
 use serde::{Serialize, Deserialize};
 
 /// Latitude and longitude values must correspond to a valid location on the
@@ -19,28 +18,23 @@ pub struct LatLng {
     pub lng: f64,
 } // struct
 
-impl std::convert::TryFrom<&LatLng> for String {
+impl LatLng {
+    pub fn new(latitude: f64, longitude: f64) -> LatLng {
+        LatLng {
+            lat: latitude,
+            lng: longitude,
+        } // Lat Lng
+    } // fn
+} // impl
 
-    // Error definitions are contained in the
-    // `google_maps\src\directions\error.rs` module.
-    type Error = crate::error::Error;
-
+impl std::convert::From<&LatLng> for String {
     /// Converts a `LatLng` struct to a `String` that contains a
     /// latitude/longitude pair.
-    fn try_from(latlng: &LatLng) -> Result<String, Error> {
-
-        // Range check latitude & longitude:
-        if latlng.lat < -90.0 || latlng.lat > 90.0 {
-            return Err(Error::InvalidLatitude(latlng.lat))
-        } else if latlng.lng < -180.0 || latlng.lng > 180.0 {
-            return Err(Error::InvalidLongitude(latlng.lng))
-        } // if
-
+    fn from(latlng: &LatLng) -> String {
         // The seventh decimal place is worth up to 11 mm: this is good for much
         // surveying and is near the limit of what GPS-based techniques can
         // achieve.
         // https://gis.stackexchange.com/questions/8650/measuring-accuracy-of-latitude-and-longitude
-        Ok(format!("{:.7},{:.7}", latlng.lat, latlng.lng))
-
+        format!("{:.7},{:.7}", latlng.lat, latlng.lng)
     } // fn
 } // impl

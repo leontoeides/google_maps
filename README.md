@@ -14,8 +14,10 @@ for a project that I'm working on. So, I've decided to spin my library off into
 a public crate. This is a very small token of gratitude and an attempt to give
 back to the Rust community. I hope it saves someone out there some work.
 
+# Feedback
+
 I would like for you to be successful with your project! If this crate is not
-working for you, doesn't work how you think it should, you have requests, or
+working for you, doesn't work how you think it should, if you have requests, or
 suggestions - please contact me. I'm not always fast at responding but I will
 respond. Thanks!
 
@@ -26,9 +28,9 @@ use google_maps::*;
 
 let directions = DirectionsRequest::new(
     YOUR_GOOGLE_API_KEY_HERE,
-    // Canadian Museum of Nature
+    // Origin: Canadian Museum of Nature
     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
-    // Canada Science and Technology Museum
+    // Destination: Canada Science and Technology Museum
     Location::LatLng { lat: 45.403509, lng: -75.618904 },
 )
 .with_travel_mode(TravelMode::Transit)
@@ -64,7 +66,8 @@ let distance_matrix = DistanceMatrixRequest::new(
         // Mozilla
         Waypoint::LatLng { lat: 37.387316, lng: -122.060008 },
     ],
-).execute().unwrap();
+)
+.execute().unwrap();
 
 // Dump entire response:
 
@@ -187,11 +190,18 @@ println!("Time in {}: {}",
 );
 ```
 
+## [Geolocation API](https://developers.google.com/maps/documentation/geolocation/intro)
+
+Google's Geolocation API seems to be offline. While the online documentation
+is still available and the API appears configurable through the Google Cloud
+Platform console, the Geolocation API responds Status code `404 Not Found` with
+an empty body to all requests. This API cannot be implemented until the server
+responds as expected.
+
 # To do
 
-1. [Geolocation API](https://developers.google.com/maps/documentation/geolocation/intro)
-2. Convert explicit query validation to session types wherever reasonable.
-3. [Places API](https://developers.google.com/places/web-service/intro)
-4. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
-5. Retry on Failure
-6. Automatic Rate Limiting
+1. Convert explicit query validation to session types wherever reasonable.
+2. [Places API](https://developers.google.com/places/web-service/intro)
+3. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
+4. Retry on Failure
+5. Automatic Rate Limiting
