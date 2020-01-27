@@ -200,11 +200,16 @@
 //! implemented until the server responds as expected.
 //!
 //! # To do:
-//! 1. Convert explicit query validation to session types wherever reasonable.
-//! 2. [Places API](https://developers.google.com/places/web-service/intro)
-//! 3. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
-//! 4. Retry on Failure
-//! 5. Automatic Rate Limiting
+//! 1. ⚠ Breaking change coming: Change latitude & longitude from `f32` to
+//! `f64`.
+//! 2. ⚠ Breaking change coming: Convert enum latitude & longitude fields into
+//! enum LatLng structs.
+//! 3. Method range-checking for LatLng manipulation.
+//! 4. Convert explicit query validation to session types wherever reasonable.
+//! 5. Retry on Failure
+//! 6. Automatic Rate Limiting
+//! 7. [Places API](https://developers.google.com/places/web-service/intro)
+//! 8. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
 
 mod error;
 pub mod bounds;

@@ -21,9 +21,9 @@ pub enum Location {
     /// directions.
     LatLng {
         /// Latitude
-        lat: f32,
+        lat: f64,
         /// Longitude
-        lng: f32
+        lng: f64
     },
 
     /// The place ID may only be specified if the request includes an API key or
