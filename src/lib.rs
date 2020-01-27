@@ -205,11 +205,12 @@
 //! 2. ⚠ Breaking change coming: Convert enum latitude & longitude fields into
 //! enum LatLng structs.
 //! 3. Method range-checking for LatLng manipulation.
-//! 4. Convert explicit query validation to session types wherever reasonable.
-//! 5. Retry on Failure
-//! 6. Automatic Rate Limiting
-//! 7. [Places API](https://developers.google.com/places/web-service/intro)
-//! 8. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
+//! 4. Move GOOGLE_API_KEY to a struct with other settings such as MAX_RETRY.
+//! 5. Convert explicit query validation to session types wherever reasonable.
+//! 6. Retry on Failure
+//! 7. Automatic Rate Limiting
+//! 8. [Places API](https://developers.google.com/places/web-service/intro)
+//! 9. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
 
 mod error;
 pub mod bounds;
