@@ -4,9 +4,9 @@ Elevation API, Geocoding API, and Time Zone API.
 
 # Changelog
 
-* 0.4.0: Your API key is no longer passed directly to Google Maps requests. A
-structure containing your API key and several other optional settings is now
-passed instead. For example:
+* 0.4.0: **Breaking change**. API keys are no longer passed directly to Google
+Maps request methods. A structure containing your API key and several other
+optional settings is now passed instead. For example:
 
 Before:
 ```rust
@@ -30,6 +30,9 @@ let location = GeocodingReverseRequest::new(
     LatLng { lat: 51.5033635, lng: -0.1276248 }
 )
 ```
+
+* 0.4.0: **Breaking change**. All `f32` fields have been increased to `f64`
+fields.
 
 
 # Welcome
