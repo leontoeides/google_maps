@@ -5,8 +5,8 @@ Elevation API, Geocoding API, and Time Zone API.
 # Changelog
 
 * 0.4.0: Your API key is no longer passed directly to Google Maps requests. A
-structure several settings including your API key is now passed instead.
-For example:
+structure containing your API key and several other optional settings is now
+passed instead. For example:
 
 Before:
 ```rust
@@ -20,9 +20,9 @@ let location = GeocodingReverseRequest::new(
 After:
 ```rust
 let client_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE)
-.with_maximum_retries(8)
-.with_maximum_backoff(64000) // In milliseconds. 64 seconds.
-.finalize();
+    .with_maximum_retries(8)
+    .with_maximum_backoff(64000) // In milliseconds. 64 seconds.
+    .finalize();
 
 let location = GeocodingReverseRequest::new(
     client_settings,
