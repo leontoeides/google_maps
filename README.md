@@ -4,7 +4,7 @@ Elevation API, Geocoding API, and Time Zone API.
 
 # Changelog
 
-* 0.4.0: **Breaking change**. API keys are no longer passed directly to Google
+* 0.4.0: ⚠ **Breaking change**. API keys are no longer passed directly to Google
 Maps request methods. Now, a structure containing your API key and several other
 optional settings is passed instead. For example:
 
@@ -35,7 +35,7 @@ let client_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE)
     .finalize();
 ```
 
-* 0.4.0: **Breaking change**. All `f32` fields have been increased to `f64`
+* 0.4.0: ⚠ **Breaking change**. All `f32` fields have been increased to `f64`
 fields.
 
 
@@ -241,9 +241,7 @@ responds as expected.
 1. ⚠ Breaking change coming: Change latitude & longitude from `f32` to `f64`.
 2. ⚠ Breaking change coming: Convert enum latitude & longitude fields into enum LatLng structs.
 3. Method range-checking for LatLng manipulation.
-4. Move GOOGLE_API_KEY to a struct with other settings such as MAX_RETRY.
-5. Convert explicit query validation to session types wherever reasonable.
-6. Retry on Failure
-7. Automatic Rate Limiting
-8. [Places API](https://developers.google.com/places/web-service/intro)
-9. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
+4. Convert explicit query validation to session types wherever reasonable.
+5. Automatic Rate Limiting
+6. [Places API](https://developers.google.com/places/web-service/intro)
+7. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
