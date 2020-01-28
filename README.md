@@ -2,6 +2,18 @@ An unofficial Google Maps Platform client for the Rust programming language.
 This client currently implements the Directions API, Distance Matrix API,
 Elevation API, Geocoding API, and Time Zone API.
 
+# Welcome
+
+This crate is expected to work well and have the more important Google Maps
+features implemented. It should work well because Reqwest and Serde do most of
+the heavy lifting! While it's an early release, this crate should work fine as
+is for most people.
+
+I created this library because I needed several Google Maps Platform features
+for a project that I'm working on. So, I've decided to spin my library off into
+a public crate. This is a very small token of gratitude and an attempt to give
+back to the Rust community. I hope it saves someone out there some work.
+
 # Changelog
 
 * 0.4.0: ⚠ **Breaking change**. API keys are no longer passed directly to Google
@@ -38,18 +50,12 @@ let client_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE)
 * 0.4.0: ⚠ **Breaking change**. All `f32` fields have been increased to `f64`
 fields.
 
+* 0.4.0: Implemented automatic retry with exponential backoff. This client
+library will now attempt to query the Google Cloud Platform several times before
+giving up and returning an error. Temporary network hiccups will no longer cause
+your program to fail.
 
-# Welcome
-
-This crate is expected to work well and have the more important Google Maps
-features implemented. It should work well because Reqwest and Serde do most of
-the heavy lifting! While it's an early release, this crate should work fine as
-is for most people.
-
-I created this library because I needed several Google Maps Platform features
-for a project that I'm working on. So, I've decided to spin my library off into
-a public crate. This is a very small token of gratitude and an attempt to give
-back to the Rust community. I hope it saves someone out there some work.
+* 0.4.0: Now implements the `log` crate with some messages for debugging.
 
 # Feedback
 
