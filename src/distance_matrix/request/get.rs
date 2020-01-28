@@ -41,9 +41,9 @@ impl Request {
             return Ok(response)
         } else {
             if response.error_message == None {
-                return Err(Error::GoogleMapsServer(response.status, None))
+                return Err(Error::GoogleMapsService(response.status, None))
             } else {
-                return Err(Error::GoogleMapsServer(response.status, response.error_message))
+                return Err(Error::GoogleMapsService(response.status, response.error_message))
             } // if
         }; // if
 

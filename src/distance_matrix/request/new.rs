@@ -1,13 +1,16 @@
-use crate::directions::request::waypoint::Waypoint;
-use crate::distance_matrix::request::Request;
+use crate::{
+    directions::request::waypoint::Waypoint,
+    distance_matrix::request::Request,
+    client_settings::ClientSettings,
+}; // use
 
 impl Request {
 
-    pub fn new(key: String, origins: Vec<Waypoint>, destinations: Vec<Waypoint>) -> Request {
+    pub fn new(client_settings: ClientSettings, origins: Vec<Waypoint>, destinations: Vec<Waypoint>) -> Request {
         Request {
             // Required parameters:
             destinations,
-            key,
+            client_settings,
             origins,
             // Optional parameters:
             arrival_time: None,

@@ -24,7 +24,7 @@ impl Request {
         let mut query = format!(
             "key={}&origins={}&destinations={}",
             // Key:
-            self.key,
+            self.client_settings.key,
             // Origins:
             utf8_percent_encode(
                 &String::from(self.origins.iter().map(|waypoint| String::from(waypoint) + "|").collect::<String>().trim_end_matches('|')),

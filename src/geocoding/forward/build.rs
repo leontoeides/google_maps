@@ -24,7 +24,7 @@ impl ForwardRequest {
 
         let mut query = format!(
             "key={}",
-            self.key
+            self.client_settings.key
         );
 
         // This section builds the "optional parameters" portion of the query

@@ -12,6 +12,7 @@ mod with_result_type;
 
 use crate::{
     geocoding::location_type::LocationType,
+    client_settings::ClientSettings,
     language::Language,
     latlng::LatLng,
     place_type::PlaceType,
@@ -26,10 +27,9 @@ pub struct ReverseRequest {
     // Required parameters:
     // --------------------
 
-    /// Your application's API key. This key identifies your application for
-    /// purposes of quota management. Learn how to [get a
-    /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
-    key: String,
+    /// This structure contains the application's API key and other
+    /// user-definable settings such as "maximum retries."
+    client_settings: ClientSettings,
 
     /// The latitude and longitude values specifying the location for which you
     /// wish to obtain the closest, human-readable address.

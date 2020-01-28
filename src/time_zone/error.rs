@@ -7,7 +7,7 @@ use crate::time_zone::response::status::Status;
 pub enum Error {
     /// Google Maps Time Zone API server generated an error. See the `Status`
     /// enum for more information.
-    GoogleMapsServer(Status, Option<String>),
+    GoogleMapsService(Status, Option<String>),
     /// API client library attempted to parse a string that contained an invalid
     /// status code. See `google_maps\src\time_zone\response\status.rs` for more
     /// information.
@@ -26,7 +26,7 @@ impl std::fmt::Display for Error {
     /// to the user.
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Error::GoogleMapsServer(status, error_message) => match error_message {
+            Error::GoogleMapsService(status, error_message) => match error_message {
                 // If the Google Maps Time Zone API server generated an error
                 // message, return that:
                 Some(error_message) => write!(f, "Google Maps Time Zone API server: {}", error_message),
@@ -77,7 +77,7 @@ impl std::error::Error for Error {
     /// error type into the native error type of the underlying library.
     fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
         match self {
-            Error::GoogleMapsServer(_error, _message) => None,
+            Error::GoogleMapsService(_error, _message) => None,
             Error::InvalidStatusCode(_status_code) => None,
             Error::QueryNotBuilt => None,
             Error::Reqwest(error) => Some(error),

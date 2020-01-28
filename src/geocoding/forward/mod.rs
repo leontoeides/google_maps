@@ -18,6 +18,7 @@ pub mod country;
 use crate::{
     bounds::Bounds,
     geocoding::forward::component::Component,
+    client_settings::ClientSettings,
     language::Language,
     region::Region,
 }; // use
@@ -31,10 +32,9 @@ pub struct ForwardRequest {
     // Required parameters:
     // --------------------
 
-    /// Your application's API key. This key identifies your application for
-    /// purposes of quota management. Learn how to [get a
-    /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
-    key: String,
+    /// This structure contains the application's API key and other
+    /// user-definable settings such as "maximum retries."
+    client_settings: ClientSettings,
 
     // Optional parameters:
     // --------------------

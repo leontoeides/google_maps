@@ -19,7 +19,7 @@ pub enum Error {
     EitherWaypointsOrTransitMode(usize),
     /// Google Maps Directions API server generated an error. See the `Status`
     /// enum for more information.
-    GoogleMapsServer(Status, Option<String>),
+    GoogleMapsService(Status, Option<String>),
     /// API client library attempted to parse a string that contained an invalid
     /// avoid/restrictions code. See
     /// `google_maps\src\directions\request\avoid.rs` for more information.
@@ -121,7 +121,7 @@ impl std::fmt::Display for Error {
                 {} waypoint(s) are set. \
                 Try again either with a different travel mode or no waypoints.",
                 waypoint_count),
-            Error::GoogleMapsServer(status, error_message) => match error_message {
+            Error::GoogleMapsService(status, error_message) => match error_message {
                 // If the Google Maps Directions API server generated an error
                 // message, return that:
                 Some(error_message) => write!(f, "Google Maps Directions API server: {}", error_message),
@@ -258,7 +258,7 @@ impl std::error::Error for Error {
             Error::EitherDepartureTimeOrArrivalTime(_arrival_time, _departure_time) => None,
             Error::EitherRestrictionsOrWaypoints(_waypoint_count, _restrictions) => None,
             Error::EitherWaypointsOrTransitMode(_waypoint_count) => None,
-            Error::GoogleMapsServer(_error, _message) => None,
+            Error::GoogleMapsService(_error, _message) => None,
             Error::InvalidAvoidCode(_avoid_code) => None,
             Error::InvalidGeocoderStatusCode(_geocoder_status_code) => None,
             Error::InvalidManeuverTypeCode(_maneuver_type_code) => None,

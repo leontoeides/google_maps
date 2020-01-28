@@ -1,5 +1,6 @@
 use crate::{
     geocoding::reverse::ReverseRequest,
+    client_settings::ClientSettings,
     latlng::LatLng,
 }; // use
 
@@ -15,11 +16,11 @@ impl ReverseRequest {
     /// * `latlng` - The latitude and longitude values specifying the location
     /// for which you wish to obtain the closest, human-readable address.
 
-    pub fn new(key: String, latlng: LatLng) -> ReverseRequest {
+    pub fn new(client_settings: ClientSettings, latlng: LatLng) -> ReverseRequest {
         // Instantiate struct and return it to caller:
         ReverseRequest {
             // Required parameters:
-            key,
+            client_settings,
             latlng,
             // Optional parameters:
             language: None,

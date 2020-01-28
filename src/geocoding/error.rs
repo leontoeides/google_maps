@@ -10,7 +10,7 @@ pub enum Error {
     AddressOrComponentsRequired,
     /// Google Maps Geocoding API server generated an error. See the `Status`
     /// enum for more information.
-    GoogleMapsServer(Status, Option<String>),
+    GoogleMapsService(Status, Option<String>),
     /// API client library attempted to parse a string that contained an invalid
     /// country code. See `google_maps\src\geocoding\forward\country.rs` for
     /// more information.
@@ -43,7 +43,7 @@ impl std::fmt::Display for Error {
                 "Google Maps Geocoding API client: \
                 Forward geocoding requests must specify an `address` or at least one `component`. \
                 Ensure that the with_address() and/or with_component methods are being called before run()."),
-            Error::GoogleMapsServer(status, error_message) => match error_message {
+            Error::GoogleMapsService(status, error_message) => match error_message {
                 // If the Google Maps Geocoding API server generated an error
                 // message, return that:
                 Some(error_message) => write!(f, "Google Maps Geocoding API server: {}", error_message),
@@ -113,7 +113,7 @@ impl std::error::Error for Error {
     fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
         match self {
             Error::AddressOrComponentsRequired => None,
-            Error::GoogleMapsServer(_error, _message) => None,
+            Error::GoogleMapsService(_error, _message) => None,
             Error::InvalidCountryCode(_country_code) => None,
             Error::InvalidLocationTypeCode(_location_type_code) => None,
             Error::InvalidStatusCode(_status_code) => None,

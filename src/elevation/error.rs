@@ -10,7 +10,7 @@ pub enum Error {
     EitherPositionalOrSampledPath,
     /// Google Maps Elevation API server generated an error. See the `Status`
     /// enum for more information.
-    GoogleMapsServer(Status, Option<String>),
+    GoogleMapsService(Status, Option<String>),
     /// API client library attempted to parse a string that contained an invalid
     /// status code. See `google_maps\src\elevation\response\status.rs` for
     /// more information.
@@ -35,7 +35,7 @@ impl std::fmt::Display for Error {
                 "Google Maps Elevation API client: \
                 A sampled_path_request() method cannot be used when postional_request() has been set. \
                 Try again with only a positional request or only a sampled path request."),
-            Error::GoogleMapsServer(status, error_message) => match error_message {
+            Error::GoogleMapsService(status, error_message) => match error_message {
                 // If the Google Maps Elevation API server generated an error
                 // message, return that:
                 Some(error_message) => write!(f, "Google Maps Elevation API server: {}", error_message),
@@ -90,7 +90,7 @@ impl std::error::Error for Error {
     fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
         match self {
             Error::EitherPositionalOrSampledPath => None,
-            Error::GoogleMapsServer(_error, _message) => None,
+            Error::GoogleMapsService(_error, _message) => None,
             Error::InvalidStatusCode(_status_code) => None,
             Error::QueryNotBuilt => None,
             Error::RequestNotValidated => None,
