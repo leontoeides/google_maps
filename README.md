@@ -17,9 +17,10 @@ back to the Rust community. I hope it saves someone out there some work.
 # Feedback
 
 I would like for you to be successful with your project! If this crate is not
-working for you, doesn't work how you think it should, if you have requests, or
-suggestions - please contact me. I'm not always fast at responding but I will
-respond. Thanks!
+working for you, doesn't work how you think it should, if you have requests or
+suggestions - please [report
+issues](https://github.com/leontoeides/google_maps/issues). I'm not always fast
+at responding but I will respond. Thanks!
 
 ## Example Directions API Request
 

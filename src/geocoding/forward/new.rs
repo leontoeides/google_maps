@@ -1,4 +1,7 @@
-use crate::geocoding::forward::ForwardRequest;
+use crate::{
+    geocoding::forward::ForwardRequest,
+    client_settings::ClientSettings,
+}; // use
 
 impl ForwardRequest {
 
@@ -9,11 +12,11 @@ impl ForwardRequest {
     ///
     /// * `key` ‧ Your application's Google Cloud API key.
 
-    pub fn new(key: String) -> ForwardRequest {
+    pub fn new(client_settings: ClientSettings) -> ForwardRequest {
         // Instantiate struct and return it to caller:
         ForwardRequest {
             // Required parameters:
-            key,
+            client_settings,
             // Optional parameters:
             address: None,
             bounds: None,

@@ -1,15 +1,18 @@
-use crate::directions::request::{
-    location::Location,
-    Request,
+use crate::{
+    directions::request::{
+        location::Location,
+        Request,
+    }, // directions::request
+    client_settings::ClientSettings,
 }; // use
 
 impl Request {
 
-    pub fn new(key: String, origin: Location, destination: Location) -> Request {
+    pub fn new(client_settings: ClientSettings, origin: Location, destination: Location) -> Request {
         Request {
             // Required parameters:
             destination,
-            key,
+            client_settings,
             origin,
             // Optional parameters:
             alternatives: None,

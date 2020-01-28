@@ -1,8 +1,9 @@
-use time::PrimitiveDateTime;
 use crate::{
+    client_settings::ClientSettings,
     latlng::LatLng,
     time_zone::request::Request,
 }; // use
+use time::PrimitiveDateTime;
 
 impl Request {
 
@@ -33,11 +34,11 @@ impl Request {
     /// ).build().get();
     /// ```
 
-    pub fn new(key: String, location: LatLng, time: PrimitiveDateTime) -> Request {
+    pub fn new(client_settings: ClientSettings, location: LatLng, time: PrimitiveDateTime) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:
-            key,
+            client_settings,
             location,
             time,
             // Optional parameters:

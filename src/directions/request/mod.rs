@@ -24,19 +24,22 @@ pub mod transit_route_preference;
 pub mod unit_system;
 pub mod waypoint;
 
-use crate::directions::request::{
-    avoid::Avoid,
-    departure_time::DepartureTime,
-    location::Location,
-    traffic_model::TrafficModel,
-    transit_mode::TransitMode,
-    transit_route_preference::TransitRoutePreference,
-    unit_system::UnitSystem,
-    waypoint::Waypoint,
-};
-use crate::directions::travel_mode::TravelMode;
-use crate::language::Language;
-use crate::region::Region;
+use crate::{
+    directions::travel_mode::TravelMode,
+    client_settings::ClientSettings,
+    language::Language,
+    region::Region,
+    directions::request::{
+        avoid::Avoid,
+        departure_time::DepartureTime,
+        location::Location,
+        traffic_model::TrafficModel,
+        transit_mode::TransitMode,
+        transit_route_preference::TransitRoutePreference,
+        unit_system::UnitSystem,
+        waypoint::Waypoint,
+    } // directions::request
+}; // use
 use time::PrimitiveDateTime;
 
 #[derive(Clone, Debug)]
@@ -49,10 +52,9 @@ pub struct Request {
     /// calculate directions.
     destination: Location,
 
-    /// Application's API key. Learn how to
-    /// [get a
-    /// key](https://developers.google.com/maps/documentation/directions/get-api-key).
-    key: String,
+    /// This structure contains the application's API key and other
+    /// user-definable settings such as "maximum retries."
+    client_settings: ClientSettings,
 
     /// The address, latitude/longitude, or place ID from which you wish to
     /// calculate directions.

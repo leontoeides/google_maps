@@ -39,7 +39,7 @@ impl ReverseRequest {
         if response.status == Status::Ok {
             return Ok(response)
         } else {
-            return Err(Error::GoogleMapsServer(response.status, None))
+            return Err(Error::GoogleMapsService(response.status, None))
         }; // if
 
     } // fn

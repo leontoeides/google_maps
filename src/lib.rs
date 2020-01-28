@@ -18,8 +18,9 @@
 //! there some work.
 //!
 //! I would like for you to be successful with your project! If this crate is
-//! not working for you, doesn't work how you think it should, you have
-//! requests, or suggestions - please contact me. I'm not always fast at
+//! not working for you, doesn't work how you think it should, if you have
+//! requests or suggestions - please [report
+//! issues](https://github.com/leontoeides/google_maps/issues). I'm not always fast at
 //! responding but I will respond. Thanks!
 //!
 //! ## Example Directions API Request
@@ -200,8 +201,7 @@
 //! implemented until the server responds as expected.
 //!
 //! # To do:
-//! 1. ⚠ Breaking change coming: Change latitude & longitude from `f32` to
-//! `f64`.
+//! 1. ⚠ Breaking change coming: Change latitude & longitude from `f32` to `f64`.
 //! 2. ⚠ Breaking change coming: Convert enum latitude & longitude fields into
 //! enum LatLng structs.
 //! 3. Method range-checking for LatLng manipulation.
@@ -218,6 +218,7 @@ pub mod directions;
 pub mod distance_matrix;
 pub mod elevation;
 pub mod geocoding;
+pub mod client_settings;
 pub mod language;
 pub mod latlng;
 pub mod place_type;
@@ -226,6 +227,7 @@ pub mod time_zone;
 
 pub extern crate time;
 pub use crate::bounds::Bounds as Bounds;
+pub use crate::client_settings::ClientSettings as ClientSettings;
 pub use crate::language::Language as Language;
 pub use crate::latlng::LatLng as LatLng;
 pub use crate::place_type::PlaceType as PlaceType;

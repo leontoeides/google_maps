@@ -1,4 +1,5 @@
 use crate::elevation::request::Request;
+use crate::client_settings::ClientSettings;
 
 impl Request {
 
@@ -9,11 +10,11 @@ impl Request {
     ///
     /// * `key` - Your application's Google Cloud API key.
 
-    pub fn new(key: String) -> Request {
+    pub fn new(client_settings: ClientSettings) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:
-            key,
+            client_settings,
             // Positional requests:
             locations: None,
             // Sampled path requests:

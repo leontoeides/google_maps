@@ -15,8 +15,6 @@ mod with_travel_mode;
 mod with_unit_system;
 
 use crate::{
-    language::Language,
-    region::Region,
     directions::{
         travel_mode::TravelMode,
         request::{
@@ -28,7 +26,10 @@ use crate::{
             unit_system::UnitSystem,
             waypoint::Waypoint,
         } // request
-    } // directions
+    }, // directions
+    client_settings::ClientSettings,
+    language::Language,
+    region::Region,
 }; // use
 use time::PrimitiveDateTime;
 
@@ -43,10 +44,9 @@ pub struct Request {
     /// place ID, or encoded polyline.
     destinations: Vec<Waypoint>,
 
-    /// Application's API key. Learn how to
-    /// [get a
-    /// key](https://developers.google.com/maps/documentation/distance-matrix/get-api-key).
-    key: String,
+    /// This structure contains the application's API key and other
+    /// user-definable settings such as "maximum retries."
+    client_settings: ClientSettings,
 
     /// The starting point for calculating travel distance and time. You can
     /// pass an address, latitude/longitude, place ID, or encoded polyline.

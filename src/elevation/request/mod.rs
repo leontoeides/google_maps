@@ -10,7 +10,10 @@ mod sampled_path_request;
 mod validate;
 pub mod locations;
 
-use crate::elevation::request::locations::Locations;
+use crate::{
+    elevation::request::locations::Locations,
+    client_settings::ClientSettings,
+}; // use
 use serde::{Serialize, Deserialize};
 
 /// Use this structure's methods to build a Time Zone API request.
@@ -21,10 +24,9 @@ pub struct Request {
     // Required parameters:
     // --------------------
 
-    /// Your application's API key. This key identifies your application for
-    /// purposes of quota management. Learn how to
-    /// [get a key](https://developers.google.com/maps/documentation/timezone/get-api-key).
-    key: String,
+    /// This structure contains the application's API key and other
+    /// user-definable settings such as "maximum retries."
+    client_settings: ClientSettings,
 
     // Positional Requests:
     // --------------------
