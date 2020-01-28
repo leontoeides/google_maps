@@ -11,6 +11,8 @@ pub enum Error {
     /// Google Maps Geocoding API server generated an error. See the `Status`
     /// enum for more information.
     GoogleMapsService(Status, Option<String>),
+    /// The HTTP request was unsuccessful.
+    HttpUnsuccessful(u8, String),
     /// API client library attempted to parse a string that contained an invalid
     /// country code. See `google_maps\src\geocoding\forward\country.rs` for
     /// more information.
@@ -73,6 +75,11 @@ impl std::fmt::Display for Error {
                         This may occur if the geocoder was passed a non-existent address."),
                 } // match
             }, // match
+            Error::HttpUnsuccessful(retries, status) => write!(f,
+                "Google Maps Geocoding API client: \
+                Could not successfully query the Google Cloud Platform service. \
+                The client attempted to contact the service {} time(s). \
+                The service last responded with a `{}` status.", retries, status),
             Error::InvalidCountryCode(country_code) => write!(f,
                 "Google Maps Geocoding API client: \
                 `{}` is not a valid ISO 3166-1 Alpha-2 country code. \
@@ -114,6 +121,7 @@ impl std::error::Error for Error {
         match self {
             Error::AddressOrComponentsRequired => None,
             Error::GoogleMapsService(_error, _message) => None,
+            Error::HttpUnsuccessful(_retries, _status) => None,
             Error::InvalidCountryCode(_country_code) => None,
             Error::InvalidLocationTypeCode(_location_type_code) => None,
             Error::InvalidStatusCode(_status_code) => None,

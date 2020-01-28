@@ -20,6 +20,8 @@ pub enum Error {
     /// Google Maps Distance Matrix API server generated an error. See the
     /// `Status` enum for more information.
     GoogleMapsService(Status, Option<String>),
+    /// The HTTP request was unsuccessful.
+    HttpUnsuccessful(u8, String),
     /// API client library attempted to parse a string that contained an invalid
     /// avoid/restrictions code. See
     /// `google_maps\src\directions\request\avoid.rs` for more information.
@@ -124,40 +126,45 @@ impl std::fmt::Display for Error {
             Error::GoogleMapsService(status, error_message) => match error_message {
                 // If the Google Maps Distance Matrix API server generated an error
                 // message, return that:
-                Some(error_message) => write!(f, "Google Maps Distance Matrix API server: {}", error_message),
+                Some(error_message) => write!(f, "Google Maps Distance Matrix API service: {}", error_message),
                 // If the Google Maps Distance Matrix API server did not generate an
                 // error message, return a generic message derived from the
                 // response status:
                 None => match status {
                     Status::InvalidRequest => write!(f,
-                        "Google Maps Distance Matrix API server: \
+                        "Google Maps Distance Matrix API service: \
                         Invalid request. \
                         This may indicate that the query (address, components, or latlng) is missing, an invalid result type, or an invalid location type."),
                     Status::MaxElementsExceeded => write!(f,
-                        "Google Maps Distance Matrix API server: \
+                        "Google Maps Distance Matrix API service: \
                         Maximum elements exceeded. \
                         The product of origins and destinations exceeds the per-query limit."),
                     Status::Ok => write!(f,
-                        "Google Maps Distance Matrix API server: \
+                        "Google Maps Distance Matrix API service: \
                         Ok. \
                         The request was successful."),
                     Status::OverDailyLimit => write!(f,
-                        "Google Maps Distance Matrix API server: \
+                        "Google Maps Distance Matrix API service: \
                         Over daily limit. \
                         Usage cap has been exceeded, API key is invalid, billing has not been enabled, or method of payment is no longer valid."),
                     Status::OverQueryLimit => write!(f,
-                        "Google Maps Distance Matrix API server: \
+                        "Google Maps Distance Matrix API service: \
                         Over query limit. \
                         Requestor has exceeded quota."),
                     Status::RequestDenied => write!(f,
-                        "Google Maps Distance Matrix API server: \
+                        "Google Maps Distance Matrix API service: \
                         Request denied. \
                         Service did not complete the request."),
                     Status::UnknownError => write!(f,
-                        "Google Maps Distance Matrix API server: \
+                        "Google Maps Distance Matrix API service: \
                         Unknown error."),
                 } // match
             }, // match
+            Error::HttpUnsuccessful(retries, status) => write!(f,
+                "Google Maps Distance Matrix API client: \
+                Could not successfully query the Google Cloud Platform service. \
+                The client attempted to contact the service {} time(s). \
+                The service last responded with a `{}` status.", retries, status),
             Error::InvalidAvoidCode(avoid_code) => write!(f,
                 "Google Maps Distance Matrix API client: \
                 `{}` is not a valid restrictions code. \
@@ -263,6 +270,7 @@ impl std::error::Error for Error {
             Error::EitherRestrictionsOrWaypoints(_waypoint_count, _restrictions) => None,
             Error::EitherWaypointsOrTransitMode(_waypoint_count) => None,
             Error::GoogleMapsService(_error, _message) => None,
+            Error::HttpUnsuccessful(_retries, _status) => None,
             Error::InvalidAvoidCode(_avoid_code) => None,
             Error::InvalidElementStatusCode(_element_status_code) => None,
             Error::InvalidManeuverTypeCode(_maneuver_type_code) => None,

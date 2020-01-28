@@ -17,9 +17,11 @@ pub enum Error {
     EitherRestrictionsOrWaypoints(usize, String),
     /// Waypoints may not be specified in Transit travel mode.
     EitherWaypointsOrTransitMode(usize),
-    /// Google Maps Directions API server generated an error. See the `Status`
+    /// Google Maps Directions API service generated an error. See the `Status`
     /// enum for more information.
     GoogleMapsService(Status, Option<String>),
+    /// The HTTP request was unsuccessful.
+    HttpUnsuccessful(u8, String),
     /// API client library attempted to parse a string that contained an invalid
     /// avoid/restrictions code. See
     /// `google_maps\src\directions\request\avoid.rs` for more information.
@@ -67,7 +69,7 @@ pub enum Error {
     /// more information.
     InvalidVehicleTypeCode(String),
     /// The query string must be built before the request may be sent to the
-    /// Google Maps Directions API server.
+    /// Google Maps Directions API service.
     QueryNotBuilt,
     /// The request must be validated before a query string may be built.
     RequestNotValidated,
@@ -111,7 +113,7 @@ impl std::fmt::Display for Error {
             Error::EitherRestrictionsOrWaypoints(waypoint_count, restrictions) => write!(f,
                 "Google Maps Directions API client: \
                 The with_restrictions() method cannot be used when with_waypoints() has been set. \
-                {} waypoint(s) are set and the restrictions(s) are set to `{}`. \
+                {} waypoint(s) are set and the restriction(s) are set to `{}`. \
                 Try again either with no waypoints or no restrictions.",
                 waypoint_count,
                 restrictions),
@@ -122,38 +124,49 @@ impl std::fmt::Display for Error {
                 Try again either with a different travel mode or no waypoints.",
                 waypoint_count),
             Error::GoogleMapsService(status, error_message) => match error_message {
-                // If the Google Maps Directions API server generated an error
+                // If the Google Maps Directions API service generated an error
                 // message, return that:
-                Some(error_message) => write!(f, "Google Maps Directions API server: {}", error_message),
-                // If the Google Maps Directions API server did not generate an
+                Some(error_message) => write!(f, "Google Maps Directions API service: {}", error_message),
+                // If the Google Maps Directions API service did not generate an
                 // error message, return a generic message derived from the
                 // response status:
                 None => match status {
-                    Status::InvalidRequest => write!(f, "Google Maps Directions API server: \
+                    Status::InvalidRequest => write!(f, "Google Maps Directions API service: \
                         Invalid request. \
                         This may indicate that the query (address, components, or latlng) is missing, an invalid result type, or an invalid location type."),
-                    Status::MaxRouteLengthExceeded => write!(f, "Google Maps Directions API server:"),
-                    Status::MaxWaypointsExceeded => write!(f, "Google Maps Directions API server:"),
-                    Status::NotFound => write!(f, "Google Maps Directions API server:"),
+                    Status::MaxRouteLengthExceeded => write!(f, "Google Maps Directions API service: \
+                        Maximum route length exceeded. \
+                        Try reducing the number of waypoints, turns, or instructions."),
+                    Status::MaxWaypointsExceeded => write!(f, "Google Maps Directions API service: \
+                        Maximum waypoints exceeded. \
+                        The maximum allowed number of waypoints is 25, plus the origin and destination."),
+                    Status::NotFound => write!(f, "Google Maps Directions API service: \
+                        Not found. \
+                        An origin, destination, or waypoint could not be geocoded."),
                     Status::Ok => write!(f, "Google Maps Directions server: \
                         Ok. \
                         The request was successful."),
-                    Status::OverDailyLimit => write!(f, "Google Maps Directions API server: \
+                    Status::OverDailyLimit => write!(f, "Google Maps Directions API service: \
                         Over daily limit. \
                         Usage cap has been exceeded, API key is invalid, billing has not been enabled, or method of payment is no longer valid."),
-                    Status::OverQueryLimit => write!(f, "Google Maps Directions API server: \
+                    Status::OverQueryLimit => write!(f, "Google Maps Directions API service: \
                         Over query limit. \
                         Requestor has exceeded quota."),
-                    Status::RequestDenied => write!(f, "Google Maps Directions API server: \
+                    Status::RequestDenied => write!(f, "Google Maps Directions API service: \
                         Request denied \
                         Service did not complete the request."),
-                    Status::UnknownError => write!(f, "Google Maps Directions API server: \
+                    Status::UnknownError => write!(f, "Google Maps Directions API service: \
                         Unknown error."),
-                    Status::ZeroResults => write!(f, "Google Maps Directions API server: \
+                    Status::ZeroResults => write!(f, "Google Maps Directions API service: \
                         Zero results.
                         This may occur if the geocoder was passed a non-existent address."),
                 } // match
             }, // match
+            Error::HttpUnsuccessful(retries, status) => write!(f,
+                "Google Maps Directions API client: \
+                Could not successfully query the Google Cloud Platform service. \
+                The client attempted to contact the service {} time(s). \
+                The service last responded with a `{}` status.", retries, status),
             Error::InvalidAvoidCode(avoid_code) => write!(f,
                 "Google Maps Directions API client: \
                 `{}` is not a valid restrictions code. \
@@ -259,6 +272,7 @@ impl std::error::Error for Error {
             Error::EitherRestrictionsOrWaypoints(_waypoint_count, _restrictions) => None,
             Error::EitherWaypointsOrTransitMode(_waypoint_count) => None,
             Error::GoogleMapsService(_error, _message) => None,
+            Error::HttpUnsuccessful(_retries, _status) => None,
             Error::InvalidAvoidCode(_avoid_code) => None,
             Error::InvalidGeocoderStatusCode(_geocoder_status_code) => None,
             Error::InvalidManeuverTypeCode(_maneuver_type_code) => None,

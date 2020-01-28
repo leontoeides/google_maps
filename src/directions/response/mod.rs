@@ -54,7 +54,7 @@ pub struct Response {
     /// Contains an array with details about the geocoding of origin,
     /// destination and waypoints. See [Geocoded
     /// Waypoints](https://developers.google.com/maps/documentation/directions/intro#GeocodedWaypoints).
-    pub geocoded_waypoints: Vec<GeocodedWaypoint>,
+    pub geocoded_waypoints: Option<Vec<GeocodedWaypoint>>,
 
     /// Contains an array of routes from the origin to the destination. See
     /// [Routes](https://developers.google.com/maps/documentation/directions/intro#Routes).

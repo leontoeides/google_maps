@@ -11,6 +11,8 @@ pub enum Error {
     /// Google Maps Elevation API server generated an error. See the `Status`
     /// enum for more information.
     GoogleMapsService(Status, Option<String>),
+    /// The HTTP request was unsuccessful.
+    HttpUnsuccessful(u8, String),
     /// API client library attempted to parse a string that contained an invalid
     /// status code. See `google_maps\src\elevation\response\status.rs` for
     /// more information.
@@ -38,32 +40,37 @@ impl std::fmt::Display for Error {
             Error::GoogleMapsService(status, error_message) => match error_message {
                 // If the Google Maps Elevation API server generated an error
                 // message, return that:
-                Some(error_message) => write!(f, "Google Maps Elevation API server: {}", error_message),
+                Some(error_message) => write!(f, "Google Maps Elevation API service: {}", error_message),
                 // If the Google Maps Elevation API server did not generate an
                 // error message, return a generic message derived from the
                 // response status:
                 None => match status {
-                    Status::InvalidRequest => write!(f, "Google Maps Elevation API server: \
+                    Status::InvalidRequest => write!(f, "Google Maps Elevation API service: \
                         Invalid request. \
                         The request was malformed."),
-                    Status::Ok => write!(f, "Google Maps Elevation server: \
+                    Status::Ok => write!(f, "Google Maps Elevation service: \
                         Ok. \
                         The request was successful."),
-                    Status::OverDailyLimit => write!(f, "Google Maps Elevation API server: \
+                    Status::OverDailyLimit => write!(f, "Google Maps Elevation API service: \
                         Over daily limit. \
                         Usage cap has been exceeded, API key is invalid, billing has not been enabled, or method of payment is no longer valid."),
-                    Status::OverQueryLimit => write!(f, "Google Maps Elevation API server: \
+                    Status::OverQueryLimit => write!(f, "Google Maps Elevation API service: \
                         Over query limit. \
                         Requestor has exceeded quota."),
-                    Status::RequestDenied => write!(f, "Google Maps Elevation API server: \
+                    Status::RequestDenied => write!(f, "Google Maps Elevation API service: \
                         Request denied \
                         Service did not complete the request."),
-                    Status::UnknownError => write!(f, "Google Maps Elevation API server: \
+                    Status::UnknownError => write!(f, "Google Maps Elevation API service: \
                         Unknown error."),
                 } // match
             }, // match
+            Error::HttpUnsuccessful(retries, status) => write!(f,
+                "Google Maps Elevation API client: \
+                Could not successfully query the Google Cloud Platform service. \
+                The client attempted to contact the service {} time(s). \
+                The service last responded with a `{}` status.", retries, status),
             Error::InvalidStatusCode(status_code) => write!(f,
-                "Google Maps Directions API client: \
+                "Google Maps Elevation API client: \
                 `{}` is not a valid status code. \
                 Valid codes are `INVALID_REQUEST`, `OK`, `OVER_DAILY_LIMIT`, \
                 `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, and `UNKNOWN_ERROR`."
@@ -91,6 +98,7 @@ impl std::error::Error for Error {
         match self {
             Error::EitherPositionalOrSampledPath => None,
             Error::GoogleMapsService(_error, _message) => None,
+            Error::HttpUnsuccessful(_retries, _status) => None,
             Error::InvalidStatusCode(_status_code) => None,
             Error::QueryNotBuilt => None,
             Error::RequestNotValidated => None,
