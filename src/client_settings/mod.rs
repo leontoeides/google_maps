@@ -1,5 +1,5 @@
 //! Contains the `ClientSettings` struct and its associated traits.
-//! `ClientSettings` is used to set your API key and settings for governing
+//! `ClientSettings` is used to set your API key and the settings for governing
 //! your requests.
 
 use serde::{Serialize, Deserialize};
@@ -50,6 +50,14 @@ impl ClientSettings {
     pub fn with_maximum_backoff(&mut self, maximum_backoff: u32) -> &mut ClientSettings {
         self.maximum_backoff = maximum_backoff;
         self
+    } // fn
+
+    pub fn finalize(&self) -> ClientSettings {
+        ClientSettings {
+            key: self.key.clone(),
+            maximum_retries: self.maximum_retries,
+            maximum_backoff: self.maximum_backoff,
+        } // ClientSettings
     } // fn
 
 } // impl
