@@ -15,6 +15,6 @@ pub struct Fare {
     pub text: String,
 
     /// The total fare amount, in the currency specified above.
-    pub value: f32,
+    pub value: f64,
 
 } // struct
