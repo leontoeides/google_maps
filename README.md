@@ -17,7 +17,7 @@ let location = GeocodingReverseRequest::new(
 )
 ```
 
-After with no optional settings:
+After:
 ```rust
 let client_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 let location = GeocodingReverseRequest::new(
@@ -27,18 +27,12 @@ let location = GeocodingReverseRequest::new(
 )
 ```
 
-After with optional settings:
+With optional settings:
 ```rust
 let client_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE)
     .with_maximum_retries(8)
     .with_maximum_backoff(64000) // In milliseconds. 64 seconds.
     .finalize();
-
-let location = GeocodingReverseRequest::new(
-    client_settings,
-    // 10 Downing St, Westminster, London
-    LatLng { lat: 51.5033635, lng: -0.1276248 }
-)
 ```
 
 * 0.4.0: **Breaking change**. All `f32` fields have been increased to `f64`
