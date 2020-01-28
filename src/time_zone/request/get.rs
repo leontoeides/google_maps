@@ -62,7 +62,7 @@ impl Request {
                             // Only Google's "Unknown Error" is eligible for
                             // retries
                             deserialized.status != Status::UnknownError ||
-                            counter >= self.client_settings.maximum_retries {
+                            counter > self.client_settings.maximum_retries {
                                 // If there is a Google API error other than
                                 // "Unknown Error," return the error and do not
                                 // retry the request. Also, if we have reached
@@ -76,7 +76,7 @@ impl Request {
                     } else if
                         !response.status().is_server_error() || // Only HTTP "500 Server Errors", and
                         response.status() != 429 || // HTTP "429 Too Many Requests" are eligible for retries.
-                        counter >= self.client_settings.maximum_retries {
+                        counter > self.client_settings.maximum_retries {
                             // If the HTTP request error was not a 500 Server
                             // error or "429 Too Many Requests" error, return
                             // the error and do not retry the request. Also, if
@@ -89,7 +89,7 @@ impl Request {
                 Err(response) => {
                     // HTTP client did not get a response from the server:
                     warn!("HTTP client returned: `{}`", response);
-                    if counter >= self.client_settings.maximum_retries {
+                    if counter > self.client_settings.maximum_retries {
                         // If we have reached the maximum retry count, do not
                         // retry anymore. Return the last HTTP client error:
                         return Err(Error::Reqwest(response))
@@ -123,7 +123,7 @@ impl Request {
                 } // if
             } // if
 
-            info!("Could not successfully query the Google Maps Platform. Retry #{} of {}. Sleeping for {} milliseconds before retrying.", counter, self.client_settings.maximum_retries, wait_time_in_ms);
+            info!("Could not successfully query the Google Maps Platform. Sleeping for {} milliseconds before retry #{} of {}.", wait_time_in_ms, counter, self.client_settings.maximum_retries);
 
             std::thread::sleep(std::time::Duration::from_millis(wait_time_in_ms as u64));
 

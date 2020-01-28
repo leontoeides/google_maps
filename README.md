@@ -2,6 +2,36 @@ An unofficial Google Maps Platform client for the Rust programming language.
 This client currently implements the Directions API, Distance Matrix API,
 Elevation API, Geocoding API, and Time Zone API.
 
+# Changelog
+
+* 0.4.0: Your API key is no longer passed directly to Google Maps requests. A
+structure several settings including your API key is now passed instead.
+For example:
+
+Before:
+```rust
+let location = GeocodingReverseRequest::new(
+    YOUR_GOOGLE_API_KEY_HERE,
+    // 10 Downing St, Westminster, London
+    LatLng { lat: 51.5033635, lng: -0.1276248 }
+)
+```
+
+After:
+```rust
+let client_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE)
+.with_maximum_retries(8)
+.with_maximum_backoff(64000) // In milliseconds. 64 seconds.
+.finalize();
+
+let location = GeocodingReverseRequest::new(
+    client_settings,
+    // 10 Downing St, Westminster, London
+    LatLng { lat: 51.5033635, lng: -0.1276248 }
+)
+```
+
+
 # Welcome
 
 This crate is expected to work well and have the more important Google Maps
