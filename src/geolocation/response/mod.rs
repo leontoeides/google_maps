@@ -1,8 +1,10 @@
 mod error_object;
 mod error;
 
-use crate::geolocation::response::error_object::ErrorObject;
-use crate::latlng::LatLng;
+use crate::{
+    geolocation::response::error_object::ErrorObject,
+    latlng::LatLng,
+}; // use
 use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
