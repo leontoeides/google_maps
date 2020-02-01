@@ -153,12 +153,12 @@ impl std::fmt::Display for Error {
                         Over query limit. \
                         Requestor has exceeded quota."),
                     Status::RequestDenied => write!(f, "Google Maps Directions API service: \
-                        Request denied \
+                        Request denied. \
                         Service did not complete the request."),
                     Status::UnknownError => write!(f, "Google Maps Directions API service: \
                         Unknown error."),
                     Status::ZeroResults => write!(f, "Google Maps Directions API service: \
-                        Zero results.
+                        Zero results. \
                         This may occur if the geocoder was passed a non-existent address."),
                 } // match
             }, // match

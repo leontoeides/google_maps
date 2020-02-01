@@ -42,8 +42,8 @@ use crate::{
 }; // use
 use time::PrimitiveDateTime;
 
-#[derive(Clone, Debug)]
-pub struct Request {
+#[derive(Debug, PartialEq, PartialOrd)]
+pub struct Request<'a> {
 
     // Required parameters:
     // --------------------
@@ -54,7 +54,7 @@ pub struct Request {
 
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client_settings: ClientSettings,
+    client_settings: &'a mut ClientSettings,
 
     /// The address, latitude/longitude, or place ID from which you wish to
     /// calculate directions.

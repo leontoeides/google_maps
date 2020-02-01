@@ -14,11 +14,10 @@ use crate::{
     elevation::request::locations::Locations,
     client_settings::ClientSettings,
 }; // use
-use serde::{Serialize, Deserialize};
 
 /// Use this structure's methods to build a Time Zone API request.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct Request {
 
     // Required parameters:

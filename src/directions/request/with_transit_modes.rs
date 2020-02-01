@@ -3,7 +3,7 @@ use crate::directions::request::{
     transit_mode::TransitMode,
 }; // use
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Specifies preferred modes of transit.
     ///
@@ -51,7 +51,7 @@ impl Request {
     /// ])
     /// ```
 
-    pub fn with_transit_modes(&mut self, transit_modes: Vec<TransitMode>) -> &mut Request {
+    pub fn with_transit_modes(&'a mut self, transit_modes: Vec<TransitMode>) -> &'a mut Request {
         self.transit_modes = Some(transit_modes);
         self
     } // fn

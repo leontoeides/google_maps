@@ -3,7 +3,7 @@ use crate::{
     region::Region,
 }; // use
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Specifies the region bias. There is a London in Canada and there is a
     /// London in England. By biasing the region, you help the directions
@@ -35,7 +35,7 @@ impl Request {
     /// .with_region(Region::Canada)
     /// ```
 
-    pub fn with_region(&mut self, region: Region) -> &mut Request {
+    pub fn with_region(&'a mut self, region: Region) -> &'a mut Request {
         self.region = Some(region);
         self
     } // fn
