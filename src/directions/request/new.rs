@@ -6,9 +6,9 @@ use crate::{
     client_settings::ClientSettings,
 }; // use
 
-impl Request {
+impl<'a> Request<'a> {
 
-    pub fn new(client_settings: ClientSettings, origin: Location, destination: Location) -> Request {
+    pub fn new(client_settings: &mut ClientSettings, origin: Location, destination: Location) -> Request {
         Request {
             // Required parameters:
             destination,

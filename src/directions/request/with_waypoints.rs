@@ -3,7 +3,7 @@ use crate::directions::request::{
     waypoint::Waypoint,
 }; // use
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Specify pass throughs or stopovers at intermediate locations.
     ///
@@ -109,7 +109,7 @@ impl Request {
     /// .with_waypoints(vec![Waypoint::PlaceId(String::from("ChIJjfwswroFzkwRYnZID9jrRnU"))])
     /// ```
 
-    pub fn with_waypoints(&mut self, waypoints: Vec<Waypoint>) -> &mut Request {
+    pub fn with_waypoints(&'a mut self, waypoints: Vec<Waypoint>) -> &'a mut Request {
         self.waypoints = Some(waypoints);
         self
     } // fn

@@ -214,14 +214,15 @@
 
 mod error;
 pub mod bounds;
+pub mod client_settings;
 pub mod directions;
 pub mod distance_matrix;
 pub mod elevation;
 pub mod geocoding;
-pub mod client_settings;
 pub mod language;
 pub mod latlng;
 pub mod place_type;
+pub mod rate_limiting;
 pub mod region;
 pub mod time_zone;
 

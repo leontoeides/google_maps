@@ -3,7 +3,7 @@ use crate::directions::request::{
     Request,
 }; // use
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Specifies the desired departure time.
     ///
@@ -62,7 +62,7 @@ impl Request {
     ///     Time::try_from_hms(12, 30, 0).unwrap(),
     /// )))
 
-    pub fn with_departure_time(&mut self, departure_time: DepartureTime) -> &mut Request {
+    pub fn with_departure_time(&'a mut self, departure_time: DepartureTime) -> &'a mut Request {
         self.departure_time = Some(departure_time);
         self
     } // fn

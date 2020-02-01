@@ -4,7 +4,7 @@ use crate::directions::{
 }; // use
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Builds the query string for the Google Maps Directions API based on the
     /// input provided by the client.
@@ -13,7 +13,7 @@ impl Request {
     ///
     /// This method accepts no arguments.
 
-    pub fn build(&mut self) -> Result<&mut Request, Error> {
+    pub fn build(&'a mut self) -> Result<&'a mut Request, Error> {
 
         // Ensure request has been validated before building the query string:
 

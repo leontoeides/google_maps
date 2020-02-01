@@ -62,7 +62,7 @@ impl Request {
                             // Only Google's "Unknown Error" is eligible for
                             // retries
                             deserialized.status != Status::UnknownError ||
-                            counter > self.client_settings.maximum_retries {
+                            counter > self.client_settings.max_retries {
                                 // If there is a Google API error other than
                                 // "Unknown Error," return the error and do not
                                 // retry the request. Also, if we have reached
@@ -76,7 +76,7 @@ impl Request {
                     } else if
                         !response.status().is_server_error() || // Only HTTP "500 Server Errors", and
                         response.status() != 429 || // HTTP "429 Too Many Requests" are eligible for retries.
-                        counter > self.client_settings.maximum_retries {
+                        counter > self.client_settings.max_retries {
                             // If the HTTP request error was not a 500 Server
                             // error or "429 Too Many Requests" error, return
                             // the error and do not retry the request. Also, if
@@ -89,7 +89,7 @@ impl Request {
                 Err(response) => {
                     // HTTP client did not get a response from the server:
                     warn!("HTTP client returned: `{}`", response);
-                    if counter > self.client_settings.maximum_retries {
+                    if counter > self.client_settings.max_retries {
                         // If we have reached the maximum retry count, do not
                         // retry anymore. Return the last HTTP client error:
                         return Err(Error::Reqwest(response))
@@ -100,7 +100,7 @@ impl Request {
             // Truncated exponential backoff is a standard error handling
             // strategy for network applications in which a client periodically
             // retries a failed request with increasing delays between requests.
-            if wait_time_in_ms < self.client_settings.maximum_backoff {
+            if wait_time_in_ms < self.client_settings.max_backoff {
                 // Wait Time = 2^N + Random
                 //
                 // A random number of milliseconds less than or equal to 255.
@@ -112,18 +112,18 @@ impl Request {
                 // appropriate value depends on the use case.
                 //
                 // It's okay to continue retrying once you reach the
-                // maximum_backoff time. Retries after this point do not need to
+                // max_backoff time. Retries after this point do not need to
                 // continue increasing backoff time. For example, if a client
-                // uses an maximum_backoff time of 64 seconds, then after
+                // uses an max_backoff time of 64 seconds, then after
                 // reaching this value, the client can retry every 64 seconds.
                 // At some point, clients should be prevented from retrying
                 // infinitely.
-                if wait_time_in_ms > self.client_settings.maximum_backoff {
-                    wait_time_in_ms = self.client_settings.maximum_backoff
+                if wait_time_in_ms > self.client_settings.max_backoff {
+                    wait_time_in_ms = self.client_settings.max_backoff
                 } // if
             } // if
 
-            info!("Could not successfully query the Google Maps Platform. Sleeping for {} milliseconds before retry #{} of {}.", wait_time_in_ms, counter, self.client_settings.maximum_retries);
+            info!("Could not successfully query the Google Maps Platform. Sleeping for {} milliseconds before retry #{} of {}.", wait_time_in_ms, counter, self.client_settings.max_retries);
 
             std::thread::sleep(std::time::Duration::from_millis(wait_time_in_ms as u64));
 

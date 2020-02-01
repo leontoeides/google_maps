@@ -33,7 +33,7 @@ use crate::{
 }; // use
 use time::PrimitiveDateTime;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct Request {
 
     // Required parameters:

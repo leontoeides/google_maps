@@ -15,7 +15,7 @@ use crate::{
 use time::PrimitiveDateTime;
 
 /// Use this structure's methods to build your Time Zone API request.
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct Request {
 
     // Required parameters:

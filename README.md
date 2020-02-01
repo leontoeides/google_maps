@@ -16,8 +16,8 @@ back to the Rust community. I hope it saves someone out there some work.
 
 # Changelog
 
-* 0.4.0: ⚠ **Breaking change**. API keys are no longer passed directly to Google
-Maps request methods. Now, a structure containing your API key and several other
+* 0.4.0: ⚠ **Breaking change**: API keys are no longer passed directly to
+Google Maps requests. Now, a structure containing your API key and several other
 optional settings is passed instead. For example:
 
 Before:
@@ -31,9 +31,9 @@ let location = GeocodingReverseRequest::new(
 
 After:
 ```rust
-let client_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
+let my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 let location = GeocodingReverseRequest::new(
-    client_settings,
+    my_settings,
     // 10 Downing St, Westminster, London
     LatLng { lat: 51.5033635, lng: -0.1276248 }
 )
@@ -41,21 +41,25 @@ let location = GeocodingReverseRequest::new(
 
 With optional settings:
 ```rust
-let client_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE)
+let my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE)
     .with_maximum_retries(8)
     .with_maximum_backoff(64000) // In milliseconds. 64 seconds.
     .finalize();
 ```
 
-* 0.4.0: ⚠ **Breaking change**. All `f32` fields have been increased to `f64`
+* 0.4.0: ⚠ **Breaking change**: All `f32` fields have been increased to `f64`
 fields.
+
+* 0.4.0: ⚠ **Breaking change**: The `DirectionsResponse` structure has been
+altered to make
 
 * 0.4.0: Implemented automatic retry with exponential backoff. This client
 library will now attempt to query the Google Cloud Platform several times before
 giving up and returning an error. Temporary network hiccups will no longer cause
 your program to fail.
 
-* 0.4.0: Now implements the `log` crate with some messages for debugging.
+* 0.4.0: Now implements the `log` crate with some logging messages for
+debugging.
 
 # Feedback
 
@@ -244,10 +248,8 @@ responds as expected.
 
 # To do
 
-1. ⚠ Breaking change coming: Change latitude & longitude from `f32` to `f64`.
-2. ⚠ Breaking change coming: Convert enum latitude & longitude fields into enum LatLng structs.
-3. Method range-checking for LatLng manipulation.
-4. Convert explicit query validation to session types wherever reasonable.
-5. Automatic Rate Limiting
-6. [Places API](https://developers.google.com/places/web-service/intro)
-7. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
+1. ⚠ Breaking change coming: Convert enum latitude & longitude fields into enum LatLng structs.
+2. Method range-checking for LatLng manipulation.
+3. Convert explicit query validation to session types wherever reasonable.
+4. [Places API](https://developers.google.com/places/web-service/intro)
+5. [Roads API](https://developers.google.com/maps/documentation/roads/intro)

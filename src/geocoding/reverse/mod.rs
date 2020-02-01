@@ -21,7 +21,7 @@ use crate::{
 /// Use this structure's methods to build your Reverse Geocoding API request.
 /// Address lookup from latitude/longitude.
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct ReverseRequest {
 
     // Required parameters:

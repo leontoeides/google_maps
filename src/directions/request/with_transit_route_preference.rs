@@ -3,7 +3,7 @@ use crate::directions::request::{
     transit_route_preference::TransitRoutePreference,
 }; // use
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Specifies the preferences for transit routes.
     ///
@@ -35,7 +35,7 @@ impl Request {
     /// .with_transit_route_preference(TransitRoutePreference::FewerTransfers)
     /// ```
 
-    pub fn with_transit_route_preference(&mut self, transit_route_preference: TransitRoutePreference) -> &mut Request {
+    pub fn with_transit_route_preference(&'a mut self, transit_route_preference: TransitRoutePreference) -> &'a mut Request {
         self.transit_route_preference = Some(transit_route_preference);
         self
     } // fn
