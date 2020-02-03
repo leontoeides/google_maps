@@ -1,10 +1,12 @@
-use crate::directions::{
-    error::Error,
-    request::Request,
-    response::Response,
-    response::status::Status,
+use crate::{
+    directions::{
+        error::Error,
+        request::Request,
+        response::Response,
+        response::status::Status,
+    },
+    rate_limit::api::Api,
 }; // use
-use crate::rate_limiting::Api;
 use log::{info, warn};
 
 impl<'a> Request<'a> {
@@ -30,8 +32,8 @@ impl<'a> Request<'a> {
             None => return Err(Error::QueryNotBuilt),
         } // match
 
-        self.client_settings.rate_limiting.limit(Api::All);
-        self.client_settings.rate_limiting.limit(Api::Directions);
+        self.client_settings.rate_limit.limit(Api::All);
+        self.client_settings.rate_limit.limit(Api::Directions);
 
         info!("HTTP GET: {}", uri);
 

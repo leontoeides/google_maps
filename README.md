@@ -39,14 +39,6 @@ let location = GeocodingReverseRequest::new(
 )
 ```
 
-With optional settings:
-```rust
-let my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE)
-    .with_maximum_retries(8)
-    .with_maximum_backoff(64000) // In milliseconds. 64 seconds.
-    .finalize();
-```
-
 * 0.4.0: ⚠ **Breaking change**: All `f32` fields have been increased to `f64`
 fields.
 

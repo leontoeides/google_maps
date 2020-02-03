@@ -222,7 +222,7 @@ pub mod geocoding;
 pub mod language;
 pub mod latlng;
 pub mod place_type;
-pub mod rate_limiting;
+pub mod rate_limit;
 pub mod region;
 pub mod time_zone;
 

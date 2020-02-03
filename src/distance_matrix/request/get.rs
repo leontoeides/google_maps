@@ -34,8 +34,10 @@ impl Request {
         // Initialize variables:
         let mut counter = 0;
         let mut wait_time_in_ms = 0;
-        // Retries the get request until successful, an error ineligible for
-        // retries is returned, or we have reached the maximum retries:
+        // This loop retries the get request until successful. An error
+        // ineligible for retries is returned to the caller as an error. If the
+        // maximum retries has been reached, the last error is returned to the
+        // caller.
         loop {
             // Increment retry counter:
             counter += 1;

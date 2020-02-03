@@ -1,6 +1,6 @@
 use crate::client_settings::ClientSettings;
-use crate::rate_limiting::Api;
-use time::Duration;
+use crate::rate_limit::api::Api;
+use std::time::Duration;
 
 impl ClientSettings {
 
