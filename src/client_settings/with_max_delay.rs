@@ -1,5 +1,5 @@
 use crate::client_settings::ClientSettings;
-use time::Duration;
+use std::time::Duration;
 
 impl ClientSettings {
 
@@ -8,15 +8,14 @@ impl ClientSettings {
     ///
     /// ## Arguments
     ///
-    /// * `max_retry_delay` ‧ The maximum delay between request retries.
+    /// * `max_delay` ‧ The maximum delay between request retries.
     ///
     /// ## Description
     ///
-    /// Client will continue retrying once you the `max_retry_delay` time is
-    /// reached. Retries after this point will not continue increasing backoff
-    /// time. For example, if a client uses an `max_retry_delay` time of _64_
-    /// seconds, then after reaching this value, the client can retry every _64_
-    /// seconds.
+    /// Client will continue retrying once you the `max_delay` time is reached.
+    /// Retries after this point will not continue increasing backoff time. For
+    /// example, if a client uses an `max_delay` time of _64_ seconds, then
+    /// after reaching this value, the client can retry every _64_ seconds.
     ///
     /// How long clients should wait between retries and how many times they
     /// should retry depends on your use case and network conditions. For
@@ -28,11 +27,11 @@ impl ClientSettings {
     ///
     /// * Sets the maximum delay between request retries to 32 seconds:
     /// ```rust
-    /// .with_max_retry_delay(Api::All, Duration::seconds(32))
+    /// .with_max_delay(Api::All, Duration::seconds(32))
     /// ```
 
-    pub fn with_max_retry_delay(&mut self, max_retry_delay: Duration) -> &mut ClientSettings {
-        self.max_backoff = max_retry_delay;
+    pub fn with_max_delay(&mut self, max_delay: Duration) -> &mut ClientSettings {
+        self.max_backoff = max_delay.as_millis() as u32;
         self
     } // fn
 
