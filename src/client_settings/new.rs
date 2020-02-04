@@ -1,5 +1,5 @@
 use crate::client_settings::ClientSettings;
-use crate::rate_limit::RateLimit;
+use crate::request_rate::RequestRate;
 
 impl ClientSettings {
 
@@ -9,14 +9,14 @@ impl ClientSettings {
             key: String::from(key),
             max_retries: 20,
             max_backoff: 32000,
-            rate_limit: RateLimit {
+            rate_limit: RequestRate {
                 all: None,
                 directions: None,
                 distance_matrix: None,
                 elevation: None,
                 geocoding: None,
                 time_zone: None,
-            } // RateLimit
+            } // RequestRate
         } // ClientSettings
     } // fn
 

@@ -1,9 +1,7 @@
-use crate::rate_limit::duration_unit::DurationUnit;
+use crate::request_rate::duration_unit::DurationUnit;
 use std::time::Duration;
 
 pub fn rate_to_string(requests: u64, duration: Duration) -> String {
-
-    let time_in_secs = duration.as_secs_f64();
 
     const MILLISECOND_IN_SECS: f64 = 0.001;
     const SECOND_IN_SECS: f64 = 1.0;
@@ -16,18 +14,29 @@ pub fn rate_to_string(requests: u64, duration: Duration) -> String {
 
     // This match takes the duration passed by the caller and adjusts the
     // time/duration unit for better readability when presenting to an end user.
-    // It returns a tuple with - the adjusted duration quantity in index 0, and
-    // the duration unit of time in index 1:
+    // This match structure finds the smallest time unit that results in a value
+    // over 1.0. It returns a tuple with - the adjusted duration quantity in
+    // index 0, and the duration unit of time in index 1:
 
-    let adjusted_units = match time_in_secs {
-        s if s < SECOND_IN_SECS => (requests as f64 / s * MILLISECOND_IN_SECS, DurationUnit::Milliseconds),
-        s if s < MINUTE_IN_SECS => (requests as f64 / s * SECOND_IN_SECS, DurationUnit::Seconds),
-        s if s < HOUR_IN_SECS => (requests as f64 / s * MINUTE_IN_SECS, DurationUnit::Minutes),
-        s if s < DAY_IN_SECS => (requests as f64 / s * HOUR_IN_SECS, DurationUnit::Hours),
-        s if s < WEEK_IN_SECS => (requests as f64 / s * DAY_IN_SECS, DurationUnit::Days),
-        s if s < MONTH_IN_SECS => (requests as f64 / s * WEEK_IN_SECS, DurationUnit::Weeks),
-        s if s < YEAR_IN_SECS => (requests as f64 / s * MONTH_IN_SECS, DurationUnit::Months),
-        _ => (time_in_secs / YEAR_IN_SECS, DurationUnit::Years),
+    let duration_in_secs = duration.as_secs_f64();
+    let requests = requests as f64;
+
+    let adjusted_units = match duration_in_secs {
+        s if requests / (s / MILLISECOND_IN_SECS) > 1.0 =>
+            (requests / (s / MILLISECOND_IN_SECS), DurationUnit::Milliseconds),
+        s if requests / (s / SECOND_IN_SECS) > 1.0 =>
+            (requests / (s / SECOND_IN_SECS), DurationUnit::Seconds),
+        s if requests / (s / MINUTE_IN_SECS) > 1.0 =>
+            (requests / (s / MINUTE_IN_SECS), DurationUnit::Minutes),
+        s if requests / (s / HOUR_IN_SECS) > 1.0 =>
+            (requests / (s / HOUR_IN_SECS), DurationUnit::Hours),
+        s if requests / (s / DAY_IN_SECS) > 1.0 =>
+            (requests / (s / DAY_IN_SECS), DurationUnit::Days),
+        s if requests / (s / WEEK_IN_SECS) > 1.0 =>
+            (requests / (s / WEEK_IN_SECS), DurationUnit::Weeks),
+        s if requests / (s / MONTH_IN_SECS) > 1.0 =>
+            (requests / (s / MONTH_IN_SECS), DurationUnit::Months),
+        _ => (duration_in_secs / YEAR_IN_SECS, DurationUnit::Years),
     }; // match
 
     // The fractional portion of a large value (i.e. 40075.14159) is less
@@ -48,10 +57,13 @@ pub fn rate_to_string(requests: u64, duration: Duration) -> String {
     // If the value has a fractional part, remove any insignificant digits:
 
     if quantity_string.contains(".") {
-        quantity_string = quantity_string.trim_end_matches(|c| c == '0' || c == '.').to_string();
+        quantity_string = quantity_string.trim_end_matches('0').to_string();
+        quantity_string = quantity_string.trim_end_matches('.').to_string();
     }
 
-    //
+    // The rate type. For example it could be "_bytes_ per second," "_file_ per
+    // minute." It will return singular if the quantity is exactly one. If the
+    // quantity is not 1, or a fractional 1, it returns plural.
 
     let rate_type_string = if quantity_string == "1" {
         String::from("request")

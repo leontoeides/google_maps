@@ -1,8 +1,8 @@
 //! # google_maps
 //!
-//! An unofficial Google Maps Platform client for the Rust programming language.
-//! This client currently implements the Directions API, Distance Matrix API,
-//! Elevation API, Geocoding API, and Time Zone API.
+//! An unofficial Google Maps Platform client library for the Rust programming
+//! language. This client currently implements the Directions API, Distance
+//! Matrix API, Elevation API, Geocoding API, and Time Zone API.
 //!
 //! # Welcome
 //!
@@ -222,8 +222,8 @@ pub mod geocoding;
 pub mod language;
 pub mod latlng;
 pub mod place_type;
-pub mod rate_limit;
 pub mod region;
+pub mod request_rate;
 pub mod time_zone;
 
 pub extern crate time;
