@@ -1,11 +1,10 @@
-use crate::rate_limit::api::Api;
-use crate::rate_limit::rate::rate_to_string;
-use crate::rate_limit::duration::duration_to_string;
-use crate::rate_limit::RateLimit;
+use crate::request_rate::api::Api;
+use crate::request_rate::duration::duration_to_string;
+use crate::request_rate::RequestRate;
 use log::{info, trace};
 use std::time::Instant;
 
-impl RateLimit {
+impl RequestRate {
 
     pub fn limit(&mut self, api: Api) {
 
@@ -21,43 +20,42 @@ impl RateLimit {
 
         match *api_ref {
 
-            // No rate limit is defined for caller's API, do nothing:
+            // No request rate is defined for caller's API, do nothing:
             None => (),
 
             //
             Some(ref mut rate) => {
 
-                match rate.first_request {
+                match rate.current_rate.first_request {
 
                     None => {
                         trace!("Rate limiting is enabled for the `{}` API.", String::from(&api));
-                        rate.first_request = Some(Instant::now());
-                        rate.total_request_count = 1;
+                        rate.current_rate.first_request = Some(Instant::now());
+                        rate.current_rate.request_count = 1;
                     }, // case
 
                     Some(first_request) => {
+
                         // Calculate the current rate and target rate:
-                        let current_rate = rate.total_request_count as f64 / first_request.elapsed().as_secs_f64();
-                        let target_rate = rate.request_limit as f64 / rate.per_duration.as_secs_f64();
+                        let target_rate = rate.target_rate.requests as f64 / rate.target_rate.per_duration.as_secs_f64();
+                        let current_rate = rate.current_rate.request_count as f64 / first_request.elapsed().as_secs_f64();
                         // Output logging information:
                         trace!(
                             "{} requests to the `{}` API this session. This API's session began {} ago.",
-                            rate.total_request_count,
+                            rate.current_rate.request_count,
                             String::from(&api),
                             duration_to_string(first_request.elapsed())
                         );
-                        trace!(
-                            "Current rate: {}. Target rate: {}.",
-                            rate_to_string(rate.total_request_count, first_request.elapsed()),
-                            rate_to_string(rate.request_limit as u64, rate.per_duration),
-                        );
+                        trace!("Current rate: {}. Target rate: {}.", rate.current_rate, rate.target_rate);
+                        //
                         let difference = current_rate - target_rate;
                         if difference > 0.0 {
                             let sleep_duration = std::time::Duration::from_secs(((1.0 / target_rate) + difference).round() as u64);
                             info!("Sleeping for {}.", duration_to_string(sleep_duration));
                             std::thread::sleep(sleep_duration);
                         } // if
-                        rate.total_request_count += 1;
+                        // Increment the request counter:
+                        rate.current_rate.request_count += 1;
                     } // case
                 } // match
 

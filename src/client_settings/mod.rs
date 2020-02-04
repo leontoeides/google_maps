@@ -8,7 +8,7 @@ mod with_max_delay;
 mod with_max_retries;
 mod with_rate_limit;
 
-use crate::rate_limit::RateLimit;
+use crate::request_rate::RequestRate;
 
 /// Contains information used for authenticating with Google and other settings.
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
@@ -35,6 +35,6 @@ pub struct ClientSettings {
     /// and for longer intervals when compared to desktop clients of the same
     /// application.
     pub max_backoff: u32,
-    /// Rate limits for all the different Google Cloud Maps Platform APIs.
-    pub rate_limit: RateLimit,
+    /// Rate limits for each of the Google Cloud Maps Platform APIs.
+    pub rate_limit: RequestRate,
 } // struct

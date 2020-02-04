@@ -4,7 +4,7 @@ version = "0.4.0"
 authors = ["Dylan Bowker <dylan.bowker@arkiteq.ca>"]
 edition = "2018"
 categories = [ "api-bindings" ]
-description = "An unofficial Google Maps Platform client for the Rust programming language."
+description = "An unofficial Google Maps Platform client library for the Rust programming language."
 documentation = "https://docs.rs/google_maps"
 keywords = [ "distance", "elevation", "geocoding", "google", "maps" ]
 license = "MIT OR Apache-2.0"
@@ -17,5 +17,5 @@ percent-encoding = "2.1.0"
 rand = "0.7.3"
 reqwest = { version = "0.10.1", features = ["blocking", "json"] }
 serde = { version = "1.0.104", features = ["derive"] }
-serde_json = "1.0.44"
-time = "0.2.4"
+serde_json = "1.0.46"
+time = "0.2.6"
