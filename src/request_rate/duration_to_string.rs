@@ -1,6 +1,13 @@
 use crate::request_rate::duration_unit::DurationUnit;
 use std::time::Duration;
 
+/// Converts a `std::time::Duration` into a user-readable string.
+///
+/// ## Arguments:
+///
+/// * `duration` ‧ The `std::time::Duration` that is to be converted into a
+/// string.
+
 pub fn duration_to_string(duration: Duration) -> String {
 
     const MILLISECOND_IN_SECS: f64 = 0.001;
@@ -47,7 +54,7 @@ pub fn duration_to_string(duration: Duration) -> String {
 
     // If the value has a fractional part, remove any insignificant digits:
 
-    if quantity_string.contains(".") {
+    if quantity_string.contains('.') {
         quantity_string = quantity_string.trim_end_matches('0').to_string();
         quantity_string = quantity_string.trim_end_matches('.').to_string();
     }
@@ -86,6 +93,6 @@ pub fn duration_to_string(duration: Duration) -> String {
 
     // Formats the final string and returns it to the caller:
 
-    quantity_string + &" " + &units_string
+    quantity_string + " " + &units_string
 
 } // fn
