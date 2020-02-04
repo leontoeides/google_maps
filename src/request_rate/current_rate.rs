@@ -1,7 +1,7 @@
 //! Contains the `CurrentRate` struct and its associated traits. Used to track
 //! the current effective request rate.
 
-use crate::request_rate::rate::rate_to_string;
+use crate::request_rate::rate_to_string::rate_to_string;
 use std::time::Instant;
 
 /// Contains the current request rate in the form of _requests_ since _first
@@ -33,7 +33,7 @@ impl std::convert::From<&CurrentRate> for String {
     fn from(current_rate: &CurrentRate) -> String {
         match current_rate.first_request {
             None => String::from("None"),
-            Some(first_request) => rate_to_string(current_rate.request_count, first_request.elapsed()),
+            Some(first_request) => rate_to_string(current_rate.request_count, first_request.elapsed(), "request", "requests"),
         } // match
     } // fn
 } // impl

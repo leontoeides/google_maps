@@ -1,8 +1,11 @@
 //! Contains the `ApiRate` struct and its associated traits. `ApiRate` contains
-//! the user's specified request rate and the effective current request rate.
+//! the user's specified request rate and the system calculated effective
+//! current request rate.
 
-use crate::request_rate::current_rate::CurrentRate;
-use crate::request_rate::target_rate::TargetRate;
+use crate::request_rate::{
+    current_rate::CurrentRate,
+    target_rate::TargetRate,
+}; // use
 
 /// Contains the user's specified request rate and the effective current request
 /// rate.

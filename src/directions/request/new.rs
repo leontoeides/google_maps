@@ -8,6 +8,12 @@ use crate::{
 
 impl<'a> Request<'a> {
 
+    /// Initializes the data structure for the builder pattern.
+    ///
+    /// ## Arguments:
+    ///
+    /// This method accepts no arguments.
+
     pub fn new(client_settings: &mut ClientSettings, origin: Location, destination: Location) -> Request {
         Request {
             // Required parameters:

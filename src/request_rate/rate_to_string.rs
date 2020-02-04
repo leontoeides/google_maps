@@ -1,7 +1,18 @@
 use crate::request_rate::duration_unit::DurationUnit;
 use std::time::Duration;
 
-pub fn rate_to_string(requests: u64, duration: Duration) -> String {
+/// Converts a series of arguments into a user-readable rate.
+///
+/// ## Arguments:
+///
+/// * `actions` ‧ _Actions_ per duration.
+/// * `duration` ‧ Actions per _duration_.
+/// * `action_singular` ‧ The singular form of the action's name. For example,
+/// `"request"` or `"file"`.
+/// * `action_plural` ‧ The plural form of the action's name. For example,
+/// `"bytes"` or `"queries"`.
+
+pub fn rate_to_string(actions: u64, duration: Duration, action_singular: &str, action_plural: &str) -> String {
 
     const MILLISECOND_IN_SECS: f64 = 0.001;
     const SECOND_IN_SECS: f64 = 1.0;
@@ -19,23 +30,23 @@ pub fn rate_to_string(requests: u64, duration: Duration) -> String {
     // index 0, and the duration unit of time in index 1:
 
     let duration_in_secs = duration.as_secs_f64();
-    let requests = requests as f64;
+    let actions = actions as f64;
 
     let adjusted_units = match duration_in_secs {
-        s if requests / (s / MILLISECOND_IN_SECS) > 1.0 =>
-            (requests / (s / MILLISECOND_IN_SECS), DurationUnit::Milliseconds),
-        s if requests / (s / SECOND_IN_SECS) > 1.0 =>
-            (requests / (s / SECOND_IN_SECS), DurationUnit::Seconds),
-        s if requests / (s / MINUTE_IN_SECS) > 1.0 =>
-            (requests / (s / MINUTE_IN_SECS), DurationUnit::Minutes),
-        s if requests / (s / HOUR_IN_SECS) > 1.0 =>
-            (requests / (s / HOUR_IN_SECS), DurationUnit::Hours),
-        s if requests / (s / DAY_IN_SECS) > 1.0 =>
-            (requests / (s / DAY_IN_SECS), DurationUnit::Days),
-        s if requests / (s / WEEK_IN_SECS) > 1.0 =>
-            (requests / (s / WEEK_IN_SECS), DurationUnit::Weeks),
-        s if requests / (s / MONTH_IN_SECS) > 1.0 =>
-            (requests / (s / MONTH_IN_SECS), DurationUnit::Months),
+        s if actions / (s / MILLISECOND_IN_SECS) > 1.0 =>
+            (actions / (s / MILLISECOND_IN_SECS), DurationUnit::Milliseconds),
+        s if actions / (s / SECOND_IN_SECS) > 1.0 =>
+            (actions / (s / SECOND_IN_SECS), DurationUnit::Seconds),
+        s if actions / (s / MINUTE_IN_SECS) > 1.0 =>
+            (actions / (s / MINUTE_IN_SECS), DurationUnit::Minutes),
+        s if actions / (s / HOUR_IN_SECS) > 1.0 =>
+            (actions / (s / HOUR_IN_SECS), DurationUnit::Hours),
+        s if actions / (s / DAY_IN_SECS) > 1.0 =>
+            (actions / (s / DAY_IN_SECS), DurationUnit::Days),
+        s if actions / (s / WEEK_IN_SECS) > 1.0 =>
+            (actions / (s / WEEK_IN_SECS), DurationUnit::Weeks),
+        s if actions / (s / MONTH_IN_SECS) > 1.0 =>
+            (actions / (s / MONTH_IN_SECS), DurationUnit::Months),
         _ => (duration_in_secs / YEAR_IN_SECS, DurationUnit::Years),
     }; // match
 
@@ -56,7 +67,7 @@ pub fn rate_to_string(requests: u64, duration: Duration) -> String {
 
     // If the value has a fractional part, remove any insignificant digits:
 
-    if quantity_string.contains(".") {
+    if quantity_string.contains('.') {
         quantity_string = quantity_string.trim_end_matches('0').to_string();
         quantity_string = quantity_string.trim_end_matches('.').to_string();
     }
@@ -66,9 +77,9 @@ pub fn rate_to_string(requests: u64, duration: Duration) -> String {
     // quantity is not 1, or a fractional 1, it returns plural.
 
     let rate_type_string = if quantity_string == "1" {
-        String::from("request")
+        action_singular
     } else {
-        String::from("requests")
+        action_plural
     }; // if
 
     // Returns the unit of time enum into a string that can be presented to the
@@ -90,6 +101,6 @@ pub fn rate_to_string(requests: u64, duration: Duration) -> String {
 
     // Formats the final string and returns it to the caller:
 
-    quantity_string + &" " + &rate_type_string + &" per " + &units_string
+    quantity_string + " " + &rate_type_string + " per " + &units_string
 
 } // fn
