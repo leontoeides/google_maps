@@ -9,14 +9,7 @@ impl ClientSettings {
             key: String::from(key),
             max_retries: 20,
             max_backoff: 32000,
-            rate_limit: RequestRate {
-                all: None,
-                directions: None,
-                distance_matrix: None,
-                elevation: None,
-                geocoding: None,
-                time_zone: None,
-            } // RequestRate
+            rate_limit: RequestRate::default(),
         } // ClientSettings
     } // fn
 

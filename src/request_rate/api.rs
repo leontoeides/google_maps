@@ -31,7 +31,7 @@ impl std::convert::From<&Api> for String {
 } // impl
 
 impl std::default::Default for Api {
-    /// Returns a reasonable default variant for the `Api` enum type.
+    /// Returns a reasonable default variant for the `Api` enum.
     fn default() -> Self {
         Api::All
     } // fn

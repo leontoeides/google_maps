@@ -16,7 +16,7 @@ pub struct ApiRate {
 } // struct
 
 impl std::default::Default for ApiRate {
-    /// Returns a reasonable default population for the `ApiRate` struct type.
+    /// Returns a reasonable default values for the `ApiRate` type.
     fn default() -> Self {
         ApiRate {
             target_rate: TargetRate::default(),
