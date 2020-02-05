@@ -10,21 +10,30 @@ use std::time::Duration;
 ///
 /// ## Description:
 ///
-/// A `Duration` is a unit of time for the Rust programming language. This this
+/// A `Duration` is a unit of time for the Rust programming language. This
 /// function converts a Duration into an English expression of time. For
 /// example, "1 month," "5.83 minutes," or "948 milliseconds." The unit of time
 /// (i.e. milliseconds or seconds) is automatically selected by this function.
 
 pub fn duration_to_string(duration: Duration) -> String {
 
-    const SECONDS_IN_MILLISECOND: f64 = 0.001;
-    const SECONDS_IN_SECOND: f64 = 1.0;
-    const SECONDS_IN_MINUTE: f64 = 60.0;
-    const SECONDS_IN_HOUR: f64 = 3_600.0;
-    const SECONDS_IN_DAY: f64 = 86_400.0;
-    const SECONDS_IN_WEEK: f64 = 604_800.0;
-    const SECONDS_IN_MONTH: f64 = 2_629_746.0;
-    const SECONDS_IN_YEAR: f64 = 31_556_952.0;
+    const SECONDS_IN_A_SECOND: f64 = 1.0;
+    const SECONDS_IN_A_MINUTE: f64 = 60.0;
+    const SECONDS_IN_AN_HOUR: f64 = 3_600.0;
+    const SECONDS_IN_A_DAY: f64 = 86_400.0;
+    const SECONDS_IN_A_WEEK: f64 = 604_800.0;
+    const SECONDS_IN_A_MONTH: f64 = 2_629_746.0;
+    const SECONDS_IN_A_YEAR: f64 = 31_556_952.0;
+
+    // Multiplication is much faster than division:
+
+    const MILLISECONDS_IN_A_SECOND: f64 = 1.0 / 0.001;
+    const MINUTES_IN_A_SECOND: f64 = 1.0 / 60.0;
+    const HOURS_IN_A_SECOND: f64 = 1.0 / 3_600.0;
+    const DAYS_IN_A_SECOND: f64 = 1.0 / 86_400.0;
+    const WEEKS_IN_A_SECOND: f64 = 1.0 / 604_800.0;
+    const MONTHS_IN_A_SECOND: f64 = 1.0 / 2_629_746.0;
+    const YEARS_IN_A_SECOND: f64 = 1.0 / 31_556_952.0;
 
     // This match takes the duration passed by the caller and adjusts the
     // time/duration unit for better readability when presenting to an end user.
@@ -34,14 +43,14 @@ pub fn duration_to_string(duration: Duration) -> String {
     let duration_in_secs = duration.as_secs_f64();
 
     let adjusted_units = match duration_in_secs {
-        s if s < SECONDS_IN_SECOND => (s / SECONDS_IN_MILLISECOND, DurationUnit::Milliseconds),
-        s if s < SECONDS_IN_MINUTE => (s / SECONDS_IN_SECOND, DurationUnit::Seconds),
-        s if s < SECONDS_IN_HOUR => (s / SECONDS_IN_MINUTE, DurationUnit::Minutes),
-        s if s < SECONDS_IN_DAY => (s / SECONDS_IN_HOUR, DurationUnit::Hours),
-        s if s < SECONDS_IN_WEEK => (s / SECONDS_IN_DAY, DurationUnit::Days),
-        s if s < SECONDS_IN_MONTH => (s / SECONDS_IN_WEEK, DurationUnit::Weeks),
-        s if s < SECONDS_IN_YEAR => (s / SECONDS_IN_MONTH, DurationUnit::Months),
-        _ => (duration_in_secs / SECONDS_IN_YEAR, DurationUnit::Years),
+        s if s < SECONDS_IN_A_SECOND => (s * MILLISECONDS_IN_A_SECOND, DurationUnit::Milliseconds),
+        s if s < SECONDS_IN_A_MINUTE => (s * SECONDS_IN_A_SECOND, DurationUnit::Seconds),
+        s if s < SECONDS_IN_AN_HOUR => (s * MINUTES_IN_A_SECOND, DurationUnit::Minutes),
+        s if s < SECONDS_IN_A_DAY => (s * HOURS_IN_A_SECOND, DurationUnit::Hours),
+        s if s < SECONDS_IN_A_WEEK => (s * DAYS_IN_A_SECOND, DurationUnit::Days),
+        s if s < SECONDS_IN_A_MONTH => (s * WEEKS_IN_A_SECOND, DurationUnit::Weeks),
+        s if s < SECONDS_IN_A_YEAR => (s * MONTHS_IN_A_SECOND, DurationUnit::Months),
+        _ => (duration_in_secs * YEARS_IN_A_SECOND, DurationUnit::Years),
     }; // match
 
     // The fractional portion of a large value (i.e. 40075.14159) is less

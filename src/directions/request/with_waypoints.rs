@@ -95,7 +95,7 @@ impl<'a> Request<'a> {
     ///     // Canadian Museum of Nature
     ///     Waypoint::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
     ///     // Rideau Canal National Historic Site
-    ///     Waypoint::LatLng{lat: 45.40453, lng: -75.6821073},
+    ///     Waypoint::LatLng(LatLng::new(45.40453, -75.6821073)?),
     ///     // Polyline to Bank St & Queen Elizabeth Driveway
     ///     Waypoint::Polyline(String::from("}`ctGdm|lMfBdEfRsLdSbHfExT")),
     ///     // Patterson's Creek Park

@@ -2,6 +2,7 @@
 //! to specify intermediate locations in the form of a text address,
 //! latitude/longitude pair, Google Place ID, or as an Encoded Polyline.
 
+use crate::latlng::LatLng;
 use serde::{Serialize, Deserialize};
 
 /// Used to specify pass throughs or stopovers at intermediate locations.
@@ -17,12 +18,7 @@ pub enum Waypoint {
 
     /// If you pass coordinates, they are used unchanged to calculate
     /// directions.
-    LatLng {
-        /// Latitude
-        lat: f64,
-        /// Longitude
-        lng: f64
-    },
+    LatLng(LatLng),
 
     /// The place ID may only be specified if the request includes an API key or
     /// a Google Maps Platform Premium Plan client ID. You can retrieve place
@@ -51,7 +47,7 @@ impl std::convert::From<&Waypoint> for String {
     fn from(waypoint: &Waypoint) -> String {
         match waypoint {
             Waypoint::Address(address) => address.clone(),
-            Waypoint::LatLng { lat, lng } => format!("{:.7},{:.7}", lat, lng),
+            Waypoint::LatLng(latlng) => format!("{}", latlng),
             Waypoint::PlaceId(place_id) => format!("place_id:{}", place_id),
             Waypoint::Polyline(polyline) => format!("enc:{}:", polyline),
         } // match

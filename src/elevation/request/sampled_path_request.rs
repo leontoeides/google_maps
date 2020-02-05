@@ -18,17 +18,16 @@ impl Request {
     /// ## Example:
     ///
     /// ```
-    /// let elevation = ElevationRequest::new(GOOGLE_API_KEY)
     /// .sampled_path_request(
     ///     ElevationLocations::LatLngs(vec![
     ///         // Denver, Colorado
-    ///         LatLng { lat: 40.714728, lng: -73.998672 },
+    ///         LatLng::new(40.714728, -73.998672)?,
     ///         // Death Valley, California
-    ///         LatLng { lat: -34.397, lng: -116.866667 },
+    ///         LatLng::new(lat: -34.397, -116.866667)?,
     ///     ]),
     ///     // Number of samples
     ///     4
-    /// ).validate().unwrap().build().unwrap().get().unwrap();
+    /// )
     /// ```
 
     pub fn sampled_path_request(&mut self, path: Locations, samples: u8) -> &mut Request {
