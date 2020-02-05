@@ -7,31 +7,36 @@ use std::time::Duration;
 ///
 /// * `numerator` ‧ The numerator of the rate. i.e. _Files_ per second,
 /// _requests_ per minute, etc.
+///
 /// * `duration` ‧ The denominator of the rate. i.e. Bytes per _second_,
-/// _pages_ per hour, etc.
-/// * `numerator_singular` ‧ The singular form of the action's name. For example,
-/// `"request"` or `"file"`.
-/// * `numerator_plural` ‧ The plural form of the action's name. For example,
-/// `"bytes"` or `"queries"`.
+/// pages per _hour_, etc.
+///
+/// * `numerator_singular` ‧ The singular form of the numerator's name as a
+/// string to be displayed to the end-user. For example, `"request"` or
+/// `"file"`.
+///
+/// * `numerator_plural` ‧ The plural form of the numerator's name as a string
+/// to be displayed to the end-user. For example, `"bytes"` or `"queries"`.
 ///
 /// ## Description:
 ///
-/// A `Duration` is a unit of time for the Rust programming language. This this
-/// function converts a numerator and Duration into an English expression of
-/// a rate. For example, "1 file per month," "5.83 pages a minute," etc. The
+/// This function converts a numerator and Duration into an English expression
+/// of a rate. For example, "1 file per month," "5.83 pages a minute," etc. The
 /// unit of time (i.e. milliseconds or seconds) is automatically selected by
 /// this function.
 
 pub fn rate_to_string(numerator: u64, duration: Duration, numerator_singular: &str, numerator_plural: &str) -> String {
 
-    const SECONDS_IN_MILLISECOND: f64 = 0.001;
-    const SECONDS_IN_SECOND: f64 = 1.0;
-    const SECONDS_IN_MINUTE: f64 = 60.0;
-    const SECONDS_IN_HOUR: f64 = 3_600.0;
-    const SECONDS_IN_DAY: f64 = 86_400.0;
-    const SECONDS_IN_WEEK: f64 = 604_800.0;
-    const SECONDS_IN_MONTH: f64 = 2_629_746.0;
-    const SECONDS_IN_YEAR: f64 = 31_556_952.0;
+    // Multiplication is much faster than division:
+
+    const MILLISECONDS_IN_A_SECOND: f64 = 1.0 / 0.001;
+    const SECONDS_IN_A_SECOND: f64 = 1.0;
+    const MINUTES_IN_A_SECOND: f64 = 1.0 / 60.0;
+    const HOURS_IN_A_SECOND: f64 = 1.0 / 3_600.0;
+    const DAYS_IN_A_SECOND: f64 = 1.0 / 86_400.0;
+    const WEEKS_IN_A_SECOND: f64 = 1.0 / 604_800.0;
+    const MONTHS_IN_A_SECOND: f64 = 1.0 / 2_629_746.0;
+    const YEARS_IN_A_SECOND: f64 = 1.0 / 31_556_952.0;
 
     // This match takes the duration passed by the caller and adjusts the
     // time/duration unit for better readability when presenting to an end user.
@@ -43,21 +48,21 @@ pub fn rate_to_string(numerator: u64, duration: Duration, numerator_singular: &s
     let numerator = numerator as f64;
 
     let adjusted_units = match duration_in_secs {
-        s if numerator / (s / SECONDS_IN_MILLISECOND) > 1.0 =>
-            (numerator / (s / SECONDS_IN_MILLISECOND), DurationUnit::Milliseconds),
-        s if numerator / (s / SECONDS_IN_SECOND) > 1.0 =>
-            (numerator / (s / SECONDS_IN_SECOND), DurationUnit::Seconds),
-        s if numerator / (s / SECONDS_IN_MINUTE) > 1.0 =>
-            (numerator / (s / SECONDS_IN_MINUTE), DurationUnit::Minutes),
-        s if numerator / (s / SECONDS_IN_HOUR) > 1.0 =>
-            (numerator / (s / SECONDS_IN_HOUR), DurationUnit::Hours),
-        s if numerator / (s / SECONDS_IN_DAY) > 1.0 =>
-            (numerator / (s / SECONDS_IN_DAY), DurationUnit::Days),
-        s if numerator / (s / SECONDS_IN_WEEK) > 1.0 =>
-            (numerator / (s / SECONDS_IN_WEEK), DurationUnit::Weeks),
-        s if numerator / (s / SECONDS_IN_MONTH) > 1.0 =>
-            (numerator / (s / SECONDS_IN_MONTH), DurationUnit::Months),
-        _ => (duration_in_secs / SECONDS_IN_YEAR, DurationUnit::Years),
+        s if numerator / (s * MILLISECONDS_IN_A_SECOND) > 1.0 =>
+            (numerator / (s * MILLISECONDS_IN_A_SECOND), DurationUnit::Milliseconds),
+        s if numerator / (s * SECONDS_IN_A_SECOND) > 1.0 =>
+            (numerator / (s * SECONDS_IN_A_SECOND), DurationUnit::Seconds),
+        s if numerator / (s * MINUTES_IN_A_SECOND) > 1.0 =>
+            (numerator / (s * MINUTES_IN_A_SECOND), DurationUnit::Minutes),
+        s if numerator / (s * HOURS_IN_A_SECOND) > 1.0 =>
+            (numerator / (s * HOURS_IN_A_SECOND), DurationUnit::Hours),
+        s if numerator / (s * DAYS_IN_A_SECOND) > 1.0 =>
+            (numerator / (s * DAYS_IN_A_SECOND), DurationUnit::Days),
+        s if numerator / (s * WEEKS_IN_A_SECOND) > 1.0 =>
+            (numerator / (s * WEEKS_IN_A_SECOND), DurationUnit::Weeks),
+        s if numerator / (s * MONTHS_IN_A_SECOND) > 1.0 =>
+            (numerator / (s * MONTHS_IN_A_SECOND), DurationUnit::Months),
+        _ => (duration_in_secs * YEARS_IN_A_SECOND, DurationUnit::Years),
     }; // match
 
     // The fractional portion of a large value (i.e. 40075.14159) is less

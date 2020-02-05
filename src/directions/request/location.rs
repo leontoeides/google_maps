@@ -2,6 +2,7 @@
 //! to specify origin and destination locations in the form of a text address,
 //! latitude/longitude pair, or Google Place ID.
 
+use crate::latlng::LatLng;
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 use serde::{Serialize, Deserialize};
 
@@ -19,12 +20,7 @@ pub enum Location {
 
     /// If you pass coordinates, they are used unchanged to calculate
     /// directions.
-    LatLng {
-        /// Latitude
-        lat: f64,
-        /// Longitude
-        lng: f64
-    },
+    LatLng(LatLng),
 
     /// The place ID may only be specified if the request includes an API key or
     /// a Google Maps Platform Premium Plan client ID. You can retrieve place
@@ -43,7 +39,7 @@ impl std::convert::From<&Location> for String {
     fn from(location: &Location) -> String {
         match location {
             Location::Address(address) => utf8_percent_encode(&address, NON_ALPHANUMERIC).to_string(),
-            Location::LatLng { lat, lng } => utf8_percent_encode(&format!("{:.7},{:.7}", lat, lng), NON_ALPHANUMERIC).to_string(),
+            Location::LatLng(latlng) => utf8_percent_encode(&*String::from(latlng), NON_ALPHANUMERIC).to_string(),
             Location::PlaceId(place_id) => utf8_percent_encode(&format!("place_id:{}", place_id), NON_ALPHANUMERIC).to_string(),
         } // match
     } // fn

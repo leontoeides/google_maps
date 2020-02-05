@@ -39,6 +39,6 @@ impl std::convert::From<&Locations> for String {
 impl std::default::Default for Locations {
     /// Returns a reasonable default variant for the `Locations` enum type.
     fn default() -> Self {
-        Locations::LatLngs(vec![LatLng { lat: 0.0, lng: 0.0 }])
+        Locations::LatLngs(vec![LatLng::new(0.0, 0.0).unwrap()])
     } // fn
 } // impl

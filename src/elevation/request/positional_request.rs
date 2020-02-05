@@ -25,7 +25,7 @@ impl Request {
     /// let response = ElevationRequest::new(GOOGLE_API_KEY)
     /// .positional_request(ElevationLocations::LatLngs(vec![
     ///     // Denver, Colorado, the "Mile High City"
-    ///     LatLng { lat: 39.7391536, lng: -104.9847034 },
+    ///     LatLng::new(39.7391536, -104.9847034)?,
     /// ])).validate().unwrap().build().unwrap().get().unwrap();
     /// let elevation = response.results.unwrap()[0].elevation;
     /// ```

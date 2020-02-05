@@ -9,9 +9,9 @@ impl ClientSettings {
     /// ## Arguments
     ///
     /// * `api` ‧ Which Google Maps API are you setting the rate limit for? For
-    /// example, Api::Directions, Api::DistanceMatrix, Api::Elevation,
-    /// Api::Geocoding, Api::TimeZone, and so on. The `Api::All` rate limit is
-    /// applied to all Google Maps API requests _in addition_ to the per-API
+    /// example, `Api::Directions`, `Api::DistanceMatrix`, `Api::Elevation`,
+    /// `Api::Geocoding`, `Api::TimeZone`, and so on. The `Api::All` rate limit
+    /// is applied to all Google Maps API requests _in addition_ to the per-API
     /// rate limits.
     ///
     /// * `requests` ‧ Sets the maximum number of requests in the specified

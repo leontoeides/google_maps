@@ -14,45 +14,6 @@ for a project that I'm working on. So, I've decided to spin my library off into
 a public crate. This is a very small token of gratitude and an attempt to give
 back to the Rust community. I hope it saves someone out there some work.
 
-# Changelog
-
-* 0.4.0: ⚠ **Breaking change**: API keys are no longer passed directly to
-Google Maps requests. Now, a structure containing your API key and several other
-optional settings is passed instead. For example:
-
-Before:
-```rust
-let location = GeocodingReverseRequest::new(
-    YOUR_GOOGLE_API_KEY_HERE,
-    // 10 Downing St, Westminster, London
-    LatLng { lat: 51.5033635, lng: -0.1276248 }
-)
-```
-
-After:
-```rust
-let my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
-let location = GeocodingReverseRequest::new(
-    my_settings,
-    // 10 Downing St, Westminster, London
-    LatLng { lat: 51.5033635, lng: -0.1276248 }
-)
-```
-
-* 0.4.0: ⚠ **Breaking change**: All `f32` fields have been increased to `f64`
-fields.
-
-* 0.4.0: ⚠ **Breaking change**: The `DirectionsResponse` structure has been
-altered to make
-
-* 0.4.0: Implemented automatic retry with exponential backoff. This client
-library will now attempt to query the Google Cloud Platform several times before
-giving up and returning an error. Temporary network hiccups will no longer cause
-your program to fail.
-
-* 0.4.0: Now implements the `log` crate with some logging messages for
-debugging.
-
 # Feedback
 
 I would like for you to be successful with your project! If this crate is not
@@ -65,17 +26,20 @@ at responding but I will respond. Thanks!
 
 ```rust
 use google_maps::*;
+let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 let directions = DirectionsRequest::new(
-    YOUR_GOOGLE_API_KEY_HERE,
+    &mut my_settings,
     // Origin: Canadian Museum of Nature
     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
     // Destination: Canada Science and Technology Museum
-    Location::LatLng { lat: 45.403509, lng: -75.618904 },
+    Location::LatLng(LatLng::new(45.403509, -75.618904).unwrap()),
 )
 .with_travel_mode(TravelMode::Transit)
 .with_arrival_time(PrimitiveDateTime::new(
-    Date::try_from_ymd(2020, 1, 20).unwrap(),
+    // Ensure the date is a weekday in the future or this query will return
+    // zero results.
+    Date::try_from_ymd(2022, 2, 10).unwrap(),
     Time::try_from_hms(13, 00, 0).unwrap()
 ))
 .execute().unwrap();
@@ -238,10 +202,53 @@ Platform console, the Geolocation API responds Status code `404 Not Found` with
 an empty body to all requests. This API cannot be implemented until the server
 responds as expected.
 
+# Changelog
+
+* 0.4.0: ⚠ **Breaking change**: API keys are no longer passed directly to
+Google Maps requests. Now, a structure containing your API key and several other
+optional settings is passed instead. For example:
+
+Before:
+```rust
+let location = GeocodingReverseRequest::new(
+    YOUR_GOOGLE_API_KEY_HERE,
+    // 10 Downing St, Westminster, London
+    LatLng { lat: 51.5033635, lng: -0.1276248 }
+)
+```
+
+After. Note to Rust newbies: you may need to change the `?` to an `.unwrap()`
+for these examples to compile.
+```rust
+let my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
+let location = GeocodingReverseRequest::new(
+    my_settings,
+    // 10 Downing St, Westminster, London
+    LatLng(LatLng::new(51.5033635, -0.1276248)?),
+)
+```
+
+* 0.4.0: ⚠ **Breaking change**: All `f32` fields have been increased to `f64`
+fields.
+
+* 0.4.0: ⚠ **Breaking change**: All response structures such as
+`DirectionsResponse` have been altered.
+
+* 0.4.0: ⚠ **Breaking change**: All LatLng enum variants have had the
+{ lat, lng } fields removed in favour of LatLng structs. Use
+`LatLng::new(lat, lng)` to define latitude/longitude pairs. See updated the
+examples.
+
+* 0.4.0: Implemented automatic retry with exponential backoff. This client
+library will now attempt to query the Google Cloud Platform several times before
+giving up and returning an error. Temporary network hiccups will no longer cause
+your program to fail.
+
+* 0.4.0: Now implements the `log` crate with some logging messages for
+debugging.
+
 # To do
 
-1. ⚠ Breaking change coming: Convert enum latitude & longitude fields into enum LatLng structs.
-2. Method range-checking for LatLng manipulation.
-3. Convert explicit query validation to session types wherever reasonable.
-4. [Places API](https://developers.google.com/places/web-service/intro)
-5. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
+1. Convert explicit query validation to session types wherever reasonable.
+2. [Places API](https://developers.google.com/places/web-service/intro)
+3. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
