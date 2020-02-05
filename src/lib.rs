@@ -6,38 +6,39 @@
 //!
 //! # Welcome
 //!
+//! ⚠ **There are many breaking changes with version 0.4.0. Please review the
+//! new examples and change log on how to reformat your code if it no longer
+//! compiles.** ⚠
+//!
 //! This crate is expected to work well and have the more important Google Maps
 //! features implemented. It should work well because Reqwest and Serde do most
 //! of the heavy lifting! While it's an early release, this crate should work
 //! fine as is for most people.
 //!
-//! I created this library because I needed several Google Maps Platform
+//! I created this client library because I needed several Google Maps Platform
 //! features for a project that I'm working on. So, I've decided to spin my
 //! library off into a public crate. This is a very small token of gratitude and
 //! an attempt to give back to the Rust community. I hope it saves someone out
 //! there some work.
 //!
-//! I would like for you to be successful with your project! If this crate is
-//! not working for you, doesn't work how you think it should, if you have
-//! requests or suggestions - please [report
-//! issues](https://github.com/leontoeides/google_maps/issues). I'm not always fast at
-//! responding but I will respond. Thanks!
-//!
 //! ## Example Directions API Request
 //!
 //! ```rust
 //! use google_maps::*;
+//! let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 //!
 //! let directions = DirectionsRequest::new(
-//!     YOUR_GOOGLE_API_KEY_HERE,
+//!     &mut my_settings,
 //!     // Origin: Canadian Museum of Nature
 //!     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
 //!     // Destination: Canada Science and Technology Museum
-//!     Location::LatLng(LatLng::try_from(45.403509, -75.618904)?),
+//!     Location::LatLng(LatLng::try_from((45.403509, -75.618904).unwrap()),
 //! )
 //! .with_travel_mode(TravelMode::Transit)
 //! .with_arrival_time(PrimitiveDateTime::new(
-//!     Date::try_from_ymd(2020, 1, 20).unwrap(),
+//!     // Ensure the date is a weekday in the future or this query will return
+//!     // zero results.
+//!     Date::try_from_ymd(2022, 2, 10).unwrap(),
 //!     Time::try_from_hms(13, 00, 0).unwrap()
 //! ))
 //! .execute().unwrap();
@@ -49,24 +50,25 @@
 //!
 //! ```rust
 //! use google_maps::*;
+//! let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 //!
 //! // Example request:
 //!
 //! let distance_matrix = DistanceMatrixRequest::new(
-//!     YOUR_GOOGLE_API_KEY_HERE,
+//!     &mut my_settings,
 //!     // Origins
 //!     vec![
 //!         // Microsoft
 //!         Waypoint::Address(String::from("One Microsoft Way, Redmond, WA 98052, United States")),
-//!         // Apple
-//!         Waypoint::Address(String::from("Infinite Loop, Cupertino, CA 95014, United States")),
+//!         // Cloudflare
+//!         Waypoint::Address(String::from("101 Townsend St, San Francisco, CA 94107, United States")),
 //!     ],
 //!     // Destinations
 //!     vec![
 //!         // Google
 //!         Waypoint::PlaceId(String::from("ChIJj61dQgK6j4AR4GeTYWZsKWw")),
 //!         // Mozilla
-//!         Waypoint::LatLng(LatLng::try_from(37.387316, -122.060008)?),
+//!         Waypoint::LatLng(LatLng::try_from((37.387316, -122.060008).unwrap()),
 //!     ],
 //! )
 //! .execute().unwrap();
@@ -80,13 +82,14 @@
 //!
 //! ```rust
 //! use google_maps::*;
+//! let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 //!
 //! // Example request:
 //!
-//! let elevation = ElevationRequest::new(YOUR_GOOGLE_API_KEY_HERE)
-//! .positional_request(ElevationLocations::LatLngs(vec![
+//! let elevation = ElevationRequest::new(&mut my_settings)
+//! .for_positional_request(ElevationLocations::LatLngs(vec![
 //!     // Denver, Colorado, the "Mile High City"
-//!     LatLng(LatLng::try_from(39.7391536, -104.9847034)?),
+//!     LatLng::try_from(39.7391536, -104.9847034).unwrap(),
 //! ]))
 //! .execute().unwrap();
 //!
@@ -103,12 +106,13 @@
 //!
 //! ```rust
 //! use google_maps::*;
+//! let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 //!
 //! // Example request:
 //!
-//! let location = GeocodingRequest::new(YOUR_GOOGLE_API_KEY_HERE)
-//! .with_address("10 Downing Street London")
-//! .execute().unwrap();
+//! let location = GeocodingRequest::new(&mut my_settings)
+//!     .with_address("10 Downing Street London")
+//!     .execute().unwrap();
 //!
 //! // Dump entire response:
 //!
@@ -117,10 +121,7 @@
 //! // Parsing example:
 //!
 //! for result in &location.results {
-//!     println!(
-//!         "Latitude: {:.7}, Longitude: {:.7}",
-//!         result.geometry.location.lat, result.geometry.location.lng
-//!     );
+//!     println!("{}", result.geometry.location)
 //! }
 //! ```
 //!
@@ -128,13 +129,14 @@
 //!
 //! ```rust
 //! use google_maps::*;
+//! let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 //!
 //! // Example request:
 //!
 //! let location = GeocodingReverseRequest::new(
-//!     YOUR_GOOGLE_API_KEY_HERE,
+//!     &mut my_settings,
 //!     // 10 Downing St, Westminster, London
-//!     LatLng(LatLng::try_from(51.5033635, -0.1276248)?),
+//!     LatLng::try_from((51.5033635, -0.1276248).unwrap(),
 //! )
 //! .with_result_type(PlaceType::StreetAddress)
 //! .execute().unwrap();
@@ -157,13 +159,14 @@
 //!
 //! ```rust
 //! use google_maps::*;
+//! let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 //!
 //! // Example request:
 //!
 //! let time_zone = TimeZoneRequest::new(
-//!     YOUR_GOOGLE_API_KEY_HERE,
+//!     &mut my_settings,
 //!     // St. Vitus Cathedral in Prague, Czechia
-//!     LatLng(LatLng::try_from(50.090903, 14.400512)?),
+//!     LatLng::try_from(50.090903, 14.400512).unwrap(),
 //!     PrimitiveDateTime::new(
 //!         // Tuesday February 15, 2022
 //!         Date::try_from_ymd(2022, 2, 15).unwrap(),
@@ -194,23 +197,33 @@
 //!
 //! ## [Geolocation API](https://developers.google.com/maps/documentation/geolocation/intro)
 //!
-//! Google's Geolocation API seems to be offline. While the online
-//! documentation is still available, and the API appears configurable through
-//! the Google Cloud Platform console, the Geolocation API responds Status code
-//! `404 Not Found` with an empty body to all requests. This API cannot be
-//! implemented until the server responds as expected.
+//! Google's Geolocation API seems to be offline. While the online documentation
+//! is still available and the API appears configurable through the Google Cloud
+//! Platform console, the Geolocation API responds Status code `404 Not Found`
+//! with an empty body to all requests. This API cannot be implemented until the
+//! server responds as expected.
+//!
+//! # Feedback
+//!
+//! I would like for you to be successful with your project! If this crate is
+//! not working for you, doesn't work how you think it should, or if you have
+//! requests, or suggestions - please [report them to
+//! me](https://github.com/leontoeides/google_maps/issues)! I'm not always fast
+//! at responding but I will respond. Thanks!
 //!
 //! # To do:
-//! 1. ⚠ Breaking change coming: Change latitude & longitude from `f32` to `f64`.
-//! 2. ⚠ Breaking change coming: Convert enum latitude & longitude fields into
-//! enum LatLng structs.
-//! 3. Method range-checking for LatLng manipulation.
-//! 4. Move GOOGLE_API_KEY to a struct with other settings such as MAX_RETRY.
-//! 5. Convert explicit query validation to session types wherever reasonable.
-//! 6. Retry on Failure
-//! 7. Automatic Rate Limiting
-//! 8. [Places API](https://developers.google.com/places/web-service/intro)
-//! 9. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
+//!
+//! 1. Convert explicit query validation to session types wherever reasonable.
+//!
+//! 2. [Places API](https://developers.google.com/places/web-service/intro)
+//! There are no immediate plans for supporting this API. It's quite big and I
+//! have no current need for it. If you would like to have to implemented,
+//! please contact me.
+//!
+//! 3. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
+//! There are no immediate plans for supporting this API. It's quite big and I
+//! have current need for it. If you would like to have to implemented, please
+//! contact me.
 
 mod error;
 pub mod bounds;
