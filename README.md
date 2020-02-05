@@ -26,7 +26,6 @@ at responding but I will respond. Thanks!
 
 ```rust
 use google_maps::*;
-
 let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 let directions = DirectionsRequest::new(
@@ -52,11 +51,12 @@ println!("{:#?}", directions);
 
 ```rust
 use google_maps::*;
+let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
 
 let distance_matrix = DistanceMatrixRequest::new(
-    YOUR_GOOGLE_API_KEY_HERE,
+    &mut my_settings,
     // Origins
     vec![
         // Microsoft
@@ -69,7 +69,7 @@ let distance_matrix = DistanceMatrixRequest::new(
         // Google
         Waypoint::PlaceId(String::from("ChIJj61dQgK6j4AR4GeTYWZsKWw")),
         // Mozilla
-        Waypoint::LatLng { lat: 37.387316, lng: -122.060008 },
+        Waypoint::LatLng(LatLng::new(37.387316, -122.060008).unwrap()),
     ],
 )
 .execute().unwrap();
@@ -83,6 +83,7 @@ println!("{:#?}", distance_matrix);
 
 ```rust
 use google_maps::*;
+let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
 
@@ -106,6 +107,7 @@ println!("Elevation: {} meters", elevation.results.unwrap()[0].elevation);
 
 ```rust
 use google_maps::*;
+let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
 
@@ -131,11 +133,12 @@ for result in &location.results {
 
 ```rust
 use google_maps::*;
+let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
 
 let location = GeocodingReverseRequest::new(
-    YOUR_GOOGLE_API_KEY_HERE,
+    &mut my_settings,
     // 10 Downing St, Westminster, London
     LatLng { lat: 51.5033635, lng: -0.1276248 }
 )
@@ -160,11 +163,12 @@ for result in &location.results {
 
 ```rust
 use google_maps::*;
+let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
 
 let time_zone = TimeZoneRequest::new(
-    YOUR_GOOGLE_API_KEY_HERE,
+    &mut my_settings,
     // St. Vitus Cathedral in Prague, Czechia
     LatLng { lat: 50.090903, lng: 14.400512 },
     PrimitiveDateTime::new(
@@ -223,7 +227,7 @@ for these examples to compile.
 ```rust
 let my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 let location = GeocodingReverseRequest::new(
-    my_settings,
+    &mut my_settings,
     // 10 Downing St, Westminster, London
     LatLng(LatLng::new(51.5033635, -0.1276248)?),
 )
