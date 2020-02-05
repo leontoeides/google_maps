@@ -33,7 +33,7 @@ let directions = DirectionsRequest::new(
     // Origin: Canadian Museum of Nature
     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
     // Destination: Canada Science and Technology Museum
-    Location::LatLng(LatLng::new(45.403509, -75.618904).unwrap()),
+    Location::LatLng(LatLng::try_from((45.403509, -75.618904).unwrap()),
 )
 .with_travel_mode(TravelMode::Transit)
 .with_arrival_time(PrimitiveDateTime::new(
@@ -69,7 +69,7 @@ let distance_matrix = DistanceMatrixRequest::new(
         // Google
         Waypoint::PlaceId(String::from("ChIJj61dQgK6j4AR4GeTYWZsKWw")),
         // Mozilla
-        Waypoint::LatLng(LatLng::new(37.387316, -122.060008).unwrap()),
+        Waypoint::LatLng(LatLng::try_from((37.387316, -122.060008).unwrap()),
     ],
 )
 .execute().unwrap();
@@ -87,10 +87,10 @@ let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
 
-let elevation = ElevationRequest::new(YOUR_GOOGLE_API_KEY_HERE)
+let elevation = ElevationRequest::new(&mut my_settings)
 .positional_request(ElevationLocations::LatLngs(vec![
     // Denver, Colorado, the "Mile High City"
-    LatLng { lat: 39.7391536, lng: -104.9847034 },
+    LatLng::try_from((39.7391536, -104.9847034).unwrap(),
 ]))
 .execute().unwrap();
 
@@ -111,9 +111,9 @@ let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
 
-let location = GeocodingRequest::new(YOUR_GOOGLE_API_KEY_HERE)
-.with_address("10 Downing Street London")
-.execute().unwrap();
+let location = GeocodingRequest::new(&mut my_settings)
+    .with_address("10 Downing Street London")
+    .execute().unwrap();
 
 // Dump entire response:
 
@@ -122,10 +122,7 @@ println!("{:#?}", location);
 // Parsing example:
 
 for result in &location.results {
-    println!(
-        "Latitude: {:.7}, Longitude: {:.7}",
-        result.geometry.location.lat, result.geometry.location.lng
-    );
+    println!("{}", result.geometry.location)
 }
 ```
 
@@ -140,7 +137,7 @@ let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 let location = GeocodingReverseRequest::new(
     &mut my_settings,
     // 10 Downing St, Westminster, London
-    LatLng { lat: 51.5033635, lng: -0.1276248 }
+    LatLng::try_from((51.5033635, -0.1276248).unwrap(),
 )
 .with_result_type(PlaceType::StreetAddress)
 .execute().unwrap();
@@ -170,7 +167,7 @@ let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 let time_zone = TimeZoneRequest::new(
     &mut my_settings,
     // St. Vitus Cathedral in Prague, Czechia
-    LatLng { lat: 50.090903, lng: 14.400512 },
+    LatLng::try_from(50.090903, 14.400512).unwrap(),
     PrimitiveDateTime::new(
         // Tuesday February 15, 2022
         Date::try_from_ymd(2022, 2, 15).unwrap(),
@@ -229,7 +226,7 @@ let my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 let location = GeocodingReverseRequest::new(
     &mut my_settings,
     // 10 Downing St, Westminster, London
-    LatLng(LatLng::new(51.5033635, -0.1276248)?),
+    LatLng(LatLng::try_from((51.5033635, -0.1276248)?),
 )
 ```
 
@@ -241,7 +238,7 @@ fields.
 
 * 0.4.0: ⚠ **Breaking change**: All LatLng enum variants have had the
 { lat, lng } fields removed in favour of LatLng structs. Use
-`LatLng::new(lat, lng)` to define latitude/longitude pairs. See updated the
+`LatLng::try_from((lat, lng)` to define latitude/longitude pairs. See updated the
 examples.
 
 * 0.4.0: Implemented automatic retry with exponential backoff. This client

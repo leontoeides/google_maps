@@ -20,7 +20,7 @@ pub struct LatLng {
 } // struct
 
 impl LatLng {
-    pub fn new(latitude: f64, longitude: f64) -> Result<LatLng, Error> {
+    pub fn try_from(latitude: f64, longitude: f64) -> Result<LatLng, Error> {
         if latitude < -90.0 || latitude > 90.0 {
             return Err(Error::InvalidLatitude(latitude, longitude))
         } // if
