@@ -17,12 +17,12 @@ pub struct Element {
     /// The total distance of this route, expressed in meters (`value`) and as
     /// `text`. The textual value uses the unit system specified with the unit
     /// parameter of the original request, or the origin's region.
-    distance: Distance,
+    distance: Option<Distance>,
 
     /// The length of time it takes to travel this route, expressed in seconds
     /// (the `value` field) and as `text`. The textual representation is
     /// localized according to the query's language parameter.
-    duration: Duration,
+    duration: Option<Duration>,
 
     /// The length of time it takes to travel this route, based on current and
     /// historical traffic conditions. See the `traffic_model` request parameter
