@@ -3,10 +3,10 @@
 
 mod build;
 mod execute;
+mod for_positional_request;
+mod for_sampled_path_request;
 mod get;
 mod new;
-mod positional_request;
-mod sampled_path_request;
 mod validate;
 pub mod locations;
 
