@@ -18,22 +18,22 @@ pub struct TargetRate {
     pub duration: Duration,
 } // struct
 
-impl std::default::Default for TargetRate {
-    /// Returns a reasonable default population for the `TargetRate` struct
-    /// type.
-    fn default() -> Self {
-        TargetRate {
-            requests: 1,
-            duration: Duration::from_secs(10),
-        } // struct
-    } // fn
-} // impl
 
 impl std::convert::From<&TargetRate> for String {
     /// Converts a `TargetRate` enum to a `String` that contains a
     /// human-friendly & readable rate.
     fn from(target_rate: &TargetRate) -> String {
         rate_to_string(target_rate.requests as u64, target_rate.duration, "request", "requests")
+    } // fn
+} // impl
+
+impl std::default::Default for TargetRate {
+    /// Returns a reasonable default values for the `TargetRate` struct.
+    fn default() -> Self {
+        TargetRate {
+            requests: 1,
+            duration: Duration::from_secs(10),
+        } // struct
     } // fn
 } // impl
 

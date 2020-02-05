@@ -1,23 +1,30 @@
 use crate::request_rate::duration_unit::DurationUnit;
 use std::time::Duration;
 
-/// Converts a `std::time::Duration` into a user-readable string.
+/// Converts a `std::time::Duration` into an English expression of time.
 ///
 /// ## Arguments:
 ///
 /// * `duration` ‧ The `std::time::Duration` that is to be converted into a
 /// string.
+///
+/// ## Description:
+///
+/// A `Duration` is a unit of time for the Rust programming language. This this
+/// function converts a Duration into an English expression of time. For
+/// example, "1 month," "5.83 minutes," or "948 milliseconds." The unit of time
+/// (i.e. milliseconds or seconds) is automatically selected by this function.
 
 pub fn duration_to_string(duration: Duration) -> String {
 
-    const MILLISECOND_IN_SECS: f64 = 0.001;
-    const SECOND_IN_SECS: f64 = 1.0;
-    const MINUTE_IN_SECS: f64 = 60.0;
-    const HOUR_IN_SECS: f64 = 3_600.0;
-    const DAY_IN_SECS: f64 = 86_400.0;
-    const WEEK_IN_SECS: f64 = 604_800.0;
-    const MONTH_IN_SECS: f64 = 2_629_746.0;
-    const YEAR_IN_SECS: f64 = 31_556_952.0;
+    const SECONDS_IN_MILLISECOND: f64 = 0.001;
+    const SECONDS_IN_SECOND: f64 = 1.0;
+    const SECONDS_IN_MINUTE: f64 = 60.0;
+    const SECONDS_IN_HOUR: f64 = 3_600.0;
+    const SECONDS_IN_DAY: f64 = 86_400.0;
+    const SECONDS_IN_WEEK: f64 = 604_800.0;
+    const SECONDS_IN_MONTH: f64 = 2_629_746.0;
+    const SECONDS_IN_YEAR: f64 = 31_556_952.0;
 
     // This match takes the duration passed by the caller and adjusts the
     // time/duration unit for better readability when presenting to an end user.
@@ -27,14 +34,14 @@ pub fn duration_to_string(duration: Duration) -> String {
     let duration_in_secs = duration.as_secs_f64();
 
     let adjusted_units = match duration_in_secs {
-        s if s < SECOND_IN_SECS => (s / MILLISECOND_IN_SECS, DurationUnit::Milliseconds),
-        s if s < MINUTE_IN_SECS => (s / SECOND_IN_SECS, DurationUnit::Seconds),
-        s if s < HOUR_IN_SECS => (s / MINUTE_IN_SECS, DurationUnit::Minutes),
-        s if s < DAY_IN_SECS => (s / HOUR_IN_SECS, DurationUnit::Hours),
-        s if s < WEEK_IN_SECS => (s / DAY_IN_SECS, DurationUnit::Days),
-        s if s < MONTH_IN_SECS => (s / WEEK_IN_SECS, DurationUnit::Weeks),
-        s if s < YEAR_IN_SECS => (s / MONTH_IN_SECS, DurationUnit::Months),
-        _ => (duration_in_secs / YEAR_IN_SECS, DurationUnit::Years),
+        s if s < SECONDS_IN_SECOND => (s / SECONDS_IN_MILLISECOND, DurationUnit::Milliseconds),
+        s if s < SECONDS_IN_MINUTE => (s / SECONDS_IN_SECOND, DurationUnit::Seconds),
+        s if s < SECONDS_IN_HOUR => (s / SECONDS_IN_MINUTE, DurationUnit::Minutes),
+        s if s < SECONDS_IN_DAY => (s / SECONDS_IN_HOUR, DurationUnit::Hours),
+        s if s < SECONDS_IN_WEEK => (s / SECONDS_IN_DAY, DurationUnit::Days),
+        s if s < SECONDS_IN_MONTH => (s / SECONDS_IN_WEEK, DurationUnit::Weeks),
+        s if s < SECONDS_IN_YEAR => (s / SECONDS_IN_MONTH, DurationUnit::Months),
+        _ => (duration_in_secs / SECONDS_IN_YEAR, DurationUnit::Years),
     }; // match
 
     // The fractional portion of a large value (i.e. 40075.14159) is less

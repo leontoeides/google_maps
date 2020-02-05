@@ -16,17 +16,6 @@ pub struct CurrentRate {
     pub request_count: u64,
 } // struct
 
-impl std::default::Default for CurrentRate {
-    /// Returns a reasonable default population for the `CurrentRate` struct
-    /// type.
-    fn default() -> Self {
-        CurrentRate {
-            first_request: None,
-            request_count: 0,
-        } // struct
-    } // fn
-} // impl
-
 impl std::convert::From<&CurrentRate> for String {
     /// Converts a `CurrentRate` enum to a `String` that contains a
     /// human-friendly & readable rate.
@@ -35,6 +24,16 @@ impl std::convert::From<&CurrentRate> for String {
             None => String::from("None"),
             Some(first_request) => rate_to_string(current_rate.request_count, first_request.elapsed(), "request", "requests"),
         } // match
+    } // fn
+} // impl
+
+impl std::default::Default for CurrentRate {
+    /// Returns a reasonable default values for the `CurrentRate` struct.
+    fn default() -> Self {
+        CurrentRate {
+            first_request: None,
+            request_count: 0,
+        } // struct
     } // fn
 } // impl
 

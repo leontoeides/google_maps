@@ -31,7 +31,7 @@ pub struct RequestRate {
 } // struct
 
 impl std::default::Default for RequestRate {
-    /// Returns a reasonable default population for the `RequestRate` struct.
+    /// Returns a reasonable default values for the `RequestRate` struct.
     fn default() -> Self {
         RequestRate {
             all: None,
