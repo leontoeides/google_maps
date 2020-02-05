@@ -18,8 +18,8 @@ pub enum Error {
     /// more information.
     InvalidCountryCode(String),
     /// API client library attempted to parse a string that contained an invalid
-    /// location type code. See `google_maps\src\geocoding\location_type.rs` for
-    /// more information.
+    /// location type code. See `google_maps\src\geocoding\location_types.rs`
+    /// for more information.
     InvalidLocationTypeCode(String),
     /// API client library attempted to parse a string that contained an invalid
     /// status code. See `google_maps\src\geocoding\response\status.rs` for more

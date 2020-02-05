@@ -31,19 +31,19 @@ impl<'a> ReverseRequest<'a> {
         } // if
 
         // Location type(s) key/value pair:
-        if let Some(location_type) = &self.location_type {
+        if let Some(location_types) = &self.location_types {
             query.push_str("&location_type=");
             query.push_str(&*utf8_percent_encode(
-                &String::from(location_type.iter().map(|location_type| String::from(location_type) + "|").collect::<String>().trim_end_matches('|')),
+                &String::from(location_types.iter().map(|location_type| String::from(location_type) + "|").collect::<String>().trim_end_matches('|')),
                 NON_ALPHANUMERIC
             ).to_string())
         } // if
 
         // Result type(s) key/value pair:
-        if let Some(result_type) = &self.result_type {
+        if let Some(result_types) = &self.result_types {
             query.push_str("&result_type=");
             query.push_str(&*utf8_percent_encode(
-                &String::from(result_type.iter().map(|result_type| String::from(result_type) + "|").collect::<String>().trim_end_matches('|')),
+                &String::from(result_types.iter().map(|result_type| String::from(result_type) + "|").collect::<String>().trim_end_matches('|')),
                 NON_ALPHANUMERIC
             ).to_string())
         } // if

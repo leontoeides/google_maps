@@ -84,13 +84,36 @@ impl<'a> Request<'a> {
     /// misinterpretations using place IDs. See
     /// [troubleshooting the results of my route request](https://developers.google.com/maps/documentation/directions/intro).
     ///
-    /// ## Examples:
+    /// ## Example:
+    ///
+    /// * After departing from the `origin` location, stop for groceries at
+    /// Sobeys before finally going to the `destination` location:
+    ///
+    /// ```rust
+    /// // Orléans Sobeys, 2276 Tenth Line Rd, Orléans, ON K4A 0X4
+    /// .with_waypoint(Waypoint::PlaceId(String::from("ChIJi5fWgmcSzkwRePJ_I9-xCRg")))
+    /// ```
+
+    pub fn with_waypoint(&'a mut self, waypoint: Waypoint) -> &'a mut Request {
+        // Add waypoint to Request struct.
+        match &mut self.waypoints {
+            // If there are no waypoints in the request struct, initialize:
+            None => self.waypoints = Some(vec![waypoint]),
+            // If there are already waypoints, append to them:
+            Some(waypoints) => waypoints.push(waypoint),
+        } // match
+        // Return modified Request struct to caller.
+        self
+    } // fn
+
+    /// ## Example:
     ///
     /// * After departing from the `origin` location; visit the Canadian Museum
     /// of Nature, Rideau Canal National Historic Site, intersection of Bank St
     /// & Queen Elizabeth Driveway, and then Patterson's Creek Park before
     /// finally going to the `destination` location:
-    /// ```
+    ///
+    /// ```rust
     /// .with_waypoints(vec![
     ///     // Canadian Museum of Nature
     ///     Waypoint::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
@@ -102,15 +125,18 @@ impl<'a> Request<'a> {
     ///     Waypoint::PlaceId(String::from("ChIJyeH59bkFzkwRnPg4zYevwQk")),
     /// ])
     /// ```
-    /// * After departing from the `origin` location, stop for groceries at
-    /// Loblaws before finally going to the `destination` location:
-    /// ```
-    /// // Loblaws, 64 Isabella St, Ottawa, ON K1S 1V4
-    /// .with_waypoints(vec![Waypoint::PlaceId(String::from("ChIJjfwswroFzkwRYnZID9jrRnU"))])
-    /// ```
 
-    pub fn with_waypoints(&'a mut self, waypoints: Vec<Waypoint>) -> &'a mut Request {
-        self.waypoints = Some(waypoints);
+    pub fn with_waypoints(&'a mut self, waypoints_slice: &[Waypoint]) -> &'a mut Request {
+        // Add waypoints to Request struct.
+        match &mut self.waypoints {
+            // If there are no waypoints in the request struct, initialize:
+            None => self.waypoints = Some(waypoints_slice.to_vec()),
+            // If there are already waypoints, append to them:
+            Some(waypoints) => for waypoint in waypoints_slice {
+                waypoints.push(waypoint.to_owned())
+            } // case
+        } // match
+        // Return modified Request struct to caller.
         self
     } // fn
 
