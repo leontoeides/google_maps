@@ -4,6 +4,10 @@ API, Elevation API, Geocoding API, and Time Zone API.
 
 # Welcome
 
+⚠ **There are many breaking changes with version 0.4.0. Please review the new
+examples and change log on how to reformat your code if it no longer
+compiles.** ⚠
+
 This crate is expected to work well and have the more important Google Maps
 features implemented. It should work well because Reqwest and Serde do most of
 the heavy lifting! While it's an early release, this crate should work fine as
@@ -204,7 +208,7 @@ or suggestions - please [report them to
 me](https://github.com/leontoeides/google_maps/issues)! I'm not always fast at
 responding but I will respond. Thanks!
 
-# Changelog
+# Change Log
 
 * 0.4.0: ⚠ **Breaking change**: API keys are no longer passed directly to
 Google Maps requests. Now, a structure containing your API key, and several
