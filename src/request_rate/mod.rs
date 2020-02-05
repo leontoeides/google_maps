@@ -6,7 +6,6 @@ mod current_rate;
 mod duration_to_string;
 mod duration_unit;
 mod limit;
-mod new;
 mod rate_to_string;
 mod target_rate;
 mod with_rate;
