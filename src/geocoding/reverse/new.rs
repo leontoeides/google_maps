@@ -24,8 +24,8 @@ impl<'a> ReverseRequest<'a> {
             latlng,
             // Optional parameters:
             language: None,
-            location_type: None,
-            result_type: None,
+            location_types: None,
+            result_types: None,
             // Internal use only:
             validated: false,
             query: None,

@@ -5,7 +5,7 @@ use crate::directions::request::{
 
 impl<'a> Request<'a> {
 
-    /// Specify features that routes should avoid.
+    /// Specify a feature that routes should avoid.
     ///
     /// ## Arguments
     ///
@@ -60,8 +60,43 @@ impl<'a> Request<'a> {
     /// .with_restrictions(vec![Avoid::Highways])
     /// ```
 
-    pub fn with_restrictions(&'a mut self, restrictions: Vec<Avoid>) -> &'a mut Request {
-        self.restrictions = Some(restrictions);
+    pub fn with_restriction(&'a mut self, restriction: Avoid) -> &'a mut Request {
+        // Add restriction to Request struct.
+        match &mut self.restrictions {
+            // If there are no restrictions in the request struct, initialize:
+            None => self.restrictions = Some(vec![restriction]),
+            // If there are already restrictions, append to them:
+            Some(restrictions) => restrictions.push(restriction),
+        } // match
+        // Return modified Request struct to caller.
+        self
+    } // fn
+
+    /// Specify features that routes should avoid.
+    ///
+    /// # Example:
+    ///
+    /// * Alternatively, multiple restrictions may be passed in a single method
+    /// call by passing a Vec. This example avoids tolls and ferries:
+    ///
+    /// ```rust
+    /// .with_restrictions(vec![
+    ///     Avoid::Tolls,
+    ///     Avoid::Ferries,
+    /// ])
+    /// ```
+
+    pub fn with_restrictions(&'a mut self, restrictions_slice: &[Avoid]) -> &'a mut Request {
+        // Add restrictions to Request struct.
+        match &mut self.restrictions {
+            // If there are no filters in the request struct, initialize field:
+            None => self.restrictions = Some(restrictions_slice.to_vec()),
+            // If there are already filters, append to them:
+            Some(restrictions) => for restriction in restrictions_slice {
+                restrictions.push(restriction.to_owned())
+            } // case
+        } // match
+        // Return modified Request struct to caller.
         self
     } // fn
 

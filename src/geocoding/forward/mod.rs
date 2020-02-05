@@ -9,7 +9,7 @@ mod new;
 mod validate;
 mod with_address;
 mod with_bounds;
-mod with_component;
+mod with_components;
 mod with_language;
 mod with_region;
 pub mod component;

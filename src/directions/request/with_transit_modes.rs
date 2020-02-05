@@ -5,7 +5,7 @@ use crate::directions::request::{
 
 impl<'a> Request<'a> {
 
-    /// Specifies preferred modes of transit.
+    /// Specify the preferred mode of transit.
     ///
     /// ## Arguments
     ///
@@ -51,8 +51,44 @@ impl<'a> Request<'a> {
     /// ])
     /// ```
 
-    pub fn with_transit_modes(&'a mut self, transit_modes: Vec<TransitMode>) -> &'a mut Request {
-        self.transit_modes = Some(transit_modes);
+    pub fn with_transit_mode(&'a mut self, transit_mode: TransitMode) -> &'a mut Request {
+        // Add restiction to Request struct.
+        match &mut self.transit_modes {
+            // If there are no transit modes in the request struct, initialize:
+            None => self.transit_modes = Some(vec![transit_mode]),
+            // If there are already transit modes, append to them:
+            Some(transit_modes) => transit_modes.push(transit_mode),
+        } // match
+        // Return modified Request struct to caller.
+        self
+    } // fn
+
+    /// Specifies preferred modes of transit.
+    ///
+    /// # Example:
+    ///
+    /// * Alternatively, multiple transit modes may be passed in a single method
+    /// call by passing a Vec. This example sets preferred transit modes to bus
+    /// and subway:
+    ///
+    /// ```rust
+    /// .with_transit_modes(vec![
+    ///     TransitMode::Bus,
+    ///     TransitMode::Subway,
+    /// ])
+    /// ```
+
+    pub fn with_transit_modes(&'a mut self, transit_modes_slice: &[TransitMode]) -> &'a mut Request {
+        // Add transit_modes to Request struct.
+        match &mut self.transit_modes {
+            // If there are no transit modes in the request struct, initialize:
+            None => self.transit_modes = Some(transit_modes_slice.to_vec()),
+            // If there are already transit modes, append to them:
+            Some(transit_modes) => for transit_mode in transit_modes_slice {
+                transit_modes.push(transit_mode.to_owned())
+            } // case
+        } // match
+        // Return modified Request struct to caller.
         self
     } // fn
 

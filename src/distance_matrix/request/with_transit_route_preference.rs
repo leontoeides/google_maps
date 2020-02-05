@@ -3,7 +3,7 @@ use crate::distance_matrix::request::Request;
 
 impl<'a> Request<'a> {
 
-    /// Specifies the preferences for transit routes.
+    /// Specifies the preference for transit routes.
     ///
     /// ## Arguments
     ///

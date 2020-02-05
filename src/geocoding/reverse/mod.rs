@@ -7,8 +7,8 @@ mod execute;
 mod get;
 mod new;
 mod with_language;
-mod with_location_type;
-mod with_result_type;
+mod with_location_types;
+mod with_result_types;
 
 use crate::{
     geocoding::location_type::LocationType,
@@ -48,7 +48,7 @@ pub struct ReverseRequest<'a> {
     /// `location_type` acts as a post-search filter: the API fetches all
     /// results for the specified `latlng`, then discards those results that do
     /// not match the specified location type(s).
-    location_type: Option<Vec<LocationType>>,
+    location_types: Option<Vec<LocationType>>,
 
     /// A filter of one or more address types. If the parameter contains
     /// multiple address types, the API returns all addresses that match any of
@@ -57,7 +57,7 @@ pub struct ReverseRequest<'a> {
     /// `result_type` acts as a post-search filter: the API fetches all results
     /// or the specified `latlng`, then discards those results that do not match
     /// the specified address type(s).
-    result_type: Option<Vec<PlaceType>>,
+    result_types: Option<Vec<PlaceType>>,
 
     // Internal use only:
     // ------------------
