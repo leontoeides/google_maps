@@ -15,15 +15,15 @@ use crate::{
 use time::PrimitiveDateTime;
 
 /// Use this structure's methods to build your Time Zone API request.
-#[derive(Clone, Debug, PartialEq, PartialOrd)]
-pub struct Request {
+#[derive(Debug, PartialEq, PartialOrd)]
+pub struct Request<'a> {
 
     // Required parameters:
     // --------------------
 
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client_settings: ClientSettings,
+    client_settings: &'a mut ClientSettings,
 
     /// The location to look up.
     location: LatLng,

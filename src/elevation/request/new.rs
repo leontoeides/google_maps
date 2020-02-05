@@ -1,7 +1,7 @@
 use crate::elevation::request::Request;
 use crate::client_settings::ClientSettings;
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Initializes the builder pattern for a Elevation API query with the
     /// required, non-optional parameters.
@@ -10,7 +10,7 @@ impl Request {
     ///
     /// * `key` - Your application's Google Cloud API key.
 
-    pub fn new(client_settings: ClientSettings) -> Request {
+    pub fn new(client_settings: &mut ClientSettings) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:

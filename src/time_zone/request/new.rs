@@ -5,7 +5,7 @@ use crate::{
 }; // use
 use time::PrimitiveDateTime;
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Initializes the builder pattern for a Time Zone API query with the
     /// required, non-optional parameters.
@@ -34,7 +34,7 @@ impl Request {
     /// ).build().get();
     /// ```
 
-    pub fn new(client_settings: ClientSettings, location: LatLng, time: PrimitiveDateTime) -> Request {
+    pub fn new(client_settings: &mut ClientSettings, location: LatLng, time: PrimitiveDateTime) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:

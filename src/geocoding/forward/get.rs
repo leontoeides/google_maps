@@ -6,7 +6,7 @@ use crate::geocoding::{
 }; // use
 use log::{info, warn};
 
-impl ForwardRequest {
+impl<'a> ForwardRequest<'a> {
 
     /// Performs the HTTP get request and returns the response to the caller.
     ///

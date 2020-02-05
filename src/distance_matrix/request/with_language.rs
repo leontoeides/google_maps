@@ -1,7 +1,7 @@
 use crate::distance_matrix::request::Request;
 use crate::language::Language;
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Specify the language in which to return results.
     ///
@@ -46,7 +46,7 @@ impl Request {
     /// .with_language(Language::French)
     /// ```
 
-    pub fn with_language(&mut self, language: Language) -> &mut Request {
+    pub fn with_language(&'a mut self, language: Language) -> &'a mut Request {
         self.language = Some(language);
         self
     } // fn

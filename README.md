@@ -26,6 +26,7 @@ at responding but I will respond. Thanks!
 
 ```rust
 use google_maps::*;
+
 let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 let directions = DirectionsRequest::new(

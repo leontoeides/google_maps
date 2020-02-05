@@ -4,7 +4,7 @@ use crate::time_zone::{
     response::Response,
 }; // use
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Executes the query you've built.
     ///
@@ -20,7 +20,7 @@ impl Request {
     ///
     /// This method accepts no arguments.
 
-    pub fn execute(&mut self) -> Result<Response, Error> {
+    pub fn execute(&'a mut self) -> Result<Response, Error> {
         self.build().get()
     } // fn
 

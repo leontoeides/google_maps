@@ -26,15 +26,15 @@ use crate::{
 /// Use this structure's methods to build your Forward Geocoding API request.
 /// Latitude/longitude lookup from address.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd)]
-pub struct ForwardRequest {
+#[derive(Debug, PartialEq, PartialOrd)]
+pub struct ForwardRequest<'a> {
 
     // Required parameters:
     // --------------------
 
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client_settings: ClientSettings,
+    client_settings: &'a mut ClientSettings,
 
     // Optional parameters:
     // --------------------

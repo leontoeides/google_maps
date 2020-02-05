@@ -1,7 +1,7 @@
 use crate::directions::travel_mode::TravelMode;
 use crate::distance_matrix::request::Request;
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Specify the mode of transportation.
     ///
@@ -47,7 +47,7 @@ impl Request {
     /// .with_travel_mode(TravelMode::Transit)
     /// ```
 
-    pub fn with_travel_mode(&mut self, travel_mode: TravelMode) -> &mut Request {
+    pub fn with_travel_mode(&'a mut self, travel_mode: TravelMode) -> &'a mut Request {
         self.travel_mode = Some(travel_mode);
         self
     } // fn

@@ -4,9 +4,9 @@ use crate::{
     client_settings::ClientSettings,
 }; // use
 
-impl Request {
+impl<'a> Request<'a> {
 
-    pub fn new(client_settings: ClientSettings, origins: Vec<Waypoint>, destinations: Vec<Waypoint>) -> Request {
+    pub fn new(client_settings: &mut ClientSettings, origins: Vec<Waypoint>, destinations: Vec<Waypoint>) -> Request {
         Request {
             // Required parameters:
             destinations,

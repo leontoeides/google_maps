@@ -4,7 +4,7 @@ use crate::{
 }; // use
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 
-impl ForwardRequest {
+impl<'a> ForwardRequest<'a> {
 
     /// Builds the query string for the Google Maps Geocoding API based on the
     /// input provided by the client.
@@ -13,7 +13,7 @@ impl ForwardRequest {
     ///
     /// This method accepts no arguments.
 
-    pub fn build(&mut self) -> Result<&mut ForwardRequest, Error> {
+    pub fn build(&mut self) -> Result<&'a mut ForwardRequest, Error> {
 
         // Ensure request has been validated before building the query string:
 

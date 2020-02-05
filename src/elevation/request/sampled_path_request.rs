@@ -3,7 +3,7 @@ use crate::elevation::request::{
     Request,
 }; // use
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Adds the _sampled path request_ parameters to the Elevation API query.
     ///
@@ -30,7 +30,7 @@ impl Request {
     /// )
     /// ```
 
-    pub fn sampled_path_request(&mut self, path: Locations, samples: u8) -> &mut Request {
+    pub fn sampled_path_request(&'a mut  self, path: Locations, samples: u8) -> &'a mut  Request {
         // Set the path in Request struct.
         self.path = Some(path);
         // Set the sample number in Request struct.
