@@ -33,7 +33,7 @@
 //!     // Origin: Canadian Museum of Nature
 //!     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
 //!     // Destination: Canada Science and Technology Museum
-//!     Location::LatLng(LatLng::new(45.403509, -75.618904)?),
+//!     Location::LatLng(LatLng::try_from(45.403509, -75.618904)?),
 //! )
 //! .with_travel_mode(TravelMode::Transit)
 //! .with_arrival_time(PrimitiveDateTime::new(
@@ -66,7 +66,7 @@
 //!         // Google
 //!         Waypoint::PlaceId(String::from("ChIJj61dQgK6j4AR4GeTYWZsKWw")),
 //!         // Mozilla
-//!         Waypoint::LatLng(LatLng::new(37.387316, -122.060008)?),
+//!         Waypoint::LatLng(LatLng::try_from(37.387316, -122.060008)?),
 //!     ],
 //! )
 //! .execute().unwrap();
@@ -86,7 +86,7 @@
 //! let elevation = ElevationRequest::new(YOUR_GOOGLE_API_KEY_HERE)
 //! .positional_request(ElevationLocations::LatLngs(vec![
 //!     // Denver, Colorado, the "Mile High City"
-//!     LatLng(LatLng::new(39.7391536, -104.9847034)?),
+//!     LatLng(LatLng::try_from(39.7391536, -104.9847034)?),
 //! ]))
 //! .execute().unwrap();
 //!
@@ -134,7 +134,7 @@
 //! let location = GeocodingReverseRequest::new(
 //!     YOUR_GOOGLE_API_KEY_HERE,
 //!     // 10 Downing St, Westminster, London
-//!     LatLng(LatLng::new(51.5033635, -0.1276248)?),
+//!     LatLng(LatLng::try_from(51.5033635, -0.1276248)?),
 //! )
 //! .with_result_type(PlaceType::StreetAddress)
 //! .execute().unwrap();
@@ -163,7 +163,7 @@
 //! let time_zone = TimeZoneRequest::new(
 //!     YOUR_GOOGLE_API_KEY_HERE,
 //!     // St. Vitus Cathedral in Prague, Czechia
-//!     LatLng(LatLng::new(50.090903, 14.400512)?),
+//!     LatLng(LatLng::try_from(50.090903, 14.400512)?),
 //!     PrimitiveDateTime::new(
 //!         // Tuesday February 15, 2022
 //!         Date::try_from_ymd(2022, 2, 15).unwrap(),
