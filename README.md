@@ -13,10 +13,10 @@ features implemented. It should work well because Reqwest and Serde do most of
 the heavy lifting! While it's an early release, this crate should work fine as
 is for most people.
 
-I created this library because I needed several Google Maps Platform features
-for a project that I'm working on. So, I've decided to spin my library off into
-a public crate. This is a very small token of gratitude and an attempt to give
-back to the Rust community. I hope it saves someone out there some work.
+I created this client library because I needed several Google Maps Platform
+features for a project that I'm working on. So, I've decided to spin my library
+off into a public crate. This is a very small token of gratitude and an attempt
+to give back to the Rust community. I hope it saves someone out there some work.
 
 ## Example Directions API Request
 
@@ -261,5 +261,13 @@ debugging.
 # To do
 
 1. Convert explicit query validation to session types wherever reasonable.
-2. [Places API](https://developers.google.com/places/web-service/intro)
+
+2. [Places API](https://developers.google.com/places/web-service/intro) There
+are no immediate plans for supporting this API. It's quite big and I have no
+current need for it. If you would like to have to implemented, please contact
+me.
+
 3. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
+There are no immediate plans for supporting this API. It's quite big and I have
+no current need for it. If you would like to have to implemented, please contact
+me.
