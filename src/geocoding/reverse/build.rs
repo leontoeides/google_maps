@@ -1,7 +1,7 @@
 use crate::geocoding::reverse::ReverseRequest;
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 
-impl ReverseRequest {
+impl<'a> ReverseRequest<'a> {
 
     /// Builds the query string for the Google Maps Geocoding API based on the
     /// input provided by the client.
@@ -10,7 +10,7 @@ impl ReverseRequest {
     ///
     /// This method accepts no arguments.
 
-    pub fn build(&mut self) -> &mut ReverseRequest {
+    pub fn build(&mut self) -> &'a mut ReverseRequest {
 
         // This section builds the "required parameters" portion of the query
         // string:

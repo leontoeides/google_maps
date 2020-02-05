@@ -6,7 +6,7 @@ use crate::geocoding::{
 }; // use
 use log::{info, warn};
 
-impl ReverseRequest {
+impl<'a> ReverseRequest<'a> {
 
     /// Performs the HTTP get request and returns the response to the caller.
     ///

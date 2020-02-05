@@ -3,7 +3,7 @@ use crate::{
     time_zone::request::Request,
 }; // use
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Adds the language parameter to the Time Zone API query.
     ///
@@ -19,7 +19,7 @@ impl Request {
     /// .with_language(Language::French)
     /// ```
 
-    pub fn with_language(&mut self, language: Language) -> &mut Request {
+    pub fn with_language(&'a mut self, language: Language) -> &'a mut Request {
         // Set language in Request struct.
         self.language = Some(language);
         // Return modified Request struct to caller.

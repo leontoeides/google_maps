@@ -3,7 +3,7 @@ use crate::elevation::request::{
     Request,
 }; // use
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Adds the _positional request_ parameters to the Elevation API query.
     ///
@@ -30,7 +30,7 @@ impl Request {
     /// let elevation = response.results.unwrap()[0].elevation;
     /// ```
 
-    pub fn positional_request(&mut self, locations: Locations) -> &mut Request {
+    pub fn positional_request(&'a mut self, locations: Locations) -> &'a mut Request {
         // Set the path in Request struct.
         self.locations = Some(locations);
         // Return modified Request struct to caller.

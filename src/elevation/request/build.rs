@@ -3,7 +3,7 @@ use crate::elevation::{
     request::Request,
 }; // use
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Builds the query string for the Google Maps Elevation API based on the
     /// input provided by the client.
@@ -12,7 +12,7 @@ impl Request {
     ///
     /// This method accepts no arguments.
 
-    pub fn build(&mut self) -> Result<&mut Request, Error> {
+    pub fn build(&mut self) -> Result<&'a mut Request, Error> {
 
         // Ensure request has been validated before building the query string:
 

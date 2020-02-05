@@ -1,7 +1,7 @@
 use crate::directions::request::avoid::Avoid;
 use crate::distance_matrix::request::Request;
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Specify features that routes should avoid.
     ///
@@ -58,7 +58,7 @@ impl Request {
     /// .with_restrictions(vec![Avoid::Highways])
     /// ```
 
-    pub fn with_restrictions(&mut self, restrictions: Vec<Avoid>) -> &mut Request {
+    pub fn with_restrictions(&'a mut self, restrictions: Vec<Avoid>) -> &'a mut Request {
         self.restrictions = Some(restrictions);
         self
     } // fn

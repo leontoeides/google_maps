@@ -1,7 +1,7 @@
 use crate::distance_matrix::request::Request;
 use time::PrimitiveDateTime;
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Specifies the desired arrival time.
     ///
@@ -26,7 +26,7 @@ impl Request {
     /// ))
     /// ```
 
-    pub fn with_arrival_time(&mut self, arrival_time: PrimitiveDateTime) -> &mut Request {
+    pub fn with_arrival_time(&'a mut self, arrival_time: PrimitiveDateTime) -> &'a mut Request {
         self.arrival_time = Some(arrival_time);
         self
     } // fn

@@ -6,7 +6,7 @@ use crate::distance_matrix::{
 }; // use
 use log::{info, warn};
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Performs the HTTP get request and returns the response to the caller.
     ///

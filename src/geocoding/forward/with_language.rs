@@ -3,7 +3,7 @@ use crate::{
     language::Language,
 }; // use
 
-impl ForwardRequest {
+impl<'a> ForwardRequest<'a> {
 
     /// Specifies the language in which to return results.
     ///
@@ -47,7 +47,7 @@ impl ForwardRequest {
     /// .with_language(Language::French)
     /// ```
 
-    pub fn with_language(&mut self, language: Language) -> &mut ForwardRequest {
+    pub fn with_language(&'a mut self, language: Language) -> &'a mut ForwardRequest {
         // Set language in ForwardRequest struct.
         self.language = Some(language);
         // Return modified ForwardRequest struct to caller.

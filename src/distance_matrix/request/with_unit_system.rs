@@ -1,7 +1,7 @@
 use crate::directions::request::unit_system::UnitSystem;
 use crate::distance_matrix::request::Request;
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Specifies the unit system to use when displaying results.
     ///
@@ -42,7 +42,7 @@ impl Request {
     /// .with_unit_system(UnitSystem::Metric)
     /// ```
 
-    pub fn with_unit_system(&mut self, unit_system: UnitSystem) -> &mut Request {
+    pub fn with_unit_system(&'a mut self, unit_system: UnitSystem) -> &'a mut Request {
         self.unit_system = Some(unit_system);
         self
     } // fn

@@ -3,7 +3,7 @@ use crate::{
     client_settings::ClientSettings,
 }; // use
 
-impl ForwardRequest {
+impl<'a> ForwardRequest<'a> {
 
     /// Initializes the builder pattern for a Geolocation API query with the
     /// required, non-optional parameters.
@@ -12,7 +12,7 @@ impl ForwardRequest {
     ///
     /// * `key` ‧ Your application's Google Cloud API key.
 
-    pub fn new(client_settings: ClientSettings) -> ForwardRequest {
+    pub fn new(client_settings: &mut ClientSettings) -> ForwardRequest {
         // Instantiate struct and return it to caller:
         ForwardRequest {
             // Required parameters:

@@ -21,15 +21,15 @@ use crate::{
 /// Use this structure's methods to build your Reverse Geocoding API request.
 /// Address lookup from latitude/longitude.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd)]
-pub struct ReverseRequest {
+#[derive(Debug, PartialEq, PartialOrd)]
+pub struct ReverseRequest<'a> {
 
     // Required parameters:
     // --------------------
 
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client_settings: ClientSettings,
+    client_settings: &'a mut ClientSettings,
 
     /// The latitude and longitude values specifying the location for which you
     /// wish to obtain the closest, human-readable address.

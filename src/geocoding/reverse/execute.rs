@@ -4,7 +4,7 @@ use crate::geocoding::{
     reverse::ReverseRequest,
 }; // use
 
-impl ReverseRequest {
+impl<'a> ReverseRequest<'a> {
 
     /// Executes the query you've built.
     ///
@@ -21,7 +21,7 @@ impl ReverseRequest {
     /// This method accepts no arguments.
 
 
-    pub fn execute(&mut self) -> Result<Response, Error> {
+    pub fn execute(&'a mut self) -> Result<Response, Error> {
         self.build().get()
     } // fn
 

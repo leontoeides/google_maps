@@ -4,7 +4,7 @@ use crate::distance_matrix::{
     request::Request,
 }; // use
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Ensures the built query is valid. This function checks the combination
     /// of parameters to ensure that they make sense together and that Google
@@ -17,7 +17,7 @@ impl Request {
     ///
     /// This method accepts no arguments.
 
-    pub fn validate(&mut self) -> Result<&mut Request, Error> {
+    pub fn validate(&mut self) -> Result<&'a mut Request, Error> {
 
         if let Some(travel_mode) = &self.travel_mode {
 

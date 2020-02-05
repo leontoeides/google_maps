@@ -3,7 +3,7 @@ use crate::geocoding::{
     forward::ForwardRequest,
 };
 
-impl ForwardRequest {
+impl<'a> ForwardRequest<'a> {
 
     /// Ensures the built query is valid. This function checks the combination
     /// of parameters to ensure that they make sense together and that Google
@@ -16,7 +16,7 @@ impl ForwardRequest {
     ///
     /// This method accepts no arguments.
 
-    pub fn validate(&mut self) -> Result<&mut ForwardRequest, Error> {
+    pub fn validate(&mut self) -> Result<&'a mut ForwardRequest, Error> {
 
         // If a positional request has been set...
         if self.address == None && self.components == None {

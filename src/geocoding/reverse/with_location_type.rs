@@ -3,7 +3,7 @@ use crate::geocoding::{
     reverse::ReverseRequest,
 }; // use
 
-impl ReverseRequest {
+impl<'a> ReverseRequest<'a> {
 
     /// Restricts the results from the geocoder to the specified location
     /// type(s).
@@ -56,7 +56,7 @@ impl ReverseRequest {
     /// .with_location_type(LocationType::RangeInterpolated)
     /// ```
 
-    pub fn with_location_type(&mut self, location_type_element: LocationType) -> &mut ReverseRequest {
+    pub fn with_location_type(&'a mut self, location_type_element: LocationType) -> &'a mut ReverseRequest {
         // Add location type to ReverseRequest struct.
         match &mut self.location_type {
             // If there are no filters in the request struct, initialize field:
@@ -94,7 +94,7 @@ impl ReverseRequest {
     /// ])
     /// ```
 
-    pub fn with_location_types(&mut self, location_type_slice: &[LocationType]) -> &mut ReverseRequest {
+    pub fn with_location_types(&'a mut self, location_type_slice: &[LocationType]) -> &'a mut ReverseRequest {
         // Add location types to ReverseRequest struct.
         match &mut self.location_type {
             // If there are no filters in the request struct, initialize field:

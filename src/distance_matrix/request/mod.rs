@@ -33,8 +33,8 @@ use crate::{
 }; // use
 use time::PrimitiveDateTime;
 
-#[derive(Clone, Debug, PartialEq, PartialOrd)]
-pub struct Request {
+#[derive(Debug, PartialEq, PartialOrd)]
+pub struct Request<'a> {
 
     // Required parameters:
     // --------------------
@@ -46,7 +46,7 @@ pub struct Request {
 
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client_settings: ClientSettings,
+    client_settings: &'a mut ClientSettings,
 
     /// The starting point for calculating travel distance and time. You can
     /// pass an address, latitude/longitude, place ID, or encoded polyline.

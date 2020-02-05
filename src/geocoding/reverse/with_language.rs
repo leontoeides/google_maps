@@ -3,7 +3,7 @@ use crate::{
     language::Language,
 }; // use
 
-impl ReverseRequest {
+impl<'a> ReverseRequest<'a> {
 
     /// Specifies the language in which to return results.
     ///
@@ -47,7 +47,7 @@ impl ReverseRequest {
     /// .with_language(Language::French)
     /// ```
 
-    pub fn with_language(&mut self, language: Language) -> &mut ReverseRequest {
+    pub fn with_language(&'a mut self, language: Language) -> &'a mut ReverseRequest {
         // Set language in ReverseRequest struct.
         self.language = Some(language);
         // Return modified ReverseRequest struct to caller.

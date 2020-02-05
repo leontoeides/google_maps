@@ -3,7 +3,7 @@ use crate::geocoding::forward::{
     ForwardRequest,
 }; // use
 
-impl ForwardRequest {
+impl<'a> ForwardRequest<'a> {
 
     /// Restricts the results from the geocoder to the specified component
     /// type(s).
@@ -64,7 +64,7 @@ impl ForwardRequest {
     /// .with_component(GeocodingComponent::Locality(String::from("London"))))
     /// ```
 
-    pub fn with_component(&mut self, component: Component) -> &mut ForwardRequest {
+    pub fn with_component(&'a mut self, component: Component) -> &'a mut ForwardRequest {
         // Add component to ForwardRequest struct.
         match &mut self.components {
             None => self.components = Some(vec![component]),
@@ -89,7 +89,7 @@ impl ForwardRequest {
     /// ])
     /// ```
 
-    pub fn with_components(&mut self, components_slice: &[Component]) -> &mut ForwardRequest {
+    pub fn with_components(&'a mut self, components_slice: &[Component]) -> &'a mut ForwardRequest {
         // Add components to ForwardRequest struct.
         match &mut self.components {
             // If there are no filters in the request struct, initialize field:

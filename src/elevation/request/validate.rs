@@ -3,7 +3,7 @@ use crate::elevation::{
     request::Request,
 }; // use
 
-impl Request {
+impl<'a> Request<'a> {
 
     /// Ensures the built query is valid. This function checks the combination
     /// of parameters to ensure that they make sense together and that Google
@@ -16,7 +16,7 @@ impl Request {
     ///
     /// This method accepts no arguments.
 
-    pub fn validate(&mut self) -> Result<&mut Request, Error> {
+    pub fn validate(&mut self) -> Result<&'a mut Request, Error> {
 
         // If a positional request has been set...
         if let Some(_locations) = &self.locations {

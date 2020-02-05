@@ -3,7 +3,7 @@ use crate::{
     region::Region,
 }; // use
 
-impl ForwardRequest {
+impl<'a> ForwardRequest<'a> {
 
     /// Specifies the region bias.
     ///
@@ -39,7 +39,7 @@ impl ForwardRequest {
     /// .with_region(Region::Canada)
     /// ```
 
-    pub fn with_region(&mut self, region: Region) -> &mut ForwardRequest {
+    pub fn with_region(&'a mut self, region: Region) -> &'a mut ForwardRequest {
         // Set region in ForwardRequest struct.
         self.region = Some(region);
         // Return modified ForwardRequest struct to caller.
