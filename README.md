@@ -14,14 +14,6 @@ for a project that I'm working on. So, I've decided to spin my library off into
 a public crate. This is a very small token of gratitude and an attempt to give
 back to the Rust community. I hope it saves someone out there some work.
 
-# Feedback
-
-I would like for you to be successful with your project! If this crate is not
-working for you, doesn't work how you think it should, if you have requests or
-suggestions - please [report
-issues](https://github.com/leontoeides/google_maps/issues). I'm not always fast
-at responding but I will respond. Thanks!
-
 ## Example Directions API Request
 
 ```rust
@@ -61,8 +53,8 @@ let distance_matrix = DistanceMatrixRequest::new(
     vec![
         // Microsoft
         Waypoint::Address(String::from("One Microsoft Way, Redmond, WA 98052, United States")),
-        // Apple
-        Waypoint::Address(String::from("Infinite Loop, Cupertino, CA 95014, United States")),
+        // Cloudflare
+        Waypoint::Address(String::from("101 Townsend St, San Francisco, CA 94107, United States")),
     ],
     // Destinations
     vec![
@@ -88,9 +80,9 @@ let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 // Example request:
 
 let elevation = ElevationRequest::new(&mut my_settings)
-.positional_request(ElevationLocations::LatLngs(vec![
+.for_positional_request(ElevationLocations::LatLngs(vec![
     // Denver, Colorado, the "Mile High City"
-    LatLng::try_from((39.7391536, -104.9847034).unwrap(),
+    LatLng::try_from(39.7391536, -104.9847034).unwrap(),
 ]))
 .execute().unwrap();
 
@@ -204,11 +196,19 @@ Platform console, the Geolocation API responds Status code `404 Not Found` with
 an empty body to all requests. This API cannot be implemented until the server
 responds as expected.
 
+# Feedback
+
+I would like for you to be successful with your project! If this crate is not
+working for you, doesn't work how you think it should, or if you have requests,
+or suggestions - please [report them to
+me](https://github.com/leontoeides/google_maps/issues)! I'm not always fast at
+responding but I will respond. Thanks!
+
 # Changelog
 
 * 0.4.0: ⚠ **Breaking change**: API keys are no longer passed directly to
-Google Maps requests. Now, a structure containing your API key and several other
-optional settings is passed instead. For example:
+Google Maps requests. Now, a structure containing your API key, and several
+optional settings, is passed instead. For example:
 
 Before:
 ```rust
@@ -230,16 +230,21 @@ let location = GeocodingReverseRequest::new(
 )
 ```
 
-* 0.4.0: ⚠ **Breaking change**: All `f32` fields have been increased to `f64`
-fields.
-
-* 0.4.0: ⚠ **Breaking change**: All response structures such as
-`DirectionsResponse` have been altered.
+* 0.4.0: ⚠ **Breaking change**: All response structures, such as
+`DirectionsResponse`, have been altered.
 
 * 0.4.0: ⚠ **Breaking change**: All LatLng enum variants have had the
 { lat, lng } fields removed in favour of LatLng structs. Use
-`LatLng::try_from((lat, lng)` to define latitude/longitude pairs. See updated the
-examples.
+`LatLng::try_from((lat, lng)` to define latitude/longitude pairs. See the
+updated examples.
+
+* 0.4.0: ⚠ **Breaking change**: The Elevation API methods
+`positional_request()` & `sampled_path_request()` have been renamed to
+`for_positional_request()` & `for_sampled_path_request()` respectively. See the
+updated examples.
+
+* 0.4.0: ⚠ **Breaking change**: All `f32` fields have been increased to `f64`
+fields.
 
 * 0.4.0: Implemented automatic retry with exponential backoff. This client
 library will now attempt to query the Google Cloud Platform several times before
