@@ -214,6 +214,11 @@ responding but I will respond. Thanks!
 
 # Change Log
 
+* 0.4.1: 2020-02-06: Added time zone and currency enumerations for look-up
+tables to be added in the future.
+
+* 0.4.1: 2020-02-06: Fixed some errors in the examples.
+
 * 0.4.1: 2020-02-05: Some internal restructuring to make the library more
 consistent. Improved many comments for better documentation.
 
