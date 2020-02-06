@@ -47,7 +47,7 @@ impl std::convert::From<&LatLng> for String {
     /// Converts a `LatLng` struct to a `String` that contains a
     /// latitude/longitude pair.
     fn from(latlng: &LatLng) -> String {
-        format!("{},{}", f64_to_decdeg(latlng.lat), f64_to_decdeg(latlng.lng))
+        format!("{},{}", latlng.lat, latlng.lng)
     } // fn
 } // impl
 

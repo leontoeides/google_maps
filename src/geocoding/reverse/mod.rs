@@ -1,8 +1,8 @@
 //! **Look in this module for documentation on building your _Geocoding API_
-//! query**. In particular, look at the _Request_ struct for examples of the
-//! builder pattern. This module contains the tools (enums, structs, methods)
-//! for building your Google Maps Platform request. Reverse geocoding converts
-//! latitude & longitude coordinates to a street address.
+//! reverse query**. In particular, look at the _ReverseRequest_ struct for
+//! examples of the builder pattern. This module contains the tools (enums,
+//! structs, methods) for building your Google Maps Platform request. Reverse
+//! geocoding converts latitude & longitude coordinates to a street address.
 
 mod build;
 mod execute;
