@@ -1,4 +1,4 @@
-//! The Geolocation API returns a location and accuracy radius based on
+//! The **Geolocation API** returns a location and accuracy radius based on
 //! information about cell towers and WiFi nodes that the mobile client can
 //! detect.
 //!

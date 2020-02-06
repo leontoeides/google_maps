@@ -27,6 +27,8 @@
 //! use google_maps::*;
 //! let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 //!
+//! // Example request:
+//!
 //! let directions = DirectionsRequest::new(
 //!     &mut my_settings,
 //!     // Origin: Canadian Museum of Nature
@@ -42,6 +44,8 @@
 //!     Time::try_from_hms(13, 00, 0).unwrap()
 //! ))
 //! .execute().unwrap();
+//!
+//! // Dump entire response:
 //!
 //! println!("{:#?}", directions);
 //! ```
@@ -215,12 +219,12 @@
 //!
 //! 1. Convert explicit query validation to session types wherever reasonable.
 //!
-//! 2. [Places API](https://developers.google.com/places/web-service/intro)
+//! 2. [Places API](https://developers.google.com/places/web-service/intro).
 //! There are no immediate plans for supporting this API. It's quite big and I
 //! have no current need for it. If you would like to have to implemented,
 //! please contact me.
 //!
-//! 3. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
+//! 3. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
 //! There are no immediate plans for supporting this API. It's quite big and I
 //! have current need for it. If you would like to have to implemented, please
 //! contact me.

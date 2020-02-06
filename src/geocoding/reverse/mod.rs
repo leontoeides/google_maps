@@ -1,6 +1,8 @@
-//! Resources (enums, structs, methods) for the client to build a Reverse
-//! Geocoding API request for the Google Cloud server. Reverse geocoding
-//! converts a latitude/longitude to an address.
+//! **Look in this module for documentation on building your _Geocoding API_
+//! query**. In particular, look at the _Request_ struct for examples of the
+//! builder pattern. This module contains the tools (enums, structs, methods)
+//! for building your Google Maps Platform request. Reverse geocoding converts
+//! latitude & longitude coordinates to a street address.
 
 mod build;
 mod execute;
@@ -18,8 +20,10 @@ use crate::{
     place_type::PlaceType,
 }; // use
 
-/// Use this structure's methods to build your Reverse Geocoding API request.
-/// Address lookup from latitude/longitude.
+/// **Look at this `Request` struct for documentation on how to build your
+/// _Geocoding API_ query**. The methods implemented for this struct are what's
+/// used to build your request. Reverse geocoding looks up a street address
+/// from latitude & longitude coorindates.
 
 #[derive(Debug, PartialEq, PartialOrd)]
 pub struct ReverseRequest<'a> {

@@ -1,5 +1,7 @@
-//! Resources (enums, structs, methods) for the client to build a Time Zone API
-//! request for the Google Cloud server.
+//! **Look in this module for documentation on building your _Time Zone API_
+//! query**. In particular, look at the _Request_ struct for examples of the
+//! builder pattern. This module contains the tools (enums, structs, methods)
+//! for building your Google Maps Platform request.
 
 mod build;
 mod execute;
@@ -14,7 +16,10 @@ use crate::{
 }; // use
 use time::PrimitiveDateTime;
 
-/// Use this structure's methods to build your Time Zone API request.
+/// **Look at this `Request` struct for documentation on how to build your _Time
+/// Zone API_ query**. The methods implemented for this struct are what's used
+/// to build your request.
+
 #[derive(Debug, PartialEq, PartialOrd)]
 pub struct Request<'a> {
 

@@ -1,6 +1,6 @@
-//! Contains the `ClientSettings` struct and its associated traits.
-//! `ClientSettings` is used to set your API key and the settings for governing
-//! your requests.
+//! Contains the `ClientSettings` struct and its associated traits. It is used
+//! to set your API key and the settings such as: rate limiting, maxium retries,
+//! & retry delay times for your requests.
 
 mod finalize;
 mod new;

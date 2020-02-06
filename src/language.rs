@@ -1,6 +1,6 @@
-//! Contains the `Language` enum and its associated traits. `Language` is used
-//! to specify a desired language for a response. _This is not a comprehensive
-//! list of languages, it is a list of languages that Google Maps supports._
+//! Contains the `Language` enum and its associated traits. It is used to
+//! specify a desired language for a response. _This is not a comprehensive list
+//! of languages, it is a list of languages that Google Maps supports._
 
 use crate::error::Error;
 use serde::{Serialize, Deserialize};

@@ -1,5 +1,5 @@
-//! Contains the `Region` enum and its associated traits. A `Region` is a
-//! country in which Google Maps has been officially launched. Google's
+//! Contains the `Region` enum and its associated traits. It is used to specify
+//! a country in which Google Maps has been officially launched. Google's
 //! _regions_ uses ccTLDs rather than ISO 3166 country codes. _This is not a
 //! comprehensive list of countries, it is a list of countries that Google Maps
 //! supports._
