@@ -1,6 +1,5 @@
-//! Contains the `ElementStatus` enum and its associated traits.
-//! `ElementStatus` indicates the status resulting from operations on the
-//! specific individual elements.
+//! Contains the `ElementStatus` enum and its associated traits. It indicates
+//! the status resulting from operations on the specific individual elements.
 
 use crate::distance_matrix::error::Error;
 use serde::{Serialize, Deserialize};

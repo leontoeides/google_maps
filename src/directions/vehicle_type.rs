@@ -1,5 +1,5 @@
-//! Contains the `VehicleType` enum and its associated traits. `VehicleType`
-//! specifies the mode of transportation for transit directions.
+//! Contains the `VehicleType` enum and its associated traits. It specifies the
+//! mode of transportation for transit directions.
 
 use crate::directions::error::Error;
 use serde::{Serialize, Deserialize};

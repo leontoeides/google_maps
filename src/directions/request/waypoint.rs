@@ -1,6 +1,6 @@
-//! Contains the `Waypoint` enum and its associated traits. `Waypoint` is used
-//! to specify intermediate locations in the form of a text address,
-//! latitude/longitude pair, Google Place ID, or as an Encoded Polyline.
+//! Contains the `Waypoint` enum and its associated traits. It is used to
+//! specify intermediate locations in the form of a text address,
+//! a latitude & longitude pair, a Google Place ID, or as an Encoded Polyline.
 
 use crate::latlng::LatLng;
 use serde::{Serialize, Deserialize};
@@ -11,7 +11,7 @@ use serde::{Serialize, Deserialize};
 pub enum Waypoint {
 
     /// If you pass an address, the Directions service geocodes the string and
-    /// converts it to a latitude/longitude coordinate to calculate directions.
+    /// converts it to latitude & longitude coordinates to calculate directions.
     /// This coordinate may be different from that returned by the Geocoding
     /// API, for example a building entrance rather than its center.
     Address(String),

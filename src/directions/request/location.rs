@@ -1,5 +1,5 @@
-//! Contains the `Location` enum and its associated traits. `Location` is used
-//! to specify origin and destination locations in the form of a text address,
+//! Contains the `Location` enum and its associated traits. It is used to
+//! specify origin and destination locations in the form of a text address,
 //! latitude/longitude pair, or Google Place ID.
 
 use crate::latlng::LatLng;

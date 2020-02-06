@@ -1,5 +1,6 @@
-//! Resources (enums, structs) for the client to process the Elevation API
-//! response.
+//! Resources (enums, structs) for processing the _Elevation API_ response
+//! from the Google Maps Platform. Look in here for more information about the
+//! data returned from Google's server and how to parse it with your program.
 
 pub mod point;
 pub mod status;

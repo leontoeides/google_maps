@@ -1,5 +1,5 @@
-//! Contains the `LocationType` enum and its associated traits. `LocationType`
-//! specifies the nature and accuracy of the Geocoding response.
+//! Contains the `LocationType` enum and its associated traits. It specifies the
+//! nature and accuracy of the Geocoding response.
 
 use crate::geocoding::error::Error;
 use serde::{Serialize, Deserialize};

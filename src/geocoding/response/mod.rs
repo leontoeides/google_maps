@@ -1,5 +1,6 @@
-//! Resources (enums, structs) for the client process the Geolocation API
-//! response from the Google Cloud server.
+//! Resources (enums, structs) for processing the _Geocoding API_ response
+//! from the Google Maps Platform. Look in here for more information about the
+//! data returned from Google's server and how to parse it with your program.
 
 mod address_component;
 mod geocoding;
