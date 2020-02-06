@@ -8,7 +8,6 @@ description = "An unofficial Google Maps Platform client library for the Rust pr
 documentation = "https://docs.rs/google_maps"
 keywords = [ "distance", "elevation", "geocoding", "google", "maps" ]
 license = "MIT OR Apache-2.0"
-maintenance = { status = "actively-developed" }
 readme = "README.md"
 repository = "https://github.com/leontoeides/google_maps"
 

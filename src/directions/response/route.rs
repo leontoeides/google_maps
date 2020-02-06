@@ -6,14 +6,14 @@ use crate::{
         overview_polyline::OverviewPolyline,
     }, // directions::response
 }; // use
-use serde::{Serialize, Deserialize};
+use serde::Deserialize;
 
 /// A single route containing a set of legs in a
 /// [Response](https://developers.google.com/maps/documentation/javascript/reference/directions#DirectionsResult).
 /// Note that though this object is "JSON-like," it is not strictly JSON, as it
 /// directly and indirectly includes `LatLng` objects.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Deserialize)]
 pub struct Route {
 
     /// The bounds for this route.

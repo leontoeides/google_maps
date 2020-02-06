@@ -7,14 +7,14 @@ use crate::{
     }, // directions::response
     latlng::LatLng,
 }; // use
-use serde::{Serialize, Deserialize};
+use serde::Deserialize;
 
 /// A single leg consisting of a set of steps in a DirectionsResult. Some fields
 /// in the leg may not be returned for all requests. Note that though this
 /// result is "JSON-like," it is not strictly JSON, as it directly and
 /// indirectly includes LatLng objects.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Deserialize)]
 pub struct Leg {
 
     /// An estimated arrival time for this leg. Only applicable for
