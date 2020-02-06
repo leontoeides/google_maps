@@ -24,6 +24,8 @@ to give back to the Rust community. I hope it saves someone out there some work.
 use google_maps::*;
 let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
+// Example request:
+
 let directions = DirectionsRequest::new(
     &mut my_settings,
     // Origin: Canadian Museum of Nature
@@ -39,6 +41,8 @@ let directions = DirectionsRequest::new(
     Time::try_from_hms(13, 00, 0).unwrap()
 ))
 .execute().unwrap();
+
+// Dump entire response:
 
 println!("{:#?}", directions);
 ```
@@ -210,6 +214,9 @@ responding but I will respond. Thanks!
 
 # Change Log
 
+* 0.4.1: Some internal restructuring to make the library more consistent.
+Improved the comments for documentation.
+
 * 0.4.0: ⚠ **Breaking change**: API keys are no longer passed directly to
 Google Maps requests. Now, a structure containing your API key, and several
 optional settings, is passed instead. For example:
@@ -262,12 +269,12 @@ debugging.
 
 1. Convert explicit query validation to session types wherever reasonable.
 
-2. [Places API](https://developers.google.com/places/web-service/intro) There
+2. [Places API](https://developers.google.com/places/web-service/intro). There
 are no immediate plans for supporting this API. It's quite big and I have no
 current need for it. If you would like to have to implemented, please contact
 me.
 
-3. [Roads API](https://developers.google.com/maps/documentation/roads/intro)
+3. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
 There are no immediate plans for supporting this API. It's quite big and I have
 no current need for it. If you would like to have to implemented, please contact
 me.

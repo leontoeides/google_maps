@@ -1,6 +1,6 @@
-//! The Geocoding API is a service that provides geocoding and reverse geocoding
-//! of addresses. It can be used to convert a street address to geographic
-//! coordinates (latitude & longitude), or vice versa.
+//! The **Geocoding API** is a service that provides geocoding and reverse
+//! geocoding of addresses. It can be used to convert a street address to
+//! geographic coordinates (latitude & longitude), or vice versa.
 //!
 //! **Geocoding** is the process of converting addresses (like a street address)
 //! into geographic coordinates (like latitude and longitude), which you can use

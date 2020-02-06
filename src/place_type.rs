@@ -1,6 +1,6 @@
-//! Contains the `PlaceType` enum and its associated traits. `PlaceType`
-//! specifies the types or categories of a place. For example, a returned place
-//! could be a "country" (as in a nation) or it could be a "shopping mall."
+//! Contains the `PlaceType` enum and its associated traits. It specifies the
+//! types or categories of a place. For example, a returned place could be a
+//! "country" (as in a nation) or it could be a "shopping mall."
 
 use crate::error::Error;
 use serde::{Serialize, Deserialize};

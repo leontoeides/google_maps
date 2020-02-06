@@ -1,9 +1,14 @@
-//! Contains the `LatLng` struct and its associated traits. The `LatLng`
-//! coorindate system is used to specify a position or location on the Earth's
-//! surface.
+//! Contains the `LatLng` struct, its associated traits, and functions. The
+//! latitude & longitude coorindate system is used to specify a position or
+//! location on the Earth's surface.
 
-use crate::error::Error;
+use crate::{
+    error::Error,
+    latlng::f64_to_decdeg::f64_to_decdeg,
+}; // use
 use serde::{Serialize, Deserialize};
+
+mod f64_to_decdeg;
 
 /// Latitude and longitude values must correspond to a valid location on the
 /// face of the earth. Latitudes can take any value between -90 and 90 while
@@ -13,13 +18,17 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct LatLng {
-    /// Latitude. A value between -90° and 90°.
+    /// Latitude. A value between -90.0° and 90.0°.
     pub lat: f64,
-    /// Longitude. A value between -180° and 180°.
+    /// Longitude. A value between -180.0° and 180.0°.
     pub lng: f64,
 } // struct
 
 impl LatLng {
+    /// Takes individual latitude & longitude floating-point coordinates and
+    /// converts them into a `LatLng` structure. If either the latitude
+    /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
+    /// function will return an error.
     pub fn try_from(latitude: f64, longitude: f64) -> Result<LatLng, Error> {
         if latitude < -90.0 || latitude > 90.0 {
             return Err(Error::InvalidLatitude(latitude, longitude))
@@ -34,28 +43,11 @@ impl LatLng {
     } // fn
 } // impl
 
-/// Contrains floating-point number to seventh decimal place precision, and
-/// removes insignificant digits to save bandwidth & improve readability.
-fn fmt_decdeg(float: f64) -> String {
-    // The seventh decimal place is worth up to 11 mm: this is good for much
-    // surveying and is near the limit of what GPS-based techniques can
-    // achieve.
-    // https://gis.stackexchange.com/questions/8650/measuring-accuracy-of-latitude-and-longitude
-    let mut decdeg_str = format!("{:.7}", float);
-    // Remove insignificant digits and possibly the fractional portion of the
-    // string altogether.
-    if decdeg_str.contains('.') {
-        decdeg_str = decdeg_str.trim_end_matches('0').to_string();
-        decdeg_str = decdeg_str.trim_end_matches('.').to_string();
-    } // if
-    decdeg_str
-} // fn
-
 impl std::convert::From<&LatLng> for String {
     /// Converts a `LatLng` struct to a `String` that contains a
     /// latitude/longitude pair.
     fn from(latlng: &LatLng) -> String {
-        format!("{},{}", fmt_decdeg(latlng.lat), fmt_decdeg(latlng.lng))
+        format!("{},{}", f64_to_decdeg(latlng.lat), f64_to_decdeg(latlng.lng))
     } // fn
 } // impl
 
@@ -91,6 +83,10 @@ impl std::fmt::Display for LatLng {
         };
         // Display latitude and longitude as decimal degrees with some extra
         // fixins'.
-        write!(f, "{}°{} {}°{}", fmt_decdeg(self.lat.abs()), ns_hemisphere, fmt_decdeg(self.lng.abs()), ew_hemisphere)
+        write!(f,
+            "{}°{} {}°{}",
+            f64_to_decdeg(self.lat.abs()), ns_hemisphere,
+            f64_to_decdeg(self.lng.abs()), ew_hemisphere
+        )
     } // fn
 } // impl

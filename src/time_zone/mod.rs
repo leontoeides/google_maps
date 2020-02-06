@@ -1,5 +1,5 @@
-//! The Time Zone API provides time offset data for locations on the surface of
-//! the earth. You request the time zone information for a specific
+//! The **Time Zone API** provides time offset data for locations on the surface
+//! of the earth. You request the time zone information for a specific
 //! latitude/longitude pair and date. The API returns the name of that time
 //! zone, the time offset from UTC, and the daylight savings offset.
 //!

@@ -1,6 +1,6 @@
-//! The Distance Matrix API is a service that provides travel distance and time
-//! for a matrix of origins and destinations, based on the recommended route
-//! between start and end points.
+//! The **Distance Matrix API** is a service that provides travel distance and
+//! time for a matrix of origins and destinations, based on the recommended
+//! route between start and end points.
 //!
 //! # [Get Started](https://developers.google.com/maps/documentation/distance-matrix/start)
 //!

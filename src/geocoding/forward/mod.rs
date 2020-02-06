@@ -1,6 +1,8 @@
-//! Resources (enums, structs, methods) for the client to build a Geocoding API
-//! request for the Google Cloud server. Forward geocoding converts an address
-//! to a latitude/longitude.
+//! **Look in this module for documentation on building your _Geocoding API_
+//! query**. In particular, look at the _Request_ struct for examples of the
+//! builder pattern. This module contains the tools (enums, structs, methods)
+//! for building your Google Maps Platform request. Forward geocoding converts a
+//! street address to latitude & longitude coordinates.
 
 mod build;
 mod execute;
@@ -23,8 +25,10 @@ use crate::{
     region::Region,
 }; // use
 
-/// Use this structure's methods to build your Forward Geocoding API request.
-/// Latitude/longitude lookup from address.
+/// **Look at this `Request` struct for documentation on how to build your
+/// _Geocoding API_ query**. The methods implemented for this struct are what's
+/// used to build your request. Forward geocoding looks up a longitude &
+/// latitude coordinates from a street address.
 
 #[derive(Debug, PartialEq, PartialOrd)]
 pub struct ForwardRequest<'a> {

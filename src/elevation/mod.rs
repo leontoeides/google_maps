@@ -1,6 +1,6 @@
-//! The Elevation API provides elevation data for all locations on the surface
-//! of the earth, including depth locations on the ocean floor (which return
-//! negative values).
+//! The **Elevation API** provides elevation data for all locations on the
+//! surface of the earth, including depth locations on the ocean floor (which
+//! return negative values).
 //!
 //! # [Get Started](https://developers.google.com/maps/documentation/elevation/start)
 //!

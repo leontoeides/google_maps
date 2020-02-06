@@ -1,4 +1,4 @@
-//! The Directions API is a service that calculates directions between
+//! The **Directions API** is a service that calculates directions between
 //! locations. You can search for directions for several modes of
 //! transportation, including transit, driving, walking, or cycling.
 //!

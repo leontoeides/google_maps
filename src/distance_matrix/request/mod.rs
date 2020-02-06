@@ -1,3 +1,8 @@
+//! **Look in this module for documentation on building your _Distance Matrix
+//! API_ query**. In particular, look at the _Request_ struct for examples of the
+//! builder pattern. This module contains the tools (enums, structs, methods)
+//! for building your Google Maps Platform request.
+
 mod build;
 mod execute;
 mod get;
@@ -32,6 +37,10 @@ use crate::{
     region::Region,
 }; // use
 use time::PrimitiveDateTime;
+
+/// **Look at this `Request` struct for documentation on how to build your
+/// _Distance Matrix API_ query**. The methods implemented for this struct are
+/// what's used to build your request.
 
 #[derive(Debug, PartialEq, PartialOrd)]
 pub struct Request<'a> {
