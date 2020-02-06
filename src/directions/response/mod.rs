@@ -31,11 +31,11 @@ use crate::directions::{
     },
     travel_mode::TravelMode,
 };
-use serde::{Serialize, Deserialize};
+use serde::Deserialize;
 
 /// Directions responses contain the following root elements.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Deserialize)]
 pub struct Response {
 
     /// Contains an array of available travel modes. This field is returned when

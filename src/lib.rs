@@ -34,13 +34,13 @@
 //!     // Origin: Canadian Museum of Nature
 //!     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
 //!     // Destination: Canada Science and Technology Museum
-//!     Location::LatLng(LatLng::try_from(45.403509, -75.618904).unwrap()),
+//!     Location::LatLng(LatLng::try_from(45.403_509, -75.618_904).unwrap()),
 //! )
 //! .with_travel_mode(TravelMode::Transit)
 //! .with_arrival_time(PrimitiveDateTime::new(
 //!     // Ensure this date is a weekday in the future or this query will return
 //!     // zero results.
-//!     Date::try_from_ymd(2020, 2, 06).unwrap(),
+//!     Date::try_from_ymd(2020, 2, 6).unwrap(),
 //!     Time::try_from_hms(13, 00, 0).unwrap()
 //! ))
 //! .execute().unwrap();
@@ -72,7 +72,7 @@
 //!         // Google
 //!         Waypoint::PlaceId(String::from("ChIJj61dQgK6j4AR4GeTYWZsKWw")),
 //!         // Mozilla
-//!         Waypoint::LatLng(LatLng::try_from(37.387316, -122.060008).unwrap()),
+//!         Waypoint::LatLng(LatLng::try_from(37.387_316, -122.060_008).unwrap()),
 //!     ],
 //! )
 //! .execute().unwrap();
@@ -92,7 +92,7 @@
 //!
 //! let elevation = ElevationRequest::new(&mut my_settings)
 //! // Denver, Colorado, the "Mile High City"
-//! .for_positional_request(LatLng::try_from(39.7391536, -104.9847034).unwrap())
+//! .for_positional_request(LatLng::try_from(39.739_154, -104.984_703).unwrap())
 //! .execute().unwrap();
 //!
 //! // Dump entire response:
@@ -138,7 +138,7 @@
 //! let location = GeocodingReverseRequest::new(
 //!     &mut my_settings,
 //!     // 10 Downing St, Westminster, London
-//!     LatLng::try_from(51.5033635, -0.1276248).unwrap(),
+//!     LatLng::try_from(51.503_364, -0.127_625).unwrap(),
 //! )
 //! .with_result_type(PlaceType::StreetAddress)
 //! .execute().unwrap();
@@ -168,7 +168,7 @@
 //! let time_zone = TimeZoneRequest::new(
 //!     &mut my_settings,
 //!     // St. Vitus Cathedral in Prague, Czechia
-//!     LatLng::try_from(50.090903, 14.400512).unwrap(),
+//!     LatLng::try_from(50.090_903, 14.400_512).unwrap(),
 //!     PrimitiveDateTime::new(
 //!         // Tuesday February 15, 2022
 //!         Date::try_from_ymd(2022, 2, 15).unwrap(),
@@ -228,6 +228,7 @@
 //! contact me.
 
 mod error;
+mod serde;
 pub mod bounds;
 pub mod client_settings;
 pub mod directions;

@@ -1,10 +1,12 @@
 use crate::directions::response::time_zone::TimeZone;
-use serde::{Serialize, Deserialize};
+use crate::serde::unix_to_primitivedatetime::unix_to_primitivedatetime;
+use serde::{Deserialize};
+use time::PrimitiveDateTime;
 
 /// A representation of time as a Date object, a localized string, and a time
 /// zone.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Deserialize)]
 pub struct Time {
 
     /// A string representing the time's value. The time is displayed in the
@@ -17,6 +19,7 @@ pub struct Time {
     pub time_zone: TimeZone,
 
     /// The time of this departure or arrival.
-    pub value: u32,
+    #[serde(deserialize_with = "unix_to_primitivedatetime")]
+    pub value: PrimitiveDateTime,
 
 } // struct
