@@ -216,15 +216,15 @@ responding but I will respond. Thanks!
 now automatically deserialized into `time::PrimitiveDateTime` structs for
 convenience.
 
-* 0.4.2: 2020-02-06: Removed precision limit for Maps queries.
+* 0.4.2: 2020-02-06: Removed precision limit for Google Maps Platform requests.
 
 * 0.4.1: 2020-02-06: Added time zone and currency enumerations for look-up
-tables and handling to be added in the future.
+tables, conversions, and additional handling to be added in the future.
 
 * 0.4.1: 2020-02-06: Fixed some errors in the examples.
 
 * 0.4.1: 2020-02-05: Some internal restructuring to make the library more
-consistent. Improved many comments for better documentation.
+consistent. Improved many comments, better documentation.
 
 * 0.4.0: ⚠ **Breaking change**: API keys are no longer passed directly to
 Google Maps requests. Now, a structure containing your API key, and several
@@ -279,11 +279,11 @@ debugging.
 
 # To do
 
-1. Automatically convert Google's UNIX timestamps to `PrimitiveDateTime` types.
-2. Track both _requests_ and request _elements_ for rate limiting.
-3. Make a generic get() function for the APIs.
-4. Make parts optional.
-5. Prelude::*
+1. Track both _requests_ and request _elements_ for rate limiting.
+2. Make a generic get() function for that can be used by all APIs.
+3. Look into making APIs optional, i.e. features.
+4. Look into the Prelude::* convention.
+5. Look into integrating [yaiouom](https://crates.io/crates/yaiouom).
 6. Convert explicit query validation to session types wherever reasonable.
 7. [Places API](https://developers.google.com/places/web-service/intro). There
 are no immediate plans for supporting this API. It's quite big and I have no
