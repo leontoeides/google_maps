@@ -31,13 +31,13 @@ let directions = DirectionsRequest::new(
     // Origin: Canadian Museum of Nature
     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
     // Destination: Canada Science and Technology Museum
-    Location::LatLng(LatLng::try_from((45.403509, -75.618904).unwrap()),
+    Location::LatLng(LatLng::try_from(45.403509, -75.618904).unwrap()),
 )
 .with_travel_mode(TravelMode::Transit)
 .with_arrival_time(PrimitiveDateTime::new(
     // Ensure the date is a weekday in the future or this query will return
     // zero results.
-    Date::try_from_ymd(2022, 2, 10).unwrap(),
+    Date::try_from_ymd(2020, 2, 06).unwrap(),
     Time::try_from_hms(13, 00, 0).unwrap()
 ))
 .execute().unwrap();
@@ -69,7 +69,7 @@ let distance_matrix = DistanceMatrixRequest::new(
         // Google
         Waypoint::PlaceId(String::from("ChIJj61dQgK6j4AR4GeTYWZsKWw")),
         // Mozilla
-        Waypoint::LatLng(LatLng::try_from((37.387316, -122.060008).unwrap()),
+        Waypoint::LatLng(LatLng::try_from(37.387316, -122.060008).unwrap()),
     ],
 )
 .execute().unwrap();
@@ -137,7 +137,7 @@ let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 let location = GeocodingReverseRequest::new(
     &mut my_settings,
     // 10 Downing St, Westminster, London
-    LatLng::try_from((51.5033635, -0.1276248).unwrap(),
+    LatLng::try_from(51.5033635, -0.1276248).unwrap(),
 )
 .with_result_type(PlaceType::StreetAddress)
 .execute().unwrap();
@@ -237,7 +237,7 @@ let my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 let location = GeocodingReverseRequest::new(
     &mut my_settings,
     // 10 Downing St, Westminster, London
-    LatLng(LatLng::try_from((51.5033635, -0.1276248)?),
+    LatLng(LatLng::try_from(51.5033635, -0.1276248)?),
 )
 ```
 
@@ -246,7 +246,7 @@ let location = GeocodingReverseRequest::new(
 
 * 0.4.0: ⚠ **Breaking change**: All LatLng enum variants have had the
 { lat, lng } fields removed in favour of LatLng structs. Use
-`LatLng::try_from((lat, lng)` to define latitude/longitude pairs. See the
+`LatLng::try_from(lat, lng)` to define latitude/longitude pairs. See the
 updated examples.
 
 * 0.4.0: ⚠ **Breaking change**: The Elevation API methods

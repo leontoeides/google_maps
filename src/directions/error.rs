@@ -27,6 +27,10 @@ pub enum Error {
     /// `google_maps\src\directions\request\avoid.rs` for more information.
     InvalidAvoidCode(String),
     /// API client library attempted to parse a string that contained an invalid
+    /// currency code. See
+    /// `google_maps\src\directions\response\currency.rs` for more information.
+    InvalidCurrencyCode(String),
+    /// API client library attempted to parse a string that contained an invalid
     /// geocoder status code. See
     /// `google_maps\src\directions\response\geocoder_status.rs` for more
     /// information.
@@ -172,6 +176,12 @@ impl std::fmt::Display for Error {
                 `{}` is not a valid restrictions code. \
                 Valid codes are `ferries`, `highways`, `indoor`, and `tolls`.",
                 avoid_code),
+             Error::InvalidCurrencyCode(currency_code) => write!(f,
+                "Google Maps Directions API client: \
+                `{}` is not a recognized currency code. \
+                For a list of supported currency codes see \
+                https://en.wikipedia.org/wiki/ISO_4217",
+                currency_code),
             Error::InvalidGeocoderStatusCode(geocoder_status_code) => write!(f,
                 "Google Maps Directions API client: \
                 `{}` is not a valid geocoder status code. \
@@ -274,6 +284,7 @@ impl std::error::Error for Error {
             Error::GoogleMapsService(_error, _message) => None,
             Error::HttpUnsuccessful(_retries, _status) => None,
             Error::InvalidAvoidCode(_avoid_code) => None,
+            Error::InvalidCurrencyCode(_currency_code) => None,
             Error::InvalidGeocoderStatusCode(_geocoder_status_code) => None,
             Error::InvalidManeuverTypeCode(_maneuver_type_code) => None,
             Error::InvalidStatusCode(_status_code) => None,
