@@ -35,7 +35,7 @@ let directions = DirectionsRequest::new(
 )
 .with_travel_mode(TravelMode::Transit)
 .with_arrival_time(PrimitiveDateTime::new(
-    // Ensure the date is a weekday in the future or this query will return
+    // Ensure this date is a weekday in the future or this query will return
     // zero results.
     Date::try_from_ymd(2020, 2, 06).unwrap(),
     Time::try_from_hms(13, 00, 0).unwrap()
@@ -88,10 +88,8 @@ let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 // Example request:
 
 let elevation = ElevationRequest::new(&mut my_settings)
-.for_positional_request(ElevationLocations::LatLngs(vec![
-    // Denver, Colorado, the "Mile High City"
-    LatLng::try_from(39.7391536, -104.9847034).unwrap(),
-]))
+// Denver, Colorado, the "Mile High City"
+.for_positional_request(LatLng::try_from(39.7391536, -104.9847034).unwrap())
 .execute().unwrap();
 
 // Dump entire response:
@@ -215,7 +213,7 @@ responding but I will respond. Thanks!
 # Change Log
 
 * 0.4.1: 2020-02-06: Added time zone and currency enumerations for look-up
-tables to be added in the future.
+tables and handling to be added in the future.
 
 * 0.4.1: 2020-02-06: Fixed some errors in the examples.
 

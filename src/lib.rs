@@ -38,7 +38,7 @@
 //! )
 //! .with_travel_mode(TravelMode::Transit)
 //! .with_arrival_time(PrimitiveDateTime::new(
-//!     // Ensure the date is a weekday in the future or this query will return
+//!     // Ensure this date is a weekday in the future or this query will return
 //!     // zero results.
 //!     Date::try_from_ymd(2020, 2, 06).unwrap(),
 //!     Time::try_from_hms(13, 00, 0).unwrap()
@@ -91,10 +91,8 @@
 //! // Example request:
 //!
 //! let elevation = ElevationRequest::new(&mut my_settings)
-//! .for_positional_request(ElevationLocations::LatLngs(vec![
-//!     // Denver, Colorado, the "Mile High City"
-//!     LatLng::try_from(39.7391536, -104.9847034).unwrap(),
-//! ]))
+//! // Denver, Colorado, the "Mile High City"
+//! .for_positional_request(LatLng::try_from(39.7391536, -104.9847034).unwrap())
 //! .execute().unwrap();
 //!
 //! // Dump entire response:
