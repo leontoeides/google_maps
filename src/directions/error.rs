@@ -45,6 +45,10 @@ pub enum Error {
     /// more information.
     InvalidStatusCode(String),
     /// API client library attempted to parse a string that contained an invalid
+    /// time zone name. See
+    /// `google_maps\src\directions\response\time_zone.rs` for more information.
+    InvalidTimeZoneName(String),
+    /// API client library attempted to parse a string that contained an invalid
     /// traffic model code. See
     /// `google_maps\src\directions\request\traffic_model.rs` for more
     /// information.
@@ -179,7 +183,7 @@ impl std::fmt::Display for Error {
              Error::InvalidCurrencyCode(currency_code) => write!(f,
                 "Google Maps Directions API client: \
                 `{}` is not a recognized currency code. \
-                For a list of supported currency codes see \
+                For a list of supported currencies see \
                 https://en.wikipedia.org/wiki/ISO_4217",
                 currency_code),
             Error::InvalidGeocoderStatusCode(geocoder_status_code) => write!(f,
@@ -203,6 +207,12 @@ impl std::fmt::Display for Error {
                 `MAX_WAYPOINTS_EXCEEDED`, `NOT_FOUND`, `OK`, \
                 `OVER_DAILY_LIMIT`, `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, \
                 `UNKNOWN_ERROR`, and `ZERO_RESULTS`.", status_code),
+            Error::InvalidTimeZoneName(time_zone_name) => write!(f,
+                "Google Maps Directions API client: \
+                `{}` is not a recognized time zone name. \
+                For a list of supported time zones see \
+                https://www.iana.org/time-zones",
+                time_zone_name),
             Error::InvalidTrafficModelCode(traffic_model_code) => write!(f,
                 "Google Maps Directions API client: \
                 `{}` is not a valid traffic model code. \
@@ -288,6 +298,7 @@ impl std::error::Error for Error {
             Error::InvalidGeocoderStatusCode(_geocoder_status_code) => None,
             Error::InvalidManeuverTypeCode(_maneuver_type_code) => None,
             Error::InvalidStatusCode(_status_code) => None,
+            Error::InvalidTimeZoneName(_time_zone_name) => None,
             Error::InvalidTrafficModelCode(_traffic_model_code) => None,
             Error::InvalidTransitModeCode(_transit_mode_code) => None,
             Error::InvalidTransitRoutePreferenceCode(_transit_route_preference_code) => None,
