@@ -1,5 +1,5 @@
-//! Contains the `Country` enum and its associated traits. `Country` specifies
-//! a country or a nation. See also [ISO 3166 country
+//! Contains the `Country` enum and its associated traits. It specifies a
+//! country or a nation. See also [ISO 3166 country
 //! codes](https://en.wikipedia.org/wiki/ISO_3166-1).
 
 use crate::geocoding::error::Error;

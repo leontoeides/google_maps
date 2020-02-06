@@ -1,6 +1,6 @@
-//! Contains the `TrafficModel` enum and its associated traits. `TrafficModel`
-//! is used to select a traffic model that is as accurate as possible,
-//! optimistic, or pessimistic.
+//! Contains the `TrafficModel` enum and its associated traits. It is used to
+//! select a traffic model that is as accurate as possible, optimistic, or
+//! pessimistic.
 
 use crate::directions::error::Error;
 use serde::{Serialize, Deserialize};

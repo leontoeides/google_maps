@@ -1,6 +1,5 @@
-//! Contains the `UnitSystem` enum and its associated traits. `UnitSystem`
-//! is used specify whether imperial or metric units are used in Directions
-//! responses.
+//! Contains the `UnitSystem` enum and its associated traits. It is used specify
+//! whether imperial or metric units are used in Directions responses.
 
 use crate::directions::error::Error;
 use serde::{Serialize, Deserialize};

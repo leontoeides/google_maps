@@ -1,5 +1,5 @@
-//! Contains the `GeocoderStatus` enum and its associated traits.
-//! `GeocoderStatus` indicates the status resulting from geocoding operations.
+//! Contains the `GeocoderStatus` enum and its associated traits. It indicates
+//! the status resulting from geocoding operations.
 
 use crate::directions::error::Error;
 use serde::{Serialize, Deserialize};

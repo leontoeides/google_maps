@@ -1,6 +1,6 @@
-//! Contains the `TransitRoutePreference` enum and its associated traits.
-//! `TransitRoutePreference` is used to prioritize _fewer bus transfers_ or
-//! _less walking_ is when generating transit directions.
+//! Contains the `TransitRoutePreference` enum and its associated traits. It is
+//! used to prioritize _fewer bus transfers_ or _less walking_ is when
+//! generating transit directions.
 
 use crate::directions::error::Error;
 use serde::{Serialize, Deserialize};

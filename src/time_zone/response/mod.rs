@@ -1,5 +1,6 @@
-//! Resources (enums, structs) for the client process the Time Zone API response
-//! from the Google Cloud server.
+//! Resources (enums, structs) for processing the _Time Zone API_ response from
+//! the Google Maps Platform. Look in here for more information about the data
+//! returned from Google's server and how to parse it with your program.
 
 pub mod status;
 

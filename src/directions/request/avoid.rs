@@ -1,5 +1,5 @@
-//! Contains the `Avoid` enum and its associated traits. `Avoid` is used to
-//! route around features such as ferries, highways, and tolls.
+//! Contains the `Avoid` enum and its associated traits. It is used to route
+//! around features such as ferries, highways, and tolls.
 
 use crate::directions::error::Error;
 use serde::{Serialize, Deserialize};

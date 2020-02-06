@@ -1,5 +1,5 @@
-//! Contains the `ManeuverType` enum and its associated traits. `ManeuverType`
-//! is often used to determine which icon to display for the current step.
+//! Contains the `ManeuverType` enum and its associated traits. It is often used
+//! to determine which icon to display for the current step.
 
 use crate::directions::error::Error;
 use serde::{Serialize, Deserialize};

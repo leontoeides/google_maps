@@ -1,6 +1,6 @@
-//! Contains the `DepartureTime` enum and its associated traits. `DepartureTime`
-//! is used to specify when the user would like to depart for traffic modelling
-//! and transit directions.
+//! Contains the `DepartureTime` enum and its associated traits. It is used to
+//! specify when the user would like to depart for traffic modelling and transit
+//! directions.
 
 use time::PrimitiveDateTime;
 

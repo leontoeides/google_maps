@@ -1,3 +1,7 @@
+//! Resources (enums, structs) for processing the _Geolocation API_ response
+//! from the Google Maps Platform. Look in here for more information about the
+//! data returned from Google's server and how to parse it with your program.
+
 mod error_object;
 mod error;
 

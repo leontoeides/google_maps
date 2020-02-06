@@ -1,6 +1,6 @@
-//! Contains the `TransitMode` enum and its associated traits. `TransitMode` is
-//! used to prioritize certain transit modes such as _bus_ or _subway_ when
-//! generating transit directions.
+//! Contains the `TransitMode` enum and its associated traits. It is used to
+//! prioritize certain transit modes such as _bus_ or _subway_ when generating
+//! transit directions.
 
 use crate::directions::error::Error;
 use serde::{Serialize, Deserialize};

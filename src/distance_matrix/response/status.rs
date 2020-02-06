@@ -1,4 +1,4 @@
-//! Contains the `Status` enum and its associated traits. `Status` may contain
+//! Contains the `Status` enum and its associated traits. It may contain
 //! debugging information to help you track down why the service request failed.
 
 use crate::distance_matrix::error::Error;

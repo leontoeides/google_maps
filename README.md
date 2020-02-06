@@ -214,8 +214,8 @@ responding but I will respond. Thanks!
 
 # Change Log
 
-* 0.4.1: Some internal restructuring to make the library more consistent.
-Improved the comments for documentation.
+* 0.4.1: 2020-02-05: Some internal restructuring to make the library more
+consistent. Improved many comments for better documentation.
 
 * 0.4.0: ⚠ **Breaking change**: API keys are no longer passed directly to
 Google Maps requests. Now, a structure containing your API key, and several
@@ -231,7 +231,7 @@ let location = GeocodingReverseRequest::new(
 ```
 
 After. Note to Rust newbies: you may need to change the `?` to an `.unwrap()`
-for these examples to compile.
+if you're running these examples in your `main()` function.
 ```rust
 let my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 let location = GeocodingReverseRequest::new(

@@ -1,5 +1,6 @@
-//! Contains the `Component` enum and its associated traits. `Component`
-//! filters the geocoding response to specific types of areas.
+//! Contains the `Component` enum and its associated traits. It filters the
+//! geocoding response to specific types of areas, such as localities (cities)
+//! or countries (nations).
 
 use crate::geocoding::forward::country::Country;
 use serde::{Serialize, Deserialize};
