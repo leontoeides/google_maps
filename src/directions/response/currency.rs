@@ -1,14 +1,14 @@
 //! Contains the `Currency` enum and its associated traits. It is used to
-//! specify a currency. Include for use with the transit fares returned by
+//! specify a currency. Included for use with the transit fares returned by
 //! Google Maps Directions API.
 
 use crate::directions::error::Error;
 use serde::{Serialize, Deserialize};
 
 /// A comprehensive list of currencies. At the moment this is used only for
-/// Google Maps Directions for Transit. The intent behind having _Serde_ convert
-/// the currency code `String` to an `enum` is for more efficient currency
-/// conversions and information lookups in the future.
+/// Google Maps Transit Directions. The intent behind having _Serde_ convert
+/// the currency code `String` to an `enum` is for efficient currency
+/// conversions, information lookups, and manipulation in the future.
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Currency {
