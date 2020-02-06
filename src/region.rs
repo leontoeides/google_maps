@@ -1089,7 +1089,7 @@ impl std::fmt::Display for Region {
             Region::SriLanka => write!(f, "Sri Lanka"),
             Region::StBarthelemy => write!(f, "St. Barthélemy"),
             Region::StHelena => write!(f, "St. Helena"),
-            Region::StKittsAndNevis => write!(f, "St. Kitts & Nevis "),
+            Region::StKittsAndNevis => write!(f, "St. Kitts & Nevis"),
             Region::StLucia => write!(f, "St. Lucia"),
             Region::StMartin => write!(f, "St. Martin"),
             Region::StPierreAndMiquelon => write!(f, "St. Pierre & Miquelon"),

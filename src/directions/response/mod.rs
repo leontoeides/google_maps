@@ -2,6 +2,7 @@
 //! the Google Maps Platform. Look in here for more information about the data
 //! returned from Google's server and how to parse it with your program.
 
+mod currency;
 mod geocoded_waypoint;
 mod geocoder_status;
 mod leg;
@@ -11,6 +12,7 @@ mod polyline;
 mod route;
 mod step;
 mod time;
+mod time_zone;
 mod transit_agency;
 mod transit_details;
 mod transit_line;

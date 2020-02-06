@@ -1,3 +1,4 @@
+use crate::directions::response::currency::Currency;
 use serde::{Serialize, Deserialize};
 
 /// If present, contains the total fare (that is, the total ticket costs) on
@@ -9,7 +10,7 @@ pub struct Fare {
 
     /// An [ISO 4217 currency code](https://en.wikipedia.org/wiki/ISO_4217)
     /// indicating the currency that the amount is expressed in.
-    pub currency: String,
+    pub currency: Currency,
 
     /// The total fare amount, formatted in the requested language.
     pub text: String,

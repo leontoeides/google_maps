@@ -1,3 +1,4 @@
+use crate::directions::response::time_zone::TimeZone;
 use serde::{Serialize, Deserialize};
 
 /// A representation of time as a Date object, a localized string, and a time
@@ -13,7 +14,7 @@ pub struct Time {
     /// The time zone in which this stop lies. The value is the name of the time
     /// zone as defined in the [IANA Time Zone
     /// Database](http://www.iana.org/time-zones), e.g. "America/New_York".
-    pub time_zone: String,
+    pub time_zone: TimeZone,
 
     /// The time of this departure or arrival.
     pub value: u32,
