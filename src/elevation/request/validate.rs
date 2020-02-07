@@ -18,9 +18,9 @@ impl<'a> Request<'a> {
 
     pub fn validate(&mut self) -> Result<&'a mut Request, Error> {
 
-        // If a positional request has been set...
+        // If a "for positional request" has been set...
         if let Some(_locations) = &self.locations {
-            // ...a sampled path request cannot be set.
+            // ...a "for sampled path request" cannot be set.
             if let Some(_path) = &self.path { return Err(Error::EitherPositionalOrSampledPath) }
         } // if
 

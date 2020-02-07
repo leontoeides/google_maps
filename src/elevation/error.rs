@@ -35,7 +35,7 @@ impl std::fmt::Display for Error {
         match self {
             Error::EitherPositionalOrSampledPath => write!(f,
                 "Google Maps Elevation API client: \
-                A sampled_path_request() method cannot be used when postional_request() has been set. \
+                A for_sampled_path_request() method cannot be used when for_postional_request() has been set. \
                 Try again with only a positional request or only a sampled path request."),
             Error::GoogleMapsService(status, error_message) => match error_message {
                 // If the Google Maps Elevation API server generated an error

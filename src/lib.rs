@@ -91,9 +91,9 @@
 //! // Example request:
 //!
 //! let elevation = ElevationRequest::new(&mut my_settings)
-//! // Denver, Colorado, the "Mile High City"
-//! .for_positional_request(LatLng::try_from(39.739_154, -104.984_703).unwrap())
-//! .execute().unwrap();
+//!     // Denver, Colorado, the "Mile High City"
+//!     .for_positional_request(LatLng::try_from(39.739_154, -104.984_703).unwrap())
+//!     .execute().unwrap();
 //!
 //! // Dump entire response:
 //!
