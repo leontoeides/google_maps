@@ -59,10 +59,6 @@ impl RequestRate {
                     // sleep if necessary:
                     Some(first_request) => {
 
-                        // Calculate the current rate and target rate:
-                        let target_rate = rate.target_rate.requests as f64 / rate.target_rate.duration.as_secs_f64();
-                        let current_rate = rate.current_rate.request_count as f64 / first_request.elapsed().as_secs_f64();
-
                         // Output logging information:
                         trace!(
                             "{} requests to the `{}` API this session. This API's session began {} ago.",
@@ -74,6 +70,10 @@ impl RequestRate {
                             "Current rate: {}. Target rate: {}.",
                             rate.current_rate, rate.target_rate
                         );
+
+                        // Calculate the current rate and target rate:
+                        let target_rate = rate.target_rate.requests as f64 / rate.target_rate.duration.as_secs_f64();
+                        let current_rate = rate.current_rate.request_count as f64 / first_request.elapsed().as_secs_f64();
 
                         // If the current rate exceeds the targeted rate, put
                         // the thread to sleep:
