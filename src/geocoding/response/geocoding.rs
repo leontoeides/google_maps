@@ -78,3 +78,38 @@ pub struct Geocoding {
     pub types: Vec<PlaceType>,
 
 } // struct
+
+impl Geocoding {
+
+    /// A helper function for destructuring the optional `plus_code` field. If
+    /// the _plus_code_ field is populated, this function will return the
+    /// global plus code. If the _plus_code_ field is empty, this function
+    /// will return `None`.
+    /// ```rust
+    /// let plus_code = geocoding.get_global_plus_code();
+    /// ```
+    pub fn get_global_plus_code(&self) -> Option<String> {
+        match &self.plus_code {
+            Some(plus_code) => Some(plus_code.global_code.to_string()),
+            None => None,
+        } // match
+    } // fn
+
+    /// A helper function for destructuring the optional `compound_code`
+    /// field. If the _compound_code_ field is populated, this function will
+    /// return the compound plus code. If the _compound_code_ field is empty,
+    /// this function will return `None`.
+    /// ```rust
+    /// let compound_code = geocoding.get_compound_plus_code();
+    /// ```
+    pub fn get_compound_plus_code(&self) -> Option<String> {
+        match &self.plus_code {
+            Some(plus_code) => match &plus_code.compound_code {
+                Some(compound_code) => Some(compound_code.to_string()),
+                None => None,
+            } // match
+            None => None,
+        } // match
+    } // fn
+
+} // impl
