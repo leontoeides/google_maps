@@ -215,17 +215,20 @@
 //!
 //! # To do:
 //!
-//! 1. Convert explicit query validation to session types wherever reasonable.
-//!
-//! 2. [Places API](https://developers.google.com/places/web-service/intro).
+//! 1. Track both _requests_ and request _elements_ for rate limiting.
+//! 2. Make a generic get() function for that can be used by all APIs.
+//! 3. Look into making APIs optional, i.e. features.
+//! 4. Look into the Prelude::* convention.
+//! 5. Look into integrating [yaiouom](https://crates.io/crates/yaiouom).
+//! 6. Convert explicit query validation to session types wherever reasonable.
+//! 7. [Places API](https://developers.google.com/places/web-service/intro).
 //! There are no immediate plans for supporting this API. It's quite big and I
 //! have no current need for it. If you would like to have to implemented,
 //! please contact me.
-//!
-//! 3. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
+//! 8. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
 //! There are no immediate plans for supporting this API. It's quite big and I
-//! have current need for it. If you would like to have to implemented, please
-//! contact me.
+//! have no current need for it. If you would like to have to implemented,
+//! please contact me.
 
 mod bounds;
 mod client_settings;
