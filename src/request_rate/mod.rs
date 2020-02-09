@@ -1,5 +1,7 @@
 //! Contains the `RequestRate` struct and its associated traits. It is used to
-//! specify Google Maps Platform and per-API request rate limits.
+//! specify Google Maps Platform and per-API request rate limits. **Do not use
+//! this module to set request rates. Use the `ClientSettings` methods
+//! instead.**
 
 mod api_rate;
 mod current_rate;

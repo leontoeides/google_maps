@@ -27,7 +27,7 @@ impl ClientSettings {
     ///
     /// * Sets the maximum delay between request retries to 32 seconds:
     /// ```rust
-    /// .with_max_delay(Api::All, Duration::seconds(32))
+    /// .with_max_delay(Duration::from_secs(32))
     /// ```
 
     pub fn with_max_delay(&mut self, max_delay: Duration) -> &mut ClientSettings {
