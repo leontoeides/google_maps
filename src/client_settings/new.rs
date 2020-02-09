@@ -1,5 +1,7 @@
-use crate::client_settings::ClientSettings;
-use crate::request_rate::RequestRate;
+use crate::{
+    client_settings::ClientSettings,
+    request_rate::RequestRate,
+}; // use
 
 impl ClientSettings {
 

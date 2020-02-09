@@ -227,29 +227,35 @@
 //! have current need for it. If you would like to have to implemented, please
 //! contact me.
 
+mod bounds;
+mod client_settings;
+mod directions;
+mod distance_matrix;
+mod elevation;
 mod error;
+mod geocoding;
+mod language;
+mod latlng;
+mod place_type;
+mod region;
+mod request_rate;
 mod serde;
-pub mod bounds;
-pub mod client_settings;
-pub mod directions;
-pub mod distance_matrix;
-pub mod elevation;
-pub mod geocoding;
-pub mod language;
-pub mod latlng;
-pub mod place_type;
-pub mod region;
-pub mod request_rate;
-pub mod time_zone;
+mod time_zone;
 
 pub extern crate time;
-pub use crate::bounds::Bounds as Bounds;
-pub use crate::client_settings::ClientSettings as ClientSettings;
-pub use crate::language::Language as Language;
-pub use crate::latlng::LatLng as LatLng;
-pub use crate::place_type::PlaceType as PlaceType;
-pub use crate::region::Region as Region;
+
+pub use std::time::{Duration, Instant};
 pub use time::{Date, PrimitiveDateTime, Time};
+
+pub use crate::{
+    bounds::Bounds,
+    client_settings::ClientSettings,
+    language::Language,
+    latlng::LatLng,
+    place_type::PlaceType,
+    region::Region,
+    request_rate::api::Api,
+}; // use
 
 pub use crate::directions::{
     request::{

@@ -1,6 +1,6 @@
 [package]
 name = "google_maps"
-version = "0.4.2"
+version = "0.4.3"
 authors = ["Dylan Bowker <dylan.bowker@arkiteq.ca>"]
 edition = "2018"
 categories = [ "api-bindings" ]
@@ -8,6 +8,7 @@ description = "An unofficial Google Maps Platform client library for the Rust pr
 documentation = "https://docs.rs/google_maps"
 keywords = [ "distance", "elevation", "geocoding", "google", "maps" ]
 license = "MIT OR Apache-2.0"
+publish = true
 readme = "README.md"
 repository = "https://github.com/leontoeides/google_maps"
 

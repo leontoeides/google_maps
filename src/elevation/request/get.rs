@@ -29,6 +29,9 @@ impl<'a> Request<'a> {
             None => return Err(Error::QueryNotBuilt),
         } // match
 
+        self.client_settings.rate_limit.limit(Api::All);
+        self.client_settings.rate_limit.limit(Api::Elevation);
+
         info!("HTTP GET: {}", uri);
 
         // Initialize variables:
