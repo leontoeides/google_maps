@@ -212,6 +212,11 @@ responding but I will respond. Thanks!
 
 # Change Log
 
+* 0.4.3: 2020-02-09: [Happy 15th birthday to Google
+Maps](https://www.blog.google/products/maps/maps-15th-birthday/)!
+
+* 0.4.3: 2020-02-09: Ensured request rate limiting was applied to all API calls.
+
 * 0.4.2: 2020-02-06: Unix timestamps received from the Google Maps Platform are
 now automatically deserialized into `time::PrimitiveDateTime` structs for
 convenience.
