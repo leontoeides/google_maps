@@ -4,7 +4,7 @@ use crate::{
         request::Request,
         response::Response,
         response::status::Status,
-    },
+    }, // directions
     request_rate::api::Api,
 }; // use
 use log::{info, warn};

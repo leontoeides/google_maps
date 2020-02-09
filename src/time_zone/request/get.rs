@@ -4,6 +4,7 @@ use crate::time_zone::{
     response::Response,
     response::status::Status,
 }; // use
+use crate::request_rate::api::Api;
 use log::{info, warn};
 
 impl<'a> Request<'a> {
@@ -14,7 +15,7 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub fn get(&self) -> Result<Response, Error> {
+    pub fn get(&mut self) -> Result<Response, Error> {
 
         // Build the URI stem for the HTTP get request:
 
