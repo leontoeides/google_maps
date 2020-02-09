@@ -1,6 +1,6 @@
-//! Contains the `ClientSettings` struct and its associated traits. Use this
-//! structure's methods to set your _API key_ and the settings such as: _rate
-//! limiting_, _maxium retries_, & _retry delay times_ for your requests.
+//! Contains the `ClientSettings` struct and its associated traits. Use its
+//! implemented methods to set your _Google API key_ and other settings such as:
+//! _rate limiting_, _maxium retries_, & _retry delay times_ for your requests.
 
 mod finalize;
 mod new;
@@ -10,9 +10,13 @@ mod with_rate;
 
 use crate::request_rate::RequestRate;
 
-/// Contains your API key - the preferred way for authenticating with the Google
-/// Maps Platform APIs, your request rate limit settings, and your automatic
-/// retry settings.
+/// Use the `ClientSettings` struct's implemented methods to set your _Google
+/// API key_ and other settings such as: _rate limiting_, _maxium retries_, &
+/// _retry delay times_ for your requests.
+///
+/// This structure contains your API key - the preferred way for authenticating
+/// with the Google Maps Platform APIs, your request rate limit settings, and
+/// your automatic retry settings.
 ///
 /// How to use this structure's methods in a builder pattern:
 ///
