@@ -3,9 +3,9 @@
 //! data returned from Google's server and how to parse it with your program.
 
 mod address_component;
-mod geocoding;
 mod geometry;
 mod plus_code;
+pub mod geocoding;
 pub mod status;
 
 use crate::geocoding::response::{

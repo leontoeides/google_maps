@@ -348,6 +348,17 @@ pub enum PlaceType {
     Cities,
 } // enum
 
+impl PlaceType {
+    /// A helper function that converts a `Vec<PlaceType>` (i.e. an array of
+    /// PlaceType enum) to a `String` that contains a comma-delimited list of
+    /// [place
+    /// types](https://developers.google.com/places/web-service/supported_types)
+    /// codes.
+    pub fn vec_to_csv(place_types: &Vec<PlaceType>) -> String {
+        String::from(place_types.iter().map(|place_type| String::from(place_type) + ",").collect::<String>().trim_end_matches(','))
+    } // fn
+} // impl
+
 impl std::convert::From<&PlaceType> for String {
     /// Converts a `PlaceType` enum to a `String` that contains a [place
     /// type](https://developers.google.com/places/web-service/supported_types)

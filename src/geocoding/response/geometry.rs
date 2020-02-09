@@ -30,3 +30,63 @@ pub struct Geometry {
     pub bounds: Option<Bounds>,
 
 } // struct
+
+impl Geometry {
+
+    /// A helper function for destructuring the optional `bounds` field. If
+    /// the _bounds_ field is populated, this function will return the
+    /// south-west _latitude_. If the _bounds_ field is empty, this function
+    /// will return `None`.
+    /// ```rust
+    /// let bounds_southwest_lat = geocoding.geometry.get_bounds_southwest_lng();
+    /// ```
+    pub fn get_bounds_southwest_lat(&self) -> Option<f64> {
+        match &self.bounds {
+            Some(bounds) => Some(bounds.southwest.lat),
+            None => None,
+        } // match
+    } // fn
+
+    /// A helper function for destructuring the optional `bounds` field. If
+    /// the _bounds_ field is populated, this function will return the
+    /// south-west _latitude_. If the _bounds_ field is empty, this function
+    /// will return `None`.
+    /// ```rust
+    /// let bounds_southwest_lng = geocoding.geometry.get_bounds_southwest_lng();
+    /// ```
+    pub fn get_bounds_southwest_lng(&self) -> Option<f64> {
+        match &self.bounds {
+            Some(bounds) => Some(bounds.southwest.lng),
+            None => None,
+        } // match
+    } // fn
+
+    /// A helper function for destructuring the optional `bounds` field. If
+    /// the _bounds_ field is populated, this function will return the
+    /// north-east _latitude_. If the _bounds_ field is empty, this function
+    /// will return `None`.
+    /// ```rust
+    /// let bounds_northeast_lat = geocoding.geometry.get_bounds_northeast_lng();
+    /// ```
+    pub fn get_bounds_northeast_lat(&self) -> Option<f64> {
+        match &self.bounds {
+            Some(bounds) => Some(bounds.northeast.lat),
+            None => None,
+        } // match
+    } // fn
+
+    /// A helper function for destructuring the optional `bounds` field. If
+    /// the _bounds_ field is populated, this function will return the
+    /// north-east _latitude_. If the _bounds_ field is empty, this function
+    /// will return `None`.
+    /// ```rust
+    /// let bounds_northeast_lng = geocoding.geometry.get_bounds_northeast_lng();
+    /// ```
+    pub fn get_bounds_northeast_lng(&self) -> Option<f64> {
+        match &self.bounds {
+            Some(bounds) => Some(bounds.northeast.lng),
+            None => None,
+        } // match
+    } // fn
+
+} // impl

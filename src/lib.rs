@@ -273,7 +273,7 @@ pub use crate::directions::{
         waypoint::Waypoint as Waypoint,
     }, // request
     response::{
-        Response as Directions,
+        Response as DirectionsResponse,
         status::Status as DirectionsStatus,
     }, // response
     travel_mode::TravelMode as TravelMode,
@@ -281,7 +281,7 @@ pub use crate::directions::{
 
 pub use crate::distance_matrix::{
     request::Request as DistanceMatrixRequest,
-    response::Response as DistanceMatrix,
+    response::Response as DistanceMatrixResponse,
     response::status::Status as DistanceMatrixStatus,
 }; // use
 
@@ -292,7 +292,7 @@ pub use crate::elevation::{
         Request as ElevationRequest,
     }, // request
     response::{
-        Response as Elevation,
+        Response as ElevationResponse,
         status::Status as ElevationStatus,
     }, // response
 }; // use
@@ -301,13 +301,12 @@ pub use crate::geocoding::{
     error::Error as GeocodingError,
     forward::{
         component::Component as GeocodingComponent,
-        ForwardRequest as GeocodingForwardRequest,
         ForwardRequest as GeocodingRequest,
     }, // forward
     location_type::LocationType as LocationType,
     response::{
-        Response as Geocoding,
-        status::Status as GeocodingStatus,
+        Response as GeocodingResponse,
+        geocoding::Geocoding as GeocodingResult,
     }, // response
     reverse::ReverseRequest as GeocodingReverseRequest,
 }; // use
@@ -316,7 +315,7 @@ pub use crate::time_zone::{
     error::Error as TimeZoneError,
     request::Request as TimeZoneRequest,
     response::{
-        Response as TimeZone,
+        Response as TimeZoneResponse,
         status::Status as TimeZoneStatus,
     }, // reponse
 }; // use
