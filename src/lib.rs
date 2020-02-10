@@ -307,6 +307,7 @@ pub use crate::geocoding::{
     response::{
         Response as GeocodingResponse,
         geocoding::Geocoding as GeocodingResult,
+        address_component::AddressComponent,
     }, // response
     reverse::ReverseRequest as GeocodingReverseRequest,
 }; // use
