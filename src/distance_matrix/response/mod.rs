@@ -5,9 +5,9 @@
 //! API_. If you're not finding what you're looking for in this module, check
 //! out the Directions modules also.
 
-mod element;
-mod element_status;
-mod row;
+pub mod element;
+pub mod element_status;
+pub mod row;
 pub mod status;
 
 use crate::distance_matrix::response::{

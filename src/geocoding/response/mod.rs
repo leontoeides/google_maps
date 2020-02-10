@@ -2,10 +2,10 @@
 //! from the Google Maps Platform. Look in here for more information about the
 //! data returned from Google's server and how to parse it with your program.
 
-mod address_component;
-mod geometry;
-mod plus_code;
+pub mod address_component;
 pub mod geocoding;
+pub mod geometry;
+pub mod plus_code;
 pub mod status;
 
 use crate::geocoding::response::{
