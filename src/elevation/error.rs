@@ -3,7 +3,7 @@
 use crate::elevation::response::status::Status;
 
 /// Errors that may be produced by the Google Maps Elevation API client.
-#[derive(Debug)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Error {
     /// A sampled_path_request() method cannot be used when postional_request()
     /// has been set.
