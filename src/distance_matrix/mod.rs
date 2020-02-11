@@ -75,6 +75,6 @@
 //! APIs. It provides an introduction to using the API and reference material on
 //! the available parameters.
 
-mod error;
+pub mod error;
 pub mod request;
 pub mod response;
