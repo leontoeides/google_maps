@@ -3,7 +3,7 @@
 use crate::time_zone::response::status::Status;
 
 /// Errors that may be produced by the Google Maps Time Zone API client.
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Debug)]
 pub enum Error {
     /// Google Maps Time Zone API server generated an error. See the `Status`
     /// enum for more information.

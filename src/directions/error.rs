@@ -3,7 +3,7 @@
 use crate::directions::response::status::Status;
 
 /// Errors that may be produced by the Google Maps Directions API client.
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Debug)]
 pub enum Error {
     /// An arrival time may only be specified in Transit travel mode.
     ArrivalTimeIsForTransitOnly(String, String),

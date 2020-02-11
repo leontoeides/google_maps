@@ -1,6 +1,6 @@
 use serde::{Serialize, Deserialize};
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Error {
     pub domain: String,
     pub reason: String,
