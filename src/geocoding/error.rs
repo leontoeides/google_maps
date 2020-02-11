@@ -3,7 +3,7 @@
 use crate::geocoding::response::status::Status;
 
 /// Errors that may be produced by the Google Maps Geocoding API client.
-#[derive(Debug)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Error {
     /// Forward geocoding requests (address to latlng) must specify an `address`
     /// or at least one `component`.

@@ -2,7 +2,7 @@
 
 /// Errors that may be produced by the root part of the Google Maps Platform API
 /// client.
-#[derive(Debug)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Error {
     /// API client library attempted to parse a string that contained an invalid
     /// language code. See `google_maps\src\language.rs` for more information.

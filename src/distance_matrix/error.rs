@@ -3,8 +3,7 @@
 use crate::distance_matrix::response::status::Status;
 
 /// Errors that may be produced by the Google Maps Distance Matrix API client.
-
-#[derive(Debug)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Error {
     /// An arrival time may only be specified in Transit travel mode.
     ArrivalTimeIsForTransitOnly(String, String),
