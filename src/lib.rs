@@ -306,7 +306,7 @@ pub use crate::geocoding::{
     location_type::LocationType as LocationType,
     response::{
         address_component::AddressComponent,
-        geocoding::Geocoding as GeocodingResult,
+        geocoding::Geocoding as Geocoding,
         geometry::Geometry,
         plus_code::PlusCode,
         Response as GeocodingResponse,
