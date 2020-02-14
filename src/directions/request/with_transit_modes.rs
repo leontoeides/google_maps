@@ -39,12 +39,12 @@ impl<'a> Request<'a> {
     /// ## Examples:
     ///
     /// * Set preferred transit mode to rail:
-    /// ```
+    /// ```rust
     /// .with_transit_mode((vec![TransitMode::Rail])
     /// ```
     ///
     /// * Set preferred transit modes to bus and subway:
-    /// ```
+    /// ```rust
     /// .with_transit_modes(vec![
     ///     TransitMode::Bus,
     ///     TransitMode::Subway

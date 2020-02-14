@@ -18,7 +18,7 @@ impl<'a> Request<'a> {
     ///
     /// ## Example:
     ///
-    /// ```
+    /// ```rust
     /// // Denver, Colorado, the "Mile High City"
     /// .for_positional_request(LatLng::try_from(39.7391536, -104.9847034).unwrap())
     /// ```
@@ -42,7 +42,7 @@ impl<'a> Request<'a> {
     ///
     /// ## Example:
     ///
-    /// ```
+    /// ```rust
     /// .for_positional_requests(ElevationLocations::LatLngs(vec![
     ///     // Denver, Colorado, the "Mile High City"
     ///     LatLng::try_from(39.7391536, -104.9847034).unwrap(),

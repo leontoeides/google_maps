@@ -43,7 +43,7 @@ impl<'a> ForwardRequest<'a> {
     /// ## Example:
     ///
     /// * Set language for result:
-    /// ```
+    /// ```rust
     /// .with_language(Language::French)
     /// ```
 

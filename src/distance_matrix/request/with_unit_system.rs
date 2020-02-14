@@ -38,7 +38,7 @@ impl<'a> Request<'a> {
     /// ## Example:
     ///
     /// * Force unit system to Metric:
-    /// ```
+    /// ```rust
     /// .with_unit_system(UnitSystem::Metric)
     /// ```
 

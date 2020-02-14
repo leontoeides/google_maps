@@ -15,7 +15,7 @@ impl<'a> ForwardRequest<'a> {
     ///
     /// ## Example:
     ///
-    /// ```
+    /// ```rust
     /// .with_address(String::from(
     ///     "1313 Disneyland Dr, Anaheim, CA 92802, United States"
     /// ))

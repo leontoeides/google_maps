@@ -45,7 +45,7 @@ impl<'a> Request<'a> {
     /// ## Example:
     ///
     /// * Set travel mode to transit:
-    /// ```
+    /// ```rust
     /// .with_travel_mode(TravelMode::Transit)
     /// ```
 

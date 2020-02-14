@@ -18,20 +18,18 @@ impl<'a> Request<'a> {
     ///
     /// ## Example:
     ///
-    /// ```
-    /// let time_zone = Request::new(
+    /// ```rust
+    /// let time_zone = TimeZoneRequest::new(
+    ///     &mut my_settings,
     ///     // St. Vitus Cathedral in Prague, Czechia
-    ///     LatLng { lat: 50.090903, lng: 14.400512 },
+    ///     LatLng::try_from(50.090_903, 14.400_512).unwrap(),
     ///     PrimitiveDateTime::new(
     ///         // Tuesday February 15, 2022
     ///         Date::try_from_ymd(2022, 2, 15).unwrap(),
     ///         // 6:00:00 pm
     ///         Time::try_from_hms(18, 00, 0).unwrap(),
     ///     ),
-    ///     // Your Google API Key
-    ///     GOOGLE_API_KEY,
-    /// // Build query string and then perform HTTP get request
-    /// ).build().get();
+    /// )
     /// ```
 
     pub fn new(client_settings: &mut ClientSettings, location: LatLng, time: PrimitiveDateTime) -> Request {

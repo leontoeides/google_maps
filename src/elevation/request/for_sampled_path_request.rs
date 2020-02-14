@@ -21,7 +21,7 @@ impl<'a> Request<'a> {
     ///
     /// ## Example:
     ///
-    /// ```
+    /// ```rust
     /// .for_sampled_path_request(
     ///     ElevationLocations::LatLngs(vec![
     ///         // Denver, Colorado
