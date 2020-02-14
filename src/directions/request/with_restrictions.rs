@@ -48,7 +48,7 @@ impl<'a> Request<'a> {
     /// ## Examples:
     ///
     /// * Avoid tolls and ferries:
-    /// ```
+    /// ```rust
     /// .with_restrictions(vec![
     ///     Avoid::Tolls,
     ///     Avoid::Ferries,
@@ -56,7 +56,7 @@ impl<'a> Request<'a> {
     ///
     /// ```
     /// * Only avoid highways:
-    /// ```
+    /// ```rust
     /// .with_restrictions(vec![Avoid::Highways])
     /// ```
 

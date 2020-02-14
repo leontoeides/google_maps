@@ -44,7 +44,7 @@ impl<'a> Request<'a> {
     /// ## Example:
     ///
     /// * Force language to French:
-    /// ```
+    /// ```rust
     /// .with_language(Language::French)
     /// ```
 

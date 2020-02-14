@@ -20,7 +20,7 @@ impl<'a> Request<'a> {
     /// ## Example:
     ///
     /// * Allow more than one route in the response:
-    /// ```
+    /// ```rust
     /// .with_alternatives(true)
     /// ```
 

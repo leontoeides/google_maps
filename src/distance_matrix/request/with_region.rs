@@ -29,7 +29,7 @@ impl<'a> Request<'a> {
     /// ## Example:
     ///
     /// * Bias region to Canada:
-    /// ```
+    /// ```rust
     /// .with_region(Region::Canada)
     /// ```
 

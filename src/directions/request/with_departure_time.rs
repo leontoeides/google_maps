@@ -42,12 +42,12 @@ impl<'a> Request<'a> {
     /// ## Examples:
     ///
     /// * Departing now:
-    /// ```
+    /// ```rust
     /// .with_departure_time(DepartureTime::Now)
     /// ```
     ///
     /// * Departing on Tuesday February 22, 2022 at 1:00:00 PM:
-    /// ```
+    /// ```rust
     /// .with_departure_time(DepartureTime::At(PrimitiveDateTime::new(
     ///     Date::try_from_ymd(2022, 2, 22).unwrap(),
     ///     Time::try_from_hms(13, 00, 0).unwrap(),
@@ -56,7 +56,7 @@ impl<'a> Request<'a> {
     /// ```
     ///
     /// * Departing on Tuesday January 1, 2030 at 12:30:00 PM:
-    /// ```
+    /// ```rust
     /// .with_departure_time(DepartureTime::At(PrimitiveDateTime::new(
     ///     Date::try_from_ymd(2030, 1, 1).unwrap(),
     ///     Time::try_from_hms(12, 30, 0).unwrap(),

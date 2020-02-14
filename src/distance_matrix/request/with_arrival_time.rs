@@ -19,7 +19,7 @@ impl<'a> Request<'a> {
     /// ## Example:
     ///
     /// * Arriving by January 1, 2019 at 12:00:00 AM:
-    /// ```
+    /// ```rust
     /// .with_arrival_time(PrimitiveDateTime::new(
     ///     PrimitiveDateTime::new(Date::try_from_ymd(2019, 1, 1).unwrap(),
     ///     Time::midnight()

@@ -31,7 +31,7 @@ impl<'a> Request<'a> {
     /// ## Example:
     ///
     /// * Set transit route preference to fewer transfers:
-    /// ```
+    /// ```rust
     /// .with_transit_route_preference(TransitRoutePreference::FewerTransfers)
     /// ```
 

@@ -35,7 +35,7 @@ impl<'a> ForwardRequest<'a> {
     /// ## Example:
     ///
     /// * Bias region to Canada:
-    /// ```
+    /// ```rust
     /// .with_region(Region::Canada)
     /// ```
 

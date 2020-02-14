@@ -48,7 +48,7 @@ impl<'a> Request<'a> {
     /// ## Example:
     ///
     /// * Set traffic model to pessimistic:
-    /// ```
+    /// ```rust
     /// .with_traffic_model(TrafficModel::Pessimistic)
     /// ```
 

@@ -15,7 +15,7 @@ impl<'a> Request<'a> {
     /// ## Example:
     ///
     /// * Set Google's response to the French language:
-    /// ```
+    /// ```rust
     /// .with_language(Language::French)
     /// ```
 
