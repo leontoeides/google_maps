@@ -64,3 +64,119 @@ pub struct Leg {
     pub steps: Vec<Step>,
 
 } // struct
+
+impl Leg {
+
+    /// A helper function for destructuring (or serializing) the optional
+    /// `duration_in_traffic` field. If the `Duration` struct is populated, this
+    /// function will return the _text_ field as a `String`. If the _Duration_
+    /// struct is empty, this function will return `None`.
+    /// ```rust
+    /// let duration_in_traffic_text = leg.get_duration_in_traffic_text();
+    /// ```
+    pub fn get_duration_in_traffic_text(&self) -> Option<&String> {
+        match &self.duration_in_traffic {
+            Some(duration) => Some(&duration.text),
+            None => None,
+        } // match
+    } // fn
+
+    /// A helper function for destructuring (or serializing) the optional
+    /// `duration_in_traffic` field. If the `Duration` struct is populated, this
+    /// function will return the _value_ field as a `u32`. If the _Duration_
+    /// struct is empty, this function will return `None`.
+    /// ```rust
+    /// let duration_in_traffic_value = leg.get_duration_in_traffic_value();
+    /// ```
+    pub fn get_duration_in_traffic_value(&self) -> Option<u32> {
+        match &self.duration_in_traffic {
+            Some(duration) => Some(duration.value),
+            None => None,
+        } // match
+    } // fn
+
+    /// A helper function for destructuring (or serializing) the optional
+    /// `arrival_time` field. If the `Time` struct is populated, this function
+    /// will return the _text_ field as a `String`. If the _Time_ struct is
+    /// empty, this function will return `None`.
+    /// ```rust
+    /// let arrival_time_text = leg.get_arrival_time_text();
+    /// ```
+    pub fn get_arrival_time_text(&self) -> Option<&String> {
+        match &self.arrival_time {
+            Some(time) => Some(&time.text),
+            None => None,
+        } // match
+    } // fn
+
+    /// A helper function for destructuring (or serializing) the optional
+    /// `arrival_time` field. If the `Time` struct is populated, this function
+    /// will return the _time_zone_ field as a `String` type. If the _Time_
+    /// struct is empty, this function will return `None`.
+    /// ```rust
+    /// let arrival_time_zone = leg.arrival_time_zone();
+    /// ```
+    pub fn get_arrival_time_value(&self) -> Option<String> {
+        match &self.arrival_time {
+            Some(time) => Some(time.time_zone.to_string()),
+            None => None,
+        } // match
+    } // fn
+
+    /// A helper function for destructuring (or serializing) the optional
+    /// `arrival_time` field. If the `Time` struct is populated, this function
+    /// will return the _time_ field as a `i64` UNIX timestamp. If the _Time_
+    /// struct is empty, this function will return `None`.
+    /// ```rust
+    /// let arrival_time_zone = leg.arrival_time_zone();
+    /// ```
+    pub fn get_arrival_time_zone(&self) -> Option<i64> {
+        match &self.arrival_time {
+            Some(time) => Some(time.value.timestamp()),
+            None => None,
+        } // match
+    } // fn
+
+    /// A helper function for destructuring (or serializing) the optional
+    /// `departure_time` field. If the `Time` struct is populated, this function
+    /// will return the _text_ field as a `String`. If the _Time_ struct is
+    /// empty, this function will return `None`.
+    /// ```rust
+    /// let departure_time_text = leg.get_departure_time_text();
+    /// ```
+    pub fn get_departure_time_text(&self) -> Option<&String> {
+        match &self.departure_time {
+            Some(time) => Some(&time.text),
+            None => None,
+        } // match
+    } // fn
+
+    /// A helper function for destructuring (or serializing) the optional
+    /// `departure_time` field. If the `Time` struct is populated, this function
+    /// will return the _time_zone_ field as a `String` type. If the _Time_
+    /// struct is empty, this function will return `None`.
+    /// ```rust
+    /// let departure_time_zone = leg.departure_time_zone();
+    /// ```
+    pub fn get_departure_time_value(&self) -> Option<String> {
+        match &self.departure_time {
+            Some(time) => Some(time.time_zone.to_string()),
+            None => None,
+        } // match
+    } // fn
+
+    /// A helper function for destructuring (or serializing) the optional
+    /// `departure_time` field. If the `Time` struct is populated, this function
+    /// will return the _time_ field as a `i64` UNIX timestamp. If the _Time_
+    /// struct is empty, this function will return `None`.
+    /// ```rust
+    /// let departure_time_zone = leg.departure_time_zone();
+    /// ```
+    pub fn get_departure_time_zone(&self) -> Option<i64> {
+        match &self.departure_time {
+            Some(time) => Some(time.value.timestamp()),
+            None => None,
+        } // match
+    } // fn
+
+} // impl

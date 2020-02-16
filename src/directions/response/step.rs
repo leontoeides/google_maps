@@ -69,3 +69,21 @@ pub struct Step {
     pub travel_mode: TravelMode,
 
 } // struct
+
+impl Step {
+
+    /// A helper function for destructuring (or serializing) the optional
+    /// `maneuver` field. If the `ManeuverType` enum is populated, this function
+    /// will return it as a `String`. If the _ManeuverType_ enum is empty, this
+    /// function will return `None`.
+    /// ```rust
+    /// let get_maneuver = step.get_maneuver();
+    /// ```
+    pub fn get_maneuver(&self) -> Option<String> {
+        match &self.maneuver {
+            Some(maneuver) => Some(maneuver.to_string()),
+            None => None,
+        } // match
+    } // fn
+
+} // impl

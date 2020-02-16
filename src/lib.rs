@@ -273,8 +273,12 @@ pub use crate::directions::{
         waypoint::Waypoint as Waypoint,
     }, // request
     response::{
+        leg::Leg as Leg,
         Response as DirectionsResponse,
+        route::Route as Route,
         status::Status as DirectionsStatus,
+        step::Step as Step,
+        transit_details::TransitDetails as TransitDetails,
     }, // response
     travel_mode::TravelMode as TravelMode,
 }; // use
@@ -310,6 +314,7 @@ pub use crate::geocoding::{
         geometry::Geometry,
         plus_code::PlusCode,
         Response as GeocodingResponse,
+        status::Status as GeocodingStatus,
     }, // response
     reverse::ReverseRequest as GeocodingReverseRequest,
 }; // use

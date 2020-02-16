@@ -1,4 +1,7 @@
-use crate::directions::response::transit_agency::TransitAgency;
+use crate::directions::response::{
+    transit_agency::TransitAgency,
+    transit_vehicle::TransitVehicle,
+}; // use
 use serde::{Serialize, Deserialize};
 
 /// Contains the type of vehicle used on this line.
@@ -20,5 +23,19 @@ pub struct TransitLine {
     /// An array containing a single `TransitAgency` object. The `TransitAgency`
     /// object provides information about the operator of the line
     pub agencies: Vec<TransitAgency>,
+
+    /// Contains the URL for this transit line as provided by the transit
+    /// agency.
+    pub url: Option<String>,
+
+    /// Contains the URL for the icon associated with this line.
+    pub icon: Option<String>,
+
+    /// Contains the color of text commonly used for signage of this line. The
+    /// color will be specified as a hex string.
+    pub text_color: Option<String>,
+
+    // Contains the type of vehicle used on this line.
+    pub vehicle: TransitVehicle,
 
 } // struct
