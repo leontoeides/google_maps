@@ -10,44 +10,62 @@ use serde::{Serialize, Deserialize};
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum VehicleType {
     /// Bus.
+    #[serde(alias = "BUS")]
     Bus,
     /// A vehicle that operates on a cable, usually on the ground. Aerial cable
     /// cars may be of the type VehicleType::Gondola.
+    #[serde(alias = "CABLE_CAR")]
     CableCar,
     /// Commuter rail.
+    #[serde(alias = "COMMUTER_TRAIN")]
     CommuterTrain,
     /// Ferry.
+    #[serde(alias = "FERRY")]
     Ferry,
     /// A vehicle that is pulled up a steep incline by a cable. A Funicular
     /// typically consists of two cars, with each car acting as a counterweight
     /// for the other.
+    #[serde(alias = "FUNICULAR")]
     Funicular,
     /// An aerial cable car.
+    #[serde(alias = "GONDOLA_LIFT")]
     GondolaLift,
     /// Heavy rail.
+    #[serde(alias = "HEAVY_RAIL")]
     HeavyRail,
     /// High speed train.
+    #[serde(alias = "HIGH_SPEED_TRAIN")]
     HighSpeedTrain,
     /// Intercity bus.
+    #[serde(alias = "INTERCITY_BUS")]
     IntercityBus,
     /// Long distance train.
+    #[serde(alias = "LONG_DISTANCE_TRAIN")]
     LongDistanceTrain,
     /// Light rail transit.
+    #[serde(alias = "METRO_RAIL")]
     MetroRail,
     /// Monorail.
+    #[serde(alias = "MONORAIL")]
     Monorail,
     /// All other vehicles will return this type.
+    #[serde(alias = "OTHER")]
     Other,
     /// Rail.
+    #[serde(alias = "RAIL")]
     Rail,
     /// Share taxi is a kind of bus with the ability to drop off and pick up
     /// passengers anywhere on its route.
+    #[serde(alias = "SHARE_TAXI")]
     ShareTaxi,
     /// Underground light rail.
+    #[serde(alias = "SUBWAY")]
     Subway,
     /// Above ground light rail.
+    #[serde(alias = "TRAM")]
     Tram,
     /// Trolleybus.
+    #[serde(alias = "TROLLEYBUS")]
     Trolleybus,
 } // enum
 
