@@ -70,3 +70,49 @@ pub struct Route {
     pub waypoint_order: Vec<u8>,
 
 } // struct
+
+impl Route {
+
+    /// A helper function for destructuring (or serializing) the optional `fare`
+    /// field. If the _fare_ struct is populated, this function will return the
+    /// _currency_ code in the `String` format. If the _fare_ struct is empty,
+    /// this function will return `None`.
+    /// ```rust
+    /// let get_fare_currency = route.get_fare_currency();
+    /// ```
+    pub fn get_fare_currency(&self) -> Option<String> {
+        match &self.fare {
+            Some(fare) => Some(fare.currency.to_string()),
+            None => None,
+        } // match
+    } // fn
+
+    /// A helper function for destructuring (or serializing) the optional `fare`
+    /// field. If the _fare_ struct is populated, this function will return the
+    /// _value_ `f64`. If the _fare_ struct is empty, this function will return
+    /// `None`.
+    /// ```rust
+    /// let get_fare_value = route.get_fare_value();
+    /// ```
+    pub fn get_fare_value(&self) -> Option<f64> {
+        match &self.fare {
+            Some(fare) => Some(fare.value),
+            None => None,
+        } // match
+    } // fn
+
+    /// A helper function for destructuring (or serializing) the optional `fare`
+    /// field. If the _fare_ struct is populated, this function will return the
+    /// _text_ `String`. If the _fare_ struct is empty, this function will
+    /// return `None`.
+    /// ```rust
+    /// let get_fare_text = route.get_fare_text();
+    /// ```
+    pub fn get_fare_text(&self) -> Option<&String> {
+        match &self.fare {
+            Some(fare) => Some(&fare.text),
+            None => None,
+        } // match
+    } // fn
+
+} // impl
