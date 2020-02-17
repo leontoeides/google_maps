@@ -73,6 +73,20 @@ pub struct Route {
 
 impl Route {
 
+    /// A helper function for destructuring (or serializing) the `summary`
+    /// field. If the _summary_ text is populated, this function will return the
+    /// _summary_ text in the `String` format. If the _summary_ text is empty,
+    /// this function will return `None`.
+    /// ```rust
+    /// let get_fare_currency = route.get_fare_currency();
+    /// ```
+    pub fn get_summary(&self) -> Option<&String> {
+        match &*self.summary {
+            "" => None,
+            _ => Some(&self.summary),
+        } // match
+    } // fn
+
     /// A helper function for destructuring (or serializing) the optional `fare`
     /// field. If the _fare_ struct is populated, this function will return the
     /// _currency_ code in the `String` format. If the _fare_ struct is empty,
@@ -82,7 +96,7 @@ impl Route {
     /// ```
     pub fn get_fare_currency(&self) -> Option<String> {
         match &self.fare {
-            Some(fare) => Some(fare.currency.to_string()),
+            Some(fare) => Some(String::from(&fare.currency)),
             None => None,
         } // match
     } // fn
