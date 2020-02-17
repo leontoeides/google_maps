@@ -1,4 +1,4 @@
-use crate::directions::response::currency::Currency;
+use crate::directions::response::transit_currency::TransitCurrency;
 use serde::{Serialize, Deserialize};
 
 /// If present, contains the total fare (that is, the total ticket costs) on
@@ -6,11 +6,11 @@ use serde::{Serialize, Deserialize};
 /// routes where fare information is available for all transit legs.
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
-pub struct Fare {
+pub struct TransitFare {
 
     /// An [ISO 4217 currency code](https://en.wikipedia.org/wiki/ISO_4217)
     /// indicating the currency that the amount is expressed in.
-    pub currency: Currency,
+    pub currency: TransitCurrency,
 
     /// The total fare amount, formatted in the requested language.
     pub text: String,

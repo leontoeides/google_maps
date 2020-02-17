@@ -3,7 +3,7 @@ use crate::{
         distance::Distance,
         duration::Duration,
         step::Step,
-        time::Time,
+        transit_time::TransitTime,
     }, // directions::response
     latlng::LatLng,
 }; // use
@@ -19,11 +19,11 @@ pub struct Leg {
 
     /// An estimated arrival time for this leg. Only applicable for
     /// `TravelMode::Transit` requests.
-    pub arrival_time: Option<Time>,
+    pub arrival_time: Option<TransitTime>,
 
     /// An estimated departure time for this leg. Only applicable for
     /// `TravelMode::Transit` requests.
-    pub departure_time: Option<Time>,
+    pub departure_time: Option<TransitTime>,
 
     /// The total distance covered by this leg. This property may be undefined
     /// as the distance may be unknown.

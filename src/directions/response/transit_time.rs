@@ -1,4 +1,4 @@
-use crate::directions::response::time_zone::TimeZone;
+use crate::directions::response::transit_time_zone::TransitTimeZone;
 use crate::serde::unix_to_primitivedatetime::unix_to_primitivedatetime;
 use serde::{Deserialize};
 use time::PrimitiveDateTime;
@@ -7,7 +7,7 @@ use time::PrimitiveDateTime;
 /// zone.
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Deserialize)]
-pub struct Time {
+pub struct TransitTime {
 
     /// A string representing the time's value. The time is displayed in the
     /// time zone of the transit stop.
@@ -16,7 +16,7 @@ pub struct Time {
     /// The time zone in which this stop lies. The value is the name of the time
     /// zone as defined in the [IANA Time Zone
     /// Database](http://www.iana.org/time-zones), e.g. "America/New_York".
-    pub time_zone: TimeZone,
+    pub time_zone: TransitTimeZone,
 
     /// The time of this departure or arrival.
     #[serde(deserialize_with = "unix_to_primitivedatetime")]
