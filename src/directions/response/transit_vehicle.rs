@@ -11,7 +11,7 @@ pub struct TransitVehicle {
 
     /// Contains the URL for the icon associated with this vehicle type, based
     /// on the local transport signage.
-    pub local_icon: String,
+    pub local_icon: Option<String>,
 
     /// Contains the name of the vehicle on this line. eg. "Subway."
     pub name: String,

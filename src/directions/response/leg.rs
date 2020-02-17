@@ -116,9 +116,13 @@ impl Leg {
     /// ```rust
     /// let arrival_time_zone = leg.arrival_time_zone();
     /// ```
-    pub fn get_arrival_time_value(&self) -> Option<String> {
+    pub fn get_arrival_time_value(&self) -> Option<i64> {
         match &self.arrival_time {
-            Some(time) => Some(time.time_zone.to_string()),
+            Some(time) => {
+                println!("{}", time.value.timestamp());
+                Some(time.value.timestamp())
+
+            },
             None => None,
         } // match
     } // fn
@@ -130,9 +134,9 @@ impl Leg {
     /// ```rust
     /// let arrival_time_zone = leg.arrival_time_zone();
     /// ```
-    pub fn get_arrival_time_zone(&self) -> Option<i64> {
+    pub fn get_arrival_time_zone(&self) -> Option<String> {
         match &self.arrival_time {
-            Some(time) => Some(time.value.timestamp()),
+            Some(time) => Some(time.time_zone.to_string()),
             None => None,
         } // match
     } // fn
@@ -158,9 +162,9 @@ impl Leg {
     /// ```rust
     /// let departure_time_zone = leg.departure_time_zone();
     /// ```
-    pub fn get_departure_time_value(&self) -> Option<String> {
+    pub fn get_departure_time_value(&self) -> Option<i64> {
         match &self.departure_time {
-            Some(time) => Some(time.time_zone.to_string()),
+            Some(time) => Some(time.value.timestamp()),
             None => None,
         } // match
     } // fn
@@ -172,9 +176,9 @@ impl Leg {
     /// ```rust
     /// let departure_time_zone = leg.departure_time_zone();
     /// ```
-    pub fn get_departure_time_zone(&self) -> Option<i64> {
+    pub fn get_departure_time_zone(&self) -> Option<String> {
         match &self.departure_time {
-            Some(time) => Some(time.value.timestamp()),
+            Some(time) => Some(time.time_zone.to_string()),
             None => None,
         } // match
     } // fn
