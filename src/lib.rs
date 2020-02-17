@@ -279,8 +279,13 @@ pub use crate::directions::{
         route::Route as Route,
         status::Status as DirectionsStatus,
         step::Step as Step,
+        transit_agency::TransitAgency as TransitAgency,
         transit_details::TransitDetails as TransitDetails,
         transit_fare::TransitFare as TransitFare,
+        transit_line::TransitLine as TransitLine,
+        transit_stop::TransitStop as TransitStop,
+        transit_time::TransitTime as TransitTime,
+        transit_vehicle::TransitVehicle as TransitVehicle,
     }, // response
     travel_mode::TravelMode as TravelMode,
 }; // use
