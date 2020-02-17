@@ -35,7 +35,7 @@ pub struct TransitDetails {
     /// Specifies the expected number of seconds between departures from the
     /// same stop at this time. For example, with a headway value of 600, you
     /// would expect a ten minute wait if you should miss your bus.
-    pub headway: Option<String>,
+    pub headway: Option<u16>,
 
     /// Contains information about the transit line used in this step.
     pub line: TransitLine,

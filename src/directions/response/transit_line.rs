@@ -14,7 +14,7 @@ pub struct TransitLine {
 
     /// Contains the short name of this transit line. This will normally be a
     /// line number, such as "M7" or "355".
-    pub short_name: String,
+    pub short_name: Option<String>,
 
     /// Contains the color commonly used in signage for this transit line. The
     /// color will be specified as a hex string such as: #FF0033.
