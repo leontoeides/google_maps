@@ -78,7 +78,7 @@ impl Route {
     /// _summary_ text in the `String` format. If the _summary_ text is empty,
     /// this function will return `None`.
     /// ```rust
-    /// let get_fare_currency = route.get_fare_currency();
+    /// let summary = route.get_summary();
     /// ```
     pub fn get_summary(&self) -> Option<&String> {
         match &*self.summary {
@@ -92,7 +92,7 @@ impl Route {
     /// _currency_ code in the `String` format. If the _fare_ struct is empty,
     /// this function will return `None`.
     /// ```rust
-    /// let get_fare_currency = route.get_fare_currency();
+    /// let fare_currency = route.get_fare_currency();
     /// ```
     pub fn get_fare_currency(&self) -> Option<String> {
         match &self.fare {
@@ -106,7 +106,7 @@ impl Route {
     /// _value_ `f64`. If the _fare_ struct is empty, this function will return
     /// `None`.
     /// ```rust
-    /// let get_fare_value = route.get_fare_value();
+    /// let fare_value = route.get_fare_value();
     /// ```
     pub fn get_fare_value(&self) -> Option<f64> {
         match &self.fare {
@@ -120,13 +120,43 @@ impl Route {
     /// _text_ `String`. If the _fare_ struct is empty, this function will
     /// return `None`.
     /// ```rust
-    /// let get_fare_text = route.get_fare_text();
+    /// let fare_text = route.get_fare_text();
     /// ```
     pub fn get_fare_text(&self) -> Option<&String> {
         match &self.fare {
             Some(fare) => Some(&fare.text),
             None => None,
         } // match
+    } // fn
+
+    /// A helper function for destructuring (or serializing) the `warnings`
+    /// field. If the _warnings_ `Vec` is populated, this function will return
+    /// the warnings as a `String` in CSV format. If the _warnings_ Vec is
+    /// empty, this function will return `None`.
+    /// ```rust
+    /// let warnings = route.get_warning();
+    /// ```
+    pub fn get_warnings(&self) -> Option<String> {
+        if self.warnings.len() == 0 {
+            None
+        } else {
+            Some(String::from(self.warnings.iter().map(|warning| String::from("\"") + warning + "\",").collect::<String>().trim_end_matches(',')))
+        } // if
+    } // fn
+
+    /// A helper function for destructuring (or serializing) the
+    /// `waypoint_order` field. If the _waypoint_order_ `Vec` is populated, this
+    /// function will return the waypoint order as a `String` in CSV format. If
+    /// the _waypoint_order_ Vec is empty, this function will return `None`.
+    /// ```rust
+    /// let waypoint_order = route.get_fare_text();
+    /// ```
+    pub fn get_waypoint_order(&self) -> Option<String> {
+        if self.waypoint_order.len() == 0 {
+            None
+        } else {
+            Some(String::from(self.waypoint_order.iter().map(|waypoint| waypoint.to_string() + ",").collect::<String>().trim_end_matches(',')))
+        } // if
     } // fn
 
 } // impl

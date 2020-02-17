@@ -19,6 +19,7 @@ mod with_transit_modes;
 mod with_transit_route_preference;
 mod with_travel_mode;
 mod with_unit_system;
+mod with_waypoint_optimization;
 mod with_waypoints;
 pub mod avoid;
 pub mod departure_time;
@@ -116,6 +117,10 @@ pub struct Request<'a> {
     /// Unit system to use when displaying results. See file `unit_system.rs`
     /// and method `with_unit_system()` for more information.
     unit_system: Option<UnitSystem>,
+
+    /// Whether the order of the intermediate locations should be optimized or
+    /// not. See the method `with_waypoint_optimization()` for more information.
+    waypoint_optimization: bool,
 
     /// Pass throughs or stopovers at intermediate locations. See file
     /// `waypoint.rs` and method `with_waypoints()` for more information.

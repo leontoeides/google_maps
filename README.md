@@ -212,9 +212,11 @@ responding but I will respond. Thanks!
 
 # Change Log
 
-* 0.4.4: 2020-02-09: Added some helper functions for destructuring responses.
+* 0.4.4: Added some helper functions for destructuring responses.
 
-* 0.4.4: 2020-02-09: Ensured response structures are all declared as public.
+* 0.4.4: Ensured response structures are all declared as public.
+
+* 0.4.4: 2020-02-17: Added support for waypoint optimization.
 
 * 0.4.3: 2020-02-09: [Happy 15th birthday to Google
 Maps](https://www.blog.google/products/maps/maps-15th-birthday/)!
