@@ -38,7 +38,7 @@ pub enum Error {
     /// maneuver type code. See
     /// `google_maps\src\directions\response\maneuver_type.rs` for more
     /// information.
-    InvalidManeuverTypeCode(String),
+    InvalidDrivingManeuverCode(String),
     /// API client library attempted to parse a string that contained an invalid
     /// status code. See `google_maps\src\directions\response\status.rs` for
     /// more information.
@@ -190,7 +190,7 @@ impl std::fmt::Display for Error {
                 `{}` is not a valid geocoder status code. \
                 Valid codes are `OK`, and `ZERO_RESULTS`.",
                 geocoder_status_code),
-            Error::InvalidManeuverTypeCode(maneuver_type_code) => write!(f,
+            Error::InvalidDrivingManeuverCode(maneuver_type_code) => write!(f,
                 "Google Maps Directions API client: \
                 `{}` is not a valid maneuver type code. \
                 Valid codes are `ferry`, `ferry-train`, `fork-left`, \
@@ -295,7 +295,7 @@ impl std::error::Error for Error {
             Error::InvalidAvoidCode(_avoid_code) => None,
             Error::InvalidCurrencyCode(_currency_code) => None,
             Error::InvalidGeocoderStatusCode(_geocoder_status_code) => None,
-            Error::InvalidManeuverTypeCode(_maneuver_type_code) => None,
+            Error::InvalidDrivingManeuverCode(_maneuver_type_code) => None,
             Error::InvalidStatusCode(_status_code) => None,
             Error::InvalidTimeZoneName(_time_zone_name) => None,
             Error::InvalidTrafficModelCode(_traffic_model_code) => None,

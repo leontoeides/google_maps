@@ -2,7 +2,7 @@ use crate::{
     directions::response::{
         distance::Distance,
         duration::Duration,
-        fare::Fare,
+        transit_fare::TransitFare,
     }, // directions::response
     distance_matrix::response::element_status::ElementStatus,
 }; // use
@@ -35,7 +35,7 @@ pub struct Element {
     /// If present, contains the total fare (that is, the total ticket costs) on
     /// this route. This property is only returned for transit requests and only
     /// for transit providers where fare information is available.
-    fare: Option<Fare>,
+    fare: Option<TransitFare>,
 
     /// See [Status
     /// Codes](https://developers.google.com/maps/documentation/distance-matrix/intro#StatusCodes)

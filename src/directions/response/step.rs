@@ -2,8 +2,8 @@ use crate::{
     directions::{
         response::{
             distance::Distance,
+            driving_maneuver::DrivingManeuver,
             duration::Duration,
-            maneuver_type::ManeuverType,
             polyline::Polyline,
             transit_details::TransitDetails,
         }, // response
@@ -53,7 +53,7 @@ pub struct Step {
 
     /// Contains the action to take for the current step (turn left, merge,
     /// straight, etc.). This field is used to determine which icon to display.
-    pub maneuver: Option<ManeuverType>,
+    pub maneuver: Option<DrivingManeuver>,
 
     /// Contains a single `points` object that holds an [encoded polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm) representation of the step. This polyline is an approximate (smoothed) path of the step. (Corresponds to `path` in the [Directions.Step interface](https://developers.google.com/maps/documentation/javascript/reference/directions#DirectionsStep).)
     pub polyline: Polyline,

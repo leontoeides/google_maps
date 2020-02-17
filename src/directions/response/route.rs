@@ -1,9 +1,9 @@
 use crate::{
     bounds::Bounds,
     directions::response::{
-        fare::Fare,
         leg::Leg,
         overview_polyline::OverviewPolyline,
+        transit_fare::TransitFare,
     }, // directions::response
 }; // use
 use serde::Deserialize;
@@ -25,7 +25,7 @@ pub struct Route {
     /// If present, contains the total fare (that is, the total ticket costs) on
     /// this route. This property is only returned for transit requests and only
     /// for routes where fare information is available for all transit legs.
-    pub fare: Option<Fare>,
+    pub fare: Option<TransitFare>,
 
     /// An array of `Legs`, each of which contains information about the steps
     /// of which it is composed. There will be one leg for each stopover
@@ -131,8 +131,8 @@ impl Route {
 
     /// A helper function for destructuring (or serializing) the `warnings`
     /// field. If the _warnings_ `Vec` is populated, this function will return
-    /// the warnings as a `String` in CSV format. If the _warnings_ Vec is
-    /// empty, this function will return `None`.
+    /// the warnings as a `String` in pipe-separated format. If the _warnings_
+    /// Vec is empty, this function will return `None`.
     /// ```rust
     /// let warnings = route.get_warning();
     /// ```
@@ -140,7 +140,7 @@ impl Route {
         if self.warnings.len() == 0 {
             None
         } else {
-            Some(String::from(self.warnings.iter().map(|warning| String::from("\"") + warning + "\",").collect::<String>().trim_end_matches(',')))
+            Some(String::from(self.warnings.iter().map(|warning| String::from(warning) + "|").collect::<String>().trim_end_matches('|')))
         } // if
     } // fn
 

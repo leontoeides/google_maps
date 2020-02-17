@@ -2,25 +2,25 @@
 //! the Google Maps Platform. Look in here for more information about the data
 //! returned from Google's server and how to parse it with your program.
 
-pub mod currency;
 pub mod distance;
+pub mod driving_maneuver;
 pub mod duration;
-pub mod fare;
 pub mod geocoded_waypoint;
 pub mod geocoder_status;
 pub mod leg;
-pub mod maneuver_type;
 pub mod overview_polyline;
 pub mod polyline;
 pub mod route;
 pub mod status;
 pub mod step;
-pub mod time;
-pub mod time_zone;
 pub mod transit_agency;
+pub mod transit_currency;
 pub mod transit_details;
+pub mod transit_fare;
 pub mod transit_line;
 pub mod transit_stop;
+pub mod transit_time;
+pub mod transit_time_zone;
 pub mod transit_vehicle;
 
 use crate::directions::{

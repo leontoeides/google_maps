@@ -251,13 +251,13 @@ pub use std::time::{Duration, Instant};
 pub use time::{Date, PrimitiveDateTime, Time};
 
 pub use crate::{
-    bounds::Bounds,
-    client_settings::ClientSettings,
-    language::Language,
-    latlng::LatLng,
-    place_type::PlaceType,
-    region::Region,
-    request_rate::api::Api,
+    bounds::Bounds as Bounds,
+    client_settings::ClientSettings as ClientSettings,
+    language::Language as Language,
+    latlng::LatLng as LatLng,
+    place_type::PlaceType as PlaceType,
+    region::Region as Region,
+    request_rate::api::Api as Api,
 }; // use
 
 pub use crate::directions::{
@@ -274,11 +274,13 @@ pub use crate::directions::{
     }, // request
     response::{
         leg::Leg as Leg,
+        overview_polyline::OverviewPolyline as OverviewPolyline,
         Response as DirectionsResponse,
         route::Route as Route,
         status::Status as DirectionsStatus,
         step::Step as Step,
         transit_details::TransitDetails as TransitDetails,
+        transit_fare::TransitFare as TransitFare,
     }, // response
     travel_mode::TravelMode as TravelMode,
 }; // use

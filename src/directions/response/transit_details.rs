@@ -1,7 +1,7 @@
 use crate::directions::response::{
-    time::Time,
     transit_line::TransitLine,
     transit_stop::TransitStop,
+    transit_time::TransitTime,
 }; // use
 use serde::Deserialize;
 
@@ -19,13 +19,13 @@ pub struct TransitDetails {
     pub arrival_stop: TransitStop,
 
     /// Contains the arrival for this leg of the journey.
-    pub arrival_time: Time,
+    pub arrival_time: TransitTime,
 
     /// Contains information about the stop/station for this part of the trip.
     pub departure_stop: TransitStop,
 
     /// Contains the departure for this leg of the journey.
-    pub departure_time: Time,
+    pub departure_time: TransitTime,
 
     /// Specifies the direction in which to travel on this line, as it is marked
     /// on the vehicle or at the departure stop. This will often be the terminus
