@@ -154,6 +154,8 @@ pub enum PlaceType {
     Physiotherapist,
     #[serde(alias = "plumber")]
     Plumber,
+    #[serde(alias = "plus_code")]
+    PlusCode,
     #[serde(alias = "police")]
     Police,
     #[serde(alias = "post_office")]
@@ -436,6 +438,7 @@ impl std::convert::From<&PlaceType> for String {
             PlaceType::Pharmacy => String::from("pharmacy"),
             PlaceType::Physiotherapist => String::from("physiotherapist"),
             PlaceType::Plumber => String::from("plumber"),
+            PlaceType::PlusCode => String::from("plus_code"),
             PlaceType::Police => String::from("police"),
             PlaceType::PostOffice => String::from("post_office"),
             PlaceType::PrimarySchool => String::from("primary_school"),
@@ -591,6 +594,7 @@ impl std::convert::TryFrom<String> for PlaceType {
             "pharmacy" => Ok(PlaceType::Pharmacy),
             "physiotherapist" => Ok(PlaceType::Physiotherapist),
             "plumber" => Ok(PlaceType::Plumber),
+            "plus_code" => Ok(PlaceType::PlusCode),
             "police" => Ok(PlaceType::Police),
             "post_office" => Ok(PlaceType::PostOffice),
             "primary_school" => Ok(PlaceType::PrimarySchool),
@@ -750,6 +754,7 @@ impl std::fmt::Display for PlaceType {
             PlaceType::Pharmacy => write!(f, "Pharmacy"),
             PlaceType::Physiotherapist => write!(f, "Physiotherapist"),
             PlaceType::Plumber => write!(f, "Plumber"),
+            PlaceType::PlusCode => write!(f, "Plus Code"),
             PlaceType::Police => write!(f, "Police"),
             PlaceType::PostOffice => write!(f, "Post Office"),
             PlaceType::PrimarySchool => write!(f, "Primary School"),
