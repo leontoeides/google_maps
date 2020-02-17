@@ -104,6 +104,9 @@ impl<'a> Request<'a> {
         // Waypoints key/value pair:
         if let Some(waypoints) = &self.waypoints {
             query.push_str("&waypoints=");
+            if self.waypoint_optimization == true {
+                query.push_str("optimize:true|");
+            } // if
             query.push_str(&*utf8_percent_encode(
                 &String::from(waypoints.iter().map(|waypoint| String::from(waypoint) + "|").collect::<String>().trim_end_matches('|')),
                 NON_ALPHANUMERIC

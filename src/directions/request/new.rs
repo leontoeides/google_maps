@@ -32,6 +32,7 @@ impl<'a> Request<'a> {
             transit_route_preference: None,
             travel_mode: None,
             unit_system: None,
+            waypoint_optimization: false,
             waypoints: None,
             // Internal use only:
             query: None,
