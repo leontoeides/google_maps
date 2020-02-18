@@ -48,10 +48,10 @@ impl std::convert::From<&TravelMode> for String {
     /// code.
     fn from(travel_mode: &TravelMode) -> String {
         match travel_mode {
-            TravelMode::Bicycling => String::from("bicycling"),
-            TravelMode::Driving => String::from("driving"),
-            TravelMode::Transit => String::from("transit"),
-            TravelMode::Walking => String::from("walking"),
+            TravelMode::Bicycling => String::from("BICYCLING"),
+            TravelMode::Driving => String::from("DRIVING"),
+            TravelMode::Transit => String::from("TRANSIT"),
+            TravelMode::Walking => String::from("WALKING"),
         } // match
     } // fn
 } // impl
@@ -67,10 +67,10 @@ impl std::convert::TryFrom<String> for TravelMode {
     /// code.
     fn try_from(travel_mode: String) -> Result<TravelMode, Error> {
         match travel_mode.as_ref() {
-            "bicycling" => Ok(TravelMode::Bicycling),
-            "driving" => Ok(TravelMode::Driving),
-            "transit" => Ok(TravelMode::Transit),
-            "walking" => Ok(TravelMode::Walking),
+            "BICYCLING" => Ok(TravelMode::Bicycling),
+            "DRIVING" => Ok(TravelMode::Driving),
+            "TRANSIT" => Ok(TravelMode::Transit),
+            "WALKING" => Ok(TravelMode::Walking),
             _ => Err(Error::InvalidTravelModeCode(travel_mode)),
         } // match
     } // fn

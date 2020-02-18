@@ -83,12 +83,12 @@ impl Leg {
 
     /// A helper function for destructuring (or serializing) the optional
     /// `duration_in_traffic` field. If the `Duration` struct is populated, this
-    /// function will return the _value_ field as a `u32`. If the _Duration_
-    /// struct is empty, this function will return `None`.
+    /// function will return the _value_ field as a `time::Duration`. If the
+    /// _Duration_ struct is empty, this function will return `None`.
     /// ```rust
     /// let duration_in_traffic_value = leg.get_duration_in_traffic_value();
     /// ```
-    pub fn get_duration_in_traffic_value(&self) -> Option<u32> {
+    pub fn get_duration_in_traffic_value(&self) -> Option<time::Duration> {
         match &self.duration_in_traffic {
             Some(duration) => Some(duration.value),
             None => None,
