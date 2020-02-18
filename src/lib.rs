@@ -242,7 +242,6 @@ mod latlng;
 mod place_type;
 mod region;
 mod request_rate;
-mod serde;
 mod time_zone;
 
 pub extern crate time;
@@ -273,21 +272,28 @@ pub use crate::directions::{
         waypoint::Waypoint as Waypoint,
     }, // request
     response::{
+        distance::Distance as DirectionsDistance,
+        driving_maneuver::DrivingManeuver as DrivingManeuver,
+        duration::Duration as DirectionsDuration,
         leg::Leg as Leg,
         overview_polyline::OverviewPolyline as OverviewPolyline,
+        polyline::Polyline as Polyline,
         Response as DirectionsResponse,
         route::Route as Route,
         status::Status as DirectionsStatus,
         step::Step as Step,
         transit_agency::TransitAgency as TransitAgency,
+        transit_currency::TransitCurrency as TransitCurrency,
         transit_details::TransitDetails as TransitDetails,
         transit_fare::TransitFare as TransitFare,
         transit_line::TransitLine as TransitLine,
         transit_stop::TransitStop as TransitStop,
         transit_time::TransitTime as TransitTime,
+        transit_time_zone::TransitTimeZone as TransitTimeZone,
         transit_vehicle::TransitVehicle as TransitVehicle,
     }, // response
     travel_mode::TravelMode as TravelMode,
+    vehicle_type::VehicleType as VehicleType,
 }; // use
 
 pub use crate::distance_matrix::{

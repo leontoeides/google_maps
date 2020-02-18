@@ -216,6 +216,15 @@ responding but I will respond. Thanks!
 
 * 0.4.4: Ensured response structures are all declared as public.
 
+* 0.4.4: 2020-02-18: Renamed `Distance` and `Duration` structs to
+`DirectionsDistance` and `DirectionsDuration` respectively.
+
+* 0.4.4: 2020-02-18: Changed `DirectionsDuration.value` type from `u32` to
+`time::Duration` type.
+
+* 0.4.4: 2020-02-18: Dropped my custom Serde deserializer in favour of the
+`time` crate's built-in _Serde_ feature.
+
 * 0.4.4: 2020-02-17: Added support for waypoint optimization.
 
 * 0.4.3: 2020-02-09: [Happy 15th birthday to Google
