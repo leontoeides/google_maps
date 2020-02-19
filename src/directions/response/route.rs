@@ -137,7 +137,7 @@ impl Route {
     /// let warnings = route.get_warning();
     /// ```
     pub fn get_warnings(&self) -> Option<String> {
-        if self.warnings.len() == 0 {
+        if self.warnings.is_empty() {
             None
         } else {
             Some(String::from(self.warnings.iter().map(|warning| String::from(warning) + "|").collect::<String>().trim_end_matches('|')))
@@ -152,7 +152,7 @@ impl Route {
     /// let waypoint_order = route.get_fare_text();
     /// ```
     pub fn get_waypoint_order(&self) -> Option<String> {
-        if self.waypoint_order.len() == 0 {
+        if self.waypoint_order.is_empty() {
             None
         } else {
             Some(String::from(self.waypoint_order.iter().map(|waypoint| waypoint.to_string() + ",").collect::<String>().trim_end_matches(',')))
