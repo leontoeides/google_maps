@@ -1,7 +1,7 @@
 use crate::{
     directions::response::{
-        distance::Distance,
-        duration::Duration,
+        directions_distance::DirectionsDistance,
+        directions_duration::DirectionsDuration,
         step::Step,
         transit_time::TransitTime,
     }, // directions::response
@@ -27,17 +27,17 @@ pub struct Leg {
 
     /// The total distance covered by this leg. This property may be undefined
     /// as the distance may be unknown.
-    pub distance: Distance,
+    pub distance: DirectionsDistance,
 
     /// The total duration of this leg. This property may be undefined as the
     /// duration may be unknown.
-    pub duration: Duration,
+    pub duration: DirectionsDuration,
 
     /// The total duration of this leg, taking into account the traffic
     /// conditions indicated by the `with_traffic_model()` method. This property
     /// may be undefined as the duration may be unknown. Only available to
     /// Premium Plan customers.
-    pub duration_in_traffic: Option<Duration>,
+    pub duration_in_traffic: Option<DirectionsDuration>,
 
     /// The address of the destination of this leg.
     pub end_address: String,
