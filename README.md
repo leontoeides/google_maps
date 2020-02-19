@@ -212,6 +212,8 @@ responding but I will respond. Thanks!
 
 # Change Log
 
+* 0.4.4: 2020-02-19: Interface should be stablizing.
+
 * 0.4.4: Added some helper functions for destructuring responses.
 
 * 0.4.4: Ensured response structures are all declared as public.
