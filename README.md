@@ -216,8 +216,9 @@ responding but I will respond. Thanks!
 
 * 0.4.4: Ensured response structures are all declared as public.
 
-* 0.4.4: 2020-02-18: Renamed `Distance` and `Duration` structs to
-`DirectionsDistance` and `DirectionsDuration` respectively.
+* 0.4.4: 2020-02-18: Aliased `Distance` and `Duration` structs to
+`DirectionsDistance` and `DirectionsDuration` respectively to prevent name
+collisions.
 
 * 0.4.4: 2020-02-18: Changed `DirectionsDuration.value` type from `u32` to
 `time::Duration` type.
