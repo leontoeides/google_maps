@@ -2,9 +2,9 @@
 //! the Google Maps Platform. Look in here for more information about the data
 //! returned from Google's server and how to parse it with your program.
 
-pub mod distance;
+pub mod directions_distance;
+pub mod directions_duration;
 pub mod driving_maneuver;
-pub mod duration;
 pub mod geocoded_waypoint;
 pub mod geocoder_status;
 pub mod leg;

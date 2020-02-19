@@ -2,11 +2,9 @@ An unofficial Google Maps Platform client library for the Rust programming
 language. This client currently implements the Directions API, Distance Matrix
 API, Elevation API, Geocoding API, and Time Zone API.
 
-# Welcome
+![alt text](https://www.arkiteq.ca/crates/google_maps/banner.jpg "Unofficial Google Maps Platform Client for Rust")
 
-⚠ **There are many breaking changes with version 0.4.0. Please review the new
-examples and change log on how to reformat your code if it no longer
-compiles.** ⚠
+# Welcome
 
 This crate is expected to work well and have the more important Google Maps
 features implemented. It should work well because Reqwest and Serde do most of
@@ -211,6 +209,9 @@ me](https://github.com/leontoeides/google_maps/issues)! I'm not always fast at
 responding but I will respond. Thanks!
 
 # Change Log
+
+* 0.4.5: 2020-02-19: Emergency update! Custom deserializer for Durations was
+not included in the 0.4.4 release.
 
 * 0.4.4: 2020-02-19: Interface should be stablizing.
 

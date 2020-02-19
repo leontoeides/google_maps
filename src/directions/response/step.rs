@@ -1,9 +1,9 @@
 use crate::{
     directions::{
         response::{
-            distance::Distance,
+            directions_distance::DirectionsDistance,
+            directions_duration::DirectionsDuration,
             driving_maneuver::DrivingManeuver,
-            duration::Duration,
             polyline::Polyline,
             transit_details::TransitDetails,
         }, // response
@@ -39,11 +39,11 @@ pub struct Step {
 
     /// The distance covered by this step. This property may be undefined as the
     /// distance may be unknown.
-    pub distance: Distance,
+    pub distance: DirectionsDistance,
 
     /// The typical time required to perform this step in seconds and in text
     /// form. This property may be undefined as the duration may be unknown.
-    pub duration: Duration,
+    pub duration: DirectionsDuration,
 
     /// The ending location of this step.
     pub end_location: LatLng,

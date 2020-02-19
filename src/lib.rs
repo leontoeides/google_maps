@@ -4,11 +4,9 @@
 //! language. This client currently implements the Directions API, Distance
 //! Matrix API, Elevation API, Geocoding API, and Time Zone API.
 //!
-//! # Welcome
+//! ![alt text](https://www.arkiteq.ca/crates/google_maps/banner.jpg "Unofficial Google Maps Platform Client for Rust")
 //!
-//! ⚠ **There are many breaking changes with version 0.4.0. Please review the
-//! new examples and change log on how to reformat your code if it no longer
-//! compiles.** ⚠
+//! # Welcome
 //!
 //! This crate is expected to work well and have the more important Google Maps
 //! features implemented. It should work well because Reqwest and Serde do most
@@ -245,6 +243,7 @@ mod latlng;
 mod place_type;
 mod region;
 mod request_rate;
+mod serde;
 mod time_zone;
 
 pub extern crate time;
@@ -275,9 +274,9 @@ pub use crate::directions::{
         waypoint::Waypoint as Waypoint,
     }, // request
     response::{
-        distance::Distance as DirectionsDistance,
+        directions_distance::DirectionsDistance,
+        directions_duration::DirectionsDuration,
         driving_maneuver::DrivingManeuver as DrivingManeuver,
-        duration::Duration as DirectionsDuration,
         leg::Leg as Leg,
         overview_polyline::OverviewPolyline as OverviewPolyline,
         polyline::Polyline as Polyline,
