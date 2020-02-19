@@ -3,7 +3,7 @@ use crate::directions::response::{
     transit_stop::TransitStop,
     transit_time::TransitTime,
 }; // use
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 /// Transit directions return additional information that is not relevant for
 /// other modes of transportation. These additional properties are exposed
@@ -12,7 +12,7 @@ use serde::Deserialize;
 /// additional information about the transit stop, transit line and transit
 /// agency.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd, Deserialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct TransitDetails {
 
     /// Contains information about the stop/station for this part of the trip.

@@ -11,7 +11,7 @@ use crate::{
     }, // directions
     latlng::LatLng,
 }; // use
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 /// Each element in the `steps` array defines a single step of the calculated
 /// directions. A step is the most atomic unit of a direction's route,
@@ -34,7 +34,7 @@ use serde::Deserialize;
 /// in the inner steps array, such as: "Head north-west", "Turn left onto
 /// Arelious Walker", and "Turn left onto Innes Ave".
 
-#[derive(Clone, Debug, PartialEq, PartialOrd, Deserialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Step {
 
     /// The distance covered by this step. This property may be undefined as the
