@@ -88,9 +88,9 @@ impl Leg {
     /// ```rust
     /// let duration_in_traffic_value = leg.get_duration_in_traffic_value();
     /// ```
-    pub fn get_duration_in_traffic_value(&self) -> Option<time::Duration> {
+    pub fn get_duration_in_traffic_value(&self) -> Option<i64> {
         match &self.duration_in_traffic {
-            Some(duration) => Some(duration.value),
+            Some(duration) => Some(duration.value.whole_seconds()),
             None => None,
         } // match
     } // fn
