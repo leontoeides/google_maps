@@ -1,6 +1,6 @@
 [package]
 name = "google_maps"
-version = "0.4.6"
+version = "0.4.7"
 authors = ["Dylan Bowker <dylan.bowker@arkiteq.ca>"]
 edition = "2018"
 categories = [ "api-bindings" ]
@@ -22,4 +22,4 @@ serde_json = "1.0.47"
 time = { version = "0.2.6", features = ["serde"] }
 
 [badges]
-maintenance = { status = "passively-maintained" }
+maintenance = { status = "actively-developed" }
