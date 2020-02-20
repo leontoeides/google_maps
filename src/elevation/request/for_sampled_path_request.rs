@@ -19,8 +19,9 @@ impl<'a> Request<'a> {
     /// which to return elevation data. The samples parameter divides the given
     /// path into an ordered set of equidistant points along the path.
     ///
-    /// ## Example:
+    /// ## Examples:
     ///
+    /// * 2 elevation samples between two points:
     /// ```rust
     /// .for_sampled_path_request(
     ///     ElevationLocations::LatLngs(vec![
@@ -30,11 +31,20 @@ impl<'a> Request<'a> {
     ///         LatLng::try_from(-34.397, -116.866667).unwrap(),
     ///     ]),
     ///     // Number of samples
+    ///     2
+    /// )
+    /// ```
+    ///
+    /// * 4 elevation samples along a polyline:
+    /// ```rust
+    /// .for_sampled_path_request(
+    ///     ElevationLocations::Polyline(String::from("gfo}EtohhUxD@bAxJmGF")),
+    ///     // Number of samples
     ///     4
     /// )
     /// ```
 
-    pub fn for_sampled_path_request(&'a mut  self, path: Locations, samples: u8) -> &'a mut  Request {
+    pub fn for_sampled_path_request(&'a mut self, path: Locations, samples: u8) -> &'a mut  Request {
         // Set the path in Request struct.
         self.path = Some(path);
         // Set the sample number in Request struct.
