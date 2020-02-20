@@ -311,6 +311,7 @@ pub use crate::elevation::{
         Request as ElevationRequest,
     }, // request
     response::{
+        point::Point as Point,
         Response as ElevationResponse,
         status::Status as ElevationStatus,
     }, // response
