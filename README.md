@@ -210,8 +210,10 @@ responding but I will respond. Thanks!
 
 # Change Log
 
-* 0.4.5: 2020-02-19: Emergency update! Case conflict for TransitMode. Had to
+* 0.4.6: 2020-02-19: Emergency update! Case conflict for TransitMode. Had to
 force to lower case in URL query string builder.
+
+* 0.4.6: 2020-02-19: Connected Travis CI.
 
 * 0.4.6: 2020-02-19: Added support for sub-steps in Directions API.
 
