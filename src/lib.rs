@@ -228,7 +228,7 @@
 //! have no current need for it. If you would like to have to implemented,
 //! please contact me.
 
-#![doc(html_favicon_url = "https://www.arkiteq.ca/crates/google_maps/logo.png")]
+#![doc(html_favicon_url = "https://www.arkiteq.ca/crates/google_maps/icon.png")]
 #![doc(html_logo_url = "https://www.arkiteq.ca/crates/google_maps/logo.png")]
 
 mod bounds;
