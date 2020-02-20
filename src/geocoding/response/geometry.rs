@@ -1,9 +1,17 @@
+//! Contains the geocoded latitude/longitude, recommended viewport for
+//! displaying the returned result, the bounding box, and other additional
+//! data.
+
 use crate::{
     bounds::Bounds,
     geocoding::location_type::LocationType,
     latlng::LatLng,
 }; // use
 use serde::{Serialize, Deserialize};
+
+/// Contains the geocoded latitude/longitude, recommended viewport for
+/// displaying the returned result, the bounding box, and other additional
+/// data.
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Geometry {

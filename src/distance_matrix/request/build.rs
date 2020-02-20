@@ -68,7 +68,7 @@ impl<'a> Request<'a> {
         // Travel mode key/value pair:
         if let Some(travel_mode) = &self.travel_mode {
             query.push_str("&mode=");
-            query.push_str(&String::from(travel_mode))
+            query.push_str(&String::from(travel_mode).to_lowercase())
         } // if
 
         // Region key/value pair:

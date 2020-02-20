@@ -1,4 +1,7 @@
-use crate::directions::response::transit_time_zone::TransitTimeZone;
+use crate::{
+    directions::response::transit_time_zone::TransitTimeZone,
+    serde::unix_to_primitivedatetime::unix_to_primitivedatetime,
+}; // use
 use serde::{Serialize, Deserialize};
 use time::PrimitiveDateTime;
 
@@ -18,6 +21,7 @@ pub struct TransitTime {
     pub time_zone: TransitTimeZone,
 
     /// The time of this departure or arrival.
+    #[serde(deserialize_with = "unix_to_primitivedatetime")]
     pub value: PrimitiveDateTime,
 
 } // struct

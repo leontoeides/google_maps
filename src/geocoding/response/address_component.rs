@@ -1,3 +1,5 @@
+//! Contains the separate components applicable to an address.
+
 use crate::place_type::PlaceType;
 use serde::{Serialize, Deserialize};
 
