@@ -210,6 +210,11 @@ responding but I will respond. Thanks!
 
 # Change Log
 
+* 0.4.5: 2020-02-19: Emergency update! Case conflict for TransitMode. Had to
+force to lower case in URL query string builder.
+
+* 0.4.6: 2020-02-19: Added support for sub-steps in Directions API.
+
 * 0.4.5: 2020-02-19: Emergency update! Custom deserializer for Durations was
 not included in the 0.4.4 release.
 
