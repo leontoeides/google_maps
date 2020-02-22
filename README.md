@@ -1,4 +1,4 @@
-An unofficial Google Maps Platform client library for the Rust programming
+🗺 An unofficial Google Maps Platform client library for the Rust programming
 language. This client currently implements the Directions API, Distance Matrix
 API, Elevation API, Geocoding API, and Time Zone API.
 
