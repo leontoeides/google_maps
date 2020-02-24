@@ -19,6 +19,7 @@ mod with_transit_route_preference;
 mod with_travel_mode;
 mod with_unit_system;
 
+use chrono::NaiveDateTime;
 use crate::{
     directions::{
         travel_mode::TravelMode,
@@ -36,7 +37,6 @@ use crate::{
     language::Language,
     region::Region,
 }; // use
-use time::PrimitiveDateTime;
 
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Distance Matrix API_ query**. The methods implemented for this struct are
@@ -66,7 +66,7 @@ pub struct Request<'a> {
 
     /// Desired arrival time. See method `with_arrival_time()` for more
     /// information.
-    arrival_time: Option<PrimitiveDateTime>,
+    arrival_time: Option<NaiveDateTime>,
 
     /// Desired departure time. See files `departure_time.rs` and method
     /// `with_departure_time()` for more information.

@@ -1,5 +1,5 @@
+use chrono::NaiveDateTime;
 use crate::directions::request::Request;
-use time::PrimitiveDateTime;
 
 impl<'a> Request<'a> {
 
@@ -20,13 +20,13 @@ impl<'a> Request<'a> {
     ///
     /// * Arriving by January 1, 2019 at 12:00:00 AM:
     /// ```
-    /// .with_arrival_time(PrimitiveDateTime::new(
-    ///     PrimitiveDateTime::new(Date::try_from_ymd(2019, 1, 1).unwrap(),
+    /// .with_arrival_time(DateTime::new(
+    ///     DateTime::new(Date::try_from_ymd(2019, 1, 1).unwrap(),
     ///     Time::midnight()
     /// ))
     /// ```
 
-    pub fn with_arrival_time(&'a mut self, arrival_time: PrimitiveDateTime) -> &'a mut Request {
+    pub fn with_arrival_time(&'a mut self, arrival_time: NaiveDateTime) -> &'a mut Request {
         self.arrival_time = Some(arrival_time);
         self
     } // fn

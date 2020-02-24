@@ -7,14 +7,14 @@ use crate::{
     }, // directions::response
     latlng::LatLng,
 }; // use
-use serde::{Serialize, Deserialize};
+use serde::Deserialize;
 
 /// A single leg consisting of a set of steps in a DirectionsResult. Some fields
 /// in the leg may not be returned for all requests. Note that though this
 /// result is "JSON-like," it is not strictly JSON, as it directly and
 /// indirectly includes LatLng objects.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Deserialize)]
 pub struct Leg {
 
     /// An estimated arrival time for this leg. Only applicable for
@@ -90,7 +90,7 @@ impl Leg {
     /// ```
     pub fn get_duration_in_traffic_value(&self) -> Option<i64> {
         match &self.duration_in_traffic {
-            Some(duration) => Some(duration.value.whole_seconds()),
+            Some(duration) => Some(duration.value.num_seconds()),
             None => None,
         } // match
     } // fn
@@ -119,9 +119,7 @@ impl Leg {
     pub fn get_arrival_time_value(&self) -> Option<i64> {
         match &self.arrival_time {
             Some(time) => {
-                println!("{}", time.value.timestamp());
                 Some(time.value.timestamp())
-
             },
             None => None,
         } // match
@@ -136,7 +134,7 @@ impl Leg {
     /// ```
     pub fn get_arrival_time_zone(&self) -> Option<String> {
         match &self.arrival_time {
-            Some(time) => Some(time.time_zone.to_string()),
+            Some(time) => Some(time.time_zone.name().to_string()),
             None => None,
         } // match
     } // fn
@@ -178,7 +176,7 @@ impl Leg {
     /// ```
     pub fn get_departure_time_zone(&self) -> Option<String> {
         match &self.departure_time {
-            Some(time) => Some(time.time_zone.to_string()),
+            Some(time) => Some(time.time_zone.name().to_string()),
             None => None,
         } // match
     } // fn

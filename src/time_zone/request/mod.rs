@@ -9,12 +9,12 @@ mod get;
 mod new;
 mod with_language;
 
+use chrono::NaiveDateTime;
 use crate::{
     client_settings::ClientSettings,
     language::Language,
     latlng::LatLng,
 }; // use
-use time::PrimitiveDateTime;
 
 /// **Look at this `Request` struct for documentation on how to build your _Time
 /// Zone API_ query**. The methods implemented for this struct are what's used
@@ -39,7 +39,7 @@ pub struct Request<'a> {
     /// historical time zones into account. That is, if you specify a past
     /// `time`, the API does not take into account the possibility that the
     /// `location` was previously in a different time zone.
-    time: PrimitiveDateTime,
+    time: NaiveDateTime,
 
     // Optional parameters:
     // --------------------

@@ -35,7 +35,7 @@ use serde::Deserialize;
 
 /// Directions responses contain the following root elements.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Deserialize)]
 pub struct Response {
 
     /// Contains an array of available travel modes. This field is returned when
