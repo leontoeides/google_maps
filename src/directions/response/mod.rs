@@ -20,7 +20,6 @@ pub mod transit_fare;
 pub mod transit_line;
 pub mod transit_stop;
 pub mod transit_time;
-pub mod transit_time_zone;
 pub mod transit_vehicle;
 
 use crate::directions::{

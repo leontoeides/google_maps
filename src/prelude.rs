@@ -38,7 +38,6 @@ pub use crate::directions::{
         transit_line::TransitLine as TransitLine,
         transit_stop::TransitStop as TransitStop,
         transit_time::TransitTime as TransitTime,
-        transit_time_zone::TransitTimeZone as TransitTimeZone,
         transit_vehicle::TransitVehicle as TransitVehicle,
     }, // response
     travel_mode::TravelMode as TravelMode,
