@@ -205,12 +205,13 @@ responding but I will respond. Thanks!
 
 # Change Log
 
-* 0.5.0: 2020-02-23: Moved from the `time` crate to the `chrono` crate. Since
+* 0.5.0: 2020-02-23: The `time` crate has deprecated the `PrimitiveDateTime`
+struct. This crate has moved from the `time` crate to the `chrono` crate. Since
 there is no reasonable way for this crate to always know which time zone is
 intended in every context, this crate relies on the `NaiveDateTime` struct. That
-means that _time_ and _time zone_ considerations must be handled by you, the
-programmer. Check into the `chrono-tz` crate which integrates nicely with the
-`chrono` crate.
+means that _time_ and _time zone_ considerations must be tracked and handled by
+you, the programmer. Check into the `chrono-tz` crate which integrates nicely
+with the `chrono` crate.
 
 * 0.4.6: 2020-02-19: Emergency update! Case conflict for TransitMode. Had to
 force to lower case in URL query string builder.
