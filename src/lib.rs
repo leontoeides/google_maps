@@ -160,13 +160,14 @@
 //! use google_maps::*;
 //! let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 //!
-//! // Example request:
+// Example request:
 //!
 //! let time_zone = TimeZoneRequest::new(
-//!     &mut my_settings,
-//!     // St. Vitus Cathedral in Prague, Czechia
-//!     LatLng::try_from(50.090_903, 14.400_512).unwrap(),
-//!     NaiveDate::from_ymd(2020, 2, 15).and_hms(18, 00, 0)
+//!      &mut my_settings,
+//!      // St. Vitus Cathedral in Prague, Czechia
+//!      LatLng::try_from(50.090_903, 14.400_512).unwrap(),
+//!      // Tuesday February 23, 2020 @ 6:00:00 pm
+//!      NaiveDate::from_ymd(2020, 2, 23).and_hms(18, 00, 0)
 //! ).execute().unwrap();
 //!
 //! // Dump entire response:
@@ -182,7 +183,7 @@
 //!
 //! println!("Time at your computer: {}", unix_timestamp);
 //!
-//! println!("Time in {}: {}",
+//! println!("Time in {:#?}: {}",
 //!     time_zone.time_zone_id.unwrap(),
 //!     unix_timestamp as i64 + time_zone.dst_offset.unwrap() as i64 +
 //!         time_zone.raw_offset.unwrap() as i64
