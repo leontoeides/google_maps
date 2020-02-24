@@ -32,12 +32,11 @@ let directions = DirectionsRequest::new(
     Location::LatLng(LatLng::try_from(45.403_509, -75.618_904).unwrap()),
 )
 .with_travel_mode(TravelMode::Transit)
-.with_arrival_time(PrimitiveDateTime::new(
+.with_arrival_time(
     // Ensure this date is a weekday in the future or this query will return
     // zero results.
-    Date::try_from_ymd(2020, 2, 6).unwrap(),
-    Time::try_from_hms(13, 00, 0).unwrap()
-))
+    NaiveDate::from_ymd(2020, 2, 25).and_hms(13, 00, 0)
+)
 .execute().unwrap();
 
 // Dump entire response:
@@ -164,12 +163,7 @@ let time_zone = TimeZoneRequest::new(
     &mut my_settings,
     // St. Vitus Cathedral in Prague, Czechia
     LatLng::try_from(50.090_903, 14.400_512).unwrap(),
-    PrimitiveDateTime::new(
-        // Tuesday February 15, 2022
-        Date::try_from_ymd(2022, 2, 15).unwrap(),
-        // 6:00:00 pm
-        Time::try_from_hms(18, 00, 0).unwrap(),
-    ),
+    NaiveDate::from_ymd(2020, 2, 15).and_hms(18, 00, 0)
 ).execute().unwrap();
 
 // Dump entire response:
@@ -210,9 +204,9 @@ responding but I will respond. Thanks!
 
 # Change Log
 
-* 0.4.7: 2020-02-23: Moved from the `time` crate to the `chrono` crate. Since
+* 0.5.0: 2020-02-23: Moved from the `time` crate to the `chrono` crate. Since
 there is no reasonable way for this crate to always know which time zone is
-meant in every context, this crate relies on the `NaiveDateTime` struct. That
+intended in every context, this crate relies on the `NaiveDateTime` struct. That
 means that _time_ and _time zone_ considerations must be handled by you, the
 programmer. Check into the `chrono-tz` crate which integrates nicely with the
 `chrono` crate.
