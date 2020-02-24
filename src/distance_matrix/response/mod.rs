@@ -14,11 +14,11 @@ use crate::distance_matrix::response::{
     row::Row,
     status::Status,
 }; // use
-use serde::{Serialize, Deserialize};
+use serde::Deserialize;
 
 /// Distance Matrix responses contain the following root elements.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Deserialize)]
 pub struct Response {
 
     /// Contains an array of addresses as returned by the API from your original

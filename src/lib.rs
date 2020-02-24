@@ -241,15 +241,14 @@ mod geocoding;
 mod language;
 mod latlng;
 mod place_type;
+mod prelude;
 mod region;
 mod request_rate;
 mod serde;
 mod time_zone;
 
-pub extern crate time;
-
-pub use std::time::{Duration, Instant};
-pub use time::{Date, PrimitiveDateTime, Time};
+pub use chrono::{NaiveDate, NaiveDateTime};
+pub use chrono_tz::Tz;
 
 pub use crate::{
     bounds::Bounds as Bounds,

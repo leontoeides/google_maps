@@ -30,6 +30,7 @@ pub mod transit_route_preference;
 pub mod unit_system;
 pub mod waypoint;
 
+use chrono::NaiveDateTime;
 use crate::{
     directions::travel_mode::TravelMode,
     client_settings::ClientSettings,
@@ -46,7 +47,6 @@ use crate::{
         waypoint::Waypoint,
     } // directions::request
 }; // use
-use time::PrimitiveDateTime;
 
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Directions API_ query**. The methods implemented for this struct are what's
@@ -79,7 +79,7 @@ pub struct Request<'a> {
 
     /// Desired arrival time. See method `with_arrival_time()` for more
     /// information.
-    arrival_time: Option<PrimitiveDateTime>,
+    arrival_time: Option<NaiveDateTime>,
 
     /// Desired departure time. See files `departure_time.rs` and method
     /// `with_departure_time()` for more information.

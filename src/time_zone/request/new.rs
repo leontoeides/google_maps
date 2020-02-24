@@ -1,9 +1,9 @@
+use chrono::NaiveDateTime;
 use crate::{
     client_settings::ClientSettings,
     latlng::LatLng,
     time_zone::request::Request,
 }; // use
-use time::PrimitiveDateTime;
 
 impl<'a> Request<'a> {
 
@@ -32,7 +32,7 @@ impl<'a> Request<'a> {
     /// )
     /// ```
 
-    pub fn new(client_settings: &mut ClientSettings, location: LatLng, time: PrimitiveDateTime) -> Request {
+    pub fn new(client_settings: &mut ClientSettings, location: LatLng, time: NaiveDateTime) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:

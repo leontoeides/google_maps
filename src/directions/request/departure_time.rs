@@ -2,7 +2,7 @@
 //! specify when the user would like to depart for traffic modelling and transit
 //! directions.
 
-use time::PrimitiveDateTime;
+use chrono::NaiveDateTime;
 
 /// Specifies the desired [time of
 /// departure](https://developers.google.com/maps/documentation/directions/intro#optional-parameters).
@@ -39,7 +39,7 @@ pub enum DepartureTime {
     Now,
 
     /// Specifies the desired time of departure.
-    At(PrimitiveDateTime),
+    At(NaiveDateTime),
 
 } // enum
 

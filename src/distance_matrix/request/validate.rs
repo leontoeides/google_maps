@@ -28,7 +28,7 @@ impl<'a> Request<'a> {
                 if let Some(arrival_time) = &self.arrival_time {
                     return Err(Error::ArrivalTimeIsForTransitOnly(
                         String::from(travel_mode),
-                        arrival_time.format("%F %r")
+                        arrival_time.format("%F %r").to_string()
                     )) // Err
                 } // if
 
@@ -58,7 +58,7 @@ impl<'a> Request<'a> {
             // ...a departure time cannot be set:
             if let Some(departure_time) = &self.departure_time {
                 return Err(Error::EitherDepartureTimeOrArrivalTime(
-                    arrival_time.format("%F %r"),
+                    arrival_time.format("%F %r").to_string(),
                     String::from(departure_time),
                 )) // Err
             } // if

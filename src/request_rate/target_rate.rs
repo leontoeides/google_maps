@@ -18,7 +18,6 @@ pub struct TargetRate {
     pub duration: Duration,
 } // struct
 
-
 impl std::convert::From<&TargetRate> for String {
     /// Converts a `TargetRate` enum to a `String` that contains a
     /// human-friendly & readable rate.
