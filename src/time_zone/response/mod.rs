@@ -4,6 +4,7 @@
 
 pub mod status;
 
+use chrono_tz::Tz;
 use crate::time_zone::response::status::Status;
 use serde::{Serialize, Deserialize};
 
@@ -20,7 +21,7 @@ use serde::{Serialize, Deserialize};
 /// The local time of a given location is the sum of the timestamp parameter,
 /// and the dstOffset and rawOffset fields from the result.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct Response {
 
     /// The offset for daylight-savings time in seconds. This will be zero if
@@ -54,7 +55,7 @@ pub struct Response {
     /// timezone.xml, this is the first alias of each timezone. For example,
     /// "Asia/Calcutta" is returned, not "Asia/Kolkata".
     #[serde(alias = "timeZoneId")]
-    pub time_zone_id: Option<String>,
+    pub time_zone_id: Option<Tz>,
 
     /// A string containing the long form name of the time zone. This field will
     /// be localized if the language parameter is set. eg. "Pacific Daylight

@@ -23,13 +23,9 @@ impl<'a> Request<'a> {
     ///     &mut my_settings,
     ///     // St. Vitus Cathedral in Prague, Czechia
     ///     LatLng::try_from(50.090_903, 14.400_512).unwrap(),
-    ///     PrimitiveDateTime::new(
-    ///         // Tuesday February 15, 2022
-    ///         Date::try_from_ymd(2022, 2, 15).unwrap(),
-    ///         // 6:00:00 pm
-    ///         Time::try_from_hms(18, 00, 0).unwrap(),
-    ///     ),
-    /// )
+    ///     // Tuesday February 15, 2022 @ 6:00:00 pm
+    ///     NaiveDate::from_ymd(2022, 2, 15).and_hms(18, 00, 0)
+    /// ).execute();
     /// ```
 
     pub fn new(client_settings: &mut ClientSettings, location: LatLng, time: NaiveDateTime) -> Request {
