@@ -20,10 +20,7 @@ impl<'a> Request<'a> {
     ///
     /// * Arriving by January 1, 2019 at 12:00:00 AM:
     /// ```
-    /// .with_arrival_time(DateTime::new(
-    ///     DateTime::new(Date::try_from_ymd(2019, 1, 1).unwrap(),
-    ///     Time::midnight()
-    /// ))
+    /// .with_arrival_time(NaiveDate::from_ymd(2019, 1, 1).and_hms(0, 00, 0))
     /// ```
 
     pub fn with_arrival_time(&'a mut self, arrival_time: NaiveDateTime) -> &'a mut Request {

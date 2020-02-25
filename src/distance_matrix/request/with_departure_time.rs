@@ -49,7 +49,6 @@ impl<'a> Request<'a> {
     /// .with_departure_time(DepartureTime::At(
     ///     NaiveDate::from_ymd(2022, 2, 22).and_hms(13, 00, 0)
     /// ))
-    ///
     /// ```
     ///
     /// * Departing on Tuesday January 1, 2030 at 12:30:00 PM:
@@ -57,6 +56,7 @@ impl<'a> Request<'a> {
     /// .with_departure_time(DepartureTime::At(
     ///     NaiveDate::from_ymd(2030, 1, 1).and_hms(12, 30, 0)
     /// ))
+    /// ```
 
     pub fn with_departure_time(&'a mut self, departure_time: DepartureTime) -> &'a mut Request {
         self.departure_time = Some(departure_time);

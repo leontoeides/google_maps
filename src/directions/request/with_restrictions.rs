@@ -47,17 +47,18 @@ impl<'a> Request<'a> {
     ///
     /// ## Examples:
     ///
-    /// * Avoid tolls and ferries:
-    /// ```rust
-    /// .with_restrictions(vec![
-    ///     Avoid::Tolls,
-    ///     Avoid::Ferries,
-    /// ])
-    ///
-    /// ```
     /// * Only avoid highways:
+    ///
     /// ```rust
-    /// .with_restrictions(vec![Avoid::Highways])
+    /// .with_restriction(Avoid::Highways)
+    /// ```
+    ///
+    /// * Multiple restrictions may be stacked together. This example avoids
+    /// tolls and ferries:
+    ///
+    /// ```rust
+    /// .with_restriction(Avoid::Tolls)
+    /// .with_restriction(Avoid::Ferries)
     /// ```
 
     pub fn with_restriction(&'a mut self, restriction: Avoid) -> &'a mut Request {
