@@ -48,19 +48,17 @@ impl<'a> Request<'a> {
     ///
     /// * Departing on Tuesday February 22, 2022 at 1:00:00 PM:
     /// ```rust
-    /// .with_departure_time(DepartureTime::At(DateTime::new(
-    ///     Date::try_from_ymd(2022, 2, 22).unwrap(),
-    ///     Time::try_from_hms(13, 00, 0).unwrap(),
-    /// )))
-    ///
+    /// .with_departure_time(DepartureTime::At(
+    ///     NaiveDate::from_ymd(2022, 2, 22).and_hms(13, 00, 0)
+    /// ))
     /// ```
     ///
     /// * Departing on Tuesday January 1, 2030 at 12:30:00 PM:
     /// ```rust
-    /// .with_departure_time(DepartureTime::At(DateTime::new(
-    ///     Date::try_from_ymd(2030, 1, 1).unwrap(),
-    ///     Time::try_from_hms(12, 30, 0).unwrap(),
-    /// )))
+    /// .with_departure_time(DepartureTime::At(
+    ///     NaiveDate::from_ymd(2030, 1, 1).and_hms(12, 30, 0)
+    /// ))
+    /// ```
 
     pub fn with_departure_time(&'a mut self, departure_time: DepartureTime) -> &'a mut Request {
         self.departure_time = Some(departure_time);
