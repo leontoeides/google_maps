@@ -197,6 +197,28 @@ Platform console, the Geolocation API responds Status code `404 Not Found` with
 an empty body to all requests. This API cannot be implemented until the server
 responds as expected.
 
+## Client Settings
+
+```rust
+use google_maps::*;
+use std::time::Duration;
+
+let mut google_maps_client = ClientSettings::new(google_api_key)
+    // For unsuccessful request attempts, the client will attempt 10 retries
+    // before giving up:
+    .with_max_retries(10)
+    // For unsuccessful requests, the delay between retries is increased after
+    // each attempt. This parameter ensures that the client will not delay for
+    // more than 32 seconds between retries:
+    .with_max_delay(Duration::from_secs(32))
+    // For successful requests, the client will delay for 10 seconds between for
+    // all Google Maps Platform APIs:
+    .with_rate(Api::All, Duration::from_secs(10))
+    // Returns the `ClientSettings` struct to the caller. This struct is used to
+    // make Google Maps Platform requests.
+    .finalize();
+```
+
 # Feedback
 
 I would like for you to be successful with your project! If this crate is not
