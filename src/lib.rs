@@ -236,7 +236,6 @@ mod geocoding;
 mod language;
 mod latlng;
 mod place_type;
-mod prelude;
 mod region;
 mod request_rate;
 mod serde;

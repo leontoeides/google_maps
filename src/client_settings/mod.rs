@@ -22,9 +22,9 @@ use crate::request_rate::RequestRate;
 ///
 /// ```rust
 /// let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE)
-///     .with_max_delay(Duration::from_secs(32))
+///     .with_max_delay(std::time::Duration::from_secs(32))
 ///     .with_max_retries(10)
-///     .with_rate(Api::All, 1, Duration::from_secs(2))
+///     .with_rate(Api::All, 1, std::time::Duration::from_secs(2))
 ///     .finalize();
 /// ```
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
