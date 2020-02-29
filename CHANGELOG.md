@@ -1,5 +1,9 @@
 # Change Log
 
+* 0.6.0: 2020-02-29: Cleaned up the `mod` and `use` declarations. To glob import
+everything from google_maps into your module, you can use the
+`use google_maps::prelude::*` convention now.
+
 * 0.5.2: 2020-02-29: I'm a procedural programmer at heart, so using handles is
 second nature to me. In an oversight, I was forcing library users to use
 handles without being consciously aware of it. I have improved the ergonomics of
