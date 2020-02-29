@@ -203,7 +203,7 @@ responds as expected.
 use google_maps::*;
 use std::time::Duration;
 
-let mut google_maps_client = ClientSettings::new(google_api_key)
+let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE)
     // For unsuccessful request attempts, the client will attempt 10 retries
     // before giving up:
     .with_max_retries(10)
