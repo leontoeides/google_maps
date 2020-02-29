@@ -193,7 +193,7 @@
 //! );
 //! ```
 //!
-//! ## Client Settings
+//! ## Example Client Settings
 //!
 //! ```rust
 //! use google_maps::*;
