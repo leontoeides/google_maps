@@ -76,3 +76,16 @@
 pub mod error;
 pub mod request;
 pub mod response;
+
+pub use crate::elevation::{
+    error::Error as ElevationError,
+    request::{
+        locations::Locations as ElevationLocations,
+        Request as ElevationRequest,
+    }, // request
+    response::{
+        point::Point as Point,
+        Response as ElevationResponse,
+        status::Status as ElevationStatus,
+    }, // response
+}; // use

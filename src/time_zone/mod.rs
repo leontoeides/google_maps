@@ -67,3 +67,12 @@
 pub mod error;
 pub mod request;
 pub mod response;
+
+pub use crate::time_zone::{
+    error::Error as TimeZoneError,
+    request::Request as TimeZoneRequest,
+    response::{
+        Response as TimeZoneResponse,
+        status::Status as TimeZoneStatus,
+    }, // reponse
+}; // use

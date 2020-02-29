@@ -27,7 +27,7 @@ number. Add this line under the `[dependencies]` section.
 ## Example Directions API Request
 
 ```rust
-use google_maps::*;
+use google_maps::prelude::*;
 let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
@@ -52,7 +52,7 @@ println!("{:#?}", directions);
 ## Example Distance Matrix API Request
 
 ```rust
-use google_maps::*;
+use google_maps::prelude::*;
 let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
@@ -83,7 +83,7 @@ println!("{:#?}", distance_matrix);
 ## Example Elevation API Positional Request
 
 ```rust
-use google_maps::*;
+use google_maps::prelude::*;
 let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
@@ -105,7 +105,7 @@ println!("Elevation: {} meters", elevation.unwrap().results.unwrap()[0].elevatio
 ## Example Geocoding API Request
 
 ```rust
-use google_maps::*;
+use google_maps::prelude::*;
 let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
@@ -128,7 +128,7 @@ for result in &location.unwrap().results {
 ## Example Reverse Geocoding API Request
 
 ```rust
-use google_maps::*;
+use google_maps::prelude::*;
 let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
@@ -157,7 +157,7 @@ for result in &location.unwrap().results {
 ## Example Time Zone API Request
 
 ```rust
-use google_maps::*;
+use google_maps::prelude::*;
 let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
@@ -192,7 +192,7 @@ println!("Time in {:#?}: {}",
 ## Example Client Settings
 
 ```rust
-use google_maps::*;
+use google_maps::prelude::*;
 use std::time::Duration;
 
 let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE)
@@ -228,6 +228,10 @@ me](https://github.com/leontoeides/google_maps/issues)! I'm not always fast at
 responding but I will respond. Thanks!
 
 # What's new?
+
+* 0.5.3: 2020-02-29: Cleaned up the `mod` and `use` declarations. To glob import
+everything from google_maps into your module, you can use the
+`use google_maps::prelude::*` convention now.
 
 * 0.5.2: 2020-02-29: I'm a procedural programmer at heart, so using handles is
 second nature to me. In an oversight, I was forcing library users to use

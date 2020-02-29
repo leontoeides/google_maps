@@ -78,3 +78,42 @@
 pub mod error;
 pub mod request;
 pub mod response;
+
+pub use crate::directions::{
+    request::{
+        avoid::Avoid as Avoid,
+        departure_time::DepartureTime as DepartureTime,
+        location::Location as Location,
+        traffic_model::TrafficModel as TrafficModel,
+        transit_mode::TransitMode as TransitMode,
+        transit_route_preference::TransitRoutePreference as TransitRoutePreference,
+        unit_system::UnitSystem as UnitSystem,
+        waypoint::Waypoint as Waypoint,
+    }, // request
+    response::{
+        directions_distance::DirectionsDistance,
+        directions_duration::DirectionsDuration,
+        driving_maneuver::DrivingManeuver as DrivingManeuver,
+        leg::Leg as Leg,
+        overview_polyline::OverviewPolyline as OverviewPolyline,
+        polyline::Polyline as Polyline,
+        route::Route as Route,
+        step::Step as Step,
+        transit_agency::TransitAgency as TransitAgency,
+        transit_currency::TransitCurrency as TransitCurrency,
+        transit_details::TransitDetails as TransitDetails,
+        transit_fare::TransitFare as TransitFare,
+        transit_line::TransitLine as TransitLine,
+        transit_stop::TransitStop as TransitStop,
+        transit_time::TransitTime as TransitTime,
+        transit_vehicle::TransitVehicle as TransitVehicle,
+    }, // response
+    travel_mode::TravelMode as TravelMode,
+    vehicle_type::VehicleType as VehicleType,
+}; // use
+
+pub use crate::distance_matrix::{
+    request::Request as DistanceMatrixRequest,
+    response::Response as DistanceMatrixResponse,
+    response::status::Status as DistanceMatrixStatus,
+}; // use
