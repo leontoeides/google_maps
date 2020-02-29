@@ -229,7 +229,7 @@ responding but I will respond. Thanks!
 
 # What's new?
 
-* 0.5.3: 2020-02-29: Cleaned up the `mod` and `use` declarations. To glob import
+* 0.6.0: 2020-02-29: Cleaned up the `mod` and `use` declarations. To glob import
 everything from google_maps into your module, you can use the
 `use google_maps::prelude::*` convention now.
 
@@ -249,14 +249,15 @@ available on GitHub.
 
 1. Track both _requests_ and request _elements_ for rate limiting.
 2. Make a generic get() function for that can be used by all APIs.
-3. Look into making APIs optional, i.e. features. Possible? Desirable?
-4. Look into integrating [yaiouom](https://crates.io/crates/yaiouom).
-5. Convert explicit query validation to session types wherever reasonable.
-6. [Places API](https://developers.google.com/places/web-service/intro). There
+3. Considering move from `reqwest` to a lighter-weight HTTP client.
+4. Look into making APIs optional, i.e. as features. Possible? Desirable?
+5. Look into integrating [yaiouom](https://crates.io/crates/yaiouom).
+6. Convert explicit query validation to session types wherever reasonable.
+7. [Places API](https://developers.google.com/places/web-service/intro). There
 are no immediate plans for supporting this API. It's quite big and I have no
 current need for it. If you would like to have to implemented, please contact
 me.
-7. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
+8. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
 There are no immediate plans for supporting this API. It's quite big and I have
 no current need for it. If you would like to have to implemented, please contact
 me.

@@ -233,7 +233,7 @@
 //!
 //! # What's new?
 //!
-//! * 0.5.3: 2020-02-29: Cleaned up the `mod` and `use` declarations. To glob
+//! * 0.6.0: 2020-02-29: Cleaned up the `mod` and `use` declarations. To glob
 //! import everything from google_maps into your module, you can use the
 //! `use google_maps::prelude::*` convention now.
 //!
