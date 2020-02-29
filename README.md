@@ -191,6 +191,9 @@ println!("Time in {:#?}: {}",
 
 ## Example Client Settings
 
+The Google Maps client settings can be used to change the request rate and
+automatic retry parameters.
+
 ```rust
 use google_maps::prelude::*;
 use std::time::Duration;
