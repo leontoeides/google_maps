@@ -219,8 +219,9 @@
 //! * 0.5.2: 2020-02-29: There were inaccuracies in the rate limiting examples.
 //! Sorry if these poor examples caused any frustration.
 //!
-//! * The full change log is available on
-//! [GitHub](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md).
+//! * The full [change
+//! log](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md) is
+//! available on GitHub.
 //!
 //! # To do:
 //!
