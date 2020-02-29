@@ -19,6 +19,15 @@
 //! an attempt to give back to the Rust community. I hope it saves someone out
 //! there some work.
 //!
+//! # Before You Begin
+//!
+//! * Add `google_maps = "0.5.3"` to your project's `Cargo.toml` file. You
+//! should check [crates.io](https://crates.io/crates/google_maps) for the
+//! latest version number. Add this line under the `[dependencies]` section.
+//!
+//! * The full documentation is available at
+//! [docs.rs](https://docs.rs/google_maps/)
+//!
 //! ## Example Directions API Request
 //!
 //! ```rust
@@ -200,7 +209,7 @@
 //! me](https://github.com/leontoeides/google_maps/issues)! I'm not always fast
 //! at responding but I will respond. Thanks!
 //!
-//! # Change Log
+//! # What's new?
 //!
 //! * 0.5.2: 2020-02-29: I'm a procedural programmer at heart, so using handles
 //! is second nature to me. In an oversight, I was forcing library users to use
