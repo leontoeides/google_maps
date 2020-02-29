@@ -317,14 +317,13 @@ debugging.
 1. Track both _requests_ and request _elements_ for rate limiting.
 2. Make a generic get() function for that can be used by all APIs.
 3. Look into making APIs optional, i.e. features. Possible? Desirable?
-4. Look into the prelude::* convention.
-5. Look into integrating [yaiouom](https://crates.io/crates/yaiouom).
-6. Convert explicit query validation to session types wherever reasonable.
-7. [Places API](https://developers.google.com/places/web-service/intro). There
+4. Look into integrating [yaiouom](https://crates.io/crates/yaiouom).
+5. Convert explicit query validation to session types wherever reasonable.
+6. [Places API](https://developers.google.com/places/web-service/intro). There
 are no immediate plans for supporting this API. It's quite big and I have no
 current need for it. If you would like to have to implemented, please contact
 me.
-8. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
+7. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
 There are no immediate plans for supporting this API. It's quite big and I have
 no current need for it. If you would like to have to implemented, please contact
 me.
