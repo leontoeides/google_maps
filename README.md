@@ -189,15 +189,7 @@ println!("Time in {:#?}: {}",
 );
 ```
 
-## [Geolocation API](https://developers.google.com/maps/documentation/geolocation/intro)
-
-Google's Geolocation API seems to be offline. While the online documentation
-is still available and the API appears configurable through the Google Cloud
-Platform console, the Geolocation API responds Status code `404 Not Found` with
-an empty body to all requests. This API cannot be implemented until the server
-responds as expected.
-
-## Client Settings
+## Example Client Settings
 
 ```rust
 use google_maps::*;
@@ -218,6 +210,14 @@ let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE)
     // make Google Maps Platform requests.
     .finalize();
 ```
+
+## [Geolocation API](https://developers.google.com/maps/documentation/geolocation/intro)
+
+Google's Geolocation API seems to be offline. While the online documentation
+is still available and the API appears configurable through the Google Cloud
+Platform console, the Geolocation API responds Status code `404 Not Found` with
+an empty body to all requests. This API cannot be implemented until the server
+responds as expected.
 
 # Feedback
 
