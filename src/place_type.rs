@@ -513,7 +513,7 @@ impl std::convert::From<&PlaceType> for String {
     } // fn
 } // impl
 
-impl std::convert::TryFrom<String> for PlaceType {
+impl std::convert::TryFrom<&str> for PlaceType {
 
     // Error definitions are contained in the `google_maps\src\error.rs` module.
     type Error = crate::error::Error;
@@ -521,7 +521,7 @@ impl std::convert::TryFrom<String> for PlaceType {
     /// Gets a `PlaceType` enum from a `String` that contains a supported [place
     /// type](https://developers.google.com/places/web-service/supported_types)
     /// code.
-    fn try_from(place_type: String) -> Result<PlaceType, Error> {
+    fn try_from(place_type: &str) -> Result<PlaceType, Error> {
         match place_type.as_ref() {
             "accounting" => Ok(PlaceType::Accounting),
             "airport" => Ok(PlaceType::Airport),
@@ -665,7 +665,7 @@ impl std::convert::TryFrom<String> for PlaceType {
             "address" => Ok(PlaceType::Address),
             "regions" => Ok(PlaceType::Regions),
             "cities" => Ok(PlaceType::Cities),
-            _ => Err(Error::InvalidPlaceTypeCode(place_type)),
+            _ => Err(Error::InvalidPlaceTypeCode(place_type.to_string())),
         } // match
     } // fn
 

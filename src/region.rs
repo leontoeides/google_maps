@@ -596,14 +596,14 @@ impl std::convert::From<&Region> for String {
     } // fn
 } // impl
 
-impl std::convert::TryFrom<String> for Region {
+impl std::convert::TryFrom<&str> for Region {
 
     // Error definitions are contained in the `google_maps\src\error.rs` module.
     type Error = crate::error::Error;
 
     /// Gets a `Region` enum from a `String` that contains a supported
     /// [region](https://developers.google.com/maps/coverage) code.
-    fn try_from(region: String) -> Result<Region, Error> {
+    fn try_from(region: &str) -> Result<Region, Error> {
         match region.as_ref() {
             "af" => Ok(Region::Afghanistan),
             "al" => Ok(Region::Albania),
@@ -861,7 +861,7 @@ impl std::convert::TryFrom<String> for Region {
             "zm" => Ok(Region::Zambia),
             "zw" => Ok(Region::Zimbabwe),
             "ax" => Ok(Region::AlandIslands),
-            _ => Err(Error::InvalidRegionCode(region)),
+            _ => Err(Error::InvalidRegionCode(region.to_string())),
         } // match
     } // fn
 

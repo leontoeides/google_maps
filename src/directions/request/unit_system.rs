@@ -49,7 +49,7 @@ impl std::convert::From<&UnitSystem> for String {
     } // fn
 } // impl
 
-impl std::convert::TryFrom<String> for UnitSystem {
+impl std::convert::TryFrom<&str> for UnitSystem {
 
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -58,11 +58,11 @@ impl std::convert::TryFrom<String> for UnitSystem {
     /// Gets a `UnitSystem` enum from a `String` that contains a valid [unit
     /// system](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
     /// code.
-    fn try_from(units: String) -> Result<UnitSystem, Error> {
+    fn try_from(units: &str) -> Result<UnitSystem, Error> {
         match units.as_ref() {
             "imperial" => Ok(UnitSystem::Imperial),
             "metric" => Ok(UnitSystem::Metric),
-            _ => Err(Error::InvalidUnitSystemCode(units)),
+            _ => Err(Error::InvalidUnitSystemCode(units.to_string())),
         } // match
     } // fn
 

@@ -56,7 +56,7 @@ impl std::convert::From<&TravelMode> for String {
     } // fn
 } // impl
 
-impl std::convert::TryFrom<String> for TravelMode {
+impl std::convert::TryFrom<&str> for TravelMode {
 
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -65,13 +65,13 @@ impl std::convert::TryFrom<String> for TravelMode {
     /// Gets a `TravelMode` enum from a `String` that contains a valid [travel
     /// mode](https://developers.google.com/maps/documentation/directions/intro#TravelModes)
     /// code.
-    fn try_from(travel_mode: String) -> Result<TravelMode, Error> {
+    fn try_from(travel_mode: &str) -> Result<TravelMode, Error> {
         match travel_mode.as_ref() {
             "BICYCLING" => Ok(TravelMode::Bicycling),
             "DRIVING" => Ok(TravelMode::Driving),
             "TRANSIT" => Ok(TravelMode::Transit),
             "WALKING" => Ok(TravelMode::Walking),
-            _ => Err(Error::InvalidTravelModeCode(travel_mode)),
+            _ => Err(Error::InvalidTravelModeCode(travel_mode.to_string())),
         } // match
     } // fn
 

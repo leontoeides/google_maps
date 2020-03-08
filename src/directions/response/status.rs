@@ -94,7 +94,7 @@ impl std::convert::From<&Status> for String {
     } // fn
 } // impl
 
-impl std::convert::TryFrom<String> for Status {
+impl std::convert::TryFrom<&str> for Status {
 
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -103,7 +103,7 @@ impl std::convert::TryFrom<String> for Status {
     /// Gets a `Status` enum from a `String` that contains a valid
     /// [status](https://developers.google.com/maps/documentation/directions/intro#StatusCodes)
     /// code.
-    fn try_from(status: String) -> Result<Status, Error> {
+    fn try_from(status: &str) -> Result<Status, Error> {
         match status.as_ref() {
             "INVALID_REQUEST" => Ok(Status::InvalidRequest),
             "MAX_ROUTE_LENGTH_EXCEEDED" => Ok(Status::MaxRouteLengthExceeded),
@@ -115,7 +115,7 @@ impl std::convert::TryFrom<String> for Status {
             "REQUEST_DENIED" => Ok(Status::RequestDenied),
             "UNKNOWN_ERROR" => Ok(Status::UnknownError),
             "ZERO_RESULTS" => Ok(Status::ZeroResults),
-            _ => Err(Error::InvalidStatusCode(status)),
+            _ => Err(Error::InvalidStatusCode(status.to_string())),
         } // match
     } // fn
 
