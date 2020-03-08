@@ -32,6 +32,7 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
+//! // OR use google_maps::{ClientSettings, LatLng, directions::{Location, TravelMode}};
 //! let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 //!
 //! // Example request:
@@ -57,6 +58,7 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
+//! // OR use google_maps::{ClientSettings, LatLng, distance_matrix::Waypoint};
 //! let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 //!
 //! // Example request:
@@ -88,6 +90,7 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
+//! // OR use google_maps::{ClientSettings, LatLng};
 //! let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 //!
 //! // Example request:
@@ -133,6 +136,7 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
+//! // OR use google_maps::ClientSettings;
 //! let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 //!
 //! // Example request:
@@ -162,6 +166,7 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
+//! // OR use google_maps::{ClientSettings, LatLng};
 //! let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 //!
 //! // Example request:
@@ -233,17 +238,21 @@
 //!
 //! # What's new?
 //!
+//! * 0.6.1: 2020-03-08: To better align this crate with Rust conventions, I've
+//! converted many `String` parameters to `&str` parameters. If you're receiving
+//! new compilations errors like `the trait bound google_maps::directions::
+//! response::driving_maneuver::DrivingManeuver: std::convert::From<std::
+//! string::String> is not satisfied` you will have to change your code to
+//! borrow the string. For example, change `TransitCurrency::try_from(currency)`
+//! to `TransitCurrency::try_from(&currency)`.
+//!
+//! * 0.6.1: Cleaned up string usage.
+//!
+//! * 0.6.1: Added more restrictive `use` examples.
+//!
 //! * 0.6.0: 2020-02-29: Cleaned up the `mod` and `use` declarations. To glob
 //! import everything from google_maps into your module, you can use the
 //! `use google_maps::prelude::*` convention now.
-//!
-//! * 0.5.2: 2020-02-29: I'm a procedural programmer at heart, so using handles
-//! is second nature to me. In an oversight, I was forcing library users to use
-//! handles without being consciously aware of it. I have improved the
-//! ergonomics of the library. Check out the new examples.
-//!
-//! * 0.5.2: 2020-02-29: There were inaccuracies in the rate limiting examples.
-//! Sorry if these poor examples caused any frustration.
 //!
 //! * The full [change
 //! log](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md) is

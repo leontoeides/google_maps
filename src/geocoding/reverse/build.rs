@@ -18,7 +18,7 @@ impl<'a> ReverseRequest<'a> {
         let mut query = format!(
             "key={}&latlng={}",
             self.client_settings.key,
-            self.latlng.to_string(),
+            String::from(&self.latlng),
         ); // format!
 
         // This section builds the "optional parameters" portion of the query
@@ -34,7 +34,7 @@ impl<'a> ReverseRequest<'a> {
         if let Some(location_types) = &self.location_types {
             query.push_str("&location_type=");
             query.push_str(&*utf8_percent_encode(
-                &String::from(location_types.iter().map(|location_type| location_type.to_string() + "|").collect::<String>().trim_end_matches('|')),
+                &String::from(location_types.iter().map(|location_type| String::from(location_type) + "|").collect::<String>().trim_end_matches('|')),
                 NON_ALPHANUMERIC
             ).to_string())
         } // if
@@ -43,7 +43,7 @@ impl<'a> ReverseRequest<'a> {
         if let Some(result_types) = &self.result_types {
             query.push_str("&result_type=");
             query.push_str(&*utf8_percent_encode(
-                &String::from(result_types.iter().map(|result_type| result_type.to_string() + "|").collect::<String>().trim_end_matches('|')),
+                &String::from(result_types.iter().map(|result_type| String::from(result_type) + "|").collect::<String>().trim_end_matches('|')),
                 NON_ALPHANUMERIC
             ).to_string())
         } // if
