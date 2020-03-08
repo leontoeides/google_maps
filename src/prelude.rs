@@ -1,3 +1,8 @@
+//! Put `use google_maps::prelude::*;` in your code will to get more convenient
+//! access to everything you need. If you're not concerned with name space
+//! collisions or conflicts, you can glob import all google_maps structs and
+//! enums by using this module.
+
 pub use crate::{
     bounds::Bounds as Bounds,
     client_settings::ClientSettings as ClientSettings,

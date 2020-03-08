@@ -5,7 +5,13 @@
 use crate::error::Error;
 use serde::{Serialize, Deserialize};
 
-/// [Place Types](https://developers.google.com/places/web-service/supported_types)
+/// This specifies the types or categories of a place. For example, a returned
+/// location could be a "country" (as in a nation) or it could be a "shopping
+/// mall." Also, a requested place could be a "locality" (a city) or a
+/// "street_address" This type helps define the data that is being returned or
+/// sought. See [Place
+/// Types](https://developers.google.com/places/web-service/supported_types)
+/// for more information.
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum PlaceType {
     // [Table 1: Place types](https://developers.google.com/places/web-service/supported_types#table1)

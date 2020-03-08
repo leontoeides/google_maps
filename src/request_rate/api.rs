@@ -3,7 +3,10 @@
 
 use serde::{Serialize, Deserialize};
 
-/// `Api` is used to select an API to configure.
+/// `Api` is used to select an API to configure. For example, the Google Maps
+/// Client can be set to have different request rates for `Directions` and
+/// `Elevation` requests. This `enum` is used to select which Google Maps API
+/// you would like to configure.
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Api {
     /// This variant is used to select settings that are observed for _all_
