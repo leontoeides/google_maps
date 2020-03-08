@@ -35,7 +35,7 @@ impl<'a> Request<'a> {
                 // ...an arrival time cannot be set:
                 if let Some(arrival_time) = &self.arrival_time {
                     return Err(Error::ArrivalTimeIsForTransitOnly(
-                        String::from(travel_mode),
+                        travel_mode.to_string(),
                         arrival_time.format("%F %r").to_string()
                     )) // Err
                 } // if
@@ -43,16 +43,16 @@ impl<'a> Request<'a> {
                 // ...a transit mode cannot be set:
                 if let Some(transit_modes) = &self.transit_modes {
                     return Err(Error::TransitModeIsForTransitOnly(
-                        String::from(travel_mode),
-                        String::from(transit_modes.iter().map(|mode| String::from(mode) + "|").collect::<String>().trim_end_matches('|'))
+                        travel_mode.to_string(),
+                        String::from(transit_modes.iter().map(|mode| mode.to_string() + "|").collect::<String>().trim_end_matches('|'))
                     )) // Err
                 } // if
 
                 // ...a transit route preference cannot be set:
                 if let Some(transit_route_preference) = &self.transit_route_preference {
                     return Err(Error::TransitRoutePreferenceIsForTransitOnly(
-                        String::from(travel_mode),
-                        String::from(transit_route_preference),
+                        travel_mode.to_string(),
+                        transit_route_preference.to_string(),
                     )) // Err
                 } // if
 
@@ -76,7 +76,7 @@ impl<'a> Request<'a> {
             if let Some(restrictions) = &self.restrictions {
                 return Err(Error::EitherRestrictionsOrWaypoints(
                     waypoints.len(),
-                    String::from(restrictions.iter().map(|avoid| String::from(avoid) + "|").collect::<String>().trim_end_matches('|')),
+                    String::from(restrictions.iter().map(|avoid| avoid.to_string() + "|").collect::<String>().trim_end_matches('|')),
                 )) // Err
             } // if
 
@@ -94,7 +94,7 @@ impl<'a> Request<'a> {
             if let Some(departure_time) = &self.departure_time {
                 return Err(Error::EitherDepartureTimeOrArrivalTime(
                     arrival_time.format("%F %r").to_string(),
-                    String::from(departure_time),
+                    departure_time.to_string(),
                 )) // Err
             } // if
 

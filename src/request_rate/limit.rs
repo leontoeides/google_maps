@@ -49,7 +49,7 @@ impl RequestRate {
                     // If this is the first request to the API, initialize the
                     // timer.
                     None => {
-                        trace!("Rate limiting is enabled for the `{}` API. First request.", String::from(&api));
+                        trace!("Rate limiting is enabled for the `{}` API. First request.", api.to_string());
                         rate.current_rate.first_request = Some(Instant::now());
                         rate.current_rate.request_count = 1;
                     }, // case
@@ -63,7 +63,7 @@ impl RequestRate {
                         trace!(
                             "{} requests to the `{}` API this session. This API's session began {} ago.",
                             rate.current_rate.request_count,
-                            String::from(&api),
+                            api.to_string(),
                             duration_to_string(first_request.elapsed())
                         );
                         trace!(
