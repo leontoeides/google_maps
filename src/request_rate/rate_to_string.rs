@@ -111,7 +111,7 @@ pub fn rate_to_string(numerator: u64, duration: Duration, numerator_singular: &s
         DurationUnit::Weeks => String::from("week"),
         DurationUnit::Years => String::from("year"),
         // This can never be reached but it keeps the Rust compiler happy:
-        _ => String::from(&adjusted_units.1),
+        _ => adjusted_units.1.to_string(),
     }; // match
 
     // Formats the final string and returns it to the caller:

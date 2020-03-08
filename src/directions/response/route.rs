@@ -96,7 +96,7 @@ impl Route {
     /// ```
     pub fn get_fare_currency(&self) -> Option<String> {
         match &self.fare {
-            Some(fare) => Some(String::from(&fare.currency)),
+            Some(fare) => Some(fare.currency.to_string()),
             None => None,
         } // match
     } // fn
@@ -140,7 +140,7 @@ impl Route {
         if self.warnings.is_empty() {
             None
         } else {
-            Some(String::from(self.warnings.iter().map(|warning| String::from(warning) + "|").collect::<String>().trim_end_matches('|')))
+            Some(String::from(self.warnings.iter().map(|warning| warning.to_string() + "|").collect::<String>().trim_end_matches('|')))
         } // if
     } // fn
 

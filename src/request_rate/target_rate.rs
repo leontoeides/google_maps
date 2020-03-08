@@ -40,6 +40,6 @@ impl std::fmt::Display for TargetRate {
     /// Formats a `TargetRate` enum into a string that is presentable to the
     /// end user.
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{}", String::from(self))
+        write!(f, "{}", self.to_string())
     } // fn
 } // impl

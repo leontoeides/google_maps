@@ -157,6 +157,7 @@ for result in &location.unwrap().results {
 ## Example Time Zone API Request
 
 ```rust
+use chrono::{NaiveDate, NaiveDateTime};
 use google_maps::prelude::*;
 let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 

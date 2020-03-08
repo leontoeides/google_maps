@@ -33,7 +33,7 @@ impl<'a> ForwardRequest<'a> {
         // Address key/value pair:
         if let Some(address) = &self.address {
             query.push_str("&address=");
-            query.push_str(&*utf8_percent_encode(&String::from(address), NON_ALPHANUMERIC).to_string())
+            query.push_str(&*utf8_percent_encode(&address.to_string(), NON_ALPHANUMERIC).to_string())
         }
 
         // Bounds key/value pair:
@@ -54,13 +54,13 @@ impl<'a> ForwardRequest<'a> {
         // Language key/value pair:
         if let Some(language) = &self.language {
             query.push_str("&language=");
-            query.push_str(&String::from(language))
+            query.push_str(&language.to_string())
         }
 
         // Region key/value pair:
         if let Some(region) = &self.region {
             query.push_str("&region=");
-            query.push_str(&String::from(region))
+            query.push_str(&region.to_string())
         }
 
         // Set query string in ForwardRequest struct.

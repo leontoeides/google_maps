@@ -23,7 +23,7 @@ impl<'a> ForwardRequest<'a> {
 
     pub fn with_address(&'a mut self, address: &str) -> &'a mut ForwardRequest {
         // Set address in ForwardRequest struct.
-        self.address = Some(String::from(address));
+        self.address = Some(address.to_string());
         // Return modified ForwardRequest struct to caller.
         self
     } // fn

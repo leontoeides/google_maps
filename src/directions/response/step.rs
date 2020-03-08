@@ -86,7 +86,7 @@ impl Step {
     /// ```
     pub fn get_maneuver(&self) -> Option<String> {
         match &self.maneuver {
-            Some(maneuver) => Some(String::from(maneuver)),
+            Some(maneuver) => Some(maneuver.to_string()),
             None => None,
         } // match
     } // fn
