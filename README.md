@@ -18,9 +18,9 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 # Before You Begin
 
-* Add `google_maps = "0.5.3"` to your project's `Cargo.toml` file. You should
-check [crates.io](https://crates.io/crates/google_maps) for the latest version
-number. Add this line under the `[dependencies]` section.
+* In your project's `Cargo.toml` file, under the `[dependencies]` section,
+add `google_maps = "0.6.1"`. Check [crates.io](https://crates.io/crates/google_maps)
+for the latest version number.
 
 * The full documentation is available at [docs.rs](https://docs.rs/google_maps/)
 
