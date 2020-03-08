@@ -27,7 +27,7 @@ impl<'a> ReverseRequest<'a> {
         // Language key/value pair:
         if let Some(language) = &self.language {
             query.push_str("&language=");
-            query.push_str(&language.to_string())
+            query.push_str(&String::from(language))
         } // if
 
         // Location type(s) key/value pair:

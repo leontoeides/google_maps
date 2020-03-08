@@ -45,7 +45,7 @@ impl<'a> Request<'a> {
         if let Some(restrictions) = &self.restrictions {
             query.push_str("&avoid=");
             query.push_str(&*utf8_percent_encode(
-                &String::from(restrictions.iter().map(|avoid| avoid.to_string() + "|").collect::<String>().trim_end_matches('|')),
+                &String::from(restrictions.iter().map(|avoid| String::from(avoid) + "|").collect::<String>().trim_end_matches('|')),
                 NON_ALPHANUMERIC
             ).to_string())
         } // if
@@ -53,38 +53,38 @@ impl<'a> Request<'a> {
         // Departure time key/value pair:
         if let Some(departure_time) = &self.departure_time {
             query.push_str("&departure_time=");
-            query.push_str(&departure_time.to_string())
+            query.push_str(&String::from(departure_time))
         } // if
 
         // Language key/value pair:
         if let Some(language) = &self.language {
             query.push_str("&language=");
-            query.push_str(&language.to_string())
+            query.push_str(&String::from(language))
         } // if
 
         // Travel mode key/value pair:
         if let Some(travel_mode) = &self.travel_mode {
             query.push_str("&mode=");
-            query.push_str(&travel_mode.to_string().to_lowercase())
+            query.push_str(&String::from(travel_mode).to_lowercase())
         } // if
 
         // Region key/value pair:
         if let Some(region) = &self.region {
             query.push_str("&region=");
-            query.push_str(&region.to_string())
+            query.push_str(&String::from(region))
         } // if
 
         // Traffic model key/value pair:
         if let Some(traffic_model) = &self.traffic_model {
             query.push_str("&traffic_model=");
-            query.push_str(&traffic_model.to_string())
+            query.push_str(&String::from(traffic_model))
         } // if
 
         // Transit mode key/value pair:
         if let Some(transit_modes) = &self.transit_modes {
             query.push_str("&transit_mode=");
             query.push_str(&*utf8_percent_encode(
-                &String::from(transit_modes.iter().map(|mode| mode.to_string() + "|").collect::<String>().trim_end_matches('|')),
+                &String::from(transit_modes.iter().map(|mode| String::from(mode) + "|").collect::<String>().trim_end_matches('|')),
                 NON_ALPHANUMERIC
             ).to_string())
         } // if
@@ -92,13 +92,13 @@ impl<'a> Request<'a> {
         // Transit route preference key/value pair:
         if let Some(transit_route_preference) = &self.transit_route_preference {
             query.push_str("&transit_routing_preference=");
-            query.push_str(&transit_route_preference.to_string())
+            query.push_str(&String::from(transit_route_preference))
         } // if
 
         // Unit system key/value pair:
         if let Some(unit_system) = &self.unit_system {
             query.push_str("&units=");
-            query.push_str(&unit_system.to_string())
+            query.push_str(&String::from(unit_system))
         } // if
 
         // Waypoints key/value pair:
