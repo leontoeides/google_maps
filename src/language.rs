@@ -228,14 +228,14 @@ impl std::convert::From<&Language> for String {
     } // fn
 } // impl
 
-impl std::convert::TryFrom<String> for Language {
+impl std::convert::TryFrom<&str> for Language {
 
     // Error definitions are contained in the `google_maps\src\error.rs` module.
     type Error = crate::error::Error;
 
     /// Gets a `Language` enum from a `String` that contains a supported
     /// [language](https://developers.google.com/maps/faq#languagesupport) code.
-    fn try_from(language: String) -> Result<Language, Error> {
+    fn try_from(language: &str) -> Result<Language, Error> {
         match language.as_ref() {
             "af" => Ok(Language::Afrikaans),
             "sq" => Ok(Language::Albanian),
@@ -318,7 +318,7 @@ impl std::convert::TryFrom<String> for Language {
             "uz" => Ok(Language::Uzbek),
             "vi" => Ok(Language::Vietnamese),
             "zu" => Ok(Language::Zulu),
-            _ => Err(Error::InvalidLanguageCode(language)),
+            _ => Err(Error::InvalidLanguageCode(language.to_string())),
         } // match
     } // fn
 

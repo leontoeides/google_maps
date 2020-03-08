@@ -59,7 +59,7 @@ impl std::convert::From<&TrafficModel> for String {
     } // fn
 } // impl
 
-impl std::convert::TryFrom<String> for TrafficModel {
+impl std::convert::TryFrom<&str> for TrafficModel {
 
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -69,12 +69,12 @@ impl std::convert::TryFrom<String> for TrafficModel {
     /// [traffic
     /// model](https://developers.google.com/maps/documentation/javascript/reference/directions#TrafficModel)
     /// code.
-    fn try_from(traffic_model: String) -> Result<TrafficModel, Error> {
+    fn try_from(traffic_model: &str) -> Result<TrafficModel, Error> {
         match traffic_model.as_ref() {
             "best_guess" => Ok(TrafficModel::BestGuess),
             "optimistic" => Ok(TrafficModel::Optimistic),
             "pessimistic" => Ok(TrafficModel::Pessimistic),
-            _ => Err(Error::InvalidTrafficModelCode(traffic_model)),
+            _ => Err(Error::InvalidTrafficModelCode(traffic_model.to_string())),
         } // match
     } // fn
 

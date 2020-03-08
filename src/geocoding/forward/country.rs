@@ -532,7 +532,7 @@ impl std::convert::From<&Country> for String {
     } // fn
 } // enum
 
-impl std::convert::TryFrom<String> for Country {
+impl std::convert::TryFrom<&str> for Country {
 
     // Error definitions are contained in the
     // `google_maps\src\geocoding\error.rs` module.
@@ -541,7 +541,7 @@ impl std::convert::TryFrom<String> for Country {
     /// Gets a `Country` enum from a `String` that contains a valid [ISO 3166-1
     /// Alpha-2](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
     /// country code.
-    fn try_from(country: String) -> Result<Country, Error> {
+    fn try_from(country: &str) -> Result<Country, Error> {
         match country.as_ref() {
             "AF" => Ok(Country::Afghanistan),
             "AX" => Ok(Country::AlandIslands),
@@ -792,7 +792,7 @@ impl std::convert::TryFrom<String> for Country {
             "YE" => Ok(Country::Yemen),
             "ZM" => Ok(Country::Zambia),
             "ZW" => Ok(Country::Zimbabwe),
-            _ => Err(Error::InvalidCountryCode(country)),
+            _ => Err(Error::InvalidCountryCode(country.to_string())),
         } // match
     } // fn
 

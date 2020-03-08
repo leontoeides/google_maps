@@ -84,7 +84,7 @@ impl std::convert::From<&DrivingManeuver> for String {
     } // fn
 } // impl
 
-impl std::convert::TryFrom<String> for DrivingManeuver {
+impl std::convert::TryFrom<&str> for DrivingManeuver {
 
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -94,7 +94,7 @@ impl std::convert::TryFrom<String> for DrivingManeuver {
     /// [maneuver
     /// type](https://developers.google.com/maps/documentation/directions/intro#Steps)
     /// code.
-    fn try_from(maneuver_type: String) -> Result<DrivingManeuver, Error> {
+    fn try_from(maneuver_type: &str) -> Result<DrivingManeuver, Error> {
         match maneuver_type.as_ref() {
             "ferry" => Ok(DrivingManeuver::Ferry),
             "ferry-train" => Ok(DrivingManeuver::FerryTrain),
@@ -116,7 +116,7 @@ impl std::convert::TryFrom<String> for DrivingManeuver {
             "turn-slight-right" => Ok(DrivingManeuver::TurnSlightRight),
             "uturn-left" => Ok(DrivingManeuver::UturnLeft),
             "uturn-right" => Ok(DrivingManeuver::UturnRight),
-            _ => Err(Error::InvalidDrivingManeuverCode(maneuver_type)),
+            _ => Err(Error::InvalidDrivingManeuverCode(maneuver_type.to_string())),
         } // match
     } // fn
 

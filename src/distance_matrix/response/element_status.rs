@@ -47,7 +47,7 @@ impl std::convert::From<&ElementStatus> for String {
 
 } // impl
 
-impl std::convert::TryFrom<String> for ElementStatus {
+impl std::convert::TryFrom<&str> for ElementStatus {
 
     // Error definitions are contained in the
     // `google_maps\src\distance_matrix\error.rs` module.
@@ -57,13 +57,13 @@ impl std::convert::TryFrom<String> for ElementStatus {
     /// [element
     /// status](https://developers.google.com/maps/documentation/distance-matrix/intro#element-level-status-codes)
     /// code.
-    fn try_from(element_status: String) -> Result<ElementStatus, Error> {
+    fn try_from(element_status: &str) -> Result<ElementStatus, Error> {
         match element_status.as_ref() {
             "MAX_ROUTE_LENGTH_EXCEEDED" => Ok(ElementStatus::MaxRouteLengthExceeded),
             "NOT_FOUND" => Ok(ElementStatus::NotFound),
             "OK" => Ok(ElementStatus::Ok),
             "ZERO_RESULTS" => Ok(ElementStatus::ZeroResults),
-            _ => Err(Error::InvalidElementStatusCode(element_status)),
+            _ => Err(Error::InvalidElementStatusCode(element_status.to_string())),
         } // match
     } // fn
 

@@ -97,7 +97,7 @@ impl std::convert::From<&VehicleType> for String {
     } // fn
 } // impl
 
-impl std::convert::TryFrom<String> for VehicleType {
+impl std::convert::TryFrom<&str> for VehicleType {
 
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -106,7 +106,7 @@ impl std::convert::TryFrom<String> for VehicleType {
     /// Gets a `VehicleType` enum from a `String` that contains a valid [vehicle
     /// type](https://developers.google.com/maps/documentation/directions/intro#VehicleType)
     /// code.
-    fn try_from(vehicle_type: String) -> Result<VehicleType, Error> {
+    fn try_from(vehicle_type: &str) -> Result<VehicleType, Error> {
         match vehicle_type.as_ref() {
             "BUS" => Ok(VehicleType::Bus),
             "CABLE_CAR" => Ok(VehicleType::CableCar),
@@ -126,7 +126,7 @@ impl std::convert::TryFrom<String> for VehicleType {
             "SUBWAY" => Ok(VehicleType::Subway),
             "TRAM" => Ok(VehicleType::Tram),
             "TROLLEYBUS" => Ok(VehicleType::Trolleybus),
-            _ => Err(Error::InvalidVehicleTypeCode(vehicle_type)),
+            _ => Err(Error::InvalidVehicleTypeCode(vehicle_type.to_string())),
         } // match
     } // fn
 

@@ -61,7 +61,7 @@ impl std::convert::From<&Avoid> for String {
     } // fn
 } // impl
 
-impl std::convert::TryFrom<String> for Avoid {
+impl std::convert::TryFrom<&str> for Avoid {
 
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -70,13 +70,13 @@ impl std::convert::TryFrom<String> for Avoid {
     /// Gets an `Avoid` enum from a `String` that contains a valid
     /// [restrictions](https://developers.google.com/maps/documentation/directions/intro#Restrictions)
     /// code.
-    fn try_from(avoid: String) -> Result<Avoid, Error> {
+    fn try_from(avoid: &str) -> Result<Avoid, Error> {
         match avoid.as_ref() {
             "ferries" => Ok(Avoid::Ferries),
             "highways" => Ok(Avoid::Highways),
             "indoor" => Ok(Avoid::Indoor),
             "tolls" => Ok(Avoid::Tolls),
-            _ => Err(Error::InvalidAvoidCode(avoid)),
+            _ => Err(Error::InvalidAvoidCode(avoid.to_string())),
         } // match
     } // fn
 

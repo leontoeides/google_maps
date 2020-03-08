@@ -45,7 +45,7 @@ impl std::convert::From<&LocationType> for String {
     } // fn
 } // impl
 
-impl std::convert::TryFrom<String> for LocationType {
+impl std::convert::TryFrom<&str> for LocationType {
 
     // Error definitions are contained in the
     // `google_maps\src\geocoding\error.rs` module.
@@ -55,13 +55,13 @@ impl std::convert::TryFrom<String> for LocationType {
     /// [location
     /// type](https://developers.google.com/maps/documentation/geocoding/intro#Results)
     /// code.
-    fn try_from(location_type: String) -> Result<LocationType, Error> {
+    fn try_from(location_type: &str) -> Result<LocationType, Error> {
         match location_type.as_ref() {
             "APPROXIMATE" => Ok(LocationType::Approximate),
             "GEOMETRIC_CENTER" => Ok(LocationType::GeometricCenter),
             "RANGE_INTERPOLATED" => Ok(LocationType::RangeInterpolated),
             "ROOFTOP" => Ok(LocationType::RoofTop),
-            _ => Err(Error::InvalidLocationTypeCode(location_type)),
+            _ => Err(Error::InvalidLocationTypeCode(location_type.to_string())),
         } // match
     } // fn
 
