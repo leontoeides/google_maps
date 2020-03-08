@@ -6,7 +6,8 @@ compilations errors like `the trait bound google_maps::directions::response::
 driving_maneuver::DrivingManeuver: std::convert::From<std::string::String> is
 not satisfied` you will have to change your code to borrow the string. For
 example, change `TransitCurrency::try_from(currency)` to
-`TransitCurrency::try_from(&currency)`.
+`TransitCurrency::try_from(&currency)` or to
+`TransitCurrency::try_from(&*currency)` if its a `String` type.
 
 * 0.6.1: Cleaned up string usage.
 
