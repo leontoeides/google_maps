@@ -7,7 +7,7 @@ use serde::{Serialize, Deserialize};
 
 /// Used to specify pass throughs or stopovers at intermediate locations.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Waypoint {
 
     /// If you pass an address, the Directions service geocodes the string and

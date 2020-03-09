@@ -9,7 +9,7 @@ use serde::{Serialize, Deserialize};
 /// Used to specify the address, latitude/longitude, or place ID for the origin
 /// and destination.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Location {
 
     /// If you pass an address, the Directions service geocodes the string and
