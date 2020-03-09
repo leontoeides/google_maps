@@ -1,6 +1,6 @@
 # Change Log
 
-* 0.6.1: 2020-03-08: Moved from `f64` to `rust_decimal::Decimal` for latitude
+* 0.7.0: 2020-03-08: Moved from `f64` to `rust_decimal::Decimal` for latitude
 and longitude coordinates. This eliminates rounding errors. The `Decimal` type
 is also hashable. Nice! **To define a `Decimal` value in your code, currently
 you must add the `rust_decimal` dependency into your `Cargo.toml` file**. Use
@@ -8,7 +8,7 @@ the `dec!()` macro like so: `dec!(12.3456)`. See the new examples. Also, see the
 [rust_decimal crate](https://crates.io/crates/rust_decimal) for more
 information.
 
-* 0.6.1: 2020-03-08: To better align this crate with Rust conventions, I've
+* 0.7.0: 2020-03-08: To better align this crate with Rust conventions, I've
 converted many `String` parameters to `&str` parameters. If you're receiving new
 compilations errors like `the trait bound google_maps::directions::response::
 driving_maneuver::DrivingManeuver: std::convert::From<std::string::String> is
