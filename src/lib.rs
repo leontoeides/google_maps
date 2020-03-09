@@ -303,6 +303,11 @@ pub mod geocoding;
 pub mod prelude;
 pub mod time_zone;
 
+pub use chrono::{Duration, NaiveDate, NaiveDateTime};
+pub use chrono_tz::Tz;
+pub use rust_decimal::Decimal;
+pub use rust_decimal_macros::dec;
+
 pub use crate::{
     bounds::Bounds as Bounds,
     client_settings::ClientSettings as ClientSettings,
