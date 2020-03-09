@@ -24,7 +24,7 @@ to give back to the Rust community. I hope it saves someone out there some work.
 		[crates.io](https://crates.io/crates/google_maps) for the latest
 		version number.
 
-	* Add `rust_decimal = "1.3.0""`. Check
+	* Add `rust_decimal = "1.3.0"`. Check
 		[crates.io](https://crates.io/crates/rust_decimal) for the
 		latest version number.
 
