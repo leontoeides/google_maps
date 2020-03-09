@@ -4,7 +4,10 @@
 and longitude coordinates. This eliminates rounding errors. The `Decimal` type
 is also hashable. Nice! **To define a `Decimal` value in your code, currently
 you must add the `rust_decimal` dependency into your `Cargo.toml` file**. Use
-the `dec!()` macro like so: `dec!(12.3456)`. See the new examples. Also, see the
+the `dec!()` macro like so: `dec!(12.345)`. This is a more precise way to define
+latitude and longitude coordinates. If you do not want to add a line to your
+`Cargo.toml` file, you may also create a `Decimal` from a `&str` like so:
+`Decimal::from_str("12.345").unwrap()`. See the new examples. Also, see the
 [rust_decimal crate](https://crates.io/crates/rust_decimal) for more
 information.
 
@@ -18,7 +21,7 @@ example, change `TransitCurrency::try_from(currency)` to
 `TransitCurrency::try_from(&*currency)` if its a `String` type.
 
 * 0.6.0: 2020-02-29: Cleaned up the `mod` and `use` declarations. To glob import
-everything from google_maps into your module, you can use the
+everything from google_maps into your project, you can use the
 `use google_maps::prelude::*` convention now.
 
 * 0.5.2: 2020-02-29: I'm a procedural programmer at heart, so using handles is
