@@ -52,7 +52,7 @@ use crate::{
 /// _Directions API_ query**. The methods implemented for this struct are what's
 /// used to build your request.
 
-#[derive(Debug, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Request<'a> {
 
     // Required parameters:

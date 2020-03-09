@@ -18,13 +18,27 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 # Before You Begin
 
-* In your project's `Cargo.toml` file, under the `[dependencies]` section,
-add `google_maps = "0.6.1"`. Check
-[crates.io](https://crates.io/crates/google_maps) for the latest version number.
+* In your project's `Cargo.toml` file, under the `[dependencies]` section:
+
+	* Add `google_maps = "0.6.1"`. Check
+		[crates.io](https://crates.io/crates/google_maps) for the latest
+		version number.
+
+	* Add `rust_decimal = "1.3.0""`. Check
+		[crates.io](https://crates.io/crates/rust_decimal) for the
+		latest version number.
 
 * The full documentation is available at [docs.rs](https://docs.rs/google_maps/)
 
 # What's new?
+
+* 0.6.1: 2020-03-08: Moved from `f64` to `rust_decimal::Decimal` for latitude
+and longitude coordinates. This eliminates rounding errors. The `Decimal` type
+is also hashable. Nice! **To define a `Decimal` value in your code, currently
+you must add the `rust_decimal` dependency into your `Cargo.toml` file**. Use
+the `dec!()` macro like so: `dec!(12.3456)`. See the new examples. Also, see the
+[rust_decimal crate](https://crates.io/crates/rust_decimal) for more
+information.
 
 * 0.6.1: 2020-03-08: To better align this crate with Rust conventions, I've
 converted many `String` parameters to `&str` parameters. If you're receiving new
@@ -34,10 +48,6 @@ not satisfied` you will have to change your code to borrow the string. For
 example, change `TransitCurrency::try_from(currency)` to
 `TransitCurrency::try_from(&currency)` or to
 `TransitCurrency::try_from(&*currency)` if its a `String` type.
-
-* 0.6.1: Cleaned up string usage.
-
-* 0.6.1: Added more restrictive `use` examples.
 
 * 0.6.0: 2020-02-29: Cleaned up the `mod` and `use` declarations. To glob import
 everything from google_maps into your module, you can use the
@@ -50,9 +60,7 @@ available on GitHub.
 ## Example Directions API Request
 
 ```rust
-use chrono::NaiveDate;
 use google_maps::prelude::*;
-// OR use google_maps::{ClientSettings, LatLng, directions::{Location, TravelMode}};
 let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
@@ -61,7 +69,7 @@ let directions = google_maps_client.directions(
     // Origin: Canadian Museum of Nature
     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
     // Destination: Canada Science and Technology Museum
-    Location::LatLng(LatLng::try_from(45.403_509, -75.618_904).unwrap()),
+    Location::LatLng(LatLng::try_from(dec!(45.403_509), dec!(-75.618_904)).unwrap()),
 )
 .with_travel_mode(TravelMode::Transit)
 // Ensure this date is a weekday in the future or this query will return zero
@@ -78,7 +86,6 @@ println!("{:#?}", directions);
 
 ```rust
 use google_maps::prelude::*;
-// OR use google_maps::{ClientSettings, LatLng, distance_matrix::Waypoint};
 let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
@@ -96,7 +103,7 @@ let distance_matrix = google_maps_client.distance_matrix(
         // Google
         Waypoint::PlaceId(String::from("ChIJj61dQgK6j4AR4GeTYWZsKWw")),
         // Mozilla
-        Waypoint::LatLng(LatLng::try_from(37.387_316, -122.060_008).unwrap()),
+        Waypoint::LatLng(LatLng::try_from(dec!(37.387_316), dec!(-122.060_008)).unwrap()),
     ],
 )
 .execute();
@@ -110,14 +117,13 @@ println!("{:#?}", distance_matrix);
 
 ```rust
 use google_maps::prelude::*;
-// OR use google_maps::{ClientSettings, LatLng};
 let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
 
 let elevation = google_maps_client.elevation()
     // Denver, Colorado, the "Mile High City"
-    .for_positional_request(LatLng::try_from(39.739_154, -104.984_703).unwrap())
+    .for_positional_request(LatLng::try_from(dec!(39.739_154), dec!(-104.984_703)).unwrap())
     .execute();
 
 // Dump entire response:
@@ -133,7 +139,6 @@ println!("Elevation: {} meters", elevation.unwrap().results.unwrap()[0].elevatio
 
 ```rust
 use google_maps::prelude::*;
-// OR use google_maps::ClientSettings;
 let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
@@ -157,14 +162,13 @@ for result in &location.unwrap().results {
 
 ```rust
 use google_maps::prelude::*;
-// OR use google_maps::{ClientSettings, LatLng, PlaceType};
 let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
 
 let location = google_maps_client.reverse_geocoding(
     // 10 Downing St, Westminster, London
-    LatLng::try_from(51.503_364, -0.127_625).unwrap(),
+    LatLng::try_from(dec!(51.503_364), dec!(-0.127_625)).unwrap(),
 )
 .with_result_type(PlaceType::StreetAddress)
 .execute();
@@ -186,16 +190,14 @@ for result in &location.unwrap().results {
 ## Example Time Zone API Request
 
 ```rust
-use chrono::NaiveDate;
 use google_maps::prelude::*;
-// OR use google_maps::{ClientSettings, LatLng};
 let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
 
 // Example request:
 
 let time_zone = google_maps_client.time_zone(
      // St. Vitus Cathedral in Prague, Czechia
-     LatLng::try_from(50.090_903, 14.400_512).unwrap(),
+     LatLng::try_from(dec!(50.090_903), dec!(14.400_512)).unwrap(),
      // Tuesday February 23, 2020 @ 6:00:00 pm
      NaiveDate::from_ymd(2020, 2, 23).and_hms(18, 00, 0)
 ).execute().unwrap();

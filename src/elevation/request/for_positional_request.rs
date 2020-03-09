@@ -20,7 +20,7 @@ impl<'a> Request<'a> {
     ///
     /// ```rust
     /// // Denver, Colorado, the "Mile High City"
-    /// .for_positional_request(LatLng::try_from(39.7391536, -104.9847034).unwrap())
+    /// .for_positional_request(LatLng::try_from(dec!(39.7391536), dec!(-104.9847034)).unwrap())
     /// ```
 
     pub fn for_positional_request(&'a mut self, location: LatLng) -> &'a mut Request {
@@ -45,9 +45,9 @@ impl<'a> Request<'a> {
     /// ```rust
     /// .for_positional_requests(ElevationLocations::LatLngs(vec![
     ///     // Denver, Colorado, the "Mile High City"
-    ///     LatLng::try_from(39.7391536, -104.9847034).unwrap(),
+    ///     LatLng::try_from(dec!(39.7391536), dec!(-104.9847034)).unwrap(),
     ///     // Death Valley
-    ///     LatLng::try_from(36.23998, -116.83171).unwrap(),
+    ///     LatLng::try_from(dec!(36.23998), dec!(-116.83171)).unwrap(),
     /// ]))
     /// ```
 

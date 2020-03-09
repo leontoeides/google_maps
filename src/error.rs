@@ -1,5 +1,7 @@
 //! Google Maps Platform API error types and error messages.
 
+use rust_decimal::Decimal;
+
 /// Errors that may be produced by the root part of the Google Maps Platform API
 /// client.
 #[derive(Debug)]
@@ -10,11 +12,11 @@ pub enum Error {
     /// API client library attempted to convert a latitude/longitude pair that
     /// contained an invalid latitude. See `google_maps\src\latlng.rs` for more
     /// information.
-    InvalidLatitude(f64, f64),
+    InvalidLatitude(Decimal, Decimal),
     /// API client library attempted to convert a latitude/longitude pair that
     /// contained an invalid longitude. See `google_maps\src\latlng.rs` for more
     /// information.
-    InvalidLongitude(f64, f64),
+    InvalidLongitude(Decimal, Decimal),
     /// API client library attempted to parse a string that contained an invalid
     /// place type code. See `google_maps\src\place_type.rs` for more
     /// information.
