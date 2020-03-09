@@ -10,7 +10,7 @@ use serde::{Serialize, Deserialize};
 /// northeast corner of the viewport bounding box. Generally the viewport is
 /// used to frame a result when displaying it to a user.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Bounds {
     /// South-west or bottom-left corner of the bounding box.
     pub southwest: LatLng,

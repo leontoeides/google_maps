@@ -1,4 +1,5 @@
 use crate::latlng::LatLng;
+use rust_decimal_macros::dec;
 use serde::{Serialize, Deserialize};
 use std::convert::TryFrom;
 
@@ -39,6 +40,6 @@ impl std::convert::From<&Locations> for String {
 impl std::default::Default for Locations {
     /// Returns a reasonable default variant for the `Locations` enum type.
     fn default() -> Self {
-        Locations::LatLngs(vec![LatLng::try_from(0.0, 0.0).unwrap()])
+        Locations::LatLngs(vec![LatLng::try_from(dec!(0.0), dec!(0.0)).unwrap()])
     } // fn
 } // impl
