@@ -3,7 +3,14 @@
 //! collisions or conflicts, you can glob import all google_maps structs and
 //! enums by using this module.
 
-pub use chrono::{Duration, NaiveDate, NaiveDateTime};
+pub use chrono::{
+    DateTime,
+    Duration,
+    Local,
+    NaiveDate,
+    NaiveDateTime,
+    Utc,
+}; // chrono
 pub use chrono_tz::Tz;
 pub use rust_decimal::Decimal;
 pub use rust_decimal_macros::dec;

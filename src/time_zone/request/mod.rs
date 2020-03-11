@@ -9,7 +9,7 @@ mod get;
 mod new;
 mod with_language;
 
-use chrono::NaiveDateTime;
+use chrono::{DateTime, Utc};
 use crate::{
     client_settings::ClientSettings,
     language::Language,
@@ -39,7 +39,7 @@ pub struct Request<'a> {
     /// historical time zones into account. That is, if you specify a past
     /// `time`, the API does not take into account the possibility that the
     /// `location` was previously in a different time zone.
-    time: NaiveDateTime,
+    timestamp: DateTime<Utc>,
 
     // Optional parameters:
     // --------------------
