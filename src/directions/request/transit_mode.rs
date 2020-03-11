@@ -67,7 +67,7 @@ impl std::convert::TryFrom<&str> for TransitMode {
     /// mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitMode)
     /// code.
     fn try_from(transit_mode: &str) -> Result<TransitMode, Error> {
-        match transit_mode.as_ref() {
+        match transit_mode {
             "bus" => Ok(TransitMode::Bus),
             "rail" => Ok(TransitMode::Rail),
             "subway" => Ok(TransitMode::Subway),

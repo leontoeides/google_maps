@@ -85,7 +85,7 @@ impl std::convert::TryFrom<&str> for Status {
     /// [status](https://developers.google.com/maps/documentation/distance-matrix/intro#top-level-status-codes)
     /// code.
     fn try_from(status: &str) -> Result<Status, Error> {
-        match status.as_ref() {
+        match status {
             "INVALID_REQUEST" => Ok(Status::InvalidRequest),
             "MAX_ELEMENTS_EXCEEDED" => Ok(Status::MaxElementsExceeded),
             "OK" => Ok(Status::Ok),

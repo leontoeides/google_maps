@@ -95,7 +95,7 @@ impl std::convert::TryFrom<&str> for DrivingManeuver {
     /// type](https://developers.google.com/maps/documentation/directions/intro#Steps)
     /// code.
     fn try_from(maneuver_type: &str) -> Result<DrivingManeuver, Error> {
-        match maneuver_type.as_ref() {
+        match maneuver_type {
             "ferry" => Ok(DrivingManeuver::Ferry),
             "ferry-train" => Ok(DrivingManeuver::FerryTrain),
             "fork-left" => Ok(DrivingManeuver::ForkLeft),

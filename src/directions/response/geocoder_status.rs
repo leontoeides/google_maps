@@ -36,7 +36,7 @@ impl std::convert::From<&GeocoderStatus> for String {
 
 } // impl
 
-impl std::convert::TryFrom<String> for GeocoderStatus {
+impl std::convert::TryFrom<&str> for GeocoderStatus {
 
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -46,11 +46,11 @@ impl std::convert::TryFrom<String> for GeocoderStatus {
     /// [geocoder
     /// status](https://developers.google.com/maps/documentation/directions/intro#GeocodedWaypoints)
     /// code.
-    fn try_from(geocoder_status: String) -> Result<GeocoderStatus, Error> {
-        match geocoder_status.as_ref() {
+    fn try_from(geocoder_status: &str) -> Result<GeocoderStatus, Error> {
+        match geocoder_status {
             "OK" => Ok(GeocoderStatus::Ok),
             "ZERO_RESULTS" => Ok(GeocoderStatus::ZeroResults),
-            _ => Err(Error::InvalidGeocoderStatusCode(geocoder_status)),
+            _ => Err(Error::InvalidGeocoderStatusCode(String::from(geocoder_status))),
         } // match
     } // fn
 

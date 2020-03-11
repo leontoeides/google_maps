@@ -604,7 +604,7 @@ impl std::convert::TryFrom<&str> for Region {
     /// Gets a `Region` enum from a `String` that contains a supported
     /// [region](https://developers.google.com/maps/coverage) code.
     fn try_from(region: &str) -> Result<Region, Error> {
-        match region.as_ref() {
+        match region {
             "af" => Ok(Region::Afghanistan),
             "al" => Ok(Region::Albania),
             "dz" => Ok(Region::Algeria),

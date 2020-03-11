@@ -66,7 +66,7 @@ impl std::convert::TryFrom<&str> for TravelMode {
     /// mode](https://developers.google.com/maps/documentation/directions/intro#TravelModes)
     /// code.
     fn try_from(travel_mode: &str) -> Result<TravelMode, Error> {
-        match travel_mode.as_ref() {
+        match travel_mode {
             "BICYCLING" => Ok(TravelMode::Bicycling),
             "DRIVING" => Ok(TravelMode::Driving),
             "TRANSIT" => Ok(TravelMode::Transit),

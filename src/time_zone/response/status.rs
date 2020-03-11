@@ -79,7 +79,7 @@ impl std::convert::TryFrom<&str> for Status {
     /// [status](https://developers.google.com/maps/documentation/timezone/intro#Responses)
     /// code.
     fn try_from(status: &str) -> Result<Status, Error> {
-        match status.as_ref() {
+        match status {
             "INVALID_REQUEST" => Ok(Status::InvalidRequest),
             "OK" => Ok(Status::Ok),
             "OVER_DAILY_LIMIT" => Ok(Status::OverDailyLimit),

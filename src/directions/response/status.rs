@@ -104,7 +104,7 @@ impl std::convert::TryFrom<&str> for Status {
     /// [status](https://developers.google.com/maps/documentation/directions/intro#StatusCodes)
     /// code.
     fn try_from(status: &str) -> Result<Status, Error> {
-        match status.as_ref() {
+        match status {
             "INVALID_REQUEST" => Ok(Status::InvalidRequest),
             "MAX_ROUTE_LENGTH_EXCEEDED" => Ok(Status::MaxRouteLengthExceeded),
             "MAX_WAYPOINTS_EXCEEDED" => Ok(Status::MaxWaypointsExceeded),

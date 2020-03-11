@@ -236,7 +236,7 @@ impl std::convert::TryFrom<&str> for Language {
     /// Gets a `Language` enum from a `String` that contains a supported
     /// [language](https://developers.google.com/maps/faq#languagesupport) code.
     fn try_from(language: &str) -> Result<Language, Error> {
-        match language.as_ref() {
+        match language {
             "af" => Ok(Language::Afrikaans),
             "sq" => Ok(Language::Albanian),
             "am" => Ok(Language::Amharic),

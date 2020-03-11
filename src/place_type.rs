@@ -528,7 +528,7 @@ impl std::convert::TryFrom<&str> for PlaceType {
     /// type](https://developers.google.com/places/web-service/supported_types)
     /// code.
     fn try_from(place_type: &str) -> Result<PlaceType, Error> {
-        match place_type.as_ref() {
+        match place_type {
             "accounting" => Ok(PlaceType::Accounting),
             "airport" => Ok(PlaceType::Airport),
             "amusement_park" => Ok(PlaceType::AmusementPark),
