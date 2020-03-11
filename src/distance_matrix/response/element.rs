@@ -11,7 +11,7 @@ use serde::Deserialize;
 /// The information about each origin-destination pairing is returned in an
 /// element entry.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Deserialize)]
 pub struct Element {
 
     /// The total distance of this route, expressed in meters (`value`) and as

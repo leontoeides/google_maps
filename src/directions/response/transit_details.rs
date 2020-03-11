@@ -12,7 +12,7 @@ use serde::{Serialize, Deserialize};
 /// additional information about the transit stop, transit line and transit
 /// agency.
 
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct TransitDetails {
 
     /// Contains information about the stop/station for this part of the trip.

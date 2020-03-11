@@ -3,6 +3,7 @@
 //! directions.
 
 use chrono::NaiveDateTime;
+use serde::{Serialize, Deserialize};
 
 /// Specifies the desired [time of
 /// departure](https://developers.google.com/maps/documentation/directions/intro#optional-parameters).
@@ -31,7 +32,7 @@ use chrono::NaiveDateTime;
 /// the service. Results may also vary between nearly-equivalent routes at any
 /// time or frequency.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum DepartureTime {
 
     /// You can specify a value of now, which sets the departure time to the

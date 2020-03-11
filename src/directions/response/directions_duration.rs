@@ -4,7 +4,7 @@ use serde::Deserialize;
 
 /// A representation of duration as a numeric value and a display string.
 
-#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Deserialize)]
 pub struct DirectionsDuration {
 
     /// A string representation of the duration value.
