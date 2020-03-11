@@ -32,6 +32,10 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 # What's new?
 
+* 0.7.1: 2020-03-10: Added in as many derivable traits as possible. Changed
+transit fare amount from `f64` to `rust_decimal::Decimal`. Clean-ups as
+commanded by Clippy.
+
 * 0.7.1: 2020-03-10: For Time Zone API requests from this crate has moved from
 expressing the time in `chrono::NaiveDateTime` to `chrono::DateTime<utc>`. See
 the updated time zone example.
