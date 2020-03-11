@@ -6,6 +6,7 @@ use crate::{
         transit_fare::TransitFare,
     }, // directions::response
 }; // use
+use rust_decimal::Decimal;
 use serde::Deserialize;
 
 /// A single route containing a set of legs in a
@@ -108,7 +109,7 @@ impl Route {
     /// ```rust
     /// let fare_value = route.get_fare_value();
     /// ```
-    pub fn get_fare_value(&self) -> Option<f64> {
+    pub fn get_fare_value(&self) -> Option<Decimal> {
         match &self.fare {
             Some(fare) => Some(fare.value),
             None => None,
