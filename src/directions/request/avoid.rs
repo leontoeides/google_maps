@@ -71,7 +71,7 @@ impl std::convert::TryFrom<&str> for Avoid {
     /// [restrictions](https://developers.google.com/maps/documentation/directions/intro#Restrictions)
     /// code.
     fn try_from(avoid: &str) -> Result<Avoid, Error> {
-        match avoid.as_ref() {
+        match avoid {
             "ferries" => Ok(Avoid::Ferries),
             "highways" => Ok(Avoid::Highways),
             "indoor" => Ok(Avoid::Indoor),

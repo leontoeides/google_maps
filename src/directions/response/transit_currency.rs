@@ -569,7 +569,7 @@ impl std::convert::TryFrom<&str> for TransitCurrency {
     /// Gets a `TransitCurrency` enum from a `String` that contains a supported
     /// [ISO 4217 currency code](https://en.wikipedia.org/wiki/ISO_4217).
     fn try_from(currency: &str) -> Result<TransitCurrency, Error> {
-        match currency.as_ref() {
+        match currency {
             "AED" => Ok(TransitCurrency::UnitedArabEmiratesDirham),
             "AFN" => Ok(TransitCurrency::AfghanAfghani),
             "ALL" => Ok(TransitCurrency::AlbanianLek),

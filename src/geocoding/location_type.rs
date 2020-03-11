@@ -56,7 +56,7 @@ impl std::convert::TryFrom<&str> for LocationType {
     /// type](https://developers.google.com/maps/documentation/geocoding/intro#Results)
     /// code.
     fn try_from(location_type: &str) -> Result<LocationType, Error> {
-        match location_type.as_ref() {
+        match location_type {
             "APPROXIMATE" => Ok(LocationType::Approximate),
             "GEOMETRIC_CENTER" => Ok(LocationType::GeometricCenter),
             "RANGE_INTERPOLATED" => Ok(LocationType::RangeInterpolated),

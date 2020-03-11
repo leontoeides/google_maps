@@ -70,7 +70,7 @@ impl std::convert::TryFrom<&str> for TrafficModel {
     /// model](https://developers.google.com/maps/documentation/javascript/reference/directions#TrafficModel)
     /// code.
     fn try_from(traffic_model: &str) -> Result<TrafficModel, Error> {
-        match traffic_model.as_ref() {
+        match traffic_model {
             "best_guess" => Ok(TrafficModel::BestGuess),
             "optimistic" => Ok(TrafficModel::Optimistic),
             "pessimistic" => Ok(TrafficModel::Pessimistic),

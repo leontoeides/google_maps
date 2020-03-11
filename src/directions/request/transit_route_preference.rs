@@ -52,7 +52,7 @@ impl std::convert::TryFrom<&str> for TransitRoutePreference {
     /// preference](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitRoutePreference)
     /// code.
     fn try_from(transit_route_preference: &str) -> Result<TransitRoutePreference, Error> {
-        match transit_route_preference.as_ref() {
+        match transit_route_preference {
             "fewer_transfers" => Ok(TransitRoutePreference::FewerTransfers),
             "less_walking" => Ok(TransitRoutePreference::LessWalking),
             _ => Err(Error::InvalidTransitRoutePreferenceCode(transit_route_preference.to_string())),

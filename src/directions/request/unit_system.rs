@@ -59,7 +59,7 @@ impl std::convert::TryFrom<&str> for UnitSystem {
     /// system](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
     /// code.
     fn try_from(units: &str) -> Result<UnitSystem, Error> {
-        match units.as_ref() {
+        match units {
             "imperial" => Ok(UnitSystem::Imperial),
             "metric" => Ok(UnitSystem::Metric),
             _ => Err(Error::InvalidUnitSystemCode(units.to_string())),

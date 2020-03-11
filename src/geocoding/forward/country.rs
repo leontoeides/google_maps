@@ -542,7 +542,7 @@ impl std::convert::TryFrom<&str> for Country {
     /// Alpha-2](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
     /// country code.
     fn try_from(country: &str) -> Result<Country, Error> {
-        match country.as_ref() {
+        match country {
             "AF" => Ok(Country::Afghanistan),
             "AX" => Ok(Country::AlandIslands),
             "AL" => Ok(Country::Albania),

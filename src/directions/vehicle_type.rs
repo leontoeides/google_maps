@@ -107,7 +107,7 @@ impl std::convert::TryFrom<&str> for VehicleType {
     /// type](https://developers.google.com/maps/documentation/directions/intro#VehicleType)
     /// code.
     fn try_from(vehicle_type: &str) -> Result<VehicleType, Error> {
-        match vehicle_type.as_ref() {
+        match vehicle_type {
             "BUS" => Ok(VehicleType::Bus),
             "CABLE_CAR" => Ok(VehicleType::CableCar),
             "COMMUTER_TRAIN" => Ok(VehicleType::CommuterTrain),
