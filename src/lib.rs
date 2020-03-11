@@ -36,13 +36,18 @@
 //!
 //! # What's new?
 //!
-//! * 0.7.0: 2020-03-08: Moved from `f64` to `rust_decimal::Decimal` for
+//! * 0.7.1: 2020-03-10: For Time Zone API requests from this crate has moved
+//! from expressing the time in `chrono::NaiveDateTime` to
+//! `chrono::DateTime<utc>`. See the updated time zone example.
+//!
+//! * 0.7.0: 2020-03-08: Transitioned from `f64` to `rust_decimal::Decimal` for
 //! latitude and longitude coordinates. This eliminates rounding errors. The
-//! `Decimal` type is also hashable. Nice! **To define a `Decimal` value in your
-//! code, currently you must add the `rust_decimal` dependency into your
+//! `Decimal` type is also hashable. Nice. `LatLng`, `Waypoint`, `Location`
+//! types can now be used as keys for hash maps. **To define a `Decimal` value
+//! in your code, currently you must add the `rust_decimal` dependency into your
 //! `Cargo.toml` file**. Use the `dec!()` macro like so: `dec!(12.345)`. This is
-//! a more precise way to define latitude and longitude coordinates. If you do
-//! not want to add a line to your `Cargo.toml` file, you may also create a
+//! the preferred way to define latitude and longitude coordinates. If you do
+//! not want to add this line to your `Cargo.toml` file, you may also create a
 //! `Decimal` from a `&str` like so: `Decimal::from_str("12.345").unwrap()`. See
 //! the new examples. Also, see the [rust_decimal
 //! crate](https://crates.io/crates/rust_decimal) for more information.
@@ -205,8 +210,8 @@
 //! let time_zone = google_maps_client.time_zone(
 //!      // St. Vitus Cathedral in Prague, Czechia
 //!      LatLng::try_from(dec!(50.090_903), dec!(14.400_512)).unwrap(),
-//!      // Tuesday February 23, 2020 @ 6:00:00 pm
-//!      NaiveDate::from_ymd(2020, 2, 23).and_hms(18, 00, 0)
+//!      // The time right now in UTC (Coordinated Universal Time)
+//!      Utc::now()
 //! ).execute().unwrap();
 //!
 //! // Dump entire response:
@@ -215,16 +220,11 @@
 //!
 //! // Parsing example:
 //!
-//! use std::time::{SystemTime, UNIX_EPOCH};
-//!
-//! let unix_timestamp =
-//!     SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs();
-//!
-//! println!("Time at your computer: {}", unix_timestamp);
+//! println!("Time at your computer: {}", Local::now().timestamp());
 //!
 //! println!("Time in {:#?}: {}",
 //!     time_zone.time_zone_id.unwrap(),
-//!     unix_timestamp as i64 + time_zone.dst_offset.unwrap() as i64 +
+//!     Utc::now().timestamp() + time_zone.dst_offset.unwrap() as i64 +
 //!         time_zone.raw_offset.unwrap() as i64
 //! );
 //! ```
@@ -303,7 +303,14 @@ pub mod geocoding;
 pub mod prelude;
 pub mod time_zone;
 
-pub use chrono::{Duration, NaiveDate, NaiveDateTime};
+pub use chrono::{
+    DateTime,
+    Duration,
+    Local,
+    NaiveDate,
+    NaiveDateTime,
+    Utc,
+};
 pub use chrono_tz::Tz;
 pub use rust_decimal::Decimal;
 pub use rust_decimal_macros::dec;

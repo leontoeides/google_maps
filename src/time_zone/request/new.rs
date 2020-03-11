@@ -1,4 +1,4 @@
-use chrono::NaiveDateTime;
+use chrono::{DateTime, Utc};
 use crate::{
     client_settings::ClientSettings,
     latlng::LatLng,
@@ -14,7 +14,8 @@ impl<'a> Request<'a> {
     ///
     /// * `key` - Your application's Google Cloud API key.
     /// * `location` - Latitude & longitude of the desired time zone location.
-    /// * `time` - Time is used to determine if Daylight Savings is applicable.
+    /// * `timestamp` - Time is used to determine if Daylight Savings is
+    /// applicable.
     ///
     /// ## Example:
     ///
@@ -28,13 +29,13 @@ impl<'a> Request<'a> {
     /// ).execute();
     /// ```
 
-    pub fn new(client_settings: &mut ClientSettings, location: LatLng, time: NaiveDateTime) -> Request {
+    pub fn new(client_settings: &mut ClientSettings, location: LatLng, timestamp: DateTime<Utc>) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:
             client_settings,
             location,
-            time,
+            timestamp,
             // Optional parameters:
             language: None,
             // Internal use only:

@@ -19,7 +19,7 @@ impl<'a> Request<'a> {
             "key={}&location={}&timestamp={}",
             self.client_settings.key,
             String::try_from(&self.location).unwrap(),
-            self.time.timestamp(),
+            self.timestamp.timestamp(),
         );
 
         // This section builds the "optional parameters" portion of the query

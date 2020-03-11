@@ -1,4 +1,7 @@
-use chrono::NaiveDateTime;
+use chrono::{
+    DateTime,
+    Utc,
+}; // chrono
 use crate::{
     client_settings::ClientSettings,
     directions::request::location::Location,
@@ -110,8 +113,8 @@ impl ClientSettings {
     /// )
     /// ```
 
-    pub fn time_zone(&mut self, location: LatLng, time: NaiveDateTime) -> crate::time_zone::request::Request {
-        crate::time_zone::request::Request::new(self, location, time)
+    pub fn time_zone(&mut self, location: LatLng, timestamp: DateTime<Utc>) -> crate::time_zone::request::Request {
+        crate::time_zone::request::Request::new(self, location, timestamp)
     } // fn
 
 } // impl

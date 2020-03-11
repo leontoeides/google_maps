@@ -1,15 +1,20 @@
 # Change Log
 
-* 0.7.0: 2020-03-08: Moved from `f64` to `rust_decimal::Decimal` for latitude
-and longitude coordinates. This eliminates rounding errors. The `Decimal` type
-is also hashable. Nice! **To define a `Decimal` value in your code, currently
-you must add the `rust_decimal` dependency into your `Cargo.toml` file**. Use
-the `dec!()` macro like so: `dec!(12.345)`. This is a more precise way to define
-latitude and longitude coordinates. If you do not want to add a line to your
-`Cargo.toml` file, you may also create a `Decimal` from a `&str` like so:
-`Decimal::from_str("12.345").unwrap()`. See the new examples. Also, see the
-[rust_decimal crate](https://crates.io/crates/rust_decimal) for more
-information.
+* 0.7.1: 2020-03-10: For Time Zone API requests from this crate has moved from
+expressing the time in `chrono::NaiveDateTime` to `chrono::DateTime<utc>`. See
+the updated time zone example.
+
+* 0.7.0: 2020-03-08: Transitioned from `f64` to `rust_decimal::Decimal` for
+latitude and longitude coordinates. This eliminates rounding errors. The
+`Decimal` type is also hashable. Nice. `LatLng`, `Waypoint`, `Location` types
+can now be used as keys for hash maps. **To define a `Decimal` value in your
+code, currently you must add the `rust_decimal` dependency into your
+`Cargo.toml` file**. Use the `dec!()` macro like so: `dec!(12.345)`. This is the
+preferred way to define latitude and longitude coordinates. If you do not want
+to add this line to your `Cargo.toml` file, you may also create a `Decimal` from
+a `&str` like so: `Decimal::from_str("12.345").unwrap()`. See the new examples.
+Also, see the [rust_decimal crate](https://crates.io/crates/rust_decimal) for
+more information.
 
 * 0.7.0: 2020-03-08: To better align this crate with Rust conventions, I've
 converted many `String` parameters to `&str` parameters. If you're receiving new
