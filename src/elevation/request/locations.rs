@@ -10,7 +10,7 @@ use std::convert::TryFrom;
 /// This parameter takes either a single location as a latitude/longitude
 /// pair, multiple latitude/longitude pairs, or an encoded polyline.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Locations {
 
     /// A single or multiple

@@ -14,7 +14,7 @@ use serde::{Serialize, Deserialize};
 /// displaying the returned result, the bounding box, and other additional
 /// data.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Geometry {
 
     /// Contains the geocoded latitude, longitude value. For normal address

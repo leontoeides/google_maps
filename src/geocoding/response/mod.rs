@@ -17,7 +17,7 @@ use serde::{Serialize, Deserialize};
 /// The response from the Google Maps Geolocation API will be stored in this
 /// structure.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Response {
 
     /// When the geocoder returns a status code other than `OK`, there may be an

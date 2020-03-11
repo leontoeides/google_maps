@@ -18,7 +18,7 @@ use serde::Deserialize;
 
 /// Distance Matrix responses contain the following root elements.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Deserialize)]
 pub struct Response {
 
     /// Contains an array of addresses as returned by the API from your original

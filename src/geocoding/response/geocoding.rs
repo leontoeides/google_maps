@@ -12,7 +12,7 @@ use serde::{Serialize, Deserialize};
 /// Even if the geocoder returns no results (such as if the address doesn't
 /// exist) it still returns an empty results array.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Geocoding {
 
     /// Array containing the separate components applicable to this address.

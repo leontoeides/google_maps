@@ -25,7 +25,7 @@ use crate::{
 /// used to build your request. Reverse geocoding looks up a street address
 /// from latitude & longitude coorindates.
 
-#[derive(Debug, PartialEq, PartialOrd)]
+#[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct ReverseRequest<'a> {
 
     // Required parameters:
