@@ -1,3 +1,5 @@
+//! A representation of distance as a numeric value and a display string.
+
 use serde::{Serialize, Deserialize};
 
 /// A representation of distance as a numeric value and a display string.

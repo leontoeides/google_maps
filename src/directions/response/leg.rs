@@ -1,3 +1,6 @@
+//! A single leg consisting of a set of steps in a DirectionsResult. Some fields
+//! in the leg may not be returned for all requests.
+
 use crate::{
     directions::response::{
         directions_distance::DirectionsDistance,

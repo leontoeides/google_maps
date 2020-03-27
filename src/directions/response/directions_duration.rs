@@ -1,3 +1,5 @@
+//! A representation of duration as a numeric value and a display string.
+
 use chrono::Duration;
 use crate::serde::seconds_to_duration::seconds_to_duration;
 use serde::Deserialize;

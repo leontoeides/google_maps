@@ -1,3 +1,6 @@
+//! A representation of time as a Date object, a localized string, and a time
+//! zone.
+
 use chrono::{NaiveDateTime, naive::serde::ts_seconds};
 use chrono_tz::Tz;
 use serde::{Serialize, Deserialize};

@@ -1,3 +1,5 @@
+//! Contains the type of vehicle used on this line.
+
 use crate::directions::vehicle_type::VehicleType;
 use serde::{Serialize, Deserialize};
 

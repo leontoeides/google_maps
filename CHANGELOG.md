@@ -5,7 +5,7 @@ transit fare amount from `f64` to `rust_decimal::Decimal`. Clean-ups as
 commanded by Clippy.
 
 * 0.7.1: 2020-03-10: For Time Zone API requests from this crate has moved from
-expressing the time in `chrono::NaiveDateTime` to `chrono::DateTime<utc>`. See
+expressing the time in `chrono::NaiveDateTime` to `chrono::DateTime<Utc>`. See
 the updated time zone example.
 
 * 0.7.0: 2020-03-08: Transitioned from `f64` to `rust_decimal::Decimal` for

@@ -1,3 +1,5 @@
+//! Contains the type of vehicle used on this line.
+
 use crate::directions::response::{
     transit_agency::TransitAgency,
     transit_vehicle::TransitVehicle,
