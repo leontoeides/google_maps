@@ -1,3 +1,5 @@
+//! Contains the total fare (that is, the total ticket costs) on this route.
+
 use crate::directions::response::transit_currency::TransitCurrency;
 use rust_decimal::Decimal;
 use serde::{Serialize, Deserialize};

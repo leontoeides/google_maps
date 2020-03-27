@@ -1,3 +1,6 @@
+//! Each element in the `steps` array defines a single step of the calculated
+//! directions. A step is the most atomic unit of a direction's route.
+
 use crate::{
     directions::{
         response::{

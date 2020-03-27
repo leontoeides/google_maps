@@ -1,3 +1,5 @@
+//! A single route containing a set of legs.
+
 use crate::{
     bounds::Bounds,
     directions::response::{

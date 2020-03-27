@@ -42,7 +42,7 @@
 //!
 //! * 0.7.1: 2020-03-10: For Time Zone API requests from this crate has moved
 //! from expressing the time in `chrono::NaiveDateTime` to
-//! `chrono::DateTime<utc>`. See the updated time zone example.
+//! `chrono::DateTime<Utc>`. See the updated time zone example.
 //!
 //! * 0.7.0: 2020-03-08: Transitioned from `f64` to `rust_decimal::Decimal` for
 //! latitude and longitude coordinates. This eliminates rounding errors. The
@@ -226,8 +226,8 @@
 //!
 //! println!("Time at your computer: {}", Local::now().timestamp());
 //!
-//! println!("Time in {:#?}: {}",
-//!     time_zone.time_zone_id.unwrap(),
+//! println!("Time in {}: {}",
+//!     time_zone.time_zone_id.unwrap().name(),
 //!     Utc::now().timestamp() + time_zone.dst_offset.unwrap() as i64 +
 //!         time_zone.raw_offset.unwrap() as i64
 //! );

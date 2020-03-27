@@ -1,3 +1,5 @@
+//! Transit directions return additional information
+
 use serde::{Serialize, Deserialize};
 
 /// Provides information about the operator of the line.
