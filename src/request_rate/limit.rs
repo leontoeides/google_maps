@@ -49,6 +49,8 @@ impl RequestRate {
                     // If this is the first request to the API, initialize the
                     // timer.
                     None => {
+                        // For some reason the trace! will cause a stack
+                        // overflow, so it has been commented out for now:
                         // trace!("Rate limiting is enabled for the `{}` API. First request.", api.to_string());
                         rate.current_rate.first_request = Some(Instant::now());
                         rate.current_rate.request_count = 1;
@@ -58,9 +60,9 @@ impl RequestRate {
                     // time & current rate, compare against the target rate, and
                     // sleep if necessary:
                     Some(first_request) => {
-/*
+
                         // Output logging information:
-                        trace!(
+/*                        trace!(
                             "{} requests to the `{}` API this session. This API's session began {} ago.",
                             rate.current_rate.request_count,
                             api.to_string(),
@@ -69,8 +71,8 @@ impl RequestRate {
                         trace!(
                             "Current rate: {}. Target rate: {}.",
                             rate.current_rate, rate.target_rate
-                        );
-*/
+                        ); */
+
                         // Calculate the current rate and target rate:
                         let target_rate = rate.target_rate.requests as f64 / rate.target_rate.duration.as_secs_f64();
                         let current_rate = rate.current_rate.request_count as f64 / first_request.elapsed().as_secs_f64();
@@ -80,7 +82,7 @@ impl RequestRate {
                         let difference = current_rate - target_rate;
                         if difference > 0.0 {
                             let sleep_duration = std::time::Duration::from_secs(((1.0 / target_rate) + difference).round() as u64);
-                            //info!("Thread is sleeping for {}.", duration_to_string(sleep_duration));
+                            info!("Thread is sleeping for {}.", duration_to_string(sleep_duration));
                             std::thread::sleep(sleep_duration);
                         } // if
 
