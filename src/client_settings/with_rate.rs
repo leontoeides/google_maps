@@ -74,7 +74,7 @@ impl ClientSettings {
     /// average of 10 elements per request.**
     /// ```rust
     /// .with_rate(
-    ///     Api::Directions,
+    ///     Api::DistanceMatrix,
     ///     (GOOGLE_CREDIT / (0.005 * 10.0)) as u16,
     ///     Duration::from_secs(SECONDS_PER_MONTH)
     /// )
