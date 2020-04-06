@@ -62,7 +62,9 @@ impl RequestRate {
                     Some(first_request) => {
 
                         // Output logging information:
-/*                        trace!(
+                        // For some reason these trace! macros will cause a
+                        // stack overflow, so it has been commented out for now:
+                        /* trace!(
                             "{} requests to the `{}` API this session. This API's session began {} ago.",
                             rate.current_rate.request_count,
                             api.to_string(),
