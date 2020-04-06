@@ -49,7 +49,7 @@ impl RequestRate {
                     // If this is the first request to the API, initialize the
                     // timer.
                     None => {
-                        // For some reason the trace! will cause a stack
+                        // For some reason this trace! macro can cause a stack
                         // overflow, so it has been commented out for now:
                         // trace!("Rate limiting is enabled for the `{}` API. First request.", api.to_string());
                         rate.current_rate.first_request = Some(Instant::now());
@@ -62,8 +62,9 @@ impl RequestRate {
                     Some(first_request) => {
 
                         // Output logging information:
-                        // For some reason these trace! macros will cause a
-                        // stack overflow, so it has been commented out for now:
+                        // For some reason these trace! macros can cause a
+                        // stack overflow, so they have been commented out for
+                        // now:
                         /* trace!(
                             "{} requests to the `{}` API this session. This API's session began {} ago.",
                             rate.current_rate.request_count,
