@@ -25,6 +25,8 @@ pub enum DrivingManeuver {
     KeepRight,
     #[serde(alias = "merge")]
     Merge,
+    #[serde(alias = "ramp")]
+    Ramp,
     #[serde(alias = "ramp-left")]
     RampLeft,
     #[serde(alias = "ramp-right")]
@@ -67,6 +69,7 @@ impl std::convert::From<&DrivingManeuver> for String {
             DrivingManeuver::KeepLeft => String::from("keep-left"),
             DrivingManeuver::KeepRight => String::from("keep-right"),
             DrivingManeuver::Merge => String::from("merge"),
+            DrivingManeuver::Ramp => String::from("ramp"),
             DrivingManeuver::RampLeft => String::from("ramp-left"),
             DrivingManeuver::RampRight => String::from("ramp-right"),
             DrivingManeuver::RoundaboutLeft => String::from("roundabout-left"),
@@ -103,6 +106,7 @@ impl std::convert::TryFrom<&str> for DrivingManeuver {
             "keep-left" => Ok(DrivingManeuver::KeepLeft),
             "keep-right" => Ok(DrivingManeuver::KeepRight),
             "merge" => Ok(DrivingManeuver::Merge),
+            "ramp" => Ok(DrivingManeuver::Ramp),
             "ramp-left" => Ok(DrivingManeuver::RampLeft),
             "ramp-right" => Ok(DrivingManeuver::RampRight),
             "roundabout-left" => Ok(DrivingManeuver::RoundaboutLeft),
@@ -142,6 +146,7 @@ impl std::fmt::Display for DrivingManeuver {
             DrivingManeuver::KeepLeft => write!(f, "Keep Left"),
             DrivingManeuver::KeepRight => write!(f, "Keep Right"),
             DrivingManeuver::Merge => write!(f, "Merge"),
+            DrivingManeuver::Ramp => write!(f, "Ramp"),
             DrivingManeuver::RampLeft => write!(f, "Ramp Left"),
             DrivingManeuver::RampRight => write!(f, "Ramp Right"),
             DrivingManeuver::RoundaboutLeft => write!(f, "Roundabout Left"),
