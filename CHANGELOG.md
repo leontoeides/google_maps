@@ -1,5 +1,8 @@
 # Change Log
 
+* 0.7.2: 2020-04-21: Small bug fixes. Some logging was causing stack overflows
+so it had to be disabled.
+
 * 0.7.1: 2020-03-10: Added in as many derivable traits as possible. Changed
 transit fare amount from `f64` to `rust_decimal::Decimal`. Clean-ups as
 commanded by Clippy.
