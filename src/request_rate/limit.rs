@@ -3,7 +3,7 @@ use crate::request_rate::{
     duration_to_string::duration_to_string,
     RequestRate,
 }; // use
-use log::{info, trace};
+use log::info;
 use std::time::Instant;
 
 impl RequestRate {
@@ -51,7 +51,7 @@ impl RequestRate {
                     None => {
                         // For some reason this trace! macro can cause a stack
                         // overflow, so it has been commented out for now:
-                        // trace!("Rate limiting is enabled for the `{}` API. First request.", api.to_string());
+                        /* trace!("Rate limiting is enabled for the `{}` API. First request.", api.to_string()); */
                         rate.current_rate.first_request = Some(Instant::now());
                         rate.current_rate.request_count = 1;
                     }, // case
@@ -70,8 +70,8 @@ impl RequestRate {
                             rate.current_rate.request_count,
                             api.to_string(),
                             duration_to_string(first_request.elapsed())
-                        );
-                        trace!(
+                        ); */
+                        /* trace!(
                             "Current rate: {}. Target rate: {}.",
                             rate.current_rate, rate.target_rate
                         ); */
