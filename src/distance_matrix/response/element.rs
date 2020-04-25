@@ -17,12 +17,12 @@ pub struct Element {
     /// The total distance of this route, expressed in meters (`value`) and as
     /// `text`. The textual value uses the unit system specified with the unit
     /// parameter of the original request, or the origin's region.
-    distance: Option<DirectionsDistance>,
+    pub distance: Option<DirectionsDistance>,
 
     /// The length of time it takes to travel this route, expressed in seconds
     /// (the `value` field) and as `text`. The textual representation is
     /// localized according to the query's language parameter.
-    duration: Option<DirectionsDuration>,
+    pub duration: Option<DirectionsDuration>,
 
     /// The length of time it takes to travel this route, based on current and
     /// historical traffic conditions. See the `traffic_model` request parameter
@@ -30,16 +30,16 @@ pub struct Element {
     /// optimistic, pessimistic, or a best-guess estimate. The duration is
     /// expressed in seconds (the `value` field) and as `text`. The textual
     /// representation is localized according to the query's language parameter.
-    duration_in_traffic: Option<DirectionsDuration>,
+    pub duration_in_traffic: Option<DirectionsDuration>,
 
     /// If present, contains the total fare (that is, the total ticket costs) on
     /// this route. This property is only returned for transit requests and only
     /// for transit providers where fare information is available.
-    fare: Option<TransitFare>,
+    pub fare: Option<TransitFare>,
 
     /// See [Status
     /// Codes](https://developers.google.com/maps/documentation/distance-matrix/intro#StatusCodes)
     /// for a list of possible status codes.
-    status: ElementStatus,
+    pub status: ElementStatus,
 
 } // struct
