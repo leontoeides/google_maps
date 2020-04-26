@@ -1,12 +1,14 @@
 use crate::{
-    directions::request::waypoint::Waypoint,
+    client_settings::ClientSettings, directions::request::waypoint::Waypoint,
     distance_matrix::request::Request,
-    client_settings::ClientSettings,
 }; // use
 
 impl<'a> Request<'a> {
-
-    pub fn new(client_settings: &mut ClientSettings, origins: Vec<Waypoint>, destinations: Vec<Waypoint>) -> Request {
+    pub fn new(
+        client_settings: &mut ClientSettings,
+        origins: Vec<Waypoint>,
+        destinations: Vec<Waypoint>,
+    ) -> Request {
         Request {
             // Required parameters:
             destinations,
@@ -28,5 +30,4 @@ impl<'a> Request<'a> {
             validated: false,
         } // struct
     } // fn
-
 } // impl

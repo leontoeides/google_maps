@@ -3,13 +3,12 @@
 //! a latitude & longitude pair, a Google Place ID, or as an Encoded Polyline.
 
 use crate::latlng::LatLng;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Used to specify pass throughs or stopovers at intermediate locations.
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Waypoint {
-
     /// If you pass an address, the Directions service geocodes the string and
     /// converts it to latitude & longitude coordinates to calculate directions.
     /// This coordinate may be different from that returned by the Geocoding
@@ -37,7 +36,6 @@ pub enum Waypoint {
     /// because the URL is significantly shorter. All web services have a URL
     /// limit of 8192 characters.
     Polyline(String),
-
 } // enum
 
 impl std::convert::From<&Waypoint> for String {

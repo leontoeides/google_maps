@@ -2,7 +2,6 @@ use crate::client_settings::ClientSettings;
 use std::time::Duration;
 
 impl ClientSettings {
-
     /// Sets the maximum delay between request retries upon consecutive
     /// failures.
     ///
@@ -34,5 +33,4 @@ impl ClientSettings {
         self.max_backoff = max_delay.as_millis() as u32;
         self
     } // fn
-
 } // impl

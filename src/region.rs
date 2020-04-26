@@ -5,7 +5,7 @@
 //! supports._
 
 use crate::error::Error;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Specifies the region bias.
 ///
@@ -597,7 +597,6 @@ impl std::convert::From<&Region> for String {
 } // impl
 
 impl std::convert::TryFrom<&str> for Region {
-
     // Error definitions are contained in the `google_maps\src\error.rs` module.
     type Error = crate::error::Error;
 
@@ -864,7 +863,6 @@ impl std::convert::TryFrom<&str> for Region {
             _ => Err(Error::InvalidRegionCode(region.to_string())),
         } // match
     } // fn
-
 } // impl
 
 impl std::default::Default for Region {
@@ -1082,7 +1080,9 @@ impl std::fmt::Display for Region {
             Region::SolomonIslands => write!(f, "Solomon Islands"),
             Region::Somalia => write!(f, "Somalia"),
             Region::SouthAfrica => write!(f, "South Africa"),
-            Region::SouthGeorgiaAndTheSouthSandwichIslands => write!(f, "South Georgia & South Sandwich Islands"),
+            Region::SouthGeorgiaAndTheSouthSandwichIslands => {
+                write!(f, "South Georgia & South Sandwich Islands")
+            }
             Region::SouthKorea => write!(f, "South Korea"),
             Region::SouthSudan => write!(f, "South Sudan"),
             Region::Spain => write!(f, "Spain"),

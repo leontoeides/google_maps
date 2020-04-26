@@ -2,7 +2,7 @@
 //! the status resulting from operations on the specific individual elements.
 
 use crate::distance_matrix::error::Error;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// The `status` fields within the response object contain the status of the
 /// request, and may contain useful debugging information. The Distance Matrix
@@ -12,7 +12,6 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum ElementStatus {
-
     /// Indicates the requested route is too long and cannot be processed.
     #[serde(alias = "MAX_ROUTE_LENGTH_EXCEEDED")]
     MaxRouteLengthExceeded,
@@ -29,7 +28,6 @@ pub enum ElementStatus {
     /// Indicates no route could be found between the origin and destination.
     #[serde(alias = "ZERO_RESULTS")]
     ZeroResults,
-
 } // struct
 
 impl std::convert::From<&ElementStatus> for String {
@@ -44,11 +42,9 @@ impl std::convert::From<&ElementStatus> for String {
             ElementStatus::ZeroResults => String::from("ZERO_RESULTS"),
         } // match
     } // fn
-
 } // impl
 
 impl std::convert::TryFrom<&str> for ElementStatus {
-
     // Error definitions are contained in the
     // `google_maps\src\distance_matrix\error.rs` module.
     type Error = crate::distance_matrix::error::Error;
@@ -66,7 +62,6 @@ impl std::convert::TryFrom<&str> for ElementStatus {
             _ => Err(Error::InvalidElementStatusCode(element_status.to_string())),
         } // match
     } // fn
-
 } // impl
 
 impl std::default::Default for ElementStatus {

@@ -3,13 +3,12 @@
 //! track down why geocoding is not working.
 
 use crate::geocoding::error::Error;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Indicates the status of the response.
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Status {
-
     /// Indicates that the request was malformed.
     #[serde(alias = "INVALID_REQUEST")]
     InvalidRequest,
@@ -49,7 +48,6 @@ pub enum Status {
     /// and not over water.
     #[serde(alias = "ZERO_RESULTS")]
     ZeroResults,
-
 } // struct
 
 impl std::convert::From<&Status> for String {
@@ -70,7 +68,6 @@ impl std::convert::From<&Status> for String {
 } // impl
 
 impl std::convert::TryFrom<&str> for Status {
-
     // Error definitions are contained in the
     // `google_maps\src\geocoding\error.rs` module.
     type Error = crate::geocoding::error::Error;
@@ -90,7 +87,6 @@ impl std::convert::TryFrom<&str> for Status {
             _ => Err(Error::InvalidStatusCode(status.to_string())),
         } // match
     } // fn
-
 } // impl
 
 impl std::default::Default for Status {

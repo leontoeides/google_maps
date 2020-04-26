@@ -1,11 +1,6 @@
-use crate::{
-    geocoding::reverse::ReverseRequest,
-    client_settings::ClientSettings,
-    latlng::LatLng,
-}; // use
+use crate::{client_settings::ClientSettings, geocoding::reverse::ReverseRequest, latlng::LatLng}; // use
 
 impl<'a> ReverseRequest<'a> {
-
     /// Initializes the builder pattern for a Geolocation API query with the
     /// required, non-optional parameters.
     ///
@@ -31,5 +26,4 @@ impl<'a> ReverseRequest<'a> {
             query: None,
         } // struct
     } // fn
-
 } // impl

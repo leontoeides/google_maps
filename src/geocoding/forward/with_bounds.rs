@@ -1,10 +1,6 @@
-use crate::{
-    bounds::Bounds,
-    geocoding::forward::ForwardRequest,
-}; // use
+use crate::{bounds::Bounds, geocoding::forward::ForwardRequest}; // use
 
 impl<'a> ForwardRequest<'a> {
-
     /// Specifies a bounding box for biasing results.
     ///
     /// ## Arguments:
@@ -48,5 +44,4 @@ impl<'a> ForwardRequest<'a> {
         // Return modified ForwardRequest struct to caller.
         self
     } // fn
-
 } // impl

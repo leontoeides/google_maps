@@ -3,7 +3,7 @@
 //! generating transit directions.
 
 use crate::directions::error::Error;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Specifies preferences for [transit
 /// routes](https://developers.google.com/maps/documentation/directions/intro#optional-parameters).
@@ -15,7 +15,6 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum TransitRoutePreference {
-
     /// Indicates that the calculated route should prefer a limited number of
     /// transfers.
     #[serde(alias = "fewer_transfers")]
@@ -25,7 +24,6 @@ pub enum TransitRoutePreference {
     /// walking.
     #[serde(alias = "less_walking")]
     LessWalking,
-
 } // enum
 
 impl std::convert::From<&TransitRoutePreference> for String {
@@ -42,7 +40,6 @@ impl std::convert::From<&TransitRoutePreference> for String {
 } // impl
 
 impl std::convert::TryFrom<&str> for TransitRoutePreference {
-
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
     type Error = crate::directions::error::Error;
@@ -55,10 +52,11 @@ impl std::convert::TryFrom<&str> for TransitRoutePreference {
         match transit_route_preference {
             "fewer_transfers" => Ok(TransitRoutePreference::FewerTransfers),
             "less_walking" => Ok(TransitRoutePreference::LessWalking),
-            _ => Err(Error::InvalidTransitRoutePreferenceCode(transit_route_preference.to_string())),
+            _ => Err(Error::InvalidTransitRoutePreferenceCode(
+                transit_route_preference.to_string(),
+            )),
         } // match
     } // fn
-
 } // impl
 
 impl std::default::Default for TransitRoutePreference {

@@ -1,6 +1,6 @@
 use crate::latlng::LatLng;
 use rust_decimal_macros::dec;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use std::convert::TryFrom;
 
 /// Defines the
@@ -12,7 +12,6 @@ use std::convert::TryFrom;
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Locations {
-
     /// A single or multiple
     /// [latitude/longitude](https://developers.google.com/maps/documentation/elevation/intro#Locations)
     /// pairs.
@@ -21,7 +20,6 @@ pub enum Locations {
     /// An [encoded
     /// polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm).
     Polyline(String),
-
 } // enum
 
 impl std::convert::From<&Locations> for String {
@@ -30,7 +28,11 @@ impl std::convert::From<&Locations> for String {
     fn from(locations: &Locations) -> String {
         match locations {
             Locations::LatLngs(latlngs) => String::from(
-                latlngs.iter().map(|latlng| String::try_from(latlng).unwrap() + "|").collect::<String>().trim_end_matches('|')
+                latlngs
+                    .iter()
+                    .map(|latlng| String::try_from(latlng).unwrap() + "|")
+                    .collect::<String>()
+                    .trim_end_matches('|'),
             ),
             Locations::Polyline(polyline) => format!("enc:{}", polyline),
         } // match

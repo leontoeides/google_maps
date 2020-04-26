@@ -2,13 +2,12 @@
 //! nature and accuracy of the Geocoding response.
 
 use crate::geocoding::error::Error;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Stores additional data about the specified location.
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum LocationType {
-
     /// Indicates that the returned result is approximate.
     #[serde(alias = "APPROXIMATE")]
     Approximate,
@@ -29,7 +28,6 @@ pub enum LocationType {
     /// have location information accurate down to street address precision.
     #[serde(alias = "ROOFTOP")]
     RoofTop,
-
 } // enum
 
 impl std::convert::From<&LocationType> for String {
@@ -46,7 +44,6 @@ impl std::convert::From<&LocationType> for String {
 } // impl
 
 impl std::convert::TryFrom<&str> for LocationType {
-
     // Error definitions are contained in the
     // `google_maps\src\geocoding\error.rs` module.
     type Error = crate::geocoding::error::Error;
@@ -64,7 +61,6 @@ impl std::convert::TryFrom<&str> for LocationType {
             _ => Err(Error::InvalidLocationTypeCode(location_type.to_string())),
         } // match
     } // fn
-
 } // impl
 
 impl std::default::Default for LocationType {

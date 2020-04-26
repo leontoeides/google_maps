@@ -3,13 +3,12 @@
 //! track down why geocoding is not working.
 
 use crate::geocoding::error::Error;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Indicates the status of the response.
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Status {
-
     /// Generally indicates one of the following:
     /// * The query (`address`, `components` or `latlng`) is missing.
     /// * An invalid `result_type` or `location_type` was given.
@@ -53,11 +52,9 @@ pub enum Status {
     /// also occur if the geocoder was passed a `latlng` in a remote location.
     #[serde(alias = "ZERO_RESULTS")]
     ZeroResults,
-
 } // enum
 
 impl std::convert::From<&Status> for String {
-
     /// Converts a `Status` enum to a `String` that contains a
     /// [status](https://developers.google.com/maps/documentation/geocoding/intro#StatusCodes)
     /// code.
@@ -73,11 +70,9 @@ impl std::convert::From<&Status> for String {
             Status::ZeroResults => String::from("ZERO_RESULTS"),
         } // match
     } // fn
-
 } // impl
 
 impl std::convert::TryFrom<&str> for Status {
-
     // Error definitions are contained in the
     // `google_maps\src\geocoding\error.rs` module.
 
@@ -99,21 +94,17 @@ impl std::convert::TryFrom<&str> for Status {
             _ => Err(Error::InvalidStatusCode(status.to_string())),
         } // match
     } // fn
-
 } // impl
 
 impl std::default::Default for Status {
-
     /// Returns a reasonable default variant for the `Status` enum type.
 
     fn default() -> Self {
         Status::Ok
     } // fn
-
 } // impl
 
 impl std::fmt::Display for Status {
-
     /// Formats a `Status` enum into a string that is presentable to the end
     /// user.
 
@@ -128,5 +119,4 @@ impl std::fmt::Display for Status {
             Status::ZeroResults => write!(f, "Zero Results"),
         } // match
     } // fn
-
 } // impl

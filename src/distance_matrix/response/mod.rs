@@ -10,17 +10,13 @@ pub mod element_status;
 pub mod row;
 pub mod status;
 
-use crate::distance_matrix::response::{
-    row::Row,
-    status::Status,
-}; // use
+use crate::distance_matrix::response::{row::Row, status::Status}; // use
 use serde::Deserialize;
 
 /// Distance Matrix responses contain the following root elements.
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Deserialize)]
 pub struct Response {
-
     /// Contains an array of addresses as returned by the API from your original
     /// request. As with `origin_addresses`, these are localized if appropriate.
     pub destination_addresses: Vec<String>,
@@ -47,5 +43,4 @@ pub struct Response {
 
     /// Contains metadata on the request.
     pub status: Status,
-
 } // struct

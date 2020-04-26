@@ -299,38 +299,26 @@
 
 mod bounds;
 mod client_settings;
-mod error;
-mod language;
-mod latlng;
-mod place_type;
-mod region;
-mod request_rate;
-mod serde;
 pub mod directions;
 pub mod distance_matrix;
 pub mod elevation;
+mod error;
 pub mod geocoding;
+mod language;
+mod latlng;
+mod place_type;
 pub mod prelude;
+mod region;
+mod request_rate;
+mod serde;
 pub mod time_zone;
 
-pub use chrono::{
-    DateTime,
-    Duration,
-    Local,
-    NaiveDate,
-    NaiveDateTime,
-    Utc,
-};
+pub use chrono::{DateTime, Duration, Local, NaiveDate, NaiveDateTime, Utc};
 pub use chrono_tz::Tz;
 pub use rust_decimal::Decimal;
 pub use rust_decimal_macros::dec;
 
 pub use crate::{
-    bounds::Bounds as Bounds,
-    client_settings::ClientSettings as ClientSettings,
-    language::Language as Language,
-    latlng::LatLng as LatLng,
-    place_type::PlaceType as PlaceType,
-    region::Region as Region,
-    request_rate::api::Api as Api,
+    bounds::Bounds, client_settings::ClientSettings, language::Language, latlng::LatLng,
+    place_type::PlaceType, region::Region, request_rate::api::Api,
 }; // use

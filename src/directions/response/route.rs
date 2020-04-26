@@ -3,9 +3,7 @@
 use crate::{
     bounds::Bounds,
     directions::response::{
-        leg::Leg,
-        overview_polyline::OverviewPolyline,
-        transit_fare::TransitFare,
+        leg::Leg, overview_polyline::OverviewPolyline, transit_fare::TransitFare,
     }, // directions::response
 }; // use
 use rust_decimal::Decimal;
@@ -18,7 +16,6 @@ use serde::Deserialize;
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Deserialize)]
 pub struct Route {
-
     /// The bounds for this route.
     pub bounds: Bounds,
 
@@ -71,11 +68,9 @@ pub struct Route {
     /// will be empty, since route optimization is not available for such
     /// queries.
     pub waypoint_order: Vec<u8>,
-
 } // struct
 
 impl Route {
-
     /// A helper function for destructuring (or serializing) the `summary`
     /// field. If the _summary_ text is populated, this function will return the
     /// _summary_ text in the `String` format. If the _summary_ text is empty,
@@ -143,7 +138,13 @@ impl Route {
         if self.warnings.is_empty() {
             None
         } else {
-            Some(String::from(self.warnings.iter().map(|warning| warning.to_string() + "|").collect::<String>().trim_end_matches('|')))
+            Some(String::from(
+                self.warnings
+                    .iter()
+                    .map(|warning| warning.to_string() + "|")
+                    .collect::<String>()
+                    .trim_end_matches('|'),
+            ))
         } // if
     } // fn
 
@@ -158,8 +159,13 @@ impl Route {
         if self.waypoint_order.is_empty() {
             None
         } else {
-            Some(String::from(self.waypoint_order.iter().map(|waypoint| waypoint.to_string() + ",").collect::<String>().trim_end_matches(',')))
+            Some(String::from(
+                self.waypoint_order
+                    .iter()
+                    .map(|waypoint| waypoint.to_string() + ",")
+                    .collect::<String>()
+                    .trim_end_matches(','),
+            ))
         } // if
     } // fn
-
 } // impl

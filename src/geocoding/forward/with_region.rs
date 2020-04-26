@@ -1,10 +1,6 @@
-use crate::{
-    geocoding::forward::ForwardRequest,
-    region::Region,
-}; // use
+use crate::{geocoding::forward::ForwardRequest, region::Region}; // use
 
 impl<'a> ForwardRequest<'a> {
-
     /// Specifies the region bias.
     ///
     /// ## Arguments:
@@ -45,5 +41,4 @@ impl<'a> ForwardRequest<'a> {
         // Return modified ForwardRequest struct to caller.
         self
     } // fn
-
 } // impl

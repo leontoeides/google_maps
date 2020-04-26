@@ -1,8 +1,8 @@
 //! Contains Serde serializer/deserializer for converting a quantity of seconds
 //! in `String` format into a `time::Duration` struct.
 
-use serde::{Deserialize, Deserializer};
 use chrono::Duration;
+use serde::{Deserialize, Deserializer};
 
 /// This trait converts a quantity of seconds in `String` format into a
 /// `time::Duration` struct. The Google Maps Platform returns duration fields in

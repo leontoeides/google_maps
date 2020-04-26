@@ -11,9 +11,7 @@ use serde::Deserialize;
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Deserialize)]
 pub struct Row {
-
     /// Each row array contains one or more `element` entries, which in turn
     /// contain the information about a single origin-destination pairing.
     pub elements: Vec<Element>,
-
 } // struct

@@ -1,11 +1,9 @@
 //! Transit directions return additional information.
 
 use crate::directions::response::{
-    transit_line::TransitLine,
-    transit_stop::TransitStop,
-    transit_time::TransitTime,
+    transit_line::TransitLine, transit_stop::TransitStop, transit_time::TransitTime,
 }; // use
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Transit directions return additional information that is not relevant for
 /// other modes of transportation. These additional properties are exposed
@@ -16,7 +14,6 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct TransitDetails {
-
     /// Contains information about the stop/station for this part of the trip.
     pub arrival_stop: TransitStop,
 
@@ -54,5 +51,4 @@ pub struct TransitDetails {
     /// Amtrak train that leaves San Jose, CA at 15:10 on weekdays to
     /// Sacramento, CA.
     pub trip_short_name: Option<String>,
-
 } // struct

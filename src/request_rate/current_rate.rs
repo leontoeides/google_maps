@@ -22,7 +22,12 @@ impl std::convert::From<&CurrentRate> for String {
     fn from(current_rate: &CurrentRate) -> String {
         match current_rate.first_request {
             None => String::from("None"),
-            Some(first_request) => rate_to_string(current_rate.request_count, first_request.elapsed(), "request", "requests"),
+            Some(first_request) => rate_to_string(
+                current_rate.request_count,
+                first_request.elapsed(),
+                "request",
+                "requests",
+            ),
         } // match
     } // fn
 } // impl

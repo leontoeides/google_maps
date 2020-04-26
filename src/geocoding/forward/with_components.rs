@@ -1,10 +1,6 @@
-use crate::geocoding::forward::{
-    component::Component,
-    ForwardRequest,
-}; // use
+use crate::geocoding::forward::{component::Component, ForwardRequest}; // use
 
 impl<'a> ForwardRequest<'a> {
-
     /// Restricts the results from the geocoder to the specified component
     /// type(s).
     ///
@@ -74,7 +70,7 @@ impl<'a> ForwardRequest<'a> {
             // If there are already components, append to them:
             Some(components) => components.push(component),
         } // match
-        // Return modified ForwardRequest struct to caller.
+          // Return modified ForwardRequest struct to caller.
         self
     } // fn
 
@@ -100,12 +96,13 @@ impl<'a> ForwardRequest<'a> {
             // If there are no filters in the request struct, initialize field:
             None => self.components = Some(components_slice.to_vec()),
             // If there are already filters, append to them:
-            Some(components) => for component in components_slice {
-                components.push(component.to_owned())
+            Some(components) => {
+                for component in components_slice {
+                    components.push(component.to_owned())
+                }
             } // case
         } // match
-        // Return modified ForwardRequest struct to caller.
+          // Return modified ForwardRequest struct to caller.
         self
     } // fn
-
 } // impl

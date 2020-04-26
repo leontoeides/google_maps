@@ -2,7 +2,7 @@
 //! contains the user's specified request rate.
 
 use crate::request_rate::rate_to_string::rate_to_string;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use std::time::Duration;
 
 /// Contains the user's specified request rate in the form of _requests_ per
@@ -22,7 +22,12 @@ impl std::convert::From<&TargetRate> for String {
     /// Converts a `TargetRate` enum to a `String` that contains a
     /// human-friendly & readable rate.
     fn from(target_rate: &TargetRate) -> String {
-        rate_to_string(target_rate.requests as u64, target_rate.duration, "request", "requests")
+        rate_to_string(
+            target_rate.requests as u64,
+            target_rate.duration,
+            "request",
+            "requests",
+        )
     } // fn
 } // impl
 

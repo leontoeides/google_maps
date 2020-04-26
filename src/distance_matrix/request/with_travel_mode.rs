@@ -2,7 +2,6 @@ use crate::directions::travel_mode::TravelMode;
 use crate::distance_matrix::request::Request;
 
 impl<'a> Request<'a> {
-
     /// Specify the mode of transportation.
     ///
     /// ## Arguments
@@ -51,5 +50,4 @@ impl<'a> Request<'a> {
         self.travel_mode = Some(travel_mode);
         self
     } // fn
-
 } // impl

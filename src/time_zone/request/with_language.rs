@@ -1,10 +1,6 @@
-use crate::{
-    language::Language,
-    time_zone::request::Request,
-}; // use
+use crate::{language::Language, time_zone::request::Request}; // use
 
 impl<'a> Request<'a> {
-
     /// Adds the language parameter to the Time Zone API query.
     ///
     /// ## Arguments:
@@ -25,5 +21,4 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl

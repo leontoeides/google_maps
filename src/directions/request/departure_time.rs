@@ -3,7 +3,7 @@
 //! directions.
 
 use chrono::NaiveDateTime;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Specifies the desired [time of
 /// departure](https://developers.google.com/maps/documentation/directions/intro#optional-parameters).
@@ -34,14 +34,12 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum DepartureTime {
-
     /// You can specify a value of now, which sets the departure time to the
     /// current time (correct to the nearest second).
     Now,
 
     /// Specifies the desired time of departure.
     At(NaiveDateTime),
-
 } // enum
 
 impl std::convert::From<&DepartureTime> for String {
@@ -68,7 +66,9 @@ impl std::fmt::Display for DepartureTime {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             DepartureTime::Now => write!(f, "Now"),
-            DepartureTime::At(departure_time) => write!(f, "At {}", departure_time.format("At %F %r")),
+            DepartureTime::At(departure_time) => {
+                write!(f, "At {}", departure_time.format("At %F %r"))
+            }
         } // match
     } // fn
 } // impl

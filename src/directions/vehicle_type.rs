@@ -2,7 +2,7 @@
 //! mode of transportation for transit directions.
 
 use crate::directions::error::Error;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Indicates the [vehicle
 /// type](https://developers.google.com/maps/documentation/directions/intro#VehicleType)
@@ -98,7 +98,6 @@ impl std::convert::From<&VehicleType> for String {
 } // impl
 
 impl std::convert::TryFrom<&str> for VehicleType {
-
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
     type Error = crate::directions::error::Error;
@@ -129,7 +128,6 @@ impl std::convert::TryFrom<&str> for VehicleType {
             _ => Err(Error::InvalidVehicleTypeCode(vehicle_type.to_string())),
         } // match
     } // fn
-
 } // impl
 
 impl std::default::Default for VehicleType {

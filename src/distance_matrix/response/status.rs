@@ -2,7 +2,7 @@
 //! debugging information to help you track down why the service request failed.
 
 use crate::distance_matrix::error::Error;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// The `status` fields within the response object contain the status of the
 /// request, and may contain useful debugging information. The Distance Matrix
@@ -12,7 +12,6 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Status {
-
     /// Indicates that the provided request was invalid. Common causes of this
     /// status include an invalid parameter or parameter value.
     #[serde(alias = "INVALID_REQUEST")]
@@ -55,7 +54,6 @@ pub enum Status {
     /// server error. The request may succeed if you try again.
     #[serde(alias = "UNKNOWN_ERROR")]
     UnknownError,
-
 } // enum
 
 impl std::convert::From<&Status> for String {
@@ -76,7 +74,6 @@ impl std::convert::From<&Status> for String {
 } // impl
 
 impl std::convert::TryFrom<&str> for Status {
-
     // Error definitions are contained in the
     // `google_maps\src\distance_matrix\error.rs` module.
     type Error = crate::distance_matrix::error::Error;
@@ -96,7 +93,6 @@ impl std::convert::TryFrom<&str> for Status {
             _ => Err(Error::InvalidStatusCode(status.to_string())),
         } // match
     } // fn
-
 } // impl
 
 impl std::default::Default for Status {

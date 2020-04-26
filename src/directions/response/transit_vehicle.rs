@@ -1,13 +1,12 @@
 //! Contains the type of vehicle used on this line.
 
 use crate::directions::vehicle_type::VehicleType;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Contains the type of vehicle used on this line.
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct TransitVehicle {
-
     /// Contains the URL for an icon associated with this vehicle type.
     pub icon: String,
 
@@ -23,5 +22,4 @@ pub struct TransitVehicle {
     /// documentation for a complete list of supported values.
     #[serde(alias = "type")]
     pub vehicle_type: VehicleType,
-
 } // struct

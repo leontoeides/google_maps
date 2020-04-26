@@ -3,7 +3,7 @@
 //! pessimistic.
 
 use crate::directions::error::Error;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Specifies the [traffic
 /// model](https://developers.google.com/maps/documentation/directions/intro#optional-parameters)
@@ -24,7 +24,6 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum TrafficModel {
-
     /// Indicates that the returned `duration_in_traffic` should be the best
     /// estimate of travel time given what is known about both historical
     /// traffic conditions and live traffic. Live traffic becomes more important
@@ -43,7 +42,6 @@ pub enum TrafficModel {
     /// particularly bad traffic conditions may exceed this value.
     #[serde(alias = "pessimistic")]
     Pessimistic,
-
 } // enum
 
 impl std::convert::From<&TrafficModel> for String {
@@ -60,7 +58,6 @@ impl std::convert::From<&TrafficModel> for String {
 } // impl
 
 impl std::convert::TryFrom<&str> for TrafficModel {
-
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
     type Error = crate::directions::error::Error;
@@ -77,7 +74,6 @@ impl std::convert::TryFrom<&str> for TrafficModel {
             _ => Err(Error::InvalidTrafficModelCode(traffic_model.to_string())),
         } // match
     } // fn
-
 } // impl
 
 impl std::default::Default for TrafficModel {

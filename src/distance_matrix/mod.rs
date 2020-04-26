@@ -81,39 +81,24 @@ pub mod response;
 
 pub use crate::directions::{
     request::{
-        avoid::Avoid as Avoid,
-        departure_time::DepartureTime as DepartureTime,
-        location::Location as Location,
-        traffic_model::TrafficModel as TrafficModel,
-        transit_mode::TransitMode as TransitMode,
-        transit_route_preference::TransitRoutePreference as TransitRoutePreference,
-        unit_system::UnitSystem as UnitSystem,
-        waypoint::Waypoint as Waypoint,
+        avoid::Avoid, departure_time::DepartureTime, location::Location,
+        traffic_model::TrafficModel, transit_mode::TransitMode,
+        transit_route_preference::TransitRoutePreference, unit_system::UnitSystem,
+        waypoint::Waypoint,
     }, // request
     response::{
-        directions_distance::DirectionsDistance,
-        directions_duration::DirectionsDuration,
-        driving_maneuver::DrivingManeuver as DrivingManeuver,
-        leg::Leg as Leg,
-        overview_polyline::OverviewPolyline as OverviewPolyline,
-        polyline::Polyline as Polyline,
-        route::Route as Route,
-        step::Step as Step,
-        transit_agency::TransitAgency as TransitAgency,
-        transit_currency::TransitCurrency as TransitCurrency,
-        transit_details::TransitDetails as TransitDetails,
-        transit_fare::TransitFare as TransitFare,
-        transit_line::TransitLine as TransitLine,
-        transit_stop::TransitStop as TransitStop,
-        transit_time::TransitTime as TransitTime,
-        transit_vehicle::TransitVehicle as TransitVehicle,
+        directions_distance::DirectionsDistance, directions_duration::DirectionsDuration,
+        driving_maneuver::DrivingManeuver, leg::Leg, overview_polyline::OverviewPolyline,
+        polyline::Polyline, route::Route, step::Step, transit_agency::TransitAgency,
+        transit_currency::TransitCurrency, transit_details::TransitDetails,
+        transit_fare::TransitFare, transit_line::TransitLine, transit_stop::TransitStop,
+        transit_time::TransitTime, transit_vehicle::TransitVehicle,
     }, // response
-    travel_mode::TravelMode as TravelMode,
-    vehicle_type::VehicleType as VehicleType,
+    travel_mode::TravelMode,
+    vehicle_type::VehicleType,
 }; // use
 
 pub use crate::distance_matrix::{
-    request::Request as DistanceMatrixRequest,
+    request::Request as DistanceMatrixRequest, response::status::Status as DistanceMatrixStatus,
     response::Response as DistanceMatrixResponse,
-    response::status::Status as DistanceMatrixStatus,
 }; // use

@@ -1,16 +1,10 @@
 use crate::{
-    directions::{
-        error::Error,
-        request::Request,
-        response::Response,
-        response::status::Status,
-    }, // directions
+    directions::{error::Error, request::Request, response::status::Status, response::Response}, // directions
     request_rate::api::Api,
 }; // use
 use log::{info, warn};
 
 impl<'a> Request<'a> {
-
     /// Performs the HTTP get request and returns the response to the caller.
     ///
     /// ## Arguments:
@@ -18,7 +12,6 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub fn get(&mut self) -> Result<Response, Error> {
-
         // Build the URL stem for the HTTP get request:
 
         const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/directions";
@@ -63,33 +56,40 @@ impl<'a> Request<'a> {
                         if deserialized.status == Status::Ok {
                             // If Google's response was "Ok" return the
                             // struct deserialized from JSON:
-                            return Ok(deserialized)
+                            return Ok(deserialized);
                         } else if
-                            // Only Google's "Unknown Error" is eligible for
-                            // retries
-                            deserialized.status != Status::UnknownError ||
-                            counter > self.client_settings.max_retries {
-                                // If there is a Google API error other than
-                                // "Unknown Error," return the error and do not
-                                // retry the request. Also, if we have reached
-                                // the maximum retry count, do not retry
-                                // further:
-                                let error = Error::GoogleMapsService(deserialized.status, deserialized.error_message);
-                                warn!("{}", error);
-                                return Err(error)
+                        // Only Google's "Unknown Error" is eligible for
+                        // retries
+                        deserialized.status != Status::UnknownError
+                            || counter > self.client_settings.max_retries
+                        {
+                            // If there is a Google API error other than
+                            // "Unknown Error," return the error and do not
+                            // retry the request. Also, if we have reached
+                            // the maximum retry count, do not retry
+                            // further:
+                            let error = Error::GoogleMapsService(
+                                deserialized.status,
+                                deserialized.error_message,
+                            );
+                            warn!("{}", error);
+                            return Err(error);
                         } // if
-                    // We got a response from the server but it was not success:
-                    } else if
-                        !response.status().is_server_error() || // Only HTTP "500 Server Errors", and
+                          // We got a response from the server but it was not success:
+                    } else if !response.status().is_server_error() || // Only HTTP "500 Server Errors", and
                         response.status() != 429 || // HTTP "429 Too Many Requests" are eligible for retries.
-                        counter > self.client_settings.max_retries {
-                            // If the HTTP request error was not a 500 Server
-                            // error or "429 Too Many Requests" error, return
-                            // the error and do not retry the request. Also, if
-                            // we have reached the maximum retry count, do not
-                            // retry anymore:
-                            warn!("HTTP client returned: `{}`.", response.status());
-                            return Err(Error::HttpUnsuccessful(counter, response.status().to_string()))
+                        counter > self.client_settings.max_retries
+                    {
+                        // If the HTTP request error was not a 500 Server
+                        // error or "429 Too Many Requests" error, return
+                        // the error and do not retry the request. Also, if
+                        // we have reached the maximum retry count, do not
+                        // retry anymore:
+                        warn!("HTTP client returned: `{}`.", response.status());
+                        return Err(Error::HttpUnsuccessful(
+                            counter,
+                            response.status().to_string(),
+                        ));
                     } // if
                 } // case
                 Err(response) => {
@@ -98,7 +98,7 @@ impl<'a> Request<'a> {
                     if counter > self.client_settings.max_retries {
                         // If we have reached the maximum retry count, do not
                         // retry anymore. Return the last HTTP client error:
-                        return Err(Error::Reqwest(response))
+                        return Err(Error::Reqwest(response));
                     } // if
                 } // case
             }; // match
@@ -132,9 +132,6 @@ impl<'a> Request<'a> {
             info!("Could not successfully query the Google Maps Platform. Sleeping for {} milliseconds before retry #{} of {}.", wait_time_in_ms, counter, self.client_settings.max_retries);
 
             std::thread::sleep(std::time::Duration::from_millis(wait_time_in_ms as u64));
-
-        }; // loop
-
+        } // loop
     } // fn
-
 } // impl

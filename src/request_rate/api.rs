@@ -1,7 +1,7 @@
 //! Contains the `Api` enum and its associated traits. The `Api` enum is used to
 //! specify a Google Maps Platform API when setting per-API request rate limits.
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// `Api` is used to select an API to configure. For example, the Google Maps
 /// Client can be set to have different request rates for `Directions` and

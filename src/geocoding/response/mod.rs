@@ -8,18 +8,14 @@ pub mod geometry;
 pub mod plus_code;
 pub mod status;
 
-use crate::geocoding::response::{
-    geocoding::Geocoding,
-    status::Status,
-}; // use
-use serde::{Serialize, Deserialize};
+use crate::geocoding::response::{geocoding::Geocoding, status::Status}; // use
+use serde::{Deserialize, Serialize};
 
 /// The response from the Google Maps Geolocation API will be stored in this
 /// structure.
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Response {
-
     /// When the geocoder returns a status code other than `OK`, there may be an
     /// additional `error_message` field within the Geocoding response object.
     /// This field contains more detailed information about the reasons behind
@@ -38,5 +34,4 @@ pub struct Response {
     /// status of the request, and may contain debugging information to help you
     /// track down why geocoding is not working.
     pub status: Status,
-
 } // struct

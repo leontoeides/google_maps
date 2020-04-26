@@ -1,13 +1,9 @@
 use crate::{
+    elevation::request::{locations::Locations, Request}, // elevation::request
     latlng::LatLng,
-    elevation::request::{
-        locations::Locations,
-        Request,
-    }, // elevation::request
 }; // use
 
 impl<'a> Request<'a> {
-
     /// Adds the _positional request_ parameter to the Elevation API query.
     ///
     /// ## Arguments:
@@ -57,5 +53,4 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl

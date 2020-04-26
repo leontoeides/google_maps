@@ -1,10 +1,6 @@
-use crate::{
-    directions::request::Request,
-    language::Language,
-}; // use
+use crate::{directions::request::Request, language::Language}; // use
 
 impl<'a> Request<'a> {
-
     /// Specify the language in which to return results.
     ///
     /// ## Arguments:
@@ -52,5 +48,4 @@ impl<'a> Request<'a> {
         self.language = Some(language);
         self
     } // fn
-
 } // impl

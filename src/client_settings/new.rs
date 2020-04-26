@@ -1,17 +1,10 @@
-use chrono::{
-    DateTime,
-    Utc,
-}; // chrono
 use crate::{
-    client_settings::ClientSettings,
-    directions::request::location::Location,
-    directions::request::waypoint::Waypoint,
-    latlng::LatLng,
-    request_rate::RequestRate,
-}; // use
+    client_settings::ClientSettings, directions::request::location::Location,
+    directions::request::waypoint::Waypoint, latlng::LatLng, request_rate::RequestRate,
+};
+use chrono::{DateTime, Utc}; // chrono // use
 
 impl ClientSettings {
-
     /// Initialize the settings needed for a Google Cloud Maps API transaction.
     pub fn new(key: &str) -> ClientSettings {
         ClientSettings {
@@ -35,7 +28,11 @@ impl ClientSettings {
     /// )
     /// ```
 
-    pub fn directions(&mut self, origin: Location, destination: Location) -> crate::directions::request::Request {
+    pub fn directions(
+        &mut self,
+        origin: Location,
+        destination: Location,
+    ) -> crate::directions::request::Request {
         crate::directions::request::Request::new(self, origin, destination)
     } // fn
 
@@ -62,7 +59,11 @@ impl ClientSettings {
     /// )
     /// ```
 
-    pub fn distance_matrix(&mut self, origins: Vec<Waypoint>, destinations: Vec<Waypoint>) -> crate::distance_matrix::request::Request {
+    pub fn distance_matrix(
+        &mut self,
+        origins: Vec<Waypoint>,
+        destinations: Vec<Waypoint>,
+    ) -> crate::distance_matrix::request::Request {
         crate::distance_matrix::request::Request::new(self, origins, destinations)
     } // fn
 
@@ -95,7 +96,10 @@ impl ClientSettings {
     /// )
     /// ```
 
-    pub fn reverse_geocoding(&mut self, latlng: LatLng) -> crate::geocoding::reverse::ReverseRequest {
+    pub fn reverse_geocoding(
+        &mut self,
+        latlng: LatLng,
+    ) -> crate::geocoding::reverse::ReverseRequest {
         crate::geocoding::reverse::ReverseRequest::new(self, latlng)
     } // fn
 
@@ -113,8 +117,11 @@ impl ClientSettings {
     /// )
     /// ```
 
-    pub fn time_zone(&mut self, location: LatLng, timestamp: DateTime<Utc>) -> crate::time_zone::request::Request {
+    pub fn time_zone(
+        &mut self,
+        location: LatLng,
+        timestamp: DateTime<Utc>,
+    ) -> crate::time_zone::request::Request {
         crate::time_zone::request::Request::new(self, location, timestamp)
     } // fn
-
 } // impl

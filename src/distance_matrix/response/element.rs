@@ -1,7 +1,6 @@
 use crate::{
     directions::response::{
-        directions_distance::DirectionsDistance,
-        directions_duration::DirectionsDuration,
+        directions_distance::DirectionsDistance, directions_duration::DirectionsDuration,
         transit_fare::TransitFare,
     }, // directions::response
     distance_matrix::response::element_status::ElementStatus,
@@ -13,7 +12,6 @@ use serde::Deserialize;
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Deserialize)]
 pub struct Element {
-
     /// The total distance of this route, expressed in meters (`value`) and as
     /// `text`. The textual value uses the unit system specified with the unit
     /// parameter of the original request, or the origin's region.
@@ -41,5 +39,4 @@ pub struct Element {
     /// Codes](https://developers.google.com/maps/documentation/distance-matrix/intro#StatusCodes)
     /// for a list of possible status codes.
     pub status: ElementStatus,
-
 } // struct

@@ -310,7 +310,10 @@ impl std::error::Error for Error {
             Error::SerdeJson(error) => Some(error),
             Error::TooManyWaypoints(_waypoint_count) => None,
             Error::TransitModeIsForTransitOnly(_travel_mode, _transit_modes) => None,
-            Error::TransitRoutePreferenceIsForTransitOnly(_travel_mode, _transit_route_preference) => None,
+            Error::TransitRoutePreferenceIsForTransitOnly(
+                _travel_mode,
+                _transit_route_preference,
+            ) => None,
         } // match
     } // fn
 } // impl

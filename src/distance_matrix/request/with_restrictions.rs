@@ -2,7 +2,6 @@ use crate::directions::request::avoid::Avoid;
 use crate::distance_matrix::request::Request;
 
 impl<'a> Request<'a> {
-
     /// Specify a feature that routes should avoid.
     ///
     /// ## Arguments
@@ -67,7 +66,7 @@ impl<'a> Request<'a> {
             // If there are already restrictions, append to them:
             Some(restrictions) => restrictions.push(restriction),
         } // match
-        // Return modified Request struct to caller.
+          // Return modified Request struct to caller.
         self
     } // fn
 
@@ -91,12 +90,13 @@ impl<'a> Request<'a> {
             // If there are no filters in the request struct, initialize field:
             None => self.restrictions = Some(restrictions_slice.to_vec()),
             // If there are already filters, append to them:
-            Some(restrictions) => for restriction in restrictions_slice {
-                restrictions.push(restriction.to_owned())
+            Some(restrictions) => {
+                for restriction in restrictions_slice {
+                    restrictions.push(restriction.to_owned())
+                }
             } // case
         } // match
-        // Return modified Request struct to caller.
+          // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl

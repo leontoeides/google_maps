@@ -4,9 +4,9 @@
 
 pub mod status;
 
-use chrono_tz::Tz;
 use crate::time_zone::response::status::Status;
-use serde::{Serialize, Deserialize};
+use chrono_tz::Tz;
+use serde::{Deserialize, Serialize};
 
 /// The response from the Google Maps Time Zone API will be stored in this
 /// structure.
@@ -23,7 +23,6 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct Response {
-
     /// The offset for daylight-savings time in seconds. This will be zero if
     /// the time zone is not in Daylight Savings Time during the specified
     /// `time`.
@@ -62,5 +61,4 @@ pub struct Response {
     /// Time" or "Australian Eastern Daylight Time"
     #[serde(alias = "timeZoneName")]
     pub time_zone_name: Option<String>,
-
 } // struct

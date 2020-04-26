@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// (See [Open Location Code](https://en.wikipedia.org/wiki/Open_Location_Code)
 /// and [plus codes](https://plus.codes/)) is an encoded location reference,
@@ -14,7 +14,6 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct PlusCode {
-
     /// A 4 character area code and 6 character or longer local code
     /// (`849VCWC8+R9`).
     pub global_code: String,
@@ -22,5 +21,4 @@ pub struct PlusCode {
     /// A 6 character or longer local code with an explicit location (`CWC8+R9,
     /// Mountain View, CA, USA`).
     pub compound_code: Option<String>,
-
 } // struct

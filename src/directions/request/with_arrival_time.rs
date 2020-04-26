@@ -1,8 +1,7 @@
-use chrono::NaiveDateTime;
 use crate::directions::request::Request;
+use chrono::NaiveDateTime;
 
 impl<'a> Request<'a> {
-
     /// Specifies the desired arrival time.
     ///
     /// ## Arguments:
@@ -27,5 +26,4 @@ impl<'a> Request<'a> {
         self.arrival_time = Some(arrival_time);
         self
     } // fn
-
 } // impl

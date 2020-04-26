@@ -16,7 +16,6 @@ use std::time::Duration;
 /// (i.e. milliseconds or seconds) is automatically selected by this function.
 
 pub fn duration_to_string(duration: Duration) -> String {
-
     const SECONDS_IN_A_SECOND: f64 = 1.0;
     const SECONDS_IN_A_MINUTE: f64 = 60.0;
     const SECONDS_IN_AN_HOUR: f64 = 3_600.0;
@@ -110,5 +109,4 @@ pub fn duration_to_string(duration: Duration) -> String {
     // Formats the final string and returns it to the caller:
 
     quantity_string + " " + &units_string
-
 } // fn

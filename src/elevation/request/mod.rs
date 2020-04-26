@@ -8,14 +8,11 @@ mod execute;
 mod for_positional_request;
 mod for_sampled_path_request;
 mod get;
+pub mod locations;
 mod new;
 mod validate;
-pub mod locations;
 
-use crate::{
-    elevation::request::locations::Locations,
-    client_settings::ClientSettings,
-}; // use
+use crate::{client_settings::ClientSettings, elevation::request::locations::Locations}; // use
 
 /// **Look at this `Request` struct for documentation on how to build your _Time
 /// Zone API_ query**. The methods implemented for this struct are what's used
@@ -23,17 +20,14 @@ use crate::{
 
 #[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Request<'a> {
-
     // Required parameters:
     // --------------------
-
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
     client_settings: &'a mut ClientSettings,
 
     // Positional Requests:
     // --------------------
-
     /// Defines the location(s) on the earth from which to return elevation
     /// data. This parameter takes either a single location as a
     /// latitude/longitude pair, multiple latitude/longitude pairs, or an
@@ -42,7 +36,6 @@ pub struct Request<'a> {
 
     // Sampled Path Requests:
     // ----------------------
-
     /// Defines a path on the earth for which to return elevation data. This
     /// parameter defines a set of two or more ordered latitude/longitude
     /// pairs defining a path along the surface of the earth. This parameter
@@ -57,11 +50,9 @@ pub struct Request<'a> {
 
     // Internal use only:
     // ------------------
-
     /// Query string that is to be submitted to the Google Cloud Maps Platform.
     query: Option<String>,
 
     /// Has the request been validated?
     validated: bool,
-
 } // struct

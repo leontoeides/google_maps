@@ -13,11 +13,8 @@ mod with_location_types;
 mod with_result_types;
 
 use crate::{
-    geocoding::location_type::LocationType,
-    client_settings::ClientSettings,
-    language::Language,
-    latlng::LatLng,
-    place_type::PlaceType,
+    client_settings::ClientSettings, geocoding::location_type::LocationType, language::Language,
+    latlng::LatLng, place_type::PlaceType,
 }; // use
 
 /// **Look at this `Request` struct for documentation on how to build your
@@ -27,10 +24,8 @@ use crate::{
 
 #[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct ReverseRequest<'a> {
-
     // Required parameters:
     // --------------------
-
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
     client_settings: &'a mut ClientSettings,
@@ -41,7 +36,6 @@ pub struct ReverseRequest<'a> {
 
     // Optional parameters:
     // --------------------
-
     /// The language in which to return results.
     language: Option<Language>,
 
@@ -65,11 +59,9 @@ pub struct ReverseRequest<'a> {
 
     // Internal use only:
     // ------------------
-
     /// Query string that is to be submitted to the Google Cloud Maps Platform.
     query: Option<String>,
 
     /// Has the request been validated?
     validated: bool,
-
 } // impl

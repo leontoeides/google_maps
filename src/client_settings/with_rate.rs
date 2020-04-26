@@ -1,11 +1,7 @@
-use crate::{
-    client_settings::ClientSettings,
-    request_rate::api::Api,
-}; // use
+use crate::{client_settings::ClientSettings, request_rate::api::Api}; // use
 use std::time::Duration;
 
 impl ClientSettings {
-
     /// Sets the rate limit for the specified API.
     ///
     /// ## Arguments
@@ -112,9 +108,13 @@ impl ClientSettings {
     /// .with_rate(Api::TimeZone, (GOOGLE_CREDIT / 0.005) as u16, Duration::from_secs(SECONDS_PER_MONTH))
     /// ```
 
-    pub fn with_rate(&mut self, api: Api, requests: u16, per_duration: Duration) -> &mut ClientSettings {
+    pub fn with_rate(
+        &mut self,
+        api: Api,
+        requests: u16,
+        per_duration: Duration,
+    ) -> &mut ClientSettings {
         self.rate_limit.with_rate(api, requests, per_duration);
         self
     } // fn
-
 } // impl

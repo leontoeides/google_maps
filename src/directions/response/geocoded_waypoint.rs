@@ -1,12 +1,8 @@
-use crate::{
-    directions::response::geocoder_status::GeocoderStatus,
-    place_type::PlaceType,
-}; // use
-use serde::{Serialize, Deserialize};
+use crate::{directions::response::geocoder_status::GeocoderStatus, place_type::PlaceType}; // use
+use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct GeocodedWaypoint {
-
     /// Indicates the status code resulting from the geocoding operation.
     pub geocoder_status: Option<GeocoderStatus>,
 
@@ -25,5 +21,4 @@ pub struct GeocodedWaypoint {
     /// [Address Component Types](https://developers.google.com/maps/documentation/javascript/geocoding#GeocodingAddressTypes)
     /// section of the Developer's Guide.
     pub types: Option<Vec<PlaceType>>,
-
 } // struct

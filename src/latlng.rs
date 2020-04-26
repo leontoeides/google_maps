@@ -5,7 +5,7 @@
 use crate::error::Error;
 use rust_decimal::Decimal;
 use rust_decimal_macros::dec;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Latitude and longitude values must correspond to a valid location on the
 /// face of the earth. Latitudes can take any value between -90 and 90 while
@@ -28,10 +28,10 @@ impl LatLng {
     /// function will return an error.
     pub fn try_from(latitude: Decimal, longitude: Decimal) -> Result<LatLng, Error> {
         if latitude < dec!(-90.0) || latitude > dec!(90.0) {
-            return Err(Error::InvalidLatitude(latitude, longitude))
+            return Err(Error::InvalidLatitude(latitude, longitude));
         } // if
         if longitude < dec!(-180.0) || longitude > dec!(180.0) {
-            return Err(Error::InvalidLongitude(latitude, longitude))
+            return Err(Error::InvalidLongitude(latitude, longitude));
         } // if
         Ok(LatLng {
             lat: latitude,
@@ -80,10 +80,13 @@ impl std::fmt::Display for LatLng {
         };
         // Display latitude and longitude as decimal degrees with some extra
         // fixins'.
-        write!(f,
+        write!(
+            f,
             "{}°{} {}°{}",
-            self.lat.abs().normalize(), ns_hemisphere,
-            self.lng.abs().normalize(), ew_hemisphere,
+            self.lat.abs().normalize(),
+            ns_hemisphere,
+            self.lng.abs().normalize(),
+            ew_hemisphere,
         )
     } // fn
 } // impl

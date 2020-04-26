@@ -4,13 +4,10 @@
 use crate::{
     directions::{
         response::{
-            directions_distance::DirectionsDistance,
-            directions_duration::DirectionsDuration,
-            driving_maneuver::DrivingManeuver,
-            polyline::Polyline,
-            transit_details::TransitDetails,
+            directions_distance::DirectionsDistance, directions_duration::DirectionsDuration,
+            driving_maneuver::DrivingManeuver, polyline::Polyline, transit_details::TransitDetails,
         }, // response
-        travel_mode::TravelMode
+        travel_mode::TravelMode,
     }, // directions
     latlng::LatLng,
 }; // use
@@ -39,7 +36,6 @@ use serde::Deserialize;
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Deserialize)]
 pub struct Step {
-
     /// The distance covered by this step. This property may be undefined as the
     /// distance may be unknown.
     pub distance: DirectionsDistance,
@@ -75,11 +71,9 @@ pub struct Step {
 
     /// The mode of travel used in this step.
     pub travel_mode: TravelMode,
-
 } // struct
 
 impl Step {
-
     /// A helper function for destructuring (or serializing) the optional
     /// `maneuver` field. If the `ManeuverType` enum in the step is populated,
     /// this function will return it as a `String`. If the _ManeuverType_ enum
@@ -93,5 +87,4 @@ impl Step {
             None => None,
         } // match
     } // fn
-
 } // impl

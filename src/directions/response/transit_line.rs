@@ -1,16 +1,12 @@
 //! Contains the type of vehicle used on this line.
 
-use crate::directions::response::{
-    transit_agency::TransitAgency,
-    transit_vehicle::TransitVehicle,
-}; // use
-use serde::{Serialize, Deserialize};
+use crate::directions::response::{transit_agency::TransitAgency, transit_vehicle::TransitVehicle}; // use
+use serde::{Deserialize, Serialize};
 
 /// Contains the type of vehicle used on this line.
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct TransitLine {
-
     /// Contains the full name of this transit line. eg. "7 Avenue Express"
     pub name: Option<String>,
 
@@ -39,5 +35,4 @@ pub struct TransitLine {
 
     // Contains the type of vehicle used on this line.
     pub vehicle: TransitVehicle,
-
 } // struct

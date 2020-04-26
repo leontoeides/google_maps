@@ -1,11 +1,7 @@
-use crate::{
-    geocoding::error::Error,
-    geocoding::forward::ForwardRequest,
-}; // use
+use crate::{geocoding::error::Error, geocoding::forward::ForwardRequest}; // use
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 
 impl<'a> ForwardRequest<'a> {
-
     /// Builds the query string for the Google Maps Geocoding API based on the
     /// input provided by the client.
     ///
@@ -14,18 +10,16 @@ impl<'a> ForwardRequest<'a> {
     /// This method accepts no arguments.
 
     pub fn build(&mut self) -> Result<&'a mut ForwardRequest, Error> {
-
         // Ensure request has been validated before building the query string:
 
-        if !self.validated { return Err(Error::RequestNotValidated) }
+        if !self.validated {
+            return Err(Error::RequestNotValidated);
+        }
 
         // This section builds the "required parameters" portion of the query
         // string:
 
-        let mut query = format!(
-            "key={}",
-            self.client_settings.key
-        );
+        let mut query = format!("key={}", self.client_settings.key);
 
         // This section builds the "optional parameters" portion of the query
         // string:
@@ -33,22 +27,35 @@ impl<'a> ForwardRequest<'a> {
         // Address key/value pair:
         if let Some(address) = &self.address {
             query.push_str("&address=");
-            query.push_str(&*utf8_percent_encode(&String::from(address), NON_ALPHANUMERIC).to_string())
+            query.push_str(
+                &*utf8_percent_encode(&String::from(address), NON_ALPHANUMERIC).to_string(),
+            )
         }
 
         // Bounds key/value pair:
         if let Some(bounds) = &self.bounds {
             query.push_str("&bounds=");
-            query.push_str(&*utf8_percent_encode(&String::from(bounds), NON_ALPHANUMERIC).to_string())
+            query.push_str(
+                &*utf8_percent_encode(&String::from(bounds), NON_ALPHANUMERIC).to_string(),
+            )
         }
 
         // Components key/value pair:
         if let Some(components) = &self.components {
             query.push_str("&components=");
-            query.push_str(&*utf8_percent_encode(
-                &String::from(components.iter().map(|component| String::from(component) + "|").collect::<String>().trim_end_matches('|')),
-                NON_ALPHANUMERIC
-            ).to_string())
+            query.push_str(
+                &*utf8_percent_encode(
+                    &String::from(
+                        components
+                            .iter()
+                            .map(|component| String::from(component) + "|")
+                            .collect::<String>()
+                            .trim_end_matches('|'),
+                    ),
+                    NON_ALPHANUMERIC,
+                )
+                .to_string(),
+            )
         }
 
         // Language key/value pair:
@@ -68,7 +75,5 @@ impl<'a> ForwardRequest<'a> {
 
         // Return modified ForwardRequest struct to caller.
         Ok(self)
-
     } // fn
-
 } // impl

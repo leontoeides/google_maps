@@ -3,7 +3,7 @@
 //! "country" (as in a nation) or it could be a "shopping mall."
 
 use crate::error::Error;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// This specifies the types or categories of a place. For example, a returned
 /// location could be a "country" (as in a nation) or it could be a "shopping
@@ -363,7 +363,13 @@ impl PlaceType {
     /// types](https://developers.google.com/places/web-service/supported_types)
     /// codes.
     pub fn vec_to_csv(place_types: &[PlaceType]) -> String {
-        String::from(place_types.iter().map(|place_type| String::from(place_type) + ",").collect::<String>().trim_end_matches(','))
+        String::from(
+            place_types
+                .iter()
+                .map(|place_type| String::from(place_type) + ",")
+                .collect::<String>()
+                .trim_end_matches(','),
+        )
     } // fn
 } // impl
 
@@ -520,7 +526,6 @@ impl std::convert::From<&PlaceType> for String {
 } // impl
 
 impl std::convert::TryFrom<&str> for PlaceType {
-
     // Error definitions are contained in the `google_maps\src\error.rs` module.
     type Error = crate::error::Error;
 
@@ -674,7 +679,6 @@ impl std::convert::TryFrom<&str> for PlaceType {
             _ => Err(Error::InvalidPlaceTypeCode(place_type.to_string())),
         } // match
     } // fn
-
 } // impl
 
 impl std::default::Default for PlaceType {

@@ -1,12 +1,11 @@
 //! Transit directions return additional information
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Provides information about the operator of the line.
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct TransitAgency {
-
     /// Contains the name of the transit agency.
     pub name: String,
 
@@ -15,5 +14,4 @@ pub struct TransitAgency {
 
     /// Contains the URL for the transit agency.
     pub url: String,
-
 } // struct
