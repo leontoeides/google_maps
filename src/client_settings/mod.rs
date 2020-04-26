@@ -29,7 +29,6 @@ use crate::request_rate::RequestRate;
 /// ```
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct ClientSettings {
-
     /// Your application's API key. This key identifies your application for
     /// purposes of quota management. Learn how to [get a
     /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
@@ -57,5 +56,4 @@ pub struct ClientSettings {
 
     /// Rate limits for each of the Google Cloud Maps Platform APIs.
     pub rate_limit: RequestRate,
-
 } // struct

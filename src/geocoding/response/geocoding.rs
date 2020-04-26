@@ -1,12 +1,10 @@
 use crate::{
     geocoding::response::{
-        address_component::AddressComponent,
-        geometry::Geometry,
-        plus_code::PlusCode,
+        address_component::AddressComponent, geometry::Geometry, plus_code::PlusCode,
     }, // geocoding::response
     place_type::PlaceType,
 }; // use
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// When the geocoder returns results, it places them within a results array.
 /// Even if the geocoder returns no results (such as if the address doesn't
@@ -14,7 +12,6 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Geocoding {
-
     /// Array containing the separate components applicable to this address.
     pub address_components: Vec<AddressComponent>,
 
@@ -76,11 +73,9 @@ pub struct Geocoding {
     /// indicates that "Chicago" is a city, and also returns "political" which
     /// indicates it is a political entity.
     pub types: Vec<PlaceType>,
-
 } // struct
 
 impl Geocoding {
-
     /// A helper function for destructuring the optional `plus_code` field. If
     /// the _plus_code_ field is populated, this function will return the
     /// global plus code. If the _plus_code_ field is empty, this function
@@ -107,9 +102,8 @@ impl Geocoding {
             Some(plus_code) => match &plus_code.compound_code {
                 Some(compound_code) => Some(compound_code.to_string()),
                 None => None,
-            } // match
+            }, // match
             None => None,
         } // match
     } // fn
-
 } // impl

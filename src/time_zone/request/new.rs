@@ -1,12 +1,7 @@
-use chrono::{DateTime, Utc};
-use crate::{
-    client_settings::ClientSettings,
-    latlng::LatLng,
-    time_zone::request::Request,
-}; // use
+use crate::{client_settings::ClientSettings, latlng::LatLng, time_zone::request::Request};
+use chrono::{DateTime, Utc}; // use
 
 impl<'a> Request<'a> {
-
     /// Initializes the builder pattern for a Time Zone API query with the
     /// required, non-optional parameters.
     ///
@@ -29,7 +24,11 @@ impl<'a> Request<'a> {
     /// ).execute();
     /// ```
 
-    pub fn new(client_settings: &mut ClientSettings, location: LatLng, timestamp: DateTime<Utc>) -> Request {
+    pub fn new(
+        client_settings: &mut ClientSettings,
+        location: LatLng,
+        timestamp: DateTime<Utc>,
+    ) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:
@@ -43,5 +42,4 @@ impl<'a> Request<'a> {
             validated: false,
         } // struct
     } // fn
-
 } // impl

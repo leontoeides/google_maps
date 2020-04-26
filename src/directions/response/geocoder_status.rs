@@ -2,7 +2,7 @@
 //! the status resulting from geocoding operations.
 
 use crate::directions::error::Error;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Indicates the [status
 /// code](https://developers.google.com/maps/documentation/directions/intro#GeocodedWaypoints)
@@ -10,7 +10,6 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum GeocoderStatus {
-
     /// Indicates that no errors occurred; the address was successfully parsed
     /// and at least one geocode was returned.
     #[serde(alias = "OK")]
@@ -20,7 +19,6 @@ pub enum GeocoderStatus {
     /// may occur if the geocoder was passed a non-existent `address`.
     #[serde(alias = "ZERO_RESULTS")]
     ZeroResults,
-
 } // struct
 
 impl std::convert::From<&GeocoderStatus> for String {
@@ -33,11 +31,9 @@ impl std::convert::From<&GeocoderStatus> for String {
             GeocoderStatus::ZeroResults => String::from("ZERO_RESULTS"),
         } // match
     } // fn
-
 } // impl
 
 impl std::convert::TryFrom<&str> for GeocoderStatus {
-
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
     type Error = crate::directions::error::Error;
@@ -50,10 +46,11 @@ impl std::convert::TryFrom<&str> for GeocoderStatus {
         match geocoder_status {
             "OK" => Ok(GeocoderStatus::Ok),
             "ZERO_RESULTS" => Ok(GeocoderStatus::ZeroResults),
-            _ => Err(Error::InvalidGeocoderStatusCode(String::from(geocoder_status))),
+            _ => Err(Error::InvalidGeocoderStatusCode(String::from(
+                geocoder_status,
+            ))),
         } // match
     } // fn
-
 } // impl
 
 impl std::default::Default for GeocoderStatus {

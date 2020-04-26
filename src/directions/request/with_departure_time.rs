@@ -1,10 +1,6 @@
-use crate::directions::request::{
-    departure_time::DepartureTime,
-    Request,
-}; // use
+use crate::directions::request::{departure_time::DepartureTime, Request}; // use
 
 impl<'a> Request<'a> {
-
     /// Specifies the desired departure time.
     ///
     /// ## Arguments:
@@ -64,5 +60,4 @@ impl<'a> Request<'a> {
         self.departure_time = Some(departure_time);
         self
     } // fn
-
 } // impl

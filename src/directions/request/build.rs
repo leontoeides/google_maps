@@ -1,11 +1,7 @@
-use crate::directions::{
-    error::Error,
-    request::Request,
-}; // use
+use crate::directions::{error::Error, request::Request}; // use
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 
 impl<'a> Request<'a> {
-
     /// Builds the query string for the Google Maps Directions API based on the
     /// input provided by the client.
     ///
@@ -14,18 +10,19 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub fn build(&'a mut self) -> Result<&'a mut Request, Error> {
-
         // Ensure request has been validated before building the query string:
 
-        if !self.validated { return Err(Error::RequestNotValidated) }
+        if !self.validated {
+            return Err(Error::RequestNotValidated);
+        }
 
         // Builds the "required parameters" portion of the query string:
 
         let mut query = format!(
             "key={}&origin={}&destination={}",
             self.client_settings.key,
-            String::from(&self.origin),         // URL-encoding performed by From trait
-            String::from(&self.destination),    // URL-encoding performed by From trait
+            String::from(&self.origin), // URL-encoding performed by From trait
+            String::from(&self.destination), // URL-encoding performed by From trait
         ); // format!
 
         // Builds the "optional parameters" portion of the query string:
@@ -44,10 +41,19 @@ impl<'a> Request<'a> {
         // Avoid key/value pair:
         if let Some(restrictions) = &self.restrictions {
             query.push_str("&avoid=");
-            query.push_str(&*utf8_percent_encode(
-                &String::from(restrictions.iter().map(|avoid| String::from(avoid) + "|").collect::<String>().trim_end_matches('|')),
-                NON_ALPHANUMERIC
-            ).to_string())
+            query.push_str(
+                &*utf8_percent_encode(
+                    &String::from(
+                        restrictions
+                            .iter()
+                            .map(|avoid| String::from(avoid) + "|")
+                            .collect::<String>()
+                            .trim_end_matches('|'),
+                    ),
+                    NON_ALPHANUMERIC,
+                )
+                .to_string(),
+            )
         } // if
 
         // Departure time key/value pair:
@@ -83,10 +89,19 @@ impl<'a> Request<'a> {
         // Transit mode key/value pair:
         if let Some(transit_modes) = &self.transit_modes {
             query.push_str("&transit_mode=");
-            query.push_str(&*utf8_percent_encode(
-                &String::from(transit_modes.iter().map(|mode| String::from(mode) + "|").collect::<String>().trim_end_matches('|')),
-                NON_ALPHANUMERIC
-            ).to_string())
+            query.push_str(
+                &*utf8_percent_encode(
+                    &String::from(
+                        transit_modes
+                            .iter()
+                            .map(|mode| String::from(mode) + "|")
+                            .collect::<String>()
+                            .trim_end_matches('|'),
+                    ),
+                    NON_ALPHANUMERIC,
+                )
+                .to_string(),
+            )
         } // if
 
         // Transit route preference key/value pair:
@@ -107,10 +122,19 @@ impl<'a> Request<'a> {
             if self.waypoint_optimization {
                 query.push_str("optimize:true|");
             } // if
-            query.push_str(&*utf8_percent_encode(
-                &String::from(waypoints.iter().map(|waypoint| String::from(waypoint) + "|").collect::<String>().trim_end_matches('|')),
-                NON_ALPHANUMERIC
-            ).to_string())
+            query.push_str(
+                &*utf8_percent_encode(
+                    &String::from(
+                        waypoints
+                            .iter()
+                            .map(|waypoint| String::from(waypoint) + "|")
+                            .collect::<String>()
+                            .trim_end_matches('|'),
+                    ),
+                    NON_ALPHANUMERIC,
+                )
+                .to_string(),
+            )
         } // if
 
         // Set query string in Request struct.
@@ -118,7 +142,5 @@ impl<'a> Request<'a> {
 
         // Return modified Request struct to caller.
         Ok(self)
-
     } // fn
-
 } // impl

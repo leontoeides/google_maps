@@ -1,7 +1,6 @@
 use crate::directions::request::Request;
 
 impl<'a> Request<'a> {
-
     /// Specify whether service may provide more than one route alternative in
     /// the response.
     ///
@@ -28,5 +27,4 @@ impl<'a> Request<'a> {
         self.alternatives = Some(alternatives);
         self
     } // fn
-
 } // impl

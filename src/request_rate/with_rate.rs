@@ -1,14 +1,9 @@
 use crate::request_rate::{
-    api::Api,
-    api_rate::ApiRate,
-    current_rate::CurrentRate,
-    RequestRate,
-    target_rate::TargetRate,
+    api::Api, api_rate::ApiRate, current_rate::CurrentRate, target_rate::TargetRate, RequestRate,
 }; // use
 use std::time::Duration;
 
 impl RequestRate {
-
     /// Specifies the request rate for the selected API. _Do not use this method
     /// to set request rate limits, use `ClientSettings.with_rate()` instead_.
     ///
@@ -49,7 +44,6 @@ impl RequestRate {
     /// ```
 
     pub fn with_rate(&mut self, api: Api, requests: u16, duration: Duration) -> &mut RequestRate {
-
         // Select `RequestRate` field for the API specified by the caller.
         let api_ref = match api {
             Api::All => &mut self.all,
@@ -62,29 +56,27 @@ impl RequestRate {
 
         // Has the ApiRate been set already?
         match api_ref {
-
             // If not, initialize the structure:
-            None => *api_ref = Some(ApiRate{
-                target_rate: TargetRate { requests, duration, },
-                current_rate: CurrentRate::default(),
-            }),
+            None => {
+                *api_ref = Some(ApiRate {
+                    target_rate: TargetRate { requests, duration },
+                    current_rate: CurrentRate::default(),
+                })
+            }
 
             // If it has, set the new target request rate but preserve the
             // current effective request rate:
-            Some(api_rate) => *api_ref = Some(ApiRate {
+            Some(api_rate) => {
+                *api_ref = Some(ApiRate {
+                    // Set new target request rate:
+                    target_rate: TargetRate { requests, duration },
 
-                // Set new target request rate:
-                target_rate: TargetRate { requests, duration, },
-
-                // Copy old actual request rate:
-                current_rate: api_rate.current_rate.clone(),
-
-            }), // ApiRate
-
+                    // Copy old actual request rate:
+                    current_rate: api_rate.current_rate.clone(),
+                })
+            } // ApiRate
         } // match
 
         self
-
     } // fn
-
 } // impl

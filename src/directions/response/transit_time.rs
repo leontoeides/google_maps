@@ -1,16 +1,15 @@
 //! A representation of time as a Date object, a localized string, and a time
 //! zone.
 
-use chrono::{NaiveDateTime, naive::serde::ts_seconds};
+use chrono::{naive::serde::ts_seconds, NaiveDateTime};
 use chrono_tz::Tz;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// A representation of time as a Date object, a localized string, and a time
 /// zone.
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct TransitTime {
-
     /// A string representing the time's value. The time is displayed in the
     /// time zone of the transit stop.
     pub text: String,
@@ -23,5 +22,4 @@ pub struct TransitTime {
     /// The time of this departure or arrival.
     #[serde(with = "ts_seconds")]
     pub value: NaiveDateTime,
-
 } // struct

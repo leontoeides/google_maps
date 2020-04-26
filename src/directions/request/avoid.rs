@@ -2,7 +2,7 @@
 //! around features such as ferries, highways, and tolls.
 
 use crate::directions::error::Error;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Used to specify features that calculated routes should
 /// [avoid](https://developers.google.com/maps/documentation/directions/intro#Restrictions).
@@ -25,7 +25,6 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Avoid {
-
     /// Indicates that the calculated route should avoid ferries.
     #[serde(alias = "ferries")]
     Ferries,
@@ -44,7 +43,6 @@ pub enum Avoid {
     /// Indicates that the calculated route should avoid toll roads/bridges.
     #[serde(alias = "tolls")]
     Tolls,
-
 } // enum
 
 impl std::convert::From<&Avoid> for String {
@@ -62,7 +60,6 @@ impl std::convert::From<&Avoid> for String {
 } // impl
 
 impl std::convert::TryFrom<&str> for Avoid {
-
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
     type Error = crate::directions::error::Error;
@@ -79,7 +76,6 @@ impl std::convert::TryFrom<&str> for Avoid {
             _ => Err(Error::InvalidAvoidCode(avoid.to_string())),
         } // match
     } // fn
-
 } // impl
 
 impl std::default::Default for Avoid {

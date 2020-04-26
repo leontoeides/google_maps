@@ -3,10 +3,8 @@
 
 use crate::{
     directions::response::{
-        directions_distance::DirectionsDistance,
-        directions_duration::DirectionsDuration,
-        step::Step,
-        transit_time::TransitTime,
+        directions_distance::DirectionsDistance, directions_duration::DirectionsDuration,
+        step::Step, transit_time::TransitTime,
     }, // directions::response
     latlng::LatLng,
 }; // use
@@ -19,7 +17,6 @@ use serde::Deserialize;
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Deserialize)]
 pub struct Leg {
-
     /// An estimated arrival time for this leg. Only applicable for
     /// `TravelMode::Transit` requests.
     pub arrival_time: Option<TransitTime>,
@@ -65,11 +62,9 @@ pub struct Leg {
     /// An array of `Steps`, each of which contains information about the
     /// individual steps in this leg.
     pub steps: Vec<Step>,
-
 } // struct
 
 impl Leg {
-
     /// A helper function for destructuring (or serializing) the optional
     /// `duration_in_traffic` field. If the `Duration` struct is populated, this
     /// function will return the _text_ field as a `String`. If the _Duration_
@@ -121,9 +116,7 @@ impl Leg {
     /// ```
     pub fn get_arrival_time_value(&self) -> Option<i64> {
         match &self.arrival_time {
-            Some(time) => {
-                Some(time.value.timestamp())
-            },
+            Some(time) => Some(time.value.timestamp()),
             None => None,
         } // match
     } // fn
@@ -183,5 +176,4 @@ impl Leg {
             None => None,
         } // match
     } // fn
-
 } // impl

@@ -1,7 +1,6 @@
 use crate::client_settings::ClientSettings;
 
 impl ClientSettings {
-
     /// Sets the maximum number of retries upon a series of request failures.
     ///
     /// ## Arguments
@@ -19,5 +18,4 @@ impl ClientSettings {
         self.max_retries = max_retries;
         self
     } // fn
-
 } // impl

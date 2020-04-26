@@ -1,8 +1,7 @@
-use crate::elevation::request::Request;
 use crate::client_settings::ClientSettings;
+use crate::elevation::request::Request;
 
 impl<'a> Request<'a> {
-
     /// Initializes the builder pattern for a Elevation API query with the
     /// required, non-optional parameters.
     ///
@@ -25,5 +24,4 @@ impl<'a> Request<'a> {
             validated: false,
         } // struct
     } // fn
-
 } // impl

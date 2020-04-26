@@ -1,7 +1,6 @@
 use crate::client_settings::ClientSettings;
 
 impl ClientSettings {
-
     /// Completes the builder pattern into a final structure.
     ///
     /// ## Arguments:
@@ -16,5 +15,4 @@ impl ClientSettings {
             rate_limit: self.rate_limit.clone(),
         } // ClientSettings
     } // fn
-
 } // impl

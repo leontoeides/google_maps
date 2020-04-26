@@ -1,11 +1,6 @@
-use crate::geocoding::{
-    error::Error,
-    forward::ForwardRequest,
-    response::Response,
-}; // use
+use crate::geocoding::{error::Error, forward::ForwardRequest, response::Response}; // use
 
 impl<'a> ForwardRequest<'a> {
-
     /// Executes the query you've built.
     ///
     /// ## Description:
@@ -21,5 +16,4 @@ impl<'a> ForwardRequest<'a> {
     pub fn execute(&'a mut self) -> Result<Response, Error> {
         self.validate()?.build()?.get()
     } // fn
-
 } // impl

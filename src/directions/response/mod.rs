@@ -23,11 +23,7 @@ pub mod transit_time;
 pub mod transit_vehicle;
 
 use crate::directions::{
-    response::{
-        geocoded_waypoint::GeocodedWaypoint,
-        route::Route,
-        status::Status,
-    },
+    response::{geocoded_waypoint::GeocodedWaypoint, route::Route, status::Status},
     travel_mode::TravelMode,
 };
 use serde::Deserialize;
@@ -36,7 +32,6 @@ use serde::Deserialize;
 
 #[derive(Clone, Debug, PartialEq, Deserialize)]
 pub struct Response {
-
     /// Contains an array of available travel modes. This field is returned when
     /// a request specifies a travel `mode` and gets no results. The array
     /// contains the available travel modes in the countries of the given set of
@@ -68,5 +63,4 @@ pub struct Response {
     /// Contains metadata on the request. See [Status
     /// Codes](https://developers.google.com/maps/documentation/directions/intro#StatusCodes).
     pub status: Status,
-
 } // struct

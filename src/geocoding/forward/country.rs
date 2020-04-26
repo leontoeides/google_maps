@@ -3,7 +3,7 @@
 //! codes](https://en.wikipedia.org/wiki/ISO_3166-1).
 
 use crate::geocoding::error::Error;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Country is the national political entity and is typically the highest order
 /// type returned by the Geocoder.
@@ -533,7 +533,6 @@ impl std::convert::From<&Country> for String {
 } // enum
 
 impl std::convert::TryFrom<&str> for Country {
-
     // Error definitions are contained in the
     // `google_maps\src\geocoding\error.rs` module.
     type Error = crate::geocoding::error::Error;
@@ -795,7 +794,6 @@ impl std::convert::TryFrom<&str> for Country {
             _ => Err(Error::InvalidCountryCode(country.to_string())),
         } // match
     } // fn
-
 } // impl
 
 impl std::fmt::Display for Country {
@@ -830,17 +828,13 @@ impl std::fmt::Display for Country {
             Country::Bermuda => write!(f, "Bermuda"),
             Country::Bhutan => write!(f, "Bhutan"),
             Country::Bolivia => write!(f, "Bolivia"),
-            Country::BonaireSintEustatiusAndSaba =>
-                write!(f, "Bonaire, Sint Eustatius and Saba"),
-            Country::BosniaAndHerzegovina =>
-                write!(f, "Bosnia and Herzegovina"),
+            Country::BonaireSintEustatiusAndSaba => write!(f, "Bonaire, Sint Eustatius and Saba"),
+            Country::BosniaAndHerzegovina => write!(f, "Bosnia and Herzegovina"),
             Country::Botswana => write!(f, "Botswana"),
             Country::BouvetIsland => write!(f, "Bouvet Island"),
             Country::Brazil => write!(f, "Brazil"),
-            Country::BritishIndianOceanTerritory =>
-                write!(f, "British Indian Ocean Territory"),
-            Country::BritishVirginIslands =>
-                write!(f, "British Virgin Islands"),
+            Country::BritishIndianOceanTerritory => write!(f, "British Indian Ocean Territory"),
+            Country::BritishVirginIslands => write!(f, "British Virgin Islands"),
             Country::Brunei => write!(f, "Brunei"),
             Country::Bulgaria => write!(f, "Bulgaria"),
             Country::BurkinaFaso => write!(f, "Burkina Faso"),
@@ -850,19 +844,16 @@ impl std::fmt::Display for Country {
             Country::Cameroon => write!(f, "Cameroon"),
             Country::Canada => write!(f, "Canada"),
             Country::CaymanIslands => write!(f, "Cayman Islands"),
-            Country::CentralAfricanRepublic =>
-                write!(f, "Central African Republic"),
+            Country::CentralAfricanRepublic => write!(f, "Central African Republic"),
             Country::Chad => write!(f, "Chad"),
             Country::Chile => write!(f, "Chile"),
             Country::China => write!(f, "China"),
             Country::ChristmasIsland => write!(f, "Christmas Island"),
-            Country::CocosKeelingIslands =>
-                write!(f, "Cocos (Keeling) Islands"),
+            Country::CocosKeelingIslands => write!(f, "Cocos (Keeling) Islands"),
             Country::Colombia => write!(f, "Colombia"),
             Country::Comoros => write!(f, "Comoros"),
             Country::CongoBrazzaville => write!(f, "Congo"),
-            Country::CongoKinshasa =>
-                write!(f, "Democratic Republic of the Congo"),
+            Country::CongoKinshasa => write!(f, "Democratic Republic of the Congo"),
             Country::CookIslands => write!(f, "Cook Islands"),
             Country::CostaRica => write!(f, "Costa Rica"),
             Country::CotedIvoire => write!(f, "Côte d'Ivoire"),
@@ -890,8 +881,7 @@ impl std::fmt::Display for Country {
             Country::France => write!(f, "France"),
             Country::FrenchGuiana => write!(f, "French Guiana"),
             Country::FrenchPolynesia => write!(f, "French Polynesia"),
-            Country::FrenchSouthernTerritories =>
-                write!(f, "French Southern Territories"),
+            Country::FrenchSouthernTerritories => write!(f, "French Southern Territories"),
             Country::Gabon => write!(f, "Gabon"),
             Country::Gambia => write!(f, "Gambia"),
             Country::Georgia => write!(f, "Georgia"),
@@ -909,8 +899,7 @@ impl std::fmt::Display for Country {
             Country::GuineaBissau => write!(f, "Guinea-Bissau"),
             Country::Guyana => write!(f, "Guyana"),
             Country::Haiti => write!(f, "Haiti"),
-            Country::HeardAndMcDonaldIslands =>
-                write!(f, "Heard Island and McDonald Islands"),
+            Country::HeardAndMcDonaldIslands => write!(f, "Heard Island and McDonald Islands"),
             Country::HolySee => write!(f, "Holy See"),
             Country::Honduras => write!(f, "Honduras"),
             Country::HongKong => write!(f, "Hong Kong"),
@@ -975,8 +964,7 @@ impl std::fmt::Display for Country {
             Country::Nigeria => write!(f, "Nigeria"),
             Country::Niue => write!(f, "Niue"),
             Country::NorfolkIsland => write!(f, "Norfolk Island"),
-            Country::NorthernMarianaIslands =>
-                write!(f, "Northern Mariana Islands"),
+            Country::NorthernMarianaIslands => write!(f, "Northern Mariana Islands"),
             Country::NorthKorea => write!(f, "North Korea"),
             Country::NorthMacedonia => write!(f, "North Macedonia"),
             Country::Norway => write!(f, "Norway"),
@@ -1013,22 +1001,20 @@ impl std::fmt::Display for Country {
             Country::SolomonIslands => write!(f, "Solomon Islands"),
             Country::Somalia => write!(f, "Somalia"),
             Country::SouthAfrica => write!(f, "SouthA frica"),
-            Country::SouthGeorgiaAndSouthSandwichIslands =>
-                write!(f, "South Georgia and the South Sandwich Islands"),
+            Country::SouthGeorgiaAndSouthSandwichIslands => {
+                write!(f, "South Georgia and the South Sandwich Islands")
+            }
             Country::SouthKorea => write!(f, "South Korea"),
             Country::SouthSudan => write!(f, "South Sudan"),
             Country::Spain => write!(f, "Spain"),
             Country::SriLanka => write!(f, "Sri Lanka"),
             Country::StBarthelemy => write!(f, "Saint Barthélemy"),
-            Country::StHelena =>
-                write!(f, "Saint Helena, Ascension and Tristan da Cunha"),
+            Country::StHelena => write!(f, "Saint Helena, Ascension and Tristan da Cunha"),
             Country::StKittsAndNevis => write!(f, "Saint Kitts and Nevis"),
             Country::StLucia => write!(f, "Saint Lucia"),
             Country::StMartin => write!(f, "Saint Martin"),
-            Country::StPierreAndMiquelon =>
-                write!(f, "Saint Pierre and Miquelon"),
-            Country::StVincentAndGrenadines =>
-                write!(f, "Saint Vincent and the Grenadines"),
+            Country::StPierreAndMiquelon => write!(f, "Saint Pierre and Miquelon"),
+            Country::StVincentAndGrenadines => write!(f, "Saint Vincent and the Grenadines"),
             Country::Sudan => write!(f, "Sudan"),
             Country::Suriname => write!(f, "Suriname"),
             Country::SvalbardAndJanMayen => write!(f, "Svalbard and Jan Mayen"),
@@ -1047,16 +1033,16 @@ impl std::fmt::Display for Country {
             Country::Tunisia => write!(f, "Tunisia"),
             Country::Turkey => write!(f, "Turkey"),
             Country::Turkmenistan => write!(f, "Turkmenistan"),
-            Country::TurksAndCaicosIslands =>
-                write!(f, "Turks and Caicos Islands"),
+            Country::TurksAndCaicosIslands => write!(f, "Turks and Caicos Islands"),
             Country::Tuvalu => write!(f, "Tuvalu"),
             Country::Uganda => write!(f, "Uganda"),
             Country::Ukraine => write!(f, "Ukraine"),
             Country::UnitedArabEmirates => write!(f, "United Arab Emirates"),
             Country::UnitedKingdom => write!(f, "United Kingdom"),
             Country::UnitedStates => write!(f, "United States"),
-            Country::UnitedStatesMinorOutlyingIslands =>
-                write!(f, "United States Minor Outlying Islands"),
+            Country::UnitedStatesMinorOutlyingIslands => {
+                write!(f, "United States Minor Outlying Islands")
+            }
             Country::Uruguay => write!(f, "Uruguay"),
             Country::USVirginIslands => write!(f, "US Virgin ISlands"),
             Country::Uzbekistan => write!(f, "Uzbekistan"),

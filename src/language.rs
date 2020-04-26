@@ -3,7 +3,7 @@
 //! of languages, it is a list of languages that Google Maps supports._
 
 use crate::error::Error;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Specifies the language in which to return results.
 ///
@@ -229,7 +229,6 @@ impl std::convert::From<&Language> for String {
 } // impl
 
 impl std::convert::TryFrom<&str> for Language {
-
     // Error definitions are contained in the `google_maps\src\error.rs` module.
     type Error = crate::error::Error;
 
@@ -321,7 +320,6 @@ impl std::convert::TryFrom<&str> for Language {
             _ => Err(Error::InvalidLanguageCode(language.to_string())),
         } // match
     } // fn
-
 } // impl
 
 impl std::default::Default for Language {

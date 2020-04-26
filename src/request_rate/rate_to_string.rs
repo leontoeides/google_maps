@@ -25,8 +25,12 @@ use std::time::Duration;
 /// unit of time (i.e. milliseconds or seconds) is automatically selected by
 /// this function.
 
-pub fn rate_to_string(numerator: u64, duration: Duration, numerator_singular: &str, numerator_plural: &str) -> String {
-
+pub fn rate_to_string(
+    numerator: u64,
+    duration: Duration,
+    numerator_singular: &str,
+    numerator_plural: &str,
+) -> String {
     // Multiplication is much faster than division:
 
     const MILLISECONDS_IN_A_SECOND: f64 = 1.0 / 0.001;
@@ -48,20 +52,28 @@ pub fn rate_to_string(numerator: u64, duration: Duration, numerator_singular: &s
     let numerator = numerator as f64;
 
     let adjusted_units = match duration_in_secs {
-        s if numerator / (s * MILLISECONDS_IN_A_SECOND) > 1.0 =>
-            (numerator / (s * MILLISECONDS_IN_A_SECOND), DurationUnit::Milliseconds),
-        s if numerator / (s * SECONDS_IN_A_SECOND) > 1.0 =>
-            (numerator / (s * SECONDS_IN_A_SECOND), DurationUnit::Seconds),
-        s if numerator / (s * MINUTES_IN_A_SECOND) > 1.0 =>
-            (numerator / (s * MINUTES_IN_A_SECOND), DurationUnit::Minutes),
-        s if numerator / (s * HOURS_IN_A_SECOND) > 1.0 =>
-            (numerator / (s * HOURS_IN_A_SECOND), DurationUnit::Hours),
-        s if numerator / (s * DAYS_IN_A_SECOND) > 1.0 =>
-            (numerator / (s * DAYS_IN_A_SECOND), DurationUnit::Days),
-        s if numerator / (s * WEEKS_IN_A_SECOND) > 1.0 =>
-            (numerator / (s * WEEKS_IN_A_SECOND), DurationUnit::Weeks),
-        s if numerator / (s * MONTHS_IN_A_SECOND) > 1.0 =>
-            (numerator / (s * MONTHS_IN_A_SECOND), DurationUnit::Months),
+        s if numerator / (s * MILLISECONDS_IN_A_SECOND) > 1.0 => (
+            numerator / (s * MILLISECONDS_IN_A_SECOND),
+            DurationUnit::Milliseconds,
+        ),
+        s if numerator / (s * SECONDS_IN_A_SECOND) > 1.0 => {
+            (numerator / (s * SECONDS_IN_A_SECOND), DurationUnit::Seconds)
+        }
+        s if numerator / (s * MINUTES_IN_A_SECOND) > 1.0 => {
+            (numerator / (s * MINUTES_IN_A_SECOND), DurationUnit::Minutes)
+        }
+        s if numerator / (s * HOURS_IN_A_SECOND) > 1.0 => {
+            (numerator / (s * HOURS_IN_A_SECOND), DurationUnit::Hours)
+        }
+        s if numerator / (s * DAYS_IN_A_SECOND) > 1.0 => {
+            (numerator / (s * DAYS_IN_A_SECOND), DurationUnit::Days)
+        }
+        s if numerator / (s * WEEKS_IN_A_SECOND) > 1.0 => {
+            (numerator / (s * WEEKS_IN_A_SECOND), DurationUnit::Weeks)
+        }
+        s if numerator / (s * MONTHS_IN_A_SECOND) > 1.0 => {
+            (numerator / (s * MONTHS_IN_A_SECOND), DurationUnit::Months)
+        }
         _ => (duration_in_secs * YEARS_IN_A_SECOND, DurationUnit::Years),
     }; // match
 
@@ -117,5 +129,4 @@ pub fn rate_to_string(numerator: u64, duration: Duration, numerator_singular: &s
     // Formats the final string and returns it to the caller:
 
     quantity_string + " " + rate_type_string + " per " + &units_string
-
 } // fn

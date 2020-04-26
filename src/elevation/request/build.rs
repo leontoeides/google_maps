@@ -1,10 +1,6 @@
-use crate::elevation::{
-    error::Error,
-    request::Request,
-}; // use
+use crate::elevation::{error::Error, request::Request}; // use
 
 impl<'a> Request<'a> {
-
     /// Builds the query string for the Google Maps Elevation API based on the
     /// input provided by the client.
     ///
@@ -13,10 +9,11 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub fn build(&mut self) -> Result<&'a mut Request, Error> {
-
         // Ensure request has been validated before building the query string:
 
-        if !self.validated { return Err(Error::RequestNotValidated) }
+        if !self.validated {
+            return Err(Error::RequestNotValidated);
+        }
 
         // This section builds the "required parameters" portion of the query
         // string:
@@ -52,7 +49,5 @@ impl<'a> Request<'a> {
 
         // Return modified Request struct to caller.
         Ok(self)
-
     } // fn
-
 } // impl

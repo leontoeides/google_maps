@@ -1,10 +1,6 @@
-use crate::{
-    geocoding::forward::ForwardRequest,
-    language::Language,
-}; // use
+use crate::{geocoding::forward::ForwardRequest, language::Language}; // use
 
 impl<'a> ForwardRequest<'a> {
-
     /// Specifies the language in which to return results.
     ///
     /// ## Arguments:
@@ -53,5 +49,4 @@ impl<'a> ForwardRequest<'a> {
         // Return modified ForwardRequest struct to caller.
         self
     } // fn
-
 } // impl

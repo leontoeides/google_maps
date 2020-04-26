@@ -1,11 +1,6 @@
-use crate::directions::{
-    error::Error,
-    request::Request,
-    response::Response,
-}; // use
+use crate::directions::{error::Error, request::Request, response::Response}; // use
 
 impl<'a> Request<'a> {
-
     /// Executes the query you've built.
     ///
     /// ## Description:
@@ -21,5 +16,4 @@ impl<'a> Request<'a> {
     pub fn execute(&'a mut self) -> Result<Response, Error> {
         self.validate()?.build()?.get()
     } // fn
-
 } // impl

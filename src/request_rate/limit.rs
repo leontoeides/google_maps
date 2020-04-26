@@ -1,13 +1,8 @@
-use crate::request_rate::{
-    api::Api,
-    duration_to_string::duration_to_string,
-    RequestRate,
-}; // use
+use crate::request_rate::{api::Api, duration_to_string::duration_to_string, RequestRate}; // use
 use log::info;
 use std::time::Instant;
 
 impl RequestRate {
-
     /// This method is not for public consumption. It is for internal use only.
     ///
     /// ## Description
@@ -23,7 +18,6 @@ impl RequestRate {
     /// * `api` ‧ The API for which to observe the request rate limit.
 
     pub fn limit(&mut self, api: Api) {
-
         // Select the ApiLimit requested by the caller:
         let api_ref = match api {
             Api::All => &mut self.all,
@@ -35,7 +29,6 @@ impl RequestRate {
         }; // api
 
         match *api_ref {
-
             // No request rate is defined for caller's API, do nothing:
             None => (),
 
@@ -43,9 +36,7 @@ impl RequestRate {
             // Compare the current rate to the target rate. Put the thread to
             // sleep if necessary.
             Some(ref mut rate) => {
-
                 match rate.current_rate.first_request {
-
                     // If this is the first request to the API, initialize the
                     // timer.
                     None => {
@@ -54,13 +45,12 @@ impl RequestRate {
                         /* trace!("Rate limiting is enabled for the `{}` API. First request.", api.to_string()); */
                         rate.current_rate.first_request = Some(Instant::now());
                         rate.current_rate.request_count = 1;
-                    }, // case
+                    } // case
 
                     // If this is not the first request - calculate the elapsed,
                     // time & current rate, compare against the target rate, and
                     // sleep if necessary:
                     Some(first_request) => {
-
                         // Output logging information:
                         // For some reason these trace! macros can cause a
                         // stack overflow, so they have been commented out for
@@ -77,29 +67,30 @@ impl RequestRate {
                         ); */
 
                         // Calculate the current rate and target rate:
-                        let target_rate = rate.target_rate.requests as f64 / rate.target_rate.duration.as_secs_f64();
-                        let current_rate = rate.current_rate.request_count as f64 / first_request.elapsed().as_secs_f64();
+                        let target_rate = rate.target_rate.requests as f64
+                            / rate.target_rate.duration.as_secs_f64();
+                        let current_rate = rate.current_rate.request_count as f64
+                            / first_request.elapsed().as_secs_f64();
 
                         // If the current rate exceeds the targeted rate, put
                         // the thread to sleep:
                         let difference = current_rate - target_rate;
                         if difference > 0.0 {
-                            let sleep_duration = std::time::Duration::from_secs(((1.0 / target_rate) + difference).round() as u64);
-                            info!("Thread is sleeping for {}.", duration_to_string(sleep_duration));
+                            let sleep_duration = std::time::Duration::from_secs(
+                                ((1.0 / target_rate) + difference).round() as u64,
+                            );
+                            info!(
+                                "Thread is sleeping for {}.",
+                                duration_to_string(sleep_duration)
+                            );
                             std::thread::sleep(sleep_duration);
                         } // if
 
                         // Increment the request counter:
                         rate.current_rate.request_count += 1;
-
                     } // case
-
                 } // match
-
             } // case
-
         } // match
-
     } // fn
-
 } // impl

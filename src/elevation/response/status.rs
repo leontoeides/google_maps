@@ -2,13 +2,12 @@
 //! debugging information to help you track down why the service request failed.
 
 use crate::elevation::error::Error;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Indicates the status of the response.
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Status {
-
     /// Indicates that the request was malformed.
     #[serde(alias = "INVALID_REQUEST")]
     InvalidRequest,
@@ -41,7 +40,6 @@ pub enum Status {
     /// Indicates an unknown error.
     #[serde(alias = "UNKNOWN_ERROR")]
     UnknownError,
-
 } // enum
 
 impl std::convert::From<&Status> for String {
@@ -61,7 +59,6 @@ impl std::convert::From<&Status> for String {
 } // impl
 
 impl std::convert::TryFrom<&str> for Status {
-
     // Error definitions are contained in the
     // `google_maps\src\elevation\error.rs` module.
     type Error = crate::elevation::error::Error;
@@ -80,7 +77,6 @@ impl std::convert::TryFrom<&str> for Status {
             _ => Err(Error::InvalidStatusCode(status.to_string())),
         } // match
     } // fn
-
 } // impl
 
 impl std::default::Default for Status {

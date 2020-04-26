@@ -2,7 +2,7 @@
 //! `DurationUnit` specifies a unit of time that is used to express a duration,
 //! which is a scale of measure of time between two events.
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// A "Duration unit" is a "duration unit of time." By adjusting the scale of
 /// time when presenting information to the user, the presentation can be made

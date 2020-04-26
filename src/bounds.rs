@@ -3,7 +3,7 @@
 //! latitude & longitude pairs.
 
 use crate::latlng::LatLng;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Contains the recommended viewport for displaying the returned result,
 /// specified as two latitude & longitude values defining the southwest and
@@ -24,10 +24,7 @@ impl std::convert::From<&Bounds> for String {
     fn from(bounds: &Bounds) -> String {
         format!(
             "{},{}|{},{}",
-            bounds.southwest.lat,
-            bounds.southwest.lng,
-            bounds.northeast.lat,
-            bounds.northeast.lng,
+            bounds.southwest.lat, bounds.southwest.lng, bounds.northeast.lat, bounds.northeast.lng,
         ) // format!
     } // fn
 } // impl

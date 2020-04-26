@@ -3,97 +3,54 @@
 //! collisions or conflicts, you can glob import all google_maps structs and
 //! enums by using this module.
 
-pub use chrono::{
-    DateTime,
-    Duration,
-    Local,
-    NaiveDate,
-    NaiveDateTime,
-    Utc,
-}; // chrono
+pub use chrono::{DateTime, Duration, Local, NaiveDate, NaiveDateTime, Utc}; // chrono
 pub use chrono_tz::Tz;
 pub use rust_decimal::Decimal;
 pub use rust_decimal_macros::dec;
 
 pub use crate::{
-    bounds::Bounds as Bounds,
-    client_settings::ClientSettings as ClientSettings,
-    language::Language as Language,
-    latlng::LatLng as LatLng,
-    place_type::PlaceType as PlaceType,
-    region::Region as Region,
-    request_rate::api::Api as Api,
+    bounds::Bounds, client_settings::ClientSettings, language::Language, latlng::LatLng,
+    place_type::PlaceType, region::Region, request_rate::api::Api,
 }; // use
 
 pub use crate::directions::{
     request::{
-        avoid::Avoid as Avoid,
-        departure_time::DepartureTime as DepartureTime,
-        location::Location as Location,
-        Request as DirectionsRequest,
-        traffic_model::TrafficModel as TrafficModel,
-        transit_mode::TransitMode as TransitMode,
-        transit_route_preference::TransitRoutePreference as TransitRoutePreference,
-        unit_system::UnitSystem as UnitSystem,
-        waypoint::Waypoint as Waypoint,
+        avoid::Avoid, departure_time::DepartureTime, location::Location,
+        traffic_model::TrafficModel, transit_mode::TransitMode,
+        transit_route_preference::TransitRoutePreference, unit_system::UnitSystem,
+        waypoint::Waypoint, Request as DirectionsRequest,
     }, // request
     response::{
-        directions_distance::DirectionsDistance,
-        directions_duration::DirectionsDuration,
-        driving_maneuver::DrivingManeuver as DrivingManeuver,
-        leg::Leg as Leg,
-        overview_polyline::OverviewPolyline as OverviewPolyline,
-        polyline::Polyline as Polyline,
+        directions_distance::DirectionsDistance, directions_duration::DirectionsDuration,
+        driving_maneuver::DrivingManeuver, leg::Leg, overview_polyline::OverviewPolyline,
+        polyline::Polyline, route::Route, status::Status as DirectionsStatus, step::Step,
+        transit_agency::TransitAgency, transit_currency::TransitCurrency,
+        transit_details::TransitDetails, transit_fare::TransitFare, transit_line::TransitLine,
+        transit_stop::TransitStop, transit_time::TransitTime, transit_vehicle::TransitVehicle,
         Response as DirectionsResponse,
-        route::Route as Route,
-        status::Status as DirectionsStatus,
-        step::Step as Step,
-        transit_agency::TransitAgency as TransitAgency,
-        transit_currency::TransitCurrency as TransitCurrency,
-        transit_details::TransitDetails as TransitDetails,
-        transit_fare::TransitFare as TransitFare,
-        transit_line::TransitLine as TransitLine,
-        transit_stop::TransitStop as TransitStop,
-        transit_time::TransitTime as TransitTime,
-        transit_vehicle::TransitVehicle as TransitVehicle,
     }, // response
-    travel_mode::TravelMode as TravelMode,
-    vehicle_type::VehicleType as VehicleType,
+    travel_mode::TravelMode,
+    vehicle_type::VehicleType,
 }; // use
 
 pub use crate::distance_matrix::{
-    request::Request as DistanceMatrixRequest,
+    request::Request as DistanceMatrixRequest, response::status::Status as DistanceMatrixStatus,
     response::Response as DistanceMatrixResponse,
-    response::status::Status as DistanceMatrixStatus,
 }; // use
 
 pub use crate::elevation::{
     error::Error as ElevationError,
-    request::{
-        locations::Locations as ElevationLocations,
-        Request as ElevationRequest,
-    }, // request
-    response::{
-        point::Point as Point,
-        Response as ElevationResponse,
-        status::Status as ElevationStatus,
-    }, // response
+    request::{locations::Locations as ElevationLocations, Request as ElevationRequest}, // request
+    response::{point::Point, status::Status as ElevationStatus, Response as ElevationResponse}, // response
 }; // use
 
 pub use crate::geocoding::{
     error::Error as GeocodingError,
-    forward::{
-        component::Component as GeocodingComponent,
-        ForwardRequest as GeocodingRequest,
-    }, // forward
-    location_type::LocationType as LocationType,
+    forward::{component::Component as GeocodingComponent, ForwardRequest as GeocodingRequest}, // forward
+    location_type::LocationType,
     response::{
-        address_component::AddressComponent,
-        geocoding::Geocoding as Geocoding,
-        geometry::Geometry,
-        plus_code::PlusCode,
-        Response as GeocodingResponse,
-        status::Status as GeocodingStatus,
+        address_component::AddressComponent, geocoding::Geocoding, geometry::Geometry,
+        plus_code::PlusCode, status::Status as GeocodingStatus, Response as GeocodingResponse,
     }, // response
     reverse::ReverseRequest as GeocodingReverseRequest,
 }; // use
@@ -101,8 +58,5 @@ pub use crate::geocoding::{
 pub use crate::time_zone::{
     error::Error as TimeZoneError,
     request::Request as TimeZoneRequest,
-    response::{
-        Response as TimeZoneResponse,
-        status::Status as TimeZoneStatus,
-    }, // reponse
+    response::{status::Status as TimeZoneStatus, Response as TimeZoneResponse}, // reponse
 }; // use

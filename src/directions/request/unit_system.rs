@@ -2,7 +2,7 @@
 //! whether imperial or metric units are used in Directions responses.
 
 use crate::directions::error::Error;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Specifies the [unit
 /// system](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
@@ -24,7 +24,6 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum UnitSystem {
-
     /// Specifies that distances in the response should be expressed in imperial
     /// units, miles and feet.
     #[serde(alias = "imperial")]
@@ -34,7 +33,6 @@ pub enum UnitSystem {
     /// units, using kilometres and metres.
     #[serde(alias = "metric")]
     Metric,
-
 } // enum
 
 impl std::convert::From<&UnitSystem> for String {
@@ -50,7 +48,6 @@ impl std::convert::From<&UnitSystem> for String {
 } // impl
 
 impl std::convert::TryFrom<&str> for UnitSystem {
-
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
     type Error = crate::directions::error::Error;
@@ -65,7 +62,6 @@ impl std::convert::TryFrom<&str> for UnitSystem {
             _ => Err(Error::InvalidUnitSystemCode(units.to_string())),
         } // match
     } // fn
-
 } // impl
 
 impl std::default::Default for UnitSystem {

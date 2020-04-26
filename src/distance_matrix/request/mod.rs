@@ -19,24 +19,20 @@ mod with_transit_route_preference;
 mod with_travel_mode;
 mod with_unit_system;
 
-use chrono::NaiveDateTime;
 use crate::{
-    directions::{
-        travel_mode::TravelMode,
-        request::{
-            avoid::Avoid,
-            departure_time::DepartureTime,
-            traffic_model::TrafficModel,
-            transit_mode::TransitMode,
-            transit_route_preference::TransitRoutePreference,
-            unit_system::UnitSystem,
-            waypoint::Waypoint,
-        } // request
-    }, // directions
     client_settings::ClientSettings,
+    directions::{
+        request::{
+            avoid::Avoid, departure_time::DepartureTime, traffic_model::TrafficModel,
+            transit_mode::TransitMode, transit_route_preference::TransitRoutePreference,
+            unit_system::UnitSystem, waypoint::Waypoint,
+        }, // request
+        travel_mode::TravelMode,
+    }, // directions
     language::Language,
     region::Region,
-}; // use
+};
+use chrono::NaiveDateTime; // use
 
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Distance Matrix API_ query**. The methods implemented for this struct are
@@ -44,10 +40,8 @@ use crate::{
 
 #[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Request<'a> {
-
     // Required parameters:
     // --------------------
-
     /// One or more locations to use as the finishing point for calculating
     /// travel distance and time. You can pass an address, latitude/longitude,
     /// place ID, or encoded polyline.
@@ -63,7 +57,6 @@ pub struct Request<'a> {
 
     // Optional parameters:
     // --------------------
-
     /// Desired arrival time. See method `with_arrival_time()` for more
     /// information.
     arrival_time: Option<NaiveDateTime>,
@@ -107,12 +100,10 @@ pub struct Request<'a> {
 
     // Internal use only:
     // ------------------
-
     /// The URL-encoded query string that is passed to the Google Maps
     /// Directions API through cURL.
     query: Option<String>,
 
     /// Has the request been validated?
     validated: bool,
-
 } // struct

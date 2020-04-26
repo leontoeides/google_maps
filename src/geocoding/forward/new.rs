@@ -1,10 +1,6 @@
-use crate::{
-    geocoding::forward::ForwardRequest,
-    client_settings::ClientSettings,
-}; // use
+use crate::{client_settings::ClientSettings, geocoding::forward::ForwardRequest}; // use
 
 impl<'a> ForwardRequest<'a> {
-
     /// Initializes the builder pattern for a Geolocation API query with the
     /// required, non-optional parameters.
     ///
@@ -28,5 +24,4 @@ impl<'a> ForwardRequest<'a> {
             query: None,
         } // struct
     } // fn
-
 } // impl

@@ -1,10 +1,6 @@
-use crate::directions::request::{
-    Request,
-    traffic_model::TrafficModel,
-}; // use
+use crate::directions::request::{traffic_model::TrafficModel, Request}; // use
 
 impl<'a> Request<'a> {
-
     /// Specifies the assumptions to use when calculating time in traffic.
     ///
     /// ## Arguments
@@ -56,5 +52,4 @@ impl<'a> Request<'a> {
         self.traffic_model = Some(traffic_model);
         self
     } // fn
-
 } // impl

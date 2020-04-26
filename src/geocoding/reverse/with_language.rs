@@ -1,10 +1,6 @@
-use crate::{
-    geocoding::reverse::ReverseRequest,
-    language::Language,
-}; // use
+use crate::{geocoding::reverse::ReverseRequest, language::Language}; // use
 
 impl<'a> ReverseRequest<'a> {
-
     /// Specifies the language in which to return results.
     ///
     /// # Arguments:
@@ -53,5 +49,4 @@ impl<'a> ReverseRequest<'a> {
         // Return modified ReverseRequest struct to caller.
         self
     } // fn
-
 } // impl

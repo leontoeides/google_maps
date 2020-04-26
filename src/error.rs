@@ -31,34 +31,46 @@ impl std::fmt::Display for Error {
     /// to the user.
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Error::InvalidLanguageCode(language_code) => write!(f,
+            Error::InvalidLanguageCode(language_code) => write!(
+                f,
                 "Google Maps Platform API client: \
                 `{}` is not a recognized language code.
                 For a list of supported languages see \
                 https://developers.google.com/maps/faq#languagesupport",
-                language_code),
-            Error::InvalidLatitude(latitude, longitude) => write!(f,
+                language_code
+            ),
+            Error::InvalidLatitude(latitude, longitude) => write!(
+                f,
                 "Google Maps Platform API client: \
                 `{lat}` from the `{lat},{lng}` pair is an invalid latitudinal value.
                 A latitude must be between -90.0° and 90.0°.",
-                lat=latitude, lng=longitude),
-            Error::InvalidLongitude(latitude, longitude) => write!(f,
+                lat = latitude,
+                lng = longitude
+            ),
+            Error::InvalidLongitude(latitude, longitude) => write!(
+                f,
                 "Google Maps Platform API client: \
                 `{lng}` from the `{lat},{lng}` pair is an invalid longitudinal value.
                 A longitude must be between -180.0° and 180.0°.",
-                lat=latitude, lng=longitude),
-            Error::InvalidPlaceTypeCode(place_type_code) => write!(f,
+                lat = latitude,
+                lng = longitude
+            ),
+            Error::InvalidPlaceTypeCode(place_type_code) => write!(
+                f,
                 "Google Maps Platform API client: \
                 `{}` is not a recognized place type code.
                 For a list of supported place types see \
                 https://developers.google.com/places/web-service/supported_types",
-                place_type_code),
-            Error::InvalidRegionCode(region_code) => write!(f,
+                place_type_code
+            ),
+            Error::InvalidRegionCode(region_code) => write!(
+                f,
                 "Google Maps Platform API client: \
                 `{}` is not a recognized region code.
                 For a list of supported regions see \
                 https://developers.google.com/maps/coverage",
-                region_code),
+                region_code
+            ),
         } // match
     } // fn
 } // impl

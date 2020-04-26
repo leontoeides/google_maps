@@ -1,10 +1,6 @@
-use crate::directions::request::{
-    Request,
-    unit_system::UnitSystem,
-}; // use
+use crate::directions::request::{unit_system::UnitSystem, Request}; // use
 
 impl<'a> Request<'a> {
-
     /// Specifies the unit system to use when displaying results.
     ///
     /// ## Arguments
@@ -48,5 +44,4 @@ impl<'a> Request<'a> {
         self.unit_system = Some(unit_system);
         self
     } // fn
-
 } // impl

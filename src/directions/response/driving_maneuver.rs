@@ -2,7 +2,7 @@
 //! to determine which icon to display for the current step.
 
 use crate::directions::error::Error;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// The action to take for the current step (turn left, merge, straight, etc.).
 /// This field is used to determine which icon to display. Values in this
@@ -88,7 +88,6 @@ impl std::convert::From<&DrivingManeuver> for String {
 } // impl
 
 impl std::convert::TryFrom<&str> for DrivingManeuver {
-
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
     type Error = crate::directions::error::Error;
@@ -123,7 +122,6 @@ impl std::convert::TryFrom<&str> for DrivingManeuver {
             _ => Err(Error::InvalidDrivingManeuverCode(maneuver_type.to_string())),
         } // match
     } // fn
-
 } // impl
 
 impl std::default::Default for DrivingManeuver {

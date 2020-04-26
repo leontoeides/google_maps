@@ -2,10 +2,7 @@
 //! the user's specified request rate and the system calculated effective
 //! current request rate.
 
-use crate::request_rate::{
-    current_rate::CurrentRate,
-    target_rate::TargetRate,
-}; // use
+use crate::request_rate::{current_rate::CurrentRate, target_rate::TargetRate}; // use
 
 /// Contains the user's specified request rate and the effective current request
 /// rate.
