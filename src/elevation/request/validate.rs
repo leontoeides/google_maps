@@ -1,6 +1,7 @@
-use crate::elevation::{error::Error, request::Request}; // use
+use crate::elevation::{error::Error, request::Request};
 
 impl<'a> Request<'a> {
+
     /// Ensures the built query is valid. This function checks the combination
     /// of parameters to ensure that they make sense together and that Google
     /// Maps Directions API will accept them - i.e. it will not allow both a
@@ -13,6 +14,7 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub fn validate(&mut self) -> Result<&'a mut Request, Error> {
+
         // If a "for positional request" has been set...
         if let Some(_locations) = &self.locations {
             // ...a "for sampled path request" cannot be set.
@@ -26,5 +28,7 @@ impl<'a> Request<'a> {
 
         // Return modified Request struct to caller.
         Ok(self)
+
     } // fn
+
 } // impl

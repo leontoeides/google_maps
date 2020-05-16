@@ -23,8 +23,8 @@ impl std::convert::From<&CurrentRate> for String {
         match current_rate.first_request {
             None => String::from("None"),
             Some(first_request) => rate_to_string(
-                current_rate.request_count,
-                first_request.elapsed(),
+                &current_rate.request_count,
+                &first_request.elapsed(),
                 "request",
                 "requests",
             ),

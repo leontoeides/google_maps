@@ -49,7 +49,7 @@ impl std::convert::From<&LatLng> for String {
 } // impl
 
 impl std::default::Default for LatLng {
-    /// Returns a reasonable default values for the `LatLng` struct.
+    /// Returns a reasonable default value for the `LatLng` struct.
     fn default() -> Self {
         LatLng {
             lat: dec!(0.0),
@@ -69,7 +69,7 @@ impl std::fmt::Display for LatLng {
             String::from("")
         } else {
             String::from(" S")
-        };
+        }; // let if
         // Indicate east-west hemisphere for longitude.
         let ew_hemisphere = if self.lng > dec!(0.0) {
             String::from(" E")
@@ -77,7 +77,7 @@ impl std::fmt::Display for LatLng {
             String::from("")
         } else {
             String::from(" W")
-        };
+        }; // let if
         // Display latitude and longitude as decimal degrees with some extra
         // fixins'.
         write!(
@@ -87,6 +87,6 @@ impl std::fmt::Display for LatLng {
             ns_hemisphere,
             self.lng.abs().normalize(),
             ew_hemisphere,
-        )
+        ) // write!
     } // fn
 } // impl

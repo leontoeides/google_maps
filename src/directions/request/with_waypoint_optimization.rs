@@ -1,6 +1,7 @@
 use crate::directions::request::Request;
 
 impl<'a> Request<'a> {
+
     /// Specifies whether the waypoint order should be optimized or not.
     ///
     /// ## Arguments
@@ -48,4 +49,5 @@ impl<'a> Request<'a> {
         self.waypoint_optimization = waypoint_optimization;
         self
     } // fn
+
 } // impl

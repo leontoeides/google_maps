@@ -770,17 +770,13 @@ impl std::fmt::Display for TransitCurrency {
             TransitCurrency::AfghanAfghani => write!(f, "Afghan afghani"),
             TransitCurrency::AlbanianLek => write!(f, "Albanian lek"),
             TransitCurrency::ArmenianDram => write!(f, "Armenian dram"),
-            TransitCurrency::NetherlandsAntilleanGuilder => {
-                write!(f, "Netherlands Antillean guilder")
-            }
+            TransitCurrency::NetherlandsAntilleanGuilder => write!(f, "Netherlands Antillean guilder"),
             TransitCurrency::AngolanKwanza => write!(f, "Angolan kwanza"),
             TransitCurrency::ArgentinePeso => write!(f, "Argentine peso"),
             TransitCurrency::AustralianDollar => write!(f, "Australian dollar"),
             TransitCurrency::ArubanFlorin => write!(f, "Aruban florin"),
             TransitCurrency::AzerbaijaniManat => write!(f, "Azerbaijani manat"),
-            TransitCurrency::BosniaAndHerzegovinaConvertibleMark => {
-                write!(f, "Bosnia and Herzegovina convertible mark")
-            }
+            TransitCurrency::BosniaAndHerzegovinaConvertibleMark => write!(f, "Bosnia and Herzegovina convertible mark"),
             TransitCurrency::BarbadosDollar => write!(f, "Barbados dollar"),
             TransitCurrency::BangladeshiTaka => write!(f, "Bangladeshi taka"),
             TransitCurrency::BulgarianLev => write!(f, "Bulgarian lev"),
@@ -919,12 +915,8 @@ impl std::fmt::Display for TransitCurrency {
             TransitCurrency::UkrainianHryvnia => write!(f, "Ukrainian hryvnia"),
             TransitCurrency::UgandanShilling => write!(f, "Ugandan shilling"),
             TransitCurrency::UnitedStatesDollar => write!(f, "United States dollar"),
-            TransitCurrency::UnitedStatesDollarNextDay => {
-                write!(f, "United States dollar next day")
-            }
-            TransitCurrency::UruguayPesoEnUnidadesIndexadas => {
-                write!(f, "Uruguay Peso en Unidades Indexadas")
-            }
+            TransitCurrency::UnitedStatesDollarNextDay => write!(f, "United States dollar next day"),
+            TransitCurrency::UruguayPesoEnUnidadesIndexadas => write!(f, "Uruguay Peso en Unidades Indexadas"),
             TransitCurrency::UruguayanPeso => write!(f, "Uruguayan peso"),
             TransitCurrency::UnidadPrevisional => write!(f, "Unidad previsional"),
             TransitCurrency::UzbekistanSom => write!(f, "Uzbekistan som"),

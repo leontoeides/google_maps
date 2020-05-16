@@ -51,7 +51,6 @@ impl std::convert::TryFrom<&str> for UnitSystem {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
     type Error = crate::directions::error::Error;
-
     /// Gets a `UnitSystem` enum from a `String` that contains a valid [unit
     /// system](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
     /// code.

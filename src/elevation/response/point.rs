@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Point {
+
     /// Elevation of the location in meters.
     pub elevation: f64,
 
@@ -20,4 +21,5 @@ pub struct Point {
     /// the most accurate elevation value for a point, it should be queried
     /// independently.
     pub resolution: Option<f64>,
+
 } // struct

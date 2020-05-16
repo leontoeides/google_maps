@@ -28,6 +28,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct AddressComponent {
+
     /// The full text description or name of the address component as returned
     /// by the Geocoder.
     pub long_name: String,
@@ -42,4 +43,5 @@ pub struct AddressComponent {
     /// [supported
     /// types](https://developers.google.com/places/web-service/supported_types).
     pub types: Vec<PlaceType>,
+
 } // struct

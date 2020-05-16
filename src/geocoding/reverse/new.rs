@@ -1,6 +1,10 @@
-use crate::{client_settings::ClientSettings, geocoding::reverse::ReverseRequest, latlng::LatLng}; // use
+use crate::{
+    client_settings::ClientSettings, geocoding::reverse::ReverseRequest,
+    latlng::LatLng
+}; // use crate
 
 impl<'a> ReverseRequest<'a> {
+
     /// Initializes the builder pattern for a Geolocation API query with the
     /// required, non-optional parameters.
     ///
@@ -11,7 +15,10 @@ impl<'a> ReverseRequest<'a> {
     /// * `latlng` - The latitude and longitude values specifying the location
     /// for which you wish to obtain the closest, human-readable address.
 
-    pub fn new(client_settings: &mut ClientSettings, latlng: LatLng) -> ReverseRequest {
+    pub fn new(
+        client_settings: &'a mut ClientSettings,
+        latlng: LatLng
+    ) -> ReverseRequest<'a> {
         // Instantiate struct and return it to caller:
         ReverseRequest {
             // Required parameters:
@@ -26,4 +33,5 @@ impl<'a> ReverseRequest<'a> {
             query: None,
         } // struct
     } // fn
+
 } // impl

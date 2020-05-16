@@ -8,6 +8,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Status {
+
     /// Indicates that the request was malformed.
     #[serde(alias = "INVALID_REQUEST")]
     InvalidRequest,
@@ -40,6 +41,7 @@ pub enum Status {
     /// Indicates an unknown error.
     #[serde(alias = "UNKNOWN_ERROR")]
     UnknownError,
+
 } // enum
 
 impl std::convert::From<&Status> for String {
@@ -62,7 +64,6 @@ impl std::convert::TryFrom<&str> for Status {
     // Error definitions are contained in the
     // `google_maps\src\elevation\error.rs` module.
     type Error = crate::elevation::error::Error;
-
     /// Gets a `Status` enum from a `String` that contains a valid
     /// [status](https://developers.google.com/maps/documentation/elevation/intro#ElevationResponses)
     /// code.

@@ -26,11 +26,12 @@ use std::time::Duration;
 /// this function.
 
 pub fn rate_to_string(
-    numerator: u64,
-    duration: Duration,
+    numerator: &u64,
+    duration: &Duration,
     numerator_singular: &str,
     numerator_plural: &str,
 ) -> String {
+
     // Multiplication is much faster than division:
 
     const MILLISECONDS_IN_A_SECOND: f64 = 1.0 / 0.001;
@@ -49,7 +50,7 @@ pub fn rate_to_string(
     // index 0, and the duration unit of time in index 1:
 
     let duration_in_secs = duration.as_secs_f64();
-    let numerator = numerator as f64;
+    let numerator = *numerator as f64;
 
     let adjusted_units = match duration_in_secs {
         s if numerator / (s * MILLISECONDS_IN_A_SECOND) > 1.0 => (
@@ -129,4 +130,5 @@ pub fn rate_to_string(
     // Formats the final string and returns it to the caller:
 
     quantity_string + " " + rate_type_string + " per " + &units_string
+
 } // fn

@@ -3,19 +3,11 @@
 //! builder pattern. This module contains the tools (enums, structs, methods)
 //! for building your Google Maps Platform request.
 
-pub mod avoid;
 mod build;
-pub mod departure_time;
 mod execute;
 mod get;
-pub mod location;
 mod new;
-pub mod traffic_model;
-pub mod transit_mode;
-pub mod transit_route_preference;
-pub mod unit_system;
 mod validate;
-pub mod waypoint;
 mod with_alternatives;
 mod with_arrival_time;
 mod with_departure_time;
@@ -29,7 +21,16 @@ mod with_travel_mode;
 mod with_unit_system;
 mod with_waypoint_optimization;
 mod with_waypoints;
+pub mod avoid;
+pub mod departure_time;
+pub mod location;
+pub mod traffic_model;
+pub mod transit_mode;
+pub mod transit_route_preference;
+pub mod unit_system;
+pub mod waypoint;
 
+use chrono::NaiveDateTime;
 use crate::{
     client_settings::ClientSettings,
     directions::request::{
@@ -42,7 +43,6 @@ use crate::{
     language::Language,
     region::Region,
 };
-use chrono::NaiveDateTime; // use
 
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Directions API_ query**. The methods implemented for this struct are what's
@@ -50,6 +50,7 @@ use chrono::NaiveDateTime; // use
 
 #[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Request<'a> {
+
     // Required parameters:
     // --------------------
     /// The address, latitude/longitude, or place ID to which you wish to
@@ -127,4 +128,5 @@ pub struct Request<'a> {
 
     /// Has the request been validated?
     validated: bool,
+
 } // struct

@@ -91,7 +91,6 @@ impl std::convert::TryFrom<&str> for DrivingManeuver {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
     type Error = crate::directions::error::Error;
-
     /// Gets a `DrivingManeuver` enum from a `String` that contains a valid
     /// [maneuver
     /// type](https://developers.google.com/maps/documentation/directions/intro#Steps)

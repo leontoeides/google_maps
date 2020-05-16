@@ -1001,9 +1001,7 @@ impl std::fmt::Display for Country {
             Country::SolomonIslands => write!(f, "Solomon Islands"),
             Country::Somalia => write!(f, "Somalia"),
             Country::SouthAfrica => write!(f, "SouthA frica"),
-            Country::SouthGeorgiaAndSouthSandwichIslands => {
-                write!(f, "South Georgia and the South Sandwich Islands")
-            }
+            Country::SouthGeorgiaAndSouthSandwichIslands => write!(f, "South Georgia and the South Sandwich Islands"),
             Country::SouthKorea => write!(f, "South Korea"),
             Country::SouthSudan => write!(f, "South Sudan"),
             Country::Spain => write!(f, "Spain"),
@@ -1040,9 +1038,7 @@ impl std::fmt::Display for Country {
             Country::UnitedArabEmirates => write!(f, "United Arab Emirates"),
             Country::UnitedKingdom => write!(f, "United Kingdom"),
             Country::UnitedStates => write!(f, "United States"),
-            Country::UnitedStatesMinorOutlyingIslands => {
-                write!(f, "United States Minor Outlying Islands")
-            }
+            Country::UnitedStatesMinorOutlyingIslands => write!(f, "United States Minor Outlying Islands"),
             Country::Uruguay => write!(f, "Uruguay"),
             Country::USVirginIslands => write!(f, "US Virgin ISlands"),
             Country::Uzbekistan => write!(f, "Uzbekistan"),

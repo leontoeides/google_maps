@@ -1,4 +1,4 @@
-use crate::{client_settings::ClientSettings, request_rate::api::Api}; // use
+use crate::{client_settings::ClientSettings, request_rate::api::Api};
 use std::time::Duration;
 
 impl ClientSettings {
@@ -111,7 +111,7 @@ impl ClientSettings {
 
     pub fn with_rate(
         &mut self,
-        api: Api,
+        api: &Api,
         requests: u16,
         per_duration: Duration,
     ) -> &mut ClientSettings {

@@ -1,6 +1,7 @@
-use crate::directions::request::{unit_system::UnitSystem, Request}; // use
+use crate::directions::request::{unit_system::UnitSystem, Request};
 
 impl<'a> Request<'a> {
+
     /// Specifies the unit system to use when displaying results.
     ///
     /// ## Arguments
@@ -40,8 +41,12 @@ impl<'a> Request<'a> {
     /// .with_unit_system(UnitSystem::Metric)
     /// ```
 
-    pub fn with_unit_system(&'a mut self, unit_system: UnitSystem) -> &mut Request {
+    pub fn with_unit_system(
+        &'a mut self,
+        unit_system: UnitSystem
+    ) -> &mut Request {
         self.unit_system = Some(unit_system);
         self
     } // fn
+
 } // impl

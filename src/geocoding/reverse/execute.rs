@@ -1,6 +1,9 @@
-use crate::geocoding::{error::Error, response::Response, reverse::ReverseRequest}; // use
+use crate::geocoding::{
+    error::Error, response::Response, reverse::ReverseRequest
+}; // use crate::geocoding
 
 impl<'a> ReverseRequest<'a> {
+
     /// Executes the query you've built.
     ///
     /// ## Description:
@@ -16,4 +19,5 @@ impl<'a> ReverseRequest<'a> {
     pub fn execute(&'a mut self) -> Result<Response, Error> {
         self.build().get()
     } // fn
+
 } // impl

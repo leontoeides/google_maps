@@ -1,6 +1,11 @@
-use crate::directions::{error::Error, request::Request, travel_mode::TravelMode}; // use
+use crate::directions::{
+    error::Error,
+    request::Request,
+    travel_mode::TravelMode
+}; // crate::directions
 
 impl<'a> Request<'a> {
+
     /// Ensures the built query is valid. This function checks the combination
     /// of parameters to ensure that they make sense together and that Google
     /// Maps Directions API will accept them - i.e. it will not allow both a
@@ -13,6 +18,7 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub fn validate(&'a mut self) -> Result<&'a mut Request, Error> {
+
         if let Some(travel_mode) = &self.travel_mode {
             // If the travel mode has been set to TravelMode::Transit...
             if *travel_mode == TravelMode::Transit {
@@ -101,5 +107,7 @@ impl<'a> Request<'a> {
 
         // Return modified Request struct to caller.
         Ok(self)
+
     } // fn
+
 } // impl

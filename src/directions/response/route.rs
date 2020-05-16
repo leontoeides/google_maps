@@ -3,8 +3,10 @@
 use crate::{
     bounds::Bounds,
     directions::response::{
-        leg::Leg, overview_polyline::OverviewPolyline, transit_fare::TransitFare,
-    }, // directions::response
+        leg::Leg,
+        overview_polyline::OverviewPolyline,
+        transit_fare::TransitFare,
+    }, // crate::directions::response
 }; // use
 use rust_decimal::Decimal;
 use serde::Deserialize;
@@ -71,6 +73,7 @@ pub struct Route {
 } // struct
 
 impl Route {
+
     /// A helper function for destructuring (or serializing) the `summary`
     /// field. If the _summary_ text is populated, this function will return the
     /// _summary_ text in the `String` format. If the _summary_ text is empty,
@@ -168,4 +171,5 @@ impl Route {
             ))
         } // if
     } // fn
+
 } // impl

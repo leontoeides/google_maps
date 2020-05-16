@@ -8,11 +8,13 @@ mod execute;
 mod for_positional_request;
 mod for_sampled_path_request;
 mod get;
-pub mod locations;
 mod new;
 mod validate;
+pub mod locations;
 
-use crate::{client_settings::ClientSettings, elevation::request::locations::Locations}; // use
+use crate::{
+    client_settings::ClientSettings, elevation::request::locations::Locations
+}; // use crate
 
 /// **Look at this `Request` struct for documentation on how to build your _Time
 /// Zone API_ query**. The methods implemented for this struct are what's used
@@ -20,6 +22,7 @@ use crate::{client_settings::ClientSettings, elevation::request::locations::Loca
 
 #[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Request<'a> {
+
     // Required parameters:
     // --------------------
     /// This structure contains the application's API key and other
@@ -55,4 +58,5 @@ pub struct Request<'a> {
 
     /// Has the request been validated?
     validated: bool,
+
 } // struct

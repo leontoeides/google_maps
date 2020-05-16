@@ -12,6 +12,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Response {
+
     /// When the status code is other than `OK`, there may be an additional
     /// `error_message` field within the Elevation response object. This field
     /// contains more detailed information about the reasons behind the given
@@ -29,4 +30,5 @@ pub struct Response {
 
     /// The status of the response.
     pub status: Status,
+
 } // struct

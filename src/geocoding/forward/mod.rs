@@ -5,8 +5,6 @@
 //! geocoding converts a street address to latitude & longitude coordinates.
 
 mod build;
-pub mod component;
-pub mod country;
 mod execute;
 mod get;
 mod new;
@@ -16,11 +14,14 @@ mod with_bounds;
 mod with_components;
 mod with_language;
 mod with_region;
+pub mod component;
+pub mod country;
 
 use crate::{
-    bounds::Bounds, client_settings::ClientSettings, geocoding::forward::component::Component,
-    language::Language, region::Region,
-}; // use
+    bounds::Bounds, client_settings::ClientSettings,
+    geocoding::forward::component::Component, language::Language,
+    region::Region,
+}; // use crate
 
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Geocoding API_ query**. The methods implemented for this struct are what's
@@ -29,6 +30,7 @@ use crate::{
 
 #[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct ForwardRequest<'a> {
+
     // Required parameters:
     // --------------------
     /// This structure contains the application's API key and other
@@ -75,4 +77,5 @@ pub struct ForwardRequest<'a> {
 
     /// Has the request been validated?
     validated: bool,
+
 } // struct

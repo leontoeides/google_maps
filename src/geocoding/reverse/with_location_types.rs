@@ -1,6 +1,7 @@
-use crate::geocoding::{location_type::LocationType, reverse::ReverseRequest}; // use
+use crate::geocoding::{location_type::LocationType, reverse::ReverseRequest};
 
 impl<'a> ReverseRequest<'a> {
+
     /// Restricts the results from the geocoder to the specified location
     /// type(s).
     ///
@@ -65,7 +66,7 @@ impl<'a> ReverseRequest<'a> {
             // If there are already filters, append to them:
             Some(location_types) => location_types.push(location_type_element),
         } // match
-          // Return modified ReverseRequest struct to caller.
+        // Return modified ReverseRequest struct to caller.
         self
     } // fn
 
@@ -108,10 +109,11 @@ impl<'a> ReverseRequest<'a> {
             Some(reverse_request_struct) => {
                 for location_type_element in location_type_slice {
                     reverse_request_struct.push(location_type_element.to_owned())
-                }
+                } // for
             } // case
         } // match
-          // Return modified ReverseRequest struct to caller.
+        // Return modified ReverseRequest struct to caller.
         self
     } // fn
+
 } // impl

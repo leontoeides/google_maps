@@ -2,7 +2,9 @@
 //! displaying the returned result, the bounding box, and other additional
 //! data.
 
-use crate::{bounds::Bounds, geocoding::location_type::LocationType, latlng::LatLng}; // use
+use crate::{
+    bounds::Bounds, geocoding::location_type::LocationType, latlng::LatLng
+}; // use crate
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 
@@ -12,6 +14,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Geometry {
+
     /// Contains the geocoded latitude, longitude value. For normal address
     /// lookups, this field is typically the most important.
     pub location: LatLng,
@@ -32,9 +35,11 @@ pub struct Geometry {
     /// technically part of the city, but probably should not be returned in the
     /// viewport.)
     pub bounds: Option<Bounds>,
+
 } // struct
 
 impl Geometry {
+
     /// A helper function for destructuring the optional `bounds` field. If
     /// the _bounds_ field is populated, this function will return the
     /// south-west _latitude_. If the _bounds_ field is empty, this function
@@ -90,4 +95,5 @@ impl Geometry {
             None => None,
         } // match
     } // fn
+
 } // impl
