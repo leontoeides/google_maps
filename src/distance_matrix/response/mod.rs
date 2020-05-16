@@ -10,7 +10,7 @@ pub mod element_status;
 pub mod row;
 pub mod status;
 
-use crate::distance_matrix::response::{row::Row, status::Status}; // use
+use crate::distance_matrix::response::{row::Row, status::Status};
 use serde::Deserialize;
 
 /// Distance Matrix responses contain the following root elements.

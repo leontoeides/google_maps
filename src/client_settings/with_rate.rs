@@ -2,6 +2,7 @@ use crate::{client_settings::ClientSettings, request_rate::api::Api}; // use
 use std::time::Duration;
 
 impl ClientSettings {
+
     /// Sets the rate limit for the specified API.
     ///
     /// ## Arguments
@@ -117,4 +118,5 @@ impl ClientSettings {
         self.rate_limit.with_rate(api, requests, per_duration);
         self
     } // fn
+
 } // impl
