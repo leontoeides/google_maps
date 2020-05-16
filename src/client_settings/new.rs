@@ -1,10 +1,16 @@
 use crate::{
-    client_settings::ClientSettings, directions::request::location::Location,
-    directions::request::waypoint::Waypoint, latlng::LatLng, request_rate::RequestRate,
-};
-use chrono::{DateTime, Utc}; // chrono // use
+    client_settings::ClientSettings,
+    directions::request::{
+        location::Location,
+        waypoint::Waypoint,
+    }, // directions::request
+    latlng::LatLng,
+    request_rate::RequestRate,
+}; // use
+use chrono::{DateTime, Utc};
 
 impl ClientSettings {
+
     /// Initialize the settings needed for a Google Cloud Maps API transaction.
     pub fn new(key: &str) -> ClientSettings {
         ClientSettings {
@@ -124,4 +130,5 @@ impl ClientSettings {
     ) -> crate::time_zone::request::Request {
         crate::time_zone::request::Request::new(self, location, timestamp)
     } // fn
+
 } // impl
