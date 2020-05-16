@@ -12,6 +12,7 @@ use std::convert::TryFrom;
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Locations {
+
     /// A single or multiple
     /// [latitude/longitude](https://developers.google.com/maps/documentation/elevation/intro#Locations)
     /// pairs.
@@ -20,6 +21,7 @@ pub enum Locations {
     /// An [encoded
     /// polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm).
     Polyline(String),
+
 } // enum
 
 impl std::convert::From<&Locations> for String {

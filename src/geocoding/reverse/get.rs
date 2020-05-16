@@ -1,10 +1,12 @@
 use crate::geocoding::{
-    error::Error, response::status::Status, response::Response, reverse::ReverseRequest,
-}; // use
+    error::Error, response::status::Status, response::Response,
+    reverse::ReverseRequest,
+}; // use crate::geocoding
 use crate::request_rate::api::Api;
 use log::{info, warn};
 
 impl<'a> ReverseRequest<'a> {
+
     /// Performs the HTTP get request and returns the response to the caller.
     ///
     /// ## Arguments:
@@ -12,6 +14,7 @@ impl<'a> ReverseRequest<'a> {
     /// This method accepts no arguments.
 
     pub fn get(&mut self) -> Result<Response, Error> {
+
         // Build the URI stem for the HTTP get request:
 
         const SERVICE_URI: &str = "https://maps.googleapis.com/maps/api/geocode";
@@ -25,17 +28,19 @@ impl<'a> ReverseRequest<'a> {
             None => return Err(Error::QueryNotBuilt),
         } // match
 
-        self.client_settings.rate_limit.limit(Api::All);
-        self.client_settings.rate_limit.limit(Api::Geocoding);
+        self.client_settings.rate_limit.limit(&Api::All);
+        self.client_settings.rate_limit.limit(&Api::Geocoding);
 
         info!("HTTP GET: {}", uri);
 
         // Initialize variables:
         let mut counter = 0;
         let mut wait_time_in_ms = 0;
+
         // Retries the get request until successful, an error ineligible for
         // retries is returned, or we have reached the maximum retries:
         loop {
+
             // Increment retry counter:
             counter += 1;
             // Query the Google Cloud Maps Platform using using an HTTP get
@@ -130,8 +135,10 @@ impl<'a> ReverseRequest<'a> {
             } // if
 
             info!("Could not successfully query the Google Maps Platform. Sleeping for {} milliseconds before retry #{} of {}.", wait_time_in_ms, counter, self.client_settings.max_retries);
-
             std::thread::sleep(std::time::Duration::from_millis(wait_time_in_ms as u64));
+
         } // loop
+
     } // fn
+
 } // impl

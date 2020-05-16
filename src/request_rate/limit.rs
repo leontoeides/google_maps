@@ -1,8 +1,13 @@
-use crate::request_rate::{api::Api, duration_to_string::duration_to_string, RequestRate}; // use
+use crate::request_rate::{
+    api::Api,
+    duration_to_string::duration_to_string,
+    RequestRate
+}; // use crate::request_rate
 use log::info;
 use std::time::Instant;
 
 impl RequestRate {
+
     /// This method is not for public consumption. It is for internal use only.
     ///
     /// ## Description
@@ -17,7 +22,8 @@ impl RequestRate {
     ///
     /// * `api` ‧ The API for which to observe the request rate limit.
 
-    pub fn limit(&mut self, api: Api) {
+    pub fn limit(&mut self, api: &Api) {
+
         // Select the ApiLimit requested by the caller:
         let api_ref = match api {
             Api::All => &mut self.all,
@@ -59,7 +65,7 @@ impl RequestRate {
                             "{} requests to the `{}` API this session. This API's session began {} ago.",
                             rate.current_rate.request_count,
                             api.to_string(),
-                            duration_to_string(first_request.elapsed())
+                            duration_to_string(&first_request.elapsed())
                         ); */
                         /* trace!(
                             "Current rate: {}. Target rate: {}.",
@@ -81,7 +87,7 @@ impl RequestRate {
                             );
                             info!(
                                 "Thread is sleeping for {}.",
-                                duration_to_string(sleep_duration)
+                                duration_to_string(&sleep_duration)
                             );
                             std::thread::sleep(sleep_duration);
                         } // if
@@ -92,5 +98,7 @@ impl RequestRate {
                 } // match
             } // case
         } // match
+
     } // fn
+
 } // impl

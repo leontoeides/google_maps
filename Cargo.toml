@@ -1,6 +1,6 @@
 [package]
 name = "google_maps"
-version = "0.7.3"
+version = "1.0.0"
 authors = ["Dylan Bowker <dylan.bowker@arkiteq.ca>"]
 edition = "2018"
 categories = [ "api-bindings" ]
@@ -19,10 +19,10 @@ log = "0.4.8"
 percent-encoding = "2.1.0"
 rand = "0.7.3"
 reqwest = { version = "0.10.4", features = ["blocking"] }
-rust_decimal = {version = "1.4.1", features = ["serde-float"] }
-rust_decimal_macros = "1.4.1"
-serde = { version = "1.0.106", features = ["derive"] }
-serde_json = "1.0.51"
+rust_decimal = {version = "1.5.0", features = ["serde-float"] }
+rust_decimal_macros = "1.5.0"
+serde = { version = "1.0.110", features = ["derive"] }
+serde_json = "1.0.53"
 
 [badges]
 travis-ci = { repository = "leontoeides/google_maps", branch = "master" }

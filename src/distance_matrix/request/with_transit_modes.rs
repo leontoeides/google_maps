@@ -2,6 +2,7 @@ use crate::directions::request::transit_mode::TransitMode;
 use crate::distance_matrix::request::Request;
 
 impl<'a> Request<'a> {
+
     /// Specify the preferred mode of transit.
     ///
     /// ## Arguments
@@ -49,7 +50,10 @@ impl<'a> Request<'a> {
     /// .with_transit_mode(TransitMode::Subway)
     /// ```
 
-    pub fn with_transit_mode(&'a mut self, transit_mode: TransitMode) -> &'a mut Request {
+    pub fn with_transit_mode(
+        &'a mut self,
+        transit_mode: TransitMode
+    ) -> &'a mut Request {
         // Add restiction to Request struct.
         match &mut self.transit_modes {
             // If there are no transit modes in the request struct, initialize:
@@ -94,4 +98,5 @@ impl<'a> Request<'a> {
           // Return modified Request struct to caller.
         self
     } // fn
+
 } // impl

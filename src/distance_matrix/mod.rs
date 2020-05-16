@@ -83,22 +83,26 @@ pub use crate::directions::{
     request::{
         avoid::Avoid, departure_time::DepartureTime, location::Location,
         traffic_model::TrafficModel, transit_mode::TransitMode,
-        transit_route_preference::TransitRoutePreference, unit_system::UnitSystem,
-        waypoint::Waypoint,
-    }, // request
+        transit_route_preference::TransitRoutePreference,
+        unit_system::UnitSystem, waypoint::Waypoint,
+    }, // crate::directions::request
     response::{
-        directions_distance::DirectionsDistance, directions_duration::DirectionsDuration,
-        driving_maneuver::DrivingManeuver, leg::Leg, overview_polyline::OverviewPolyline,
-        polyline::Polyline, route::Route, step::Step, transit_agency::TransitAgency,
-        transit_currency::TransitCurrency, transit_details::TransitDetails,
-        transit_fare::TransitFare, transit_line::TransitLine, transit_stop::TransitStop,
+        directions_distance::DirectionsDistance,
+        directions_duration::DirectionsDuration,
+        driving_maneuver::DrivingManeuver, leg::Leg,
+        overview_polyline::OverviewPolyline,
+        polyline::Polyline, route::Route, step::Step,
+        transit_agency::TransitAgency, transit_currency::TransitCurrency,
+        transit_details::TransitDetails, transit_fare::TransitFare,
+        transit_line::TransitLine, transit_stop::TransitStop,
         transit_time::TransitTime, transit_vehicle::TransitVehicle,
-    }, // response
+    }, // crate::directions::response
     travel_mode::TravelMode,
     vehicle_type::VehicleType,
-}; // use
+}; // use crate::directions
 
 pub use crate::distance_matrix::{
-    request::Request as DistanceMatrixRequest, response::status::Status as DistanceMatrixStatus,
+    request::Request as DistanceMatrixRequest,
     response::Response as DistanceMatrixResponse,
-}; // use
+    response::status::Status as DistanceMatrixStatus,
+}; // use crate::distance_matrix

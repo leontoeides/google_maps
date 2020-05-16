@@ -13,9 +13,9 @@ mod with_location_types;
 mod with_result_types;
 
 use crate::{
-    client_settings::ClientSettings, geocoding::location_type::LocationType, language::Language,
-    latlng::LatLng, place_type::PlaceType,
-}; // use
+    client_settings::ClientSettings, geocoding::location_type::LocationType,
+    language::Language, latlng::LatLng, place_type::PlaceType,
+}; // use crate
 
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Geocoding API_ query**. The methods implemented for this struct are what's
@@ -24,6 +24,7 @@ use crate::{
 
 #[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct ReverseRequest<'a> {
+
     // Required parameters:
     // --------------------
     /// This structure contains the application's API key and other
@@ -64,4 +65,5 @@ pub struct ReverseRequest<'a> {
 
     /// Has the request been validated?
     validated: bool,
+
 } // impl

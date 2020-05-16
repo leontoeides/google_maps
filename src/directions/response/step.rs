@@ -4,13 +4,16 @@
 use crate::{
     directions::{
         response::{
-            directions_distance::DirectionsDistance, directions_duration::DirectionsDuration,
-            driving_maneuver::DrivingManeuver, polyline::Polyline, transit_details::TransitDetails,
-        }, // response
+            directions_distance::DirectionsDistance,
+            directions_duration::DirectionsDuration,
+            driving_maneuver::DrivingManeuver,
+            polyline::Polyline,
+            transit_details::TransitDetails,
+        }, // crate::directions::response
         travel_mode::TravelMode,
-    }, // directions
+    }, // crate::directions
     latlng::LatLng,
-}; // use
+}; // use crate
 use serde::Deserialize;
 
 /// Each element in the `steps` array defines a single step of the calculated
@@ -74,6 +77,7 @@ pub struct Step {
 } // struct
 
 impl Step {
+
     /// A helper function for destructuring (or serializing) the optional
     /// `maneuver` field. If the `ManeuverType` enum in the step is populated,
     /// this function will return it as a `String`. If the _ManeuverType_ enum
@@ -81,10 +85,12 @@ impl Step {
     /// ```rust
     /// let maneuver = step.get_maneuver();
     /// ```
+
     pub fn get_maneuver(&self) -> Option<String> {
         match &self.maneuver {
             Some(maneuver) => Some(String::from(maneuver)),
             None => None,
         } // match
     } // fn
+
 } // impl

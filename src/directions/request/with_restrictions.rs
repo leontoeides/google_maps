@@ -1,6 +1,7 @@
-use crate::directions::request::{avoid::Avoid, Request}; // use
+use crate::directions::request::{avoid::Avoid, Request};
 
 impl<'a> Request<'a> {
+
     /// Specify a feature that routes should avoid.
     ///
     /// ## Arguments
@@ -57,7 +58,10 @@ impl<'a> Request<'a> {
     /// .with_restriction(Avoid::Ferries)
     /// ```
 
-    pub fn with_restriction(&'a mut self, restriction: Avoid) -> &'a mut Request {
+    pub fn with_restriction(
+        &'a mut self,
+        restriction: Avoid
+    ) -> &'a mut Request {
         // Add restriction to Request struct.
         match &mut self.restrictions {
             // If there are no restrictions in the request struct, initialize:
@@ -65,7 +69,7 @@ impl<'a> Request<'a> {
             // If there are already restrictions, append to them:
             Some(restrictions) => restrictions.push(restriction),
         } // match
-          // Return modified Request struct to caller.
+        // Return modified Request struct to caller.
         self
     } // fn
 
@@ -83,7 +87,10 @@ impl<'a> Request<'a> {
     /// ])
     /// ```
 
-    pub fn with_restrictions(&'a mut self, restrictions_slice: &[Avoid]) -> &'a mut Request {
+    pub fn with_restrictions(
+        &'a mut self,
+        restrictions_slice: &[Avoid]
+    ) -> &'a mut Request {
         // Add restrictions to Request struct.
         match &mut self.restrictions {
             // If there are no filters in the request struct, initialize field:
@@ -95,7 +102,8 @@ impl<'a> Request<'a> {
                 }
             } // case
         } // match
-          // Return modified Request struct to caller.
+        // Return modified Request struct to caller.
         self
     } // fn
+
 } // impl

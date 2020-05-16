@@ -19,17 +19,14 @@ pub enum TravelMode {
     /// (Default) Indicates standard driving directions using the road network.
     #[serde(alias = "DRIVING")]
     Driving,
-
     /// Requests walking directions via pedestrian paths & sidewalks (where
     /// available).
     #[serde(alias = "WALKING")]
     Walking,
-
     /// Requests bicycling directions via bicycle paths & preferred streets
     /// (where available).
     #[serde(alias = "BICYCLING")]
     Bicycling,
-
     /// Requests directions via public transit routes (where available). If you
     /// set the mode to `transit`, you can optionally specify either a
     /// `departure_time` or an `arrival_time`. If neither time is specified, the
@@ -58,7 +55,6 @@ impl std::convert::TryFrom<&str> for TravelMode {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
     type Error = crate::directions::error::Error;
-
     /// Gets a `TravelMode` enum from a `String` that contains a valid [travel
     /// mode](https://developers.google.com/maps/documentation/directions/intro#TravelModes)
     /// code.

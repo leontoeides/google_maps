@@ -1,9 +1,11 @@
 use crate::request_rate::{
-    api::Api, api_rate::ApiRate, current_rate::CurrentRate, target_rate::TargetRate, RequestRate,
-}; // use
+    api::Api, api_rate::ApiRate, current_rate::CurrentRate,
+    target_rate::TargetRate, RequestRate,
+}; // use crate::request_rate
 use std::time::Duration;
 
 impl RequestRate {
+
     /// Specifies the request rate for the selected API. _Do not use this method
     /// to set request rate limits, use `ClientSettings.with_rate()` instead_.
     ///
@@ -43,7 +45,13 @@ impl RequestRate {
     /// .with_rate(Api::TimeZone, 2, Duration::from_secs(60)) // 1 second
     /// ```
 
-    pub fn with_rate(&mut self, api: Api, requests: u16, duration: Duration) -> &mut RequestRate {
+    pub fn with_rate(
+        &mut self,
+        api: &Api,
+        requests: u16,
+        duration: Duration
+    ) -> &mut RequestRate {
+
         // Select `RequestRate` field for the API specified by the caller.
         let api_ref = match api {
             Api::All => &mut self.all,
@@ -63,7 +71,6 @@ impl RequestRate {
                     current_rate: CurrentRate::default(),
                 })
             }
-
             // If it has, set the new target request rate but preserve the
             // current effective request rate:
             Some(api_rate) => {
@@ -78,5 +85,7 @@ impl RequestRate {
         } // match
 
         self
+
     } // fn
+
 } // impl

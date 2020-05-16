@@ -1,6 +1,7 @@
 use crate::{bounds::Bounds, geocoding::forward::ForwardRequest}; // use
 
 impl<'a> ForwardRequest<'a> {
+
     /// Specifies a bounding box for biasing results.
     ///
     /// ## Arguments:
@@ -38,10 +39,14 @@ impl<'a> ForwardRequest<'a> {
     /// })
     /// ```
 
-    pub fn with_bounds(&'a mut self, bounds: Bounds) -> &'a mut ForwardRequest {
+    pub fn with_bounds(
+        &'a mut self,
+        bounds: Bounds
+    ) -> &'a mut ForwardRequest {
         // Set bounds in ForwardRequest struct.
         self.bounds = Some(bounds);
         // Return modified ForwardRequest struct to caller.
         self
     } // fn
+
 } // impl

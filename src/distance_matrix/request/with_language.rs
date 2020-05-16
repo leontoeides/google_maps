@@ -2,6 +2,7 @@ use crate::distance_matrix::request::Request;
 use crate::language::Language;
 
 impl<'a> Request<'a> {
+
     /// Specify the language in which to return results.
     ///
     /// ## Arguments:
@@ -49,4 +50,5 @@ impl<'a> Request<'a> {
         self.language = Some(language);
         self
     } // fn
+
 } // impl

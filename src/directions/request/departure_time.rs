@@ -37,7 +37,6 @@ pub enum DepartureTime {
     /// You can specify a value of now, which sets the departure time to the
     /// current time (correct to the nearest second).
     Now,
-
     /// Specifies the desired time of departure.
     At(NaiveDateTime),
 } // enum

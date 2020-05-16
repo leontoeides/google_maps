@@ -599,7 +599,6 @@ impl std::convert::From<&Region> for String {
 impl std::convert::TryFrom<&str> for Region {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
     type Error = crate::error::Error;
-
     /// Gets a `Region` enum from a `String` that contains a supported
     /// [region](https://developers.google.com/maps/coverage) code.
     fn try_from(region: &str) -> Result<Region, Error> {
@@ -1080,9 +1079,7 @@ impl std::fmt::Display for Region {
             Region::SolomonIslands => write!(f, "Solomon Islands"),
             Region::Somalia => write!(f, "Somalia"),
             Region::SouthAfrica => write!(f, "South Africa"),
-            Region::SouthGeorgiaAndTheSouthSandwichIslands => {
-                write!(f, "South Georgia & South Sandwich Islands")
-            }
+            Region::SouthGeorgiaAndTheSouthSandwichIslands => write!(f, "South Georgia & South Sandwich Islands"),
             Region::SouthKorea => write!(f, "South Korea"),
             Region::SouthSudan => write!(f, "South Sudan"),
             Region::Spain => write!(f, "Spain"),

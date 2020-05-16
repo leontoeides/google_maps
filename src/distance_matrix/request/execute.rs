@@ -1,6 +1,9 @@
-use crate::distance_matrix::{error::Error, request::Request, response::Response}; // use
+use crate::distance_matrix::{
+    error::Error, request::Request, response::Response
+}; // use crate::distance_matrix
 
 impl<'a> Request<'a> {
+
     /// Executes the query you've built.
     ///
     /// ## Description:
@@ -16,4 +19,5 @@ impl<'a> Request<'a> {
     pub fn execute(&'a mut self) -> Result<Response, Error> {
         self.validate()?.build()?.get()
     } // fn
+
 } // impl

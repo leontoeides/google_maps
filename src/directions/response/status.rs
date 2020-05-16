@@ -96,7 +96,6 @@ impl std::convert::TryFrom<&str> for Status {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
     type Error = crate::directions::error::Error;
-
     /// Gets a `Status` enum from a `String` that contains a valid
     /// [status](https://developers.google.com/maps/documentation/directions/intro#StatusCodes)
     /// code.

@@ -61,7 +61,6 @@ impl std::convert::TryFrom<&str> for TrafficModel {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
     type Error = crate::directions::error::Error;
-
     /// Gets a `TrafficModel` enum from a `String` that contains a valid
     /// [traffic
     /// model](https://developers.google.com/maps/documentation/javascript/reference/directions#TrafficModel)

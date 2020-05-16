@@ -26,13 +26,13 @@ use crate::{
             avoid::Avoid, departure_time::DepartureTime, traffic_model::TrafficModel,
             transit_mode::TransitMode, transit_route_preference::TransitRoutePreference,
             unit_system::UnitSystem, waypoint::Waypoint,
-        }, // request
+        }, // crate::directions::request
         travel_mode::TravelMode,
-    }, // directions
+    }, // crate::directions
     language::Language,
     region::Region,
-};
-use chrono::NaiveDateTime; // use
+}; // use crate
+use chrono::NaiveDateTime;
 
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Distance Matrix API_ query**. The methods implemented for this struct are
@@ -40,6 +40,7 @@ use chrono::NaiveDateTime; // use
 
 #[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Request<'a> {
+
     // Required parameters:
     // --------------------
     /// One or more locations to use as the finishing point for calculating
@@ -106,4 +107,5 @@ pub struct Request<'a> {
 
     /// Has the request been validated?
     validated: bool,
+
 } // struct

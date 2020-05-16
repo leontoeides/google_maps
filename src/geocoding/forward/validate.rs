@@ -1,6 +1,7 @@
 use crate::geocoding::{error::Error, forward::ForwardRequest};
 
 impl<'a> ForwardRequest<'a> {
+
     /// Ensures the built query is valid. This function checks the combination
     /// of parameters to ensure that they make sense together and that Google
     /// Maps Geocoding API will accept them - i.e. require an address or
@@ -17,11 +18,10 @@ impl<'a> ForwardRequest<'a> {
         if self.address == None && self.components == None {
             return Err(Error::AddressOrComponentsRequired);
         } // if
-
         // Indicate that the request passed validation.
         self.validated = true;
-
         // Return modified Request struct to caller.
         Ok(self)
     } // fn
+
 } // impl

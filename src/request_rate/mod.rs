@@ -3,7 +3,6 @@
 //! this module to set request rates. Use the `ClientSettings` methods
 //! instead.**
 
-pub mod api;
 mod api_rate;
 mod current_rate;
 mod duration_to_string;
@@ -12,6 +11,7 @@ mod limit;
 mod rate_to_string;
 mod target_rate;
 mod with_rate;
+pub mod api;
 
 use crate::request_rate::api_rate::ApiRate;
 

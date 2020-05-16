@@ -1,9 +1,10 @@
 use crate::{
     client_settings::ClientSettings,
-    directions::request::{location::Location, Request}, // directions::request
-}; // use
+    directions::request::{location::Location, Request},
+}; // use crate
 
 impl<'a> Request<'a> {
+
     /// Initializes the data structure for the builder pattern.
     ///
     /// ## Arguments:
@@ -11,10 +12,10 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub fn new(
-        client_settings: &mut ClientSettings,
+        client_settings: &'a mut ClientSettings,
         origin: Location,
         destination: Location,
-    ) -> Request {
+    ) -> Request<'a> {
         Request {
             // Required parameters:
             destination,
@@ -39,4 +40,5 @@ impl<'a> Request<'a> {
             validated: false,
         } // struct
     } // fn
+
 } // impl

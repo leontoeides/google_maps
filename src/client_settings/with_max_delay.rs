@@ -30,7 +30,10 @@ impl ClientSettings {
     /// .with_max_delay(std::time::Duration::from_secs(32))
     /// ```
 
-    pub fn with_max_delay(&mut self, max_delay: Duration) -> &mut ClientSettings {
+    pub fn with_max_delay(
+        &mut self,
+        max_delay: &Duration
+    ) -> &mut ClientSettings {
         self.max_backoff = max_delay.as_millis() as u32;
         self
     } // fn

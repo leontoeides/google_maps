@@ -23,11 +23,11 @@
 //!
 //! * In your project's `Cargo.toml` file, under the `[dependencies]` section:
 //!
-//!     * Add `google_maps = "0.7.3"`. Check
+//!     * Add `google_maps = "1.0.0"`. Check
 //!         [crates.io](https://crates.io/crates/google_maps) for the latest
 //!         version number.
 //!
-//!     * Add `rust_decimal = "1.3.0`. Check
+//!     * Add `rust_decimal = "1.5.0`. Check
 //!         [crates.io](https://crates.io/crates/rust_decimal) for the
 //!         latest version number.
 //!
@@ -35,6 +35,8 @@
 //! [docs.rs](https://docs.rs/google_maps/)
 //!
 //! # What's new?
+//!
+//! * 1.0.0: 2020-05-16: Inteface stable.
 //!
 //! * 0.7.3: 2020-04-25: For the Distance-Matrix API, some response fields that
 //! should have been public weren't. Fixed.
@@ -299,18 +301,18 @@
 
 mod bounds;
 mod client_settings;
-pub mod directions;
-pub mod distance_matrix;
-pub mod elevation;
 mod error;
-pub mod geocoding;
 mod language;
 mod latlng;
 mod place_type;
-pub mod prelude;
 mod region;
 mod request_rate;
 mod serde;
+pub mod directions;
+pub mod distance_matrix;
+pub mod elevation;
+pub mod geocoding;
+pub mod prelude;
 pub mod time_zone;
 
 pub use chrono::{DateTime, Duration, Local, NaiveDate, NaiveDateTime, Utc};
@@ -319,6 +321,7 @@ pub use rust_decimal::Decimal;
 pub use rust_decimal_macros::dec;
 
 pub use crate::{
-    bounds::Bounds, client_settings::ClientSettings, language::Language, latlng::LatLng,
-    place_type::PlaceType, region::Region, request_rate::api::Api,
-}; // use
+    bounds::Bounds, client_settings::ClientSettings, language::Language,
+    latlng::LatLng, place_type::PlaceType, region::Region,
+    request_rate::api::Api,
+}; // use crate

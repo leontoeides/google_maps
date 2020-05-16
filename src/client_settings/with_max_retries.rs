@@ -15,7 +15,10 @@ impl ClientSettings {
     /// .with_max_retries(10)
     /// ```
 
-    pub fn with_max_retries(&mut self, max_retries: u8) -> &mut ClientSettings {
+    pub fn with_max_retries(
+        &mut self,
+        max_retries: u8
+    ) -> &mut ClientSettings {
         self.max_retries = max_retries;
         self
     } // fn

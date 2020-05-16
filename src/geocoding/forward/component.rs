@@ -16,6 +16,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Component {
+
     // Restrict results:
     // -----------------
     /// Country matches a country name or a two letter [ISO
@@ -37,6 +38,7 @@ pub enum Component {
 
     /// Matches the long or short name of a route.
     Route(String),
+
 } // enum
 
 impl std::convert::From<&Component> for String {

@@ -37,7 +37,6 @@ impl std::convert::TryFrom<&str> for GeocoderStatus {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
     type Error = crate::directions::error::Error;
-
     /// Gets a `GeocoderStatus` enum from a `String` that contains a valid
     /// [geocoder
     /// status](https://developers.google.com/maps/documentation/directions/intro#GeocodedWaypoints)

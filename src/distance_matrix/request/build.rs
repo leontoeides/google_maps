@@ -1,7 +1,8 @@
-use crate::distance_matrix::{error::Error, request::Request}; // use
+use crate::distance_matrix::{error::Error, request::Request};
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 
 impl<'a> Request<'a> {
+
     /// Builds the query string for the Google Maps Directions API based on the
     /// input provided by the client.
     ///
@@ -10,6 +11,7 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub fn build(&mut self) -> Result<&'a mut Request, Error> {
+
         // Ensure request has been validated before building the query string:
 
         if !self.validated {
@@ -138,5 +140,7 @@ impl<'a> Request<'a> {
 
         // Return modified Request struct to caller.
         Ok(self)
+
     } // fn
+
 } // impl

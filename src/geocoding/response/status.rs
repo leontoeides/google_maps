@@ -9,6 +9,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Status {
+
     /// Generally indicates one of the following:
     /// * The query (`address`, `components` or `latlng`) is missing.
     /// * An invalid `result_type` or `location_type` was given.
@@ -52,13 +53,13 @@ pub enum Status {
     /// also occur if the geocoder was passed a `latlng` in a remote location.
     #[serde(alias = "ZERO_RESULTS")]
     ZeroResults,
+
 } // enum
 
 impl std::convert::From<&Status> for String {
     /// Converts a `Status` enum to a `String` that contains a
     /// [status](https://developers.google.com/maps/documentation/geocoding/intro#StatusCodes)
     /// code.
-
     fn from(status: &Status) -> String {
         match status {
             Status::InvalidRequest => String::from("INVALID_REQUEST"),
@@ -75,13 +76,10 @@ impl std::convert::From<&Status> for String {
 impl std::convert::TryFrom<&str> for Status {
     // Error definitions are contained in the
     // `google_maps\src\geocoding\error.rs` module.
-
     type Error = crate::geocoding::error::Error;
-
     /// Gets a `Status` enum from a `String` that contains a valid
     /// [status](https://developers.google.com/maps/documentation/geocoding/intro#StatusCodes)
     /// code.
-
     fn try_from(status: &str) -> Result<Status, Error> {
         match status {
             "INVALID_REQUEST" => Ok(Status::InvalidRequest),
@@ -98,7 +96,6 @@ impl std::convert::TryFrom<&str> for Status {
 
 impl std::default::Default for Status {
     /// Returns a reasonable default variant for the `Status` enum type.
-
     fn default() -> Self {
         Status::Ok
     } // fn
@@ -107,7 +104,6 @@ impl std::default::Default for Status {
 impl std::fmt::Display for Status {
     /// Formats a `Status` enum into a string that is presentable to the end
     /// user.
-
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Status::InvalidRequest => write!(f, "Invalid Request"),

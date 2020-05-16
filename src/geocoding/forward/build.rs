@@ -1,7 +1,8 @@
-use crate::{geocoding::error::Error, geocoding::forward::ForwardRequest}; // use
+use crate::{geocoding::error::Error, geocoding::forward::ForwardRequest};
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 
 impl<'a> ForwardRequest<'a> {
+
     /// Builds the query string for the Google Maps Geocoding API based on the
     /// input provided by the client.
     ///
@@ -10,6 +11,7 @@ impl<'a> ForwardRequest<'a> {
     /// This method accepts no arguments.
 
     pub fn build(&mut self) -> Result<&'a mut ForwardRequest, Error> {
+
         // Ensure request has been validated before building the query string:
 
         if !self.validated {
@@ -75,5 +77,7 @@ impl<'a> ForwardRequest<'a> {
 
         // Return modified ForwardRequest struct to caller.
         Ok(self)
+
     } // fn
+
 } // impl

@@ -93,7 +93,7 @@ pub use crate::directions::{
         traffic_model::TrafficModel, transit_mode::TransitMode,
         transit_route_preference::TransitRoutePreference, unit_system::UnitSystem,
         waypoint::Waypoint, Request as DirectionsRequest,
-    }, // request
+    }, // crate::directions::request
     response::{
         directions_distance::DirectionsDistance, directions_duration::DirectionsDuration,
         driving_maneuver::DrivingManeuver, leg::Leg, overview_polyline::OverviewPolyline,
@@ -102,7 +102,7 @@ pub use crate::directions::{
         transit_details::TransitDetails, transit_fare::TransitFare, transit_line::TransitLine,
         transit_stop::TransitStop, transit_time::TransitTime, transit_vehicle::TransitVehicle,
         Response as DirectionsResponse,
-    }, // response
+    }, // crate::directions::response
     travel_mode::TravelMode,
     vehicle_type::VehicleType,
 }; // use

@@ -47,7 +47,6 @@ impl std::convert::TryFrom<&str> for LocationType {
     // Error definitions are contained in the
     // `google_maps\src\geocoding\error.rs` module.
     type Error = crate::geocoding::error::Error;
-
     /// Gets a `LocationType` enum from a `String` that contains a supported
     /// [location
     /// type](https://developers.google.com/maps/documentation/geocoding/intro#Results)

@@ -1,10 +1,12 @@
 use crate::distance_matrix::{
-    error::Error, request::Request, response::status::Status, response::Response,
-}; // use
+    error::Error, request::Request, response::status::Status,
+    response::Response,
+}; // use crate::distance_matrix
 use crate::request_rate::api::Api;
 use log::{info, warn};
 
 impl<'a> Request<'a> {
+
     /// Performs the HTTP get request and returns the response to the caller.
     ///
     /// ## Arguments:
@@ -12,6 +14,7 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub fn get(&mut self) -> Result<Response, Error> {
+
         // Build the URL stem for the HTTP get request:
 
         const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/distancematrix";
@@ -25,26 +28,31 @@ impl<'a> Request<'a> {
             None => return Err(Error::QueryNotBuilt),
         } // match
 
-        self.client_settings.rate_limit.limit(Api::All);
-        self.client_settings.rate_limit.limit(Api::DistanceMatrix);
+        self.client_settings.rate_limit.limit(&Api::All);
+        self.client_settings.rate_limit.limit(&Api::DistanceMatrix);
 
         info!("HTTP GET: {}", uri);
 
         // Initialize variables:
         let mut counter = 0;
         let mut wait_time_in_ms = 0;
+
         // This loop retries the get request until successful. An error
         // ineligible for retries is returned to the caller as an error. If the
         // maximum retries has been reached, the last error is returned to the
         // caller.
         loop {
+
             // Increment retry counter:
             counter += 1;
+
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
             let response = reqwest::blocking::get(&*uri);
+
             // Check response from the HTTP client:
             match response {
+
                 Ok(response) => {
                     // HTTP client was successful getting a response from the
                     // server. Check the HTTP status code:
@@ -94,6 +102,7 @@ impl<'a> Request<'a> {
                         ));
                     } // if
                 } // case
+
                 Err(response) => {
                     // HTTP client did not get a response from the server:
                     warn!("HTTP client returned: `{}`", response);
@@ -103,6 +112,7 @@ impl<'a> Request<'a> {
                         return Err(Error::Reqwest(response));
                     } // if
                 } // case
+
             }; // match
 
             // Truncated exponential backoff is a standard error handling
@@ -132,8 +142,9 @@ impl<'a> Request<'a> {
             } // if
 
             info!("Could not successfully query the Google Maps Platform. Sleeping for {} milliseconds before retry #{} of {}.", wait_time_in_ms, counter, self.client_settings.max_retries);
-
             std::thread::sleep(std::time::Duration::from_millis(wait_time_in_ms as u64));
         } // loop
+
     } // fn
+
 } // impl

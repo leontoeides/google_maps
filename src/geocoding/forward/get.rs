@@ -1,10 +1,12 @@
 use crate::geocoding::{
-    error::Error, forward::ForwardRequest, response::status::Status, response::Response,
-}; // use
+    error::Error, forward::ForwardRequest, response::status::Status,
+    response::Response,
+}; // use crate::geocoding
 use crate::request_rate::api::Api;
 use log::{info, warn};
 
 impl<'a> ForwardRequest<'a> {
+
     /// Performs the HTTP get request and returns the response to the caller.
     ///
     /// ## Arguments:
@@ -12,8 +14,8 @@ impl<'a> ForwardRequest<'a> {
     /// This method accepts no arguments.
 
     pub fn get(&mut self) -> Result<Response, Error> {
-        // Build the URI stem for the HTTP get request:
 
+        // Build the URI stem for the HTTP get request:
         const SERVICE_URI: &str = "https://maps.googleapis.com/maps/api/geocode";
         const OUTPUT_FORMAT: &str = "json"; // json or xml
         let mut uri = format!("{}/{}?", SERVICE_URI, OUTPUT_FORMAT);
@@ -25,22 +27,26 @@ impl<'a> ForwardRequest<'a> {
             None => return Err(Error::QueryNotBuilt),
         } // match
 
-        self.client_settings.rate_limit.limit(Api::All);
-        self.client_settings.rate_limit.limit(Api::Geocoding);
+        self.client_settings.rate_limit.limit(&Api::All);
+        self.client_settings.rate_limit.limit(&Api::Geocoding);
 
         info!("HTTP GET: {}", uri);
 
         // Initialize variables:
         let mut counter = 0;
         let mut wait_time_in_ms = 0;
+
         // Retries the get request until successful, an error ineligible for
         // retries is returned, or we have reached the maximum retries:
         loop {
+
             // Increment retry counter:
             counter += 1;
+
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
             let response = reqwest::blocking::get(&*uri);
+
             // Check response from the HTTP client:
             match response {
                 Ok(response) => {
@@ -130,8 +136,10 @@ impl<'a> ForwardRequest<'a> {
             } // if
 
             info!("Could not successfully query the Google Maps Platform. Sleeping for {} milliseconds before retry #{} of {}.", wait_time_in_ms, counter, self.client_settings.max_retries);
-
             std::thread::sleep(std::time::Duration::from_millis(wait_time_in_ms as u64));
+
         } // loop
+
     } // fn
+
 } // impl
