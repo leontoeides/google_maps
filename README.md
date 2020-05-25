@@ -1,3 +1,9 @@
+This is a fork of the library which uses async and non-blocking calls.
+The examples below need to be updated, by adding `.await` after `execute()`,
+and the call need to be made in an `async` function. The API should be 
+otherwise similar. (Except the rate limit has been turned off by default)
+
+
 🗺 An unofficial Google Maps Platform client library for the Rust programming
 language. This client currently implements the Directions API, Distance Matrix
 API, Elevation API, Geocoding API, and Time Zone API.
