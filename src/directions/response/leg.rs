@@ -15,7 +15,7 @@ use serde::{Deserialize, Serialize};
 /// result is "JSON-like," it is not strictly JSON, as it directly and
 /// indirectly includes LatLng objects.
 
-#[derive(Clone, Debug, Eq, Hash, PartialEq, Deserialize, Serialize)]
+#[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct Leg {
     /// An estimated arrival time for this leg. Only applicable for
     /// `TravelMode::Transit` requests.

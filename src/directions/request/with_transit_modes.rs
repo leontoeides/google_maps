@@ -1,6 +1,7 @@
 use crate::directions::request::{transit_mode::TransitMode, Request};
 
 impl<'a> Request<'a> {
+
     /// Specify the preferred mode of transit.
     ///
     /// ## Arguments

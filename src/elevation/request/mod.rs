@@ -22,7 +22,6 @@ use crate::{
 
 #[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Request<'a> {
-
     // Required parameters:
     // --------------------
     /// This structure contains the application's API key and other
@@ -58,5 +57,4 @@ pub struct Request<'a> {
 
     /// Has the request been validated?
     validated: bool,
-
 } // struct

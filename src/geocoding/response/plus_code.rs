@@ -14,7 +14,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct PlusCode {
-
     /// A 4 character area code and 6 character or longer local code
     /// (`849VCWC8+R9`).
     pub global_code: String,
@@ -22,5 +21,4 @@ pub struct PlusCode {
     /// A 6 character or longer local code with an explicit location (`CWC8+R9,
     /// Mountain View, CA, USA`).
     pub compound_code: Option<String>,
-
 } // struct

@@ -5,12 +5,12 @@ use crate::{
     }, // directions::response
     distance_matrix::response::element_status::ElementStatus,
 }; // use
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 /// The information about each origin-destination pairing is returned in an
 /// element entry.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Element {
     /// The total distance of this route, expressed in meters (`value`) and as
     /// `text`. The textual value uses the unit system specified with the unit

@@ -20,17 +20,20 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 * In your project's `Cargo.toml` file, under the `[dependencies]` section:
 
-	* Add `google_maps = "1.0.0"`. Check
+	* Add `google_maps = "1.0.1"`. Check
 		[crates.io](https://crates.io/crates/google_maps) for the latest
 		version number.
 
-	* Add `rust_decimal = "1.5.0"`. Check
+	* Add `rust_decimal = "1.6.0"`. Check
 		[crates.io](https://crates.io/crates/rust_decimal) for the
 		latest version number.
 
 * The full documentation is available at [docs.rs](https://docs.rs/google_maps/)
 
 # What's new?
+
+* 1.0.1: 2020-05-25: Ensuring all public structures use Serde's serialize and
+deserialize traits. Thanks qrayven
 
 * 1.0.0: 2020-05-16: Inteface stable.
 

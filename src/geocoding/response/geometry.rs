@@ -14,7 +14,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Geometry {
-
     /// Contains the geocoded latitude, longitude value. For normal address
     /// lookups, this field is typically the most important.
     pub location: LatLng,
@@ -35,7 +34,6 @@ pub struct Geometry {
     /// technically part of the city, but probably should not be returned in the
     /// viewport.)
     pub bounds: Option<Bounds>,
-
 } // struct
 
 impl Geometry {
