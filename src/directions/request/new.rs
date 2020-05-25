@@ -12,7 +12,7 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub fn new(
-        client_settings: &'a mut ClientSettings,
+        client_settings: &'a ClientSettings,
         origin: Location,
         destination: Location,
     ) -> Request<'a> {

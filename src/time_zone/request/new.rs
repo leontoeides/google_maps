@@ -15,8 +15,10 @@ impl<'a> Request<'a> {
     /// ## Example:
     ///
     /// ```rust
+    /// use google_maps::prelude::TimeZoneRequest;
+    /// use google_maps::{LatLng, NaiveDate};
     /// let time_zone = TimeZoneRequest::new(
-    ///     &mut my_settings,
+    ///     &my_settings,
     ///     // St. Vitus Cathedral in Prague, Czechia
     ///     LatLng::try_from(50.090_903, 14.400_512).unwrap(),
     ///     // Tuesday February 15, 2022 @ 6:00:00 pm
@@ -25,7 +27,7 @@ impl<'a> Request<'a> {
     /// ```
 
     pub fn new(
-        client_settings: &mut ClientSettings,
+        client_settings: &ClientSettings,
         location: LatLng,
         timestamp: DateTime<Utc>,
     ) -> Request {

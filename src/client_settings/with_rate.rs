@@ -40,8 +40,6 @@ impl ClientSettings {
     /// You are responsible for all charges. Use with care.
     ///
     /// ```rust
-    /// use std::time::Duration;
-    ///
     /// // Assumptions:
     /// // - $200.00 USD monthly free credit from Google. Thanks, guys!
     /// // - 2,629,746 seconds in a month.
@@ -54,7 +52,9 @@ impl ClientSettings {
     /// information, arrival or departure times, < 10 waypoints, and no waypoint
     /// optimization, $0.005 USD per request.
     /// ```rust
-    /// .with_rate(Api::Directions, (GOOGLE_CREDIT / 0.005) as u16, Duration::from_secs(SECONDS_PER_MONTH))
+    /// use google_maps::Api;
+    /// use std::time::Duration;
+    /// with_rate(Api::Directions, (GOOGLE_CREDIT / 0.005) as u16, Duration::from_secs(SECONDS_PER_MONTH))
     /// ```
     ///
     /// * [Directions Advanced](https://developers.google.com/maps/billing/gmp-billing#directions-advanced)
@@ -62,7 +62,9 @@ impl ClientSettings {
     /// traffic information, > 10 waypoints, and/or waypoint optimization, $0.01
     /// per request.
     /// ```rust
-    /// .with_rate(Api::Directions, (GOOGLE_CREDIT / 0.01) as u16, Duration::from_secs(SECONDS_PER_MONTH))
+    /// use google_maps::Api;
+    /// use std::time::Duration;
+    /// with_rate(Api::Directions, (GOOGLE_CREDIT / 0.01) as u16, Duration::from_secs(SECONDS_PER_MONTH))
     /// ```
     ///
     /// * [Distance Matrix](https://developers.google.com/maps/billing/gmp-billing#distance-matrix)
@@ -70,7 +72,9 @@ impl ClientSettings {
     /// traffic information, $0.005 per _element_. **The below rate assumes an
     /// average of 10 elements per request.**
     /// ```rust
-    /// .with_rate(
+    /// use google_maps::Api;
+    /// use std::time::Duration;
+    /// with_rate(
     ///     Api::DistanceMatrix,
     ///     (GOOGLE_CREDIT / (0.005 * 10.0)) as u16,
     ///     Duration::from_secs(SECONDS_PER_MONTH)
@@ -83,7 +87,9 @@ impl ClientSettings {
     /// information, $0.01 USD per _element_. **The below rate assumes an average
     /// of 10 elements per request.**
     /// ```rust
-    /// .with_rate(
+    /// use google_maps::Api;
+    /// use std::time::Duration;
+    /// with_rate(
     ///     Api::DistanceMatrix,
     ///     (GOOGLE_CREDIT / (0.01 * 10.0)) as u16,
     ///     Duration::from_secs(SECONDS_PER_MONTH)
@@ -93,20 +99,26 @@ impl ClientSettings {
     /// * [Elevation](https://developers.google.com/maps/billing/gmp-billing#elevation)
     /// API. $0.005 USD per request.
     /// ```rust
-    /// .with_rate(Api::Elevation, (GOOGLE_CREDIT / 0.005) as u16, Duration::from_secs(SECONDS_PER_MONTH))
+    /// use google_maps::Api;
+    /// use std::time::Duration;
+    /// with_rate(Api::Elevation, (GOOGLE_CREDIT / 0.005) as u16, Duration::from_secs(SECONDS_PER_MONTH))
     /// ```
     ///
     /// * [Geocoding](https://developers.google.com/maps/billing/gmp-billing#geolocation)
     /// API. $0.005 USD per request.
     /// ```rust
-    /// .with_rate(Api::Geocoding, (GOOGLE_CREDIT / 0.005) as u16, Duration::from_secs(SECONDS_PER_MONTH))
+    /// use google_maps::Api;
+    /// use std::time::Duration;
+    /// with_rate(Api::Geocoding, (GOOGLE_CREDIT / 0.005) as u16, Duration::from_secs(SECONDS_PER_MONTH))
     /// ```
     ///
     /// * [Time
     /// Zone](https://developers.google.com/maps/billing/gmp-billing#time-zone)
     /// API. $0.005 USD per request.
     /// ```rust
-    /// .with_rate(Api::TimeZone, (GOOGLE_CREDIT / 0.005) as u16, Duration::from_secs(SECONDS_PER_MONTH))
+    /// use google_maps::Api;
+    /// use std::time::Duration;
+    /// with_rate(Api::TimeZone, (GOOGLE_CREDIT / 0.005) as u16, Duration::from_secs(SECONDS_PER_MONTH))
     /// ```
 
     pub fn with_rate(
