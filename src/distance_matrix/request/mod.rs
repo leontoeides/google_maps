@@ -38,7 +38,7 @@ use chrono::NaiveDateTime;
 /// _Distance Matrix API_ query**. The methods implemented for this struct are
 /// what's used to build your request.
 
-#[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
+#[derive(Debug, Eq, PartialEq)]
 pub struct Request<'a> {
 
     // Required parameters:
@@ -50,7 +50,7 @@ pub struct Request<'a> {
 
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client_settings: &'a mut ClientSettings,
+    client_settings: &'a ClientSettings,
 
     /// The starting point for calculating travel distance and time. You can
     /// pass an address, latitude/longitude, place ID, or encoded polyline.

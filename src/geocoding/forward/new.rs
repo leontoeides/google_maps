@@ -11,7 +11,7 @@ impl<'a> ForwardRequest<'a> {
     ///
     /// * `key` ‧ Your application's Google Cloud API key.
 
-    pub fn new(client_settings: &mut ClientSettings) -> ForwardRequest {
+    pub fn new(client_settings: &ClientSettings) -> ForwardRequest {
         // Instantiate struct and return it to caller:
         ForwardRequest {
             // Required parameters:

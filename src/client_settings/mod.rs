@@ -28,7 +28,7 @@ use crate::request_rate::RequestRate;
 ///     .finalize();
 /// ```
 
-#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct ClientSettings {
 
     /// Your application's API key. This key identifies your application for

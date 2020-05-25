@@ -10,7 +10,7 @@ impl<'a> Request<'a> {
     ///
     /// * `key` - Your application's Google Cloud API key.
 
-    pub fn new(client_settings: &mut ClientSettings) -> Request {
+    pub fn new(client_settings: &ClientSettings) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:

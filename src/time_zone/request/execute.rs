@@ -13,7 +13,7 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub fn execute(&'a mut self) -> Result<Response, Error> {
-        self.build().get()
+    pub async fn execute(&'a mut self) -> Result<Response, Error> {
+        self.build().get().await
     } // fn
 } // impl
