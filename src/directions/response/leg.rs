@@ -3,21 +3,19 @@
 
 use crate::{
     directions::response::{
-        directions_distance::DirectionsDistance,
-        directions_duration::DirectionsDuration,
-        step::Step,
-        transit_time::TransitTime,
+        directions_distance::DirectionsDistance, directions_duration::DirectionsDuration,
+        step::Step, transit_time::TransitTime,
     }, // crate::directions::response
     latlng::LatLng,
 }; // use crate
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 /// A single leg consisting of a set of steps in a DirectionsResult. Some fields
 /// in the leg may not be returned for all requests. Note that though this
 /// result is "JSON-like," it is not strictly JSON, as it directly and
 /// indirectly includes LatLng objects.
 
-#[derive(Clone, Debug, Eq, Hash, PartialEq, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, PartialEq, Deserialize, Serialize)]
 pub struct Leg {
     /// An estimated arrival time for this leg. Only applicable for
     /// `TravelMode::Transit` requests.
@@ -67,7 +65,6 @@ pub struct Leg {
 } // struct
 
 impl Leg {
-
     /// A helper function for destructuring (or serializing) the optional
     /// `duration_in_traffic` field. If the `Duration` struct is populated, this
     /// function will return the _text_ field as a `String`. If the _Duration_
@@ -179,5 +176,4 @@ impl Leg {
             None => None,
         } // match
     } // fn
-
 } // impl

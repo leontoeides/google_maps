@@ -4,17 +4,14 @@
 use crate::{
     directions::{
         response::{
-            directions_distance::DirectionsDistance,
-            directions_duration::DirectionsDuration,
-            driving_maneuver::DrivingManeuver,
-            polyline::Polyline,
-            transit_details::TransitDetails,
+            directions_distance::DirectionsDistance, directions_duration::DirectionsDuration,
+            driving_maneuver::DrivingManeuver, polyline::Polyline, transit_details::TransitDetails,
         }, // crate::directions::response
         travel_mode::TravelMode,
     }, // crate::directions
     latlng::LatLng,
 }; // use crate
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 /// Each element in the `steps` array defines a single step of the calculated
 /// directions. A step is the most atomic unit of a direction's route,
@@ -37,7 +34,7 @@ use serde::Deserialize;
 /// in the inner steps array, such as: "Head north-west", "Turn left onto
 /// Arelious Walker", and "Turn left onto Innes Ave".
 
-#[derive(Clone, Debug, Eq, Hash, PartialEq, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, PartialEq, Deserialize, Serialize)]
 pub struct Step {
     /// The distance covered by this step. This property may be undefined as the
     /// distance may be unknown.
@@ -77,7 +74,6 @@ pub struct Step {
 } // struct
 
 impl Step {
-
     /// A helper function for destructuring (or serializing) the optional
     /// `maneuver` field. If the `ManeuverType` enum in the step is populated,
     /// this function will return it as a `String`. If the _ManeuverType_ enum
@@ -92,5 +88,4 @@ impl Step {
             None => None,
         } // match
     } // fn
-
 } // impl
