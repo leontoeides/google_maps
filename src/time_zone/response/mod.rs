@@ -4,8 +4,8 @@
 
 pub mod status;
 
-use crate::time_zone::response::status::Status;
 use chrono_tz::Tz;
+use crate::time_zone::response::status::Status;
 use serde::{Deserialize, Serialize};
 
 /// The response from the Google Maps Time Zone API will be stored in this

@@ -8,7 +8,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Status {
-
     /// Indicates that the request was malformed.
     #[serde(alias = "INVALID_REQUEST")]
     InvalidRequest,
@@ -41,7 +40,6 @@ pub enum Status {
     /// Indicates an unknown error.
     #[serde(alias = "UNKNOWN_ERROR")]
     UnknownError,
-
 } // enum
 
 impl std::convert::From<&Status> for String {

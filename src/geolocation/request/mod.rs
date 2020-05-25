@@ -5,13 +5,11 @@ mod wifi_access_point;
 use crate::geolocation::request::cell_tower::CellTower;
 use crate::geolocation::request::radio_type::RadioType;
 use crate::geolocation::request::wifi_access_point::WiFiAccessPoint;
-use serde::{Serialize, Deserialize};
 
 /// The request body must be formatted as JSON. All fields are optional.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Request {
-
     // Required parameters:
     // --------------------
 
@@ -79,5 +77,4 @@ pub struct Request {
     /// Has the request been validated?
     #[serde(skip)]
     validated: bool,
-
 } // struct

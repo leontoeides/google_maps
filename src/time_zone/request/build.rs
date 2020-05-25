@@ -2,6 +2,7 @@ use crate::time_zone::request::Request;
 use std::convert::TryFrom;
 
 impl<'a> Request<'a> {
+
     /// Builds the query string for the Google Maps Time Zone API based on the
     /// input provided by the client.
     ///
@@ -35,4 +36,5 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
+
 } // impl

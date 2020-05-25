@@ -30,7 +30,6 @@ use crate::{
 
 #[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct ForwardRequest<'a> {
-
     // Required parameters:
     // --------------------
     /// This structure contains the application's API key and other
@@ -77,5 +76,4 @@ pub struct ForwardRequest<'a> {
 
     /// Has the request been validated?
     validated: bool,
-
 } // struct

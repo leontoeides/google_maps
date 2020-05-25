@@ -9,7 +9,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub enum Status {
-
     /// Generally indicates one of the following:
     /// * The query (`address`, `components` or `latlng`) is missing.
     /// * An invalid `result_type` or `location_type` was given.
@@ -53,7 +52,6 @@ pub enum Status {
     /// also occur if the geocoder was passed a `latlng` in a remote location.
     #[serde(alias = "ZERO_RESULTS")]
     ZeroResults,
-
 } // enum
 
 impl std::convert::From<&Status> for String {
