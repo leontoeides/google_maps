@@ -50,15 +50,15 @@ impl ClientSettings {
     /// ```
     ///
     /// * [Directions](https://developers.google.com/maps/billing/gmp-billing#directions)
-    /// API. You are billed for this SKU when your request does not use traffic
-    /// information, arrival or departure times, < 10 waypoints, and no waypoint
-    /// optimization, $0.005 USD per request.
+    /// API. You are billed for this SKU when your request does not use live
+    /// traffic information, arrival or departure times, < 10 waypoints, and no
+    /// waypoint optimization, $0.005 USD per request.
     /// ```rust
     /// .with_rate(Api::Directions, (GOOGLE_CREDIT / 0.005) as u16, Duration::from_secs(SECONDS_PER_MONTH))
     /// ```
     ///
     /// * [Directions Advanced](https://developers.google.com/maps/billing/gmp-billing#directions-advanced)
-    /// API. You are billed for this SKU when your request requires include
+    /// API. You are billed for this SKU when your request requires live
     /// traffic information, > 10 waypoints, and/or waypoint optimization, $0.01
     /// per request.
     /// ```rust
@@ -66,9 +66,9 @@ impl ClientSettings {
     /// ```
     ///
     /// * [Distance Matrix](https://developers.google.com/maps/billing/gmp-billing#distance-matrix)
-    /// API. You are billed for this SKU when your requests _does not_ require
-    /// traffic information, $0.005 per _element_. **The below rate assumes an
-    /// average of 10 elements per request.**
+    /// API. You are billed for this SKU when your requests _do not_ require
+    /// live traffic information, $0.005 per _element_. **The below rate assumes
+    /// an average of 10 elements per request.**
     /// ```rust
     /// .with_rate(
     ///     Api::DistanceMatrix,
@@ -79,7 +79,7 @@ impl ClientSettings {
     ///
     /// * [Distance Matrix
     /// Advanced](https://developers.google.com/maps/billing/gmp-billing#distance-matrix-advanced)
-    /// API. You are billed for this SKU when your requests require traffic
+    /// API. You are billed for this SKU when your requests require live traffic
     /// information, $0.01 USD per _element_. **The below rate assumes an average
     /// of 10 elements per request.**
     /// ```rust
