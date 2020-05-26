@@ -1,12 +1,13 @@
 # Change Log
 
 * 1.0.1: 2020-05-25: Ensuring all public structures use Serde's serialize and
-deserialize traits. Thanks qrayven
+deserialize traits. Thanks [qrayven](https://github.com/qrayven)!
 
 * 1.0.0: 2020-05-16: Inteface stable.
 
 * 0.7.3: 2020-04-25: For the Distance-Matrix API, some response fields that
-should have been public weren't. Fixed.
+should have been public weren't. Fixed. Thanks
+[sroebuck](https://github.com/sroebuck)!
 
 * 0.7.2: 2020-04-21: Small bug fixes. Also, some logging was causing stack
 overflows, so it had to be disabled.
