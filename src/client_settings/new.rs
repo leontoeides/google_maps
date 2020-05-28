@@ -36,7 +36,7 @@ impl ClientSettings {
     /// ```
 
     pub fn directions(
-        &mut self,
+        &self,
         origin: Location,
         destination: Location,
     ) -> crate::directions::request::Request {
@@ -68,7 +68,7 @@ impl ClientSettings {
     /// ```
 
     pub fn distance_matrix(
-        &mut self,
+        &self,
         origins: Vec<Waypoint>,
         destinations: Vec<Waypoint>,
     ) -> crate::distance_matrix::request::Request {
@@ -79,7 +79,7 @@ impl ClientSettings {
     /// surface of the earth, including depth locations on the ocean floor
     /// (which return negative values).
 
-    pub fn elevation(&mut self) -> crate::elevation::request::Request {
+    pub fn elevation(&self) -> crate::elevation::request::Request {
         crate::elevation::request::Request::new(self)
     } // fn
 
@@ -106,7 +106,7 @@ impl ClientSettings {
     /// ```
 
     pub fn reverse_geocoding(
-        &mut self,
+        &self,
         latlng: LatLng,
     ) -> crate::geocoding::reverse::ReverseRequest {
         crate::geocoding::reverse::ReverseRequest::new(self, latlng)
@@ -128,7 +128,7 @@ impl ClientSettings {
     /// ```
 
     pub fn time_zone(
-        &mut self,
+        &self,
         location: LatLng,
         timestamp: DateTime<Utc>,
     ) -> crate::time_zone::request::Request {

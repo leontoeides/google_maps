@@ -30,31 +30,31 @@ impl RequestRate {
     /// * Sets the rate limit for all Google Maps API requests to _2 request per
     /// minute_:
     /// ```rust
-    /// .with_rate(Api::All, 2, Duration::from_secs(60)) // 1 minute
+    /// with_rate(Api::All, 2, Duration::from_secs(60)) // 1 minute
     /// ```
     ///
     /// * Sets the rate limit for Google Maps Elevation API requests to _1
     /// requests per second_:
     /// ```rust
-    /// .with_rate(Api::All, 1, Duration::from_secs(1)) // 1 second
+    /// with_rate(Api::All, 1, Duration::from_secs(1)) // 1 second
     /// ```
     ///
     /// * This method can be stacked:
     /// ```rust
-    /// .with_rate(Api::All, 1, Duration::from_secs(60)) // 1 minute
-    /// .with_rate(Api::Directions, 1, Duration::from_secs(3_600)) // 1 hour
-    /// .with_rate(Api::TimeZone, 2, Duration::from_secs(60)) // 1 second
+    /// with_rate(Api::All, 1, Duration::from_secs(60)) // 1 minute
+    /// with_rate(Api::Directions, 1, Duration::from_secs(3_600)) // 1 hour
+    /// with_rate(Api::TimeZone, 2, Duration::from_secs(60)) // 1 second
     /// ```
 
     pub fn with_rate(
         &mut self,
-        api: &Api,
+        api: Api,
         requests: u16,
         duration: Duration
     ) -> &mut RequestRate {
 
         // Select `RequestRate` field for the API specified by the caller.
-        let api_ref = self.rate_map.get_mut(api); // api
+        let api_ref = self.rate_map.get_mut(&api); // api
         let throttle_pool = match requests {
             0 => None,
             _ => {

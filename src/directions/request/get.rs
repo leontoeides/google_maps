@@ -20,6 +20,7 @@ impl<'a> Request<'a> {
         // Build the URL stem for the HTTP get request:
 
         const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/directions";
+        // const SERVICE_URL: &str = "https://192.168.221.226/maps/api/directions";
         const OUTPUT_FORMAT: &str = "json"; // json or xml
         let mut uri = format!("{}/{}?", SERVICE_URL, OUTPUT_FORMAT);
 

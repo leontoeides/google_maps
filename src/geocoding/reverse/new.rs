@@ -16,7 +16,7 @@ impl<'a> ReverseRequest<'a> {
     /// for which you wish to obtain the closest, human-readable address.
 
     pub fn new(
-        client_settings: &'a mut ClientSettings,
+        client_settings: &'a ClientSettings,
         latlng: LatLng
     ) -> ReverseRequest<'a> {
         // Instantiate struct and return it to caller:
