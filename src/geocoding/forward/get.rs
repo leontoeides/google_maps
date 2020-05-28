@@ -16,8 +16,9 @@ impl<'a> ForwardRequest<'a> {
     pub async fn get(&mut self) -> Result<Response, Error> {
 
         // Build the URI stem for the HTTP get request:
-        //const SERVICE_URI: &str = "https://maps.googleapis.com/maps/api/geocode";
-        const SERVICE_URI: &str = "http://192.168.221.226/maps/api/geocode";
+        const SERVICE_URI: &str = "https://maps.googleapis.com/maps/api/geocode";
+        // const SERVICE_URI: &str = "https://192.168.221.226/maps/api/geocode";
+
         const OUTPUT_FORMAT: &str = "json"; // json or xml
         let mut uri = format!("{}/{}?", SERVICE_URI, OUTPUT_FORMAT);
 
