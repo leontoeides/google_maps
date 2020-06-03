@@ -301,7 +301,7 @@
 
 mod bounds;
 mod client_settings;
-mod error;
+pub mod error;
 mod language;
 mod latlng;
 mod place_type;

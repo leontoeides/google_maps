@@ -3,7 +3,8 @@
 //! codes](https://en.wikipedia.org/wiki/ISO_3166-1).
 
 use crate::geocoding::error::Error;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize, Deserializer};
+use std::convert::TryFrom;
 
 /// Country is the national political entity and is typically the highest order
 /// type returned by the Geocoder.
@@ -20,7 +21,7 @@ use serde::{Deserialize, Serialize};
 /// codes](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) or the
 /// [ISO Online Browsing Platform](https://www.iso.org/obp/ui/#search).**
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub enum Country {
     Afghanistan,
     AlandIslands,
@@ -272,6 +273,22 @@ pub enum Country {
     Zambia,
     Zimbabwe,
 } // enum
+
+impl<'de> Deserialize<'de> for Country {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        use serde::de::Error;
+
+        let s = String::deserialize(deserializer)?;
+        let try_country = Country::try_from(s.as_str());
+        match try_country {
+            Ok(country) => Ok(country),
+            Err(err) => Err(Error::custom(err.to_string()))
+        }
+    }
+}
 
 impl std::convert::From<&Country> for String {
     /// Converts a `Country` enum to a `String` that contains a [ISO 3166-1
