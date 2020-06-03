@@ -3,7 +3,8 @@
 //! of languages, it is a list of languages that Google Maps supports._
 
 use crate::error::Error;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize, Deserializer};
+use std::convert::TryFrom;
 
 /// Specifies the language in which to return results.
 ///
@@ -53,7 +54,7 @@ use serde::{Deserialize, Serialize};
 /// You can see what the map will look like in any of the languages listed above
 /// in this [sample application](https://developers.google.com/maps/documentation/javascript/demos/localization/).
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub enum Language {
     Afrikaans,
     Albanian,
@@ -137,6 +138,23 @@ pub enum Language {
     Vietnamese,
     Zulu,
 } // enum
+
+
+impl<'de> Deserialize<'de> for Language {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+        where
+            D: Deserializer<'de>,
+    {
+        use serde::de::Error;
+
+        let s = String::deserialize(deserializer)?;
+        let try_language = Language::try_from(s.as_str());
+        match try_language {
+            Ok(language) => Ok(language),
+            Err(err) => Err(Error::custom(err.to_string()))
+        }
+    }
+}
 
 impl std::convert::From<&Language> for String {
     /// Converts a `Language` enum to a `String` that contains a

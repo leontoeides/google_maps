@@ -17,6 +17,10 @@ pub enum Error {
     /// contained an invalid longitude. See `google_maps\src\latlng.rs` for more
     /// information.
     InvalidLongitude(Decimal, Decimal),
+    /// API client library attempted to convert a latitude/longitude pair string
+    /// that is invalid. See `google_maps\src\latlng.rs` for more
+    /// information.
+    InvalidLatLongString(String),
     /// API client library attempted to parse a string that contained an invalid
     /// place type code. See `google_maps\src\place_type.rs` for more
     /// information.
@@ -71,6 +75,12 @@ impl std::fmt::Display for Error {
                 https://developers.google.com/maps/coverage",
                 region_code
             ),
+            Error::InvalidLatLongString(value) => write!(
+                f,
+                "Google Maps Platform API client: \
+                `{}` is an invalid lat lon string.",
+                value
+            )
         } // match
     } // fn
 } // impl
@@ -87,6 +97,7 @@ impl std::error::Error for Error {
             Error::InvalidLongitude(_latitude, _longitude) => None,
             Error::InvalidPlaceTypeCode(_place_type_code) => None,
             Error::InvalidRegionCode(_region_code) => None,
+            Error::InvalidLatLongString(_value) => None,
         } // match
     } // fn
 } // impl
