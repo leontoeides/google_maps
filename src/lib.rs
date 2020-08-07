@@ -23,7 +23,7 @@
 //!
 //! * In your project's `Cargo.toml` file, under the `[dependencies]` section:
 //!
-//!     * Add `google_maps = "1.0.1"`. Check
+//!     * Add `google_maps = "1.0.2"`. Check
 //!         [crates.io](https://crates.io/crates/google_maps) for the latest
 //!         version number.
 //!
@@ -35,6 +35,10 @@
 //! [docs.rs](https://docs.rs/google_maps/)
 //!
 //! # What's new?
+//!
+//! * 1.0.2: 2020-08-07: Corrected error where string formatted for display were
+//! being sent to the Google Maps Platform API. Thanks
+//! [victorct-pronto](https://github.com/victorct-pronto)!
 //!
 //! * 1.0.1: 2020-05-25: Ensuring all public structures use Serde's serialize
 //! and deserialize traits. Thanks [qrayven](https://github.com/qrayven)!

@@ -45,7 +45,7 @@ impl std::convert::From<&Waypoint> for String {
     fn from(waypoint: &Waypoint) -> String {
         match waypoint {
             Waypoint::Address(address) => address.clone(),
-            Waypoint::LatLng(latlng) => latlng.to_string(),
+            Waypoint::LatLng(latlng) => String::from(latlng),
             Waypoint::PlaceId(place_id) => format!("place_id:{}", place_id),
             Waypoint::Polyline(polyline) => format!("enc:{}:", polyline),
         } // match

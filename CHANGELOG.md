@@ -1,5 +1,9 @@
 # Change Log
 
+* 1.0.2: 2020-08-07: Corrected error where string formatted for display were
+being sent to the Google Maps Platform API. Thanks
+[victorct-pronto](https://github.com/victorct-pronto)!
+
 * 1.0.1: 2020-05-25: Ensuring all public structures use Serde's serialize and
 deserialize traits. Thanks [qrayven](https://github.com/qrayven)!
 
