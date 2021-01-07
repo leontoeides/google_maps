@@ -23,11 +23,11 @@
 //!
 //! * In your project's `Cargo.toml` file, under the `[dependencies]` section:
 //!
-//!     * Add `google_maps = "1.0.2"`. Check
+//!     * Add `google_maps = "1.0.3"`. Check
 //!         [crates.io](https://crates.io/crates/google_maps) for the latest
 //!         version number.
 //!
-//!     * Add `rust_decimal = "1.6.0`. Check
+//!     * Add `rust_decimal = "1.9.0`. Check
 //!         [crates.io](https://crates.io/crates/rust_decimal) for the
 //!         latest version number.
 //!
@@ -35,6 +35,9 @@
 //! [docs.rs](https://docs.rs/google_maps/)
 //!
 //! # What's new?
+//!
+//! * 1.0.3: 2021-01-06: Updated dependencies. A few minor corrections. Async
+//! support is planned for the next month or two.
 //!
 //! * 1.0.2: 2020-08-07: Corrected error where string formatted for display were
 //! being sent to the Google Maps Platform API. Thanks
@@ -249,17 +252,18 @@
 //!
 //! # To do:
 //!
-//! 1. Track both _requests_ and request _elements_ for rate limiting.
-//! 2. Make a generic get() function for that can be used by all APIs.
-//! 3. Look into making APIs optional, i.e. features.
-//! 4. Look into the Prelude::* convention.
-//! 5. Look into integrating [yaiouom](https://crates.io/crates/yaiouom).
-//! 6. Convert explicit query validation to session types wherever reasonable.
-//! 7. [Places API](https://developers.google.com/places/web-service/intro).
+//! 1. Async support.
+//! 2. Track both _requests_ and request _elements_ for rate limiting.
+//! 3. Make a generic get() function for that can be used by all APIs.
+//! 4. Look into making APIs optional, i.e. features.
+//! 5. Look into the Prelude::* convention.
+//! 6. Look into integrating [yaiouom](https://crates.io/crates/yaiouom).
+//! 7. Convert explicit query validation to session types wherever reasonable.
+//! 8. [Places API](https://developers.google.com/places/web-service/intro).
 //! There are no immediate plans for supporting this API. It's quite big and I
 //! have no current need for it. If you would like to have to implemented,
 //! please contact me.
-//! 8. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
+//! 9. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
 //! There are no immediate plans for supporting this API. It's quite big and I
 //! have no current need for it. If you would like to have to implemented,
 //! please contact me.
