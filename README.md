@@ -20,17 +20,20 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 * In your project's `Cargo.toml` file, under the `[dependencies]` section:
 
-	* Add `google_maps = "1.0.1"`. Check
+	* Add `google_maps = "1.0.3"`. Check
 		[crates.io](https://crates.io/crates/google_maps) for the latest
 		version number.
 
-	* Add `rust_decimal = "1.6.0"`. Check
+	* Add `rust_decimal = "1.9.0"`. Check
 		[crates.io](https://crates.io/crates/rust_decimal) for the
 		latest version number.
 
 * The full documentation is available at [docs.rs](https://docs.rs/google_maps/)
 
 # What's new?
+
+* 1.0.3: 2021-01-06: Updated dependencies. A few minor corrections. Async
+support is planned for the next month or two.
 
 * 1.0.2: 2020-08-07: Corrected error where string formatted for display were
 being sent to the Google Maps Platform API. Thanks
