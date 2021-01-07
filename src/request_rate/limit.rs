@@ -3,7 +3,7 @@ use crate::request_rate::{
     duration_to_string::duration_to_string,
     RequestRate
 }; // use crate::request_rate
-use log::info;
+use log::{info, trace};
 use std::time::Instant;
 
 impl RequestRate {
@@ -58,19 +58,16 @@ impl RequestRate {
                     // sleep if necessary:
                     Some(first_request) => {
                         // Output logging information:
-                        // For some reason these trace! macros can cause a
-                        // stack overflow, so they have been commented out for
-                        // now:
-                        /* trace!(
+                        trace!(
                             "{} requests to the `{}` API this session. This API's session began {} ago.",
                             rate.current_rate.request_count,
                             api.to_string(),
                             duration_to_string(&first_request.elapsed())
-                        ); */
-                        /* trace!(
+                        );
+                        trace!(
                             "Current rate: {}. Target rate: {}.",
                             rate.current_rate, rate.target_rate
-                        ); */
+                        );
 
                         // Calculate the current rate and target rate:
                         let target_rate = rate.target_rate.requests as f64

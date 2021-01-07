@@ -10,4 +10,4 @@ where
 {
     let seconds = data.num_seconds();
     serializer.serialize_i64(seconds)
-}
+} // fn

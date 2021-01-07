@@ -46,6 +46,6 @@ impl std::fmt::Display for CurrentRate {
     /// Formats a `CurrentRate` enum into a string that is presentable to the
     /// end user.
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{}", self.to_string())
+        write!(f, "{}", String::from(self))
     } // fn
 } // impl

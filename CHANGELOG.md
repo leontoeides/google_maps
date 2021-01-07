@@ -1,5 +1,8 @@
 # Change Log
 
+* 1.0.3: 2021-01-06: Updated dependencies. A few minor corrections. Async
+support is planned for the next month or two.
+
 * 1.0.2: 2020-08-07: Corrected error where string formatted for display were
 being sent to the Google Maps Platform API. Thanks
 [victorct-pronto](https://github.com/victorct-pronto)!
