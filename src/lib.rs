@@ -23,13 +23,13 @@
 //!
 //! * In your project's `Cargo.toml` file, under the `[dependencies]` section:
 //!
-//!     * Add `google_maps = "1.0.3"`. Check
+//!     * Add `google_maps = "^1.0.3"`. Check
 //!         [crates.io](https://crates.io/crates/google_maps) for the latest
 //!         version number.
 //!
-//!     * Add `rust_decimal = "1.9.0`. Check
-//!         [crates.io](https://crates.io/crates/rust_decimal) for the
-//!         latest version number.
+//!     * Add `rust_decimal_macros = "^1.9.0` for access to the dec! macro. This
+//!         macro is used to define decimal numbers in your program. This is
+//!         useful for defining latitudes and longitudes.
 //!
 //! * The full documentation is available at
 //! [docs.rs](https://docs.rs/google_maps/)
