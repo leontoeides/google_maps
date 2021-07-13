@@ -23,18 +23,14 @@ pub mod transit_time;
 pub mod transit_vehicle;
 
 use crate::directions::{
-    response::{
-        geocoded_waypoint::GeocodedWaypoint,
-        route::Route,
-        status::Status
-    }, // crate::directions::response
+    response::{geocoded_waypoint::GeocodedWaypoint, route::Route, status::Status}, // crate::directions::response
     travel_mode::TravelMode,
 }; // use // crate::directions
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 /// Directions responses contain the following root elements.
 
-#[derive(Clone, Debug, PartialEq, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Response {
     /// Contains an array of available travel modes. This field is returned when
     /// a request specifies a travel `mode` and gets no results. The array

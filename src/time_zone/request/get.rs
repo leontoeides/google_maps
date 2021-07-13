@@ -5,6 +5,7 @@ use crate::time_zone::{
 use log::{info, warn};
 
 impl<'a> Request<'a> {
+
     /// Performs the HTTP get request and returns the response to the caller.
     ///
     /// ## Arguments:
@@ -135,4 +136,5 @@ impl<'a> Request<'a> {
             tokio::time::delay_for(std::time::Duration::from_millis(wait_time_in_ms as u64)).await
         } // loop
     } // fn
+
 } // impl

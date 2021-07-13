@@ -12,6 +12,7 @@ mod target_rate;
 mod with_rate;
 pub mod api;
 pub mod api_rate_limit;
+mod current_rate;
 
 use crate::request_rate::api_rate::ApiRate;
 use crate::request_rate::api::Api;

@@ -9,8 +9,8 @@ mod get;
 mod new;
 mod with_language;
 
+use chrono::{DateTime, Utc};
 use crate::{client_settings::ClientSettings, language::Language, latlng::LatLng};
-use chrono::{DateTime, Utc}; // use
 
 /// **Look at this `Request` struct for documentation on how to build your _Time
 /// Zone API_ query**. The methods implemented for this struct are what's used

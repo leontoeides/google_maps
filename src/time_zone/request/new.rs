@@ -1,7 +1,8 @@
+use chrono::{DateTime, Utc};
 use crate::{client_settings::ClientSettings, latlng::LatLng, time_zone::request::Request};
-use chrono::{DateTime, Utc}; // use
 
 impl<'a> Request<'a> {
+
     /// Initializes the builder pattern for a Time Zone API query with the
     /// required, non-optional parameters.
     ///
@@ -44,4 +45,5 @@ impl<'a> Request<'a> {
             validated: false,
         } // struct
     } // fn
+
 } // impl

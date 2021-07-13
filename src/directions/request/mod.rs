@@ -50,7 +50,6 @@ use crate::{
 
 #[derive(Debug, Eq, PartialEq)]
 pub struct Request<'a> {
-
     // Required parameters:
     // --------------------
     /// The address, latitude/longitude, or place ID to which you wish to
@@ -128,5 +127,4 @@ pub struct Request<'a> {
 
     /// Has the request been validated?
     validated: bool,
-
 } // struct

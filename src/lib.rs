@@ -23,59 +23,30 @@
 //!
 //! * In your project's `Cargo.toml` file, under the `[dependencies]` section:
 //!
-//!     * Add `google_maps = "1.0.0"`. Check
+//!     * Add `google_maps = "^1.0.3"`. Check
 //!         [crates.io](https://crates.io/crates/google_maps) for the latest
 //!         version number.
 //!
-//!     * Add `rust_decimal = "1.5.0`. Check
-//!         [crates.io](https://crates.io/crates/rust_decimal) for the
-//!         latest version number.
+//!     * Add `rust_decimal_macros = "^1.9.0` for access to the dec! macro. This
+//!         macro is used to define decimal numbers in your program. This is
+//!         useful for defining latitudes and longitudes.
 //!
 //! * The full documentation is available at
 //! [docs.rs](https://docs.rs/google_maps/)
 //!
 //! # What's new?
 //!
+//! * 1.0.3: 2021-01-06: Updated dependencies. A few minor corrections. Async
+//! support is planned for the next month or two.
+//!
+//! * 1.0.2: 2020-08-07: Corrected error where string formatted for display were
+//! being sent to the Google Maps Platform API. Thanks
+//! [victorct-pronto](https://github.com/victorct-pronto)!
+//!
+//! * 1.0.1: 2020-05-25: Ensuring all public structures use Serde's serialize
+//! and deserialize traits. Thanks [qrayven](https://github.com/qrayven)!
+//!
 //! * 1.0.0: 2020-05-16: Inteface stable.
-//!
-//! * 0.7.3: 2020-04-25: For the Distance-Matrix API, some response fields that
-//! should have been public weren't. Fixed.
-//!
-//! * 0.7.2: 2020-04-21: Small bug fixes. Also, some logging was causing stack
-//! overflows, so it had to be disabled.
-//!
-//! * 0.7.1: 2020-03-10: Added in as many derivable traits as possible. Changed
-//! transit fare amount from `f64` to `rust_decimal::Decimal`. Clean-ups as
-//! commanded by Clippy.
-//!
-//! * 0.7.1: 2020-03-10: For Time Zone API requests from this crate has moved
-//! from expressing the time in `chrono::NaiveDateTime` to
-//! `chrono::DateTime<Utc>`. See the updated time zone example.
-//!
-//! * 0.7.0: 2020-03-08: Transitioned from `f64` to `rust_decimal::Decimal` for
-//! latitude and longitude coordinates. This eliminates rounding errors. The
-//! `Decimal` type is also hashable. Nice. `LatLng`, `Waypoint`, `Location`
-//! types can now be used as keys for hash maps. **To define a `Decimal` value
-//! in your code, currently you must add the `rust_decimal` dependency into your
-//! `Cargo.toml` file**. Use the `dec!()` macro like so: `dec!(12.345)`. This is
-//! the preferred way to define latitude and longitude coordinates. If you do
-//! not want to add this line to your `Cargo.toml` file, you may also create a
-//! `Decimal` from a `&str` like so: `Decimal::from_str("12.345").unwrap()`. See
-//! the new examples. Also, see the [rust_decimal
-//! crate](https://crates.io/crates/rust_decimal) for more information.
-//!
-//! * 0.7.0: 2020-03-08: To better align this crate with Rust conventions, I've
-//! converted many `String` parameters to `&str` parameters. If you're receiving
-//! new compilations errors like `the trait bound google_maps::directions::
-//! response::driving_maneuver::DrivingManeuver: std::convert::From<std::
-//! string::String> is not satisfied` you will have to change your code to
-//! borrow the string. For example, change `TransitCurrency::try_from(currency)`
-//! to `TransitCurrency::try_from(&currency)` or to
-//! `TransitCurrency::try_from(&*currency)` if its a `String` type.
-//!
-//! * 0.6.0: 2020-02-29: Cleaned up the `mod` and `use` declarations. To glob
-//! import everything from google_maps into your project, you can use the
-//! `use google_maps::prelude::*` convention now.
 //!
 //! * The full [change
 //! log](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md) is
@@ -281,17 +252,18 @@
 //!
 //! # To do:
 //!
-//! 1. Track both _requests_ and request _elements_ for rate limiting.
-//! 2. Make a generic get() function for that can be used by all APIs.
-//! 3. Look into making APIs optional, i.e. features.
-//! 4. Look into the Prelude::* convention.
-//! 5. Look into integrating [yaiouom](https://crates.io/crates/yaiouom).
-//! 6. Convert explicit query validation to session types wherever reasonable.
-//! 7. [Places API](https://developers.google.com/places/web-service/intro).
+//! 1. Async support.
+//! 2. Track both _requests_ and request _elements_ for rate limiting.
+//! 3. Make a generic get() function for that can be used by all APIs.
+//! 4. Look into making APIs optional, i.e. features.
+//! 5. Look into the Prelude::* convention.
+//! 6. Look into integrating [yaiouom](https://crates.io/crates/yaiouom).
+//! 7. Convert explicit query validation to session types wherever reasonable.
+//! 8. [Places API](https://developers.google.com/places/web-service/intro).
 //! There are no immediate plans for supporting this API. It's quite big and I
 //! have no current need for it. If you would like to have to implemented,
 //! please contact me.
-//! 8. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
+//! 9. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
 //! There are no immediate plans for supporting this API. It's quite big and I
 //! have no current need for it. If you would like to have to implemented,
 //! please contact me.

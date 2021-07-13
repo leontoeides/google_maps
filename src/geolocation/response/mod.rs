@@ -9,7 +9,7 @@ use crate::{
     geolocation::response::error_object::ErrorObject,
     latlng::LatLng,
 }; // use
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Response {
