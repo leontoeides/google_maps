@@ -16,8 +16,8 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub fn execute(&'a mut self) -> Result<Response, Error> {
-        self.validate()?.build()?.get()
+    pub async fn execute(&'a mut self) -> Result<Response, Error> {
+        self.validate()?.build()?.get().await
     } // fn
 
 } // impl

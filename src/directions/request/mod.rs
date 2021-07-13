@@ -48,7 +48,7 @@ use crate::{
 /// _Directions API_ query**. The methods implemented for this struct are what's
 /// used to build your request.
 
-#[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
+#[derive(Debug, Eq, PartialEq)]
 pub struct Request<'a> {
     // Required parameters:
     // --------------------
@@ -58,7 +58,7 @@ pub struct Request<'a> {
 
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client_settings: &'a mut ClientSettings,
+    client_settings: &'a ClientSettings,
 
     /// The address, latitude/longitude, or place ID from which you wish to
     /// calculate directions.

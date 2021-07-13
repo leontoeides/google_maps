@@ -5,7 +5,7 @@ use crate::{
 
 impl<'a> Request<'a> {
     pub fn new(
-        client_settings: &mut ClientSettings,
+        client_settings: &ClientSettings,
         origins: Vec<Waypoint>,
         destinations: Vec<Waypoint>,
     ) -> Request {

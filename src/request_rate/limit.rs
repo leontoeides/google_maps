@@ -1,10 +1,11 @@
 use crate::request_rate::{
     api::Api,
-    duration_to_string::duration_to_string,
     RequestRate
 }; // use crate::request_rate
-use log::{info, trace};
-use std::time::Instant;
+use futures::future;
+use std::time::SystemTime;
+use log::{info, warn};
+use crate::request_rate::duration_to_string::duration_to_string;
 
 impl RequestRate {
 
@@ -12,90 +13,32 @@ impl RequestRate {
     ///
     /// ## Description
     ///
-    /// This method does the actual rate limiting. It will look up the actual
-    /// effective requests/duration rate and compare it to the targeted
-    /// requests/duration rate. If the current rate exceeds the targeted rate,
+    /// This method performs rate limiting, using the throttler under rate_map
+    /// specified by the list of apis, which was calculated using targeted requests/duration
+    /// rates during initialization. If the current rate exceeds any of the targeted rate,
     /// this method will put the thread to sleep until it is ready for the next
     /// request.
     ///
     /// ## Arguments:
     ///
-    /// * `api` ‧ The API for which to observe the request rate limit.
-
-    pub fn limit(&mut self, api: &Api) {
-
-        // Select the ApiLimit requested by the caller:
-        let api_ref = match api {
-            Api::All => &mut self.all,
-            Api::Directions => &mut self.directions,
-            Api::DistanceMatrix => &mut self.distance_matrix,
-            Api::Elevation => &mut self.elevation,
-            Api::Geocoding => &mut self.geocoding,
-            Api::TimeZone => &mut self.time_zone,
-        }; // api
-
-        match *api_ref {
-            // No request rate is defined for caller's API, do nothing:
-            None => (),
-
-            // There is a request rate defined for the caller's specified API.
-            // Compare the current rate to the target rate. Put the thread to
-            // sleep if necessary.
-            Some(ref mut rate) => {
-                match rate.current_rate.first_request {
-                    // If this is the first request to the API, initialize the
-                    // timer.
-                    None => {
-                        // For some reason this trace! macro can cause a stack
-                        // overflow, so it has been commented out for now:
-                        /* trace!("Rate limiting is enabled for the `{}` API. First request.", api.to_string()); */
-                        rate.current_rate.first_request = Some(Instant::now());
-                        rate.current_rate.request_count = 1;
-                    } // case
-
-                    // If this is not the first request - calculate the elapsed,
-                    // time & current rate, compare against the target rate, and
-                    // sleep if necessary:
-                    Some(first_request) => {
-                        // Output logging information:
-                        trace!(
-                            "{} requests to the `{}` API this session. This API's session began {} ago.",
-                            rate.current_rate.request_count,
-                            api.to_string(),
-                            duration_to_string(&first_request.elapsed())
-                        );
-                        trace!(
-                            "Current rate: {}. Target rate: {}.",
-                            rate.current_rate, rate.target_rate
-                        );
-
-                        // Calculate the current rate and target rate:
-                        let target_rate = rate.target_rate.requests as f64
-                            / rate.target_rate.duration.as_secs_f64();
-                        let current_rate = rate.current_rate.request_count as f64
-                            / first_request.elapsed().as_secs_f64();
-
-                        // If the current rate exceeds the targeted rate, put
-                        // the thread to sleep:
-                        let difference = current_rate - target_rate;
-                        if difference > 0.0 {
-                            let sleep_duration = std::time::Duration::from_secs(
-                                ((1.0 / target_rate) + difference).round() as u64,
-                            );
-                            info!(
-                                "Thread is sleeping for {}.",
-                                duration_to_string(&sleep_duration)
-                            );
-                            std::thread::sleep(sleep_duration);
-                        } // if
-
-                        // Increment the request counter:
-                        rate.current_rate.request_count += 1;
-                    } // case
-                } // match
-            } // case
-        } // match
-
-    } // fn
-
+    /// * `apis` ‧ The APIs for which to observe the request rate limit.
+    pub async fn limit_apis(&self, apis: Vec<&Api>) -> () {
+        let mut limit_futures = Vec::new();
+        for (key, val) in self.rate_map.iter() {
+            if apis.contains(&key) {
+                limit_futures.push(val.limit());
+            }
+        }
+        let start = SystemTime::now();
+        future::join_all(limit_futures).await;
+        let wait_time = SystemTime::now().duration_since(start);
+        match wait_time {
+            Ok(duration) => {
+                if duration.as_millis() > 10 {
+                    info!("Waited for {} under rate limiter", duration_to_string(&duration))
+                }
+            },
+            _ => warn!("Clock went backwards!")
+        }
+    }
 } // impl

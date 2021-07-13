@@ -22,13 +22,13 @@ use crate::{
 /// used to build your request. Reverse geocoding looks up a street address
 /// from latitude & longitude coorindates.
 
-#[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
+#[derive(Debug, Eq, PartialEq)]
 pub struct ReverseRequest<'a> {
     // Required parameters:
     // --------------------
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client_settings: &'a mut ClientSettings,
+    client_settings: &'a ClientSettings,
 
     /// The latitude and longitude values specifying the location for which you
     /// wish to obtain the closest, human-readable address.

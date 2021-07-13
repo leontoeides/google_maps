@@ -13,7 +13,7 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub fn get(&mut self) -> Result<Response, Error> {
+    pub async fn get(&mut self) -> Result<Response, Error> {
 
         // Build the URL stem for the HTTP get request:
 
@@ -28,8 +28,7 @@ impl<'a> Request<'a> {
             None => return Err(Error::QueryNotBuilt),
         } // match
 
-        self.client_settings.rate_limit.limit(&Api::All);
-        self.client_settings.rate_limit.limit(&Api::Elevation);
+        self.client_settings.rate_limit.limit_apis(vec!(&Api::All, &Api::Elevation)).await;
 
         info!("HTTP GET: {}", uri);
 
@@ -46,7 +45,7 @@ impl<'a> Request<'a> {
 
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
-            let response = reqwest::blocking::get(&*uri);
+            let response: Result<reqwest::Response, reqwest::Error> = reqwest::get(&*uri).await;
 
             // Check response from the HTTP client:
             match response {
@@ -57,7 +56,7 @@ impl<'a> Request<'a> {
                     if response.status().is_success() {
                         // If the HTTP GET request was successful, deserialize
                         // the JSON response into a Rust data structure:
-                        let deserialized: Response = serde_json::from_str(&response.text()?)?;
+                        let deserialized: Response = serde_json::from_str(&response.text().await?)?;
                         // If the response JSON was successfully parsed, check
                         // the Google API status before returning it to the
                         // caller:
@@ -140,7 +139,8 @@ impl<'a> Request<'a> {
             } // if
 
             info!("Could not successfully query the Google Maps Platform. Sleeping for {} milliseconds before retry #{} of {}.", wait_time_in_ms, counter, self.client_settings.max_retries);
-            std::thread::sleep(std::time::Duration::from_millis(wait_time_in_ms as u64));
+            //std::thread::sleep(std::time::Duration::from_millis(wait_time_in_ms as u64));
+            tokio::time::sleep(std::time::Duration::from_millis(wait_time_in_ms as u64)).await
 
         } // loop
 
