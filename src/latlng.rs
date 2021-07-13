@@ -7,6 +7,7 @@ use rust_decimal::Decimal;
 use rust_decimal_macros::dec;
 use serde::{Deserialize, Serialize};
 use std::convert::TryFrom;
+use std::cmp::{Ord, Ordering};
 use rust_decimal::prelude::FromStr;
 
 /// Latitude and longitude values must correspond to a valid location on the
@@ -86,31 +87,23 @@ impl std::fmt::Display for LatLng {
     /// Formats a `LatLng` struct into a string that is presentable to the end
     /// user.
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        // Indicate north-south hemisphere for latitude.
-        let ns_hemisphere = if self.lat > dec!(0.0) {
-            String::from(" N")
-        } else if self.lat == dec!(0.0) {
-            String::from("")
-        } else {
-            String::from(" S")
-        }; // let if
-        // Indicate east-west hemisphere for longitude.
-        let ew_hemisphere = if self.lng > dec!(0.0) {
-            String::from(" E")
-        } else if self.lng == dec!(0.0) {
-            String::from("")
-        } else {
-            String::from(" W")
-        }; // let if
         // Display latitude and longitude as decimal degrees with some extra
         // fixins'.
         write!(
             f,
             "{}°{} {}°{}",
             self.lat.abs().normalize(),
-            ns_hemisphere,
+            match self.lat.cmp(&dec!(0.0)) {
+                Ordering::Less => " S".to_string(),
+                Ordering::Greater => " N".to_string(),
+                Ordering::Equal => "".to_string(),
+            }, // match
             self.lng.abs().normalize(),
-            ew_hemisphere,
+            match self.lng.cmp(&dec!(0.0)) {
+                Ordering::Less => " W".to_string(),
+                Ordering::Greater => " E".to_string(),
+                Ordering::Equal => "".to_string(),
+            }, // match
         ) // write!
     } // fn
 } // impl

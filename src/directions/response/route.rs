@@ -3,20 +3,18 @@
 use crate::{
     bounds::Bounds,
     directions::response::{
-        leg::Leg,
-        overview_polyline::OverviewPolyline,
-        transit_fare::TransitFare,
+        leg::Leg, overview_polyline::OverviewPolyline, transit_fare::TransitFare,
     }, // crate::directions::response
 }; // use
 use rust_decimal::Decimal;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 /// A single route containing a set of legs in a
 /// [Response](https://developers.google.com/maps/documentation/javascript/reference/directions#DirectionsResult).
 /// Note that though this object is "JSON-like," it is not strictly JSON, as it
 /// directly and indirectly includes `LatLng` objects.
 
-#[derive(Clone, Debug, Eq, Hash, PartialEq, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct Route {
     /// The bounds for this route.
     pub bounds: Bounds,
@@ -73,7 +71,6 @@ pub struct Route {
 } // struct
 
 impl Route {
-
     /// A helper function for destructuring (or serializing) the `summary`
     /// field. If the _summary_ text is populated, this function will return the
     /// _summary_ text in the `String` format. If the _summary_ text is empty,
@@ -171,5 +168,4 @@ impl Route {
             ))
         } // if
     } // fn
-
 } // impl

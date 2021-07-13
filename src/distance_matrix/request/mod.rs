@@ -40,7 +40,6 @@ use chrono::NaiveDateTime;
 
 #[derive(Debug, Eq, PartialEq)]
 pub struct Request<'a> {
-
     // Required parameters:
     // --------------------
     /// One or more locations to use as the finishing point for calculating
@@ -107,5 +106,4 @@ pub struct Request<'a> {
 
     /// Has the request been validated?
     validated: bool,
-
 } // struct

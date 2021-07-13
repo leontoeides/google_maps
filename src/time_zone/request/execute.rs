@@ -1,6 +1,7 @@
-use crate::time_zone::{error::Error, request::Request, response::Response}; // use
+use crate::time_zone::{error::Error, request::Request, response::Response};
 
 impl<'a> Request<'a> {
+
     /// Executes the query you've built.
     ///
     /// ## Description:
@@ -16,4 +17,5 @@ impl<'a> Request<'a> {
     pub async fn execute(&'a mut self) -> Result<Response, Error> {
         self.build().get().await
     } // fn
+
 } // impl
