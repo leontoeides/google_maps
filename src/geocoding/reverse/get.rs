@@ -136,7 +136,7 @@ impl<'a> ReverseRequest<'a> {
 
             info!("Could not successfully query the Google Maps Platform. Sleeping for {} milliseconds before retry #{} of {}.", wait_time_in_ms, counter, self.client_settings.max_retries);
             // std::thread::sleep(std::time::Duration::from_millis(wait_time_in_ms as u64));
-            tokio::time::delay_for(std::time::Duration::from_millis(wait_time_in_ms as u64)).await
+            tokio::time::sleep(std::time::Duration::from_millis(wait_time_in_ms as u64)).await
 
         } // loop
 
