@@ -15,7 +15,7 @@ impl ClientSettings {
     pub fn new(key: &str) -> ClientSettings {
         ClientSettings {
             key: key.to_string(),
-            max_retries: 20,
+            max_retries: 5,
             max_backoff: 32000,
             rate_limit: RequestRate::default(),
         } // ClientSettings
@@ -26,6 +26,7 @@ impl ClientSettings {
     /// transportation, including transit, driving, walking, or cycling.
     ///
     /// ```rust
+    /// use google_maps::prelude::*;
     /// directions(
     ///     // Origin: Canadian Museum of Nature
     ///     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
@@ -35,7 +36,7 @@ impl ClientSettings {
     /// ```
 
     pub fn directions(
-        &mut self,
+        &self,
         origin: Location,
         destination: Location,
     ) -> crate::directions::request::Request {
@@ -47,6 +48,7 @@ impl ClientSettings {
     /// route between start and end points.
     ///
     /// ```rust
+    /// use google_maps::prelude::*;
     /// distance_matrix(
     ///     // Origins
     ///     vec![
@@ -66,7 +68,7 @@ impl ClientSettings {
     /// ```
 
     pub fn distance_matrix(
-        &mut self,
+        &self,
         origins: Vec<Waypoint>,
         destinations: Vec<Waypoint>,
     ) -> crate::distance_matrix::request::Request {
@@ -77,7 +79,7 @@ impl ClientSettings {
     /// surface of the earth, including depth locations on the ocean floor
     /// (which return negative values).
 
-    pub fn elevation(&mut self) -> crate::elevation::request::Request {
+    pub fn elevation(&self) -> crate::elevation::request::Request {
         crate::elevation::request::Request::new(self)
     } // fn
 
@@ -87,7 +89,7 @@ impl ClientSettings {
     /// longitude), which you can use to place markers on a map, or position the
     /// map.
 
-    pub fn geocoding(&mut self) -> crate::geocoding::forward::ForwardRequest {
+    pub fn geocoding(&self) -> crate::geocoding::forward::ForwardRequest {
         crate::geocoding::forward::ForwardRequest::new(self)
     } // fn
 
@@ -96,6 +98,7 @@ impl ClientSettings {
     /// geographic coordinates into a human-readable address.
     ///
     /// ```rust
+    /// use google_maps::LatLng;
     /// reverse_geocoding(
     ///     // 10 Downing St, Westminster, London
     ///     LatLng::try_from(dec!(51.503_364), dec!(-0.127_625)).unwrap(),
@@ -103,7 +106,7 @@ impl ClientSettings {
     /// ```
 
     pub fn reverse_geocoding(
-        &mut self,
+        &self,
         latlng: LatLng,
     ) -> crate::geocoding::reverse::ReverseRequest {
         crate::geocoding::reverse::ReverseRequest::new(self, latlng)
@@ -115,6 +118,7 @@ impl ClientSettings {
     /// zone, the time offset from UTC, and the daylight savings offset.
     ///
     /// ```rust
+    /// use google_maps::{LatLng, NaiveDate};
     /// time_zone(
     ///      // St. Vitus Cathedral in Prague, Czechia
     ///      LatLng::try_from(dec!(50.090_903), dec!(14.400_512)).unwrap(),
@@ -124,7 +128,7 @@ impl ClientSettings {
     /// ```
 
     pub fn time_zone(
-        &mut self,
+        &self,
         location: LatLng,
         timestamp: DateTime<Utc>,
     ) -> crate::time_zone::request::Request {

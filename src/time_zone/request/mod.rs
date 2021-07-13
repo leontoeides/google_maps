@@ -16,13 +16,13 @@ use crate::{client_settings::ClientSettings, language::Language, latlng::LatLng}
 /// Zone API_ query**. The methods implemented for this struct are what's used
 /// to build your request.
 
-#[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
+#[derive(Debug, Eq, PartialEq)]
 pub struct Request<'a> {
     // Required parameters:
     // --------------------
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client_settings: &'a mut ClientSettings,
+    client_settings: &'a ClientSettings,
 
     /// The location to look up.
     location: LatLng,

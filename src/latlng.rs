@@ -6,7 +6,9 @@ use crate::error::Error;
 use rust_decimal::Decimal;
 use rust_decimal_macros::dec;
 use serde::{Deserialize, Serialize};
+use std::convert::TryFrom;
 use std::cmp::{Ord, Ordering};
+use rust_decimal::prelude::FromStr;
 
 /// Latitude and longitude values must correspond to a valid location on the
 /// face of the earth. Latitudes can take any value between -90 and 90 while
@@ -40,6 +42,28 @@ impl LatLng {
         }) // Lat Lng
     } // fn
 } // impl
+
+impl TryFrom<&str> for LatLng {
+    type Error = Error;
+
+    ///
+    /// Convert string to lat lng
+    ///
+    fn try_from(value: &str) -> Result<Self, Error> {
+        let coords: Vec<&str> = value.trim()
+            .split(',')
+            .collect();
+        if coords.len() != 2 {
+            Err(Error::InvalidLatLongString(value.to_owned()))
+        } else {
+            let lat = Decimal::from_str(coords[0]);
+            let lat = lat.or_else(|_| Err(Error::InvalidLatLongString(value.to_owned())))?;
+            let lon = Decimal::from_str(coords[1]);
+            let lon = lon.or_else(|_| Err(Error::InvalidLatLongString(value.to_owned())))?;
+            LatLng::try_from(lat, lon)
+        }
+    }
+}
 
 impl std::convert::From<&LatLng> for String {
     /// Converts a `LatLng` struct to a `String` that contains a

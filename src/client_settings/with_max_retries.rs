@@ -12,7 +12,7 @@ impl ClientSettings {
     ///
     /// * Sets the maximum number of retries to 10:
     /// ```rust
-    /// .with_max_retries(10)
+    /// with_max_retries(10)
     /// ```
 
     pub fn with_max_retries(

@@ -1,8 +1,9 @@
 use crate::request_rate::{
-    api::Api, api_rate::ApiRate, current_rate::CurrentRate,
+    api::Api, api_rate::ApiRate,
     target_rate::TargetRate, RequestRate,
 }; // use crate::request_rate
 use std::time::Duration;
+use stream_throttle::{ThrottleRate, ThrottlePool};
 
 impl RequestRate {
 
@@ -29,58 +30,56 @@ impl RequestRate {
     /// * Sets the rate limit for all Google Maps API requests to _2 request per
     /// minute_:
     /// ```rust
-    /// .with_rate(Api::All, 2, Duration::from_secs(60)) // 1 minute
+    /// with_rate(Api::All, 2, Duration::from_secs(60)) // 1 minute
     /// ```
     ///
     /// * Sets the rate limit for Google Maps Elevation API requests to _1
     /// requests per second_:
     /// ```rust
-    /// .with_rate(Api::All, 1, Duration::from_secs(1)) // 1 second
+    /// with_rate(Api::All, 1, Duration::from_secs(1)) // 1 second
     /// ```
     ///
     /// * This method can be stacked:
     /// ```rust
-    /// .with_rate(Api::All, 1, Duration::from_secs(60)) // 1 minute
-    /// .with_rate(Api::Directions, 1, Duration::from_secs(3_600)) // 1 hour
-    /// .with_rate(Api::TimeZone, 2, Duration::from_secs(60)) // 1 second
+    /// with_rate(Api::All, 1, Duration::from_secs(60)) // 1 minute
+    /// with_rate(Api::Directions, 1, Duration::from_secs(3_600)) // 1 hour
+    /// with_rate(Api::TimeZone, 2, Duration::from_secs(60)) // 1 second
     /// ```
 
     pub fn with_rate(
         &mut self,
-        api: &Api,
+        api: Api,
         requests: u16,
         duration: Duration
     ) -> &mut RequestRate {
 
         // Select `RequestRate` field for the API specified by the caller.
-        let api_ref = match api {
-            Api::All => &mut self.all,
-            Api::Directions => &mut self.directions,
-            Api::DistanceMatrix => &mut self.distance_matrix,
-            Api::Elevation => &mut self.elevation,
-            Api::Geocoding => &mut self.geocoding,
-            Api::TimeZone => &mut self.time_zone,
-        }; // api
+        let api_ref = self.rate_map.get_mut(&api); // api
+        let throttle_pool = match requests {
+            0 => None,
+            _ => {
+                let throttle_rate = ThrottleRate::new(requests as usize, duration);
+                Some(ThrottlePool::new(throttle_rate))
+            }
+        };
 
         // Has the ApiRate been set already?
         match api_ref {
             // If not, initialize the structure:
             None => {
-                *api_ref = Some(ApiRate {
+                self.rate_map.insert(api.clone(), ApiRate {
                     target_rate: TargetRate { requests, duration },
-                    current_rate: CurrentRate::default(),
-                })
+                    throttle_pool,
+                });
             }
             // If it has, set the new target request rate but preserve the
             // current effective request rate:
             Some(api_rate) => {
-                *api_ref = Some(ApiRate {
+                *api_rate = ApiRate {
                     // Set new target request rate:
                     target_rate: TargetRate { requests, duration },
-
-                    // Copy old actual request rate:
-                    current_rate: api_rate.current_rate.clone(),
-                })
+                    throttle_pool,
+                };
             } // ApiRate
         } // match
 
