@@ -26,7 +26,7 @@ impl<'a> Request<'a> {
             None => return Err(Error::QueryNotBuilt),
         } // match
 
-        self.client_settings.rate_limit.limit_apis(vec!(&Api::All, &Api::TimeZone)).await;
+        self.client_settings.rate_limit.limit_apis(vec![&Api::All, &Api::TimeZone]).await;
 
         info!("HTTP GET: {}", uri);
 

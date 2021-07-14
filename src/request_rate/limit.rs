@@ -22,7 +22,7 @@ impl RequestRate {
     /// ## Arguments:
     ///
     /// * `apis` ‧ The APIs for which to observe the request rate limit.
-    pub async fn limit_apis(&self, apis: Vec<&Api>) -> () {
+    pub async fn limit_apis(&self, apis: Vec<&Api>) {
         let mut limit_futures = Vec::new();
         for (key, val) in self.rate_map.iter() {
             if apis.contains(&key) {

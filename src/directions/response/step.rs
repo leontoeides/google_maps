@@ -83,9 +83,6 @@ impl Step {
     /// ```
 
     pub fn get_maneuver(&self) -> Option<String> {
-        match &self.maneuver {
-            Some(maneuver) => Some(String::from(maneuver)),
-            None => None,
-        } // match
+        self.maneuver.as_ref().map(String::from)
     } // fn
 } // impl
