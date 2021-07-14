@@ -1,5 +1,8 @@
 # Change Log
 
+* 2.0.0: 2022-07-13: The Rust Google Maps client is now async thanks to
+[seanpianka](https://github.com/seanpianka)!
+
 * 1.0.3: 2021-01-06: Updated dependencies. A few minor corrections. Async
 support is planned for the next month or two.
 

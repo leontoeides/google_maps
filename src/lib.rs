@@ -23,11 +23,11 @@
 //!
 //! * In your project's `Cargo.toml` file, under the `[dependencies]` section:
 //!
-//!     * Add `google_maps = "^1.0.3"`. Check
+//!     * Add `google_maps = "2.0"`. Check
 //!         [crates.io](https://crates.io/crates/google_maps) for the latest
 //!         version number.
 //!
-//!     * Add `rust_decimal_macros = "^1.9.0` for access to the dec! macro. This
+//!     * Add `rust_decimal_macros = "1.14` for access to the dec! macro. This
 //!         macro is used to define decimal numbers in your program. This is
 //!         useful for defining latitudes and longitudes.
 //!
@@ -35,6 +35,9 @@
 //! [docs.rs](https://docs.rs/google_maps/)
 //!
 //! # What's new?
+//!
+//! * 2.0.0: 2022-07-13: The Rust Google Maps client is now async thanks to
+//! [seanpianka](https://github.com/seanpianka)!
 //!
 //! * 1.0.3: 2021-01-06: Updated dependencies. A few minor corrections. Async
 //! support is planned for the next month or two.
@@ -45,8 +48,6 @@
 //!
 //! * 1.0.1: 2020-05-25: Ensuring all public structures use Serde's serialize
 //! and deserialize traits. Thanks [qrayven](https://github.com/qrayven)!
-//!
-//! * 1.0.0: 2020-05-16: Inteface stable.
 //!
 //! * The full [change
 //! log](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md) is
@@ -70,7 +71,7 @@
 //! // Ensure this date is a weekday in the future or this query will return zero
 //! // results.
 //! .with_arrival_time(NaiveDate::from_ymd(2020, 3, 2).and_hms(13, 00, 0))
-//! .execute();
+//! .execute().await;
 //!
 //! // Dump entire response:
 //!
@@ -101,7 +102,7 @@
 //!         Waypoint::LatLng(LatLng::try_from(dec!(37.387_316), dec!(-122.060_008)).unwrap()),
 //!     ],
 //! )
-//! .execute();
+//! .execute().await;
 //!
 //! // Dump entire response:
 //!
@@ -119,7 +120,7 @@
 //! let elevation = google_maps_client.elevation()
 //!     // Denver, Colorado, the "Mile High City"
 //!     .for_positional_request(LatLng::try_from(dec!(39.739_154), dec!(-104.984_703)).unwrap())
-//!     .execute();
+//!     .execute().await;
 //!
 //! // Dump entire response:
 //!
@@ -140,7 +141,7 @@
 //!
 //! let location = google_maps_client.geocoding()
 //!     .with_address("10 Downing Street London")
-//!     .execute();
+//!     .execute().await;
 //!
 //! // Dump entire response:
 //!
@@ -166,7 +167,7 @@
 //!     LatLng::try_from(dec!(51.503_364), dec!(-0.127_625)).unwrap(),
 //! )
 //! .with_result_type(PlaceType::StreetAddress)
-//! .execute();
+//! .execute().await;
 //!
 //! // Dump entire response:
 //!
@@ -195,7 +196,7 @@
 //!      LatLng::try_from(dec!(50.090_903), dec!(14.400_512)).unwrap(),
 //!      // The time right now in UTC (Coordinated Universal Time)
 //!      Utc::now()
-//! ).execute().unwrap();
+//! ).execute().await.unwrap();
 //!
 //! // Dump entire response:
 //!
