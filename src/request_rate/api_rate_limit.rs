@@ -14,7 +14,7 @@ impl ApiRate {
     /// request.
     ///
 
-    pub async fn limit(&self) -> () {
+    pub async fn limit(&self) {
         match &self.throttle_pool {
             Some(wait_pool) => wait_pool.queue().await,
             None => ()

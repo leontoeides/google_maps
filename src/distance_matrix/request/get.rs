@@ -28,7 +28,7 @@ impl<'a> Request<'a> {
             None => return Err(Error::QueryNotBuilt),
         } // match
 
-        self.client_settings.rate_limit.limit_apis(vec!(&Api::All, &Api::DistanceMatrix)).await;
+        self.client_settings.rate_limit.limit_apis(vec![&Api::All, &Api::DistanceMatrix]).await;
 
         info!("HTTP GET: {}", uri);
 

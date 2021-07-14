@@ -87,10 +87,7 @@ impl Leg {
     /// let duration_in_traffic_value = leg.get_duration_in_traffic_value();
     /// ```
     pub fn get_duration_in_traffic_value(&self) -> Option<i64> {
-        match &self.duration_in_traffic {
-            Some(duration) => Some(duration.value.num_seconds()),
-            None => None,
-        } // match
+        self.duration_in_traffic.as_ref().map(|duration| duration.value.num_seconds())
     } // fn
 
     /// A helper function for destructuring (or serializing) the optional
@@ -115,10 +112,7 @@ impl Leg {
     /// let arrival_time_zone = leg.arrival_time_zone();
     /// ```
     pub fn get_arrival_time_value(&self) -> Option<i64> {
-        match &self.arrival_time {
-            Some(time) => Some(time.value.timestamp()),
-            None => None,
-        } // match
+        self.arrival_time.as_ref().map(|time| time.value.timestamp())
     } // fn
 
     /// A helper function for destructuring (or serializing) the optional
@@ -129,10 +123,7 @@ impl Leg {
     /// let arrival_time_zone = leg.arrival_time_zone();
     /// ```
     pub fn get_arrival_time_zone(&self) -> Option<String> {
-        match &self.arrival_time {
-            Some(time) => Some(time.time_zone.name().to_string()),
-            None => None,
-        } // match
+        self.arrival_time.as_ref().map(|time| time.time_zone.name().to_string())
     } // fn
 
     /// A helper function for destructuring (or serializing) the optional
@@ -157,10 +148,7 @@ impl Leg {
     /// let departure_time_zone = leg.departure_time_zone();
     /// ```
     pub fn get_departure_time_value(&self) -> Option<i64> {
-        match &self.departure_time {
-            Some(time) => Some(time.value.timestamp()),
-            None => None,
-        } // match
+        self.departure_time.as_ref().map(|time| time.value.timestamp())
     } // fn
 
     /// A helper function for destructuring (or serializing) the optional
@@ -171,9 +159,6 @@ impl Leg {
     /// let departure_time_zone = leg.departure_time_zone();
     /// ```
     pub fn get_departure_time_zone(&self) -> Option<String> {
-        match &self.departure_time {
-            Some(time) => Some(time.time_zone.name().to_string()),
-            None => None,
-        } // match
+        self.departure_time.as_ref().map(|time| time.time_zone.name().to_string())
     } // fn
 } // impl

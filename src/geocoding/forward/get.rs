@@ -29,7 +29,7 @@ impl<'a> ForwardRequest<'a> {
             None => return Err(Error::QueryNotBuilt),
         } // match
 
-        self.client_settings.rate_limit.limit_apis(vec!(&Api::All, &Api::Geocoding)).await;
+        self.client_settings.rate_limit.limit_apis(vec![&Api::All, &Api::Geocoding]).await;
 
         info!("HTTP GET: {}", uri);
 

@@ -93,10 +93,7 @@ impl Route {
     /// let fare_currency = route.get_fare_currency();
     /// ```
     pub fn get_fare_currency(&self) -> Option<String> {
-        match &self.fare {
-            Some(fare) => Some(fare.currency.to_string()),
-            None => None,
-        } // match
+        self.fare.as_ref().map(|fare| fare.currency.to_string())
     } // fn
 
     /// A helper function for destructuring (or serializing) the optional `fare`
@@ -107,10 +104,7 @@ impl Route {
     /// let fare_value = route.get_fare_value();
     /// ```
     pub fn get_fare_value(&self) -> Option<Decimal> {
-        match &self.fare {
-            Some(fare) => Some(fare.value),
-            None => None,
-        } // match
+        self.fare.as_ref().map(|fare| fare.value)
     } // fn
 
     /// A helper function for destructuring (or serializing) the optional `fare`

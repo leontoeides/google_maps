@@ -46,10 +46,7 @@ impl Geometry {
     /// let bounds_southwest_lat = geocoding.geometry.get_bounds_southwest_lng();
     /// ```
     pub fn get_bounds_southwest_lat(&self) -> Option<Decimal> {
-        match &self.bounds {
-            Some(bounds) => Some(bounds.southwest.lat),
-            None => None,
-        } // match
+        self.bounds.as_ref().map(|bounds| bounds.southwest.lat)
     } // fn
 
     /// A helper function for destructuring the optional `bounds` field. If
@@ -60,10 +57,7 @@ impl Geometry {
     /// let bounds_southwest_lng = geocoding.geometry.get_bounds_southwest_lng();
     /// ```
     pub fn get_bounds_southwest_lng(&self) -> Option<Decimal> {
-        match &self.bounds {
-            Some(bounds) => Some(bounds.southwest.lng),
-            None => None,
-        } // match
+        self.bounds.as_ref().map(|bounds| bounds.southwest.lng)
     } // fn
 
     /// A helper function for destructuring the optional `bounds` field. If
@@ -74,10 +68,7 @@ impl Geometry {
     /// let bounds_northeast_lat = geocoding.geometry.get_bounds_northeast_lng();
     /// ```
     pub fn get_bounds_northeast_lat(&self) -> Option<Decimal> {
-        match &self.bounds {
-            Some(bounds) => Some(bounds.northeast.lat),
-            None => None,
-        } // match
+        self.bounds.as_ref().map(|bounds| bounds.northeast.lat)
     } // fn
 
     /// A helper function for destructuring the optional `bounds` field. If
@@ -88,10 +79,7 @@ impl Geometry {
     /// let bounds_northeast_lng = geocoding.geometry.get_bounds_northeast_lng();
     /// ```
     pub fn get_bounds_northeast_lng(&self) -> Option<Decimal> {
-        match &self.bounds {
-            Some(bounds) => Some(bounds.northeast.lng),
-            None => None,
-        } // match
+        self.bounds.as_ref().map(|bounds| bounds.northeast.lng)
     } // fn
 
 } // impl

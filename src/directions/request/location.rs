@@ -37,7 +37,7 @@ impl std::convert::From<&Location> for String {
     fn from(location: &Location) -> String {
         match location {
             Location::Address(address) => {
-                utf8_percent_encode(&address, NON_ALPHANUMERIC).to_string()
+                utf8_percent_encode(address, NON_ALPHANUMERIC).to_string()
             }
             Location::LatLng(latlng) => {
                 utf8_percent_encode(&String::from(latlng), NON_ALPHANUMERIC).to_string()
