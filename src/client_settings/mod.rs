@@ -7,6 +7,7 @@ mod new;
 mod with_max_delay;
 mod with_max_retries;
 mod with_rate;
+mod with_reqwest_client;
 
 use crate::request_rate::RequestRate;
 
@@ -28,7 +29,7 @@ use crate::request_rate::RequestRate;
 ///     .finalize();
 /// ```
 
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug)]
 pub struct ClientSettings {
 
     /// Your application's API key. This key identifies your application for
@@ -58,5 +59,9 @@ pub struct ClientSettings {
 
     /// Rate limits for each of the Google Cloud Maps Platform APIs.
     pub rate_limit: RequestRate,
+
+    /// Allows you to optionally provide your own pre-configured reqwest client
+    /// that will be used by the Google Maps client.
+    pub reqwest_client: Option<reqwest::Client>
 
 } // struct

@@ -36,6 +36,9 @@
 //!
 //! # What's new?
 //!
+//! * 2.0.1: 2022-07-15: Now supports a user-supplied Reqwest client in the
+//! Google Maps client builder. `ClientSettings::new("YOUR_API_KEY_HERE").with_reqwest_client(your_reqwest_client).finalize();`
+//!
 //! * 2.0.0: 2022-07-13: The Rust Google Maps client is now async thanks to
 //! [seanpianka](https://github.com/seanpianka)!
 //!
@@ -57,7 +60,7 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
-//! let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
+//! let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
 //!
@@ -82,7 +85,7 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
-//! let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
+//! let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
 //!
@@ -113,7 +116,7 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
-//! let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
+//! let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
 //!
@@ -135,7 +138,7 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
-//! let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
+//! let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
 //!
@@ -158,7 +161,7 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
-//! let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
+//! let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
 //!
@@ -177,7 +180,7 @@
 //!
 //! for result in &location.unwrap().results {
 //!     for address_component in &result.address_components {
-//!         print!("{} ", address_component.short_name);
+//!         print!("{}", address_component.short_name);
 //!     }
 //!     println!(""); // New line.
 //! }
@@ -187,7 +190,7 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
-//! let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
+//! let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
 //!
@@ -219,7 +222,7 @@
 //! use google_maps::prelude::*;
 //! use std::time::Duration;
 //!
-//! let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE)
+//! let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE")
 //!     // For all Google Maps Platform APIs, the client will limit 2 sucessful
 //!     // requests for every 10 seconds:
 //!     .with_rate(Api::All, 2, std::time::Duration::from_secs(10))
@@ -253,18 +256,17 @@
 //!
 //! # To do:
 //!
-//! 1. Async support.
-//! 2. Track both _requests_ and request _elements_ for rate limiting.
-//! 3. Make a generic get() function for that can be used by all APIs.
-//! 4. Look into making APIs optional, i.e. features.
-//! 5. Look into the Prelude::* convention.
-//! 6. Look into integrating [yaiouom](https://crates.io/crates/yaiouom).
-//! 7. Convert explicit query validation to session types wherever reasonable.
-//! 8. [Places API](https://developers.google.com/places/web-service/intro).
+//! 1. Track both _requests_ and request _elements_ for rate limiting.
+//! 2. Make a generic get() function for that can be used by all APIs.
+//! 3. Look into making APIs optional, i.e. features.
+//! 4. Look into the Prelude::* convention.
+//! 5. Look into integrating [yaiouom](https://crates.io/crates/yaiouom).
+//! 6. Convert explicit query validation to session types wherever reasonable.
+//! 7. [Places API](https://developers.google.com/places/web-service/intro).
 //! There are no immediate plans for supporting this API. It's quite big and I
 //! have no current need for it. If you would like to have to implemented,
 //! please contact me.
-//! 9. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
+//! 8. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
 //! There are no immediate plans for supporting this API. It's quite big and I
 //! have no current need for it. If you would like to have to implemented,
 //! please contact me.
@@ -274,7 +276,6 @@
 
 mod bounds;
 mod client_settings;
-pub mod error;
 mod language;
 mod latlng;
 mod place_type;
@@ -284,6 +285,7 @@ mod serde;
 pub mod directions;
 pub mod distance_matrix;
 pub mod elevation;
+pub mod error;
 pub mod geocoding;
 pub mod prelude;
 pub mod time_zone;
