@@ -28,7 +28,7 @@ use crate::{
 /// used to build your request. Forward geocoding looks up a longitude &
 /// latitude coordinates from a street address.
 
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug)]
 pub struct ForwardRequest<'a> {
     // Required parameters:
     // --------------------

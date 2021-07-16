@@ -18,6 +18,7 @@ impl ClientSettings {
             max_retries: 5,
             max_backoff: 32000,
             rate_limit: RequestRate::default(),
+            reqwest_client: None,
         } // ClientSettings
     } // fn
 

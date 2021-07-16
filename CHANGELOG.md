@@ -1,5 +1,8 @@
 # Change Log
 
+* 2.0.1: 2022-07-15: Now supports a user-configured Reqwest client in the Google
+Maps client builder. `ClientSettings::new("YOUR_API_KEY_HERE").with_reqwest_client(your_reqwest_client).finalize();`
+
 * 2.0.0: 2022-07-13: The Rust Google Maps client is now async thanks to
 [seanpianka](https://github.com/seanpianka)!
 
@@ -34,7 +37,7 @@ the updated time zone example.
 latitude and longitude coordinates. This eliminates rounding errors. The
 `Decimal` type is also hashable. Nice. `LatLng`, `Waypoint`, `Location` types
 can now be used as keys for hash maps. **To define a `Decimal` value in your
-code, currently you must add the `rust_decimal` dependency into your
+code, currently you must add the `rust_decimal_macros` dependency into your
 `Cargo.toml` file**. Use the `dec!()` macro like so: `dec!(12.345)`. This is the
 preferred way to define latitude and longitude coordinates. If you do not want
 to add this line to your `Cargo.toml` file, you may also create a `Decimal` from

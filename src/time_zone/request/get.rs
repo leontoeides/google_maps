@@ -13,6 +13,7 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub async fn get(&mut self) -> Result<Response, Error> {
+
         // Build the URI stem for the HTTP get request:
 
         const SERVICE_URI: &str = "https://maps.googleapis.com/maps/api/timezone";
@@ -33,14 +34,20 @@ impl<'a> Request<'a> {
         // Initialize variables:
         let mut counter = 0;
         let mut wait_time_in_ms = 0;
+
         // Retries the get request until successful, an error ineligible for
         // retries is returned, or we have reached the maximum retries:
         loop {
+
             // Increment retry counter:
             counter += 1;
+
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
-            let response: Result<reqwest::Response, reqwest::Error> = reqwest::get(&*uri).await;
+            let response: Result<reqwest::Response, reqwest::Error> = match &self.client_settings.reqwest_client {
+                Some(reqwest_client) => reqwest_client.execute(reqwest_client.get(&*uri).build()?).await,
+                None => reqwest::get(&*uri).await,
+            }; // match
 
             // Check response from the HTTP client:
             match response {

@@ -38,6 +38,9 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 # What's new?
 
+* 2.0.1: 2022-07-15: Now supports a user-configured Reqwest client in the Google
+Maps client builder. `ClientSettings::new("YOUR_API_KEY_HERE").with_reqwest_client(your_reqwest_client).finalize();`
+
 * 2.0.0: 2022-07-13: The Rust Google Maps client is now async thanks to
 [seanpianka](https://github.com/seanpianka)!
 
@@ -59,7 +62,7 @@ available on GitHub.
 
 ```rust
 use google_maps::prelude::*;
-let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
+let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -84,7 +87,7 @@ println!("{:#?}", directions);
 
 ```rust
 use google_maps::prelude::*;
-let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
+let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -115,7 +118,7 @@ println!("{:#?}", distance_matrix);
 
 ```rust
 use google_maps::prelude::*;
-let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
+let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -137,7 +140,7 @@ println!("Elevation: {} meters", elevation.unwrap().results.unwrap()[0].elevatio
 
 ```rust
 use google_maps::prelude::*;
-let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
+let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -160,7 +163,7 @@ for result in &location.unwrap().results {
 
 ```rust
 use google_maps::prelude::*;
-let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
+let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -189,7 +192,7 @@ for result in &location.unwrap().results {
 
 ```rust
 use google_maps::prelude::*;
-let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE);
+let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -224,7 +227,7 @@ automatic retry parameters.
 use google_maps::prelude::*;
 use std::time::Duration;
 
-let mut google_maps_client = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE)
+let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE")
     // For all Google Maps Platform APIs, the client will limit 2 sucessful
     // requests for every 10 seconds:
     .with_rate(Api::All, 2, std::time::Duration::from_secs(10))

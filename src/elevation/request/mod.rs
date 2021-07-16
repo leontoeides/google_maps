@@ -20,7 +20,7 @@ use crate::{
 /// Zone API_ query**. The methods implemented for this struct are what's used
 /// to build your request.
 
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug)]
 pub struct Request<'a> {
     // Required parameters:
     // --------------------
