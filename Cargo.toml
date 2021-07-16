@@ -17,7 +17,7 @@ doctest = false
 
 [features]
 default = ["native-tls"]
-native-tls = ["reqwest/native-tls"]
+native-tls = ["reqwest/default-tls"]
 rustls = ["reqwest/rustls-tls"]
 
 [dependencies]
