@@ -16,7 +16,7 @@ repository = "https://github.com/leontoeides/google_maps"
 doctest = false
 
 [features]
-rustls = ["reqwest/rustls"]
+rustls = ["reqwest/rustls-tls"]
 
 [dependencies]
 chrono = { version = "0.4", features = ["serde"] }
