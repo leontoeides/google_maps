@@ -1,9 +1,3 @@
-This is a fork of the library which uses async and non-blocking calls.
-The examples below need to be updated, by adding `.await` after `execute()`,
-and the call need to be made in an `async` function. The API should be 
-otherwise similar. (Except the rate limit has been turned off by default)
-
-
 🗺 An unofficial Google Maps Platform client library for the Rust programming
 language. This client currently implements the Directions API, Distance Matrix
 API, Elevation API, Geocoding API, and Time Zone API.
@@ -38,10 +32,12 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 # What's new?
 
-* 2.0.1: 2022-07-15: Now supports a user-configured Reqwest client in the Google
+* 2.0.2: 2021-07-16: Added support for using rustls-tls in reqwest dependency
+
+* 2.0.1: 2021-07-15: Now supports a user-configured Reqwest client in the Google
 Maps client builder. `ClientSettings::new("YOUR_API_KEY_HERE").with_reqwest_client(your_reqwest_client).finalize();`
 
-* 2.0.0: 2022-07-13: The Rust Google Maps client is now async thanks to
+* 2.0.0: 2021-07-13: The Rust Google Maps client is now async thanks to
 [seanpianka](https://github.com/seanpianka)!
 
 * 1.0.3: 2021-01-06: Updated dependencies. A few minor corrections. Async
