@@ -35,6 +35,8 @@
 //! [docs.rs](https://docs.rs/google_maps/)
 //!
 //! # What's new?
+//! * 2.0.2: 2021-07-16: Added support for using rustls-tls in reqwest
+//! dependency. Transitioned from `log` crate to the `tracing` crate.
 //!
 //! * 2.0.1: 2022-07-15: Now supports a user-supplied Reqwest client in the
 //! Google Maps client builder. `ClientSettings::new("YOUR_API_KEY_HERE").with_reqwest_client(your_reqwest_client).finalize();`
