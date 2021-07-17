@@ -32,7 +32,7 @@ impl<'a> Request<'a> {
         } // match
 
         // Enter a tracing (logging) span. Span is closed when function ends:
-        let directions_span = tracing::info_span!("Querying Google Maps Directions API: ", query_string = %uri);
+        let directions_span = tracing::info_span!("Querying Google Maps Directions API", query_string = %uri);
         let _directions_span_guard = directions_span.enter();
 
         // Observe any rate limiting before executing request:
@@ -100,7 +100,7 @@ impl<'a> Request<'a> {
                         // the error and do not retry the request. Also, if
                         // we have reached the maximum retry count, do not
                         // retry anymore:
-                        tracing::error!("HTTP client returned: `{}`.", response.status());
+                        tracing::error!("HTTP client returned: `{}`", response.status());
                         return Err(Error::HttpUnsuccessful(
                             counter,
                             response.status().to_string(),
@@ -146,7 +146,7 @@ impl<'a> Request<'a> {
             } // if
 
             let sleep_span = tracing::warn_span!(
-                "Could not successfully query the Google Maps Directions API. Sleeping for {} milliseconds before retry #{} of {}. ",
+                "Could not successfully query the Google Maps Directions API. Sleeping for {} milliseconds before retry #{} of {}",
                 wait_time_in_ms,
                 counter,
                 self.client_settings.max_retries
