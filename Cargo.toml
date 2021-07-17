@@ -15,6 +15,11 @@ repository = "https://github.com/leontoeides/google_maps"
 [lib]
 doctest = false
 
+[features]
+default = ["native-tls"]
+native-tls = ["reqwest/default-tls"]
+rustls = ["reqwest/rustls-tls"]
+
 [dependencies]
 chrono = { version = "0.4", features = ["serde"] }
 chrono-tz = { version = "0.5", features = ["serde"] }
@@ -22,7 +27,7 @@ log = "0.4"
 percent-encoding = "^2.1"
 rand = "0.8"
 futures = "0.3"
-reqwest = { version = "0.11", features = ["gzip"] }
+reqwest = { version = "0.11", default-features = false, features = ["gzip"] }
 rust_decimal = {version = "1.14", features = ["serde-float"] }
 rust_decimal_macros = "1.14"
 serde = { version = "1.0", features = ["derive"] }
