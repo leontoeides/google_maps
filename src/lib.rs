@@ -10,8 +10,7 @@
 //!
 //! This crate is expected to work well and have the more important Google Maps
 //! features implemented. It should work well because Reqwest and Serde do most
-//! of the heavy lifting! While it's an early release, this crate should work
-//! fine as is for most people.
+//! of the heavy lifting!
 //!
 //! I created this client library because I needed several Google Maps Platform
 //! features for a project that I'm working on. So, I've decided to spin my

@@ -20,7 +20,7 @@ pub enum Error {
     /// enum for more information.
     GoogleMapsService(Status, Option<String>),
     /// The HTTP request was unsuccessful.
-    HttpUnsuccessful(u8, String),
+    HttpUnsuccessful(String),
     /// API client library attempted to parse a string that contained an invalid
     /// avoid/restrictions code. See
     /// `google_maps\src\directions\request\avoid.rs` for more information.
@@ -82,6 +82,9 @@ pub enum Error {
     RequestNotValidated,
     /// The dependency library Reqwest generated an error.
     Reqwest(reqwest::Error),
+    /// The dependency library Reqwest generated an error. The error could
+    /// not be passed normally so a `String` representation is passed instead.
+    ReqwestMessage(String),
     /// The dependency library Serde JSON generated an error.
     SerdeJson(serde_json::error::Error),
     /// Too many waypoints specified.
@@ -169,11 +172,10 @@ impl std::fmt::Display for Error {
                         This may occur if the geocoder was passed a non-existent address."),
                 } // match
             }, // match
-            Error::HttpUnsuccessful(retries, status) => write!(f,
+            Error::HttpUnsuccessful(status) => write!(f,
                 "Google Maps Directions API client: \
                 Could not successfully query the Google Cloud Platform service. \
-                The client attempted to contact the service {} time(s). \
-                The service last responded with a `{}` status.", retries, status),
+                The service last responded with a `{}` status.", status),
             Error::InvalidAvoidCode(avoid_code) => write!(f,
                 "Google Maps Directions API client: \
                 `{}` is not a valid restrictions code. \
@@ -252,6 +254,7 @@ impl std::fmt::Display for Error {
                 The request must be validated before a query string may be built. \
                 Ensure the validate() method is called before build()."),
             Error::Reqwest(error) => write!(f, "Google Maps Directions API client in the Reqwest library: {}", error),
+            Error::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {}", error),
             Error::SerdeJson(error) => write!(f, "Google Maps Directions API client in the Serde JSON library: {}", error),
             Error::TooManyWaypoints(waypoint_count) => write!(f,
                 "Google Maps Directions API client: \
@@ -291,7 +294,7 @@ impl std::error::Error for Error {
             Error::EitherRestrictionsOrWaypoints(_waypoint_count, _restrictions) => None,
             Error::EitherWaypointsOrTransitMode(_waypoint_count) => None,
             Error::GoogleMapsService(_error, _message) => None,
-            Error::HttpUnsuccessful(_retries, _status) => None,
+            Error::HttpUnsuccessful(_status) => None,
             Error::InvalidAvoidCode(_avoid_code) => None,
             Error::InvalidCurrencyCode(_currency_code) => None,
             Error::InvalidGeocoderStatusCode(_geocoder_status_code) => None,
@@ -307,6 +310,7 @@ impl std::error::Error for Error {
             Error::QueryNotBuilt => None,
             Error::RequestNotValidated => None,
             Error::Reqwest(error) => Some(error),
+            Error::ReqwestMessage(_error) => None,
             Error::SerdeJson(error) => Some(error),
             Error::TooManyWaypoints(_waypoint_count) => None,
             Error::TransitModeIsForTransitOnly(_travel_mode, _transit_modes) => None,
