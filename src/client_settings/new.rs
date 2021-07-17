@@ -15,8 +15,6 @@ impl ClientSettings {
     pub fn new(key: &str) -> ClientSettings {
         ClientSettings {
             key: key.to_string(),
-            max_retries: 5,
-            max_backoff: 32000,
             rate_limit: RequestRate::default(),
             reqwest_client: None,
         } // ClientSettings

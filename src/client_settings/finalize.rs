@@ -11,8 +11,6 @@ impl ClientSettings {
     pub fn finalize(&self) -> ClientSettings {
         ClientSettings {
             key: self.key.clone(),
-            max_retries: self.max_retries,
-            max_backoff: self.max_backoff,
             rate_limit: self.rate_limit.clone(),
             reqwest_client: self.reqwest_client.clone(),
         } // ClientSettings

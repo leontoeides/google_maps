@@ -1,6 +1,11 @@
+use backoff::Error::{Permanent, Transient};
+use backoff::ExponentialBackoff;
+use backoff::future::retry;
 use crate::elevation::{
-    error::Error, request::Request, response::status::Status,
+    error::Error,
+    request::Request,
     response::Response,
+    response::status::Status,
 }; // use crate
 use crate::request_rate::api::Api;
 use tracing_futures::Instrument;
@@ -29,134 +34,115 @@ impl<'a> Request<'a> {
         } // match
 
         // Enter a tracing (logging) span. Span is closed when function ends:
-        let elevation_span = tracing::info_span!("Querying Google Maps Elevation API", query_string = %uri);
+        let elevation_span = tracing::info_span!(
+            "Querying Google Maps Elevation API",
+            query_string = %uri
+        ); // info_span!
         let _elevation_span_guard = elevation_span.enter();
 
         // Observe any rate limiting before executing request:
-        self.client_settings.rate_limit.limit_apis(vec![&Api::All, &Api::Elevation]).await;
-
-        // Initialize variables:
-        let mut counter = 0;
-        let mut wait_time_in_ms = 0;
+        let rate_span = tracing::trace_span!("Observing rate limit before executing query");
+        self.client_settings.rate_limit.limit_apis(vec![&Api::All, &Api::Elevation])
+            .instrument(rate_span)
+            .await;
 
         // Retries the get request until successful, an error ineligible for
-        // retries is returned, or we have reached the maximum retries:
-        loop {
-
-            // Increment retry counter:
-            counter += 1;
+        // retries is returned, or we have reached the maximum retries. Note:
+        // errors wrapped in `Transient()` will retried by the `backoff` crate
+        // while errors wrapped in `Permanent()` will exit the retry loop.
+        let backoff_span = tracing::trace_span!("Applying retry policy to query");
+        retry(ExponentialBackoff::default(), || async {
 
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
-            let response: Result<reqwest::Response, reqwest::Error> = match &self.client_settings.reqwest_client {
-                Some(reqwest_client) => reqwest_client.execute(reqwest_client.get(&*uri).build()?).await,
-                None => reqwest::get(&*uri).await,
-            }; // match
+            let response: Result<reqwest::Response, reqwest::Error> =
+                match &self.client_settings.reqwest_client {
+                    Some(reqwest_client) =>
+                        match reqwest_client.get(&*uri).build() {
+                            Ok(request) => reqwest_client.execute(request).await,
+                            Err(error) => Err(error),
+                        }, // Some
+                    None => reqwest::get(&*uri).await,
+                }; // match
 
             // Check response from the HTTP client:
             match response {
-
                 Ok(response) => {
                     // HTTP client was successful getting a response from the
                     // server. Check the HTTP status code:
                     if response.status().is_success() {
-                        // If the HTTP GET request was successful, deserialize
-                        // the JSON response into a Rust data structure:
-                        let deserialized: Response = serde_json::from_str(&response.text().await?)?;
-                        // If the response JSON was successfully parsed, check
-                        // the Google API status before returning it to the
-                        // caller:
-                        if deserialized.status == Status::Ok {
-                            // If Google's response was "Ok" return the
-                            // struct deserialized from JSON:
-                            return Ok(deserialized);
-                        } else if
-                        // Only Google's "Unknown Error" is eligible for
-                        // retries
-                        deserialized.status != Status::UnknownError
-                            || counter > self.client_settings.max_retries
-                        {
-                            // If there is a Google API error other than
-                            // "Unknown Error," return the error and do not
-                            // retry the request. Also, if we have reached
-                            // the maximum retry count, do not retry
-                            // further:
-                            let error = Error::GoogleMapsService(
-                                deserialized.status,
-                                deserialized.error_message,
-                            );
-                            tracing::error!("{}", error);
-                            return Err(error);
-                        } // if
-                          // We got a response from the server but it was not success:
-                    } else if !response.status().is_server_error() || // Only HTTP "500 Server Errors", and
-                        response.status() != 429 || // HTTP "429 Too Many Requests" are eligible for retries.
-                        counter > self.client_settings.max_retries
-                    {
-                        // If the HTTP request error was not a 500 Server
-                        // error or "429 Too Many Requests" error, return
-                        // the error and do not retry the request. Also, if
-                        // we have reached the maximum retry count, do not
-                        // retry anymore:
-                        tracing::error!("HTTP client returned: `{}`.", response.status());
-                        return Err(Error::HttpUnsuccessful(
-                            counter,
-                            response.status().to_string(),
-                        ));
+                        // If the HTTP GET request was successful, get the
+                        // response text:
+                        let text = &response.text().await;
+                        match text {
+                            Ok(text) => {
+                                match serde_json::from_str::<Response>(text) {
+                                    Ok(deserialized) => {
+                                        // If the response JSON was successfully
+                                        // parsed, check the Google API status
+                                        // before returning it to the caller:
+                                        if deserialized.status == Status::Ok {
+                                            // If Google's response was "Ok"
+                                            // return the struct deserialized
+                                            // from JSON:
+                                            Ok(deserialized)
+                                        // Google API returned an error. This
+                                        // indicates an issue with the request.
+                                        // In most cases, retrying will not
+                                        // help:
+                                        } else {
+                                            let error = Error::GoogleMapsService(
+                                                deserialized.status.to_owned(),
+                                                deserialized.error_message,
+                                            );
+                                            // Check Google API response status
+                                            // for error type:
+                                            if deserialized.status == Status::UnknownError {
+                                                // Only Google's "Unknown Error"
+                                                // is eligible for retries:
+                                                tracing::warn!("Google Maps API returned: {}", error);
+                                                Err(Transient(error))
+                                            } else {
+                                                // Not an "Unknown Error." The
+                                                // error is permanent, do not
+                                                // retry:
+                                                tracing::error!("Google Maps API returned: {}", error);
+                                                Err(Permanent(error))
+                                            } // if
+                                        } // if
+                                    }, // Ok(deserialized)
+                                    Err(error) => {
+                                        tracing::error!("JSON parsing error: {}", error);
+                                        Err(Permanent(Error::SerdeJson(error)))
+                                    }, // Err
+                                } // match
+                            }, // Ok(text)
+                            Err(error) => {
+                                tracing::error!("HTTP client returned: {}", error);
+                                Err(Permanent(Error::ReqwestMessage(error.to_string())))
+                            }, // Err
+                        } // match
+                    // We got a response from the server but it was not OK.
+                    // Only HTTP "500 Server Errors", and HTTP "429 Too Many
+                    // Requests" are eligible for retries.
+                    } else if response.status().is_server_error() || response.status() == 429 {
+                        tracing::warn!("HTTP client returned: {}", response.status());
+                        Err(Transient(Error::HttpUnsuccessful(response.status().to_string())))
+                    // Not a 500 Server Error or "429 Too Many Requests" error.
+                    // The error is permanent, do not retry:
+                    } else {
+                        tracing::error!("HTTP client returned: {}", response.status());
+                        Err(Permanent(Error::HttpUnsuccessful(response.status().to_string())))
                     } // if
                 } // case
-
-                Err(response) => {
-                    // HTTP client did not get a response from the server:
-                    tracing::warn!("HTTP client returned: `{}`", response);
-                    if counter > self.client_settings.max_retries {
-                        // If we have reached the maximum retry count, do not
-                        // retry anymore. Return the last HTTP client error:
-                        tracing::error!("Maximum {} retries reached.", self.client_settings.max_retries);
-                        return Err(Error::Reqwest(response));
-                    } // if
+                // HTTP client did not get a response from the server. Retry:
+                Err(error) => {
+                    tracing::warn!("HTTP client returned: {}", error);
+                    Err(Transient(Error::Reqwest(error)))
                 } // case
+            } // match
 
-            }; // match
-
-            // Truncated exponential backoff is a standard error handling
-            // strategy for network applications in which a client periodically
-            // retries a failed request with increasing delays between requests.
-            if wait_time_in_ms < self.client_settings.max_backoff {
-                // Wait Time = 2^N + Random
-                //
-                // A random number of milliseconds less than or equal to 255.
-                // This helps to avoid cases where many clients get synchronized
-                // by some situation and all retry at once, sending requests in
-                // synchronized waves.
-                wait_time_in_ms = 2_u32.pow(counter as u32) + (rand::random::<u8>() as u32);
-                // Maximum backoff is typically 32 or 64 seconds. The
-                // appropriate value depends on the use case.
-                //
-                // It's okay to continue retrying once you reach the
-                // max_backoff time. Retries after this point do not need to
-                // continue increasing backoff time. For example, if a client
-                // uses an max_backoff time of 64 seconds, then after
-                // reaching this value, the client can retry every 64 seconds.
-                // At some point, clients should be prevented from retrying
-                // infinitely.
-                if wait_time_in_ms > self.client_settings.max_backoff {
-                    wait_time_in_ms = self.client_settings.max_backoff
-                } // if
-            } // if
-
-            let sleep_span = tracing::warn_span!(
-                "Could not successfully query the Google Maps Elevation API. Sleeping for {} milliseconds before retry #{} of {}",
-                wait_time_in_ms,
-                counter,
-                self.client_settings.max_retries
-            ); // warn!
-
-            tokio::time::sleep(std::time::Duration::from_millis(wait_time_in_ms as u64))
-                .instrument(sleep_span)
-                .await
-
-        } // loop
+        }).instrument(backoff_span).await
 
     } // fn
 

@@ -12,7 +12,7 @@ pub enum Error {
     /// enum for more information.
     GoogleMapsService(Status, Option<String>),
     /// The HTTP request was unsuccessful.
-    HttpUnsuccessful(u8, String),
+    HttpUnsuccessful(String),
     /// API client library attempted to parse a string that contained an invalid
     /// country code. See `google_maps\src\geocoding\forward\country.rs` for
     /// more information.
@@ -32,6 +32,9 @@ pub enum Error {
     RequestNotValidated,
     /// The dependency library Reqwest generated an error.
     Reqwest(reqwest::Error),
+    /// The dependency library Reqwest generated an error. The error could
+    /// not be passed normally so a `String` representation is passed instead.
+    ReqwestMessage(String),
     /// The dependency library Serde JSON generated an error.
     SerdeJson(serde_json::error::Error),
 } // enum
@@ -75,11 +78,10 @@ impl std::fmt::Display for Error {
                         This may occur if the geocoder was passed a non-existent address."),
                 } // match
             }, // match
-            Error::HttpUnsuccessful(retries, status) => write!(f,
+            Error::HttpUnsuccessful(status) => write!(f,
                 "Google Maps Geocoding API client: \
                 Could not successfully query the Google Cloud Platform service. \
-                The client attempted to contact the service {} time(s). \
-                The service last responded with a `{}` status.", retries, status),
+                The service last responded with a `{}` status.", status),
             Error::InvalidCountryCode(country_code) => write!(f,
                 "Google Maps Geocoding API client: \
                 `{}` is not a valid ISO 3166-1 Alpha-2 country code. \
@@ -107,6 +109,7 @@ impl std::fmt::Display for Error {
                 The request must be validated before a query string may be built. \
                 Ensure the validate() method is called before build()."),
             Error::Reqwest(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {}", error),
+            Error::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {}", error),
             Error::SerdeJson(error) => write!(f, "Google Maps Geocoding API client in the Serde JSON library: {}", error),
         } // match
     } // fn
@@ -121,13 +124,14 @@ impl std::error::Error for Error {
         match self {
             Error::AddressOrComponentsRequired => None,
             Error::GoogleMapsService(_error, _message) => None,
-            Error::HttpUnsuccessful(_retries, _status) => None,
+            Error::HttpUnsuccessful(_status) => None,
             Error::InvalidCountryCode(_country_code) => None,
             Error::InvalidLocationTypeCode(_location_type_code) => None,
             Error::InvalidStatusCode(_status_code) => None,
             Error::QueryNotBuilt => None,
             Error::RequestNotValidated => None,
             Error::Reqwest(error) => Some(error),
+            Error::ReqwestMessage(_error) => None,
             Error::SerdeJson(error) => Some(error),
         } // match
     } // fn
