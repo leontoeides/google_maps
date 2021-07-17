@@ -29,7 +29,7 @@ impl<'a> ForwardRequest<'a> {
         } // match
 
         // Enter a tracing (logging) span. Span is closed when function ends:
-        let geocoding_span = tracing::info_span!("Querying Google Maps Geocoding API: ", query_string = %uri);
+        let geocoding_span = tracing::info_span!("Querying Google Maps Geocoding API", query_string = %uri);
         let _geocoding_span_guard = geocoding_span.enter();
 
         // Observe any rate limiting before executing request:
@@ -143,7 +143,7 @@ impl<'a> ForwardRequest<'a> {
             } // if
 
             let sleep_span = tracing::warn_span!(
-                "Could not successfully query the Google Maps Geocoding API. Sleeping for {} milliseconds before retry #{} of {}. ",
+                "Could not successfully query the Google Maps Geocoding API. Sleeping for {} milliseconds before retry #{} of {}",
                 wait_time_in_ms,
                 counter,
                 self.client_settings.max_retries

@@ -29,7 +29,7 @@ impl<'a> Request<'a> {
         } // match
 
         // Enter a tracing (logging) span. Span is closed when function ends:
-        let distance_matrix_span = tracing::info_span!("Querying Google Maps Distance Matrix API: ", query_string = %uri);
+        let distance_matrix_span = tracing::info_span!("Querying Google Maps Distance Matrix API", query_string = %uri);
         let _distance_matrix_span_guard = distance_matrix_span.enter();
 
         // Observe any rate limiting before executing request:
@@ -148,7 +148,7 @@ impl<'a> Request<'a> {
             } // if
 
             let sleep_span = tracing::warn_span!(
-                "Could not successfully query the Google Maps Distance Matrix API. Sleeping for {} milliseconds before retry #{} of {}. ",
+                "Could not successfully query the Google Maps Distance Matrix API. Sleeping for {} milliseconds before retry #{} of {}",
                 wait_time_in_ms,
                 counter,
                 self.client_settings.max_retries

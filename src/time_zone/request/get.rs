@@ -28,7 +28,7 @@ impl<'a> Request<'a> {
         } // match
 
         // Enter a tracing (logging) span. Span is closed when function ends:
-        let time_zone_span = tracing::info_span!("Querying Google Maps Time Zone API: ", query_string = %uri);
+        let time_zone_span = tracing::info_span!("Querying Google Maps Time Zone API", query_string = %uri);
         let _time_zone_span_guard = time_zone_span.enter();
 
         // Observe any rate limiting before executing request:
@@ -142,7 +142,7 @@ impl<'a> Request<'a> {
             } // if
 
             let sleep_span = tracing::warn_span!(
-                "Could not successfully query the Google Maps Time Zone API. Sleeping for {} milliseconds before retry #{} of {}. ",
+                "Could not successfully query the Google Maps Time Zone API. Sleeping for {} milliseconds before retry #{} of {}",
                 wait_time_in_ms,
                 counter,
                 self.client_settings.max_retries
