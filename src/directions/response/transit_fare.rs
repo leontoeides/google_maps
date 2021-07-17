@@ -13,10 +13,8 @@ pub struct TransitFare {
     /// An [ISO 4217 currency code](https://en.wikipedia.org/wiki/ISO_4217)
     /// indicating the currency that the amount is expressed in.
     pub currency: TransitCurrency,
-
     /// The total fare amount, formatted in the requested language.
     pub text: String,
-
     /// The total fare amount, in the currency specified above.
     pub value: Decimal,
 } // struct

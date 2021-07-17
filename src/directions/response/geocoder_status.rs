@@ -14,7 +14,6 @@ pub enum GeocoderStatus {
     /// and at least one geocode was returned.
     #[serde(alias = "OK")]
     Ok,
-
     /// Indicates that the geocode was successful but returned no results. This
     /// may occur if the geocoder was passed a non-existent `address`.
     #[serde(alias = "ZERO_RESULTS")]

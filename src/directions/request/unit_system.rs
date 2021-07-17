@@ -28,7 +28,6 @@ pub enum UnitSystem {
     /// units, miles and feet.
     #[serde(alias = "imperial")]
     Imperial,
-
     /// Specifies that distances in the response should be expressed in metric
     /// units, using kilometres and metres.
     #[serde(alias = "metric")]

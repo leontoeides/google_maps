@@ -13,9 +13,7 @@ impl<'a> Request<'a> {
     pub fn build(&'a mut self) -> Result<&'a mut Request, Error> {
 
         // Ensure request has been validated before building the query string:
-        if !self.validated {
-            return Err(Error::RequestNotValidated);
-        }
+        if !self.validated { return Err(Error::RequestNotValidated) }
 
         // Builds the "required parameters" portion of the query string:
         let mut query = format!(
@@ -142,6 +140,7 @@ impl<'a> Request<'a> {
 
         // Return modified Request struct to caller.
         Ok(self)
+
     } // fn
 
 } // impl

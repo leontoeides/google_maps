@@ -16,11 +16,9 @@ pub enum Location {
     /// This coordinate may be different from that returned by the Geocoding
     /// API, for example a building entrance rather than its center.
     Address(String),
-
     /// If you pass coordinates, they are used unchanged to calculate
     /// directions.
     LatLng(LatLng),
-
     /// The place ID may only be specified if the request includes an API key or
     /// a Google Maps Platform Premium Plan client ID. You can retrieve place
     /// IDs from the Geocoding API and the Places API (including Place

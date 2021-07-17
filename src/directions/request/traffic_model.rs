@@ -30,13 +30,11 @@ pub enum TrafficModel {
     /// the closer the `departure_time` is to now.
     #[serde(alias = "best_guess")]
     BestGuess,
-
     /// Indicates that the returned duration_in_traffic should be shorter than
     /// the actual travel time on most days, though occasional days with
     /// particularly good traffic conditions may be faster than this value.
     #[serde(alias = "optimistic")]
     Optimistic,
-
     /// Indicates that the returned `duration_in_traffic` should be longer than
     /// the actual travel time on most days, though occasional days with
     /// particularly bad traffic conditions may exceed this value.

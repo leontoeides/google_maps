@@ -62,17 +62,14 @@ impl<'a> Request<'a> {
             query.push_str("&avoid=");
             query.push_str(
                 &*utf8_percent_encode(
-                    &String::from(
-                        restrictions
-                            .iter()
-                            .map(|avoid| String::from(avoid) + "|")
-                            .collect::<String>()
-                            .trim_end_matches('|'),
-                    ),
+                    &restrictions
+                        .iter()
+                        .map(String::from)
+                        .collect::<Vec<String>>()
+                        .join("|"),
                     NON_ALPHANUMERIC,
-                )
-                .to_string(),
-            )
+                ).to_string(),
+            ) // push_str
         } // if
 
         // Departure time key/value pair:
@@ -110,17 +107,14 @@ impl<'a> Request<'a> {
             query.push_str("&transit_mode=");
             query.push_str(
                 &*utf8_percent_encode(
-                    &String::from(
-                        transit_modes
-                            .iter()
-                            .map(|mode| String::from(mode) + "|")
-                            .collect::<String>()
-                            .trim_end_matches('|'),
-                    ),
+                    &transit_modes
+                        .iter()
+                        .map(String::from)
+                        .collect::<Vec<String>>()
+                        .join("|"),
                     NON_ALPHANUMERIC,
-                )
-                .to_string(),
-            )
+                ).to_string(),
+            ) // query
         } // if
 
         // Transit route preference key/value pair:

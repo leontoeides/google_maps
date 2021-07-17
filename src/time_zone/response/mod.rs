@@ -28,7 +28,6 @@ pub struct Response {
     /// `time`.
     #[serde(alias = "dstOffset")]
     pub dst_offset: Option<i16>,
-
     /// More detailed information about the reasons behind the given status
     /// code, if other than `OK`.
     ///
@@ -36,15 +35,12 @@ pub struct Response {
     /// content is subject to change.
     #[serde(alias = "errorMessage")]
     pub error_message: Option<String>,
-
     /// The offset from UTC (in seconds) for the given location. This does not
     /// take into effect daylight savings.
     #[serde(alias = "rawOffset")]
     pub raw_offset: Option<i16>,
-
     /// The status of the response.
     pub status: Status,
-
     /// A string containing the ID of the time zone, such as
     /// "America/Los_Angeles" or "Australia/Sydney". These IDs are defined by
     /// Unicode [Common Locale Data Repository (CLDR)
@@ -55,7 +51,6 @@ pub struct Response {
     /// "Asia/Calcutta" is returned, not "Asia/Kolkata".
     #[serde(alias = "timeZoneId")]
     pub time_zone_id: Option<Tz>,
-
     /// A string containing the long form name of the time zone. This field will
     /// be localized if the language parameter is set. eg. "Pacific Daylight
     /// Time" or "Australian Eastern Daylight Time"

@@ -19,7 +19,6 @@ pub enum TransitRoutePreference {
     /// transfers.
     #[serde(alias = "fewer_transfers")]
     FewerTransfers,
-
     /// Indicates that the calculated route should prefer limited amounts of
     /// walking.
     #[serde(alias = "less_walking")]
@@ -43,7 +42,6 @@ impl std::convert::TryFrom<&str> for TransitRoutePreference {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
     type Error = crate::directions::error::Error;
-
     /// Gets a `TransitRoutePreference` enum from a `String` that contains a
     /// valid [transit route
     /// preference](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitRoutePreference)
