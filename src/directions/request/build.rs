@@ -33,7 +33,8 @@ impl<'a> Request<'a> {
 
         // Arrival time key/value pair:
         if let Some(arrival_time) = &self.arrival_time {
-            query.push_str(&format!("&arrival_time={}", arrival_time.timestamp()));
+            query.push_str("&arrival_time=");
+            query.push_str(&arrival_time.timestamp().to_string());
         } // if
 
         // Avoid key/value pair:
@@ -41,17 +42,14 @@ impl<'a> Request<'a> {
             query.push_str("&avoid=");
             query.push_str(
                 &*utf8_percent_encode(
-                    &String::from(
-                        restrictions
-                            .iter()
-                            .map(|avoid| String::from(avoid) + "|")
-                            .collect::<String>()
-                            .trim_end_matches('|'),
-                    ),
+                    &restrictions
+                        .iter()
+                        .map(String::from)
+                        .collect::<Vec<String>>()
+                        .join("|"),
                     NON_ALPHANUMERIC,
-                )
-                .to_string(),
-            )
+                ).to_string(),
+            ) // push_str
         } // if
 
         // Departure time key/value pair:
@@ -89,17 +87,14 @@ impl<'a> Request<'a> {
             query.push_str("&transit_mode=");
             query.push_str(
                 &*utf8_percent_encode(
-                    &String::from(
-                        transit_modes
-                            .iter()
-                            .map(|mode| String::from(mode) + "|")
-                            .collect::<String>()
-                            .trim_end_matches('|'),
-                    ),
+                    &transit_modes
+                        .iter()
+                        .map(String::from)
+                        .collect::<Vec<String>>()
+                        .join("|"),
                     NON_ALPHANUMERIC,
-                )
-                .to_string(),
-            )
+                ).to_string(),
+            ) // push_str
         } // if
 
         // Transit route preference key/value pair:
@@ -122,17 +117,14 @@ impl<'a> Request<'a> {
             } // if
             query.push_str(
                 &*utf8_percent_encode(
-                    &String::from(
-                        waypoints
-                            .iter()
-                            .map(|waypoint| String::from(waypoint) + "|")
-                            .collect::<String>()
-                            .trim_end_matches('|'),
-                    ),
+                    &waypoints
+                        .iter()
+                        .map(String::from)
+                        .collect::<Vec<String>>()
+                        .join("|"),
                     NON_ALPHANUMERIC,
-                )
-                .to_string(),
-            )
+                ).to_string(),
+            ) // push_str
         } // if
 
         // Set query string in Request struct.
