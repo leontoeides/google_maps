@@ -11,6 +11,7 @@ impl<'a> ReverseRequest<'a> {
     /// This method accepts no arguments.
 
     pub fn build(&mut self) -> &'a mut ReverseRequest {
+
         // This section builds the "required parameters" portion of the query
         // string:
 

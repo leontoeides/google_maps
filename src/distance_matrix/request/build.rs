@@ -26,35 +26,30 @@ impl<'a> Request<'a> {
             self.client_settings.key,
             // Origins:
             utf8_percent_encode(
-                &String::from(
-                    self.origins
-                        .iter()
-                        .map(|waypoint| String::from(waypoint) + "|")
-                        .collect::<String>()
-                        .trim_end_matches('|')
-                ),
+                &self.origins
+                    .iter()
+                    .map(String::from)
+                    .collect::<Vec<String>>()
+                    .join("|"),
                 NON_ALPHANUMERIC
-            )
-            .to_string(),
+            ).to_string(),
             // Destinations:
             utf8_percent_encode(
-                &String::from(
-                    self.destinations
-                        .iter()
-                        .map(|waypoint| String::from(waypoint) + "|")
-                        .collect::<String>()
-                        .trim_end_matches('|')
-                ),
+                &self.destinations
+                    .iter()
+                    .map(String::from)
+                    .collect::<Vec<String>>()
+                    .join("|"),
                 NON_ALPHANUMERIC
-            )
-            .to_string(),
+            ).to_string(),
         ); // format!
 
         // Builds the "optional parameters" portion of the query string:
 
         // Arrival time key/value pair:
         if let Some(arrival_time) = &self.arrival_time {
-            query.push_str(&format!("&arrival_time={}", arrival_time.timestamp()));
+            query.push_str("&arrival_time=");
+            query.push_str(&arrival_time.timestamp().to_string());
         } // if
 
         // Avoid key/value pair:
@@ -114,7 +109,7 @@ impl<'a> Request<'a> {
                         .join("|"),
                     NON_ALPHANUMERIC,
                 ).to_string(),
-            ) // query
+            ) // push_str
         } // if
 
         // Transit route preference key/value pair:

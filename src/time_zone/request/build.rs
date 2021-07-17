@@ -11,6 +11,7 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub fn build(&mut self) -> &'a mut Request {
+
         // This section builds the "required parameters" portion of the query
         // string:
 

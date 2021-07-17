@@ -41,7 +41,8 @@ impl<'a> Request<'a> {
 
         // Samples key/value pair:
         if let Some(samples) = &self.samples {
-            query.push_str(&format!("&samples={}", samples));
+            query.push_str("&samples=");
+            query.push_str(&samples.to_string());
         } // if
 
         // Set query string in Request struct.
