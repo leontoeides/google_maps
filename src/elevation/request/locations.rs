@@ -30,9 +30,9 @@ impl std::convert::From<&Locations> for String {
             Locations::LatLngs(latlngs) => String::from(
                 latlngs
                     .iter()
-                    .map(|latlng| String::try_from(latlng).unwrap() + "|")
-                    .collect::<String>()
-                    .trim_end_matches('|'),
+                    .map(|latlng| String::try_from(latlng).unwrap())
+                    .collect::<Vec<String>>()
+                    .join("|"),
             ),
             Locations::Polyline(polyline) => format!("enc:{}", polyline),
         } // match

@@ -47,7 +47,7 @@ impl std::convert::From<&DepartureTime> for String {
     fn from(departure_time: &DepartureTime) -> String {
         match departure_time {
             DepartureTime::Now => String::from("now"),
-            DepartureTime::At(departure_time) => format!("{}", departure_time.timestamp()),
+            DepartureTime::At(departure_time) => departure_time.timestamp().to_string(),
         } // match
     } // fn
 } // impl

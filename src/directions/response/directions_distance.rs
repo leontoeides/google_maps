@@ -9,7 +9,6 @@ pub struct DirectionsDistance {
     /// A string representation of the distance value, using the
     /// `with_unit_system()` specified in the request.
     pub text: String,
-
     /// Indicates the distance in meters.
     pub value: u32,
 } // struct

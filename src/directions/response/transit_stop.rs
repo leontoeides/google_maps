@@ -9,7 +9,6 @@ use serde::{Deserialize, Serialize};
 pub struct TransitStop {
     /// The name of the transit station/stop. eg. "Union Square".
     pub name: String,
-
     /// The location of the transit station/stop, represented as a `lat` and
     /// `lng` field.
     pub location: LatLng,

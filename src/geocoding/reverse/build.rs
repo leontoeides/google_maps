@@ -34,17 +34,14 @@ impl<'a> ReverseRequest<'a> {
             query.push_str("&location_type=");
             query.push_str(
                 &*utf8_percent_encode(
-                    &String::from(
-                        location_types
-                            .iter()
-                            .map(|location_type| String::from(location_type) + "|")
-                            .collect::<String>()
-                            .trim_end_matches('|'),
-                    ),
+                    &location_types
+                        .iter()
+                        .map(String::from)
+                        .collect::<Vec<String>>()
+                        .join("|"),
                     NON_ALPHANUMERIC,
-                )
-                .to_string(),
-            )
+                ).to_string(),
+            ) // push_str
         } // if
 
         // Result type(s) key/value pair:
@@ -52,17 +49,14 @@ impl<'a> ReverseRequest<'a> {
             query.push_str("&result_type=");
             query.push_str(
                 &*utf8_percent_encode(
-                    &String::from(
-                        result_types
-                            .iter()
-                            .map(|result_type| String::from(result_type) + "|")
-                            .collect::<String>()
-                            .trim_end_matches('|'),
-                    ),
+                    &result_types
+                        .iter()
+                        .map(String::from)
+                        .collect::<Vec<String>>()
+                        .join("|"),
                     NON_ALPHANUMERIC,
-                )
-                .to_string(),
-            )
+                ).to_string(),
+            ) // push_str
         } // if
 
         // Set query string in ReverseRequest struct.

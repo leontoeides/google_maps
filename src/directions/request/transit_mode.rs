@@ -17,21 +17,17 @@ pub enum TransitMode {
     /// Indicates that the calculated route should prefer travel by bus.
     #[serde(alias = "bus")]
     Bus,
-
     /// Indicates that the calculated route should prefer travel by train, tram,
     /// light rail, and subway. This is equivalent to
     /// `transit_mode=train|tram|subway`.
     #[serde(alias = "rail")]
     Rail,
-
     /// Indicates that the calculated route should prefer travel by subway.
     #[serde(alias = "subway")]
     Subway,
-
     /// Indicates that the calculated route should prefer travel by train.
     #[serde(alias = "train")]
     Train,
-
     /// Indicates that the calculated route should prefer travel by tram and
     /// light rail.
     /// Indicates that the calculated route should prefer travel by tram and

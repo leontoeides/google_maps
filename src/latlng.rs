@@ -45,7 +45,6 @@ impl LatLng {
 
 impl TryFrom<&str> for LatLng {
     type Error = Error;
-
     ///
     /// Convert string to lat lng
     ///

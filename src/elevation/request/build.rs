@@ -13,9 +13,7 @@ impl<'a> Request<'a> {
 
         // Ensure request has been validated before building the query string:
 
-        if !self.validated {
-            return Err(Error::RequestNotValidated);
-        }
+        if !self.validated { return Err(Error::RequestNotValidated) }
 
         // This section builds the "required parameters" portion of the query
         // string:

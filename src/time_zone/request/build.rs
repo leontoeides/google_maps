@@ -35,6 +35,7 @@ impl<'a> Request<'a> {
 
         // Return modified Request struct to caller.
         self
+
     } // fn
 
 } // impl

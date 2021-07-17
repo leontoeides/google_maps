@@ -28,18 +28,15 @@ pub enum Avoid {
     /// Indicates that the calculated route should avoid ferries.
     #[serde(alias = "ferries")]
     Ferries,
-
     /// Indicates that the calculated route should avoid highways.
     #[serde(alias = "highways")]
     Highways,
-
     /// Indicates that the calculated route should avoid indoor steps for
     /// walking and transit directions. Only requests that include an API key or
     /// a Google Maps Platform Premium Plan client ID will receive indoor steps
     /// by default.
     #[serde(alias = "indoor")]
     Indoor,
-
     /// Indicates that the calculated route should avoid toll roads/bridges.
     #[serde(alias = "tolls")]
     Tolls,

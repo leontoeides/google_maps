@@ -14,9 +14,7 @@ impl<'a> ForwardRequest<'a> {
 
         // Ensure request has been validated before building the query string:
 
-        if !self.validated {
-            return Err(Error::RequestNotValidated);
-        }
+        if !self.validated { return Err(Error::RequestNotValidated) }
 
         // This section builds the "required parameters" portion of the query
         // string:
@@ -47,17 +45,14 @@ impl<'a> ForwardRequest<'a> {
             query.push_str("&components=");
             query.push_str(
                 &*utf8_percent_encode(
-                    &String::from(
-                        components
-                            .iter()
-                            .map(|component| String::from(component) + "|")
-                            .collect::<String>()
-                            .trim_end_matches('|'),
-                    ),
+                    &components
+                        .iter()
+                        .map(String::from)
+                        .collect::<Vec<String>>()
+                        .join("|"),
                     NON_ALPHANUMERIC,
-                )
-                .to_string(),
-            )
+                ).to_string(),
+            ) // push_str
         }
 
         // Language key/value pair:
