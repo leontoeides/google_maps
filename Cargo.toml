@@ -4,9 +4,9 @@ version = "2.0.2"
 authors = ["Dylan Bowker <dylan.bowker@arkiteq.ca>"]
 edition = "2018"
 categories = [ "api-bindings" ]
-description = "🗺 An unofficial Google Maps Platform client library for the Rust programming language."
+description = "An unofficial Google Maps Platform client library for the Rust programming language."
 documentation = "https://docs.rs/google_maps"
-keywords = [ "distance", "elevation", "geocoding", "google", "maps" ]
+keywords = [ "directions", distance", "elevation", "geocoding", "google", "maps" ]
 license = "MIT OR Apache-2.0"
 publish = true
 readme = "README.md"
@@ -15,13 +15,18 @@ repository = "https://github.com/leontoeides/google_maps"
 [lib]
 doctest = false
 
+[features]
+default = ["native-tls"]
+native-tls = ["reqwest/default-tls"]
+rustls = ["reqwest/rustls-tls"]
+
 [dependencies]
 chrono = { version = "0.4", features = ["serde"] }
 chrono-tz = { version = "0.5", features = ["serde"] }
 futures = "0.3"
 percent-encoding = "^2.1"
 rand = "0.8"
-reqwest = { version = "0.11", features = ["gzip"] }
+reqwest = { version = "0.11", default-features = false, features = ["gzip"] }
 rust_decimal = {version = "1.14", features = ["serde-float"] }
 rust_decimal_macros = "1.14"
 serde = { version = "1.0", features = ["derive"] }
