@@ -30,7 +30,7 @@ to give back to the Rust community. I hope it saves someone out there some work.
 		[crates.io](https://crates.io/crates/google_maps) for the latest
 		version number.
 
-	* Add `rust_decimal_macros = "1.14` for access to the dec! macro. This
+	* Add `rust_decimal_macros = "1.14"` for access to the dec! macro. This
 		macro is used to define decimal numbers in your program. This is
 		useful for defining latitudes and longitudes.
 
@@ -43,16 +43,6 @@ Maps client builder. `ClientSettings::new("YOUR_API_KEY_HERE").with_reqwest_clie
 
 * 2.0.0: 2022-07-13: The Rust Google Maps client is now async thanks to
 [seanpianka](https://github.com/seanpianka)!
-
-* 1.0.3: 2021-01-06: Updated dependencies. A few minor corrections. Async
-support is planned for the next month or two.
-
-* 1.0.2: 2020-08-07: Corrected error where string formatted for display were
-being sent to the Google Maps Platform API. Thanks
-[victorct-pronto](https://github.com/victorct-pronto)!
-
-* 1.0.1: 2020-05-25: Ensuring all public structures use Serde's serialize and
-deserialize traits. Thanks [qrayven](https://github.com/qrayven)!
 
 * The full [change
 log](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md) is
