@@ -3,7 +3,7 @@ use crate::distance_matrix::{
     response::Response,
 }; // use crate::distance_matrix
 use crate::request_rate::api::Api;
-use log::{info, warn};
+use tracing_futures::Instrument;
 
 impl<'a> Request<'a> {
 
@@ -28,9 +28,12 @@ impl<'a> Request<'a> {
             None => return Err(Error::QueryNotBuilt),
         } // match
 
-        self.client_settings.rate_limit.limit_apis(vec![&Api::All, &Api::DistanceMatrix]).await;
+        // Enter a tracing (logging) span. Span is closed when function ends:
+        let distance_matrix_span = tracing::info_span!("Querying Google Maps Distance Matrix API: ", query_string = %uri);
+        let _distance_matrix_span_guard = distance_matrix_span.enter();
 
-        info!("HTTP GET: {}", uri);
+        // Observe any rate limiting before executing request:
+        self.client_settings.rate_limit.limit_apis(vec![&Api::All, &Api::DistanceMatrix]).await;
 
         // Initialize variables:
         let mut counter = 0;
@@ -84,7 +87,7 @@ impl<'a> Request<'a> {
                                 deserialized.status,
                                 deserialized.error_message,
                             );
-                            warn!("{}", error);
+                            tracing::error!("{}", error);
                             return Err(error);
                         } // if
                           // We got a response from the server but it was not success:
@@ -97,7 +100,7 @@ impl<'a> Request<'a> {
                         // the error and do not retry the request. Also, if
                         // we have reached the maximum retry count, do not
                         // retry anymore:
-                        warn!("HTTP client returned: `{}`.", response.status());
+                        tracing::error!("HTTP client returned: `{}`.", response.status());
                         return Err(Error::HttpUnsuccessful(
                             counter,
                             response.status().to_string(),
@@ -107,10 +110,11 @@ impl<'a> Request<'a> {
 
                 Err(response) => {
                     // HTTP client did not get a response from the server:
-                    warn!("HTTP client returned: `{}`", response);
+                    tracing::warn!("HTTP client returned: `{}`", response);
                     if counter > self.client_settings.max_retries {
                         // If we have reached the maximum retry count, do not
                         // retry anymore. Return the last HTTP client error:
+                        tracing::error!("Maximum {} retries reached.", self.client_settings.max_retries);
                         return Err(Error::Reqwest(response));
                     } // if
                 } // case
@@ -143,9 +147,16 @@ impl<'a> Request<'a> {
                 } // if
             } // if
 
-            info!("Could not successfully query the Google Maps Platform. Sleeping for {} milliseconds before retry #{} of {}.", wait_time_in_ms, counter, self.client_settings.max_retries);
-            //std::thread::sleep(std::time::Duration::from_millis(wait_time_in_ms as u64));
-            tokio::time::sleep(std::time::Duration::from_millis(wait_time_in_ms as u64)).await
+            let sleep_span = tracing::warn_span!(
+                "Could not successfully query the Google Maps Distance Matrix API. Sleeping for {} milliseconds before retry #{} of {}. ",
+                wait_time_in_ms,
+                counter,
+                self.client_settings.max_retries
+            ); // warn!
+
+            tokio::time::sleep(std::time::Duration::from_millis(wait_time_in_ms as u64))
+                .instrument(sleep_span)
+                .await
 
         } // loop
 
