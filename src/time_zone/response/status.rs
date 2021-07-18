@@ -1,8 +1,8 @@
 //! The `"status"` field within the Time Zone API response object contains the
 //! status of the request, and may contain debugging information to help you
-//! track down why geocoding is not working.
+//! track down why time zone is not working.
 
-use crate::geocoding::error::Error;
+use crate::time_zone::error::Error;
 use serde::{Deserialize, Serialize};
 
 /// Indicates the status of the response.
@@ -63,8 +63,8 @@ impl std::convert::From<&Status> for String {
 
 impl std::convert::TryFrom<&str> for Status {
     // Error definitions are contained in the
-    // `google_maps\src\geocoding\error.rs` module.
-    type Error = crate::geocoding::error::Error;
+    // `google_maps\src\time_zone\error.rs` module.
+    type Error = crate::time_zone::error::Error;
 
     /// Gets a `Status` enum from a `String` that contains a valid
     /// [status](https://developers.google.com/maps/documentation/timezone/intro#Responses)

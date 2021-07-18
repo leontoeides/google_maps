@@ -1,5 +1,9 @@
 # Change Log
 
+* 2.1.0: 2021-07-17: Transitioned from an in-house retry/backoff implementation
+to the `backoff` crate. Google Maps APIs are now optional through the use of
+feature flags. Improved examples.
+
 * 2.0.2: 2021-07-16: Added support for using rustls-tls in reqwest dependency.
 Transitioned from `log` crate to the `tracing` crate.
 

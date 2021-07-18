@@ -1,12 +1,14 @@
 use crate::{
     client_settings::ClientSettings,
-    directions::request::{
-        location::Location,
-        waypoint::Waypoint,
-    }, // directions::request
-    latlng::LatLng,
     request_rate::RequestRate,
 }; // use
+#[cfg(feature = "directions")]
+use crate::directions::request::location::Location;
+#[cfg(feature = "distance_matrix")]
+use crate::directions::request::waypoint::Waypoint;
+#[cfg(any(feature = "geocoding", feature = "time_zone"))]
+use crate::latlng::LatLng;
+#[cfg(feature = "time_zone")]
 use chrono::{DateTime, Utc};
 
 impl ClientSettings {
@@ -34,6 +36,7 @@ impl ClientSettings {
     /// )
     /// ```
 
+    #[cfg(feature = "directions")]
     pub fn directions(
         &self,
         origin: Location,
@@ -66,6 +69,7 @@ impl ClientSettings {
     /// )
     /// ```
 
+    #[cfg(feature = "distance_matrix")]
     pub fn distance_matrix(
         &self,
         origins: Vec<Waypoint>,
@@ -78,6 +82,7 @@ impl ClientSettings {
     /// surface of the earth, including depth locations on the ocean floor
     /// (which return negative values).
 
+    #[cfg(feature = "elevation")]
     pub fn elevation(&self) -> crate::elevation::request::Request {
         crate::elevation::request::Request::new(self)
     } // fn
@@ -88,6 +93,7 @@ impl ClientSettings {
     /// longitude), which you can use to place markers on a map, or position the
     /// map.
 
+    #[cfg(feature = "geocoding")]
     pub fn geocoding(&self) -> crate::geocoding::forward::ForwardRequest {
         crate::geocoding::forward::ForwardRequest::new(self)
     } // fn
@@ -104,6 +110,7 @@ impl ClientSettings {
     /// )
     /// ```
 
+    #[cfg(feature = "geocoding")]
     pub fn reverse_geocoding(
         &self,
         latlng: LatLng,
@@ -126,6 +133,7 @@ impl ClientSettings {
     /// )
     /// ```
 
+    #[cfg(feature = "time_zone")]
     pub fn time_zone(
         &self,
         location: LatLng,

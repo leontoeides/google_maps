@@ -1,5 +1,6 @@
 use crate::{
-    client_settings::ClientSettings, directions::request::waypoint::Waypoint,
+    client_settings::ClientSettings,
+    directions::request::waypoint::Waypoint,
     distance_matrix::request::Request,
 }; // use
 
