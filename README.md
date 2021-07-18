@@ -25,8 +25,8 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 	* Optionally, add `rust_decimal = "1"` and `rust_decimal_macros = "1"`
 		for access to the dec! macro. This macro can be used to define
-		decimal numbers in your program. This is useful for hard-coding
-		latitudes and longitudes in your code.
+		decimal numbers in your program. This is useful for efficiently
+		hard-codinglatitudes and longitudes in your code.
 
 * The full documentation is available at [docs.rs](https://docs.rs/google_maps/)
 
