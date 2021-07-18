@@ -18,8 +18,10 @@ pub mod component;
 pub mod country;
 
 use crate::{
-    bounds::Bounds, client_settings::ClientSettings,
-    geocoding::forward::component::Component, language::Language,
+    bounds::Bounds,
+    client_settings::ClientSettings,
+    geocoding::forward::component::Component,
+    language::Language,
     region::Region,
 }; // use crate
 
@@ -32,12 +34,14 @@ use crate::{
 pub struct ForwardRequest<'a> {
     // Required parameters:
     // --------------------
+
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
     client_settings: &'a ClientSettings,
 
     // Optional parameters:
     // --------------------
+
     /// The street address that you want to geocode, in the format used by the
     /// national postal service of the country concerned. Additional address
     //elements such as business names and unit, suite or floor numbers should be
