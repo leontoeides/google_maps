@@ -19,8 +19,7 @@ impl ClientSettings {
     /// ```rust
     /// let reqwest_client = reqwest::Client::builder()
     ///     .user_agent("My Cool App v1.0")
-    ///     .build()
-    ///     .unwrap();
+    ///     .build()?;
     ///
     /// let mut google_maps_client = ClientSettings::new("YOUR_API_KEY_HERE")
     ///     .with_reqwest_client(reqwest_client)

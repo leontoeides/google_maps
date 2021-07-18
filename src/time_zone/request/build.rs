@@ -1,5 +1,4 @@
 use crate::time_zone::request::Request;
-use std::convert::TryFrom;
 
 impl<'a> Request<'a> {
 
@@ -18,7 +17,7 @@ impl<'a> Request<'a> {
         let mut query = format!(
             "key={}&location={}&timestamp={}",
             self.client_settings.key,
-            String::try_from(&self.location).unwrap(),
+            String::from(&self.location),
             self.timestamp.timestamp(),
         );
 

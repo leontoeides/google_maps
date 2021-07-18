@@ -1,7 +1,6 @@
 use crate::latlng::LatLng;
 use rust_decimal_macros::dec;
 use serde::{Deserialize, Serialize};
-use std::convert::TryFrom;
 
 /// Defines the
 /// [location(s)](https://developers.google.com/maps/documentation/elevation/intro#Locations)
@@ -24,11 +23,10 @@ pub enum Locations {
 impl std::convert::From<&Locations> for String {
     /// Converts a `Locations` enum to a `String` that contains
     /// [locations](https://developers.google.com/maps/documentation/elevation/intro#Locations).
-    fn from(locations: &Locations) -> String {
+    fn from(locations: &Locations) -> Self {
         match locations {
-            Locations::LatLngs(latlngs) => latlngs
-                .iter()
-                .map(|latlng| String::try_from(latlng).unwrap())
+            Locations::LatLngs(latlngs) => latlngs.iter()
+                .map(String::from)
                 .collect::<Vec<String>>()
                 .join("|"),
             Locations::Polyline(polyline) => format!("enc:{}", polyline),

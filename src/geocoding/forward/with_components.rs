@@ -105,7 +105,7 @@ impl<'a> ForwardRequest<'a> {
             // If there are already filters, append to them:
             Some(components) => components_slice.iter().for_each(|component|
                 components.push(component.to_owned())
-            ), / iter
+            ), // iter
         } // match
         // Return modified ForwardRequest struct to caller.
         self

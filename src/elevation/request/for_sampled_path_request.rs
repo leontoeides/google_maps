@@ -26,9 +26,9 @@ impl<'a> Request<'a> {
     /// .for_sampled_path_request(
     ///     ElevationLocations::LatLngs(vec![
     ///         // Denver, Colorado
-    ///         LatLng::try_from(dec!(40.714728), dec!(-73.998672)).unwrap(),
+    ///         LatLng::try_from(dec!(40.714728), dec!(-73.998672))?,
     ///         // Death Valley, California
-    ///         LatLng::try_from(dec!(-34.397), dec!(-116.866667)).unwrap(),
+    ///         LatLng::try_from(dec!(-34.397), dec!(-116.866667))?,
     ///     ]),
     ///     // Number of samples
     ///     2

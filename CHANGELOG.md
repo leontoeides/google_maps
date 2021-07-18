@@ -1,5 +1,7 @@
 # Change Log
 
+* 2.1.1: 2021-07-18: House-keeping.
+
 * 2.1.0: 2021-07-17: Transitioned from an in-house retry/backoff implementation
 to the `backoff` crate. Google Maps APIs are now optional through the use of
 feature flags. Improved examples.
