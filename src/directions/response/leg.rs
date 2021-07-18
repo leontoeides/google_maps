@@ -3,8 +3,10 @@
 
 use crate::{
     directions::response::{
-        directions_distance::DirectionsDistance, directions_duration::DirectionsDuration,
-        step::Step, transit_time::TransitTime,
+        directions_distance::DirectionsDistance,
+        directions_duration::DirectionsDuration,
+        step::Step,
+        transit_time::TransitTime,
     }, // crate::directions::response
     latlng::LatLng,
 }; // use crate

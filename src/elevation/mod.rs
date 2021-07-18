@@ -80,10 +80,11 @@ pub mod response;
 pub use crate::elevation::{
     error::Error as ElevationError,
     request::{
-        locations::Locations as ElevationLocations, Request as ElevationRequest
-    }, // crate::elevation::request
+        locations::Locations as ElevationLocations,
+        Request as ElevationRequest,
+    }, // request
     response::{
         point::Point, status::Status as ElevationStatus,
         Response as ElevationResponse
-    }, // crate::elevation::response
-}; // use
+    }, // response
+}; // crate::elevation

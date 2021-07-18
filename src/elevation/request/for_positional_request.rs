@@ -1,7 +1,10 @@
 use crate::{
-    elevation::request::{locations::Locations, Request},
+    elevation::request::{
+        locations::Locations,
+        Request
+    }, // elevation::request
     latlng::LatLng,
-}; // use crate
+}; // crate
 
 impl<'a> Request<'a> {
 

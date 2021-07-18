@@ -81,28 +81,39 @@ pub mod response;
 
 pub use crate::directions::{
     request::{
-        avoid::Avoid, departure_time::DepartureTime, location::Location,
-        traffic_model::TrafficModel, transit_mode::TransitMode,
+        avoid::Avoid,
+        departure_time::DepartureTime,
+        location::Location,
+        traffic_model::TrafficModel,
+        transit_mode::TransitMode,
         transit_route_preference::TransitRoutePreference,
-        unit_system::UnitSystem, waypoint::Waypoint,
-    }, // crate::directions::request
+        unit_system::UnitSystem,
+        waypoint::Waypoint,
+    }, // request
     response::{
         directions_distance::DirectionsDistance,
         directions_duration::DirectionsDuration,
-        driving_maneuver::DrivingManeuver, leg::Leg,
+        driving_maneuver::DrivingManeuver,
+        leg::Leg,
         overview_polyline::OverviewPolyline,
-        polyline::Polyline, route::Route, step::Step,
-        transit_agency::TransitAgency, transit_currency::TransitCurrency,
-        transit_details::TransitDetails, transit_fare::TransitFare,
-        transit_line::TransitLine, transit_stop::TransitStop,
-        transit_time::TransitTime, transit_vehicle::TransitVehicle,
-    }, // crate::directions::response
+        polyline::Polyline,
+        route::Route,
+        step::Step,
+        transit_agency::TransitAgency,
+        transit_currency::TransitCurrency,
+        transit_details::TransitDetails,
+        transit_fare::TransitFare,
+        transit_line::TransitLine,
+        transit_stop::TransitStop,
+        transit_time::TransitTime,
+        transit_vehicle::TransitVehicle,
+    }, // response
     travel_mode::TravelMode,
     vehicle_type::VehicleType,
-}; // use crate::directions
+}; // crate::directions
 
 pub use crate::distance_matrix::{
     request::Request as DistanceMatrixRequest,
     response::Response as DistanceMatrixResponse,
     response::status::Status as DistanceMatrixStatus,
-}; // use crate::distance_matrix
+}; // crate::distance_matrix
