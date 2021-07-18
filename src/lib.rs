@@ -295,21 +295,19 @@
 //! * gzip
 //! * brotli
 //!
-//! Feature flag usage example:
+//! **Feature flag usage example**: This example will only include the Google
+//! Maps Directions API. Reqwest will secure the connection using the Rustls
+//! library, and has brotli compression enabled.
 //!
 //! ```toml
-//! # This example will only include the Google Maps Directions API, reqwest will
-//! # encrypt the connection using the Rustls library, and HTTP transfer using
-//! # brotli compression.
 //! google_maps = { version = "2.1", default-features = false, features = ["directions", "rustls", "brotli"] }
 //! ```
 //!
-//! Default feature flag configuration:
+//! **Default feature flag configuration**: By default, the Google Maps client
+//! includes all implemented Google Maps APIs. Reqwest will secure the
+//! connection using the system-native TLS, and has gzip compression enabled.
 //!
 //! ```toml
-//! # By default: include all implemented Google Maps APIs, reqwest will encrypt the
-//! # connection using the system-native TLS, and HTTP transfer using gzip
-//! # compression.
 //! default = ["directions", "distance_matrix", "elevation", "geocoding", "time_zone", "native-tls", "gzip"]
 //! ```
 //!
