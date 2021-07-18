@@ -65,7 +65,7 @@ let directions = google_maps_client.directions(
     // Origin: Canadian Museum of Nature
     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
     // Destination: Canada Science and Technology Museum
-    Location::LatLng(LatLng::try_from(dec!(45.403_509), dec!(-75.618_904)).unwrap()),
+    Location::LatLng(LatLng::try_from(dec!(45.403_509), dec!(-75.618_904))?),
 )
 .with_travel_mode(TravelMode::Driving)
 .execute()
@@ -101,7 +101,7 @@ let distance_matrix = google_maps_client.distance_matrix(
         // Google
         Waypoint::PlaceId(String::from("ChIJj61dQgK6j4AR4GeTYWZsKWw")),
         // Mozilla
-        Waypoint::LatLng(LatLng::try_from(dec!(37.387_316), dec!(-122.060_008)).unwrap()),
+        Waypoint::LatLng(LatLng::try_from(dec!(37.387_316), dec!(-122.060_008))?),
     ],
 ).execute().await?;
 
@@ -182,7 +182,7 @@ let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 let location = google_maps_client.reverse_geocoding(
     // 10 Downing St, Westminster, London
-    LatLng::try_from(dec!(51.503_364), dec!(-0.127_625)).unwrap(),
+    LatLng::try_from(dec!(51.503_364), dec!(-0.127_625))?,
 )
 .with_result_type(PlaceType::StreetAddress)
 .execute()
@@ -220,7 +220,7 @@ let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 let time_zone = google_maps_client.time_zone(
      // St. Vitus Cathedral in Prague, Czechia
-     LatLng::try_from(dec!(50.090_903), dec!(14.400_512)).unwrap(),
+     LatLng::try_from(dec!(50.090_903), dec!(14.400_512))?,
      // The time right now in UTC (Coordinated Universal Time)
      Utc::now()
 ).execute().await?;
