@@ -272,7 +272,7 @@ It is possible to change the Reqwest features that are in turn used by the
 Google Maps API client through feature flags. It is also possible to only
 include desired Google Maps APIs by using Cargo.toml feature flags.
 
-Google Maps feature flags:
+Google Maps Client feature flags:
 
 * directions
 * distance_matrix
