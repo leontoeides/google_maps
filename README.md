@@ -31,6 +31,10 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 # What's new?
 
+* 2.1.0: 2021-07-17: Transitioned from an in-house retry/backoff implementation
+to the `backoff` crate. Google Maps APIs are now optional through the use of
+feature flags. Improved examples.
+
 * 2.0.2: 2021-07-16: Added support for using rustls-tls in reqwest dependency.
 Transitioned from `log` crate to the `tracing` crate.
 
@@ -46,9 +50,14 @@ available on GitHub.
 
 ## Example Directions API Request
 
+The Directions API is a service that calculates directions between locations.
+You can search for directions for several modes of transportation, including
+transit, driving, walking, or cycling.
+
 ```rust
 use google_maps::prelude::*;
-let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+
+let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -58,11 +67,9 @@ let directions = google_maps_client.directions(
     // Destination: Canada Science and Technology Museum
     Location::LatLng(LatLng::try_from(dec!(45.403_509), dec!(-75.618_904)).unwrap()),
 )
-.with_travel_mode(TravelMode::Transit)
-// Ensure this date is a weekday in the future or this query will return zero
-// results.
-.with_arrival_time(NaiveDate::from_ymd(2020, 3, 2).and_hms(13, 00, 0))
-.execute().await;
+.with_travel_mode(TravelMode::Driving)
+.execute()
+.await?;
 
 // Dump entire response:
 
@@ -71,9 +78,13 @@ println!("{:#?}", directions);
 
 ## Example Distance Matrix API Request
 
+The Distance Matrix API is a service that provides travel distance and time for
+a matrix of origins and destinations, based on the recommended route between
+start and end points.
+
 ```rust
 use google_maps::prelude::*;
-let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -92,8 +103,7 @@ let distance_matrix = google_maps_client.distance_matrix(
         // Mozilla
         Waypoint::LatLng(LatLng::try_from(dec!(37.387_316), dec!(-122.060_008)).unwrap()),
     ],
-)
-.execute().await;
+).execute().await?;
 
 // Dump entire response:
 
@@ -102,54 +112,71 @@ println!("{:#?}", distance_matrix);
 
 ## Example Elevation API Positional Request
 
+The Elevation API provides elevation data for all locations on the surface of
+the earth, including depth locations on the ocean floor (which return negative
+values).
+
 ```rust
 use google_maps::prelude::*;
-let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
 let elevation = google_maps_client.elevation()
     // Denver, Colorado, the "Mile High City"
-    .for_positional_request(&LatLng::try_from(dec!(39.739_154), dec!(-104.984_703)).unwrap())
-    .execute().await;
+    .for_positional_request(LatLng::try_from(dec!(39.739_154), dec!(-104.984_703))?)
+    .execute()
+    .await?;
 
 // Dump entire response:
 
 println!("{:#?}", elevation);
 
-// Parsing example:
+// Display first result:
 
-println!("Elevation: {} meters", elevation.unwrap().results.unwrap()[0].elevation);
+if let Some(results) = elevation.results {
+    println!("Elevation: {} meters", results[0].elevation)
+}
 ```
 
 ## Example Geocoding API Request
 
+The Geocoding API is a service that provides geocoding and reverse geocoding of
+addresses. Geocoding is the process of converting addresses (like a street
+address) into geographic coordinates (like latitude and longitude), which you
+can use to place markers on a map, or position the map.
+
 ```rust
 use google_maps::prelude::*;
-let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
 let location = google_maps_client.geocoding()
     .with_address("10 Downing Street London")
-    .execute().await;
+    .execute()
+    .await?;
 
 // Dump entire response:
 
 println!("{:#?}", location);
 
-// Parsing example:
+// Print latitude & longitude coordinates:
 
-for result in &location.unwrap().results {
+for result in location.results {
     println!("{}", result.geometry.location)
 }
 ```
 
 ## Example Reverse Geocoding API Request
 
+The Geocoding API is a service that provides geocoding and reverse geocoding of
+addresses. Reverse geocoding is the process of converting geographic coordinates
+into a human-readable address.
+
 ```rust
 use google_maps::prelude::*;
-let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -158,27 +185,36 @@ let location = google_maps_client.reverse_geocoding(
     LatLng::try_from(dec!(51.503_364), dec!(-0.127_625)).unwrap(),
 )
 .with_result_type(PlaceType::StreetAddress)
-.execute().await;
+.execute()
+.await?;
 
 // Dump entire response:
 
 println!("{:#?}", location);
 
-// Parsing example:
+// Display all results:
 
-for result in &location.unwrap().results {
-    for address_component in &result.address_components {
-        print!("{} ", address_component.short_name);
-    }
-    println!(""); // New line.
+for result in location.results {
+    println!(
+        "{}",
+        result.address_components.iter()
+            .map(|address_component| address_component.short_name.to_string())
+            .collect::<Vec<String>>()
+            .join(", ")
+    );
 }
 ```
 
 ## Example Time Zone API Request
 
+The Time Zone API provides time offset data for locations on the surface of the
+earth. You request the time zone information for a specific latitude/longitude
+pair and date. The API returns the name of that time zone, the time offset from
+UTC, and the daylight savings offset.
+
 ```rust
 use google_maps::prelude::*;
-let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -187,46 +223,22 @@ let time_zone = google_maps_client.time_zone(
      LatLng::try_from(dec!(50.090_903), dec!(14.400_512)).unwrap(),
      // The time right now in UTC (Coordinated Universal Time)
      Utc::now()
-).execute().await.unwrap();
+).execute().await?;
 
 // Dump entire response:
 
 println!("{:#?}", time_zone);
 
-// Parsing example:
+// Usage example:
 
-println!("Time at your computer: {}", Local::now().timestamp());
+println!("Time at your computer: {}", Local::now().to_rfc2822());
 
-println!("Time in {}: {}",
-    time_zone.time_zone_id.unwrap().name(),
-    Utc::now().timestamp() + time_zone.dst_offset.unwrap() as i64 +
-        time_zone.raw_offset.unwrap() as i64
-);
-```
-
-## Example Client Settings
-
-The Google Maps client settings can be used to change the request rate and
-automatic retry parameters.
-
-```rust
-use google_maps::prelude::*;
-use std::time::Duration;
-
-let mut google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE")
-    // For all Google Maps Platform APIs, the client will limit 2 sucessful
-    // requests for every 10 seconds:
-    .with_rate(Api::All, 2, std::time::Duration::from_secs(10))
-    // For unsuccessful request attempts, the client will attempt 10 retries
-    // before giving up:
-    .with_max_retries(10)
-    // For unsuccessful requests, the delay between retries is increased after
-    // each attempt. This parameter ensures that the client will not delay for
-    // more than 32 seconds between retries:
-    .with_max_delay(&std::time::Duration::from_secs(32))
-    // Returns the `ClientSettings` struct to the caller. This struct is used to
-    // make Google Maps Platform requests.
-    .finalize();
+if let Some(time_zone_id) = time_zone.time_zone_id {
+    println!("Time in {}: {}",
+        time_zone_id.name(),
+        Local::now().with_timezone(&time_zone_id).to_rfc2822()
+    );
+}
 ```
 
 ## [Geolocation API](https://developers.google.com/maps/documentation/geolocation/intro)
@@ -236,6 +248,56 @@ is still available and the API appears configurable through the Google Cloud
 Platform console, the Geolocation API responds Status code `404 Not Found` with
 an empty body to all requests. This API cannot be implemented until the server
 responds as expected.
+
+## Example Client Settings
+
+The Google Maps client settings can be used to change the request rate and
+automatic retry parameters.
+
+```rust
+use google_maps::prelude::*;
+
+let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE")
+    // For all Google Maps Platform APIs, the client will limit 2 sucessful
+    // requests for every 10 seconds:
+    .with_rate(Api::All, 2, std::time::Duration::from_secs(10))
+    // Returns the `ClientSettings` struct to the caller. This struct is used to
+    // make Google Maps Platform requests.
+    .finalize();
+```
+
+## Feature Flags
+
+It is possible to change the Reqwest features that are in turn used by the
+Google Maps API client through feature flags. It is also possible to only
+include desired Google Maps APIs by using Cargo.toml feature flags.
+
+Google Maps feature flags:
+
+* directions
+* distance_matrix
+* elevation
+* geocoding
+* time_zone
+
+Reqwest feature flags:
+
+* native-tls
+* rustls
+* gzip
+* brotli
+
+Feature flag usage example:
+
+```toml
+google_maps = { version = "2.1", default-features = false, features = ["directions", "rustls", brotli"] }
+```
+
+Default feature flag configuration:
+
+```toml
+default = ["directions", "distance_matrix", "elevation", "geocoding", "time_zone", "native-tls", "gzip"]
+```
 
 # Feedback
 

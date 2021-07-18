@@ -16,9 +16,18 @@ repository = "https://github.com/leontoeides/google_maps"
 doctest = false
 
 [features]
-default = ["native-tls"]
+default = ["directions", "distance_matrix", "elevation", "geocoding", "time_zone", "native-tls", "gzip"]
+# Google Maps features:
+directions = []
+distance_matrix = []
+elevation = []
+geocoding = []
+time_zone = []
+# Reqwest features:
 native-tls = ["reqwest/default-tls"]
 rustls = ["reqwest/rustls-tls"]
+gzip = ["reqwest/gzip"]
+brotli = ["reqwest/brotli"]
 
 [dependencies]
 backoff = { version = "0.3", features = ["futures", "tokio"] }
@@ -27,7 +36,7 @@ chrono-tz = { version = "0.5", features = ["serde"] }
 futures = "0.3"
 percent-encoding = "^2.1"
 rand = "0.8"
-reqwest = { version = "0.11", default-features = false, features = ["gzip"] }
+reqwest = { version = "0.11", default-features = false }
 rust_decimal = {version = "1.14", features = ["serde-float"] }
 rust_decimal_macros = "1.14"
 serde = { version = "1.0", features = ["derive"] }

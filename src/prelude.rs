@@ -3,60 +3,110 @@
 //! collisions or conflicts, you can glob import all google_maps structs and
 //! enums by using this module.
 
-pub use chrono::{DateTime, Duration, Local, NaiveDate, NaiveDateTime, Utc};
+pub use chrono::{DateTime, Duration, Local, NaiveDate, NaiveDateTime, offset::TimeZone, Utc};
 pub use chrono_tz::Tz;
 pub use rust_decimal::Decimal;
 pub use rust_decimal_macros::dec;
 
 pub use crate::{
-    bounds::Bounds, client_settings::ClientSettings, language::Language, latlng::LatLng,
-    place_type::PlaceType, region::Region, request_rate::api::Api,
-}; // use crate
+    bounds::Bounds,
+    client_settings::ClientSettings,
+    language::Language,
+    latlng::LatLng,
+    place_type::PlaceType,
+    region::Region,
+    request_rate::api::Api,
+}; // crate
 
+#[cfg(any(feature = "directions", feature = "distance_matrix"))]
 pub use crate::directions::{
     request::{
-        avoid::Avoid, departure_time::DepartureTime, location::Location,
-        traffic_model::TrafficModel, transit_mode::TransitMode,
-        transit_route_preference::TransitRoutePreference, unit_system::UnitSystem,
-        waypoint::Waypoint, Request as DirectionsRequest,
-    }, // crate::directions::request
+        avoid::Avoid,
+        departure_time::DepartureTime,
+        location::Location,
+        traffic_model::TrafficModel,
+        transit_mode::TransitMode,
+        transit_route_preference::TransitRoutePreference,
+        unit_system::UnitSystem,
+        waypoint::Waypoint,
+    }, // request
     response::{
-        directions_distance::DirectionsDistance, directions_duration::DirectionsDuration,
-        driving_maneuver::DrivingManeuver, leg::Leg, overview_polyline::OverviewPolyline,
-        polyline::Polyline, route::Route, status::Status as DirectionsStatus, step::Step,
-        transit_agency::TransitAgency, transit_currency::TransitCurrency,
-        transit_details::TransitDetails, transit_fare::TransitFare, transit_line::TransitLine,
-        transit_stop::TransitStop, transit_time::TransitTime, transit_vehicle::TransitVehicle,
+        driving_maneuver::DrivingManeuver,
+        leg::Leg,
+        overview_polyline::OverviewPolyline,
+        polyline::Polyline,
         Response as DirectionsResponse,
-    }, // crate::directions::response
+        route::Route,
+        status::Status as DirectionsStatus,
+        step::Step,
+        transit_agency::TransitAgency,
+        transit_currency::TransitCurrency,
+        transit_details::TransitDetails,
+        transit_fare::TransitFare,
+        transit_line::TransitLine,
+        transit_stop::TransitStop,
+        transit_time::TransitTime,
+        transit_vehicle::TransitVehicle,
+    }, // response
     travel_mode::TravelMode,
     vehicle_type::VehicleType,
-}; // use crate::directions
+}; // crate::directions
 
+#[cfg(feature = "directions")]
+pub use crate::directions::{
+    request::Request as DirectionsRequest,
+    response::{
+        directions_distance::DirectionsDistance,
+        directions_duration::DirectionsDuration,
+    }, // response
+}; // crate::directions
+
+#[cfg(feature = "distance_matrix")]
 pub use crate::distance_matrix::{
-    request::Request as DistanceMatrixRequest, response::status::Status as DistanceMatrixStatus,
+    request::Request as DistanceMatrixRequest,
     response::Response as DistanceMatrixResponse,
+    response::status::Status as DistanceMatrixStatus,
 }; // use crate::distance_matrix
 
+#[cfg(feature = "elevation")]
 pub use crate::elevation::{
     error::Error as ElevationError,
-    request::{locations::Locations as ElevationLocations, Request as ElevationRequest},
-    response::{point::Point, status::Status as ElevationStatus, Response as ElevationResponse},
-}; // use crate::elevation
+    request::{
+        locations::Locations as ElevationLocations,
+        Request as ElevationRequest
+    }, // request
+    response::{
+        point::Point,
+        Response as ElevationResponse,
+        status::Status as ElevationStatus,
+    }, // response
+}; // crate::elevation
 
+#[cfg(feature = "geocoding")]
 pub use crate::geocoding::{
     error::Error as GeocodingError,
-    forward::{component::Component as GeocodingComponent, ForwardRequest as GeocodingRequest},
+    forward::{
+        component::Component as GeocodingComponent,
+        ForwardRequest as GeocodingRequest,
+    }, // forward
     location_type::LocationType,
     response::{
-        address_component::AddressComponent, geocoding::Geocoding, geometry::Geometry,
-        plus_code::PlusCode, status::Status as GeocodingStatus, Response as GeocodingResponse,
+        address_component::AddressComponent,
+        geocoding::Geocoding,
+        geometry::Geometry,
+        plus_code::PlusCode,
+        Response as GeocodingResponse,
+        status::Status as GeocodingStatus,
     }, // response
     reverse::ReverseRequest as GeocodingReverseRequest,
-}; // use crate::geocoding
+}; // crate::geocoding
 
+#[cfg(feature = "time_zone")]
 pub use crate::time_zone::{
     error::Error as TimeZoneError,
     request::Request as TimeZoneRequest,
-    response::{status::Status as TimeZoneStatus, Response as TimeZoneResponse},
-}; // use crate::time_zone
+    response::{
+        Response as TimeZoneResponse,
+        status::Status as TimeZoneStatus,
+    }, // reponse
+}; // crate::time_zone
