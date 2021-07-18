@@ -61,7 +61,7 @@ impl<'a> Request<'a> {
             // If there are already transit modes, append to them:
             Some(transit_modes) => transit_modes.push(transit_mode),
         } // match
-          // Return modified Request struct to caller.
+        // Return modified Request struct to caller.
         self
     } // fn
 
@@ -89,13 +89,11 @@ impl<'a> Request<'a> {
             // If there are no transit modes in the request struct, initialize:
             None => self.transit_modes = Some(transit_modes_slice.to_vec()),
             // If there are already transit modes, append to them:
-            Some(transit_modes) => {
-                for transit_mode in transit_modes_slice {
-                    transit_modes.push(transit_mode.to_owned())
-                }
-            } // case
+            Some(transit_modes) => transit_modes_slice.iter().for_each(|transit_mode|
+                transit_modes.push(transit_mode.to_owned())
+            ), // iter
         } // match
-          // Return modified Request struct to caller.
+        // Return modified Request struct to caller.
         self
     } // fn
 
