@@ -276,7 +276,7 @@
 //! Google Maps API client through feature flags. It is also possible to only
 //! include desired Google Maps APIs by using Cargo.toml feature flags.
 //!
-//! Google Maps feature flags:
+//! Google Maps API Client feature flags:
 //!
 //! * directions
 //! * distance_matrix
@@ -294,12 +294,18 @@
 //! Feature flag usage example:
 //!
 //! ```toml
+//! # This example will only include the Google Maps Directions API, reqwest will
+//! # encrypt the connection using the Rustls library, and HTTP transfer using
+//! # brotli compression.
 //! google_maps = { version = "2.1", default-features = false, features = ["directions", "rustls", "brotli"] }
 //! ```
 //!
 //! Default feature flag configuration:
 //!
 //! ```toml
+//! # By default: include all implemented Google Maps APIs, reqwest will encrypt the
+//! # connection using the system-native TLS, and HTTP transfer using gzip
+//! # compression.
 //! default = ["directions", "distance_matrix", "elevation", "geocoding", "time_zone", "native-tls", "gzip"]
 //! ```
 //!
