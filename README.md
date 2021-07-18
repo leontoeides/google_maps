@@ -23,9 +23,10 @@ to give back to the Rust community. I hope it saves someone out there some work.
 		[crates.io](https://crates.io/crates/google_maps) for the latest
 		version number.
 
-	* Add `rust_decimal_macros = "1.14"` for access to the dec! macro. This
-		macro is used to define decimal numbers in your program. This is
-		useful for defining latitudes and longitudes.
+	* Optionally, add `rust_decimal = "1"` and `rust_decimal_macros = "1"`
+		for access to the dec! macro. This macro can be used to define
+		decimal numbers in your program. This is useful for hard-coding
+		latitudes and longitudes in your code.
 
 * The full documentation is available at [docs.rs](https://docs.rs/google_maps/)
 
@@ -59,6 +60,7 @@ transit, driving, walking, or cycling.
 
 ```rust
 use google_maps::prelude::*;
+use rust_decimal_macros::dec;
 
 let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
@@ -87,6 +89,8 @@ start and end points.
 
 ```rust
 use google_maps::prelude::*;
+use rust_decimal_macros::dec;
+
 let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
@@ -121,6 +125,8 @@ values).
 
 ```rust
 use google_maps::prelude::*;
+use rust_decimal_macros::dec;
+
 let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
@@ -151,6 +157,7 @@ can use to place markers on a map, or position the map.
 
 ```rust
 use google_maps::prelude::*;
+
 let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
@@ -179,6 +186,8 @@ into a human-readable address.
 
 ```rust
 use google_maps::prelude::*;
+use rust_decimal_macros::dec;
+
 let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
@@ -217,6 +226,8 @@ UTC, and the daylight savings offset.
 
 ```rust
 use google_maps::prelude::*;
+use rust_decimal_macros::dec;
+
 let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
@@ -240,7 +251,7 @@ if let Some(time_zone_id) = time_zone.time_zone_id {
     println!(
     	"Time in {}: {}",
         time_zone_id.name(),
-        Local::now().with_timezone(&time_zone_id).to_rfc2822()
+        Utc::now().with_timezone(&time_zone_id).to_rfc2822()
     );
 }
 ```

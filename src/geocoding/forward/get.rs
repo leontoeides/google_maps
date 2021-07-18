@@ -50,7 +50,7 @@ impl<'a> ForwardRequest<'a> {
         // retries is returned, or we have reached the maximum retries. Note:
         // errors wrapped in `Transient()` will retried by the `backoff` crate
         // while errors wrapped in `Permanent()` will exit the retry loop.
-        let backoff_span = tracing::trace_span!("Applying retry policy to query");
+        let backoff_span = tracing::trace_span!("Trying query");
         retry(ExponentialBackoff::default(), || async {
 
             // Query the Google Cloud Maps Platform using using an HTTP get

@@ -8,6 +8,7 @@ mod build;
 mod execute;
 mod get;
 mod new;
+mod query_string;
 mod validate;
 mod with_address;
 mod with_bounds;

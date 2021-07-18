@@ -7,6 +7,7 @@ mod build;
 mod execute;
 mod get;
 mod new;
+mod query_string;
 mod with_language;
 
 use chrono::{DateTime, Utc};

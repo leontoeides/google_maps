@@ -26,9 +26,10 @@
 //!         [crates.io](https://crates.io/crates/google_maps) for the latest
 //!         version number.
 //!
-//!     * Add `rust_decimal_macros = "1.14"` for access to the dec! macro. This
-//!         macro is used to define decimal numbers in your program. This is
-//!         useful for defining latitudes and longitudes.
+//!     * Optionally, add `rust_decimal = "1"` and `rust_decimal_macros = "1"`
+//!         for access to the dec! macro. This macro can be used to define
+//!         decimal numbers in your program. This is useful for hard-coding
+//!         latitudes and longitudes in your code.
 //!
 //! * The full documentation is available at [docs.rs](https://docs.rs/google_maps/)
 //!
@@ -63,6 +64,7 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
+//! use rust_decimal_macros::dec;
 //!
 //! let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 //!
@@ -91,6 +93,8 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
+//! use rust_decimal_macros::dec;
+//!
 //! let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
@@ -125,6 +129,8 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
+//! use rust_decimal_macros::dec;
+//!
 //! let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
@@ -155,6 +161,7 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
+//!
 //! let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
@@ -183,6 +190,8 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
+//! use rust_decimal_macros::dec;
+//!
 //! let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
@@ -221,6 +230,8 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
+//! use rust_decimal_macros::dec;
+//!
 //! let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
@@ -238,7 +249,7 @@
 //!
 //! // Usage example:
 //!
-//! println!("Time at your computer: {}", Local::now().to_rfc2822());
+//! println!("Time at your computer: {}", Utc::now().to_rfc2822());
 //!
 //! if let Some(time_zone_id) = time_zone.time_zone_id {
 //!     println!(
