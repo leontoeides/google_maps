@@ -34,9 +34,13 @@ use chrono::NaiveDateTime;
 use crate::{
     client_settings::ClientSettings,
     directions::request::{
-        avoid::Avoid, departure_time::DepartureTime, location::Location,
-        traffic_model::TrafficModel, transit_mode::TransitMode,
-        transit_route_preference::TransitRoutePreference, unit_system::UnitSystem,
+        avoid::Avoid,
+        departure_time::DepartureTime,
+        location::Location,
+        traffic_model::TrafficModel,
+        transit_mode::TransitMode,
+        transit_route_preference::TransitRoutePreference,
+        unit_system::UnitSystem,
         waypoint::Waypoint,
     }, // directions::request
     directions::travel_mode::TravelMode,

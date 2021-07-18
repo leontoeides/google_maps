@@ -16,7 +16,6 @@ pub enum Locations {
     /// [latitude/longitude](https://developers.google.com/maps/documentation/elevation/intro#Locations)
     /// pairs.
     LatLngs(Vec<LatLng>),
-
     /// An [encoded
     /// polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm).
     Polyline(String),
@@ -27,13 +26,11 @@ impl std::convert::From<&Locations> for String {
     /// [locations](https://developers.google.com/maps/documentation/elevation/intro#Locations).
     fn from(locations: &Locations) -> String {
         match locations {
-            Locations::LatLngs(latlngs) => String::from(
-                latlngs
-                    .iter()
-                    .map(|latlng| String::try_from(latlng).unwrap())
-                    .collect::<Vec<String>>()
-                    .join("|"),
-            ),
+            Locations::LatLngs(latlngs) => latlngs
+                .iter()
+                .map(|latlng| String::try_from(latlng).unwrap())
+                .collect::<Vec<String>>()
+                .join("|"),
             Locations::Polyline(polyline) => format!("enc:{}", polyline),
         } // match
     } // fn

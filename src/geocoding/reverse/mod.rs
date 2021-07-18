@@ -13,9 +13,12 @@ mod with_location_types;
 mod with_result_types;
 
 use crate::{
-    client_settings::ClientSettings, geocoding::location_type::LocationType,
-    language::Language, latlng::LatLng, place_type::PlaceType,
-}; // use crate
+    client_settings::ClientSettings,
+    geocoding::location_type::LocationType,
+    language::Language,
+    latlng::LatLng,
+    place_type::PlaceType,
+}; // crate
 
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Geocoding API_ query**. The methods implemented for this struct are what's

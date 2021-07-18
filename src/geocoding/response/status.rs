@@ -14,12 +14,10 @@ pub enum Status {
     /// * An invalid `result_type` or `location_type` was given.
     #[serde(alias = "INVALID_REQUEST")]
     InvalidRequest,
-
     /// Indicates that no errors occurred; the address was successfully parsed
     /// and at least one geocode was returned.
     #[serde(alias = "OK")]
     Ok,
-
     /// Indicates any of the following:
     /// * The API key is missing or invalid.
     /// * Billing has not been enabled on your account.
@@ -32,21 +30,17 @@ pub enum Status {
     /// learn how to fix this.
     #[serde(alias = "OVER_DAILY_LIMIT")]
     OverDailyLimit,
-
     /// Indicates the requestor has exceeded quota.
     #[serde(alias = "OVER_QUERY_LIMIT")]
     OverQueryLimit,
-
     /// Indicates that the API did not complete the request. Confirm that the
     /// request was sent over HTTPS instead of HTTP.
     #[serde(alias = "REQUEST_DENIED")]
     RequestDenied,
-
     /// Indicates that the request could not be processed due to a server error.
     /// The request may succeed if you try again.
     #[serde(alias = "UNKNOWN_ERROR")]
     UnknownError,
-
     /// Indicates that the geocode was successful but returned no results. This
     /// may occur if the geocoder was passed a non-existent `address`. This may
     /// also occur if the geocoder was passed a `latlng` in a remote location.

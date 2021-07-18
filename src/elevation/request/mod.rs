@@ -13,7 +13,8 @@ mod validate;
 pub mod locations;
 
 use crate::{
-    client_settings::ClientSettings, elevation::request::locations::Locations
+    client_settings::ClientSettings,
+    elevation::request::locations::Locations
 }; // use crate
 
 /// **Look at this `Request` struct for documentation on how to build your _Time
