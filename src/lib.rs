@@ -38,7 +38,7 @@
 //! * 2.1.1: 2021-07-18: House-keeping. Fixed issue with Google Maps API
 //! `features`. Added support for using your own HTTP client. See
 //! [CHANGELOG.md](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md)
-//! for details.
+//! for example usage.
 //!
 //! * 2.1.0: 2021-07-17: Transitioned from an in-house retry/backoff
 //! implementation to the `backoff` crate. Google Maps APIs are now optional
