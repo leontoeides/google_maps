@@ -1,5 +1,6 @@
 use crate::{
-    client_settings::ClientSettings, geocoding::reverse::ReverseRequest,
+    client_settings::ClientSettings,
+    geocoding::reverse::ReverseRequest,
     latlng::LatLng
 }; // use crate
 
