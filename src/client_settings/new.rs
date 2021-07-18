@@ -1,7 +1,6 @@
-use crate::{
-    client_settings::ClientSettings,
-    request_rate::RequestRate,
-}; // use
+use crate::client_settings::ClientSettings;
+#[cfg(feature = "enable-reqwest")]
+use crate::request_rate::RequestRate;
 #[cfg(feature = "directions")]
 use crate::directions::request::location::Location;
 #[cfg(feature = "distance_matrix")]
@@ -14,11 +13,30 @@ use chrono::{DateTime, Utc};
 impl ClientSettings {
 
     /// Initialize the settings needed for a Google Cloud Maps API transaction.
+    ///
+    /// ## Arguments:
+    ///
+    /// This method accepts no arguments.
+
+    #[cfg(feature = "enable-reqwest")]
     pub fn new(key: &str) -> ClientSettings {
         ClientSettings {
             key: key.to_string(),
             rate_limit: RequestRate::default(),
             reqwest_client: None,
+        } // ClientSettings
+    } // fn
+
+    /// Initialize the settings needed for a Google Cloud Maps API transaction.
+    ///
+    /// ## Arguments:
+    ///
+    /// This method accepts no arguments.
+
+    #[cfg(not(feature = "enable-reqwest"))]
+    pub fn new(key: &str) -> ClientSettings {
+        ClientSettings {
+            key: key.to_string(),
         } // ClientSettings
     } // fn
 

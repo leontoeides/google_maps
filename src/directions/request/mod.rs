@@ -4,7 +4,9 @@
 //! for building your Google Maps Platform request.
 
 mod build;
+#[cfg(feature = "enable-reqwest")]
 mod execute;
+#[cfg(feature = "enable-reqwest")]
 mod get;
 mod new;
 mod query_string;

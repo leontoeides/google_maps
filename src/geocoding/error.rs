@@ -31,9 +31,11 @@ pub enum Error {
     /// The request must be validated before a query string may be built.
     RequestNotValidated,
     /// The dependency library Reqwest generated an error.
+    #[cfg(feature = "enable-reqwest")]
     Reqwest(reqwest::Error),
     /// The dependency library Reqwest generated an error. The error could
     /// not be passed normally so a `String` representation is passed instead.
+    #[cfg(feature = "enable-reqwest")]
     ReqwestMessage(String),
     /// The dependency library Serde JSON generated an error.
     SerdeJson(serde_json::error::Error),
@@ -108,7 +110,9 @@ impl std::fmt::Display for Error {
                 "Google Maps Geocoding API client: \
                 The request must be validated before a query string may be built. \
                 Ensure the validate() method is called before build()."),
+            #[cfg(feature = "enable-reqwest")]
             Error::Reqwest(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {}", error),
+            #[cfg(feature = "enable-reqwest")]
             Error::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {}", error),
             Error::SerdeJson(error) => write!(f, "Google Maps Geocoding API client in the Serde JSON library: {}", error),
         } // match
@@ -130,13 +134,16 @@ impl std::error::Error for Error {
             Error::InvalidStatusCode(_status_code) => None,
             Error::QueryNotBuilt => None,
             Error::RequestNotValidated => None,
+            #[cfg(feature = "enable-reqwest")]
             Error::Reqwest(error) => Some(error),
+            #[cfg(feature = "enable-reqwest")]
             Error::ReqwestMessage(_error) => None,
             Error::SerdeJson(error) => Some(error),
         } // match
     } // fn
 } // impl
 
+#[cfg(feature = "enable-reqwest")]
 impl From<reqwest::Error> for Error {
     /// This trait converts from an Reqwest error type (`reqwest::Error`) into a
     /// Google Maps Geocoding API error type

@@ -18,9 +18,11 @@ pub enum Error {
     /// Google Maps Time Zone API server.
     QueryNotBuilt,
     /// The dependency library Reqwest generated an error.
+    #[cfg(feature = "enable-reqwest")]
     Reqwest(reqwest::Error),
     /// The dependency library Reqwest generated an error. The error could
     /// not be passed normally so a `String` representation is passed instead.
+    #[cfg(feature = "enable-reqwest")]
     ReqwestMessage(String),
     /// The dependency library Serde JSON generated an error.
     SerdeJson(serde_json::error::Error),
@@ -73,7 +75,9 @@ impl std::fmt::Display for Error {
             Error::QueryNotBuilt => write!(f, "Google Maps Time Zone API client library: \
                 The query string must be built before the request may be sent to the Google Cloud Maps Platform. \
                 Ensure the build() method is called before run()."),
+            #[cfg(feature = "enable-reqwest")]
             Error::Reqwest(error) => write!(f, "Google Maps Time Zone API client in the Reqwest library: {}", error),
+            #[cfg(feature = "enable-reqwest")]
             Error::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {}", error),
             Error::SerdeJson(error) => write!(f, "Google Maps Time Zone API client in the Serde JSON library: {}", error),
         } // match
@@ -91,13 +95,16 @@ impl std::error::Error for Error {
             Error::HttpUnsuccessful(_status) => None,
             Error::InvalidStatusCode(_status_code) => None,
             Error::QueryNotBuilt => None,
+            #[cfg(feature = "enable-reqwest")]
             Error::Reqwest(error) => Some(error),
+            #[cfg(feature = "enable-reqwest")]
             Error::ReqwestMessage(_error) => None,
             Error::SerdeJson(error) => Some(error),
         } // match
     } // fn
 } // impl
 
+#[cfg(feature = "enable-reqwest")]
 impl From<reqwest::Error> for Error {
     /// This trait converts from an Reqwest error type (`reqwest::Error`) into a
     /// Google Maps Time Zone API error type

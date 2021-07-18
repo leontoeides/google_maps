@@ -3,10 +3,16 @@
 //! collisions or conflicts, you can glob import all google_maps structs and
 //! enums by using this module.
 
-pub use chrono::{DateTime, Duration, Local, NaiveDate, NaiveDateTime, offset::TimeZone, Utc};
-pub use chrono_tz::Tz;
+// Re-export dependencies
+
 pub use rust_decimal::Decimal;
 pub use rust_decimal_macros::dec;
+#[cfg(any(feature = "directions", feature = "distance_matrix", feature = "time_zone"))]
+pub use chrono::{DateTime, Duration, Local, NaiveDate, NaiveDateTime, offset::TimeZone, Utc};
+#[cfg(any(feature = "directions", feature = "time_zone"))]
+pub use chrono_tz::Tz;
+
+// Common structures:
 
 pub use crate::{
     bounds::Bounds,
@@ -15,8 +21,12 @@ pub use crate::{
     latlng::LatLng,
     place_type::PlaceType,
     region::Region,
-    request_rate::api::Api,
 }; // crate
+
+// Optional structures:
+
+#[cfg(feature = "enable-reqwest")]
+pub use crate::request_rate::api::Api;
 
 #[cfg(any(feature = "directions", feature = "distance_matrix"))]
 pub use crate::directions::{
