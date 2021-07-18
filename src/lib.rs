@@ -39,7 +39,8 @@
 //! through the use of feature flags. Improved examples.
 //!
 //! * 2.0.2: 2021-07-16: Added support for using rustls-tls in reqwest
-//! dependency. Transitioned from `log` crate to the `tracing` crate.
+//! dependency - thanks [seanpianka](https://github.com/seanpianka)!
+//! Transitioned from `log` crate to the `tracing` crate.
 //!
 //! * 2.0.1: 2021-07-15: Now supports a user-configured Reqwest client in the
 //! Google Maps client builder.
