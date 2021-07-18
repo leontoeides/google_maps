@@ -36,7 +36,7 @@ impl<'a> ForwardRequest<'a> {
         // Enter a tracing (logging) span. Span is closed when function ends:
         let geocoding_span = tracing::info_span!(
             "Querying Google Maps Geocoding API",
-            uri = %uri
+            query_string = %self.query.as_ref().unwrap()
         ); // info_span!
         let _geocoding_span_guard = geocoding_span.enter();
 

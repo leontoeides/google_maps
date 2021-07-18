@@ -36,7 +36,7 @@ impl<'a> Request<'a> {
         // Enter a tracing (logging) span. Span is closed when function ends:
         let distance_matrix_span = tracing::info_span!(
             "Querying Google Maps Distance Matrix API",
-            query_string = %uri
+            query_string = %self.query.as_ref().unwrap()
         ); // info_span!
         let _distance_matrix_span_guard = distance_matrix_span.enter();
 
