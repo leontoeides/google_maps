@@ -294,7 +294,7 @@
 //! Feature flag usage example:
 //!
 //! ```toml
-//! google_maps = { version = "2.1", default-features = false, features = ["directions", "rustls", brotli"] }
+//! google_maps = { version = "2.1", default-features = false, features = ["directions", "rustls", "brotli"] }
 //! ```
 //!
 //! Default feature flag configuration:
