@@ -1,5 +1,9 @@
 # Change Log
 
+* 2.1.2: 2021-07-18: Sorry for all of the updates. Made more dependencies
+optional. This adds the ability to slim down this client when needed. Also,
+spruced up the `query_string()` methods.
+
 * 2.1.1: 2021-07-18: House-keeping. Fixed issue with Google Maps API `features`.
 Added support for using your own HTTP client. Example usage:
 ```rust
@@ -15,7 +19,7 @@ let query_string = google_maps_client.time_zone(
 
 // Insert your favourite HTTP client here:
 let json = reqwest::get(
-    "https://maps.googleapis.com/maps/api/timezone/json?".to_owned() + &query_string
+    query_string.0 + &query_string.1
 ).await?.text().await?;
 
 // Parse JSON string into a TimeZoneResponse structure:

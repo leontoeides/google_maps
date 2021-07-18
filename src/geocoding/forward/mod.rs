@@ -5,7 +5,9 @@
 //! geocoding converts a street address to latitude & longitude coordinates.
 
 mod build;
+#[cfg(feature = "enable-reqwest")]
 mod execute;
+#[cfg(feature = "enable-reqwest")]
 mod get;
 mod new;
 mod query_string;

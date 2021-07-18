@@ -16,15 +16,16 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub fn query_string(&'a mut self) -> Result<String, Error> {
-        Ok(
+    pub fn query_string(&'a mut self) -> Result<(String, String), Error> {
+        Ok((
+            "https://maps.googleapis.com/maps/api/distancematrix/json?".to_string(),
             match &self.query {
                 // If query string has already been built, return it:
                 Some(query_string) => query_string.to_owned(),
                 // If it hasn't been built, build it:
-                None => self.build()?.query.as_ref().unwrap().clone(),
+                None => self.validate()?.build()?.query.as_ref().unwrap().clone(),
             } // match
-        )
+        )) // Ok
     } // fn
 
 } // impl

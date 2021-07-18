@@ -9,8 +9,10 @@
 //! # Welcome
 //!
 //! This crate is expected to work well and have the more important Google Maps
-//! features implemented. It should work well because Reqwest and Serde do most
-//! of the heavy lifting!
+//! features implemented. It should work well because
+//! [Serde](https://crates.io/crates/serde) and, by default,
+//! [reqwest](https://crates.io/crates/reqwest) do most of the heavy lifting!
+//!
 //!
 //! I created this client library because I needed several Google Maps Platform
 //! features for a project that I'm working on. So, I've decided to spin my
@@ -34,6 +36,10 @@
 //! * The full documentation is available at [docs.rs](https://docs.rs/google_maps/)
 //!
 //! # What's new?
+//!
+//! * 2.1.2: 2021-07-18: Made more dependencies optional. This adds the ability
+//! to slim down this client when needed. Also, spruced up the `query_string()`
+//! methods.
 //!
 //! * 2.1.1: 2021-07-18: House-keeping. Fixed issue with Google Maps API
 //! `features`. Added support for using your own HTTP client. See
@@ -316,15 +322,16 @@
 //! library, and has brotli compression enabled.
 //!
 //! ```toml
-//! google_maps = { version = "2.1", default-features = false, features = ["directions", "rustls", "brotli"] }
+//! google_maps = { version = "2.1", default-features = false, features = ["directions", "enable-reqwest", "rustls", "brotli"] }
 //! ```
 //!
 //! **Default feature flag configuration**: By default, the Google Maps client
 //! includes all implemented Google Maps APIs. Reqwest will secure the
-//! connection using the system-native TLS, and has gzip compression enabled.
+//! connection using the system-native TLS (`native-tls`), and has gzip
+//! compression enabled (`gzip`).
 //!
 //! ```toml
-//! default = ["directions", "distance_matrix", "elevation", "geocoding", "time_zone", "native-tls", "gzip"]
+//! default = ["directions", "distance_matrix", "elevation", "geocoding", "time_zone", "enable-reqwest"]
 //! ```
 //!
 //! # Feedback
@@ -363,7 +370,6 @@ mod language;
 mod latlng;
 mod place_type;
 mod region;
-mod request_rate;
 mod serde;
 pub mod error;
 pub mod prelude;
@@ -382,6 +388,11 @@ pub mod geocoding;
 #[cfg(feature = "time_zone")]
 pub mod time_zone;
 
+// Optional dependencies:
+
+#[cfg(feature = "enable-reqwest")]
+mod request_rate;
+
 // Re-exports:
 
 pub use crate::{
@@ -391,5 +402,7 @@ pub use crate::{
     latlng::LatLng,
     place_type::PlaceType,
     region::Region,
-    request_rate::api::Api,
 }; // crate
+
+#[cfg(feature = "enable-reqwest")]
+pub use crate::request_rate::api::Api;

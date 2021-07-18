@@ -4,9 +4,12 @@
 
 mod finalize;
 mod new;
+#[cfg(feature = "enable-reqwest")]
 mod with_rate;
+#[cfg(feature = "enable-reqwest")]
 mod with_reqwest_client;
 
+#[cfg(feature = "enable-reqwest")]
 use crate::request_rate::RequestRate;
 
 /// Use the `ClientSettings` struct's implemented methods to set your _Google
@@ -37,10 +40,12 @@ pub struct ClientSettings {
     pub key: String,
 
     /// Rate limits for each of the Google Cloud Maps Platform APIs.
+    #[cfg(feature = "enable-reqwest")]
     pub rate_limit: RequestRate,
 
     /// Allows you to optionally provide your own pre-configured reqwest client
     /// that will be used by the Google Maps client.
+    #[cfg(feature = "enable-reqwest")]
     pub reqwest_client: Option<reqwest::Client>
 
 } // struct
