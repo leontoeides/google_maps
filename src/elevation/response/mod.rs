@@ -30,3 +30,12 @@ pub struct Response {
     /// The status of the response.
     pub status: Status,
 } // struct
+
+impl std::str::FromStr for Response {
+    type Err = serde_json::error::Error;
+    /// Parse a Google Maps Elevation API JSON `String` into a `Response`
+    /// usable `Response` struct.
+    fn from_str(s: &str) -> Result<Self, serde_json::error::Error> {
+        serde_json::from_str(s)
+    }
+}

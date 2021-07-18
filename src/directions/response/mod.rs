@@ -68,3 +68,12 @@ pub struct Response {
     /// Codes](https://developers.google.com/maps/documentation/directions/intro#StatusCodes).
     pub status: Status,
 } // struct
+
+impl std::str::FromStr for Response {
+    type Err = serde_json::error::Error;
+    /// Parse a Google Maps Directions API JSON `String` response into a
+    /// usable `Response` struct.
+    fn from_str(s: &str) -> Result<Self, serde_json::error::Error> {
+        serde_json::from_str(s)
+    }
+}

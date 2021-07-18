@@ -35,7 +35,31 @@
 //!
 //! # What's new?
 //!
-//! * 2.1.1: 2021-07-18: House-keeping.
+//! * 2.1.1: 2021-07-18: House-keeping. Fixed issue with Google Maps API
+//! `features`. Added support for using your own HTTP client. Example usage:
+//! ```rust
+//! use google_maps::prelude::*;
+//!
+//! let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+//!
+//! // Get query string from builder pattern:
+//! let query_string = google_maps_client.time_zone(
+//!      LatLng::try_from(dec!(50.090_903), dec!(14.400_512))?,
+//!      Utc::now()
+//! ).query_string();
+//!
+//! // Insert your favourite HTTP client here:
+//! let json = reqwest::get(
+//!     "https://maps.googleapis.com/maps/api/timezone/json?".to_owned() + &query_string
+//! ).await?.text().await?;
+//!
+//! // Parse JSON string into a TimeZoneResponse structure:
+//! let time_zone: TimeZoneResponse = json.parse()?;
+//!
+//! // Dump entire response:
+//! println!("{:#?}", time_zone);
+//!
+//! ```
 //!
 //! * 2.1.0: 2021-07-17: Transitioned from an in-house retry/backoff
 //! implementation to the `backoff` crate. Google Maps APIs are now optional
