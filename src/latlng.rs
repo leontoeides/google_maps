@@ -55,9 +55,9 @@ impl TryFrom<&str> for LatLng {
         if coords.len() != 2 {
             Err(Error::InvalidLatLongString(value.to_owned()))
         } else {
-            let lat = Decimal::from_str(coords[0]);
+            let lat = Decimal::from_str(coords[0].trim());
             let lat = lat.map_err(|_| Error::InvalidLatLongString(value.to_owned()))?;
-            let lon = Decimal::from_str(coords[1]);
+            let lon = Decimal::from_str(coords[1].trim());
             let lon = lon.map_err(|_| Error::InvalidLatLongString(value.to_owned()))?;
             LatLng::try_from(lat, lon)
         }

@@ -21,7 +21,7 @@ impl<'a> Request<'a> {
     /// let time_zone = TimeZoneRequest::new(
     ///     &my_settings,
     ///     // St. Vitus Cathedral in Prague, Czechia
-    ///     LatLng::try_from(50.090_903, 14.400_512).unwrap(),
+    ///     LatLng::try_from(50.090_903, 14.400_512)?,
     ///     // Tuesday February 15, 2022 @ 6:00:00 pm
     ///     NaiveDate::from_ymd(2022, 2, 15).and_hms(18, 00, 0)
     /// ).execute();
