@@ -9,6 +9,7 @@ mod for_positional_request;
 mod for_sampled_path_request;
 mod get;
 mod new;
+mod query_string;
 mod validate;
 pub mod locations;
 

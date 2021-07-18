@@ -25,7 +25,6 @@ impl<'a> Request<'a> {
         // Build the URL stem for the HTTP get request:
 
         const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/directions";
-        // const SERVICE_URL: &str = "https://192.168.221.226/maps/api/directions";
         const OUTPUT_FORMAT: &str = "json"; // json or xml
         let mut uri = format!("{}/{}?", SERVICE_URL, OUTPUT_FORMAT);
 
@@ -53,7 +52,7 @@ impl<'a> Request<'a> {
         // retries is returned, or we have reached the maximum retries. Note:
         // errors wrapped in `Transient()` will retried by the `backoff` crate
         // while errors wrapped in `Permanent()` will exit the retry loop.
-        let backoff_span = tracing::trace_span!("Applying retry policy to query");
+        let backoff_span = tracing::trace_span!("Trying query");
         retry(ExponentialBackoff::default(), || async {
 
             // Query the Google Cloud Maps Platform using using an HTTP get

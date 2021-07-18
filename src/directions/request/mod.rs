@@ -7,6 +7,7 @@ mod build;
 mod execute;
 mod get;
 mod new;
+mod query_string;
 mod validate;
 mod with_alternatives;
 mod with_arrival_time;
