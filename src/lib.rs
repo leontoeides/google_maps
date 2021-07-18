@@ -28,38 +28,17 @@
 //!
 //!     * Optionally, add `rust_decimal = "1"` and `rust_decimal_macros = "1"`
 //!         for access to the dec! macro. This macro can be used to define
-//!         decimal numbers in your program. This is useful for hard-coding
-//!         latitudes and longitudes in your code.
+//!         decimal numbers in your program. This is useful for efficiently
+//!         hard-coding latitudes and longitudes in your code.
 //!
 //! * The full documentation is available at [docs.rs](https://docs.rs/google_maps/)
 //!
 //! # What's new?
 //!
 //! * 2.1.1: 2021-07-18: House-keeping. Fixed issue with Google Maps API
-//! `features`. Added support for using your own HTTP client. Example usage:
-//! ```rust
-//! use google_maps::prelude::*;
-//!
-//! let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
-//!
-//! // Get query string from builder pattern:
-//! let query_string = google_maps_client.time_zone(
-//!      LatLng::try_from(dec!(50.090_903), dec!(14.400_512))?,
-//!      Utc::now()
-//! ).query_string();
-//!
-//! // Insert your favourite HTTP client here:
-//! let json = reqwest::get(
-//!     "https://maps.googleapis.com/maps/api/timezone/json?".to_owned() + &query_string
-//! ).await?.text().await?;
-//!
-//! // Parse JSON string into a TimeZoneResponse structure:
-//! let time_zone: TimeZoneResponse = json.parse()?;
-//!
-//! // Dump entire response:
-//! println!("{:#?}", time_zone);
-//!
-//! ```
+//! `features`. Added support for using your own HTTP client. See
+//! [CHANGELOG.md](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md)
+//! for details.
 //!
 //! * 2.1.0: 2021-07-17: Transitioned from an in-house retry/backoff
 //! implementation to the `backoff` crate. Google Maps APIs are now optional
