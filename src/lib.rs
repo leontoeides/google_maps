@@ -238,7 +238,8 @@
 //! println!("Time at your computer: {}", Local::now().to_rfc2822());
 //!
 //! if let Some(time_zone_id) = time_zone.time_zone_id {
-//!     println!("Time in {}: {}",
+//!     println!(
+//!         "Time in {}: {}",
 //!         time_zone_id.name(),
 //!         Local::now().with_timezone(&time_zone_id).to_rfc2822()
 //!     );
