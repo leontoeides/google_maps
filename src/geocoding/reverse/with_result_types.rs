@@ -164,9 +164,9 @@ impl<'a> ReverseRequest<'a> {
             // If there are no filters in the request struct, initialize field:
             None => self.result_types = Some(result_type_slice.to_vec()),
             // If there are already filters, append to them:
-            Some(reverse_request_struct) => result_type_slice
-                .iter()
-                .for_each(|result_type| reverse_request_struct.push(result_type.to_owned())),
+            Some(reverse_request_struct) => result_type_slice.iter().for_each(|result_type|
+                reverse_request_struct.push(result_type.to_owned())
+            ), // iter
         } // match
         // Return modified ReverseRequest struct to caller.
         self

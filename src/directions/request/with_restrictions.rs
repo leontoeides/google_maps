@@ -96,11 +96,9 @@ impl<'a> Request<'a> {
             // If there are no filters in the request struct, initialize field:
             None => self.restrictions = Some(restrictions_slice.to_vec()),
             // If there are already filters, append to them:
-            Some(restrictions) => {
-                for restriction in restrictions_slice {
-                    restrictions.push(restriction.to_owned())
-                }
-            } // case
+            Some(restrictions) => restrictions_slice.iter().for_each(|restriction|
+                restrictions.push(restriction.to_owned())
+            ), // iter
         } // match
         // Return modified Request struct to caller.
         self

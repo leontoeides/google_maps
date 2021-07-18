@@ -1,7 +1,7 @@
 use crate::{
     elevation::request::{
         locations::Locations,
-        Request
+        Request,
     }, // elevation::request
     latlng::LatLng,
 }; // crate
@@ -20,12 +20,12 @@ impl<'a> Request<'a> {
     ///
     /// ```rust
     /// // Denver, Colorado, the "Mile High City"
-    /// .for_positional_request(LatLng::try_from(dec!(39.7391536), dec!(-104.9847034)).unwrap())
+    /// .for_positional_request(LatLng::try_from(dec!(39.7391536), dec!(-104.9847034))?)
     /// ```
 
     pub fn for_positional_request(
         &'a mut self,
-        location: LatLng
+        location: LatLng,
     ) -> &'a mut Request {
         // Set the path in Request struct.
         self.locations = Some(Locations::LatLngs(vec![location]));
@@ -48,9 +48,9 @@ impl<'a> Request<'a> {
     /// ```rust
     /// .for_positional_requests(ElevationLocations::LatLngs(vec![
     ///     // Denver, Colorado, the "Mile High City"
-    ///     LatLng::try_from(dec!(39.7391536), dec!(-104.9847034)).unwrap(),
+    ///     LatLng::try_from(dec!(39.7391536), dec!(-104.9847034))?,
     ///     // Death Valley
-    ///     LatLng::try_from(dec!(36.23998), dec!(-116.83171)).unwrap(),
+    ///     LatLng::try_from(dec!(36.23998), dec!(-116.83171))?,
     /// ]))
     /// ```
 

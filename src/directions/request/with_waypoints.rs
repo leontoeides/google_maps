@@ -132,11 +132,9 @@ impl<'a> Request<'a> {
             // If there are no waypoints in the request struct, initialize:
             None => self.waypoints = Some(waypoints_slice.to_vec()),
             // If there are already waypoints, append to them:
-            Some(waypoints) => {
-                for waypoint in waypoints_slice {
-                    waypoints.push(waypoint.to_owned())
-                }
-            } // case
+            Some(waypoints) => waypoints_slice.iter().for_each(|waypoint|
+                waypoints.push(waypoint.to_owned())
+            ), // iter
         } // match
         // Return modified Request struct to caller.
         self

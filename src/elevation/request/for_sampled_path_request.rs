@@ -1,4 +1,7 @@
-use crate::elevation::request::{locations::Locations, Request};
+use crate::elevation::request::{
+    locations::Locations,
+    Request,
+};
 
 impl<'a> Request<'a> {
 
