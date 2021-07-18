@@ -62,3 +62,12 @@ pub struct Response {
     #[serde(alias = "timeZoneName")]
     pub time_zone_name: Option<String>,
 } // struct
+
+impl std::str::FromStr for Response {
+    type Err = serde_json::error::Error;
+    /// Parse a Google Maps Time Zone API JSON `String` response into a
+    /// usable `Response` struct.
+    fn from_str(s: &str) -> Result<Self, serde_json::error::Error> {
+        serde_json::from_str(s)
+    }
+}
