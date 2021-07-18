@@ -36,7 +36,7 @@ impl<'a> Request<'a> {
         // Enter a tracing (logging) span. Span is closed when function ends:
         let elevation_span = tracing::info_span!(
             "Querying Google Maps Elevation API",
-            query_string = %uri
+            query_string = %self.query.as_ref().unwrap()
         ); // info_span!
         let _elevation_span_guard = elevation_span.enter();
 

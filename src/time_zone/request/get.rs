@@ -36,7 +36,7 @@ impl<'a> Request<'a> {
         // Enter a tracing (logging) span. Span is closed when function ends:
         let time_zone_span = tracing::info_span!(
             "Querying Google Maps Time Zone API",
-            query_string = %uri
+            query_string = %self.query.as_ref().unwrap()
         ); // info_span!
         let _time_zone_span_guard = time_zone_span.enter();
 

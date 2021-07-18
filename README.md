@@ -165,10 +165,12 @@ let elevation = google_maps_client.elevation()
 
 println!("{:#?}", elevation);
 
-// Display first result:
+// Display all results:
 
-if let Some(results) = elevation.results {
-    println!("Elevation: {} meters", results[0].elevation)
+if let Some(results) = &elevation.results {
+    for result in results {
+        println!("Elevation: {} meters", result.elevation)
+    }
 }
 ```
 
