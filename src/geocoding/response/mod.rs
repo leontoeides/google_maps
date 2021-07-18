@@ -8,7 +8,7 @@ pub mod geometry;
 pub mod plus_code;
 pub mod status;
 
-use crate::geocoding::response::{geocoding::Geocoding, status::Status}; // use
+use crate::geocoding::response::{geocoding::Geocoding, status::Status};
 use serde::{Deserialize, Serialize};
 
 /// The response from the Google Maps Geolocation API will be stored in this

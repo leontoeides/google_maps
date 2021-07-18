@@ -23,7 +23,7 @@ use crate::{
     geocoding::forward::component::Component,
     language::Language,
     region::Region,
-}; // use crate
+}; // crate
 
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Geocoding API_ query**. The methods implemented for this struct are what's
@@ -75,6 +75,7 @@ pub struct ForwardRequest<'a> {
 
     // Internal use only:
     // ------------------
+
     /// Query string that is to be submitted to the Google Cloud Maps Platform.
     query: Option<String>,
 

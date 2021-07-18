@@ -20,11 +20,13 @@ pub struct Response {
     /// **Note**: This field is not guaranteed to be always present, and its
     /// content is subject to change.
     pub error_message: Option<String>,
+
     /// If there was only one `location` in the query, there will only be one
     /// sample point in the response. If there were multiple `locations` or a
     /// `path` in the query, there will be multiple sample points in the
     /// response.
     pub results: Option<Vec<Point>>,
+
     /// The status of the response.
     pub status: Status,
 } // struct

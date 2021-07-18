@@ -14,8 +14,8 @@ pub mod locations;
 
 use crate::{
     client_settings::ClientSettings,
-    elevation::request::locations::Locations
-}; // use crate
+    elevation::request::locations::Locations,
+}; // crate
 
 /// **Look at this `Request` struct for documentation on how to build your _Time
 /// Zone API_ query**. The methods implemented for this struct are what's used
