@@ -331,7 +331,7 @@
 //! compression enabled (`gzip`).
 //!
 //! ```toml
-//! default = ["directions", "distance_matrix", "elevation", "geocoding", "time_zone", "enable-reqwest"]
+//! default = ["directions", "distance_matrix", "elevation", "geocoding", "time_zone", "enable-reqwest", "reqwest/default-tls", "reqwest/gzip"]
 //! ```
 //!
 //! # Feedback
