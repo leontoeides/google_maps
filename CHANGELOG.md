@@ -19,6 +19,7 @@ let query_string = google_maps_client.time_zone(
 
 // Insert your favourite HTTP client here:
 let json = reqwest::get(
+    // query_string.0 = "https://maps.googleapis.com/maps/api/timezone/json?"
     query_string.0 + &query_string.1
 ).await?.text().await?;
 
