@@ -1,27 +1,24 @@
 # Change Log
 
-* 2.1.2: 2021-07-18: Sorry for all of the updates. Made more dependencies
-optional. This adds the ability to slim down this client when needed. Also,
-spruced up the `query_string()` methods.
-
-* 2.1.1: 2021-07-18: House-keeping. Fixed issue with Google Maps API `features`.
-Added support for using your own HTTP client. Example usage:
+* 2.1.3: 2021-07-22: Web Assembly (WASM) support: if Google Maps API Client's
+`default-features` are set to false, all desired reqwest features (`brotli`,
+`rustls`, etc.) must be manually added to the `Cargo.toml` file. Now, the
+`enable-reqwest` feature starts with no reqwest features so that Web Assembly
+users may rely on reqwest's JS fetch API. Also, changed `query_string()` to
+`query_url()`. Example usage:
 ```rust
 use google_maps::prelude::*;
 
 let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Get query string from builder pattern:
-let query_string = google_maps_client.time_zone(
+let url_string = google_maps_client.time_zone(
      LatLng::try_from(dec!(50.090_903), dec!(14.400_512))?,
      Utc::now()
-).query_string();
+).url_string();
 
 // Insert your favourite HTTP client here:
-let json = reqwest::get(
-    // query_string.0 = "https://maps.googleapis.com/maps/api/timezone/json?"
-    query_string.0 + &query_string.1
-).await?.text().await?;
+let json = reqwest::get(url_string).await?.text().await?;
 
 // Parse JSON string into a TimeZoneResponse structure:
 let time_zone: TimeZoneResponse = json.parse()?;
@@ -30,6 +27,13 @@ let time_zone: TimeZoneResponse = json.parse()?;
 println!("{:#?}", time_zone);
 
 ```
+
+* 2.1.2: 2021-07-18: Sorry for all of the updates. Made more dependencies
+optional. This adds the ability to slim down this client when needed. Also,
+spruced up the `query_string()` methods.
+
+* 2.1.1: 2021-07-18: House-keeping. Fixed issue with Google Maps API `features`.
+Added support for using your own HTTP client.
 
 * 2.1.0: 2021-07-17: Transitioned from an in-house retry/backoff implementation
 to the `backoff` crate. Google Maps APIs are now optional through the use of

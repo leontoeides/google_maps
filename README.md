@@ -33,14 +33,21 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 # What's new?
 
+* 2.1.3: 2021-07-22: Web Assembly (WASM) support: if Google Maps API Client's
+`default-features` are set to false, all desired reqwest features (`brotli`,
+`rustls`, etc.) must be manually added to the `Cargo.toml` file. Now, the
+`enable-reqwest` feature starts with no reqwest features so that Web Assembly
+users may rely on reqwest's JS fetch API. Also, changed `query_string()` to
+`query_url()`. See
+[CHANGELOG.md](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md)
+for example usage.
+
 * 2.1.2: 2021-07-18: Made more dependencies optional. This adds the ability to
 slim down this client when needed. Also, spruced up the `query_string()`
 methods.
 
 * 2.1.1: 2021-07-18: House-keeping. Fixed issue with Google Maps API `features`.
-Added support for using your own HTTP client. See
-[CHANGELOG.md](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md)
-for example usage.
+Added support for using your own HTTP client.
 
 * 2.1.0: 2021-07-17: Transitioned from an in-house retry/backoff implementation
 to the `backoff` crate. Google Maps APIs are now optional through the use of

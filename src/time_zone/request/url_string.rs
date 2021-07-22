@@ -20,12 +20,13 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub fn url_string(&'a mut self) -> String {
-        match &self.query {
+        let query_string = match &self.query {
             // If query string has already been built, return it:
-            Some(url_string) => format!("{}/{}?{}", SERVICE_URL, OUTPUT_FORMAT, url_string),
+            Some(query_string) => query_string,
             // If it hasn't been built, build it:
-            None => self.build().query.as_ref().unwrap().clone(),
-        } // match
+            None => self.build().query.as_ref().unwrap(),
+        }; // match
+        format!("{}/{}?{}", SERVICE_URL, OUTPUT_FORMAT, query_string)
     } // fn
 
 } // impl
