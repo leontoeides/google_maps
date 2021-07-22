@@ -20,15 +20,15 @@ impl<'a> ForwardRequest<'a> {
 
     pub async fn get(&mut self) -> Result<Response, Error> {
 
-        // Build the URI stem for the HTTP get request:
+        // Build the URL stem for the HTTP get request:
 
         const SERVICE_URI: &str = "https://maps.googleapis.com/maps/api/geocode";
         const OUTPUT_FORMAT: &str = "json"; // json or xml
-        let mut uri = format!("{}/{}?", SERVICE_URI, OUTPUT_FORMAT);
+        let mut url = format!("{}/{}?", SERVICE_URI, OUTPUT_FORMAT);
 
         match &self.query {
             // If query string built, append it to the URL stem.
-            Some(query) => uri.push_str(query.as_ref()),
+            Some(query) => url.push_str(query.as_ref()),
             // If query string not built, return an error.
             None => return Err(Error::QueryNotBuilt),
         } // match
@@ -58,11 +58,11 @@ impl<'a> ForwardRequest<'a> {
             let response: Result<reqwest::Response, reqwest::Error> =
                 match &self.client_settings.reqwest_client {
                     Some(reqwest_client) =>
-                        match reqwest_client.get(&*uri).build() {
+                        match reqwest_client.get(&*url).build() {
                             Ok(request) => reqwest_client.execute(request).await,
                             Err(error) => Err(error),
                         }, // Some
-                    None => reqwest::get(&*uri).await,
+                    None => reqwest::get(&*url).await,
                 }; // match
 
             // Check response from the HTTP client:

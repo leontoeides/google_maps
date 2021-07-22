@@ -3,7 +3,7 @@ use crate::geocoding::forward::ForwardRequest;
 
 impl<'a> ForwardRequest<'a> {
 
-    /// Returns the URI query string that represents the query you've built.
+    /// Returns the URL query string that represents the query you've built.
     ///
     /// ## Description:
     ///

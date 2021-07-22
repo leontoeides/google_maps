@@ -33,6 +33,9 @@ pub mod transit_route_preference;
 pub mod unit_system;
 pub mod waypoint;
 
+const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/directions";
+const OUTPUT_FORMAT: &str = "json"; // json or xml
+
 use chrono::NaiveDateTime;
 use crate::{
     client_settings::ClientSettings,

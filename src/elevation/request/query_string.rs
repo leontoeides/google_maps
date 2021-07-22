@@ -3,7 +3,7 @@ use crate::elevation::request::Request;
 
 impl<'a> Request<'a> {
 
-    /// Returns the URI query string that represents the query you've built.
+    /// Returns the URL query string that represents the query you've built.
     ///
     /// ## Description:
     ///

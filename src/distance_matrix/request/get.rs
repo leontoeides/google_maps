@@ -24,11 +24,11 @@ impl<'a> Request<'a> {
 
         const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/distancematrix";
         const OUTPUT_FORMAT: &str = "json"; // json or xml
-        let mut uri = format!("{}/{}?", SERVICE_URL, OUTPUT_FORMAT);
+        let mut url = format!("{}/{}?", SERVICE_URL, OUTPUT_FORMAT);
 
         match &self.query {
             // If query string built, append it to the URL stem.
-            Some(query) => uri.push_str(query.as_ref()),
+            Some(query) => url.push_str(query.as_ref()),
             // If query string not built, return an error.
             None => return Err(Error::QueryNotBuilt),
         } // match
@@ -58,11 +58,11 @@ impl<'a> Request<'a> {
             let response: Result<reqwest::Response, reqwest::Error> =
                 match &self.client_settings.reqwest_client {
                     Some(reqwest_client) =>
-                        match reqwest_client.get(&*uri).build() {
+                        match reqwest_client.get(&*url).build() {
                             Ok(request) => reqwest_client.execute(request).await,
                             Err(error) => Err(error),
                         }, // Some
-                    None => reqwest::get(&*uri).await,
+                    None => reqwest::get(&*url).await,
                 }; // match
 
             // Check response from the HTTP client:

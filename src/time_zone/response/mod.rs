@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 /// [Time Zone Responses](https://developers.google.com/maps/documentation/timezone/intro#Responses)
 /// ------------------------------------------------------------------------------------------------
 /// For each valid request, the time zone service will return a response in the
-/// format indicated within the request URI.
+/// format indicated within the request URL.
 ///
 /// [Calculating the Local Time](https://developers.google.com/maps/documentation/timezone/intro#CalculatingTime)
 ///
