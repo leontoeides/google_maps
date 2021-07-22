@@ -5,20 +5,20 @@
 `rustls`, etc.) must be manually added to the `Cargo.toml` file. Now, the
 `enable-reqwest` feature starts with no reqwest features so that Web Assembly
 users may rely on reqwest's JS fetch API. Also, changed `query_string()` to
-`query_url()`. Example usage:
+`query_url()`. Example `query_url()` usage:
 ```rust
 use google_maps::prelude::*;
 
 let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Get query string from builder pattern:
-let url_string = google_maps_client.time_zone(
+let query_url = google_maps_client.time_zone(
      LatLng::try_from(dec!(50.090_903), dec!(14.400_512))?,
      Utc::now()
-).url_string();
+).query_url();
 
 // Insert your favourite HTTP client here:
-let json = reqwest::get(url_string).await?.text().await?;
+let json = reqwest::get(query_url).await?.text().await?;
 
 // Parse JSON string into a TimeZoneResponse structure:
 let time_zone: TimeZoneResponse = json.parse()?;

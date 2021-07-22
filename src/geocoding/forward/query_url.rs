@@ -1,11 +1,11 @@
-use crate::elevation::{
+use crate::geocoding::{
+    error::Error,
+    forward::ForwardRequest,
     OUTPUT_FORMAT,
     SERVICE_URL,
-    error::Error,
-    request::Request,
-}; // crate::elevation
+}; // crate::geocoding
 
-impl<'a> Request<'a> {
+impl<'a> ForwardRequest<'a> {
 
     /// Returns the URL query string that represents the query you've built.
     ///
@@ -20,7 +20,7 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub fn url_string(&'a mut self) -> Result<String, Error> {
+    pub fn query_url(&'a mut self) -> Result<String, Error> {
         let query_string = match &self.query {
             // If query string has already been built, return it:
             Some(query_string) => query_string,

@@ -10,7 +10,7 @@ mod execute;
 #[cfg(feature = "enable-reqwest")]
 mod get;
 mod new;
-mod url_string;
+mod query_url;
 mod validate;
 mod with_address;
 mod with_bounds;
