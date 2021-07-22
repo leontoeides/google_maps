@@ -77,6 +77,9 @@ pub mod error;
 pub mod request;
 pub mod response;
 
+const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/elevation";
+const OUTPUT_FORMAT: &str = "json"; // json or xml
+
 pub use crate::elevation::{
     error::Error as ElevationError,
     request::{

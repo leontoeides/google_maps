@@ -1,5 +1,9 @@
-use crate::geocoding::error::Error;
-use crate::geocoding::forward::ForwardRequest;
+use crate::geocoding::{
+    error::Error,
+    forward::ForwardRequest,
+    OUTPUT_FORMAT,
+    SERVICE_URL,
+}; // crate::geocoding
 
 impl<'a> ForwardRequest<'a> {
 
@@ -16,16 +20,15 @@ impl<'a> ForwardRequest<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub fn query_string(&'a mut self) -> Result<(String, String), Error> {
-        Ok((
-            "https://maps.googleapis.com/maps/api/geocode/json?".to_string(),
+    pub fn url_string(&'a mut self) -> Result<String, Error> {
+        Ok(
             match &self.query {
                 // If query string has already been built, return it:
-                Some(query_string) => query_string.to_owned(),
+                Some(url_string) => format!("{}/{}?{}", SERVICE_URL, OUTPUT_FORMAT, url_string),
                 // If it hasn't been built, build it:
                 None => self.validate()?.build()?.query.as_ref().unwrap().clone(),
             } // match
-        )) // Ok
+        ) // Ok
     } // fn
 
 } // impl

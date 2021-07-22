@@ -3,6 +3,8 @@ use backoff::ExponentialBackoff;
 use backoff::future::retry;
 use crate::request_rate::api::Api;
 use crate::time_zone::{
+    SERVICE_URL,
+    OUTPUT_FORMAT,
     error::Error,
     request::Request,
     response::Response,
@@ -21,10 +23,7 @@ impl<'a> Request<'a> {
     pub async fn get(&mut self) -> Result<Response, Error> {
 
         // Build the URL stem for the HTTP get request:
-
-        const SERVICE_URI: &str = "https://maps.googleapis.com/maps/api/timezone";
-        const OUTPUT_FORMAT: &str = "json"; // json or xml
-        let mut url = format!("{}/{}?", SERVICE_URI, OUTPUT_FORMAT);
+        let mut url = format!("{}/{}?", SERVICE_URL, OUTPUT_FORMAT);
 
         match &self.query {
             // If query string built, append it to the URL stem.

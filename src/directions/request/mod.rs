@@ -9,7 +9,7 @@ mod execute;
 #[cfg(feature = "enable-reqwest")]
 mod get;
 mod new;
-mod query_string;
+mod url_string;
 mod validate;
 mod with_alternatives;
 mod with_arrival_time;
@@ -32,9 +32,6 @@ pub mod transit_mode;
 pub mod transit_route_preference;
 pub mod unit_system;
 pub mod waypoint;
-
-const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/directions";
-const OUTPUT_FORMAT: &str = "json"; // json or xml
 
 use chrono::NaiveDateTime;
 use crate::{

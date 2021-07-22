@@ -9,7 +9,7 @@ mod execute;
 #[cfg(feature = "enable-reqwest")]
 mod get;
 mod new;
-mod query_string;
+mod url_string;
 mod validate;
 mod with_arrival_time;
 mod with_departure_time;

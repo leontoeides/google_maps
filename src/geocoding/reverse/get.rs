@@ -2,6 +2,8 @@ use backoff::Error::{Permanent, Transient};
 use backoff::ExponentialBackoff;
 use backoff::future::retry;
 use crate::geocoding::{
+    SERVICE_URL,
+    OUTPUT_FORMAT,
     error::Error,
     response::Response,
     response::status::Status,
@@ -21,10 +23,7 @@ impl<'a> ReverseRequest<'a> {
     pub async fn get(&mut self) -> Result<Response, Error> {
 
         // Build the URL stem for the HTTP get request:
-
-        const SERVICE_URI: &str = "https://maps.googleapis.com/maps/api/geocode";
-        const OUTPUT_FORMAT: &str = "json"; // json or xml
-        let mut url = format!("{}/{}?", SERVICE_URI, OUTPUT_FORMAT);
+        let mut url = format!("{}/{}?", SERVICE_URL, OUTPUT_FORMAT);
 
         match &self.query {
             // If query string built, append it to the URL stem.

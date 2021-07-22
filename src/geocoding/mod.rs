@@ -86,6 +86,9 @@ pub mod location_type;
 pub mod response;
 pub mod reverse;
 
+const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/geocode";
+const OUTPUT_FORMAT: &str = "json"; // json or xml
+
 pub use crate::geocoding::{
     error::Error as GeocodingError,
     forward::{

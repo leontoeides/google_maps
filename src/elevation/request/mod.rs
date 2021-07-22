@@ -11,7 +11,7 @@ mod for_sampled_path_request;
 #[cfg(feature = "enable-reqwest")]
 mod get;
 mod new;
-mod query_string;
+mod url_string;
 mod validate;
 pub mod locations;
 

@@ -9,7 +9,7 @@ mod execute;
 #[cfg(feature = "enable-reqwest")]
 mod get;
 mod new;
-mod query_string;
+mod url_string;
 mod with_language;
 
 use chrono::{DateTime, Utc};

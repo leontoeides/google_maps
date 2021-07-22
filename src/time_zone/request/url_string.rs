@@ -1,4 +1,8 @@
-use crate::time_zone::request::Request;
+use crate::time_zone::{
+    OUTPUT_FORMAT,
+    SERVICE_URL,
+    request::Request,
+}; // crate::time_zone
 
 impl<'a> Request<'a> {
 
@@ -15,16 +19,13 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub fn query_string(&'a mut self) -> (String, String) {
-        (
-            "https://maps.googleapis.com/maps/api/timezone/json?".to_string(),
-            match &self.query {
-                // If query string has already been built, return it:
-                Some(query_string) => query_string.to_owned(),
-                // If it hasn't been built, build it:
-                None => self.build().query.as_ref().unwrap().clone(),
-            } // match
-        )
+    pub fn url_string(&'a mut self) -> String {
+        match &self.query {
+            // If query string has already been built, return it:
+            Some(url_string) => format!("{}/{}?{}", SERVICE_URL, OUTPUT_FORMAT, url_string),
+            // If it hasn't been built, build it:
+            None => self.build().query.as_ref().unwrap().clone(),
+        } // match
     } // fn
 
 } // impl

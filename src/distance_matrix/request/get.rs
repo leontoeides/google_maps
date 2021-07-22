@@ -2,6 +2,8 @@ use backoff::Error::{Permanent, Transient};
 use backoff::ExponentialBackoff;
 use backoff::future::retry;
 use crate::distance_matrix::{
+    SERVICE_URL,
+    OUTPUT_FORMAT,
     error::Error,
     request::Request,
     response::Response,
@@ -21,9 +23,6 @@ impl<'a> Request<'a> {
     pub async fn get(&mut self) -> Result<Response, Error> {
 
         // Build the URL stem for the HTTP get request:
-
-        const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/distancematrix";
-        const OUTPUT_FORMAT: &str = "json"; // json or xml
         let mut url = format!("{}/{}?", SERVICE_URL, OUTPUT_FORMAT);
 
         match &self.query {
