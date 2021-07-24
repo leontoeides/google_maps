@@ -10,7 +10,6 @@ use crate::distance_matrix::{
     response::status::Status,
 }; // use crate::distance_matrix
 use crate::request_rate::api::Api;
-use tracing_futures::Instrument;
 
 impl<'a> Request<'a> {
 
@@ -20,6 +19,7 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
+    #[tracing::instrument(level = "trace", name = "Get Google Maps Distance Matrix", skip(self))]
     pub async fn get(&mut self) -> Result<Response, Error> {
 
         // Build the URL stem for the HTTP get request:
@@ -32,24 +32,14 @@ impl<'a> Request<'a> {
             None => return Err(Error::QueryNotBuilt),
         } // match
 
-        // Enter a tracing (logging) span. Span is closed when function ends:
-        let distance_matrix_span = tracing::info_span!(
-            "Querying Google Maps Distance Matrix API",
-            query_string = %self.query.as_ref().unwrap()
-        ); // info_span!
-        let _distance_matrix_span_guard = distance_matrix_span.enter();
-
         // Observe any rate limiting before executing request:
-        let rate_span = tracing::trace_span!("Observing rate limit before executing query");
         self.client_settings.rate_limit.limit_apis(vec![&Api::All, &Api::DistanceMatrix])
-            .instrument(rate_span)
             .await;
 
         // Retries the get request until successful, an error ineligible for
         // retries is returned, or we have reached the maximum retries. Note:
         // errors wrapped in `Transient()` will retried by the `backoff` crate
         // while errors wrapped in `Permanent()` will exit the retry loop.
-        let backoff_span = tracing::trace_span!("Trying query");
         retry(ExponentialBackoff::default(), || async {
 
             // Query the Google Cloud Maps Platform using using an HTTP get
@@ -141,7 +131,7 @@ impl<'a> Request<'a> {
                 } // case
             } // match
 
-        }).instrument(backoff_span).await
+        }).await
 
     } // fn
 
