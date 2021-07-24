@@ -21,7 +21,7 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
-    #[tracing::instrument(level = "trace", name = "Get Google Maps Directions", skip(self))]
+    #[tracing::instrument(level = "trace", name = "Google Maps Directions", skip(self))]
     pub async fn get(&mut self) -> Result<Response, Error> {
 
         // Build the URL stem for the HTTP get request:
