@@ -59,7 +59,7 @@ impl std::fmt::Display for Error {
                     Status::UnknownError => write!(f, "Google Maps Time Zone API service: \
                         Unknown error."),
                     Status::ZeroResults => write!(f, "Google Maps Time Zone API service: \
-                        Zero results.
+                        Zero results. \
                         This may occur if the geocoder was passed a non-existent address."),
                 } // match
             }, // match

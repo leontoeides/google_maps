@@ -76,7 +76,7 @@ impl std::fmt::Display for Error {
                     Status::UnknownError => write!(f, "Google Maps Geocoding API server: \
                         Unknown error."),
                     Status::ZeroResults => write!(f, "Google Maps Geocoding API server: \
-                        Zero results.
+                        Zero results. \
                         This may occur if the geocoder was passed a non-existent address."),
                 } // match
             }, // match
