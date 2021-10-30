@@ -33,13 +33,11 @@ impl<'a> Request<'a> {
                 if let Some(transit_modes) = &self.transit_modes {
                     return Err(Error::TransitModeIsForTransitOnly(
                         travel_mode.to_string(),
-                        String::from(
-                            transit_modes
-                                .iter()
-                                .map(|mode| mode.to_string() + "|")
-                                .collect::<String>()
-                                .trim_end_matches('|'),
-                        ),
+                        transit_modes
+                            .iter()
+                            .map(|mode| mode.to_string())
+                            .collect::<Vec<String>>()
+                            .join("|"),
                     )); // Err
                 } // if
 

@@ -71,6 +71,4 @@ pub struct ReverseRequest<'a> {
     /// Query string that is to be submitted to the Google Cloud Maps Platform.
     query: Option<String>,
 
-    /// Has the request been validated?
-    validated: bool,
 } // impl

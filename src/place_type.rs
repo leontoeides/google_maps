@@ -363,13 +363,11 @@ impl PlaceType {
     /// types](https://developers.google.com/places/web-service/supported_types)
     /// codes.
     pub fn vec_to_csv(place_types: &[PlaceType]) -> String {
-        String::from(
-            place_types
-                .iter()
-                .map(|place_type| String::from(place_type) + ",")
-                .collect::<String>()
-                .trim_end_matches(','),
-        )
+        place_types
+            .iter()
+            .map(String::from)
+            .collect::<Vec<String>>()
+            .join(",")
     } // fn
 } // impl
 

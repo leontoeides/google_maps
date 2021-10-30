@@ -32,7 +32,7 @@ impl<'a> Request<'a> {
                     .collect::<Vec<String>>()
                     .join("|"),
                 NON_ALPHANUMERIC
-            ).to_string(),
+            ),
             // Destinations:
             utf8_percent_encode(
                 &self.destinations
@@ -41,7 +41,7 @@ impl<'a> Request<'a> {
                     .collect::<Vec<String>>()
                     .join("|"),
                 NON_ALPHANUMERIC
-            ).to_string(),
+            ),
         ); // format!
 
         // Builds the "optional parameters" portion of the query string:

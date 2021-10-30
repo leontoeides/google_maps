@@ -1,8 +1,8 @@
 [package]
 name = "google_maps"
-version = "2.1.4"
+version = "2.1.5"
 authors = ["Dylan Bowker <dylan.bowker@arkiteq.ca>"]
-edition = "2018"
+edition = "2021"
 categories = [ "api-bindings" ]
 description = "An unofficial Google Maps Platform client library for the Rust programming language."
 documentation = "https://docs.rs/google_maps"

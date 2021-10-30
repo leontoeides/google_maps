@@ -30,7 +30,6 @@ impl<'a> ReverseRequest<'a> {
             location_types: None,
             result_types: None,
             // Internal use only:
-            validated: false,
             query: None,
         } // struct
     } // fn

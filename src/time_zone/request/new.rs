@@ -42,7 +42,6 @@ impl<'a> Request<'a> {
             language: None,
             // Internal use only:
             query: None,
-            validated: false,
         } // struct
     } // fn
 
