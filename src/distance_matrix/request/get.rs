@@ -89,13 +89,13 @@ impl<'a> Request<'a> {
                                             if deserialized.status == Status::UnknownError {
                                                 // Only Google's "Unknown Error"
                                                 // is eligible for retries:
-                                                tracing::warn!("Google Maps API returned: {}", error);
+                                                tracing::warn!("{}", error);
                                                 Err(Transient(error))
                                             } else {
                                                 // Not an "Unknown Error." The
                                                 // error is permanent, do not
                                                 // retry:
-                                                tracing::error!("Google Maps API returned: {}", error);
+                                                tracing::error!("{}", error);
                                                 Err(Permanent(error))
                                             } // if
                                         } // if
