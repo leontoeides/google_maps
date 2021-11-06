@@ -15,7 +15,6 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub async fn execute(&'a mut self) -> Result<Response, Error> {
-tracing::info!("Inside exeute!");
         self.build().get().await
     } // fn
 
