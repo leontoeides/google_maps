@@ -20,15 +20,13 @@ use serde::{Deserialize, Serialize};
 /// The response from the Google Maps Places API _Place Autocomplete_ request
 /// will be stored in this structure.
 ///
-/// [Time Zone Responses](https://developers.google.com/maps/documentation/timezone/intro#Responses)
+/// [Place Autocomplete Response](https://developers.google.com/maps/documentation/places/web-service/autocomplete#place_autocomplete_responses)
 /// ------------------------------------------------------------------------------------------------
-/// For each valid request, the time zone service will return a response in the
-/// format indicated within the request URL.
 ///
-/// [Calculating the Local Time](https://developers.google.com/maps/documentation/timezone/intro#CalculatingTime)
-///
-/// The local time of a given location is the sum of the timestamp parameter,
-/// and the dstOffset and rawOffset fields from the result.
+/// Of particular interest within the results are the `place_id` elements, which
+/// can be used to request more specific details about the place via a separate
+/// query. See [Place Details](https://developers.google.com/maps/documentation/places/web-service/details#PlaceDetailsRequests)
+/// requests.
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct Response {
