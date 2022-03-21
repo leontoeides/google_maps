@@ -18,7 +18,6 @@ mod with_components;
 mod with_language;
 mod with_region;
 pub mod component;
-pub mod country;
 
 use crate::{
     bounds::Bounds,

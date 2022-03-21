@@ -2,7 +2,7 @@
 //! geocoding response to specific types of areas, such as localities (cities)
 //! or countries (nations).
 
-use crate::geocoding::forward::country::Country;
+use crate::Country;
 use serde::{Deserialize, Serialize};
 
 /// The components filter is accepted as an _optional_ parameter if an address

@@ -1,6 +1,6 @@
 [package]
 name = "google_maps"
-version = "2.1.5"
+version = "2.1.6"
 authors = ["Dylan Bowker <dylan.bowker@arkiteq.ca>"]
 edition = "2021"
 categories = [ "api-bindings" ]
@@ -16,13 +16,14 @@ repository = "https://github.com/leontoeides/google_maps"
 doctest = false
 
 [features]
-default = ["directions", "distance_matrix", "elevation", "geocoding", "time_zone", "enable-reqwest", "reqwest/default-tls", "reqwest/gzip"]
+default = ["directions", "distance_matrix", "elevation", "geocoding", "time_zone", "places", "enable-reqwest", "reqwest/default-tls", "reqwest/gzip"]
 # Google Maps Client API features:
 directions = ["chrono", "chrono-tz"]
 distance_matrix = ["chrono", "chrono-tz"]
 elevation = []
 geocoding = []
 time_zone = ["chrono", "chrono-tz"]
+places = []
 # Reqwest features:
 enable-reqwest = ["reqwest", "backoff", "futures", "stream_throttle"]
 brotli = ["reqwest/brotli"]

@@ -375,6 +375,7 @@
 
 mod bounds;
 mod client_settings;
+mod country;
 mod language;
 mod latlng;
 mod place_type;
@@ -396,6 +397,8 @@ pub mod elevation;
 pub mod geocoding;
 #[cfg(feature = "time_zone")]
 pub mod time_zone;
+#[cfg(feature = "places")]
+pub mod places;
 
 // Optional dependencies:
 
@@ -407,6 +410,7 @@ mod request_rate;
 pub use crate::{
     bounds::Bounds,
     client_settings::ClientSettings,
+    country::Country,
     language::Language,
     latlng::LatLng,
     place_type::PlaceType,
