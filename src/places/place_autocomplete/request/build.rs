@@ -20,7 +20,7 @@ impl<'a> Request<'a> {
         let mut query = format!(
             "key={}&input={}",
             self.client_settings.key,
-            utf8_percent_encode(&self.input, NON_ALPHANUMERIC).to_string(),
+            utf8_percent_encode(&self.input, NON_ALPHANUMERIC),
         );
 
         // This section builds the "optional parameters" portion of the query

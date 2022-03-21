@@ -70,7 +70,7 @@ impl<'a> Request<'a> {
         // Set radius in Request struct.
         self.radius = Some(radius);
         // Set strictbounds in Request struct.
-        if strictbounds == true {
+        if strictbounds {
             self.strictbounds = Some(strictbounds);
         } // if
         // Return modified Request struct to caller.
