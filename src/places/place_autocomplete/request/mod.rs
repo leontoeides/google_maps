@@ -11,10 +11,12 @@ mod get;
 mod new;
 mod query_url;
 mod with_language;
+mod with_location;
+mod with_offset;
+mod with_origin;
 mod with_region;
 mod with_sessiontoken;
 mod with_components;
-mod with_location;
 mod with_types;
 pub mod autocomplete_type;
 
