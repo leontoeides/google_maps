@@ -1,9 +1,17 @@
+//! The `"structured_formatting"` field provides pre-formatted text that can be
+//! shown in your autocomplete results. This content is meant to be read as-is.
+//! Do not programmatically parse the formatted address.
+
 use crate::places::place_autocomplete::response::matched_substring::MatchedSubstring;
 use serde::{Deserialize, Serialize};
 
 /// ----------------------------------------------------------------------------
 //
-/// [PlaceAutocompleteStructuredFormat](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlaceAutocompleteStructuredFormat)
+/// Provides pre-formatted text that can be shown in your autocomplete results.
+/// This content is meant to be read as-is. Do not programmatically parse the
+/// formatted address.
+///
+/// See also: [PlaceAutocompleteStructuredFormat](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlaceAutocompleteStructuredFormat)
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct StructuredFormat {
@@ -23,7 +31,7 @@ pub struct StructuredFormat {
     /// Contains the secondary text of a prediction, usually the location of the
     /// place.
     #[serde(alias = "secondary_text")]
-    pub secondary_text: usize,
+    pub secondary_text: String,
 
     /// Contains an array with `offset` value and `length`. These describe the
     /// location of the entered term in the prediction result text, so that the

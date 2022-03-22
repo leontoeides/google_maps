@@ -1,9 +1,8 @@
 //! The **Place Autocomplete** service is a web service that returns place
-//! predictions in response to an HTTP request. The request specifies a textual
-//! search string and optional geographic bounds. The service can be used to
-//! provide autocomplete functionality for text-based geographic searches, by
-//! returning places such as businesses, addresses and points of interest as a
-//! user types.
+//! predictions. The request specifies a textual search string and optional
+//! geographic bounds. The service can be used to provide autocomplete
+//! functionality for text-based geographic searches, by returning places such
+//! as businesses, addresses and points of interest as a user types.
 //!
 //! ## Note: Server-side and client-side libraries
 //!
@@ -42,14 +41,25 @@ pub mod error;
 pub mod request;
 pub mod response;
 
+// -----------------------------------------------------------------------------
+
 const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/place/autocomplete";
 const OUTPUT_FORMAT: &str = "json"; // json or xml
 
+// -----------------------------------------------------------------------------
+
 pub use crate::places::place_autocomplete::{
-    error::Error as PlaceAutocompleteError,
-    request::Request as PlaceAutocompleteRequest,
+    error::Error as Error,
     response::{
-        status::Status as PlaceAutocompleteStatus,
-        Response as PlaceAutocompleteResponse
-    }, // reponse
-}; // crate::places::place_autocomplete
+        matched_substring::MatchedSubstring,
+        prediction::Prediction,
+        Response,
+        status::Status,
+        structured_format::StructuredFormat,
+        term::Term,
+    }, // response
+    request::{
+        autocomplete_type::AutocompleteType,
+        Request,
+    }, // request
+}; // place_autocomplete

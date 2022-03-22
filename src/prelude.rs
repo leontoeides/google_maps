@@ -12,21 +12,30 @@ pub use chrono::{DateTime, Duration, Local, NaiveDate, NaiveDateTime, offset::Ti
 #[cfg(any(feature = "directions", feature = "time_zone"))]
 pub use chrono_tz::Tz;
 
+// =============================================================================
+//
 // Common structures:
 
 pub use crate::{
     bounds::Bounds,
     client_settings::ClientSettings,
+    country::Country,
     language::Language,
     latlng::LatLng,
     place_type::PlaceType,
     region::Region,
 }; // crate
 
+// =============================================================================
+//
 // Optional structures:
+
+// -----------------------------------------------------------------------------
 
 #[cfg(feature = "enable-reqwest")]
 pub use crate::request_rate::api::Api;
+
+// -----------------------------------------------------------------------------
 
 #[cfg(any(feature = "directions", feature = "distance_matrix"))]
 pub use crate::directions::{
@@ -62,6 +71,8 @@ pub use crate::directions::{
     vehicle_type::VehicleType,
 }; // crate::directions
 
+// -----------------------------------------------------------------------------
+
 #[cfg(feature = "directions")]
 pub use crate::directions::{
     request::Request as DirectionsRequest,
@@ -71,12 +82,16 @@ pub use crate::directions::{
     }, // response
 }; // crate::directions
 
+// -----------------------------------------------------------------------------
+
 #[cfg(feature = "distance_matrix")]
 pub use crate::distance_matrix::{
     request::Request as DistanceMatrixRequest,
     response::Response as DistanceMatrixResponse,
     response::status::Status as DistanceMatrixStatus,
 }; // use crate::distance_matrix
+
+// -----------------------------------------------------------------------------
 
 #[cfg(feature = "elevation")]
 pub use crate::elevation::{
@@ -91,6 +106,8 @@ pub use crate::elevation::{
         status::Status as ElevationStatus,
     }, // response
 }; // crate::elevation
+
+// -----------------------------------------------------------------------------
 
 #[cfg(feature = "geocoding")]
 pub use crate::geocoding::{
@@ -111,6 +128,8 @@ pub use crate::geocoding::{
     reverse::ReverseRequest as GeocodingReverseRequest,
 }; // crate::geocoding
 
+// -----------------------------------------------------------------------------
+
 #[cfg(feature = "time_zone")]
 pub use crate::time_zone::{
     error::Error as TimeZoneError,
@@ -120,3 +139,22 @@ pub use crate::time_zone::{
         status::Status as TimeZoneStatus,
     }, // reponse
 }; // crate::time_zone
+
+// -----------------------------------------------------------------------------
+
+#[cfg(feature = "place_autocomplete")]
+pub use crate::places::place_autocomplete::{
+    error::Error as PlaceAutocompleteError,
+    response::{
+        matched_substring::MatchedSubstring,
+        prediction::Prediction,
+        Response as PlaceAutocompleteResponse,
+        status::Status as PlaceAutocompleteStatus,
+        structured_format::StructuredFormat,
+        term::Term,
+    }, // response
+    request::{
+        autocomplete_type::AutocompleteType,
+        Request as PlaceAutocompleteRequest,
+    }, // request
+}; // crate::places::place_autocomplete

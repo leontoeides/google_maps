@@ -25,18 +25,18 @@ impl<'a> Request<'a> {
     ///
     /// We recommend the following guidelines:
     ///
-    ///     * Use session tokens for all autocomplete sessions.
+    /// * Use session tokens for all autocomplete sessions.
     ///
-    ///     * Generate a fresh token for each session. Using a version 4 UUID is
-    ///     recommended.
+    /// * Generate a fresh token for each session. Using a version 4 UUID is
+    /// recommended.
     ///
-    ///     * Ensure that the API key(s) used for all Place Autocomplete and
-    ///     Place Details requests within a session belong to the same Cloud
-    ///     Console project.
+    /// * Ensure that the API key(s) used for all Place Autocomplete and Place
+    /// Details requests within a session belong to the same Cloud Console
+    /// project.
     ///
-    ///     * Be sure to pass a unique session token for each new session. Using
-    ///     the same token for more than one session will result in each request
-    ///     being billed individually.
+    /// * Be sure to pass a unique session token for each new session. Using the
+    /// same token for more than one session will result in each request being
+    /// billed individually.
 
     pub fn with_sessiontoken(&'a mut self, sessiontoken: String) -> &'a mut Request {
         // Set session token in Request struct.

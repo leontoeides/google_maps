@@ -160,4 +160,18 @@ impl ClientSettings {
         crate::time_zone::request::Request::new(self, location, timestamp)
     } // fn
 
+    /// The Place API _Place Autocomplete_ service returns place predictions.
+    /// The request specifies a textual search string and optional geographic
+    /// bounds. The service can be used to provide autocomplete functionality
+    /// for text-based geographic searches, by returning places such as
+    /// businesses, addresses and points of interest as a user types.
+
+    #[cfg(feature = "place_autocomplete")]
+    pub fn place_autocomplete(
+        &self,
+        input: String,
+    ) -> crate::places::place_autocomplete::request::Request {
+        crate::places::place_autocomplete::request::Request::new(self, input)
+    } // fn
+
 } // impl

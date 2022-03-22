@@ -1,3 +1,5 @@
+//! The `"predictions"` are the results from a search.
+
 use crate::place_type::PlaceType;
 use crate::places::place_autocomplete::response::{
     matched_substring::MatchedSubstring,
@@ -8,12 +10,12 @@ use serde::{Deserialize, Serialize};
 
 /// ----------------------------------------------------------------------------
 //
-/// [PlaceAutocompletePrediction](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlaceAutocompletePrediction)
-///
-/// When the Places service returns JSON results from a search, it places them
-/// within a `predictions` array. Even if the service returns no results (such
-/// as if the `location` is remote) it still returns an empty `predictions`
+/// When the Places service returns results from a search, it places them within
+/// a `predictions` array. Even if the service returns no results (such as if
+/// the `location` is remote) it still returns an empty `predictions`
 /// array.
+///
+/// See also: [PlaceAutocompletePrediction](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlaceAutocompletePrediction)
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct Prediction {

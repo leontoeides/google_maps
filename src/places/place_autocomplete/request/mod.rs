@@ -3,7 +3,6 @@
 //! for examples of the builder pattern. This module contains the tools (enums,
 //! structs, methods) for building your Google Maps Platform request.
 
-mod autocomplete_type;
 mod build;
 #[cfg(feature = "enable-reqwest")]
 mod execute;
@@ -17,6 +16,7 @@ mod with_sessiontoken;
 mod with_components;
 mod with_location;
 mod with_types;
+pub mod autocomplete_type;
 
 // -----------------------------------------------------------------------------
 

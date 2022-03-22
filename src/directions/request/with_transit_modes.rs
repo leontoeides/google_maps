@@ -37,7 +37,7 @@ impl<'a> Request<'a> {
     ///
     /// * Set preferred transit mode to rail:
     /// ```rust
-    /// .with_transit_mode((vec![TransitMode::Rail])
+    /// .with_transit_mode((vec![TransitMode::Rail]))
     /// ```
     ///
     /// * Set preferred transit modes to bus and subway:

@@ -1,6 +1,6 @@
-//! The **Places API** is a service that returns information about places using
-//! HTTP requests. Places are defined within this API as establishments,
-//! geographic locations, or prominent points of interest.
+//! The **Places API** is a service that returns information about places.
+//! Places are defined within this API as establishments, geographic locations,
+//! or prominent points of interest.
 //!
 //! ## Before you begin
 //!
@@ -26,13 +26,16 @@
 //! The following place requests are available:
 //!
 //! * [Place Search](https://developers.google.com/maps/documentation/places/web-service/search)
+//! **(Not yet implemented in this client.)**
 //! returns a list of places based on a user's location or searchstring.
 //!
 //! * [Place Details](https://developers.google.com/maps/documentation/places/web-service/details)
+//! **(Not yet implemented in this client.)**
 //! returns more detailed information about a specific place, including user
 //! reviews.
 //!
 //! * [Place Photos](https://developers.google.com/maps/documentation/places/web-service/photos)
+//! **(Not yet implemented in this client.)**
 //! provides access to the millions of place-related photos stored in Google's
 //! Place database.
 //!
@@ -42,10 +45,6 @@
 //! * [Query Autocomplete](https://developers.google.com/maps/documentation/places/web-service/query)
 //! provides a query prediction service for text-based geographic searches,
 //! returning suggested queries as users type.
-//!
-//! Each of the services is accessed as an HTTP request, and returns either an
-//! JSON or XML response. All requests to a Places service must use the https://
-//! protocol, and include an API key.
 //!
 //! The Places API uses a place ID to uniquely identify a place. For details
 //! about the format and usage of this identifier across the Places API and
@@ -69,4 +68,5 @@
 //! Billing](https://developers.google.com/maps/documentation/places/web-service/usage-and-billing)
 //! documentation.
 
+#[cfg(feature = "place_autocomplete")]
 pub mod place_autocomplete;

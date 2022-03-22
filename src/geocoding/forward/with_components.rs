@@ -60,7 +60,7 @@ impl<'a> ForwardRequest<'a> {
     ///
     /// ```rust
     /// .with_component(GeocodingComponent::Route(String::from("Downing Street")))
-    /// .with_component(GeocodingComponent::Locality(String::from("London"))))
+    /// .with_component(GeocodingComponent::Locality(String::from("London")))
     /// ```
 
     pub fn with_component(

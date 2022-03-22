@@ -325,7 +325,16 @@ Directions API. Reqwest will secure the connection using the Rustls library, and
 has brotli compression enabled.
 
 ```toml
-google_maps = { version = "2.1", default-features = false, features = ["directions", "enable-reqwest", "rustls", "brotli"] }
+google_maps = {
+	version = "2.1",
+	default-features = false,
+	features = [
+		"directions",
+		"enable-reqwest",
+		"rustls",
+		"brotli"
+	]
+}
 ```
 
 **Default feature flag configuration**: By default, the Google Maps client
@@ -334,7 +343,17 @@ using the system-native TLS (`native-tls`), and has gzip compression enabled
 (`gzip`).
 
 ```toml
-default = ["directions", "distance_matrix", "elevation", "geocoding", "time_zone", "enable-reqwest", "reqwest/default-tls", "reqwest/gzip"]
+default = [
+	"directions",
+	"distance_matrix",
+	"elevation",
+	"geocoding",
+	"time_zone",
+	"places",
+	"enable-reqwest",
+	"reqwest/default-tls",
+	"reqwest/gzip"
+]
 ```
 
 # Feedback
@@ -349,15 +368,11 @@ responding but I will respond. Thanks!
 
 1. Track both _requests_ and request _elements_ for rate limiting.
 2. Make a generic get() function for that can be used by all APIs.
-3. Considering move from `reqwest` to a lighter-weight HTTP client.
-4. Look into making APIs optional, i.e. as features. Possible? Desirable?
-5. Look into integrating [yaiouom](https://crates.io/crates/yaiouom).
-6. Convert explicit query validation to session types wherever reasonable.
-7. [Places API](https://developers.google.com/places/web-service/intro). There
-are no immediate plans for supporting this API. It's quite big and I have no
-current need for it. If you would like to have to implemented, please contact
-me.
-8. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
+3. Convert explicit query validation to session types wherever reasonable.
+4. [Places API](https://developers.google.com/places/web-service/intro). Only
+partly implemented. If you would like to have any missing pieces implemented,
+please contact me.
+5. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
 There are no immediate plans for supporting this API. It's quite big and I have
 no current need for it. If you would like to have to implemented, please contact
 me.
