@@ -92,7 +92,7 @@ impl<'a> Request<'a> {
                                                 // Only Google's "Unknown Error"
                                                 // is eligible for retries:
                                                 tracing::warn!("{}", error);
-                                                Err(Transient(error))
+                                                Err(Transient { err: error, retry_after: None })
                                             } else {
                                                 // Not an "Unknown Error." The
                                                 // error is permanent, do not
@@ -118,7 +118,7 @@ impl<'a> Request<'a> {
                     // Requests" are eligible for retries.
                     } else if response.status().is_server_error() || response.status() == 429 {
                         tracing::warn!("HTTP client returned: {}", response.status());
-                        Err(Transient(Error::HttpUnsuccessful(response.status().to_string())))
+                        Err(Transient { err: Error::HttpUnsuccessful(response.status().to_string()), retry_after: None })
                     // Not a 500 Server Error or "429 Too Many Requests" error.
                     // The error is permanent, do not retry:
                     } else {
@@ -129,7 +129,7 @@ impl<'a> Request<'a> {
                 // HTTP client did not get a response from the server. Retry:
                 Err(error) => {
                     tracing::warn!("HTTP client returned: {}", error);
-                    Err(Transient(Error::Reqwest(error)))
+                    Err(Transient { err: Error::Reqwest(error), retry_after: None })
                 } // case
             } // match
 

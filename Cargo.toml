@@ -42,7 +42,7 @@ native-tls = ["reqwest/default-tls"]
 rustls = ["reqwest/rustls-tls"]
 
 [dependencies]
-backoff = { version = "0.3", optional = true, features = ["futures", "tokio"] }
+backoff = { version = "0.4", optional = true, features = ["futures", "tokio"] }
 chrono = { version = "0.4", optional = true, features = ["serde"] }
 chrono-tz = { version = "0.6", optional = true, features = ["serde"] }
 futures = { version = "0.3", optional = true }
