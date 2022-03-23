@@ -97,7 +97,6 @@ impl<'a> Request<'a> {
         }
 
         // Set query string in Request struct.
-        println!("{}", &query);
         self.query = Some(query);
 
         // Return modified Request struct to caller.
