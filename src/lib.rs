@@ -37,6 +37,9 @@
 //!
 //! # What's new?
 //!
+//! * 2.1.5: 2022-03-23: Partial support for the `Google Maps` `Places API`.
+//! Implemented the `Place Autocomplete` and `Query Autocomplete` services.
+//!
 //! * 2.1.3: 2021-07-22: Web Assembly (WASM) support: if Google Maps API
 //! Client's `default-features` are set to false, all desired reqwest features
 //! (`brotli`, `rustls`, etc.) must be manually added to the `Cargo.toml` file.
