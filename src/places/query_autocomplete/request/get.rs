@@ -1,15 +1,17 @@
 use backoff::Error::{Permanent, Transient};
 use backoff::ExponentialBackoff;
 use backoff::future::retry;
-use crate::request_rate::api::Api;
 use crate::places::place_autocomplete::{
-    SERVICE_URL,
-    OUTPUT_FORMAT,
     error::Error,
-    request::Request,
     response::Response,
     response::status::Status,
 }; // crate::places::place_autocomplete
+use crate::places::query_autocomplete::{
+    SERVICE_URL,
+    OUTPUT_FORMAT,
+    request::Request,
+}; // crate::places::query_autocomplete
+use crate::request_rate::api::Api;
 
 // -----------------------------------------------------------------------------
 
@@ -21,7 +23,7 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
-    #[tracing::instrument(level = "debug", name = "Google Maps Place Autocomplete", skip(self))]
+    #[tracing::instrument(level = "debug", name = "Google Maps Query Autocomplete", skip(self))]
     pub async fn get(&mut self) -> Result<Response, Error> {
 
         // Build the URL stem for the HTTP get request:

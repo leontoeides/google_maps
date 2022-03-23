@@ -166,12 +166,28 @@ impl ClientSettings {
     /// for text-based geographic searches, by returning places such as
     /// businesses, addresses and points of interest as a user types.
 
-    #[cfg(feature = "place_autocomplete")]
+    #[cfg(feature = "autocomplete")]
     pub fn place_autocomplete(
         &self,
         input: String,
     ) -> crate::places::place_autocomplete::request::Request {
         crate::places::place_autocomplete::request::Request::new(self, input)
+    } // fn
+
+    /// The Place API _Query Autocomplete_ service allows you to add on-the-fly
+    /// geographic query predictions to your application. Instead of searching
+    /// for a specific location, a user can type in a categorical search, such
+    /// as "pizza near New York" and the service responds with a list of
+    /// suggested queries matching the string. As the Query Autocomplete service
+    /// can match on both full words and substrings, applications can send
+    /// queries as the user types to provide on-the-fly predictions.
+
+    #[cfg(feature = "autocomplete")]
+    pub fn query_autocomplete(
+        &self,
+        input: String,
+    ) -> crate::places::query_autocomplete::request::Request {
+        crate::places::query_autocomplete::request::Request::new(self, input)
     } // fn
 
 } // impl

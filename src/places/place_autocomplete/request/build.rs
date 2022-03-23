@@ -5,8 +5,8 @@ use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 
 impl<'a> Request<'a> {
 
-    /// Builds the query string for the Google Maps Time Zone API based on the
-    /// input provided by the client.
+    /// Builds the query string for the Google Maps Places API _Place
+    /// Autocomplete_ query based on the input provided by the client.
     ///
     /// ## Arguments:
     ///
@@ -85,7 +85,7 @@ impl<'a> Request<'a> {
             query.push_str(&strictbounds.to_string())
         }
 
-        // Strict Bounds key/value pair:
+        // Types key/value pair:
         if !self.types.is_empty() {
             query.push_str("&types=");
             let types = self.types

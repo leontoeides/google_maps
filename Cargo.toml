@@ -22,7 +22,7 @@ default = [
 	"elevation",
 	"geocoding",
 	"time_zone",
-	"place_autocomplete",
+	"autocomplete",
 	"enable-reqwest",
 	"reqwest/default-tls",
 	"reqwest/gzip"
@@ -33,7 +33,7 @@ distance_matrix = ["chrono", "chrono-tz"]
 elevation = []
 geocoding = []
 time_zone = ["chrono", "chrono-tz"]
-place_autocomplete = []
+autocomplete = []
 # Reqwest features:
 enable-reqwest = ["reqwest", "backoff", "futures", "stream_throttle"]
 brotli = ["reqwest/brotli"]

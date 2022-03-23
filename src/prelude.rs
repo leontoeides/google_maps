@@ -142,19 +142,28 @@ pub use crate::time_zone::{
 
 // -----------------------------------------------------------------------------
 
-#[cfg(feature = "place_autocomplete")]
+#[cfg(feature = "autocomplete")]
 pub use crate::places::place_autocomplete::{
-    error::Error as PlaceAutocompleteError,
+    error::Error as AutocompleteError,
     response::{
         matched_substring::MatchedSubstring,
         prediction::Prediction,
-        Response as PlaceAutocompleteResponse,
-        status::Status as PlaceAutocompleteStatus,
+        Response as AutocompleteResponse,
+        status::Status as AutocompleteStatus,
         structured_format::StructuredFormat,
         term::Term,
     }, // response
     request::{
         autocomplete_type::AutocompleteType,
         Request as PlaceAutocompleteRequest,
+    }, // request
+}; // crate::places::place_autocomplete
+
+// -----------------------------------------------------------------------------
+
+#[cfg(feature = "autocomplete")]
+pub use crate::places::place_autocomplete::{
+    request::{
+        Request as QueryAutocompleteRequest,
     }, // request
 }; // crate::places::place_autocomplete

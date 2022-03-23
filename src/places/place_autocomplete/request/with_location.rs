@@ -34,11 +34,6 @@ impl<'a> Request<'a> {
     ///         accepted, and will result in an `INVALID_REQUEST`.
     /// * Query Autocomplete: 50,000 meters
     /// * Text Search: 50,000 meters
-    ///
-    /// * `strictbounds` ‧ Returns only those places that are strictly within
-    /// the region defined by `location` and `radius`. This is a restriction,
-    /// rather than a bias, meaning that results outside this region will not be
-    /// returned even if they match the user input.
 
     pub fn with_location_and_radius(
         &'a mut self,

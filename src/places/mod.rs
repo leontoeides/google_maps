@@ -68,5 +68,7 @@
 //! Billing](https://developers.google.com/maps/documentation/places/web-service/usage-and-billing)
 //! documentation.
 
-#[cfg(feature = "place_autocomplete")]
+#[cfg(feature = "autocomplete")]
 pub mod place_autocomplete;
+#[cfg(feature = "autocomplete")]
+pub mod query_autocomplete;
