@@ -1,7 +1,20 @@
 # Change Log
 
 * 2.1.5: 2022-03-23: Partial support for the `Google Maps` `Places API`.
-Implemented the `Place Autocomplete` and `Query Autocomplete` services.
+Implemented the `Place Autocomplete` and `Query Autocomplete` services. Example
+of basic usage:
+
+```rust
+let google_maps_client = ClientSettings::new("YOUR_API_KEY_HERE");
+
+let predictions = google_maps_client.place_autocomplete("51".to_string())
+    .with_location_and_radius(LatLng::try_from(dec!(54), dec!(-114))?, 1_000)
+    .with_type(AutocompleteType::Address)
+    .execute()
+    .await?;
+
+println!("{:#?}", predictions);
+```
 
 * 2.1.3: 2021-07-22: Web Assembly (WASM) support: if Google Maps API Client's
 `default-features` are set to false, all desired reqwest features (`brotli`,
