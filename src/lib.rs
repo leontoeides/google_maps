@@ -415,7 +415,6 @@ pub mod elevation;
 pub mod geocoding;
 #[cfg(feature = "time_zone")]
 pub mod time_zone;
-#[cfg(feature = "places")]
 pub mod places;
 
 // Optional dependencies:

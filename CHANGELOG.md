@@ -3,7 +3,6 @@
 * 2.1.5: 2022-03-23: Partial support for the `Google Maps` `Places API`.
 Implemented the `Place Autocomplete` and `Query Autocomplete` services. Example
 of basic usage:
-
 ```rust
 let google_maps_client = ClientSettings::new("YOUR_API_KEY_HERE");
 

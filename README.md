@@ -353,7 +353,7 @@ default = [
 	"elevation",
 	"geocoding",
 	"time_zone",
-	"places",
+	"autocomplete",
 	"enable-reqwest",
 	"reqwest/default-tls",
 	"reqwest/gzip"
