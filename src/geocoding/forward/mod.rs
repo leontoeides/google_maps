@@ -53,14 +53,14 @@ pub struct ForwardRequest<'a> {
     /// additional guidance.
     address: Option<String>,
 
-	/// The place ID of the place for which you wish to obtain the
-	/// human-readable address. The place ID is a unique identifier that can
-	/// be used with other Google APIs. For example, you can use the placeID
-	/// returned by the [Roads
-	/// API](https://developers.google.com/maps/documentation/roads/snap) to
-	/// get the address for a snapped point.
-	/// For more information about place IDs, see the place [ID
-	/// overview](https://developers.google.com/maps/documentation/places/web-service/place-id)..
+    /// The place ID of the place for which you wish to obtain the
+    /// human-readable address. The place ID is a unique identifier that can
+    /// be used with other Google APIs. For example, you can use the placeID
+    /// returned by the [Roads
+    /// API](https://developers.google.com/maps/documentation/roads/snap) to
+    /// get the address for a snapped point.
+    /// For more information about place IDs, see the place [ID
+    /// overview](https://developers.google.com/maps/documentation/places/web-service/place-id)..
     place_id: Option<String>,
 
     /// The bounding box of the viewport within which to bias geocode results
