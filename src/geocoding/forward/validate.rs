@@ -15,7 +15,7 @@ impl<'a> ForwardRequest<'a> {
 
     pub fn validate(&mut self) -> Result<&'a mut ForwardRequest, Error> {
         // If a positional request has been set...
-        if self.address == None && self.components == None {
+        if self.address == None && self.place_id == None && self.components == None {
             return Err(Error::AddressOrComponentsRequired);
         } // if
         // Indicate that the request passed validation.

@@ -32,6 +32,14 @@ impl<'a> ForwardRequest<'a> {
             )
         }
 
+        // Place Id key/value pair:
+        if let Some(place_id) = &self.place_id {
+            query.push_str("&place_id=");
+            query.push_str(
+                &*utf8_percent_encode(&String::from(place_id), NON_ALPHANUMERIC).to_string(),
+            )
+        }
+
         // Bounds key/value pair:
         if let Some(bounds) = &self.bounds {
             query.push_str("&bounds=");
