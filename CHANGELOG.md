@@ -1,5 +1,11 @@
 # Change Log
 
+* 2.1.6: 2022-08-19: Support for geocoding
+[Google Maps Place IDs](https://developers.google.com/maps/documentation/places/web-service/place-id).
+
+* 2.1.6: 2022-04-10: `country` was moved up the hierarchy because it's now being
+shared amongst several APIs. Made `google_maps::country` module public.
+
 * 2.1.5: 2022-03-23: Partial support for the `Google Maps` `Places API`.
 Implemented the `Place Autocomplete` and `Query Autocomplete` services. Example
 of basic usage:
