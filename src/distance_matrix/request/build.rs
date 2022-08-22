@@ -56,7 +56,7 @@ impl<'a> Request<'a> {
         if let Some(restrictions) = &self.restrictions {
             query.push_str("&avoid=");
             query.push_str(
-                &*utf8_percent_encode(
+                &utf8_percent_encode(
                     &restrictions
                         .iter()
                         .map(String::from)
@@ -101,7 +101,7 @@ impl<'a> Request<'a> {
         if let Some(transit_modes) = &self.transit_modes {
             query.push_str("&transit_mode=");
             query.push_str(
-                &*utf8_percent_encode(
+                &utf8_percent_encode(
                     &transit_modes
                         .iter()
                         .map(String::from)

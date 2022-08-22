@@ -28,7 +28,7 @@ impl<'a> ForwardRequest<'a> {
         if let Some(address) = &self.address {
             query.push_str("&address=");
             query.push_str(
-                &*utf8_percent_encode(&String::from(address), NON_ALPHANUMERIC).to_string(),
+                &utf8_percent_encode(&String::from(address), NON_ALPHANUMERIC).to_string(),
             )
         }
 
@@ -36,7 +36,7 @@ impl<'a> ForwardRequest<'a> {
         if let Some(place_id) = &self.place_id {
             query.push_str("&place_id=");
             query.push_str(
-                &*utf8_percent_encode(&String::from(place_id), NON_ALPHANUMERIC).to_string(),
+                &utf8_percent_encode(&String::from(place_id), NON_ALPHANUMERIC).to_string(),
             )
         }
 
@@ -44,7 +44,7 @@ impl<'a> ForwardRequest<'a> {
         if let Some(bounds) = &self.bounds {
             query.push_str("&bounds=");
             query.push_str(
-                &*utf8_percent_encode(&String::from(bounds), NON_ALPHANUMERIC).to_string(),
+                &utf8_percent_encode(&String::from(bounds), NON_ALPHANUMERIC).to_string(),
             )
         }
 
@@ -52,7 +52,7 @@ impl<'a> ForwardRequest<'a> {
         if let Some(components) = &self.components {
             query.push_str("&components=");
             query.push_str(
-                &*utf8_percent_encode(
+                &utf8_percent_encode(
                     &components
                         .iter()
                         .map(String::from)

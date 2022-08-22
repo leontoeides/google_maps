@@ -34,7 +34,7 @@ impl<'a> ReverseRequest<'a> {
         if let Some(location_types) = &self.location_types {
             query.push_str("&location_type=");
             query.push_str(
-                &*utf8_percent_encode(
+                &utf8_percent_encode(
                     &location_types
                         .iter()
                         .map(String::from)
@@ -49,7 +49,7 @@ impl<'a> ReverseRequest<'a> {
         if let Some(result_types) = &self.result_types {
             query.push_str("&result_type=");
             query.push_str(
-                &*utf8_percent_encode(
+                &utf8_percent_encode(
                     &result_types
                         .iter()
                         .map(String::from)
