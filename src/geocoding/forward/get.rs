@@ -38,6 +38,9 @@ impl<'a> ForwardRequest<'a> {
         self.client_settings.rate_limit.limit_apis(vec![&Api::All, &Api::Geocoding])
             .await;
 
+        // Emit debug message so client can monitor activity:
+        tracing::debug!("Executing GET request to Google Maps Geocoding API: `{url}`");
+
         // Retries the get request until successful, an error ineligible for
         // retries is returned, or we have reached the maximum retries. Note:
         // errors wrapped in `Transient()` will retried by the `backoff` crate
