@@ -37,6 +37,18 @@
 //!
 //! # What's new?
 //!
+//! * 2.1.7: 2022-08-27: `str` to `enum` table look-ups are now powered by `phf`
+//! (perfect hash functions.)
+//!
+//! * 2.1.7: 2022-08-27: Manual implementation `serde` deserializers for Google
+//! Maps types, which can utilize the new `phf` tables.
+//!
+//! * 2.1.7: 2022-08-27: Google Maps client types now implement `FromStr` which
+//! gives access to `parse`.
+//!
+//! * 2.1.7: 2022-08-22: Added debug logging message to show Google Maps
+//! client's request activity.
+//!
 //! * 2.1.6: 2022-08-19: Support for geocoding from Google Maps
 //! [Place IDs](https://developers.google.com/maps/documentation/places/web-service/place-id).
 //! Thank you [E-gy](https://github.com/E-gy)!
