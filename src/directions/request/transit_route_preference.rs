@@ -72,7 +72,23 @@ impl std::convert::TryFrom<&str> for TransitRoutePreference {
     /// valid [transit route
     /// preference](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitRoutePreference)
     /// code.
-    fn try_from(transit_route_preference_code: &str) -> Result<TransitRoutePreference, Error> {
+    fn try_from(transit_route_preference_code: &str) -> Result<Self, Self::Error> {
+        TRANSIT_ROUTE_PREFERENCE_BY_CODE
+            .get(transit_route_preference_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidTransitRoutePreferenceCode(transit_route_preference_code.to_string()))
+    } // fn
+} // impl
+
+impl std::str::FromStr for TransitRoutePreference {
+    // Error definitions are contained in the
+    // `google_maps\src\directions\error.rs` module.
+    type Err = crate::directions::error::Error;
+    /// Gets a `TransitRoutePreference` enum from a `String` that contains a
+    /// valid [transit route
+    /// preference](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitRoutePreference)
+    /// code.
+    fn from_str(transit_route_preference_code: &str) -> Result<Self, Self::Err> {
         TRANSIT_ROUTE_PREFERENCE_BY_CODE
             .get(transit_route_preference_code)
             .cloned()

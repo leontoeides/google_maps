@@ -140,7 +140,23 @@ impl std::convert::TryFrom<&str> for DrivingManeuver {
     /// [maneuver
     /// type](https://developers.google.com/maps/documentation/directions/intro#Steps)
     /// code.
-    fn try_from(driving_maneuver_type_code: &str) -> Result<DrivingManeuver, Error> {
+    fn try_from(driving_maneuver_type_code: &str) -> Result<Self, Self::Error> {
+        DRIVING_MANEUVERS_BY_CODE
+            .get(driving_maneuver_type_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidDrivingManeuverCode(driving_maneuver_type_code.to_string()))
+    } // fn
+} // impl
+
+impl std::str::FromStr for DrivingManeuver {
+    // Error definitions are contained in the
+    // `google_maps\src\directions\error.rs` module.
+    type Err = crate::directions::error::Error;
+    /// Gets a `DrivingManeuver` enum from a `String` that contains a valid
+    /// [maneuver
+    /// type](https://developers.google.com/maps/documentation/directions/intro#Steps)
+    /// code.
+    fn from_str(driving_maneuver_type_code: &str) -> Result<Self, Self::Err> {
         DRIVING_MANEUVERS_BY_CODE
             .get(driving_maneuver_type_code)
             .cloned()

@@ -86,7 +86,22 @@ impl std::convert::TryFrom<&str> for TravelMode {
     /// Gets a `TravelMode` enum from a `String` that contains a valid [travel
     /// mode](https://developers.google.com/maps/documentation/directions/intro#TravelModes)
     /// code.
-    fn try_from(travel_mode_code: &str) -> Result<TravelMode, Error> {
+    fn try_from(travel_mode_code: &str) -> Result<Self, Self::Error> {
+        TRAVEL_MODES_BY_CODE
+            .get(travel_mode_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidTravelModeCode(travel_mode_code.to_string()))
+    } // fn
+} // impl
+
+impl std::str::FromStr for TravelMode {
+    // Error definitions are contained in the
+    // `google_maps\src\directions\error.rs` module.
+    type Err = crate::directions::error::Error;
+    /// Gets a `TravelMode` enum from a `String` that contains a valid [travel
+    /// mode](https://developers.google.com/maps/documentation/directions/intro#TravelModes)
+    /// code.
+    fn from_str(travel_mode_code: &str) -> Result<Self, Self::Err> {
         TRAVEL_MODES_BY_CODE
             .get(travel_mode_code)
             .cloned()

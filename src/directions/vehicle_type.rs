@@ -146,7 +146,22 @@ impl std::convert::TryFrom<&str> for VehicleType {
     /// Gets a `VehicleType` enum from a `String` that contains a valid [vehicle
     /// type](https://developers.google.com/maps/documentation/directions/intro#VehicleType)
     /// code.
-    fn try_from(vehicle_type_code: &str) -> Result<VehicleType, Error> {
+    fn try_from(vehicle_type_code: &str) -> Result<Self, Self::Error> {
+        VEHICLE_TYPES_BY_CODE
+            .get(vehicle_type_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidVehicleTypeCode(vehicle_type_code.to_string()))
+    } // fn
+} // impl
+
+impl std::str::FromStr for VehicleType {
+    // Error definitions are contained in the
+    // `google_maps\src\directions\error.rs` module.
+    type Err = crate::directions::error::Error;
+    /// Gets a `VehicleType` enum from a `String` that contains a valid [vehicle
+    /// type](https://developers.google.com/maps/documentation/directions/intro#VehicleType)
+    /// code.
+    fn from_str(vehicle_type_code: &str) -> Result<Self, Self::Err> {
         VEHICLE_TYPES_BY_CODE
             .get(vehicle_type_code)
             .cloned()

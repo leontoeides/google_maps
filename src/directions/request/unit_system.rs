@@ -79,7 +79,22 @@ impl std::convert::TryFrom<&str> for UnitSystem {
     /// Gets a `UnitSystem` enum from a `String` that contains a valid [unit
     /// system](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
     /// code.
-    fn try_from(unit_system_code: &str) -> Result<UnitSystem, Error> {
+    fn try_from(unit_system_code: &str) -> Result<Self, Self::Error> {
+        UNIT_SYSTEMS_BY_CODE
+            .get(unit_system_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidUnitSystemCode(unit_system_code.to_string()))
+    } // fn
+} // impl
+
+impl std::str::FromStr for UnitSystem {
+    // Error definitions are contained in the
+    // `google_maps\src\directions\error.rs` module.
+    type Err = crate::directions::error::Error;
+    /// Gets a `UnitSystem` enum from a `String` that contains a valid [unit
+    /// system](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
+    /// code.
+    fn from_str(unit_system_code: &str) -> Result<Self, Self::Err> {
         UNIT_SYSTEMS_BY_CODE
             .get(unit_system_code)
             .cloned()

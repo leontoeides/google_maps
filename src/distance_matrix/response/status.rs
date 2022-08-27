@@ -105,7 +105,22 @@ impl std::convert::TryFrom<&str> for Status {
     /// Gets a `Status` enum from a `String` that contains a valid
     /// [status](https://developers.google.com/maps/documentation/distance-matrix/intro#top-level-status-codes)
     /// code.
-    fn try_from(status_code: &str) -> Result<Status, Error> {
+    fn try_from(status_code: &str) -> Result<Self, Self::Error> {
+        STATUSES_BY_CODE
+            .get(status_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidStatusCode(status_code.to_string()))
+    } // fn
+} // impl
+
+impl std::str::FromStr for Status {
+    // Error definitions are contained in the
+    // `google_maps\src\distance_matrix\error.rs` module.
+    type Err = crate::distance_matrix::error::Error;
+    /// Gets a `Status` enum from a `String` that contains a valid
+    /// [status](https://developers.google.com/maps/documentation/distance-matrix/intro#top-level-status-codes)
+    /// code.
+    fn from_str(status_code: &str) -> Result<Self, Self::Err> {
         STATUSES_BY_CODE
             .get(status_code)
             .cloned()

@@ -339,7 +339,20 @@ impl std::convert::TryFrom<&str> for Language {
     type Error = crate::error::Error;
     /// Gets a `Language` enum from a `String` that contains a supported
     /// [language](https://developers.google.com/maps/faq#languagesupport) code.
-    fn try_from(language_code: &str) -> Result<Language, Error> {
+    fn try_from(language_code: &str) -> Result<Self, Self::Error> {
+        LANGUAGES_BY_CODE
+            .get(language_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidLanguageCode(language_code.to_string()))
+    } // fn
+} // impl
+
+impl std::str::FromStr for Language {
+    // Error definitions are contained in the `google_maps\src\error.rs` module.
+    type Err = crate::error::Error;
+    /// Gets a `Language` enum from a `String` that contains a supported
+    /// [language](https://developers.google.com/maps/faq#languagesupport) code.
+    fn from_str(language_code: &str) -> Result<Self, Self::Err> {
         LANGUAGES_BY_CODE
             .get(language_code)
             .cloned()

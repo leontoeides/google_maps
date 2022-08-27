@@ -375,23 +375,6 @@ impl<'de> Deserialize<'de> for PlaceType {
 
 // -----------------------------------------------------------------------------
 
-impl PlaceType {
-    /// A helper function that converts a `Vec<PlaceType>` (i.e. an array of
-    /// PlaceType enum) to a `String` that contains a comma-delimited list of
-    /// [place
-    /// types](https://developers.google.com/places/web-service/supported_types)
-    /// codes.
-    pub fn vec_to_csv(place_types: &[PlaceType]) -> String {
-        place_types
-            .iter()
-            .map(String::from)
-            .collect::<Vec<String>>()
-            .join(",")
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
 impl std::convert::From<&PlaceType> for String {
     /// Converts a `PlaceType` enum to a `String` that contains a [place
     /// type](https://developers.google.com/places/web-service/supported_types)
@@ -697,7 +680,21 @@ impl std::convert::TryFrom<&str> for PlaceType {
     /// Gets a `PlaceType` enum from a `String` that contains a supported [place
     /// type](https://developers.google.com/places/web-service/supported_types)
     /// code.
-    fn try_from(place_type_code: &str) -> Result<PlaceType, Error> {
+    fn try_from(place_type_code: &str) -> Result<Self, Self::Error> {
+        PLACE_TYPES_BY_CODE
+            .get(place_type_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidPlaceTypeCode(place_type_code.to_string()))
+    } // fn
+} // impl
+
+impl std::str::FromStr for PlaceType {
+    // Error definitions are contained in the `google_maps\src\error.rs` module.
+    type Err = crate::error::Error;
+    /// Gets a `PlaceType` enum from a `String` that contains a supported [place
+    /// type](https://developers.google.com/places/web-service/supported_types)
+    /// code.
+    fn from_str(place_type_code: &str) -> Result<Self, Self::Err> {
         PLACE_TYPES_BY_CODE
             .get(place_type_code)
             .cloned()
@@ -864,5 +861,22 @@ impl std::fmt::Display for PlaceType {
             PlaceType::Regions => write!(f, "Regions"),
             PlaceType::Cities => write!(f, "Cities"),
         } // match
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl PlaceType {
+    /// A helper function that converts a `Vec<PlaceType>` (i.e. an array of
+    /// PlaceType enum) to a `String` that contains a comma-delimited list of
+    /// [place
+    /// types](https://developers.google.com/places/web-service/supported_types)
+    /// codes.
+    pub fn vec_to_csv(place_types: &[PlaceType]) -> String {
+        place_types
+            .iter()
+            .map(String::from)
+            .collect::<Vec<String>>()
+            .join(",")
     } // fn
 } // impl

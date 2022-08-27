@@ -77,7 +77,23 @@ impl std::convert::TryFrom<&str> for ElementStatus {
     /// [element
     /// status](https://developers.google.com/maps/documentation/distance-matrix/intro#element-level-status-codes)
     /// code.
-    fn try_from(element_status_code: &str) -> Result<ElementStatus, Error> {
+    fn try_from(element_status_code: &str) -> Result<Self, Self::Error> {
+        ELEMENT_STATUSES_BY_CODE
+            .get(element_status_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidElementStatusCode(element_status_code.to_string()))
+    } // fn
+} // impl
+
+impl std::str::FromStr for ElementStatus {
+    // Error definitions are contained in the
+    // `google_maps\src\distance_matrix\error.rs` module.
+    type Err = crate::distance_matrix::error::Error;
+    /// Gets a `ElementStatus` enum from a `String` that contains a valid
+    /// [element
+    /// status](https://developers.google.com/maps/documentation/distance-matrix/intro#element-level-status-codes)
+    /// code.
+    fn from_str(element_status_code: &str) -> Result<Self, Self::Err> {
         ELEMENT_STATUSES_BY_CODE
             .get(element_status_code)
             .cloned()

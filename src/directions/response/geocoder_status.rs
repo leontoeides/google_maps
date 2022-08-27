@@ -66,7 +66,23 @@ impl std::convert::TryFrom<&str> for GeocoderStatus {
     /// [geocoder
     /// status](https://developers.google.com/maps/documentation/directions/intro#GeocodedWaypoints)
     /// code.
-    fn try_from(geocoder_status_code: &str) -> Result<GeocoderStatus, Error> {
+    fn try_from(geocoder_status_code: &str) -> Result<Self, Self::Error> {
+        GEOCODER_STATUSES_BY_CODE
+            .get(geocoder_status_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidGeocoderStatusCode(geocoder_status_code.to_string()))
+    } // fn
+} // impl
+
+impl std::str::FromStr for GeocoderStatus {
+    // Error definitions are contained in the
+    // `google_maps\src\directions\error.rs` module.
+    type Err = crate::directions::error::Error;
+    /// Gets a `GeocoderStatus` enum from a `String` that contains a valid
+    /// [geocoder
+    /// status](https://developers.google.com/maps/documentation/directions/intro#GeocodedWaypoints)
+    /// code.
+    fn from_str(geocoder_status_code: &str) -> Result<Self, Self::Err> {
         GEOCODER_STATUSES_BY_CODE
             .get(geocoder_status_code)
             .cloned()

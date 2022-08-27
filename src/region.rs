@@ -876,14 +876,12 @@ static REGIONS_BY_CODE: phf::Map<&'static str, Region> = phf_map! {
     "ax" => Region::AlandIslands,
 };
 
-// -----------------------------------------------------------------------------
-
 impl std::convert::TryFrom<&str> for Region {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
     type Error = crate::error::Error;
     /// Gets a `Region` enum from a `String` that contains a supported
     /// [region](https://developers.google.com/maps/coverage) code.
-    fn try_from(region_code: &str) -> Result<Region, Error> {
+    fn try_from(region_code: &str) -> Result<Self, Self::Error> {
         REGIONS_BY_CODE
             .get(region_code)
             .cloned()
@@ -891,12 +889,29 @@ impl std::convert::TryFrom<&str> for Region {
     } // fn
 } // impl
 
+impl std::str::FromStr for Region {
+    // Error definitions are contained in the `google_maps\src\error.rs` module.
+    type Err = crate::error::Error;
+    /// Gets a `Region` enum from a `String` that contains a supported
+    /// [region](https://developers.google.com/maps/coverage) code.
+    fn from_str(region_code: &str) -> Result<Self, Self::Err> {
+        REGIONS_BY_CODE
+            .get(region_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidRegionCode(region_code.to_string()))
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::default::Default for Region {
     /// Returns a reasonable default variant for the `Region` enum type.
     fn default() -> Self {
         Region::UnitedStates
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for Region {
     /// Formats a `Region` enum into a string that is presentable to the end

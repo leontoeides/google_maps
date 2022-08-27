@@ -806,8 +806,6 @@ static COUNTRIES_BY_CODE: phf::Map<&'static str, Country> = phf_map! {
     "ZW" => Country::Zimbabwe,
 };
 
-// -----------------------------------------------------------------------------
-
 impl std::convert::TryFrom<&str> for Country {
     // Error definitions are contained in the
     // `google_maps\src\geocoding\error.rs` module.
@@ -815,7 +813,22 @@ impl std::convert::TryFrom<&str> for Country {
     /// Gets a `Country` enum from a `String` that contains a valid [ISO 3166-1
     /// Alpha-2](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
     /// country code.
-    fn try_from(country_code: &str) -> Result<Country, Error> {
+    fn try_from(country_code: &str) -> Result<Self, Self::Error> {
+        COUNTRIES_BY_CODE
+            .get(country_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidCountryCode(country_code.to_string()))
+    } // fn
+} // impl
+
+impl std::str::FromStr for Country {
+    // Error definitions are contained in the
+    // `google_maps\src\geocoding\error.rs` module.
+    type Err = crate::geocoding::error::Error;
+    /// Gets a `Country` enum from a `String` that contains a valid [ISO 3166-1
+    /// Alpha-2](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
+    /// country code.
+    fn from_str(country_code: &str) -> Result<Self, Self::Err> {
         COUNTRIES_BY_CODE
             .get(country_code)
             .cloned()

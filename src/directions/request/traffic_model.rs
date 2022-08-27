@@ -90,7 +90,23 @@ impl std::convert::TryFrom<&str> for TrafficModel {
     /// [traffic
     /// model](https://developers.google.com/maps/documentation/javascript/reference/directions#TrafficModel)
     /// code.
-    fn try_from(traffic_model_code: &str) -> Result<TrafficModel, Error> {
+    fn try_from(traffic_model_code: &str) -> Result<Self, Self::Error> {
+        TRAFFIC_MODELS_BY_CODE
+            .get(traffic_model_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidTrafficModelCode(traffic_model_code.to_string()))
+    } // fn
+} // impl
+
+impl std::str::FromStr for TrafficModel {
+    // Error definitions are contained in the
+    // `google_maps\src\directions\error.rs` module.
+    type Err = crate::directions::error::Error;
+    /// Gets a `TrafficModel` enum from a `String` that contains a valid
+    /// [traffic
+    /// model](https://developers.google.com/maps/documentation/javascript/reference/directions#TrafficModel)
+    /// code.
+    fn from_str(traffic_model_code: &str) -> Result<Self, Self::Err> {
         TRAFFIC_MODELS_BY_CODE
             .get(traffic_model_code)
             .cloned()

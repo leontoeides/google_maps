@@ -87,7 +87,22 @@ impl std::convert::TryFrom<&str> for TransitMode {
     /// Gets a `TransitMode` enum from a `String` that contains a valid [transit
     /// mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitMode)
     /// code.
-    fn try_from(transit_mode_code: &str) -> Result<TransitMode, Error> {
+    fn try_from(transit_mode_code: &str) -> Result<Self, Self::Error> {
+        TRANSIT_MODES_BY_CODE
+            .get(transit_mode_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidTransitModeCode(transit_mode_code.to_string()))
+    } // fn
+} // impl
+
+impl std::str::FromStr for TransitMode {
+    // Error definitions are contained in the
+    // `google_maps\src\directions\error.rs` module.
+    type Err = crate::directions::error::Error;
+    /// Gets a `TransitMode` enum from a `String` that contains a valid [transit
+    /// mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitMode)
+    /// code.
+    fn from_str(transit_mode_code: &str) -> Result<Self, Self::Err> {
         TRANSIT_MODES_BY_CODE
             .get(transit_mode_code)
             .cloned()
