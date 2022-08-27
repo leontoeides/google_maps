@@ -34,7 +34,7 @@ impl RequestRate {
         match wait_time {
             Ok(duration) => {
                 if duration.as_millis() > 10 {
-                    tracing::info!("Waited for {} under rate limiter", duration_to_string(&duration))
+                    tracing::debug!("Waited for {} under rate limiter.", duration_to_string(&duration))
                 }
             },
             _ => tracing::warn!("Clock went backwards!")

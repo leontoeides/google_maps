@@ -37,6 +37,8 @@
 //!
 //! # What's new?
 //!
+//! * 2.1.8: 2022-08-27: Adjusted `tracing` log levels.
+//!
 //! * 2.1.7: 2022-08-27: `str` to `enum` table look-ups are now powered by
 //! [phf](https://crates.io/crates/phf) (perfect hash functions.)
 //!

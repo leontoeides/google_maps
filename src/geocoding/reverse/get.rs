@@ -39,7 +39,7 @@ impl<'a> ReverseRequest<'a> {
             .await;
 
         // Emit debug message so client can monitor activity:
-        tracing::debug!("Executing GET request to Google Maps Geocoding API: `{url}`");
+        tracing::info!("Executing GET request to Google Maps Geocoding API: `{url}`");
 
         // Retries the get request until successful, an error ineligible for
         // retries is returned, or we have reached the maximum retries. Note:
