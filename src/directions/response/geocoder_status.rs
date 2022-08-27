@@ -2,7 +2,10 @@
 //! the status resulting from geocoding operations.
 
 use crate::directions::error::Error;
+use phf::phf_map;
 use serde::{Deserialize, Serialize};
+
+// -----------------------------------------------------------------------------
 
 /// Indicates the [status
 /// code](https://developers.google.com/maps/documentation/directions/intro#GeocodedWaypoints)
@@ -20,6 +23,8 @@ pub enum GeocoderStatus {
     ZeroResults,
 } // struct
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&GeocoderStatus> for String {
     /// Converts a `GeocoderStatus` enum to a `String` that contains a [geocoder
     /// status](https://developers.google.com/maps/documentation/directions/intro#GeocodedWaypoints)
@@ -32,6 +37,13 @@ impl std::convert::From<&GeocoderStatus> for String {
     } // fn
 } // impl
 
+// -----------------------------------------------------------------------------
+
+static GEOCODER_STATUSES_BY_CODE: phf::Map<&'static str, GeocoderStatus> = phf_map! {
+    "OK" => GeocoderStatus::Ok,
+    "ZERO_RESULTS" => GeocoderStatus::ZeroResults,
+};
+
 impl std::convert::TryFrom<&str> for GeocoderStatus {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -40,16 +52,15 @@ impl std::convert::TryFrom<&str> for GeocoderStatus {
     /// [geocoder
     /// status](https://developers.google.com/maps/documentation/directions/intro#GeocodedWaypoints)
     /// code.
-    fn try_from(geocoder_status: &str) -> Result<GeocoderStatus, Error> {
-        match geocoder_status {
-            "OK" => Ok(GeocoderStatus::Ok),
-            "ZERO_RESULTS" => Ok(GeocoderStatus::ZeroResults),
-            _ => Err(Error::InvalidGeocoderStatusCode(String::from(
-                geocoder_status,
-            ))),
-        } // match
+    fn try_from(geocoder_status_code: &str) -> Result<GeocoderStatus, Error> {
+        GEOCODER_STATUSES_BY_CODE
+            .get(geocoder_status_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidGeocoderStatusCode(geocoder_status_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::default::Default for GeocoderStatus {
     /// Returns a reasonable default variant for the `GeocoderStatus` enum type.
@@ -57,6 +68,8 @@ impl std::default::Default for GeocoderStatus {
         GeocoderStatus::Ok
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for GeocoderStatus {
     /// Formats a `GeocoderStatus` enum into a string that is presentable to the

@@ -3,7 +3,10 @@
 //! pessimistic.
 
 use crate::directions::error::Error;
+use phf::phf_map;
 use serde::{Deserialize, Serialize};
+
+// -----------------------------------------------------------------------------
 
 /// Specifies the [traffic
 /// model](https://developers.google.com/maps/documentation/directions/intro#optional-parameters)
@@ -42,6 +45,8 @@ pub enum TrafficModel {
     Pessimistic,
 } // enum
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&TrafficModel> for String {
     /// Converts a `TrafficModel` enum to a `String` that contains a [traffic
     /// model](https://developers.google.com/maps/documentation/javascript/reference/directions#TrafficModel)
@@ -55,6 +60,14 @@ impl std::convert::From<&TrafficModel> for String {
     } // fn
 } // impl
 
+// -----------------------------------------------------------------------------
+
+static TRAFFIC_MODELS_BY_CODE: phf::Map<&'static str, TrafficModel> = phf_map! {
+    "best_guess" => TrafficModel::BestGuess,
+    "optimistic" => TrafficModel::Optimistic,
+    "pessimistic" => TrafficModel::Pessimistic,
+};
+
 impl std::convert::TryFrom<&str> for TrafficModel {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -63,15 +76,15 @@ impl std::convert::TryFrom<&str> for TrafficModel {
     /// [traffic
     /// model](https://developers.google.com/maps/documentation/javascript/reference/directions#TrafficModel)
     /// code.
-    fn try_from(traffic_model: &str) -> Result<TrafficModel, Error> {
-        match traffic_model {
-            "best_guess" => Ok(TrafficModel::BestGuess),
-            "optimistic" => Ok(TrafficModel::Optimistic),
-            "pessimistic" => Ok(TrafficModel::Pessimistic),
-            _ => Err(Error::InvalidTrafficModelCode(traffic_model.to_string())),
-        } // match
+    fn try_from(traffic_model_code: &str) -> Result<TrafficModel, Error> {
+        TRAFFIC_MODELS_BY_CODE
+            .get(traffic_model_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidTrafficModelCode(traffic_model_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::default::Default for TrafficModel {
     /// Returns a reasonable default variant for the `TrafficModel` enum type.
@@ -79,6 +92,8 @@ impl std::default::Default for TrafficModel {
         TrafficModel::BestGuess
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for TrafficModel {
     /// Formats a `TrafficModel` enum into a string that is presentable to the

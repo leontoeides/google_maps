@@ -3,7 +3,10 @@
 //! track down why time zone is not working.
 
 use crate::time_zone::error::Error;
+use phf::phf_map;
 use serde::{Deserialize, Serialize};
+
+// -----------------------------------------------------------------------------
 
 /// Indicates the status of the response.
 
@@ -44,6 +47,8 @@ pub enum Status {
     ZeroResults,
 } // struct
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&Status> for String {
     /// Converts a `Status` enum to a `String` that contains a
     /// [status](https://developers.google.com/maps/documentation/timezone/intro#Responses)
@@ -61,27 +66,34 @@ impl std::convert::From<&Status> for String {
     } // fn
 } // impl
 
+// -----------------------------------------------------------------------------
+
+static STATUSES_BY_CODE: phf::Map<&'static str, Status> = phf_map! {
+    "INVALID_REQUEST" => Status::InvalidRequest,
+    "OK" => Status::Ok,
+    "OVER_DAILY_LIMIT" => Status::OverDailyLimit,
+    "OVER_QUERY_LIMIT" => Status::OverQueryLimit,
+    "REQUEST_DENIED" => Status::RequestDenied,
+    "UNKNOWN_ERROR" => Status::UnknownError,
+    "ZERO_RESULTS" => Status::ZeroResults,
+};
+
 impl std::convert::TryFrom<&str> for Status {
     // Error definitions are contained in the
     // `google_maps\src\time_zone\error.rs` module.
     type Error = crate::time_zone::error::Error;
-
     /// Gets a `Status` enum from a `String` that contains a valid
     /// [status](https://developers.google.com/maps/documentation/timezone/intro#Responses)
     /// code.
-    fn try_from(status: &str) -> Result<Status, Error> {
-        match status {
-            "INVALID_REQUEST" => Ok(Status::InvalidRequest),
-            "OK" => Ok(Status::Ok),
-            "OVER_DAILY_LIMIT" => Ok(Status::OverDailyLimit),
-            "OVER_QUERY_LIMIT" => Ok(Status::OverQueryLimit),
-            "REQUEST_DENIED" => Ok(Status::RequestDenied),
-            "UNKNOWN_ERROR" => Ok(Status::UnknownError),
-            "ZERO_RESULTS" => Ok(Status::ZeroResults),
-            _ => Err(Error::InvalidStatusCode(status.to_string())),
-        } // match
+    fn try_from(status_code: &str) -> Result<Status, Error> {
+        STATUSES_BY_CODE
+            .get(status_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidStatusCode(status_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::default::Default for Status {
     /// Returns a reasonable default variant for the `Status` enum type.
@@ -89,6 +101,8 @@ impl std::default::Default for Status {
         Status::Ok
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for Status {
     /// Formats a `Status` enum into a string that is presentable to the end

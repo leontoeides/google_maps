@@ -2,7 +2,10 @@
 //! whether imperial or metric units are used in Directions responses.
 
 use crate::directions::error::Error;
+use phf::phf_map;
 use serde::{Deserialize, Serialize};
+
+// -----------------------------------------------------------------------------
 
 /// Specifies the [unit
 /// system](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
@@ -34,6 +37,8 @@ pub enum UnitSystem {
     Metric,
 } // enum
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&UnitSystem> for String {
     /// Converts a `UnitSystem` enum to a `String` that contains a [unit
     /// system](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
@@ -46,6 +51,13 @@ impl std::convert::From<&UnitSystem> for String {
     } // fn
 } // impl
 
+// -----------------------------------------------------------------------------
+
+static UNIT_SYSTEMS_BY_CODE: phf::Map<&'static str, UnitSystem> = phf_map! {
+    "imperial" => UnitSystem::Imperial,
+    "metric" => UnitSystem::Metric,
+};
+
 impl std::convert::TryFrom<&str> for UnitSystem {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -53,14 +65,15 @@ impl std::convert::TryFrom<&str> for UnitSystem {
     /// Gets a `UnitSystem` enum from a `String` that contains a valid [unit
     /// system](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
     /// code.
-    fn try_from(units: &str) -> Result<UnitSystem, Error> {
-        match units {
-            "imperial" => Ok(UnitSystem::Imperial),
-            "metric" => Ok(UnitSystem::Metric),
-            _ => Err(Error::InvalidUnitSystemCode(units.to_string())),
-        } // match
+    fn try_from(unit_system_code: &str) -> Result<UnitSystem, Error> {
+        UNIT_SYSTEMS_BY_CODE
+            .get(unit_system_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidUnitSystemCode(unit_system_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::default::Default for UnitSystem {
     /// Returns a reasonable default variant for the `UnitSystem` enum type.
@@ -68,6 +81,8 @@ impl std::default::Default for UnitSystem {
         UnitSystem::Metric
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for UnitSystem {
     /// Formats a `UnitSystem` enum into a string that is presentable to the

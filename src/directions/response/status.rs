@@ -2,7 +2,10 @@
 //! debugging information to help you track down why the service request failed.
 
 use crate::directions::error::Error;
+use phf::phf_map;
 use serde::{Deserialize, Serialize};
+
+// -----------------------------------------------------------------------------
 
 /// The `status` field within the Directions response object contains the
 /// [status](https://developers.google.com/maps/documentation/directions/intro#StatusCodes)
@@ -63,6 +66,8 @@ pub enum Status {
     ZeroResults,
 } // enum
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&Status> for String {
     /// Converts a `Status` enum to a `String` that contains a
     /// [status](https://developers.google.com/maps/documentation/directions/intro#StatusCodes)
@@ -83,6 +88,21 @@ impl std::convert::From<&Status> for String {
     } // fn
 } // impl
 
+// -----------------------------------------------------------------------------
+
+static STATUSES_BY_CODE: phf::Map<&'static str, Status> = phf_map! {
+    "INVALID_REQUEST" => Status::InvalidRequest,
+    "MAX_ROUTE_LENGTH_EXCEEDED" => Status::MaxRouteLengthExceeded,
+    "MAX_WAYPOINTS_EXCEEDED" => Status::MaxWaypointsExceeded,
+    "NOT_FOUND" => Status::NotFound,
+    "OK" => Status::Ok,
+    "OVER_DAILY_LIMIT" => Status::OverDailyLimit,
+    "OVER_QUERY_LIMIT" => Status::OverQueryLimit,
+    "REQUEST_DENIED" => Status::RequestDenied,
+    "UNKNOWN_ERROR" => Status::UnknownError,
+    "ZERO_RESULTS" => Status::ZeroResults,
+};
+
 impl std::convert::TryFrom<&str> for Status {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -90,22 +110,15 @@ impl std::convert::TryFrom<&str> for Status {
     /// Gets a `Status` enum from a `String` that contains a valid
     /// [status](https://developers.google.com/maps/documentation/directions/intro#StatusCodes)
     /// code.
-    fn try_from(status: &str) -> Result<Status, Error> {
-        match status {
-            "INVALID_REQUEST" => Ok(Status::InvalidRequest),
-            "MAX_ROUTE_LENGTH_EXCEEDED" => Ok(Status::MaxRouteLengthExceeded),
-            "MAX_WAYPOINTS_EXCEEDED" => Ok(Status::MaxWaypointsExceeded),
-            "NOT_FOUND" => Ok(Status::NotFound),
-            "OK" => Ok(Status::Ok),
-            "OVER_DAILY_LIMIT" => Ok(Status::OverDailyLimit),
-            "OVER_QUERY_LIMIT" => Ok(Status::OverQueryLimit),
-            "REQUEST_DENIED" => Ok(Status::RequestDenied),
-            "UNKNOWN_ERROR" => Ok(Status::UnknownError),
-            "ZERO_RESULTS" => Ok(Status::ZeroResults),
-            _ => Err(Error::InvalidStatusCode(status.to_string())),
-        } // match
+    fn try_from(status_code: &str) -> Result<Status, Error> {
+        STATUSES_BY_CODE
+            .get(status_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidStatusCode(status_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::default::Default for Status {
     /// Returns a reasonable default variant for the `Status` enum type.
@@ -113,6 +126,8 @@ impl std::default::Default for Status {
         Status::Ok
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for Status {
     /// Formats a `Status` enum into a string that is presentable to the end

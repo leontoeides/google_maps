@@ -3,6 +3,7 @@
 //! information to help your request is not working.
 
 use crate::places::place_autocomplete::error::Error;
+use phf::phf_map;
 use serde::{Deserialize, Serialize};
 
 // -----------------------------------------------------------------------------
@@ -69,24 +70,27 @@ impl std::convert::From<&Status> for String {
 
 // -----------------------------------------------------------------------------
 
+static STATUSES_BY_CODE: phf::Map<&'static str, Status> = phf_map! {
+    "INVALID_REQUEST" => Status::InvalidRequest,
+    "OK" => Status::Ok,
+    "OVER_QUERY_LIMIT" => Status::OverQueryLimit,
+    "REQUEST_DENIED" => Status::RequestDenied,
+    "UNKNOWN_ERROR" => Status::UnknownError,
+    "ZERO_RESULTS" => Status::ZeroResults,
+};
+
 impl std::convert::TryFrom<&str> for Status {
     // Error definitions are contained in the
     // `google_maps\src\places\place_autocomplete\error.rs` module.
     type Error = crate::places::place_autocomplete::error::Error;
-
     /// Gets a `Status` enum from a `String` that contains a valid
-    /// [status](https://developers.google.com/maps/documentation/timezone/intro#Responses)
+    /// [status](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlacesAutocompleteStatus)
     /// code.
-    fn try_from(status: &str) -> Result<Status, Error> {
-        match status {
-            "INVALID_REQUEST" => Ok(Status::InvalidRequest),
-            "OK" => Ok(Status::Ok),
-            "OVER_QUERY_LIMIT" => Ok(Status::OverQueryLimit),
-            "REQUEST_DENIED" => Ok(Status::RequestDenied),
-            "UNKNOWN_ERROR" => Ok(Status::UnknownError),
-            "ZERO_RESULTS" => Ok(Status::ZeroResults),
-            _ => Err(Error::InvalidStatusCode(status.to_string())),
-        } // match
+    fn try_from(status_code: &str) -> Result<Status, Error> {
+        STATUSES_BY_CODE
+            .get(status_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidStatusCode(status_code.to_string()))
     } // fn
 } // impl
 

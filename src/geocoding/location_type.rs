@@ -2,7 +2,10 @@
 //! nature and accuracy of the Geocoding response.
 
 use crate::geocoding::error::Error;
+use phf::phf_map;
 use serde::{Deserialize, Serialize};
+
+// -----------------------------------------------------------------------------
 
 /// Stores additional data about the specified location.
 
@@ -27,6 +30,8 @@ pub enum LocationType {
     RoofTop,
 } // enum
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&LocationType> for String {
     /// Converts a `LocationType` enum to a `String` that contains a [location
     /// type](https://developers.google.com/maps/documentation/geocoding/intro#Results) code.
@@ -40,6 +45,15 @@ impl std::convert::From<&LocationType> for String {
     } // fn
 } // impl
 
+// -----------------------------------------------------------------------------
+
+static LOCATION_TYPES_BY_CODE: phf::Map<&'static str, LocationType> = phf_map! {
+    "APPROXIMATE" => LocationType::Approximate,
+    "GEOMETRIC_CENTER" => LocationType::GeometricCenter,
+    "RANGE_INTERPOLATED" => LocationType::RangeInterpolated,
+    "ROOFTOP" => LocationType::RoofTop,
+};
+
 impl std::convert::TryFrom<&str> for LocationType {
     // Error definitions are contained in the
     // `google_maps\src\geocoding\error.rs` module.
@@ -48,16 +62,15 @@ impl std::convert::TryFrom<&str> for LocationType {
     /// [location
     /// type](https://developers.google.com/maps/documentation/geocoding/intro#Results)
     /// code.
-    fn try_from(location_type: &str) -> Result<LocationType, Error> {
-        match location_type {
-            "APPROXIMATE" => Ok(LocationType::Approximate),
-            "GEOMETRIC_CENTER" => Ok(LocationType::GeometricCenter),
-            "RANGE_INTERPOLATED" => Ok(LocationType::RangeInterpolated),
-            "ROOFTOP" => Ok(LocationType::RoofTop),
-            _ => Err(Error::InvalidLocationTypeCode(location_type.to_string())),
-        } // match
+    fn try_from(location_code: &str) -> Result<LocationType, Error> {
+        LOCATION_TYPES_BY_CODE
+            .get(location_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidLocationTypeCode(location_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::default::Default for LocationType {
     /// Returns a reasonable default variant for the `LocationType` enum type.
@@ -65,6 +78,8 @@ impl std::default::Default for LocationType {
         LocationType::Approximate
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for LocationType {
     /// Formats a `LocationType` enum into a string that is presentable to the

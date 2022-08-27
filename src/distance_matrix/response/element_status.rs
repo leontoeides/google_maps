@@ -2,7 +2,10 @@
 //! the status resulting from operations on the specific individual elements.
 
 use crate::distance_matrix::error::Error;
+use phf::phf_map;
 use serde::{Deserialize, Serialize};
+
+// -----------------------------------------------------------------------------
 
 /// The `status` fields within the response object contain the status of the
 /// request, and may contain useful debugging information. The Distance Matrix
@@ -30,6 +33,8 @@ pub enum ElementStatus {
     ZeroResults,
 } // struct
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&ElementStatus> for String {
     /// Converts a `ElementStatus` enum to a `String` that contains a [element
     /// status](https://developers.google.com/maps/documentation/distance-matrix/intro#element-level-status-codes)
@@ -44,25 +49,32 @@ impl std::convert::From<&ElementStatus> for String {
     } // fn
 } // impl
 
+// -----------------------------------------------------------------------------
+
+static ELEMENT_STATUSES_BY_CODE: phf::Map<&'static str, ElementStatus> = phf_map! {
+    "MAX_ROUTE_LENGTH_EXCEEDED" => ElementStatus::MaxRouteLengthExceeded,
+    "NOT_FOUND" => ElementStatus::NotFound,
+    "OK" => ElementStatus::Ok,
+    "ZERO_RESULTS" => ElementStatus::ZeroResults,
+};
+
 impl std::convert::TryFrom<&str> for ElementStatus {
     // Error definitions are contained in the
     // `google_maps\src\distance_matrix\error.rs` module.
     type Error = crate::distance_matrix::error::Error;
-
     /// Gets a `ElementStatus` enum from a `String` that contains a valid
     /// [element
     /// status](https://developers.google.com/maps/documentation/distance-matrix/intro#element-level-status-codes)
     /// code.
-    fn try_from(element_status: &str) -> Result<ElementStatus, Error> {
-        match element_status {
-            "MAX_ROUTE_LENGTH_EXCEEDED" => Ok(ElementStatus::MaxRouteLengthExceeded),
-            "NOT_FOUND" => Ok(ElementStatus::NotFound),
-            "OK" => Ok(ElementStatus::Ok),
-            "ZERO_RESULTS" => Ok(ElementStatus::ZeroResults),
-            _ => Err(Error::InvalidElementStatusCode(element_status.to_string())),
-        } // match
+    fn try_from(element_status_code: &str) -> Result<ElementStatus, Error> {
+        ELEMENT_STATUSES_BY_CODE
+            .get(element_status_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidElementStatusCode(element_status_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::default::Default for ElementStatus {
     /// Returns a reasonable default variant for the `ElementStatus` enum type.
@@ -70,6 +82,8 @@ impl std::default::Default for ElementStatus {
         ElementStatus::Ok
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for ElementStatus {
     /// Formats a `ElementStatus` enum into a string that is presentable to the

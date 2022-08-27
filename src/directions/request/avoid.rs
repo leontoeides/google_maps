@@ -2,7 +2,10 @@
 //! around features such as ferries, highways, and tolls.
 
 use crate::directions::error::Error;
+use phf::phf_map;
 use serde::{Deserialize, Serialize};
+
+// -----------------------------------------------------------------------------
 
 /// Used to specify features that calculated routes should
 /// [avoid](https://developers.google.com/maps/documentation/directions/intro#Restrictions).
@@ -42,6 +45,8 @@ pub enum Avoid {
     Tolls,
 } // enum
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&Avoid> for String {
     /// Converts an `Avoid` enum to a `String` that contains a
     /// [restrictions](https://developers.google.com/maps/documentation/directions/intro#Restrictions)
@@ -56,6 +61,15 @@ impl std::convert::From<&Avoid> for String {
     } // fn
 } // impl
 
+// -----------------------------------------------------------------------------
+
+static RESTRICTIONS_BY_CODE: phf::Map<&'static str, Avoid> = phf_map! {
+    "ferries" => Avoid::Ferries,
+    "highways" => Avoid::Highways,
+    "indoor" => Avoid::Indoor,
+    "tolls" => Avoid::Tolls,
+};
+
 impl std::convert::TryFrom<&str> for Avoid {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -63,16 +77,15 @@ impl std::convert::TryFrom<&str> for Avoid {
     /// Gets an `Avoid` enum from a `String` that contains a valid
     /// [restrictions](https://developers.google.com/maps/documentation/directions/intro#Restrictions)
     /// code.
-    fn try_from(avoid: &str) -> Result<Avoid, Error> {
-        match avoid {
-            "ferries" => Ok(Avoid::Ferries),
-            "highways" => Ok(Avoid::Highways),
-            "indoor" => Ok(Avoid::Indoor),
-            "tolls" => Ok(Avoid::Tolls),
-            _ => Err(Error::InvalidAvoidCode(avoid.to_string())),
-        } // match
+    fn try_from(restriction_code: &str) -> Result<Avoid, Error> {
+        RESTRICTIONS_BY_CODE
+            .get(restriction_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidAvoidCode(restriction_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::default::Default for Avoid {
     /// Returns a reasonable default variant for the `Avoid` enum type.
@@ -80,6 +93,8 @@ impl std::default::Default for Avoid {
         Avoid::Tolls
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for Avoid {
     /// Formats a `Avoid` enum into a string that is presentable to the end

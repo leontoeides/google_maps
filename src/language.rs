@@ -3,8 +3,11 @@
 //! of languages, it is a list of languages that Google Maps supports._
 
 use crate::error::Error;
+use phf::phf_map;
 use serde::{Deserialize, Serialize, Deserializer};
 use std::convert::TryFrom;
+
+// -----------------------------------------------------------------------------
 
 /// Specifies the language in which to return results.
 ///
@@ -139,22 +142,22 @@ pub enum Language {
     Zulu,
 } // enum
 
+// -----------------------------------------------------------------------------
 
 impl<'de> Deserialize<'de> for Language {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
         where
             D: Deserializer<'de>,
     {
-        use serde::de::Error;
-
         let s = String::deserialize(deserializer)?;
-        let try_language = Language::try_from(s.as_str());
-        match try_language {
+        match Language::try_from(s.as_str()) {
             Ok(language) => Ok(language),
-            Err(err) => Err(Error::custom(err.to_string()))
-        }
-    }
-}
+            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+        } // match
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::convert::From<&Language> for String {
     /// Converts a `Language` enum to a `String` that contains a
@@ -246,99 +249,106 @@ impl std::convert::From<&Language> for String {
     } // fn
 } // impl
 
+// -----------------------------------------------------------------------------
+
+static LANGUAGES_BY_CODE: phf::Map<&'static str, Language> = phf_map! {
+    "af" => Language::Afrikaans,
+    "sq" => Language::Albanian,
+    "am" => Language::Amharic,
+    "ar" => Language::Arabic,
+    "hy" => Language::Armenian,
+    "az" => Language::Azerbaijani,
+    "eu" => Language::Basque,
+    "be" => Language::Belarusian,
+    "bn" => Language::Bengali,
+    "bs" => Language::Bosnian,
+    "bg" => Language::Bulgarian,
+    "my" => Language::Burmese,
+    "ca" => Language::Catalan,
+    "zh" => Language::Chinese,
+    "zh-CN" => Language::ChineseSimplified,
+    "zh-HK" => Language::ChineseHongKong,
+    "zh-TW" => Language::ChineseTraditional,
+    "hr" => Language::Croatian,
+    "cs" => Language::Czech,
+    "da" => Language::Danish,
+    "nl" => Language::Dutch,
+    "en" => Language::English,
+    "en-AU" => Language::EnglishAustralian,
+    "en-GB" => Language::EnglishGreatBritain,
+    "et" => Language::Estonian,
+    "fa" => Language::Farsi,
+    "fi" => Language::Finnish,
+    "fil" => Language::Filipino,
+    "fr" => Language::French,
+    "fr-CA" => Language::FrenchCanada,
+    "gl" => Language::Galician,
+    "ka" => Language::Georgian,
+    "de" => Language::German,
+    "el" => Language::Greek,
+    "gu" => Language::Gujarati,
+    "iw" => Language::Hebrew,
+    "hi" => Language::Hindi,
+    "hu" => Language::Hungarian,
+    "is" => Language::Icelandic,
+    "id" => Language::Indonesian,
+    "it" => Language::Italian,
+    "ja" => Language::Japanese,
+    "kn" => Language::Kannada,
+    "kk" => Language::Kazakh,
+    "km" => Language::Khmer,
+    "ko" => Language::Korean,
+    "ky" => Language::Kyrgyz,
+    "lo" => Language::Lao,
+    "lv" => Language::Latvian,
+    "lt" => Language::Lithuanian,
+    "mk" => Language::Macedonian,
+    "ms" => Language::Malay,
+    "ml" => Language::Malayalam,
+    "mr" => Language::Marathi,
+    "mn" => Language::Mongolian,
+    "ne" => Language::Nepali,
+    "no" => Language::Norwegian,
+    "pl" => Language::Polish,
+    "pt" => Language::Portuguese,
+    "pr-BR" => Language::PortugueseBrazil,
+    "pt-PT" => Language::PortuguesePortugal,
+    "pa" => Language::Punjabi,
+    "ro" => Language::Romanian,
+    "ru" => Language::Russian,
+    "sr" => Language::Serbian,
+    "si" => Language::Sinhalese,
+    "sk" => Language::Slovak,
+    "sl" => Language::Slovenian,
+    "es" => Language::Spanish,
+    "es-419" => Language::SpanishLatinAmerica,
+    "sw" => Language::Swahili,
+    "sv" => Language::Swedish,
+    "ta" => Language::Tamil,
+    "te" => Language::Telugu,
+    "th" => Language::Thai,
+    "tr" => Language::Turkish,
+    "uk" => Language::Ukrainian,
+    "ur" => Language::Urdu,
+    "uz" => Language::Uzbek,
+    "vi" => Language::Vietnamese,
+    "zu" => Language::Zulu,
+};
+
 impl std::convert::TryFrom<&str> for Language {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
     type Error = crate::error::Error;
-
     /// Gets a `Language` enum from a `String` that contains a supported
     /// [language](https://developers.google.com/maps/faq#languagesupport) code.
-    fn try_from(language: &str) -> Result<Language, Error> {
-        match language {
-            "af" => Ok(Language::Afrikaans),
-            "sq" => Ok(Language::Albanian),
-            "am" => Ok(Language::Amharic),
-            "ar" => Ok(Language::Arabic),
-            "hy" => Ok(Language::Armenian),
-            "az" => Ok(Language::Azerbaijani),
-            "eu" => Ok(Language::Basque),
-            "be" => Ok(Language::Belarusian),
-            "bn" => Ok(Language::Bengali),
-            "bs" => Ok(Language::Bosnian),
-            "bg" => Ok(Language::Bulgarian),
-            "my" => Ok(Language::Burmese),
-            "ca" => Ok(Language::Catalan),
-            "zh" => Ok(Language::Chinese),
-            "zh-CN" => Ok(Language::ChineseSimplified),
-            "zh-HK" => Ok(Language::ChineseHongKong),
-            "zh-TW" => Ok(Language::ChineseTraditional),
-            "hr" => Ok(Language::Croatian),
-            "cs" => Ok(Language::Czech),
-            "da" => Ok(Language::Danish),
-            "nl" => Ok(Language::Dutch),
-            "en" => Ok(Language::English),
-            "en-AU" => Ok(Language::EnglishAustralian),
-            "en-GB" => Ok(Language::EnglishGreatBritain),
-            "et" => Ok(Language::Estonian),
-            "fa" => Ok(Language::Farsi),
-            "fi" => Ok(Language::Finnish),
-            "fil" => Ok(Language::Filipino),
-            "fr" => Ok(Language::French),
-            "fr-CA" => Ok(Language::FrenchCanada),
-            "gl" => Ok(Language::Galician),
-            "ka" => Ok(Language::Georgian),
-            "de" => Ok(Language::German),
-            "el" => Ok(Language::Greek),
-            "gu" => Ok(Language::Gujarati),
-            "iw" => Ok(Language::Hebrew),
-            "hi" => Ok(Language::Hindi),
-            "hu" => Ok(Language::Hungarian),
-            "is" => Ok(Language::Icelandic),
-            "id" => Ok(Language::Indonesian),
-            "it" => Ok(Language::Italian),
-            "ja" => Ok(Language::Japanese),
-            "kn" => Ok(Language::Kannada),
-            "kk" => Ok(Language::Kazakh),
-            "km" => Ok(Language::Khmer),
-            "ko" => Ok(Language::Korean),
-            "ky" => Ok(Language::Kyrgyz),
-            "lo" => Ok(Language::Lao),
-            "lv" => Ok(Language::Latvian),
-            "lt" => Ok(Language::Lithuanian),
-            "mk" => Ok(Language::Macedonian),
-            "ms" => Ok(Language::Malay),
-            "ml" => Ok(Language::Malayalam),
-            "mr" => Ok(Language::Marathi),
-            "mn" => Ok(Language::Mongolian),
-            "ne" => Ok(Language::Nepali),
-            "no" => Ok(Language::Norwegian),
-            "pl" => Ok(Language::Polish),
-            "pt" => Ok(Language::Portuguese),
-            "pr-BR" => Ok(Language::PortugueseBrazil),
-            "pt-PT" => Ok(Language::PortuguesePortugal),
-            "pa" => Ok(Language::Punjabi),
-            "ro" => Ok(Language::Romanian),
-            "ru" => Ok(Language::Russian),
-            "sr" => Ok(Language::Serbian),
-            "si" => Ok(Language::Sinhalese),
-            "sk" => Ok(Language::Slovak),
-            "sl" => Ok(Language::Slovenian),
-            "es" => Ok(Language::Spanish),
-            "es-419" => Ok(Language::SpanishLatinAmerica),
-            "sw" => Ok(Language::Swahili),
-            "sv" => Ok(Language::Swedish),
-            "ta" => Ok(Language::Tamil),
-            "te" => Ok(Language::Telugu),
-            "th" => Ok(Language::Thai),
-            "tr" => Ok(Language::Turkish),
-            "uk" => Ok(Language::Ukrainian),
-            "ur" => Ok(Language::Urdu),
-            "uz" => Ok(Language::Uzbek),
-            "vi" => Ok(Language::Vietnamese),
-            "zu" => Ok(Language::Zulu),
-            _ => Err(Error::InvalidLanguageCode(language.to_string())),
-        } // match
+    fn try_from(language_code: &str) -> Result<Language, Error> {
+        LANGUAGES_BY_CODE
+            .get(language_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidLanguageCode(language_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::default::Default for Language {
     /// Returns a reasonable default variant for the `Language` enum type.
@@ -346,6 +356,8 @@ impl std::default::Default for Language {
         Language::English
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for Language {
     /// Formats a `Language` enum into a string that is presentable to the

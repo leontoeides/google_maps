@@ -4,6 +4,7 @@
 // -----------------------------------------------------------------------------
 
 use crate::places::place_autocomplete::error::Error;
+use phf::phf_map;
 use serde::{Deserialize, Serialize};
 
 // -----------------------------------------------------------------------------
@@ -51,6 +52,8 @@ pub enum AutocompleteType {
     Cities,
 } // enum
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&AutocompleteType> for String {
     /// Converts a `AutocompleteType` enum to a `String` that contains a
     /// [autocomplete
@@ -67,6 +70,18 @@ impl std::convert::From<&AutocompleteType> for String {
     } // fn
 } // impl
 
+// -----------------------------------------------------------------------------
+
+static AUTOCOMPLETE_TYPES_BY_CODE: phf::Map<&'static str, AutocompleteType> = phf_map! {
+    "geocode" => AutocompleteType::Geocode,
+    "address" => AutocompleteType::Address,
+    "establishment" => AutocompleteType::Establishment,
+    "(regions)" => AutocompleteType::Regions,
+    "regions" => AutocompleteType::Regions,
+    "(cities)" => AutocompleteType::Cities,
+    "cities" => AutocompleteType::Cities,
+};
+
 impl std::convert::TryFrom<&str> for AutocompleteType {
     // Error definitions are contained in the
     // `google_maps\src\places\place_autocomplete\error.rs` module.
@@ -75,19 +90,15 @@ impl std::convert::TryFrom<&str> for AutocompleteType {
     /// [autocomplete
     /// type](https://developers.google.com/maps/documentation/places/web-service/autocomplete#types)
     /// code.
-    fn try_from(autocomplete_type: &str) -> Result<AutocompleteType, Error> {
-        match autocomplete_type {
-            "geocode" => Ok(AutocompleteType::Geocode),
-            "address" => Ok(AutocompleteType::Address),
-            "establishment" => Ok(AutocompleteType::Establishment),
-            "(regions)" => Ok(AutocompleteType::Regions),
-            "regions" => Ok(AutocompleteType::Regions),
-            "(cities)" => Ok(AutocompleteType::Cities),
-            "cities" => Ok(AutocompleteType::Cities),
-            _ => Err(Error::InvalidAutocompleteType(autocomplete_type.to_string())),
-        } // match
+    fn try_from(autocomplete_code: &str) -> Result<AutocompleteType, Error> {
+        AUTOCOMPLETE_TYPES_BY_CODE
+            .get(autocomplete_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidAutocompleteType(autocomplete_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::default::Default for AutocompleteType {
     /// Returns a reasonable default variant for the `AutocompleteType` enum
@@ -96,6 +107,8 @@ impl std::default::Default for AutocompleteType {
         AutocompleteType::Address
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for AutocompleteType {
     /// Formats a `AutocompleteType` enum into a string that is presentable to

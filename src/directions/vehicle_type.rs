@@ -2,7 +2,10 @@
 //! mode of transportation for transit directions.
 
 use crate::directions::error::Error;
+use phf::phf_map;
 use serde::{Deserialize, Serialize};
+
+// -----------------------------------------------------------------------------
 
 /// Indicates the [vehicle
 /// type](https://developers.google.com/maps/documentation/directions/intro#VehicleType)
@@ -69,6 +72,8 @@ pub enum VehicleType {
     Trolleybus,
 } // enum
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&VehicleType> for String {
     /// Converts a `VehicleType` enum to a `String` that contains a [vehicle
     /// type](https://developers.google.com/maps/documentation/directions/intro#VehicleType)
@@ -97,6 +102,29 @@ impl std::convert::From<&VehicleType> for String {
     } // fn
 } // impl
 
+// -----------------------------------------------------------------------------
+
+static VEHICLE_TYPES_BY_CODE: phf::Map<&'static str, VehicleType> = phf_map! {
+    "BUS" => VehicleType::Bus,
+    "CABLE_CAR" => VehicleType::CableCar,
+    "COMMUTER_TRAIN" => VehicleType::CommuterTrain,
+    "FERRY" => VehicleType::Ferry,
+    "FUNICULAR" => VehicleType::Funicular,
+    "GONDOLA_LIFT" => VehicleType::GondolaLift,
+    "HEAVY_RAIL" => VehicleType::HeavyRail,
+    "HIGH_SPEED_TRAIN" => VehicleType::HighSpeedTrain,
+    "INTERCITY_BUS" => VehicleType::IntercityBus,
+    "LONG_DISTANCE_TRAIN" => VehicleType::LongDistanceTrain,
+    "METRO_RAIL" => VehicleType::MetroRail,
+    "MONORAIL" => VehicleType::Monorail,
+    "OTHER" => VehicleType::Other,
+    "RAIL" => VehicleType::Rail,
+    "SHARE_TAXI" => VehicleType::ShareTaxi,
+    "SUBWAY" => VehicleType::Subway,
+    "TRAM" => VehicleType::Tram,
+    "TROLLEYBUS" => VehicleType::Trolleybus,
+};
+
 impl std::convert::TryFrom<&str> for VehicleType {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -104,30 +132,15 @@ impl std::convert::TryFrom<&str> for VehicleType {
     /// Gets a `VehicleType` enum from a `String` that contains a valid [vehicle
     /// type](https://developers.google.com/maps/documentation/directions/intro#VehicleType)
     /// code.
-    fn try_from(vehicle_type: &str) -> Result<VehicleType, Error> {
-        match vehicle_type {
-            "BUS" => Ok(VehicleType::Bus),
-            "CABLE_CAR" => Ok(VehicleType::CableCar),
-            "COMMUTER_TRAIN" => Ok(VehicleType::CommuterTrain),
-            "FERRY" => Ok(VehicleType::Ferry),
-            "FUNICULAR" => Ok(VehicleType::Funicular),
-            "GONDOLA_LIFT" => Ok(VehicleType::GondolaLift),
-            "HEAVY_RAIL" => Ok(VehicleType::HeavyRail),
-            "HIGH_SPEED_TRAIN" => Ok(VehicleType::HighSpeedTrain),
-            "INTERCITY_BUS" => Ok(VehicleType::IntercityBus),
-            "LONG_DISTANCE_TRAIN" => Ok(VehicleType::LongDistanceTrain),
-            "METRO_RAIL" => Ok(VehicleType::MetroRail),
-            "MONORAIL" => Ok(VehicleType::Monorail),
-            "OTHER" => Ok(VehicleType::Other),
-            "RAIL" => Ok(VehicleType::Rail),
-            "SHARE_TAXI" => Ok(VehicleType::ShareTaxi),
-            "SUBWAY" => Ok(VehicleType::Subway),
-            "TRAM" => Ok(VehicleType::Tram),
-            "TROLLEYBUS" => Ok(VehicleType::Trolleybus),
-            _ => Err(Error::InvalidVehicleTypeCode(vehicle_type.to_string())),
-        } // match
+    fn try_from(vehicle_type_code: &str) -> Result<VehicleType, Error> {
+        VEHICLE_TYPES_BY_CODE
+            .get(vehicle_type_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidVehicleTypeCode(vehicle_type_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::default::Default for VehicleType {
     /// Returns a reasonable default variant for the `VehicleType` enum type.
@@ -135,6 +148,8 @@ impl std::default::Default for VehicleType {
         VehicleType::Bus
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for VehicleType {
     /// Formats a `VehicleType` enum into a string that is presentable to the

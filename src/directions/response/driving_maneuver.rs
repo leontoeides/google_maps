@@ -2,7 +2,10 @@
 //! to determine which icon to display for the current step.
 
 use crate::directions::error::Error;
+use phf::phf_map;
 use serde::{Deserialize, Serialize};
+
+// -----------------------------------------------------------------------------
 
 /// The action to take for the current step (turn left, merge, straight, etc.).
 /// This field is used to determine which icon to display. Values in this
@@ -55,6 +58,8 @@ pub enum DrivingManeuver {
     UturnRight,
 } // enum
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&DrivingManeuver> for String {
     /// Converts a `DrivingManeuver` enum to a `String` that contains a
     /// [maneuver
@@ -87,6 +92,32 @@ impl std::convert::From<&DrivingManeuver> for String {
     } // fn
 } // impl
 
+// -----------------------------------------------------------------------------
+
+static DRIVING_MANEUVERS_BY_CODE: phf::Map<&'static str, DrivingManeuver> = phf_map! {
+    "ferry" => DrivingManeuver::Ferry,
+    "ferry-train" => DrivingManeuver::FerryTrain,
+    "fork-left" => DrivingManeuver::ForkLeft,
+    "fork-right" => DrivingManeuver::ForkRight,
+    "keep-left" => DrivingManeuver::KeepLeft,
+    "keep-right" => DrivingManeuver::KeepRight,
+    "merge" => DrivingManeuver::Merge,
+    "ramp" => DrivingManeuver::Ramp,
+    "ramp-left" => DrivingManeuver::RampLeft,
+    "ramp-right" => DrivingManeuver::RampRight,
+    "roundabout-left" => DrivingManeuver::RoundaboutLeft,
+    "roundabout-right" => DrivingManeuver::RoundaboutRight,
+    "straight" => DrivingManeuver::Straight,
+    "turn-left" => DrivingManeuver::TurnLeft,
+    "turn-right" => DrivingManeuver::TurnRight,
+    "turn-sharp-left" => DrivingManeuver::TurnSharpLeft,
+    "turn-sharp-right" => DrivingManeuver::TurnSharpRight,
+    "turn-slight-left" => DrivingManeuver::TurnSlightLeft,
+    "turn-slight-right" => DrivingManeuver::TurnSlightRight,
+    "uturn-left" => DrivingManeuver::UturnLeft,
+    "uturn-right" => DrivingManeuver::UturnRight,
+};
+
 impl std::convert::TryFrom<&str> for DrivingManeuver {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -95,33 +126,15 @@ impl std::convert::TryFrom<&str> for DrivingManeuver {
     /// [maneuver
     /// type](https://developers.google.com/maps/documentation/directions/intro#Steps)
     /// code.
-    fn try_from(maneuver_type: &str) -> Result<DrivingManeuver, Error> {
-        match maneuver_type {
-            "ferry" => Ok(DrivingManeuver::Ferry),
-            "ferry-train" => Ok(DrivingManeuver::FerryTrain),
-            "fork-left" => Ok(DrivingManeuver::ForkLeft),
-            "fork-right" => Ok(DrivingManeuver::ForkRight),
-            "keep-left" => Ok(DrivingManeuver::KeepLeft),
-            "keep-right" => Ok(DrivingManeuver::KeepRight),
-            "merge" => Ok(DrivingManeuver::Merge),
-            "ramp" => Ok(DrivingManeuver::Ramp),
-            "ramp-left" => Ok(DrivingManeuver::RampLeft),
-            "ramp-right" => Ok(DrivingManeuver::RampRight),
-            "roundabout-left" => Ok(DrivingManeuver::RoundaboutLeft),
-            "roundabout-right" => Ok(DrivingManeuver::RoundaboutRight),
-            "straight" => Ok(DrivingManeuver::Straight),
-            "turn-left" => Ok(DrivingManeuver::TurnLeft),
-            "turn-right" => Ok(DrivingManeuver::TurnRight),
-            "turn-sharp-left" => Ok(DrivingManeuver::TurnSharpLeft),
-            "turn-sharp-right" => Ok(DrivingManeuver::TurnSharpRight),
-            "turn-slight-left" => Ok(DrivingManeuver::TurnSlightLeft),
-            "turn-slight-right" => Ok(DrivingManeuver::TurnSlightRight),
-            "uturn-left" => Ok(DrivingManeuver::UturnLeft),
-            "uturn-right" => Ok(DrivingManeuver::UturnRight),
-            _ => Err(Error::InvalidDrivingManeuverCode(maneuver_type.to_string())),
-        } // match
+    fn try_from(driving_maneuver_type_code: &str) -> Result<DrivingManeuver, Error> {
+        DRIVING_MANEUVERS_BY_CODE
+            .get(driving_maneuver_type_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidDrivingManeuverCode(driving_maneuver_type_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::default::Default for DrivingManeuver {
     /// Returns a reasonable default variant for the `DrivingManeuver` enum
@@ -130,6 +143,8 @@ impl std::default::Default for DrivingManeuver {
         DrivingManeuver::Straight
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for DrivingManeuver {
     /// Formats a `DrivingManeuver` enum into a string that is presentable to

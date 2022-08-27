@@ -9,6 +9,8 @@ use crate::{
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 
+// -----------------------------------------------------------------------------
+
 /// A single route containing a set of legs in a
 /// [Response](https://developers.google.com/maps/documentation/javascript/reference/directions#DirectionsResult).
 /// Note that though this object is "JSON-like," it is not strictly JSON, as it
@@ -62,6 +64,8 @@ pub struct Route {
     /// queries.
     pub waypoint_order: Vec<u8>,
 } // struct
+
+// -----------------------------------------------------------------------------
 
 impl Route {
 

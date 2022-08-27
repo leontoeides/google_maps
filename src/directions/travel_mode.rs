@@ -2,7 +2,10 @@
 //! mode of transportation.
 
 use crate::directions::error::Error;
+use phf::phf_map;
 use serde::{Deserialize, Serialize};
+
+// -----------------------------------------------------------------------------
 
 /// Specifies the [mode of
 /// transportation](https://developers.google.com/maps/documentation/directions/intro#TravelModes).
@@ -37,6 +40,8 @@ pub enum TravelMode {
     Transit,
 } // enum
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&TravelMode> for String {
     /// Converts a `TravelMode` enum to a `String` that contains a [travel
     /// mode](https://developers.google.com/maps/documentation/directions/intro#TravelModes)
@@ -51,6 +56,15 @@ impl std::convert::From<&TravelMode> for String {
     } // fn
 } // impl
 
+// -----------------------------------------------------------------------------
+
+static TRAVEL_MODES_BY_CODE: phf::Map<&'static str, TravelMode> = phf_map! {
+    "BICYCLING" => TravelMode::Bicycling,
+    "DRIVING" => TravelMode::Driving,
+    "TRANSIT" => TravelMode::Transit,
+    "WALKING" => TravelMode::Walking,
+};
+
 impl std::convert::TryFrom<&str> for TravelMode {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -58,16 +72,15 @@ impl std::convert::TryFrom<&str> for TravelMode {
     /// Gets a `TravelMode` enum from a `String` that contains a valid [travel
     /// mode](https://developers.google.com/maps/documentation/directions/intro#TravelModes)
     /// code.
-    fn try_from(travel_mode: &str) -> Result<TravelMode, Error> {
-        match travel_mode {
-            "BICYCLING" => Ok(TravelMode::Bicycling),
-            "DRIVING" => Ok(TravelMode::Driving),
-            "TRANSIT" => Ok(TravelMode::Transit),
-            "WALKING" => Ok(TravelMode::Walking),
-            _ => Err(Error::InvalidTravelModeCode(travel_mode.to_string())),
-        } // match
+    fn try_from(travel_mode_code: &str) -> Result<TravelMode, Error> {
+        TRAVEL_MODES_BY_CODE
+            .get(travel_mode_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidTravelModeCode(travel_mode_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::default::Default for TravelMode {
     /// Returns a reasonable default variant for the `TravelMode` enum type.
@@ -75,6 +88,8 @@ impl std::default::Default for TravelMode {
         TravelMode::Driving
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for TravelMode {
     /// Formats a `TravelMode` enum into a string that is presentable to the

@@ -3,7 +3,10 @@
 //! transit directions.
 
 use crate::directions::error::Error;
+use phf::phf_map;
 use serde::{Deserialize, Serialize};
+
+// -----------------------------------------------------------------------------
 
 /// Specifies one or more preferred [modes of
 /// transit](https://developers.google.com/maps/documentation/directions/intro#optional-parameters).
@@ -36,6 +39,8 @@ pub enum TransitMode {
     Tram,
 } // enum
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&TransitMode> for String {
     /// Converts a `TransitMode` enum to a `String` that contains a [transit
     /// mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitMode)
@@ -51,6 +56,16 @@ impl std::convert::From<&TransitMode> for String {
     } // fn
 } // impl
 
+// -----------------------------------------------------------------------------
+
+static TRANSIT_MODES_BY_CODE: phf::Map<&'static str, TransitMode> = phf_map! {
+    "bus" => TransitMode::Bus,
+    "rail" => TransitMode::Rail,
+    "subway" => TransitMode::Subway,
+    "train" => TransitMode::Train,
+    "tram" => TransitMode::Tram,
+};
+
 impl std::convert::TryFrom<&str> for TransitMode {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -58,17 +73,15 @@ impl std::convert::TryFrom<&str> for TransitMode {
     /// Gets a `TransitMode` enum from a `String` that contains a valid [transit
     /// mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitMode)
     /// code.
-    fn try_from(transit_mode: &str) -> Result<TransitMode, Error> {
-        match transit_mode {
-            "bus" => Ok(TransitMode::Bus),
-            "rail" => Ok(TransitMode::Rail),
-            "subway" => Ok(TransitMode::Subway),
-            "train" => Ok(TransitMode::Train),
-            "tram" => Ok(TransitMode::Tram),
-            _ => Err(Error::InvalidTransitModeCode(transit_mode.to_string())),
-        } // match
+    fn try_from(transit_mode_code: &str) -> Result<TransitMode, Error> {
+        TRANSIT_MODES_BY_CODE
+            .get(transit_mode_code)
+            .cloned()
+            .ok_or_else(|| Error::InvalidTransitModeCode(transit_mode_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::default::Default for TransitMode {
     /// Returns a reasonable default variant for the `TransitMode` enum type.
@@ -76,6 +89,8 @@ impl std::default::Default for TransitMode {
         TransitMode::Bus
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for TransitMode {
     /// Formats a `TransitMode` enum into a string that is presentable to the
