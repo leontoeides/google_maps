@@ -1,7 +1,7 @@
 # Change Log
 
-* 2.1.7: 2022-08-27: `str` to `enum` table look-ups are now powered by `phf`
-(perfect hash functions.)
+* 2.1.7: 2022-08-27: `str` to `enum` table look-ups are now powered by
+[phf](https://crates.io/crates/phf) (perfect hash functions.)
 
 * 2.1.7: 2022-08-27: Manual implementation `serde` deserializers for Google Maps
 types, which can utilize the new `phf` tables.
