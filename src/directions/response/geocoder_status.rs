@@ -3,7 +3,7 @@
 
 use crate::directions::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize, Deserializer};
 
 // -----------------------------------------------------------------------------
 
@@ -11,7 +11,7 @@ use serde::{Deserialize, Serialize};
 /// code](https://developers.google.com/maps/documentation/directions/intro#GeocodedWaypoints)
 /// resulting from the geocoding operation.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub enum GeocoderStatus {
     /// Indicates that no errors occurred; the address was successfully parsed
     /// and at least one geocode was returned.
@@ -22,6 +22,20 @@ pub enum GeocoderStatus {
     #[serde(alias = "ZERO_RESULTS")]
     ZeroResults,
 } // struct
+
+// -----------------------------------------------------------------------------
+
+impl<'de> Deserialize<'de> for GeocoderStatus {
+    /// Manual implementation of `Deserialize` for `serde`. This will take
+    /// advantage of the `phf`-powered `TryFrom` implementation for this type.
+    fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        let string = String::deserialize(deserializer)?;
+        match GeocoderStatus::try_from(string.as_str()) {
+            Ok(variant) => Ok(variant),
+            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+        } // match
+    } // fn
+} // impl
 
 // -----------------------------------------------------------------------------
 

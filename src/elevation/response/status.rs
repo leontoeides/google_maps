@@ -3,13 +3,13 @@
 
 use crate::elevation::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize, Deserializer};
 
 // -----------------------------------------------------------------------------
 
 /// Indicates the status of the response.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub enum Status {
     /// Indicates that the request was malformed.
     #[serde(alias = "INVALID_REQUEST")]
@@ -39,6 +39,20 @@ pub enum Status {
     #[serde(alias = "UNKNOWN_ERROR")]
     UnknownError,
 } // enum
+
+// -----------------------------------------------------------------------------
+
+impl<'de> Deserialize<'de> for Status {
+    /// Manual implementation of `Deserialize` for `serde`. This will take
+    /// advantage of the `phf`-powered `TryFrom` implementation for this type.
+    fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        let string = String::deserialize(deserializer)?;
+        match Status::try_from(string.as_str()) {
+            Ok(variant) => Ok(variant),
+            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+        } // match
+    } // fn
+} // impl
 
 // -----------------------------------------------------------------------------
 

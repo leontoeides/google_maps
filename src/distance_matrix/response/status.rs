@@ -3,7 +3,7 @@
 
 use crate::distance_matrix::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize, Deserializer};
 
 // -----------------------------------------------------------------------------
 
@@ -13,23 +13,20 @@ use serde::{Deserialize, Serialize};
 /// general, as well as a status field for each element field, with information
 /// about that particular origin-destination pairing.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub enum Status {
     /// Indicates that the provided request was invalid. Common causes of this
     /// status include an invalid parameter or parameter value.
     #[serde(alias = "INVALID_REQUEST")]
     InvalidRequest,
-
     /// Indicates that the product of origins and destinations exceeds the
     /// per-query
     /// [limit](https://developers.google.com/maps/documentation/distance-matrix/usage-and-billing).
     #[serde(alias = "MAX_ELEMENTS_EXCEEDED")]
     MaxElementsExceeded,
-
     /// Indicates the response contains a valid `result`.
     #[serde(alias = "OK")]
     Ok,
-
     /// Indicates any of the following:
     /// * The API key is missing or invalid.
     /// * Billing has not been enabled on your account.
@@ -42,22 +39,33 @@ pub enum Status {
     /// learn how to fix this.
     #[serde(alias = "OVER_DAILY_LIMIT")]
     OverDailyLimit,
-
     /// Indicates the service has received too many requests from your
     /// application within the allowed time period.
     #[serde(alias = "OVER_QUERY_LIMIT")]
     OverQueryLimit,
-
     /// Indicates that the service denied use of the Distance Matrix service by
     /// your application.
     #[serde(alias = "REQUEST_DENIED")]
     RequestDenied,
-
     /// Indicates a Distance Matrix request could not be processed due to a
     /// server error. The request may succeed if you try again.
     #[serde(alias = "UNKNOWN_ERROR")]
     UnknownError,
 } // enum
+
+// -----------------------------------------------------------------------------
+
+impl<'de> Deserialize<'de> for Status {
+    /// Manual implementation of `Deserialize` for `serde`. This will take
+    /// advantage of the `phf`-powered `TryFrom` implementation for this type.
+    fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        let string = String::deserialize(deserializer)?;
+        match Status::try_from(string.as_str()) {
+            Ok(variant) => Ok(variant),
+            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+        } // match
+    } // fn
+} // impl
 
 // -----------------------------------------------------------------------------
 

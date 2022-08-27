@@ -4,7 +4,7 @@
 
 use crate::directions::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize, Deserializer};
 
 // -----------------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ use serde::{Deserialize, Serialize};
 /// than `pessimistic`, due to the way the `best_guess` prediction model
 /// integrates live traffic information.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub enum TrafficModel {
     /// Indicates that the returned `duration_in_traffic` should be the best
     /// estimate of travel time given what is known about both historical
@@ -44,6 +44,20 @@ pub enum TrafficModel {
     #[serde(alias = "pessimistic")]
     Pessimistic,
 } // enum
+
+// -----------------------------------------------------------------------------
+
+impl<'de> Deserialize<'de> for TrafficModel {
+    /// Manual implementation of `Deserialize` for `serde`. This will take
+    /// advantage of the `phf`-powered `TryFrom` implementation for this type.
+    fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        let string = String::deserialize(deserializer)?;
+        match TrafficModel::try_from(string.as_str()) {
+            Ok(variant) => Ok(variant),
+            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+        } // match
+    } // fn
+} // impl
 
 // -----------------------------------------------------------------------------
 

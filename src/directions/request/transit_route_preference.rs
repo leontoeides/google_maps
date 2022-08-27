@@ -4,7 +4,7 @@
 
 use crate::directions::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize, Deserializer};
 
 // -----------------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ use serde::{Deserialize, Serialize};
 /// be specified for transit directions, and only if the request includes an API
 /// key or a Google Maps Platform Premium Plan client ID.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub enum TransitRoutePreference {
     /// Indicates that the calculated route should prefer a limited number of
     /// transfers.
@@ -27,6 +27,20 @@ pub enum TransitRoutePreference {
     #[serde(alias = "less_walking")]
     LessWalking,
 } // enum
+
+// -----------------------------------------------------------------------------
+
+impl<'de> Deserialize<'de> for TransitRoutePreference {
+    /// Manual implementation of `Deserialize` for `serde`. This will take
+    /// advantage of the `phf`-powered `TryFrom` implementation for this type.
+    fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        let string = String::deserialize(deserializer)?;
+        match TransitRoutePreference::try_from(string.as_str()) {
+            Ok(variant) => Ok(variant),
+            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+        } // match
+    } // fn
+} // impl
 
 // -----------------------------------------------------------------------------
 

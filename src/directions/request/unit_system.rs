@@ -3,7 +3,7 @@
 
 use crate::directions::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize, Deserializer};
 
 // -----------------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ use serde::{Deserialize, Serialize};
 /// `distance` fields. The `distance` fields also contain `values` which are
 /// always expressed in meters.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub enum UnitSystem {
     /// Specifies that distances in the response should be expressed in imperial
     /// units, miles and feet.
@@ -36,6 +36,20 @@ pub enum UnitSystem {
     #[serde(alias = "metric")]
     Metric,
 } // enum
+
+// -----------------------------------------------------------------------------
+
+impl<'de> Deserialize<'de> for UnitSystem {
+    /// Manual implementation of `Deserialize` for `serde`. This will take
+    /// advantage of the `phf`-powered `TryFrom` implementation for this type.
+    fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        let string = String::deserialize(deserializer)?;
+        match UnitSystem::try_from(string.as_str()) {
+            Ok(variant) => Ok(variant),
+            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+        } // match
+    } // fn
+} // impl
 
 // -----------------------------------------------------------------------------
 

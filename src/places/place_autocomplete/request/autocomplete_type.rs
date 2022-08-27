@@ -5,7 +5,7 @@
 
 use crate::places::place_autocomplete::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize, Deserializer};
 
 // -----------------------------------------------------------------------------
 
@@ -18,7 +18,7 @@ use serde::{Deserialize, Serialize};
 /// mix the geocode and establishment types, but note that this will have the
 /// same effect as specifying no types.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub enum AutocompleteType {
     /// Instructs the Place Autocomplete service to return only geocoding
     /// results, rather than business results. Generally, you use this request
@@ -51,6 +51,20 @@ pub enum AutocompleteType {
     #[serde(alias = "(cities)")]
     Cities,
 } // enum
+
+// -----------------------------------------------------------------------------
+
+impl<'de> Deserialize<'de> for AutocompleteType {
+    /// Manual implementation of `Deserialize` for `serde`. This will take
+    /// advantage of the `phf`-powered `TryFrom` implementation for this type.
+    fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        let string = String::deserialize(deserializer)?;
+        match AutocompleteType::try_from(string.as_str()) {
+            Ok(variant) => Ok(variant),
+            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+        } // match
+    } // fn
+} // impl
 
 // -----------------------------------------------------------------------------
 

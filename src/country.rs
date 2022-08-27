@@ -280,20 +280,16 @@ pub enum Country {
 // -----------------------------------------------------------------------------
 
 impl<'de> Deserialize<'de> for Country {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        use serde::de::Error;
-
-        let s = String::deserialize(deserializer)?;
-        let try_country = Country::try_from(s.as_str());
-        match try_country {
-            Ok(country) => Ok(country),
-            Err(err) => Err(Error::custom(err.to_string()))
-        }
-    }
-}
+    /// Manual implementation of `Deserialize` for `serde`. This will take
+    /// advantage of the `phf`-powered `TryFrom` implementation for this type.
+    fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        let string = String::deserialize(deserializer)?;
+        match Country::try_from(string.as_str()) {
+            Ok(variant) => Ok(variant),
+            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+        } // match
+    } // fn
+} // impl
 
 // -----------------------------------------------------------------------------
 

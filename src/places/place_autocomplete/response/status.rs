@@ -4,23 +4,21 @@
 
 use crate::places::place_autocomplete::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize, Deserializer};
 
 // -----------------------------------------------------------------------------
 
 /// Indicates the status of the response.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub enum Status {
     /// Indicates the API request was malformed, generally due to the missing
     /// input parameter.
     #[serde(alias = "INVALID_REQUEST")]
     InvalidRequest,
-
     /// Indicates that the request was successful.
     #[serde(alias = "OK")]
     Ok,
-
     /// Indicates any of the following:
     /// * You have exceeded the QPS limits.
     /// * Billing has not been enabled on your account.
@@ -33,22 +31,33 @@ pub enum Status {
     /// for more information about how to resolve this error.
     #[serde(alias = "OVER_QUERY_LIMIT")]
     OverQueryLimit,
-
     /// Indicates that your request was denied, generally because:
     /// * The request is missing an API key.
     /// * The key parameter is invalid.
     #[serde(alias = "REQUEST_DENIED")]
     RequestDenied,
-
     /// Indicates an unknown error.
     #[serde(alias = "UNKNOWN_ERROR")]
     UnknownError,
-
     /// Indicates that the search was successful but returned no results. This
     /// may occur if the search was passed a bounds in a remote location.
     #[serde(alias = "ZERO_RESULTS")]
     ZeroResults,
 } // struct
+
+// -----------------------------------------------------------------------------
+
+impl<'de> Deserialize<'de> for Status {
+    /// Manual implementation of `Deserialize` for `serde`. This will take
+    /// advantage of the `phf`-powered `TryFrom` implementation for this type.
+    fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        let string = String::deserialize(deserializer)?;
+        match Status::try_from(string.as_str()) {
+            Ok(variant) => Ok(variant),
+            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+        } // match
+    } // fn
+} // impl
 
 // -----------------------------------------------------------------------------
 

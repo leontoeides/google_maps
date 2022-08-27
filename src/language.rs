@@ -145,13 +145,12 @@ pub enum Language {
 // -----------------------------------------------------------------------------
 
 impl<'de> Deserialize<'de> for Language {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-        where
-            D: Deserializer<'de>,
-    {
-        let s = String::deserialize(deserializer)?;
-        match Language::try_from(s.as_str()) {
-            Ok(language) => Ok(language),
+    /// Manual implementation of `Deserialize` for `serde`. This will take
+    /// advantage of the `phf`-powered `TryFrom` implementation for this type.
+    fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        let string = String::deserialize(deserializer)?;
+        match Language::try_from(string.as_str()) {
+            Ok(variant) => Ok(variant),
             Err(error) => Err(serde::de::Error::custom(error.to_string()))
         } // match
     } // fn

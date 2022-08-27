@@ -3,7 +3,7 @@
 
 use crate::distance_matrix::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize, Deserializer};
 
 // -----------------------------------------------------------------------------
 
@@ -13,25 +13,36 @@ use serde::{Deserialize, Serialize};
 /// general, as well as a status field for each element field, with information
 /// about that particular origin-destination pairing.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub enum ElementStatus {
     /// Indicates the requested route is too long and cannot be processed.
     #[serde(alias = "MAX_ROUTE_LENGTH_EXCEEDED")]
     MaxRouteLengthExceeded,
-
     /// Indicates that the origin and/or destination of this pairing could not
     /// be geocoded.
     #[serde(alias = "NOT_FOUND")]
     NotFound,
-
     /// Indicates the response contains a valid result.
     #[serde(alias = "OK")]
     Ok,
-
     /// Indicates no route could be found between the origin and destination.
     #[serde(alias = "ZERO_RESULTS")]
     ZeroResults,
 } // struct
+
+// -----------------------------------------------------------------------------
+
+impl<'de> Deserialize<'de> for ElementStatus {
+    /// Manual implementation of `Deserialize` for `serde`. This will take
+    /// advantage of the `phf`-powered `TryFrom` implementation for this type.
+    fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        let string = String::deserialize(deserializer)?;
+        match ElementStatus::try_from(string.as_str()) {
+            Ok(variant) => Ok(variant),
+            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+        } // match
+    } // fn
+} // impl
 
 // -----------------------------------------------------------------------------
 

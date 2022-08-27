@@ -4,7 +4,7 @@
 
 use crate::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize, Deserializer};
 
 // -----------------------------------------------------------------------------
 
@@ -15,7 +15,7 @@ use serde::{Deserialize, Serialize};
 /// sought. See [Place
 /// Types](https://developers.google.com/places/web-service/supported_types)
 /// for more information.
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub enum PlaceType {
     // [Table 1: Place types](https://developers.google.com/places/web-service/supported_types#table1)
     // The types that are supported for place searches, and can be returned with Place details results, and as part of autocomplete place predictions.
@@ -358,6 +358,20 @@ pub enum PlaceType {
     #[serde(alias = "cities")]
     Cities,
 } // enum
+
+// -----------------------------------------------------------------------------
+
+impl<'de> Deserialize<'de> for PlaceType {
+    /// Manual implementation of `Deserialize` for `serde`. This will take
+    /// advantage of the `phf`-powered `TryFrom` implementation for this type.
+    fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        let string = String::deserialize(deserializer)?;
+        match PlaceType::try_from(string.as_str()) {
+            Ok(variant) => Ok(variant),
+            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+        } // match
+    } // fn
+} // impl
 
 // -----------------------------------------------------------------------------
 
