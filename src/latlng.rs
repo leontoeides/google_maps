@@ -6,9 +6,10 @@ use crate::error::Error;
 use rust_decimal::Decimal;
 use rust_decimal_macros::dec;
 use serde::{Deserialize, Serialize};
-use std::convert::TryFrom;
 use std::cmp::{Ord, Ordering};
 use rust_decimal::prelude::FromStr;
+
+// -----------------------------------------------------------------------------
 
 /// Latitude and longitude values must correspond to a valid location on the
 /// face of the earth. Latitudes can take any value between -90 and 90 while
@@ -23,6 +24,8 @@ pub struct LatLng {
     /// Longitude. A value between -180.0° and 180.0°.
     pub lng: Decimal,
 } // struct
+
+// -----------------------------------------------------------------------------
 
 impl LatLng {
     /// Takes individual latitude & longitude floating-point coordinates and
@@ -43,12 +46,14 @@ impl LatLng {
     } // fn
 } // impl
 
+// -----------------------------------------------------------------------------
+
 impl TryFrom<&str> for LatLng {
     type Error = Error;
     ///
     /// Convert string to lat lng
     ///
-    fn try_from(value: &str) -> Result<Self, Error> {
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
         let coords: Vec<&str> = value.trim()
             .split(',')
             .collect();
@@ -64,6 +69,32 @@ impl TryFrom<&str> for LatLng {
     }
 }
 
+// -----------------------------------------------------------------------------
+
+impl std::str::FromStr for LatLng {
+    // Error definitions are contained in the
+    // `google_maps\src\geocoding\error.rs` module.
+    type Err = crate::error::Error;
+    /// Gets a `LatLng` struct from a `String` that contains a comma-delimited
+    /// latitude & longitude pair.
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
+        let coords: Vec<&str> = value.trim()
+            .split(',')
+            .collect();
+        if coords.len() != 2 {
+            Err(Error::InvalidLatLongString(value.to_owned()))
+        } else {
+            let lat = Decimal::from_str(coords[0].trim());
+            let lat = lat.map_err(|_| Error::InvalidLatLongString(value.to_owned()))?;
+            let lon = Decimal::from_str(coords[1].trim());
+            let lon = lon.map_err(|_| Error::InvalidLatLongString(value.to_owned()))?;
+            LatLng::try_from(lat, lon)
+        } // if
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&LatLng> for String {
     /// Converts a `LatLng` struct to a `String` that contains a
     /// latitude/longitude pair.
@@ -71,6 +102,8 @@ impl std::convert::From<&LatLng> for String {
         format!("{},{}", latlng.lat.normalize(), latlng.lng.normalize())
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::default::Default for LatLng {
     /// Returns a reasonable default value for the `LatLng` struct.
@@ -81,6 +114,8 @@ impl std::default::Default for LatLng {
         } // struct
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for LatLng {
     /// Formats a `LatLng` struct into a string that is presentable to the end
