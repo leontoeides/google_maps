@@ -33,14 +33,16 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 # What's new?
 
-* 2.1.8: 2022-08-27: Optional type conversion support for the `geo` crate. This
-feature can be enabled with the `geo_types` feature flag. It makes using these
-crates together a little less burdensome. Includes some unidirectional and some
-bidirectional `try_from` conversions between `LatLng`, `Waypoint`, `Coordinate`,
-`Point`, `Bounds`, `Rect`, `Polygon` types. `Line`, `LineString`, and
-`MultiLineString` types can be converted to a `Vec<Waypoint>` for use in a
-`directions` or `distance_matrix` request quite easily. This can be done by
-iterating over them and converting each resulting `Point` to a `Waypoint`.
+* 2.1.8: 2022-08-27: Optional type conversion support for the
+[geo](https://crates.io/crates/geo) crate. This feature can be enabled with the
+`geo_types` feature flag. It makes using these crates together a little less
+burdensome. Includes some unidirectional and some bidirectional
+[TryFrom](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) conversions
+between `LatLng`, `Waypoint`, `Coordinate`, `Point`, `Bounds`, `Rect`, `Polygon`
+types. `Line`, `LineString`, and `MultiLineString` types can be pretty easily
+converted to a `Vec<Waypoint>` for use in a `directions` or `distance_matrix`
+request. This can be done by iterating over the `geo` line type and converting
+each resulting `Point` to a `Waypoint`.
 
 * 2.1.8: 2022-08-27: Adjusted `tracing` log levels.
 
