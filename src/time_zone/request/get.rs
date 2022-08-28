@@ -39,7 +39,7 @@ impl<'a> Request<'a> {
             .await;
 
         // Emit debug message so client can monitor activity:
-        tracing::info!("Executing GET request to Google Maps Time Zone API: `{url}`");
+        tracing::info!("Making HTTP GET request to Google Maps Time Zone API: `{url}`");
 
         // Retries the get request until successful, an error ineligible for
         // retries is returned, or we have reached the maximum retries. Note:
