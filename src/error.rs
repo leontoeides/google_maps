@@ -3,8 +3,11 @@
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 
+// -----------------------------------------------------------------------------
+
 /// Errors that may be produced by the root part of the Google Maps Platform API
 /// client.
+
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Deserialize, Serialize)]
 pub enum Error {
     /// API client library attempted to parse a string that contained an invalid
@@ -18,6 +21,9 @@ pub enum Error {
     /// contained an invalid longitude. See `google_maps\src\latlng.rs` for more
     /// information.
     InvalidLongitude(Decimal, Decimal),
+    /// API client library attempted to convert a latitude/longitude pair that
+    /// contained an invalid floating-point value.
+    FloatToDecimalConversionError(String),
     /// API client library attempted to convert a latitude/longitude pair string
     /// that is invalid. See `google_maps\src\latlng.rs` for more
     /// information.
@@ -30,6 +36,8 @@ pub enum Error {
     /// region code. See `google_maps\src\region.rs` for more information.
     InvalidRegionCode(String),
 } // enum
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for Error {
     /// This trait converts the error code into a format that may be presented
@@ -60,6 +68,11 @@ impl std::fmt::Display for Error {
                 lat = latitude,
                 lng = longitude
             ),
+            Error::FloatToDecimalConversionError(value) => write!(
+                f,
+                "Google Maps Platform API client: \
+                `{value}` could not be converted from a `f64` type to a `Decimal` type.",
+            ),
             Error::InvalidPlaceTypeCode(place_type_code) => write!(
                 f,
                 "Google Maps Platform API client: \
@@ -79,12 +92,14 @@ impl std::fmt::Display for Error {
             Error::InvalidLatLongString(value) => write!(
                 f,
                 "Google Maps Platform API client: \
-                `{}` is an invalid lat lon string.",
+                `{}` is an invalid `LatLng` string.",
                 value
             )
         } // match
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::error::Error for Error {
     /// If the cause for the error is in an underlying library (not this
@@ -96,6 +111,7 @@ impl std::error::Error for Error {
             Error::InvalidLanguageCode(_language_code) => None,
             Error::InvalidLatitude(_latitude, _longitude) => None,
             Error::InvalidLongitude(_latitude, _longitude) => None,
+            Error::FloatToDecimalConversionError(_value) => None,
             Error::InvalidPlaceTypeCode(_place_type_code) => None,
             Error::InvalidRegionCode(_region_code) => None,
             Error::InvalidLatLongString(_value) => None,

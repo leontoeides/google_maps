@@ -2,6 +2,11 @@
 //! specify intermediate locations in the form of a text address,
 //! a latitude & longitude pair, a Google Place ID, or as an Encoded Polyline.
 
+#[cfg(feature = "geo")]
+mod geo;
+
+// -----------------------------------------------------------------------------
+
 use crate::latlng::LatLng;
 use serde::{Deserialize, Serialize};
 

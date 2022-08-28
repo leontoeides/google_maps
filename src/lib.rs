@@ -37,6 +37,11 @@
 //!
 //! # What's new?
 //!
+//! * 2.1.8: 2022-08-27: Optional type conversion support for the `geo` crate to
+//! make using these crates together a little less burdensome. Includes some
+//! unidirectional and some bidirectional conversions between `LatLng`,
+//! `Waypoint`, `Coordinate`, `Point`, `Bounds`, `Rect`, `Polygon` types.
+//!
 //! * 2.1.8: 2022-08-27: Adjusted `tracing` log levels.
 //!
 //! * 2.1.7: 2022-08-27: `str` to `enum` table look-ups are now powered by
@@ -383,7 +388,8 @@
 //!     "places",
 //!     "enable-reqwest",
 //!     "reqwest/default-tls",
-//!     "reqwest/gzip"
+//!     "reqwest/gzip",
+//!     "geo"
 //! ]
 //! ```
 //!

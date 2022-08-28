@@ -2,6 +2,11 @@
 //! specify a selection or bounding box over a geographic area using two
 //! latitude & longitude pairs.
 
+#[cfg(feature = "geo")]
+mod geo;
+
+// -----------------------------------------------------------------------------
+
 use crate::latlng::LatLng;
 use serde::{Deserialize, Serialize};
 
@@ -28,7 +33,10 @@ impl std::convert::From<&Bounds> for String {
     fn from(bounds: &Bounds) -> String {
         format!(
             "{},{}|{},{}",
-            bounds.southwest.lat, bounds.southwest.lng, bounds.northeast.lat, bounds.northeast.lng,
+            bounds.southwest.lat,
+            bounds.southwest.lng,
+            bounds.northeast.lat,
+            bounds.northeast.lng,
         ) // format!
     } // fn
 } // impl

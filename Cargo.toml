@@ -1,7 +1,7 @@
 [package]
 name = "google_maps"
 version = "2.1.8"
-authors = ["Dylan Bowker <dylan.bowker@arkiteq.ca>"]
+authors = [ "Dylan Bowker <dylan.bowker@arkiteq.ca>" ]
 edition = "2021"
 categories = [ "api-bindings" ]
 description = "An unofficial Google Maps Platform client library for the Rust programming language."
@@ -25,37 +25,40 @@ default = [
 	"autocomplete",
 	"enable-reqwest",
 	"reqwest/default-tls",
-	"reqwest/gzip"
+	"reqwest/gzip",
+	"geo",
 ]
 # Google Maps Client API features:
-directions = ["chrono", "chrono-tz"]
-distance_matrix = ["chrono", "chrono-tz"]
+directions = [ "chrono", "chrono-tz" ]
+distance_matrix = [ "chrono", "chrono-tz" ]
 elevation = []
 geocoding = []
-time_zone = ["chrono", "chrono-tz"]
+time_zone = [ "chrono", "chrono-tz" ]
 autocomplete = []
+geo = [ "geo-types" ]
 # Reqwest features:
-enable-reqwest = ["reqwest", "backoff", "futures", "stream_throttle"]
-brotli = ["reqwest/brotli"]
-gzip = ["reqwest/gzip"]
-native-tls = ["reqwest/default-tls"]
-rustls = ["reqwest/rustls-tls"]
+enable-reqwest = [ "reqwest", "backoff", "futures", "stream_throttle" ]
+brotli = [ "reqwest/brotli" ]
+gzip = [ "reqwest/gzip" ]
+native-tls = [ "reqwest/default-tls" ]
+rustls = [ "reqwest/rustls-tls" ]
 
 [dependencies]
-backoff = { version = "0.4", optional = true, features = ["futures", "tokio"] }
-chrono = { version = "0.4", optional = true, features = ["serde"] }
-chrono-tz = { version = "0.6", optional = true, features = ["serde"] }
+backoff = { version = "0.4", optional = true, features = [ "futures", "tokio" ] }
+chrono = { version = "0.4", optional = true, features = [ "serde" ] }
+chrono-tz = { version = "0.6", optional = true, features = [ "serde" ] }
 futures = { version = "0.3", optional = true }
+geo-types = { version = "0.7", optional = true }
 percent-encoding = "2.1"
-phf = { version = "0.11", features = ["macros"] }
+phf = { version = "0.11", features = [ "macros" ] }
 reqwest = { version = "0.11", optional = true, default-features = false }
-rust_decimal = {version = "1", features = ["serde-float"] }
+rust_decimal = {version = "1", features = [ "serde-float" ] }
 rust_decimal_macros = "1"
-serde = { version = "1.0", features = ["derive"] }
+serde = { version = "1.0", features = [ "derive" ] }
 serde_json = "1.0"
 stream_throttle = { version = "0.4", optional = true }
-tokio = { version = "1", optional = true, features = ["time"] }
-tracing = { version = "0.1", features = ["log"] }
+tokio = { version = "1", optional = true, features = [ "time" ] }
+tracing = { version = "0.1", features = [ "log" ] }
 
 [badges]
 maintenance = { status = "passively-maintained" }

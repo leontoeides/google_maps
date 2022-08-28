@@ -2,6 +2,11 @@
 //! latitude & longitude coorindate system is used to specify a position or
 //! location on the Earth's surface.
 
+#[cfg(feature = "geo")]
+mod geo;
+
+// -----------------------------------------------------------------------------
+
 use crate::error::Error;
 use rust_decimal::Decimal;
 use rust_decimal_macros::dec;
