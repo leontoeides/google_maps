@@ -2,7 +2,7 @@
 //! specify a selection or bounding box over a geographic area using two
 //! latitude & longitude pairs.
 
-#[cfg(feature = "geo")]
+#[cfg(feature = "geo_types")]
 mod geo;
 
 // -----------------------------------------------------------------------------

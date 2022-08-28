@@ -2,7 +2,7 @@
 //! [geo](https://crates.io/crates/geo) crate.
 
 use crate::{error::Error, LatLng};
-use geo_types::geometry::{Coordinate, Point};
+use geo::geometry::{Coordinate, Point};
 use rust_decimal::{Decimal, prelude::FromPrimitive, prelude::ToPrimitive};
 
 // -----------------------------------------------------------------------------

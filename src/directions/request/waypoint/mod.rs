@@ -2,7 +2,7 @@
 //! specify intermediate locations in the form of a text address,
 //! a latitude & longitude pair, a Google Place ID, or as an Encoded Polyline.
 
-#[cfg(feature = "geo")]
+#[cfg(feature = "geo_types")]
 mod geo;
 
 // -----------------------------------------------------------------------------

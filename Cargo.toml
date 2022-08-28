@@ -34,7 +34,7 @@ elevation = []
 geocoding = []
 time_zone = [ "chrono", "chrono-tz" ]
 autocomplete = []
-geo = [ "geo-types" ]
+geo_types = [ "geo" ]
 # Reqwest features:
 enable-reqwest = [ "reqwest", "backoff", "futures", "stream_throttle" ]
 brotli = [ "reqwest/brotli" ]
@@ -47,7 +47,7 @@ backoff = { version = "0.4", optional = true, features = [ "futures", "tokio" ] 
 chrono = { version = "0.4", optional = true, features = [ "serde" ] }
 chrono-tz = { version = "0.6", optional = true, features = [ "serde" ] }
 futures = { version = "0.3", optional = true }
-geo-types = { version = "0.7", optional = true }
+geo = { version = "0.23", optional = true }
 percent-encoding = "2.1"
 phf = { version = "0.11", features = [ "macros" ] }
 reqwest = { version = "0.11", optional = true, default-features = false }

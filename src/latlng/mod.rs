@@ -2,7 +2,7 @@
 //! latitude & longitude coorindate system is used to specify a position or
 //! location on the Earth's surface.
 
-#[cfg(feature = "geo")]
+#[cfg(feature = "geo_types")]
 mod geo;
 
 // -----------------------------------------------------------------------------

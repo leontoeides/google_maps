@@ -4,7 +4,7 @@
 use crate::directions::Waypoint;
 use crate::error::Error;
 use crate::LatLng;
-use geo_types::geometry::{Coordinate, Point};
+use geo::geometry::{Coordinate, Point};
 use rust_decimal::{Decimal, prelude::FromPrimitive};
 
 // -----------------------------------------------------------------------------
