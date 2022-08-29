@@ -23,7 +23,7 @@ impl TryFrom<&Rect> for Bounds {
         // the `TryFrom` trait, we must do the conversion in a longer way:
 
         let sw_lat: Decimal = Decimal::from_f64(max_coordinate.y)
-            .ok_or_else(|| Error::FloatToDecimalConversionError(min_coordinate.y.to_string()))?;
+            .ok_or_else(|| Error::FloatToDecimalConversionError(max_coordinate.y.to_string()))?;
 
         let sw_lng: Decimal = Decimal::from_f64(min_coordinate.x)
             .ok_or_else(|| Error::FloatToDecimalConversionError(min_coordinate.x.to_string()))?;
@@ -34,7 +34,7 @@ impl TryFrom<&Rect> for Bounds {
             .ok_or_else(|| Error::FloatToDecimalConversionError(min_coordinate.y.to_string()))?;
 
         let ne_lng: Decimal = Decimal::from_f64(max_coordinate.x)
-            .ok_or_else(|| Error::FloatToDecimalConversionError(min_coordinate.x.to_string()))?;
+            .ok_or_else(|| Error::FloatToDecimalConversionError(max_coordinate.x.to_string()))?;
 
         let northeast: LatLng = LatLng::try_from(ne_lat, ne_lng)?;
 

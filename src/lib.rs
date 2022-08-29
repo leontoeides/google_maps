@@ -10,7 +10,7 @@
 //!
 //! This crate is expected to work well and have the more important Google Maps
 //! features implemented. It should work well because
-//! [Serde](https://crates.io/crates/serde) and, by default,
+//! [serde](https://crates.io/crates/serde) and, by default,
 //! [reqwest](https://crates.io/crates/reqwest) do most of the heavy lifting!
 //!
 //!
@@ -29,7 +29,7 @@
 //!         version number.
 //!
 //!     * Optionally, add `rust_decimal = "1"` and `rust_decimal_macros = "1"`
-//!         for access to the dec! macro. This macro can be used to define
+//!         for access to the `dec!` macro. This macro can be used to define
 //!         decimal numbers in your program. This is useful for efficiently
 //!         hard-coding latitudes and longitudes in your code.
 //!
