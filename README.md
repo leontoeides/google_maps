@@ -47,14 +47,14 @@ for more information.
 
 * 2.2.0: 2022-08-27: Adjusted `tracing` log levels.
 
-* 2.1.7: 2022-08-27: `str` to `enum` table look-ups are now powered by
-[phf](https://crates.io/crates/phf) (perfect hash functions.)
-
-* 2.1.7: 2022-08-27: Manual implementation `serde` deserializers for Google Maps
-types, which can utilize the new `phf` tables.
+* 2.1.7: 2022-08-27: `String` to `enum` table look-ups are now powered by the
+[phf](https://crates.io/crates/phf) (perfect hash functions) crate. Added manual
+implementations of `serde` deserializers for Google Maps client types, which
+take advantage of the new `phf` tables.
 
 * 2.1.7: 2022-08-27: Google Maps client types now implement `FromStr` which
-gives access to `parse`.
+gives access to `parse`. For example:
+`let lat_lng: LatLng = "49.8845,-97.1468".parse()?;`
 
 * 2.1.7: 2022-08-22: Added debug logging message to show Google Maps client's
 request activity.
@@ -348,7 +348,8 @@ Google Maps Client feature flags:
 * geocoding
 * time_zone
 * places
-* enable-reqwest
+* enable-reqwest (uses [reqwest](https://crates.io/crates/reqwest) for querying Google Maps API).
+* geo (support for [geo](https://crates.io/crates/geo-types) crate types)
 
 Reqwest feature flags (for use with `enable-reqwest` only):
 

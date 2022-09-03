@@ -6,11 +6,11 @@ renamed to `LatLng::try_from_dec` to fix name collision with the
 Added `try_from_f32` and `try_from_f64` methods for the `LatLng` type.
 
 * 2.2.0: 2022-09-03: This crate's `Waypoint` and `Location` types now have
-variants that represent the geo crate's `Coordinate` and `Point` types.
-`Locations` type now has variants that represent the geo crate's `Line` and
-`LineString` types. It's now possible to get make most Google Maps API requests
-using geo types, using the provided special helper methods when the `geo`
-feature flag is enabled.
+variants that represent the [geo](https://crates.io/crates/geo) crate's
+`Coordinate` and `Point` types. `Locations` type now has variants that represent
+rhe geo crate's `Line` and `LineString` types. It's now possible to make
+most Google Maps API requests using geo types, using the provided special helper
+methods when the `geo` feature flag is enabled.
 
 * 2.2.0: 2022-08-27: Optional type conversion support for the
 [geo](https://crates.io/crates/geo) crate. This feature can be enabled with the
@@ -22,14 +22,14 @@ between this crate's `LatLng`, `Waypoint`, `Bounds`, and geo's `Coordinate`,
 
 * 2.2.0: 2022-08-27: Adjusted `tracing` log levels.
 
-* 2.1.7: 2022-08-27: `str` to `enum` table look-ups are now powered by
-[phf](https://crates.io/crates/phf) (perfect hash functions.)
-
-* 2.1.7: 2022-08-27: Manual implementation `serde` deserializers for Google Maps
-types, which can utilize the new `phf` tables.
+* 2.1.7: 2022-08-27: `String` to `enum` table look-ups are now powered by the
+[phf](https://crates.io/crates/phf) (perfect hash functions) crate. Added manual
+implementations of `serde` deserializers for Google Maps client types, which
+take advantage of the new `phf` tables.
 
 * 2.1.7: 2022-08-27: Google Maps client types now implement `FromStr` which
-gives access to `parse`.
+gives access to `parse`. For example:
+`let lat_lng: LatLng = "49.8845,-97.1468".parse()?;`
 
 * 2.1.7: 2022-08-22: Added debug logging message to show Google Maps client's
 request activity.
