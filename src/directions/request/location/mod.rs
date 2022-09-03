@@ -2,6 +2,11 @@
 //! specify origin and destination locations in the form of a text address,
 //! latitude/longitude pair, or Google Place ID.
 
+#[cfg(feature = "geo")]
+mod geo_conversions;
+
+// -----------------------------------------------------------------------------
+
 use crate::latlng::LatLng;
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 
@@ -81,9 +86,8 @@ pub enum Location {
     /// [geo](https://crates.io/crates/geo) crate's
     /// [Coordinate](https://docs.rs/geo/latest/geo/geometry/struct.Coordinate.html) type.
     Coordinate(geo_types::geometry::Coordinate),
-    /// If you pass coordinates, they are used unchanged to calculate
-    /// directions. This variant supports the
-    /// [geo](https://crates.io/crates/geo) crate's
+    /// If you pass a point, it is used unchanged to calculate directions. This
+    /// variant supports the [geo](https://crates.io/crates/geo) crate's
     /// [Point](https://docs.rs/geo/latest/geo/geometry/struct.Point.html) type.
     Point(geo_types::geometry::Point),
 } // enum

@@ -26,6 +26,7 @@ default = [
 	"enable-reqwest",
 	"reqwest/default-tls",
 	"reqwest/gzip",
+	"geo"
 ]
 # Google Maps Client API features:
 directions = [ "chrono", "chrono-tz" ]

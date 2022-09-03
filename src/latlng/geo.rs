@@ -1,4 +1,4 @@
-//! Provides some `LatLng` conversion methods for the
+//! Provides some `LatLng` conversion `TryFrom` traits for the
 //! [geo](https://crates.io/crates/geo) crate.
 
 use crate::{error::Error, LatLng};

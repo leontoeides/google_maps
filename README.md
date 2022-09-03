@@ -39,11 +39,12 @@ renamed to `try_from_dec` to fix name collision with the
 Added `try_from_f32` and `try_from_f64` methods to `LatLng` type.
 
 * 2.2.0: 2022-09-03: Optional basic support for the
-[geo](https://crates.io/crates/geo) crate. This support may be enabled using the
-`geo` feature flag. When the `geo` feature is enabled, some types will loose
-support for `serde` serialization & deserialization. See
+[geo](https://crates.io/crates/geo) crate and [GeoRust](https://georust.org/)
+ecosystem. This support may be enabled using the `geo` feature flag. When the
+`geo` feature is enabled, some types will loose support for `serde`
+serialization & deserialization. See
 [CHANGELOG.md](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md)
-for more information.
+for more information on this update.
 
 * 2.2.0: 2022-08-27: Adjusted `tracing` log levels.
 
@@ -54,7 +55,7 @@ take advantage of the new `phf` tables.
 
 * 2.1.7: 2022-08-27: Google Maps client types now implement `FromStr` which
 gives access to `parse`. For example:
-`let lat_lng: LatLng = "49.8845,-97.1468".parse()?;`
+`let the_golden_boy: LatLng = "49.8845224,-97.1469436".parse()?;`
 
 * 2.1.7: 2022-08-22: Added debug logging message to show Google Maps client's
 request activity.
