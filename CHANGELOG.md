@@ -1,15 +1,16 @@
 # Change Log
 
 * 2.2.0: 2022-09-03: ⚠ **Breaking change**: `LatLng::try_from` had to be
-renamed to `try_from_dec` to fix name collision with the
+renamed to `LatLng::try_from_dec` to fix name collision with the
 [TryFrom](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) trait.
 Added `try_from_f32` and `try_from_f64` methods for the `LatLng` type.
 
 * 2.2.0: 2022-09-03: This crate's `Waypoint` and `Location` types now have
-variants that represent the `geo` crates `Coordinate` and `Point` types.
-`Locations` type now has variants that represent the `geo` crate's `Line` and
+variants that represent the geo crate's `Coordinate` and `Point` types.
+`Locations` type now has variants that represent the geo crate's `Line` and
 `LineString` types. It's now possible to get make most Google Maps API requests
-using `geo` types, using the provided special helper methods.
+using geo types, using the provided special helper methods when the `geo`
+feature flag is enabled.
 
 * 2.2.0: 2022-08-27: Optional type conversion support for the
 [geo](https://crates.io/crates/geo) crate. This feature can be enabled with the

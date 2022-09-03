@@ -38,7 +38,7 @@
 //! # What's new?
 //!
 //! * 2.2.0: 2022-09-03: ⚠ **Breaking change**: `LatLng::try_from` had to be
-//! renamed to `try_from_dec` to fix name collision with the
+//! renamed to `LatLng::try_from_dec` to fix name collision with the
 //! [TryFrom](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) trait.
 //! Added `try_from_f32` and `try_from_f64` methods to `LatLng` type.
 //!
