@@ -50,7 +50,7 @@ impl ClientSettings {
     ///     // Origin: Canadian Museum of Nature
     ///     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
     ///     // Destination: Canada Science and Technology Museum
-    ///     Location::LatLng(LatLng::try_from(dec!(45.403_509), dec!(-75.618_904))?),
+    ///     Location::LatLng(LatLng::try_from_dec(dec!(45.403_509), dec!(-75.618_904))?),
     /// )
     /// ```
 
@@ -82,7 +82,7 @@ impl ClientSettings {
     ///         // Google
     ///         Waypoint::PlaceId(String::from("ChIJj61dQgK6j4AR4GeTYWZsKWw")),
     ///         // Mozilla
-    ///         Waypoint::LatLng(LatLng::try_from(dec!(37.387_316), dec!(-122.060_008))?),
+    ///         Waypoint::LatLng(LatLng::try_from_dec(dec!(37.387_316), dec!(-122.060_008))?),
     ///     ],
     /// )
     /// ```
@@ -124,7 +124,7 @@ impl ClientSettings {
     /// use google_maps::LatLng;
     /// reverse_geocoding(
     ///     // 10 Downing St, Westminster, London
-    ///     LatLng::try_from(dec!(51.503_364), dec!(-0.127_625))?,
+    ///     LatLng::try_from_dec(dec!(51.503_364), dec!(-0.127_625))?,
     /// )
     /// ```
 
@@ -145,7 +145,7 @@ impl ClientSettings {
     /// use google_maps::{LatLng, NaiveDate};
     /// time_zone(
     ///      // St. Vitus Cathedral in Prague, Czechia
-    ///      LatLng::try_from(dec!(50.090_903), dec!(14.400_512))?,
+    ///      LatLng::try_from_dec(dec!(50.090_903), dec!(14.400_512))?,
     ///      // Tuesday February 23, 2020 @ 6:00:00 pm
     ///      NaiveDate::from_ymd(2020, 2, 23).and_hms(18, 00, 0)
     /// )

@@ -1,18 +1,19 @@
-use crate::{
-    client_settings::ClientSettings,
-    geocoding::reverse::ReverseRequest,
-    latlng::LatLng
-}; // use crate
+use crate::client_settings::ClientSettings;
+use crate::geocoding::reverse::ReverseRequest;
+use crate::latlng::LatLng;
+
+// =============================================================================
 
 impl<'a> ReverseRequest<'a> {
 
+    // -------------------------------------------------------------------------
+    //
     /// Initializes the builder pattern for a Geolocation API query with the
     /// required, non-optional parameters.
     ///
     /// # Arguments:
     ///
-    /// * `key` - Your application's Google Cloud API key.
-    ///
+    /// * `client_settings` - Your application's Google Maps API client struct.
     /// * `latlng` - The latitude and longitude values specifying the location
     /// for which you wish to obtain the closest, human-readable address.
 
@@ -32,6 +33,74 @@ impl<'a> ReverseRequest<'a> {
             // Internal use only:
             query: None,
         } // struct
+    } // fn
+
+    // -------------------------------------------------------------------------
+    //
+    /// Initializes the builder pattern for a Geolocation API query with the
+    /// required, non-optional parameters.
+    ///
+    /// This function is the same as `new` but it supports
+    /// the [geo](https://crates.io/crates/geo) crate's
+    /// [Coordinate](https://docs.rs/geo/latest/geo/geometry/struct.Coordinate.html) type.
+    ///
+    /// # Arguments:
+    ///
+    /// * `client_settings` - Your application's Google Maps API client struct.
+    /// * `coordinate` - The `Coordinate` specifying the location for which you
+    /// wish to obtain the closest, human-readable address.
+
+    #[cfg(feature = "geo")]
+    pub fn try_new_coordinate(
+        client_settings: &'a ClientSettings,
+        coordinate: &geo_types::Coordinate,
+    ) -> Result<ReverseRequest<'a>, crate::error::Error> {
+        // Instantiate struct and return it to caller:
+        Ok(ReverseRequest {
+            // Required parameters:
+            client_settings,
+            latlng: LatLng::try_from(coordinate)?,
+            // Optional parameters:
+            language: None,
+            location_types: None,
+            result_types: None,
+            // Internal use only:
+            query: None,
+        }) // struct
+    } // fn
+
+    // -------------------------------------------------------------------------
+    //
+    /// Initializes the builder pattern for a Geolocation API query with the
+    /// required, non-optional parameters.
+    ///
+    /// This function is the same as `new` but it supports
+    /// the [geo](https://crates.io/crates/geo) crate's
+    /// [Point](https://docs.rs/geo/latest/geo/geometry/struct.Point.html) type.
+    ///
+    /// # Arguments:
+    ///
+    /// * `client_settings` - Your application's Google Maps API client struct.
+    /// * `point` - The `Point` specifying the location for which you wish to
+    /// obtain the closest, human-readable address.
+
+    #[cfg(feature = "geo")]
+    pub fn try_new_point(
+        client_settings: &'a ClientSettings,
+        point: &geo_types::Point,
+    ) -> Result<ReverseRequest<'a>, crate::error::Error> {
+        // Instantiate struct and return it to caller:
+        Ok(ReverseRequest {
+            // Required parameters:
+            client_settings,
+            latlng: LatLng::try_from(point)?,
+            // Optional parameters:
+            language: None,
+            location_types: None,
+            result_types: None,
+            // Internal use only:
+            query: None,
+        }) // struct
     } // fn
 
 } // impl

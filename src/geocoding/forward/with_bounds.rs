@@ -34,8 +34,8 @@ impl<'a> ForwardRequest<'a> {
     /// * Specify bounding box for search area:
     /// ```
     /// .with_bounds(Bounds {
-    ///     southwest: LatLng::try_from(dec!(51.503_111_7), dec!(-0.129_150_3))?,
-    ///     northeast: LatLng::try_from(dec!(51.503_440_5), dec!(-0.126_003_2))?,
+    ///     southwest: LatLng::try_from_dec(dec!(51.503_111_7), dec!(-0.129_150_3))?,
+    ///     northeast: LatLng::try_from_dec(dec!(51.503_440_5), dec!(-0.126_003_2))?,
     /// })
     /// ```
 

@@ -10,7 +10,7 @@ use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 /// Used to specify the address, latitude/longitude, or place ID for the origin
 /// and destination.
 
-#[cfg(not(feature = "geo_types"))]
+#[cfg(not(feature = "geo"))]
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
 pub enum Location {
     /// If you pass an address, the Directions service geocodes the string and
@@ -32,7 +32,7 @@ pub enum Location {
 
 // -----------------------------------------------------------------------------
 
-#[cfg(not(feature = "geo_types"))]
+#[cfg(not(feature = "geo"))]
 impl std::convert::From<&Location> for String {
     /// Converts a `Location` enum to a `String` that contains a URL-encoded
     /// [location](https://developers.google.com/maps/documentation/directions/intro#required-parameters)
@@ -58,7 +58,7 @@ impl std::convert::From<&Location> for String {
 /// Used to specify the address, latitude/longitude, or place ID for the origin
 /// and destination.
 
-#[cfg(feature = "geo_types")]
+#[cfg(feature = "geo")]
 #[derive(Clone, Debug, PartialEq)]
 pub enum Location {
     /// If you pass an address, the Directions service geocodes the string and
@@ -80,17 +80,17 @@ pub enum Location {
     /// directions. This variant supports the
     /// [geo](https://crates.io/crates/geo) crate's
     /// [Coordinate](https://docs.rs/geo/latest/geo/geometry/struct.Coordinate.html) type.
-    Coordinate(geo::geometry::Coordinate),
+    Coordinate(geo_types::geometry::Coordinate),
     /// If you pass coordinates, they are used unchanged to calculate
     /// directions. This variant supports the
     /// [geo](https://crates.io/crates/geo) crate's
     /// [Point](https://docs.rs/geo/latest/geo/geometry/struct.Point.html) type.
-    Point(geo::geometry::Point),
+    Point(geo_types::geometry::Point),
 } // enum
 
 // -----------------------------------------------------------------------------
 
-#[cfg(feature = "geo_types")]
+#[cfg(feature = "geo")]
 impl std::convert::From<&Location> for String {
     /// Converts a `Location` enum to a `String` that contains a URL-encoded
     /// [location](https://developers.google.com/maps/documentation/directions/intro#required-parameters)

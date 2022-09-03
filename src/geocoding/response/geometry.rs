@@ -2,18 +2,21 @@
 //! displaying the returned result, the bounding box, and other additional
 //! data.
 
-use crate::{
-    bounds::Bounds, geocoding::location_type::LocationType, latlng::LatLng
-}; // use crate
+use crate::bounds::Bounds;
+use crate::geocoding::location_type::LocationType;
+use crate::latlng::LatLng;
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 
+// -----------------------------------------------------------------------------
+//
 /// Contains the geocoded latitude/longitude, recommended viewport for
 /// displaying the returned result, the bounding box, and other additional
 /// data.
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Geometry {
+
     /// Contains the geocoded latitude, longitude value. For normal address
     /// lookups, this field is typically the most important.
     pub location: LatLng,
@@ -34,10 +37,15 @@ pub struct Geometry {
     /// technically part of the city, but probably should not be returned in the
     /// viewport.)
     pub bounds: Option<Bounds>,
+
 } // struct
+
+// =============================================================================
 
 impl Geometry {
 
+    // -------------------------------------------------------------------------
+    //
     /// A helper function for destructuring the optional `bounds` field. If
     /// the _bounds_ field is populated, this function will return the
     /// south-west _latitude_. If the _bounds_ field is empty, this function
@@ -45,10 +53,13 @@ impl Geometry {
     /// ```rust
     /// let bounds_southwest_lat = geocoding.geometry.get_bounds_southwest_lng();
     /// ```
+
     pub fn get_bounds_southwest_lat(&self) -> Option<Decimal> {
         self.bounds.as_ref().map(|bounds| bounds.southwest.lat)
     } // fn
 
+    // -------------------------------------------------------------------------
+    //
     /// A helper function for destructuring the optional `bounds` field. If
     /// the _bounds_ field is populated, this function will return the
     /// south-west _latitude_. If the _bounds_ field is empty, this function
@@ -56,10 +67,13 @@ impl Geometry {
     /// ```rust
     /// let bounds_southwest_lng = geocoding.geometry.get_bounds_southwest_lng();
     /// ```
+
     pub fn get_bounds_southwest_lng(&self) -> Option<Decimal> {
         self.bounds.as_ref().map(|bounds| bounds.southwest.lng)
     } // fn
 
+    // -------------------------------------------------------------------------
+    //
     /// A helper function for destructuring the optional `bounds` field. If
     /// the _bounds_ field is populated, this function will return the
     /// north-east _latitude_. If the _bounds_ field is empty, this function
@@ -67,10 +81,13 @@ impl Geometry {
     /// ```rust
     /// let bounds_northeast_lat = geocoding.geometry.get_bounds_northeast_lng();
     /// ```
+
     pub fn get_bounds_northeast_lat(&self) -> Option<Decimal> {
         self.bounds.as_ref().map(|bounds| bounds.northeast.lat)
     } // fn
 
+    // -------------------------------------------------------------------------
+    //
     /// A helper function for destructuring the optional `bounds` field. If
     /// the _bounds_ field is populated, this function will return the
     /// north-east _latitude_. If the _bounds_ field is empty, this function
@@ -78,6 +95,7 @@ impl Geometry {
     /// ```rust
     /// let bounds_northeast_lng = geocoding.geometry.get_bounds_northeast_lng();
     /// ```
+
     pub fn get_bounds_northeast_lng(&self) -> Option<Decimal> {
         self.bounds.as_ref().map(|bounds| bounds.northeast.lng)
     } // fn

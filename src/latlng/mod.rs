@@ -2,17 +2,18 @@
 //! latitude & longitude coorindate system is used to specify a position or
 //! location on the Earth's surface.
 
-#[cfg(feature = "geo_types")]
+#[cfg(feature = "geo")]
 mod geo;
 
 // -----------------------------------------------------------------------------
 
 use crate::error::Error;
 use rust_decimal::Decimal;
+use rust_decimal::prelude::FromPrimitive;
+use rust_decimal::prelude::FromStr;
 use rust_decimal_macros::dec;
 use serde::{Deserialize, Serialize};
 use std::cmp::{Ord, Ordering};
-use rust_decimal::prelude::FromStr;
 
 // -----------------------------------------------------------------------------
 
@@ -33,21 +34,87 @@ pub struct LatLng {
 // -----------------------------------------------------------------------------
 
 impl LatLng {
-    /// Takes individual latitude & longitude floating-point coordinates and
+    /// Takes individual latitude & longitude `Decimal` coordinates and
     /// converts them into a `LatLng` structure. If either the latitude
     /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
     /// function will return an error.
-    pub fn try_from(latitude: Decimal, longitude: Decimal) -> Result<LatLng, Error> {
-        if latitude < dec!(-90.0) || latitude > dec!(90.0) {
-            return Err(Error::InvalidLatitude(latitude, longitude));
+    pub fn try_from_dec(lat: Decimal, lng: Decimal) -> Result<LatLng, Error> {
+
+        if lat < dec!(-90.0) || lat > dec!(90.0) {
+            return Err(Error::InvalidLatitude(lat, lng));
         } // if
-        if longitude < dec!(-180.0) || longitude > dec!(180.0) {
-            return Err(Error::InvalidLongitude(latitude, longitude));
+
+        if lng < dec!(-180.0) || lng > dec!(180.0) {
+            return Err(Error::InvalidLongitude(lat, lng));
         } // if
+
         Ok(LatLng {
-            lat: latitude,
-            lng: longitude,
-        }) // Lat Lng
+            lat,
+            lng,
+        }) // LatLng
+
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl LatLng {
+    /// Takes individual latitude & longitude `f32` coordinates and
+    /// converts them into a `LatLng` structure. If either the latitude
+    /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
+    /// function will return an error.
+    pub fn try_from_f32(lat: f32, lng: f32) -> Result<LatLng, Error> {
+
+        let lat: Decimal = Decimal::from_f32(lat)
+            .ok_or_else(|| Error::FloatToDecimalConversionError(lat.to_string()))?;
+
+        let lng: Decimal = Decimal::from_f32(lng)
+            .ok_or_else(|| Error::FloatToDecimalConversionError(lng.to_string()))?;
+
+        if lat < dec!(-90.0) || lat > dec!(90.0) {
+            return Err(Error::InvalidLatitude(lat, lng));
+        } // if
+
+        if lng < dec!(-180.0) || lng > dec!(180.0) {
+            return Err(Error::InvalidLongitude(lat, lng));
+        } // if
+
+        Ok(LatLng {
+            lat,
+            lng,
+        }) // LatLng
+
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl LatLng {
+    /// Takes individual latitude & longitude `f64` coordinates and
+    /// converts them into a `LatLng` structure. If either the latitude
+    /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
+    /// function will return an error.
+    pub fn try_from_f64(lat: f64, lng: f64) -> Result<LatLng, Error> {
+
+        let lat: Decimal = Decimal::from_f64(lat)
+            .ok_or_else(|| Error::FloatToDecimalConversionError(lat.to_string()))?;
+
+        let lng: Decimal = Decimal::from_f64(lng)
+            .ok_or_else(|| Error::FloatToDecimalConversionError(lng.to_string()))?;
+
+        if lat < dec!(-90.0) || lat > dec!(90.0) {
+            return Err(Error::InvalidLatitude(lat, lng));
+        } // if
+
+        if lng < dec!(-180.0) || lng > dec!(180.0) {
+            return Err(Error::InvalidLongitude(lat, lng));
+        } // if
+
+        Ok(LatLng {
+            lat,
+            lng,
+        }) // LatLng
+
     } // fn
 } // impl
 
@@ -69,7 +136,7 @@ impl TryFrom<&str> for LatLng {
             let lat = lat.map_err(|_| Error::InvalidLatLongString(value.to_owned()))?;
             let lon = Decimal::from_str(coords[1].trim());
             let lon = lon.map_err(|_| Error::InvalidLatLongString(value.to_owned()))?;
-            LatLng::try_from(lat, lon)
+            LatLng::try_from_dec(lat, lon)
         }
     }
 }
@@ -93,7 +160,7 @@ impl std::str::FromStr for LatLng {
             let lat = lat.map_err(|_| Error::InvalidLatLongString(value.to_owned()))?;
             let lon = Decimal::from_str(coords[1].trim());
             let lon = lon.map_err(|_| Error::InvalidLatLongString(value.to_owned()))?;
-            LatLng::try_from(lat, lon)
+            LatLng::try_from_dec(lat, lon)
         } // if
     } // fn
 } // impl

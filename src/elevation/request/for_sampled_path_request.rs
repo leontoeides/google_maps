@@ -1,10 +1,11 @@
-use crate::elevation::request::{
-    locations::Locations,
-    Request,
-};
+use crate::elevation::request::{locations::Locations, Request};
+
+// =============================================================================
 
 impl<'a> Request<'a> {
 
+    // -------------------------------------------------------------------------
+    //
     /// Adds the _sampled path request_ parameters to the Elevation API query.
     ///
     /// ## Arguments:
@@ -24,11 +25,11 @@ impl<'a> Request<'a> {
     /// * 2 elevation samples between two points:
     /// ```rust
     /// .for_sampled_path_request(
-    ///     ElevationLocations::LatLngs(vec![
+    ///     Locations::LatLngs(vec![
     ///         // Denver, Colorado
-    ///         LatLng::try_from(dec!(40.714728), dec!(-73.998672))?,
+    ///         LatLng::try_from_dec(dec!(40.714728), dec!(-73.998672))?,
     ///         // Death Valley, California
-    ///         LatLng::try_from(dec!(-34.397), dec!(-116.866667))?,
+    ///         LatLng::try_from_dec(dec!(-34.397), dec!(-116.866667))?,
     ///     ]),
     ///     // Number of samples
     ///     2
@@ -38,7 +39,7 @@ impl<'a> Request<'a> {
     /// * 4 elevation samples along a polyline:
     /// ```rust
     /// .for_sampled_path_request(
-    ///     ElevationLocations::Polyline(String::from("gfo}EtohhUxD@bAxJmGF")),
+    ///     Locations::Polyline(String::from("gfo}EtohhUxD@bAxJmGF")),
     ///     // Number of samples
     ///     4
     /// )

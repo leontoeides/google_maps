@@ -1,21 +1,31 @@
 # Change Log
 
-* 2.1.8: 2022-09-02: This crate's `Waypoint` and `Location` types now have
-variants that represent the `geo` crates `Coordinate` and `Point` types.
+* 2.2.0: 2022-09-03: ⚠ **Breaking change**: `LatLng::try_from` had to be
+renamed to `try_from_dec` to fix name collision with the
+[TryFrom](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) trait.
+Added `try_from_f32` and `try_from_f64` methods for the `LatLng` type.
 
-* 2.1.8: 2022-08-27: Optional type conversion support for the
+* 2.2.0: 2022-09-03: New methods that support the
+[geo](https://crates.io/crates/geo) crate's `Coordinate`, `Point`, `Line` and
+`LineString` types.
+
+* 2.2.0: 2022-09-03: This crate's `Locations` type now has variants that
+represent the `geo` crates `Line` and `LineString` types. It's now possible to
+get samples elevation requests using geo's types.
+
+* 2.2.0: 2022-09-02: This crate's `Waypoint` and `Location` types now have
+variants that represent the `geo` crates `Coordinate` and `Point` types. It's
+now possible to get directions directly using geo's types.
+
+* 2.2.0: 2022-08-27: Optional type conversion support for the
 [geo](https://crates.io/crates/geo) crate. This feature can be enabled with the
-`geo_types` feature flag. Note: enabling `geo` disables `serde` for some of this
-crate's types. This feature makes using these crates together a little less
-burdensome. This feature includes some unidirectional and some bidirectional
+`geo_types` feature flag. It makes using these crates together a little less
+burdensome. Includes some unidirectional and some bidirectional
 [TryFrom](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) conversions
-between `LatLng`, `Waypoint`, `Coordinate`, `Point`, `Bounds`, `Rect`, `Polygon`
-types. `Line`, `LineString`, and `MultiLineString` types can be pretty easily
-converted to a `Vec<Waypoint>` for use in a `directions` or `distance_matrix`
-request. This can be done by iterating over the `geo` line type and converting
-each resulting `Point` to a `Waypoint`.
+between this crate's `LatLng`, `Waypoint`, `Bounds`, and geo's `Coordinate`,
+`Point`, `Rect`, `Polygon` types.
 
-* 2.1.8: 2022-08-27: Adjusted `tracing` log levels.
+* 2.2.0: 2022-08-27: Adjusted `tracing` log levels.
 
 * 2.1.7: 2022-08-27: `str` to `enum` table look-ups are now powered by
 [phf](https://crates.io/crates/phf) (perfect hash functions.)

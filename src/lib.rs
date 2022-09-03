@@ -24,7 +24,7 @@
 //!
 //! * In your project's `Cargo.toml` file, under the `[dependencies]` section:
 //!
-//!     * Add `google_maps = "2.1"`. Check
+//!     * Add `google_maps = "2.2"`. Check
 //!         [crates.io](https://crates.io/crates/google_maps) for the latest
 //!         version number.
 //!
@@ -37,19 +37,19 @@
 //!
 //! # What's new?
 //!
-//! * 2.1.8: 2022-08-27: Optional type conversion support for the
-//! [geo](https://crates.io/crates/geo) crate. This feature can be enabled with
-//! the `geo_types` feature flag. It makes using these crates together a little
-//! less burdensome. Includes some unidirectional and some bidirectional
-//! [TryFrom](https://doc.rust-lang.org/std/convert/trait.TryFrom.html)
-//! conversions between `LatLng`, `Waypoint`, `Coordinate`, `Point`, `Bounds`,
-//! `Rect`, `Polygon` types. `Line`, `LineString`, and `MultiLineString` types
-//! can be pretty easily converted to a `Vec<Waypoint>` for use in a
-//! `directions` or `distance_matrix` request. This can be done by iterating
-//! over the `geo` line type and converting each resulting `Point` to a
-//! `Waypoint`.
+//! * 2.2.0: 2022-09-03: ⚠ **Breaking change**: `LatLng::try_from` had to be
+//! renamed to `try_from_dec` to fix name collision with the
+//! [TryFrom](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) trait.
+//! Added `try_from_f32` and `try_from_f64` methods to `LatLng` type.
 //!
-//! * 2.1.8: 2022-08-27: Adjusted `tracing` log levels.
+//! * 2.2.0: 2022-09-03: Optional basic support for the
+//! [geo](https://crates.io/crates/geo) crate. This support may be enabled using
+//! the `geo` feature flag. When the `geo` feature is enabled, some types will
+//! loose support for `serde` serialization & deserialization. See
+//! [CHANGELOG.md](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md)
+//! for more information.
+//!
+//! * 2.2.0: 2022-08-27: Adjusted `tracing` log levels.
 //!
 //! * 2.1.7: 2022-08-27: `str` to `enum` table look-ups are now powered by
 //! [phf](https://crates.io/crates/phf) (perfect hash functions.)
@@ -129,7 +129,7 @@
 //!     // Origin: Canadian Museum of Nature
 //!     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
 //!     // Destination: Canada Science and Technology Museum
-//!     Location::LatLng(LatLng::try_from(dec!(45.403_509), dec!(-75.618_904))?),
+//!     Location::LatLng(LatLng::try_from_dec(dec!(45.403_509), dec!(-75.618_904))?),
 //! )
 //! .with_travel_mode(TravelMode::Driving)
 //! .execute()
@@ -167,7 +167,7 @@
 //!         // Google
 //!         Waypoint::PlaceId(String::from("ChIJj61dQgK6j4AR4GeTYWZsKWw")),
 //!         // Mozilla
-//!         Waypoint::LatLng(LatLng::try_from(dec!(37.387_316), dec!(-122.060_008))?),
+//!         Waypoint::LatLng(LatLng::try_from_dec(dec!(37.387_316), dec!(-122.060_008))?),
 //!     ],
 //! ).execute().await?;
 //!
@@ -192,7 +192,7 @@
 //!
 //! let elevation = google_maps_client.elevation()
 //!     // Denver, Colorado, the "Mile High City"
-//!     .for_positional_request(LatLng::try_from(dec!(39.739_154), dec!(-104.984_703))?)
+//!     .for_positional_request(LatLng::try_from_dec(dec!(39.739_154), dec!(-104.984_703))?)
 //!     .execute()
 //!     .await?;
 //!
@@ -255,7 +255,7 @@
 //!
 //! let location = google_maps_client.reverse_geocoding(
 //!     // 10 Downing St, Westminster, London
-//!     LatLng::try_from(dec!(51.503_364), dec!(-0.127_625))?,
+//!     LatLng::try_from_dec(dec!(51.503_364), dec!(-0.127_625))?,
 //! )
 //! .with_result_type(PlaceType::StreetAddress)
 //! .execute()
@@ -295,7 +295,7 @@
 //!
 //! let time_zone = google_maps_client.time_zone(
 //!      // St. Vitus Cathedral in Prague, Czechia
-//!      LatLng::try_from(dec!(50.090_903), dec!(14.400_512))?,
+//!      LatLng::try_from_dec(dec!(50.090_903), dec!(14.400_512))?,
 //!      // The time right now in UTC (Coordinated Universal Time)
 //!      Utc::now()
 //! ).execute().await?;

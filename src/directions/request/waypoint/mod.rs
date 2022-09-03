@@ -2,7 +2,7 @@
 //! specify intermediate locations in the form of a text address,
 //! a latitude & longitude pair, a Google Place ID, or as an Encoded Polyline.
 
-#[cfg(feature = "geo_types")]
+#[cfg(feature = "geo")]
 mod geo_conversions;
 
 // -----------------------------------------------------------------------------
@@ -13,7 +13,7 @@ use crate::latlng::LatLng;
 //
 /// Used to specify pass throughs or stopovers at intermediate locations.
 
-#[cfg(not(feature = "geo_types"))]
+#[cfg(not(feature = "geo"))]
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
 pub enum Waypoint {
     /// If you pass an address, the Directions service geocodes the string and
@@ -44,7 +44,7 @@ pub enum Waypoint {
 
 // -----------------------------------------------------------------------------
 
-#[cfg(not(feature = "geo_types"))]
+#[cfg(not(feature = "geo"))]
 impl std::convert::From<&Waypoint> for String {
     /// Converts a `Waypoint` enum to a `String` that contains a
     /// [waypoint](https://developers.google.com/maps/documentation/directions/intro#Waypoints)
@@ -63,7 +63,7 @@ impl std::convert::From<&Waypoint> for String {
 //
 /// Used to specify pass throughs or stopovers at intermediate locations.
 
-#[cfg(feature = "geo_types")]
+#[cfg(feature = "geo")]
 #[derive(Clone, Debug, PartialEq)]
 pub enum Waypoint {
     /// If you pass an address, the Directions service geocodes the string and
@@ -94,17 +94,17 @@ pub enum Waypoint {
     /// directions. This variant supports the
     /// [geo](https://crates.io/crates/geo) crate's
     /// [Coordinate](https://docs.rs/geo/latest/geo/geometry/struct.Coordinate.html) type.
-    Coordinate(geo::geometry::Coordinate),
+    Coordinate(geo_types::geometry::Coordinate),
     /// If you pass coordinates, they are used unchanged to calculate
     /// directions. This variant supports the
     /// [geo](https://crates.io/crates/geo) crate's
     /// [Point](https://docs.rs/geo/latest/geo/geometry/struct.Point.html) type.
-    Point(geo::geometry::Point),
+    Point(geo_types::geometry::Point),
 } // enum
 
 // -----------------------------------------------------------------------------
 
-#[cfg(feature = "geo_types")]
+#[cfg(feature = "geo")]
 impl std::convert::From<&Waypoint> for String {
     /// Converts a `Waypoint` enum to a `String` that contains a
     /// [waypoint](https://developers.google.com/maps/documentation/directions/intro#Waypoints)
