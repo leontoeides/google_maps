@@ -33,12 +33,18 @@ impl std::convert::From<&Locations> for String {
     /// Converts a `Locations` enum to a `String` that contains
     /// [locations](https://developers.google.com/maps/documentation/elevation/intro#Locations).
     fn from(locations: &Locations) -> Self {
+
         match locations {
-            Locations::LatLngs(latlngs) => latlngs.iter()
-                .map(String::from)
-                .collect::<Vec<String>>()
-                .join("|"),
-            Locations::Polyline(polyline) => format!("enc:{}", polyline),
+
+            Locations::LatLngs(latlngs) =>
+                latlngs.iter()
+                    .map(String::from)
+                    .collect::<Vec<String>>()
+                    .join("|"),
+
+            Locations::Polyline(polyline) =>
+                format!("enc:{}", polyline),
+
         } // match
     } // fn
 } // impl
@@ -62,6 +68,10 @@ pub enum Locations {
     /// An [encoded
     /// polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm).
     Polyline(String),
+    /// This variant supports the
+    /// [geo](https://crates.io/crates/geo) crate's
+    /// [MultiPoint](https://docs.rs/geo/latest/geo/geometry/struct.MultiPoint.html) type.
+    MultiPoint(geo_types::geometry::MultiPoint),
     /// This variant supports the
     /// [geo](https://crates.io/crates/geo) crate's
     /// [Line](https://docs.rs/geo/latest/geo/geometry/struct.Line.html) type.
@@ -89,6 +99,15 @@ impl std::convert::From<&Locations> for String {
 
             Locations::Polyline(polyline) =>
                 format!("enc:{}", polyline),
+
+            Locations::MultiPoint(multi_point) =>
+                multi_point
+                    .iter()
+                    .map(|point|
+                        format!("{lat},{lng}", lat=point.y(), lng=point.x())
+                    ) // map
+                    .collect::<Vec<String>>()
+                    .join("|"),
 
             Locations::Line(line) =>
                 format!(
