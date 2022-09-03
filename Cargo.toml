@@ -48,7 +48,7 @@ backoff = { version = "0.4", optional = true, features = [ "futures", "tokio" ] 
 chrono = { version = "0.4", optional = true, features = [ "serde" ] }
 chrono-tz = { version = "0.6", optional = true, features = [ "serde" ] }
 futures = { version = "0.3", optional = true }
-geo = { version = "0.23", optional = true }
+geo = { version = "0.23", optional = true, features = [ "serde" ] }
 percent-encoding = "2.1"
 phf = { version = "0.11", features = [ "macros" ] }
 reqwest = { version = "0.11", optional = true, default-features = false }

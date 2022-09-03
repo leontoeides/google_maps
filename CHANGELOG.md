@@ -1,9 +1,13 @@
 # Change Log
 
+* 2.1.8: 2022-09-02: This crate's `Waypoint` and `Location` types now have
+variants that represent the `geo` crates `Coordinate` and `Point` types.
+
 * 2.1.8: 2022-08-27: Optional type conversion support for the
 [geo](https://crates.io/crates/geo) crate. This feature can be enabled with the
-`geo_types` feature flag. It makes using these crates together a little less
-burdensome. Includes some unidirectional and some bidirectional
+`geo_types` feature flag. Note: enabling `geo` disables `serde` for some of this
+crate's types. This feature makes using these crates together a little less
+burdensome. This feature includes some unidirectional and some bidirectional
 [TryFrom](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) conversions
 between `LatLng`, `Waypoint`, `Coordinate`, `Point`, `Bounds`, `Rect`, `Polygon`
 types. `Line`, `LineString`, and `MultiLineString` types can be pretty easily

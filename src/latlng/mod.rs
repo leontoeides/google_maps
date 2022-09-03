@@ -104,7 +104,11 @@ impl std::convert::From<&LatLng> for String {
     /// Converts a `LatLng` struct to a `String` that contains a
     /// latitude/longitude pair.
     fn from(latlng: &LatLng) -> String {
-        format!("{},{}", latlng.lat.normalize(), latlng.lng.normalize())
+        format!(
+            "{latitude},{longitude}",
+            latitude=latlng.lat.normalize(),
+            longitude=latlng.lng.normalize(),
+        ) // format!
     } // fn
 } // impl
 
@@ -130,15 +134,15 @@ impl std::fmt::Display for LatLng {
         // fixins'.
         write!(
             f,
-            "{}°{} {}°{}",
-            self.lat.abs().normalize(),
-            match self.lat.cmp(&dec!(0.0)) {
+            "{lat}°{lat_hem} {lng}°{lng_hem}",
+            lat=self.lat.abs().normalize(),
+            lat_hem=match self.lat.cmp(&dec!(0.0)) {
                 Ordering::Less => " S".to_string(),
                 Ordering::Greater => " N".to_string(),
                 Ordering::Equal => "".to_string(),
             }, // match
-            self.lng.abs().normalize(),
-            match self.lng.cmp(&dec!(0.0)) {
+            lng=self.lng.abs().normalize(),
+            lng_hem=match self.lng.cmp(&dec!(0.0)) {
                 Ordering::Less => " W".to_string(),
                 Ordering::Greater => " E".to_string(),
                 Ordering::Equal => "".to_string(),
