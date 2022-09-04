@@ -103,7 +103,7 @@ impl<'a> Request<'a> {
     /// elevation data. This parameter takes a single `Point`.
 
     #[cfg(feature = "geo")]
-    pub fn for_point_request(
+    pub fn try_point_request(
         &'a mut self,
         point: &geo_types::Point,
     ) -> Result<&'a mut Request, crate::error::Error> {

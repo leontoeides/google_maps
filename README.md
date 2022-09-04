@@ -1,6 +1,7 @@
 🗺 An unofficial Google Maps Platform client library for the Rust programming
 language. This client currently implements the Directions API, Distance Matrix
-API, Elevation API, Geocoding API, and Time Zone API.
+API, Elevation API, Geocoding API, Time Zone API, parts of the Places API, and
+parts of the Roads API.
 
 ![alt text](https://www.arkiteq.ca/crates/google_maps/banner.jpg "Unofficial Google Maps Platform Client for Rust")
 
@@ -341,7 +342,7 @@ It is possible to change the Reqwest features that are in turn used by the
 Google Maps API client through feature flags. It is also possible to only
 include desired Google Maps APIs by using Cargo.toml feature flags.
 
-##### Google Maps Client feature flags:
+#### Google Maps Client feature flags:
 
 * directions
 * distance_matrix
@@ -350,13 +351,14 @@ include desired Google Maps APIs by using Cargo.toml feature flags.
 * time_zone
 * autocomplete
 * roads
-* enable-reqwest (uses [reqwest](https://crates.io/crates/reqwest) for querying Google Maps API).
+* enable-reqwest (uses [reqwest](https://crates.io/crates/reqwest) for querying
+Google Maps API).
 * geo (support for [geo](https://crates.io/crates/geo-types) crate types)
 
 Note: The Places autocomplete APIs have been put in the `autocomplete` feature
 flag. The rest of the Places APIs will be put under the `places` feature flag.
 
-##### Reqwest feature flags (for use with `enable-reqwest` only):
+#### Reqwest feature flags (for use with `enable-reqwest` only):
 
 * native-tls
 * rustls
@@ -369,7 +371,7 @@ has brotli compression enabled.
 
 ```toml
 google_maps = {
-	version = "2.1",
+	version = "2.2",
 	default-features = false,
 	features = [
 		"directions",

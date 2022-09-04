@@ -22,7 +22,8 @@ default = [
 	"elevation",
 	"geocoding",
 	"time_zone",
-	"autocomplete", # Places auto-complete APIs, other APIs will be under "places" feature
+	"autocomplete", # (Places autocomplete-related APIs, other Places APIs will be under "places" feature)
+	"roads",
 	"enable-reqwest",
 	"reqwest/default-tls",
 	"reqwest/gzip",
@@ -36,6 +37,7 @@ geocoding = []
 time_zone = [ "chrono", "chrono-tz" ]
 autocomplete = []
 geo = [ "geo-types" ]
+roads = []
 # Reqwest features:
 enable-reqwest = [ "reqwest", "backoff", "futures", "stream_throttle" ]
 brotli = [ "reqwest/brotli" ]

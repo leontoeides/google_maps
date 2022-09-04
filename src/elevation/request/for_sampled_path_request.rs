@@ -58,4 +58,30 @@ impl<'a> Request<'a> {
         self
     } // fn
 
+    // -------------------------------------------------------------------------
+    //
+    /// Adds the _positional request_ parameter to the Elevation API query.
+    ///
+    /// This function is the same as `for_sampled_path_request` but it supports
+    /// the [geo](https://crates.io/crates/geo) crate's
+    /// [LineString](https://docs.rs/geo/latest/geo/geometry/struct.LineString.html)
+    /// type.
+    ///
+    /// ## Arguments:
+    ///
+    /// * `line_string` ‧ Specifies the sample points along a path for which to
+    /// return elevation data. The samples parameter divides the given path into
+    /// an ordered set of equidistant points along the path.
+
+    #[cfg(feature = "geo")]
+    pub fn for_line_string_request(
+        &'a mut self,
+        line_string: geo_types::LineString,
+    ) -> Result<&'a mut Request, crate::error::Error> {
+        // Set the path in Request struct.
+        self.locations = Some(Locations::LineString(line_string));
+        // Return modified Request struct to caller.
+        Ok(self)
+    } // fn
+
 } // impl

@@ -26,8 +26,12 @@ use std::cmp::{Ord, Ordering};
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct LatLng {
     /// Latitude. A value between -90.0° and 90.0°.
+    #[serde(alias = "latitude")]
     pub lat: Decimal,
     /// Longitude. A value between -180.0° and 180.0°.
+    #[serde(alias = "lon")]
+    #[serde(alias = "long")]
+    #[serde(alias = "longitude")]
     pub lng: Decimal,
 } // struct
 

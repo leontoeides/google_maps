@@ -2,16 +2,22 @@
 //! implemented methods to set your _Google API key_ and other settings such as:
 //! _rate limiting_, _maxium retries_, & _retry delay times_ for your requests.
 
+// -----------------------------------------------------------------------------
+
 mod finalize;
-mod new;
+mod impls;
 #[cfg(feature = "enable-reqwest")]
 mod with_rate;
 #[cfg(feature = "enable-reqwest")]
 mod with_reqwest_client;
 
+// -----------------------------------------------------------------------------
+
 #[cfg(feature = "enable-reqwest")]
 use crate::request_rate::RequestRate;
 
+// -----------------------------------------------------------------------------
+//
 /// Use the `ClientSettings` struct's implemented methods to set your _Google
 /// API key_ and other settings such as: _rate limiting_, _maxium retries_, &
 /// _retry delay times_ for your requests.
