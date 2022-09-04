@@ -37,7 +37,7 @@ impl<'a> Request<'a> {
         } // match
 
         // Observe any rate limiting before executing request:
-        self.client_settings.rate_limit.limit_apis(vec![&Api::All, &Api::TimeZone])
+        self.client_settings.rate_limit.limit_apis(vec![&Api::All, &Api::Places])
             .await;
 
         // Emit debug message so client can monitor activity:

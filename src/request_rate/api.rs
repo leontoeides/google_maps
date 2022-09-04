@@ -3,6 +3,8 @@
 
 use serde::{Deserialize, Serialize};
 
+// -----------------------------------------------------------------------------
+//
 /// `Api` is used to select an API to configure. For example, the Google Maps
 /// Client can be set to have different request rates for `Directions` and
 /// `Elevation` requests. This `enum` is used to select which Google Maps API
@@ -17,7 +19,11 @@ pub enum Api {
     Elevation,
     Geocoding,
     TimeZone,
+    Places,
+    Roads,
 } // enum
+
+// -----------------------------------------------------------------------------
 
 impl std::convert::From<&Api> for String {
     /// Converts an `Api` enum to a `String` that contains an API name.
@@ -29,9 +35,13 @@ impl std::convert::From<&Api> for String {
             Api::Elevation => String::from("Elevation"),
             Api::Geocoding => String::from("Geocoding"),
             Api::TimeZone => String::from("Time Zone"),
+            Api::Places => String::from("Places"),
+            Api::Roads => String::from("Roads"),
         } // match
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::default::Default for Api {
     /// Returns a reasonable default variant for the `Api` enum.
@@ -39,6 +49,8 @@ impl std::default::Default for Api {
         Api::All
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for Api {
     /// Formats an `Api` enum into a string that is presentable to the end user.

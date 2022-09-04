@@ -341,18 +341,22 @@ It is possible to change the Reqwest features that are in turn used by the
 Google Maps API client through feature flags. It is also possible to only
 include desired Google Maps APIs by using Cargo.toml feature flags.
 
-Google Maps Client feature flags:
+##### Google Maps Client feature flags:
 
 * directions
 * distance_matrix
 * elevation
 * geocoding
 * time_zone
-* places
+* autocomplete
+* roads
 * enable-reqwest (uses [reqwest](https://crates.io/crates/reqwest) for querying Google Maps API).
 * geo (support for [geo](https://crates.io/crates/geo-types) crate types)
 
-Reqwest feature flags (for use with `enable-reqwest` only):
+Note: The Places autocomplete APIs have been put in the `autocomplete` feature
+flag. The rest of the Places APIs will be put under the `places` feature flag.
+
+##### Reqwest feature flags (for use with `enable-reqwest` only):
 
 * native-tls
 * rustls
@@ -383,12 +387,16 @@ using the system-native TLS (`native-tls`), and has gzip compression enabled
 
 ```toml
 default = [
+	# Google Maps crate features:
 	"directions",
 	"distance_matrix",
 	"elevation",
 	"geocoding",
 	"time_zone",
 	"autocomplete",
+	"roads",
+
+	# reqwest features:
 	"enable-reqwest",
 	"reqwest/default-tls",
 	"reqwest/gzip",

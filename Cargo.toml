@@ -22,10 +22,11 @@ default = [
 	"elevation",
 	"geocoding",
 	"time_zone",
-	"autocomplete",
+	"autocomplete", # Places auto-complete APIs, other APIs will be under "places" feature
 	"enable-reqwest",
 	"reqwest/default-tls",
 	"reqwest/gzip",
+	"geo",
 ]
 # Google Maps Client API features:
 directions = [ "chrono", "chrono-tz" ]
