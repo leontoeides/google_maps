@@ -2,12 +2,10 @@
 //! the Google Maps Platform. Look in here for more information about the data
 //! returned from Google's server and how to parse it with your program.
 
-pub mod snapped_point;
-
 // -----------------------------------------------------------------------------
 
 use crate::roads::error_response::ErrorResponse;
-use crate::roads::snap_to_roads::response::snapped_point::SnappedPoint;
+use crate::roads::snapped_point::SnappedPoint;
 use serde::{Deserialize, Serialize};
 
 // -----------------------------------------------------------------------------

@@ -68,8 +68,12 @@ pub mod error;
 pub mod request;
 pub mod response;
 
+// -----------------------------------------------------------------------------
+
 const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/timezone";
 const OUTPUT_FORMAT: &str = "json"; // json or xml
+
+// -----------------------------------------------------------------------------
 
 pub use crate::time_zone::{
     error::Error as TimeZoneError,

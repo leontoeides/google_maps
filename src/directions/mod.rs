@@ -87,8 +87,12 @@ pub mod response;
 pub mod travel_mode;
 pub mod vehicle_type;
 
+// -----------------------------------------------------------------------------
+
 const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/directions";
 const OUTPUT_FORMAT: &str = "json"; // json or xml
+
+// -----------------------------------------------------------------------------
 
 pub use crate::directions::{
     request::{

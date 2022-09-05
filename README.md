@@ -34,9 +34,6 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 # What's new?
 
-* 3.0.0: 2022-09-04: ⚠ **Breaking change**: `ClientSettings` renamed to
-`GoogleMapsClient`.
-
 * 3.0.0: 2022-09-03: ⚠ **Breaking change**: `LatLng::try_from` had to be
 renamed to `LatLng::try_from_dec` to fix name collision with the
 [TryFrom](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) trait.
@@ -49,6 +46,8 @@ ecosystem. This support may be enabled using the `geo` feature flag. When the
 serialization & deserialization. See
 [CHANGELOG.md](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md)
 for more information on this update.
+
+* 3.0.0: 2022-09-04: `ClientSettings` renamed to `GoogleMapsClient`.
 
 * 3.0.0: 2022-08-27: Adjusted `tracing` log levels.
 

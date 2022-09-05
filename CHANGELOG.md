@@ -1,8 +1,5 @@
 # Change Log
 
-* 3.0.0: 2022-09-04: ⚠ **Breaking change**: `ClientSettings` renamed to
-`GoogleMapsClient`.
-
 * 3.0.0: 2022-09-03: ⚠ **Breaking change**: `LatLng::try_from` had to be
 renamed to `LatLng::try_from_dec` to fix name collision with the
 [TryFrom](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) trait.
@@ -28,6 +25,8 @@ burdensome. Includes some unidirectional and some bidirectional
 [TryFrom](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) conversions
 between this crate's `LatLng`, `Waypoint`, `Bounds`, and geo's `Coordinate`,
 `Point`, `Rect`, `Polygon` types.
+
+* 3.0.0: 2022-09-04: `ClientSettings` renamed to `GoogleMapsClient`.
 
 * 3.0.0: 2022-08-27: Adjusted `tracing` log levels.
 

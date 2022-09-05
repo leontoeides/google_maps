@@ -72,3 +72,31 @@
 pub mod place_autocomplete;
 #[cfg(feature = "autocomplete")]
 pub mod query_autocomplete;
+
+// -----------------------------------------------------------------------------
+
+#[cfg(feature = "autocomplete")]
+pub use crate::places::place_autocomplete::{
+    error::Error as AutocompleteError,
+    response::{
+        matched_substring::MatchedSubstring,
+        prediction::Prediction,
+        Response as AutocompleteResponse,
+        status::Status as AutocompleteStatus,
+        structured_format::StructuredFormat,
+        term::Term,
+    }, // response
+    request::{
+        autocomplete_type::AutocompleteType,
+        Request as PlaceAutocompleteRequest,
+    }, // request
+}; // crate::places::place_autocomplete
+
+// -----------------------------------------------------------------------------
+
+#[cfg(feature = "autocomplete")]
+pub use crate::places::place_autocomplete::{
+    request::{
+        Request as QueryAutocompleteRequest,
+    }, // request
+}; // crate::places::place_autocomplete

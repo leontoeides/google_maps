@@ -168,3 +168,29 @@ pub use crate::places::place_autocomplete::{
         Request as QueryAutocompleteRequest,
     }, // request
 }; // crate::places::place_autocomplete
+
+// -----------------------------------------------------------------------------
+
+#[cfg(feature = "roads")]
+pub use crate::roads::{
+    error::Error as RoadsError,
+    error_response::ErrorResponse as RoadsErrorResponse,
+    snapped_point::SnappedPoint,
+    status::Status as RoadsStatus,
+}; // crate::roads
+
+// -----------------------------------------------------------------------------
+
+#[cfg(feature = "roads")]
+pub use crate::roads::snap_to_roads::{
+    response::Response as SnapToRoadsResponse,
+    request::Request as SnapToRoadsRequest,
+}; // crate::roads::snap_to_roads
+
+// -----------------------------------------------------------------------------
+
+#[cfg(feature = "roads")]
+pub use crate::roads::nearest_roads::{
+    response::Response as NearestRoadsResponse,
+    request::Request as NearestRoadsRequest,
+}; // crate::roads::nearest_roads

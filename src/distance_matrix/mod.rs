@@ -79,8 +79,12 @@ pub mod error;
 pub mod request;
 pub mod response;
 
+// -----------------------------------------------------------------------------
+
 pub const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/distancematrix";
 pub const OUTPUT_FORMAT: &str = "json"; // json or xml
+
+// -----------------------------------------------------------------------------
 
 pub use crate::directions::{
     request::{
