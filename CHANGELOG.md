@@ -56,7 +56,7 @@ of basic usage:
 let google_maps_client = ClientSettings::new("YOUR_API_KEY_HERE");
 
 let predictions = google_maps_client.place_autocomplete("51".to_string())
-    .with_location_and_radius(LatLng::try_from(dec!(54), dec!(-114))?, 1_000)
+    .with_location_and_radius(LatLng::try_from_dec(dec!(54), dec!(-114))?, 1_000)
     .with_type(AutocompleteType::Address)
     .execute()
     .await?;
@@ -77,7 +77,7 @@ let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Get query string from builder pattern:
 let query_url = google_maps_client.time_zone(
-     LatLng::try_from(dec!(50.090_903), dec!(14.400_512))?,
+     LatLng::try_from_dec(dec!(50.090_903), dec!(14.400_512))?,
      Utc::now()
 ).query_url();
 

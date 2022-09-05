@@ -133,7 +133,7 @@
 //!     // Origin: Canadian Museum of Nature
 //!     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
 //!     // Destination: Canada Science and Technology Museum
-//!     Location::LatLng(LatLng::try_from_dec(dec!(45.403_509), dec!(-75.618_904))?),
+//!     Location::LatLng(LatLng::try_from_f64(45.403_509, -75.618_904)?),
 //! )
 //! .with_travel_mode(TravelMode::Driving)
 //! .execute()

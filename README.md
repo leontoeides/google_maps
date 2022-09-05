@@ -163,7 +163,7 @@ let distance_matrix = google_maps_client.distance_matrix(
         // Google
         Waypoint::PlaceId(String::from("ChIJj61dQgK6j4AR4GeTYWZsKWw")),
         // Mozilla
-        Waypoint::LatLng(LatLng::try_from(dec!(37.387_316), dec!(-122.060_008))?),
+        Waypoint::LatLng(LatLng::try_from_dec(dec!(37.387_316), dec!(-122.060_008))?),
     ],
 ).execute().await?;
 
@@ -188,7 +188,7 @@ let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 let elevation = google_maps_client.elevation()
     // Denver, Colorado, the "Mile High City"
-    .for_positional_request(LatLng::try_from(dec!(39.739_154), dec!(-104.984_703))?)
+    .for_positional_request(LatLng::try_from_dec(dec!(39.739_154), dec!(-104.984_703))?)
     .execute()
     .await?;
 
@@ -251,7 +251,7 @@ let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 let location = google_maps_client.reverse_geocoding(
     // 10 Downing St, Westminster, London
-    LatLng::try_from(dec!(51.503_364), dec!(-0.127_625))?,
+    LatLng::try_from_dec(dec!(51.503_364), dec!(-0.127_625))?,
 )
 .with_result_type(PlaceType::StreetAddress)
 .execute()
@@ -291,7 +291,7 @@ let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
 
 let time_zone = google_maps_client.time_zone(
      // St. Vitus Cathedral in Prague, Czechia
-     LatLng::try_from(dec!(50.090_903), dec!(14.400_512))?,
+     LatLng::try_from_dec(dec!(50.090_903), dec!(14.400_512))?,
      // The time right now in UTC (Coordinated Universal Time)
      Utc::now()
 ).execute().await?;
