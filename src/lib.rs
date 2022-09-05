@@ -106,7 +106,7 @@
 //!
 //! * 2.0.1: 2021-07-15: Now supports a user-configured Reqwest client in the
 //! Google Maps client builder.
-//! `ClientSettings::new("YOUR_API_KEY_HERE").with_reqwest_client(your_reqwest_client).build();`
+//! `GoogleMapsClient::new("YOUR_API_KEY_HERE").with_reqwest_client(your_reqwest_client).build();`
 //!
 //! * 2.0.0: 2021-07-13: The Rust Google Maps client is now async thanks to
 //! [seanpianka](https://github.com/seanpianka)!
@@ -123,9 +123,8 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
-//! use rust_decimal_macros::dec;
 //!
-//! let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+//! let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
 //!
@@ -152,9 +151,8 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
-//! use rust_decimal_macros::dec;
 //!
-//! let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+//! let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
 //!
@@ -188,9 +186,8 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
-//! use rust_decimal_macros::dec;
 //!
-//! let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+//! let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
 //!
@@ -223,7 +220,7 @@
 //! ```rust
 //! use google_maps::prelude::*;
 //!
-//! let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+//! let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
 //!
@@ -251,9 +248,8 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
-//! use rust_decimal_macros::dec;
 //!
-//! let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+//! let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
 //!
@@ -291,9 +287,8 @@
 //!
 //! ```rust
 //! use google_maps::prelude::*;
-//! use rust_decimal_macros::dec;
 //!
-//! let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+//! let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
 //!
@@ -337,12 +332,12 @@
 //! ```rust
 //! use google_maps::prelude::*;
 //!
-//! let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE")
+//! let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE")
 //!     // For all Google Maps Platform APIs, the client will limit 2 sucessful
 //!     // requests for every 10 seconds:
 //!     .with_rate(Api::All, 2, std::time::Duration::from_secs(10))
-//!     // Returns the `ClientSettings` struct to the caller. This struct is used to
-//!     // make Google Maps Platform requests.
+//!     // Returns the `GoogleMapsClient` struct to the caller. This struct is
+//!     // used to make Google Maps Platform requests.
 //!     .build();
 //! ```
 //!
@@ -429,9 +424,8 @@
 //! Only partly implemented. If you would like to have any missing pieces
 //! implemented, please contact me.
 //! 5. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
-//! There are no immediate plans for supporting this API. It's quite big and I
-//! have no current need for it. If you would like to have to implemented,
-//! please contact me.
+//! Only partly implemented. If you would like to have any missing pieces
+//! implemented, please contact me.
 
 #![doc(html_favicon_url = "https://www.arkiteq.ca/crates/google_maps/icon.png")]
 #![doc(html_logo_url = "https://www.arkiteq.ca/crates/google_maps/logo.png")]

@@ -62,7 +62,11 @@ impl GoogleMapsClient {
     ///
     /// ```rust
     /// use google_maps::prelude::*;
-    /// directions(
+    /// use rust_decimal_macros::dec;
+    ///
+    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+    ///
+    /// let directions = google_maps_client.directions(
     ///     // Origin: Canadian Museum of Nature
     ///     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
     ///     // Destination: Canada Science and Technology Museum
@@ -87,7 +91,11 @@ impl GoogleMapsClient {
     ///
     /// ```rust
     /// use google_maps::prelude::*;
-    /// distance_matrix(
+    /// use rust_decimal_macros::dec;
+    ///
+    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+    ///
+    /// let distances = google_maps_client.distance_matrix(
     ///     // Origins
     ///     vec![
     ///         // Microsoft
@@ -145,8 +153,12 @@ impl GoogleMapsClient {
     /// converting geographic coordinates into a human-readable address.
     ///
     /// ```rust
-    /// use google_maps::LatLng;
-    /// reverse_geocoding(
+    /// use google_maps::prelude::*;
+    /// use rust_decimal_macros::dec;
+    ///
+    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+    ///
+    /// let address = google_maps_client.reverse_geocoding(
     ///     // 10 Downing St, Westminster, London
     ///     LatLng::try_from_dec(dec!(51.503_364), dec!(-0.127_625))?,
     /// )
@@ -169,8 +181,12 @@ impl GoogleMapsClient {
     /// offset.
     ///
     /// ```rust
-    /// use google_maps::{LatLng, NaiveDate};
-    /// time_zone(
+    /// use google_maps::prelude::*;
+    /// use rust_decimal_macros::dec;
+    ///
+    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+    ///
+    /// let time_zone = google_maps_client.time_zone(
     ///      // St. Vitus Cathedral in Prague, Czechia
     ///      LatLng::try_from_dec(dec!(50.090_903), dec!(14.400_512))?,
     ///      // Tuesday February 23, 2020 @ 6:00:00 pm
@@ -212,6 +228,22 @@ impl GoogleMapsClient {
     /// list of suggested queries matching the string. As the Query Autocomplete
     /// service can match on both full words and substrings, applications can
     /// send queries as the user types to provide on-the-fly predictions.
+    ///
+    ///
+    /// ```rust
+    /// use google_maps::prelude::*;
+    /// use rust_decimal_macros::dec;
+    ///
+    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+    ///
+    /// let predictions = google_maps_client.place_autocomplete("51".to_string())
+    ///     .with_location_and_radius(LatLng::try_from_dec(dec!(54), dec!(-114))?, 1_000)
+    ///     .with_type(AutocompleteType::Address)
+    ///     .execute()
+    ///     .await?;
+    ///
+    /// println!("{:#?}", predictions);
+    /// ```
 
     #[cfg(feature = "autocomplete")]
     pub fn query_autocomplete(
@@ -230,8 +262,10 @@ impl GoogleMapsClient {
     /// in a path that smoothly follows the geometry of the road.
     ///
     /// ```rust
-    /// use google_maps::LatLng;
+    /// use google_maps::prelude::*;
     /// use rust_decimal_macros::dec;
+    ///
+    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
     ///
     /// let snapped_points = google_maps_client.snap_to_roads(vec![
     ///     LatLng::try_from_dec(dec!(-35.27801), dec!(149.12958))?,
@@ -266,8 +300,10 @@ impl GoogleMapsClient {
     /// **If you are working with sequential GPS points, use Nearest Roads.**
     ///
     /// ```rust
-    /// use google_maps::LatLng;
+    /// use google_maps::prelude::*;
     /// use rust_decimal_macros::dec;
+    ///
+    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
     ///
     /// let snapped_points = google_maps_client.nearest_roads(vec![
     ///     LatLng::try_from_dec(dec!(-35.27801), dec!(149.12958))?,

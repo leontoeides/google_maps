@@ -25,11 +25,6 @@ to give back to the Rust community. I hope it saves someone out there some work.
 		[crates.io](https://crates.io/crates/google_maps) for the latest
 		version number.
 
-	* Optionally, add `rust_decimal = "1"` and `rust_decimal_macros = "1"`
-		for access to the `dec!` macro. This macro can be used to define
-		decimal numbers in your program. This is useful for efficiently
-		hard-coding latitudes and longitudes in your code.
-
 * The full documentation is available at [docs.rs](https://docs.rs/google_maps/)
 
 # What's new?
@@ -98,7 +93,8 @@ thanks [seanpianka](https://github.com/seanpianka)! Transitioned from `log`
 crate to the `tracing` crate.
 
 * 2.0.1: 2021-07-15: Now supports a user-configured Reqwest client in the Google
-Maps client builder. `ClientSettings::new("YOUR_API_KEY_HERE").with_reqwest_client(your_reqwest_client).build();`
+Maps client builder.
+`GoogleMapsClient::new("YOUR_API_KEY_HERE").with_reqwest_client(your_reqwest_client).build();`
 
 * 2.0.0: 2021-07-13: The Rust Google Maps client is now async thanks to
 [seanpianka](https://github.com/seanpianka)!
@@ -115,9 +111,8 @@ transit, driving, walking, or cycling.
 
 ```rust
 use google_maps::prelude::*;
-use rust_decimal_macros::dec;
 
-let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -144,9 +139,8 @@ start and end points.
 
 ```rust
 use google_maps::prelude::*;
-use rust_decimal_macros::dec;
 
-let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -180,9 +174,8 @@ values).
 
 ```rust
 use google_maps::prelude::*;
-use rust_decimal_macros::dec;
 
-let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -215,7 +208,7 @@ can use to place markers on a map, or position the map.
 ```rust
 use google_maps::prelude::*;
 
-let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -243,9 +236,8 @@ into a human-readable address.
 
 ```rust
 use google_maps::prelude::*;
-use rust_decimal_macros::dec;
 
-let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -283,9 +275,8 @@ UTC, and the daylight savings offset.
 
 ```rust
 use google_maps::prelude::*;
-use rust_decimal_macros::dec;
 
-let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -329,12 +320,12 @@ automatic retry parameters.
 ```rust
 use google_maps::prelude::*;
 
-let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE")
+let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE")
     // For all Google Maps Platform APIs, the client will limit 2 sucessful
     // requests for every 10 seconds:
     .with_rate(Api::All, 2, std::time::Duration::from_secs(10))
-    // Returns the `ClientSettings` struct to the caller. This struct is used to
-    // make Google Maps Platform requests.
+    // Returns the `GoogleMapsClient` struct to the caller. This struct is used
+    // to make Google Maps Platform requests.
     .build();
 ```
 
@@ -424,6 +415,5 @@ responding but I will respond. Thanks!
 partly implemented. If you would like to have any missing pieces implemented,
 please contact me.
 5. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
-There are no immediate plans for supporting this API. It's quite big and I have
-no current need for it. If you would like to have to implemented, please contact
-me.
+Only partly implemented. If you would like to have any missing pieces
+implemented, please contact me.

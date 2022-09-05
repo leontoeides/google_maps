@@ -53,7 +53,7 @@ shared amongst several APIs. Made `google_maps::country` module public.
 Implemented the `Place Autocomplete` and `Query Autocomplete` services. Example
 of basic usage:
 ```rust
-let google_maps_client = ClientSettings::new("YOUR_API_KEY_HERE");
+let google_maps_client = GoogleMapsClient::new("YOUR_API_KEY_HERE");
 
 let predictions = google_maps_client.place_autocomplete("51".to_string())
     .with_location_and_radius(LatLng::try_from_dec(dec!(54), dec!(-114))?, 1_000)
@@ -73,7 +73,7 @@ users may rely on reqwest's JS fetch API. Also, changed `query_string()` to
 ```rust
 use google_maps::prelude::*;
 
-let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE");
+let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Get query string from builder pattern:
 let query_url = google_maps_client.time_zone(
@@ -108,7 +108,8 @@ thanks [seanpianka](https://github.com/seanpianka)! Transitioned from `log`
 crate to the `tracing` crate.
 
 * 2.0.1: 2022-07-15: Now supports a user-configured Reqwest client in the Google
-Maps client builder. `ClientSettings::new("YOUR_API_KEY_HERE").with_reqwest_client(your_reqwest_client).finalize();`
+Maps client builder.
+`GoogleMapsClient::new("YOUR_API_KEY_HERE").with_reqwest_client(your_reqwest_client).build();`
 
 * 2.0.0: 2022-07-13: The Rust Google Maps client is now async thanks to
 [seanpianka](https://github.com/seanpianka)!
