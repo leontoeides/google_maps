@@ -30,7 +30,7 @@ impl ClientSettings {
         &mut self,
         reqwest_client: reqwest::Client,
     ) -> &mut ClientSettings {
-        self.reqwest_client = Some(reqwest_client);
+        self.reqwest_client = reqwest_client;
         self
     } // fn
 

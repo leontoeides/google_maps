@@ -24,11 +24,19 @@ impl ClientSettings {
 
     #[cfg(feature = "enable-reqwest")]
     pub fn new(key: &str) -> ClientSettings {
+
+        const VERSION: &str = env!("CARGO_PKG_VERSION");
+        let reqwest_client = reqwest::Client::builder()
+            .user_agent(format!("Google Maps Rust Client {VERSION}"))
+            .build()
+            .unwrap();
+
         ClientSettings {
             key: key.to_string(),
             rate_limit: RequestRate::default(),
-            reqwest_client: None,
+            reqwest_client,
         } // ClientSettings
+
     } // fn
 
     // -------------------------------------------------------------------------
@@ -120,10 +128,10 @@ impl ClientSettings {
     // -------------------------------------------------------------------------
     //
     /// The Geocoding API is a service that provides geocoding and reverse
-    /// geocoding of addresses. Geocoding is the process of converting addresses
-    /// (like a street address) into geographic coordinates (like latitude and
-    /// longitude), which you can use to place markers on a map, or position the
-    /// map.
+    /// geocoding of addresses. **Geocoding** is the process of converting
+    /// addresses (like a street address) into geographic coordinates (like
+    /// latitude and longitude), which you can use to place markers on a map, or
+    /// position the map.
 
     #[cfg(feature = "geocoding")]
     pub fn geocoding(&self) -> crate::geocoding::forward::ForwardRequest {
@@ -133,8 +141,8 @@ impl ClientSettings {
     // -------------------------------------------------------------------------
     //
     /// The Geocoding API is a service that provides geocoding and reverse
-    /// geocoding of addresses. Reverse geocoding is the process of converting
-    /// geographic coordinates into a human-readable address.
+    /// geocoding of addresses. **Reverse geocoding** is the process of
+    /// converting geographic coordinates into a human-readable address.
     ///
     /// ```rust
     /// use google_maps::LatLng;
@@ -154,10 +162,11 @@ impl ClientSettings {
 
     // -------------------------------------------------------------------------
     //
-    /// The Time Zone API provides time offset data for locations on the surface
-    /// of the earth. You request the time zone information for a specific
-    /// latitude/longitude pair and date. The API returns the name of that time
-    /// zone, the time offset from UTC, and the daylight savings offset.
+    /// The **Time Zone API** provides time offset data for locations on the
+    /// surface of the earth. You request the time zone information for a
+    /// specific latitude/longitude pair and date. The API returns the name of
+    /// that time zone, the time offset from UTC, and the daylight savings
+    /// offset.
     ///
     /// ```rust
     /// use google_maps::{LatLng, NaiveDate};
@@ -180,7 +189,7 @@ impl ClientSettings {
 
     // -------------------------------------------------------------------------
     //
-    /// The Place API _Place Autocomplete_ service returns place predictions.
+    /// The Place API **Place Autocomplete** service returns place predictions.
     /// The request specifies a textual search string and optional geographic
     /// bounds. The service can be used to provide autocomplete functionality
     /// for text-based geographic searches, by returning places such as
@@ -196,13 +205,13 @@ impl ClientSettings {
 
     // -------------------------------------------------------------------------
     //
-    /// The Place API _Query Autocomplete_ service allows you to add on-the-fly
-    /// geographic query predictions to your application. Instead of searching
-    /// for a specific location, a user can type in a categorical search, such
-    /// as "pizza near New York" and the service responds with a list of
-    /// suggested queries matching the string. As the Query Autocomplete service
-    /// can match on both full words and substrings, applications can send
-    /// queries as the user types to provide on-the-fly predictions.
+    /// The Place API **Query Autocomplete** service allows you to add
+    /// on-the-fly geographic query predictions to your application. Instead of
+    /// searching for a specific location, a user can type in a categorical
+    /// search, such as "pizza near New York" and the service responds with a
+    /// list of suggested queries matching the string. As the Query Autocomplete
+    /// service can match on both full words and substrings, applications can
+    /// send queries as the user types to provide on-the-fly predictions.
 
     #[cfg(feature = "autocomplete")]
     pub fn query_autocomplete(
@@ -257,6 +266,9 @@ impl ClientSettings {
     /// **If you are working with sequential GPS points, use Nearest Roads.**
     ///
     /// ```rust
+    /// use google_maps::LatLng;
+    /// use rust_decimal_macros::dec;
+    ///
     /// let snapped_points = google_maps_client.nearest_roads(vec![
     ///     LatLng::try_from_dec(dec!(-35.27801), dec!(149.12958))?,
     ///     LatLng::try_from_dec(dec!(60.170880), dec!(24.942795))?,

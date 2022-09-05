@@ -50,13 +50,9 @@ impl<'a> ReverseRequest<'a> {
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
             let response: Result<reqwest::Response, reqwest::Error> =
-                match &self.client_settings.reqwest_client {
-                    Some(reqwest_client) =>
-                        match reqwest_client.get(&*url).build() {
-                            Ok(request) => reqwest_client.execute(request).await,
-                            Err(error) => Err(error),
-                        }, // Some
-                    None => reqwest::get(&*url).await,
+                match self.client_settings.reqwest_client.get(&*url).build() {
+                    Ok(request) => self.client_settings.reqwest_client.execute(request).await,
+                    Err(error) => Err(error),
                 }; // match
 
             // Check response from the HTTP client:

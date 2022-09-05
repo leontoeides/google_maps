@@ -21,7 +21,7 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 * In your project's `Cargo.toml` file, under the `[dependencies]` section:
 
-	* Add `google_maps = "2.2"`. Check
+	* Add `google_maps = "3.0"`. Check
 		[crates.io](https://crates.io/crates/google_maps) for the latest
 		version number.
 
@@ -34,20 +34,23 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 # What's new?
 
-* 2.2.0: 2022-09-03: ⚠ **Breaking change**: `LatLng::try_from` had to be
-renamed to `try_from_dec` to fix name collision with the
-[TryFrom](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) trait.
-Added `try_from_f32` and `try_from_f64` methods to `LatLng` type.
+* 3.0.0: 2022-09-04: ⚠ **Breaking change**: `ClientSettings` renamed to
+`GoogleMapsClient`.
 
-* 2.2.0: 2022-09-03: Optional basic support for the
+* 3.0.0: 2022-09-03: ⚠ **Breaking change**: `LatLng::try_from` had to be
+renamed to `LatLng::try_from_dec` to fix name collision with the
+[TryFrom](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) trait.
+Added `try_from_f32` and `try_from_f64` methods for the `LatLng` type.
+
+* 3.0.0: 2022-09-03: Optional basic support for the
 [geo](https://crates.io/crates/geo) crate and [GeoRust](https://georust.org/)
 ecosystem. This support may be enabled using the `geo` feature flag. When the
-`geo` feature is enabled, some types will loose support for `serde`
+`geo` feature is enabled, some types may loose support for `serde`
 serialization & deserialization. See
 [CHANGELOG.md](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md)
 for more information on this update.
 
-* 2.2.0: 2022-08-27: Adjusted `tracing` log levels.
+* 3.0.0: 2022-08-27: Adjusted `tracing` log levels.
 
 * 2.1.7: 2022-08-27: `String` to `enum` table look-ups are now powered by the
 [phf](https://crates.io/crates/phf) (perfect hash functions) crate. Added manual
@@ -371,7 +374,7 @@ has brotli compression enabled.
 
 ```toml
 google_maps = {
-	version = "2.2",
+	version = "3.0",
 	default-features = false,
 	features = [
 		"directions",
