@@ -20,9 +20,11 @@ mod with_language;
 mod with_region;
 pub mod component;
 
+// -----------------------------------------------------------------------------
+
 use crate::{
     bounds::Bounds,
-    client_settings::ClientSettings,
+    client::GoogleMapsClient,
     geocoding::forward::component::Component,
     language::Language,
     region::Region,
@@ -35,12 +37,13 @@ use crate::{
 
 #[derive(Debug)]
 pub struct ForwardRequest<'a> {
+
     // Required parameters:
     // --------------------
 
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client_settings: &'a ClientSettings,
+    client: &'a GoogleMapsClient,
 
     // Optional parameters:
     // --------------------
@@ -94,4 +97,5 @@ pub struct ForwardRequest<'a> {
 
     /// Has the request been validated?
     validated: bool,
+
 } // struct

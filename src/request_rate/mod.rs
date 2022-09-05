@@ -1,6 +1,6 @@
 //! Contains the `RequestRate` struct and its associated traits. It is used to
 //! specify Google Maps Platform and per-API request rate limits. **Do not use
-//! this module to set request rates. Use the `ClientSettings` methods
+//! this module to set request rates. Use the `GoogleMapsClient` methods
 //! instead.**
 
 mod api_rate;
@@ -14,12 +14,17 @@ pub mod api;
 pub mod api_rate_limit;
 mod current_rate;
 
+// -----------------------------------------------------------------------------
+
 use crate::request_rate::api_rate::ApiRate;
 use crate::request_rate::api::Api;
 use std::collections::HashMap;
 
+// -----------------------------------------------------------------------------
+//
 /// Contains the request rates for the Google Maps Platform and the individual
 /// Google Maps APIs.
+
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct RequestRate {
     /// Used to specify the request rate for _all_ APIs in addition to the
@@ -28,6 +33,8 @@ pub struct RequestRate {
     /// observed afterward.
     pub rate_map: HashMap<Api, ApiRate>,
 } // struct
+
+// -----------------------------------------------------------------------------
 
 impl std::default::Default for RequestRate {
     /// Returns default values (empty) for the `RequestRate` struct.

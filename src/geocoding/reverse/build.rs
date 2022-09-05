@@ -17,7 +17,7 @@ impl<'a> ReverseRequest<'a> {
 
         let mut query = format!(
             "key={}&latlng={}",
-            self.client_settings.key,
+            self.client.key,
             String::from(&self.latlng),
         ); // format!
 

@@ -35,7 +35,7 @@ impl<'a> ForwardRequest<'a> {
         } // match
 
         // Observe any rate limiting before executing request:
-        self.client_settings.rate_limit.limit_apis(vec![&Api::All, &Api::Geocoding])
+        self.client.rate_limit.limit_apis(vec![&Api::All, &Api::Geocoding])
             .await;
 
         // Emit debug message so client can monitor activity:
@@ -50,8 +50,8 @@ impl<'a> ForwardRequest<'a> {
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
             let response: Result<reqwest::Response, reqwest::Error> =
-                match self.client_settings.reqwest_client.get(&*url).build() {
-                    Ok(request) => self.client_settings.reqwest_client.execute(request).await,
+                match self.client.reqwest_client.get(&*url).build() {
+                    Ok(request) => self.client.reqwest_client.execute(request).await,
                     Err(error) => Err(error),
                 }; // match
 

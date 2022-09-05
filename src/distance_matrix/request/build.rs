@@ -23,7 +23,7 @@ impl<'a> Request<'a> {
         let mut query = format!(
             "key={}&origins={}&destinations={}",
             // Key:
-            self.client_settings.key,
+            self.client.key,
             // Origins:
             utf8_percent_encode(
                 &self.origins

@@ -1,4 +1,4 @@
-use crate::client_settings::ClientSettings;
+use crate::client::GoogleMapsClient;
 use crate::latlng::LatLng;
 use crate::roads::snap_to_roads::request::Request;
 
@@ -13,8 +13,7 @@ impl<'a> Request<'a> {
     ///
     /// ## Arguments:
     ///
-    /// * `client_settings` ‧ Your application's Google Maps API client struct.
-    ///
+    /// * `client` ‧ Your application's Google Maps API client struct.
     /// * `path` ‧ The path to be snapped. Note: The snapping algorithm works
     /// best for points that are not too far apart. If you observe odd snapping
     /// behavior, try creating paths that have points closer together. To ensure
@@ -24,14 +23,14 @@ impl<'a> Request<'a> {
     /// points caused by GPS signal loss, or noise.
 
     pub fn new(
-        client_settings: &ClientSettings,
+        client: &GoogleMapsClient,
         path: Vec<LatLng>,
     ) -> Request {
 
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:
-            client_settings,
+            client,
             path,
             // Optional parameters:
             interpolate: None,

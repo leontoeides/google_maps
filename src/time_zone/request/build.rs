@@ -16,7 +16,7 @@ impl<'a> Request<'a> {
 
         let mut query = format!(
             "key={}&location={}&timestamp={}",
-            self.client_settings.key,
+            self.client.key,
             String::from(&self.location),
             self.timestamp.timestamp(),
         );

@@ -1,4 +1,4 @@
-use crate::client_settings::ClientSettings;
+use crate::client::GoogleMapsClient;
 #[cfg(feature = "enable-reqwest")]
 use crate::request_rate::RequestRate;
 #[cfg(feature = "directions")]
@@ -12,7 +12,7 @@ use chrono::{DateTime, Utc};
 
 // =============================================================================
 
-impl ClientSettings {
+impl GoogleMapsClient {
 
     // -------------------------------------------------------------------------
     //
@@ -23,7 +23,7 @@ impl ClientSettings {
     /// This method accepts no arguments.
 
     #[cfg(feature = "enable-reqwest")]
-    pub fn new(key: &str) -> ClientSettings {
+    pub fn new(key: &str) -> GoogleMapsClient {
 
         const VERSION: &str = env!("CARGO_PKG_VERSION");
         let reqwest_client = reqwest::Client::builder()
@@ -31,11 +31,11 @@ impl ClientSettings {
             .build()
             .unwrap();
 
-        ClientSettings {
+        GoogleMapsClient {
             key: key.to_string(),
             rate_limit: RequestRate::default(),
             reqwest_client,
-        } // ClientSettings
+        } // GoogleMapsClient
 
     } // fn
 
@@ -48,10 +48,10 @@ impl ClientSettings {
     /// This method accepts no arguments.
 
     #[cfg(not(feature = "enable-reqwest"))]
-    pub fn new(key: &str) -> ClientSettings {
-        ClientSettings {
+    pub fn new(key: &str) -> GoogleMapsClient {
+        GoogleMapsClient {
             key: key.to_string(),
-        } // ClientSettings
+        } // GoogleMapsClient
     } // fn
 
     // -------------------------------------------------------------------------

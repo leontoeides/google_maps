@@ -22,8 +22,10 @@ mod with_transit_route_preference;
 mod with_travel_mode;
 mod with_unit_system;
 
+// -----------------------------------------------------------------------------
+
 use crate::{
-    client_settings::ClientSettings,
+    client::GoogleMapsClient,
     directions::{
         request::{
             avoid::Avoid,
@@ -41,23 +43,26 @@ use crate::{
 }; // crate
 use chrono::NaiveDateTime;
 
+// -----------------------------------------------------------------------------
+//
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Distance Matrix API_ query**. The methods implemented for this struct are
 /// what's used to build your request.
 
 #[derive(Debug)]
 pub struct Request<'a> {
+
     // Required parameters:
     // --------------------
+
+    /// This structure contains the application's API key and other
+    /// user-definable settings such as "maximum retries."
+    client: &'a GoogleMapsClient,
 
     /// One or more locations to use as the finishing point for calculating
     /// travel distance and time. You can pass an address, latitude/longitude,
     /// place ID, or encoded polyline.
     destinations: Vec<Waypoint>,
-
-    /// This structure contains the application's API key and other
-    /// user-definable settings such as "maximum retries."
-    client_settings: &'a ClientSettings,
 
     /// The starting point for calculating travel distance and time. You can
     /// pass an address, latitude/longitude, place ID, or encoded polyline.
@@ -116,4 +121,5 @@ pub struct Request<'a> {
 
     /// Has the request been validated?
     validated: bool,
+
 } // struct

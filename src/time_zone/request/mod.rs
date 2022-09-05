@@ -13,20 +13,23 @@ mod query_url;
 mod with_language;
 
 use chrono::{DateTime, Utc};
-use crate::{client_settings::ClientSettings, language::Language, latlng::LatLng};
+use crate::{client::GoogleMapsClient, language::Language, latlng::LatLng};
 
+// -----------------------------------------------------------------------------
+//
 /// **Look at this `Request` struct for documentation on how to build your _Time
 /// Zone API_ query**. The methods implemented for this struct are what's used
 /// to build your request.
 
 #[derive(Debug)]
 pub struct Request<'a> {
+
     // Required parameters:
     // --------------------
 
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client_settings: &'a ClientSettings,
+    client: &'a GoogleMapsClient,
 
     /// The location to look up.
     location: LatLng,

@@ -1,19 +1,32 @@
 use crate::{
-    client_settings::ClientSettings,
+    client::GoogleMapsClient,
     directions::request::waypoint::Waypoint,
     distance_matrix::request::Request,
 }; // use
 
+// =============================================================================
+
 impl<'a> Request<'a> {
+
+    // -------------------------------------------------------------------------
+    //
+    /// Initializes the builder pattern for a Distance Matrix API query with the
+    /// required, non-optional parameters.
+    ///
+    /// ## Arguments:
+    ///
+    /// * `client` ‧ Your application's Google Maps API client struct.
+
     pub fn new(
-        client_settings: &ClientSettings,
+        client: &GoogleMapsClient,
         origins: Vec<Waypoint>,
         destinations: Vec<Waypoint>,
     ) -> Request {
+
         Request {
             // Required parameters:
+            client,
             destinations,
-            client_settings,
             origins,
             // Optional parameters:
             arrival_time: None,
@@ -30,5 +43,7 @@ impl<'a> Request<'a> {
             query: None,
             validated: false,
         } // struct
+
     } // fn
+
 } // impl

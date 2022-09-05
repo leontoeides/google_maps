@@ -1,20 +1,25 @@
-use crate::client_settings::ClientSettings;
+use crate::client::GoogleMapsClient;
 use crate::elevation::request::Request;
+
+// =============================================================================
 
 impl<'a> Request<'a> {
 
+    // -------------------------------------------------------------------------
+    //
     /// Initializes the builder pattern for a Elevation API query with the
     /// required, non-optional parameters.
     ///
     /// ## Arguments:
     ///
-    /// * `key` ‧ Your application's Google Cloud API key.
+    /// * `client` ‧ Your application's Google Maps API client struct.
 
-    pub fn new(client_settings: &ClientSettings) -> Request {
+    pub fn new(client: &GoogleMapsClient) -> Request {
+
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:
-            client_settings,
+            client,
             // Positional requests:
             locations: None,
             // Sampled path requests:
@@ -24,6 +29,7 @@ impl<'a> Request<'a> {
             query: None,
             validated: false,
         } // struct
+
     } // fn
 
 } // impl

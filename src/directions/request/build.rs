@@ -18,7 +18,7 @@ impl<'a> Request<'a> {
         // Builds the "required parameters" portion of the query string:
         let mut query = format!(
             "key={}&origin={}&destination={}",
-            self.client_settings.key,
+            self.client.key,
             String::from(&self.origin), // URL-encoding performed by From trait
             String::from(&self.destination), // URL-encoding performed by From trait
         ); // format!

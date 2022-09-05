@@ -16,22 +16,23 @@ mod with_offset;
 
 // -----------------------------------------------------------------------------
 
-use crate::{client_settings::ClientSettings, language::Language, latlng::LatLng};
+use crate::{client::GoogleMapsClient, language::Language, latlng::LatLng};
 
 // -----------------------------------------------------------------------------
-
+//
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Query Autocomplete_ query**. The methods implemented for this struct are
 /// what's used to build your request.
 
 #[derive(Debug)]
 pub struct Request<'a> {
+
     // Required parameters:
     // --------------------
 
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client_settings: &'a ClientSettings,
+    client: &'a GoogleMapsClient,
 
     /// The text string on which to search. The Query Autocomplete service will
     /// return candidate matches based on this string and order results based on

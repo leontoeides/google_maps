@@ -19,7 +19,7 @@ impl<'a> ForwardRequest<'a> {
         // This section builds the "required parameters" portion of the query
         // string:
 
-        let mut query = format!("key={}", self.client_settings.key);
+        let mut query = format!("key={}", self.client.key);
 
         // This section builds the "optional parameters" portion of the query
         // string:

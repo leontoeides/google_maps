@@ -33,7 +33,7 @@ impl<'a> Request<'a> {
         // Build "required parameters" portion of the query string:
         let query = format!(
             "key={key}&points={points}",
-            key=self.client_settings.key,
+            key=self.client.key,
         );
 
         // Set query string in Request struct.

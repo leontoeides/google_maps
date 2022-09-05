@@ -1,10 +1,14 @@
 use crate::{
-    client_settings::ClientSettings,
+    client::GoogleMapsClient,
     directions::request::{location::Location, Request},
 }; // use crate
 
+// =============================================================================
+
 impl<'a> Request<'a> {
 
+    // -------------------------------------------------------------------------
+    //
     /// Initializes the data structure for the builder pattern.
     ///
     /// ## Arguments:
@@ -12,14 +16,15 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub fn new(
-        client_settings: &'a ClientSettings,
+        client: &'a GoogleMapsClient,
         origin: Location,
         destination: Location,
     ) -> Request<'a> {
+
         Request {
             // Required parameters:
+            client,
             destination,
-            client_settings,
             origin,
             // Optional parameters:
             alternatives: None,
@@ -39,6 +44,7 @@ impl<'a> Request<'a> {
             query: None,
             validated: false,
         } // struct
+
     } // fn
 
 } // impl

@@ -15,14 +15,18 @@ mod with_language;
 mod with_location_types;
 mod with_result_types;
 
+// -----------------------------------------------------------------------------
+
 use crate::{
-    client_settings::ClientSettings,
+    client::GoogleMapsClient,
     geocoding::location_type::LocationType,
     language::Language,
     latlng::LatLng,
     place_type::PlaceType,
 }; // crate
 
+// -----------------------------------------------------------------------------
+//
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Geocoding API_ query**. The methods implemented for this struct are what's
 /// used to build your request. Reverse geocoding looks up a street address
@@ -30,12 +34,13 @@ use crate::{
 
 #[derive(Debug)]
 pub struct ReverseRequest<'a> {
+
     // Required parameters:
     // --------------------
 
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client_settings: &'a ClientSettings,
+    client: &'a GoogleMapsClient,
 
     /// The latitude and longitude values specifying the location for which you
     /// wish to obtain the closest, human-readable address.

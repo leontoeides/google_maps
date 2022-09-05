@@ -99,7 +99,7 @@ thanks [seanpianka](https://github.com/seanpianka)! Transitioned from `log`
 crate to the `tracing` crate.
 
 * 2.0.1: 2021-07-15: Now supports a user-configured Reqwest client in the Google
-Maps client builder. `ClientSettings::new("YOUR_API_KEY_HERE").with_reqwest_client(your_reqwest_client).finalize();`
+Maps client builder. `ClientSettings::new("YOUR_API_KEY_HERE").with_reqwest_client(your_reqwest_client).build();`
 
 * 2.0.0: 2021-07-13: The Rust Google Maps client is now async thanks to
 [seanpianka](https://github.com/seanpianka)!
@@ -336,7 +336,7 @@ let google_maps_client = ClientSettings::new("YOUR_GOOGLE_API_KEY_HERE")
     .with_rate(Api::All, 2, std::time::Duration::from_secs(10))
     // Returns the `ClientSettings` struct to the caller. This struct is used to
     // make Google Maps Platform requests.
-    .finalize();
+    .build();
 ```
 
 ## Feature Flags

@@ -107,7 +107,7 @@
 //!
 //! * 2.0.1: 2021-07-15: Now supports a user-configured Reqwest client in the
 //! Google Maps client builder.
-//! `ClientSettings::new("YOUR_API_KEY_HERE").with_reqwest_client(your_reqwest_client).finalize();`
+//! `ClientSettings::new("YOUR_API_KEY_HERE").with_reqwest_client(your_reqwest_client).build();`
 //!
 //! * 2.0.0: 2021-07-13: The Rust Google Maps client is now async thanks to
 //! [seanpianka](https://github.com/seanpianka)!
@@ -344,7 +344,7 @@
 //!     .with_rate(Api::All, 2, std::time::Duration::from_secs(10))
 //!     // Returns the `ClientSettings` struct to the caller. This struct is used to
 //!     // make Google Maps Platform requests.
-//!     .finalize();
+//!     .build();
 //! ```
 //!
 //! ## Feature Flags
@@ -440,7 +440,7 @@
 // Common / global modules:
 
 mod bounds;
-mod client_settings;
+mod client;
 mod language;
 mod latlng;
 mod place_type;
@@ -467,22 +467,23 @@ pub mod places;
 #[cfg(feature = "roads")]
 pub mod roads;
 
-// Optional dependencies:
-
-#[cfg(feature = "enable-reqwest")]
-mod request_rate;
-
 // Re-exports:
 
 pub use crate::{
     bounds::Bounds,
-    client_settings::ClientSettings,
+    client::GoogleMapsClient,
+    client::GoogleMapsClient as ClientSettings,
     country::Country,
     language::Language,
     latlng::LatLng,
     place_type::PlaceType,
     region::Region,
 }; // crate
+
+// Optional dependencies:
+
+#[cfg(feature = "enable-reqwest")]
+mod request_rate;
 
 #[cfg(feature = "enable-reqwest")]
 pub use crate::request_rate::api::Api;

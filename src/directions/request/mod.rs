@@ -33,9 +33,11 @@ pub mod transit_route_preference;
 pub mod unit_system;
 pub mod waypoint;
 
+// -----------------------------------------------------------------------------
+
 use chrono::NaiveDateTime;
 use crate::{
-    client_settings::ClientSettings,
+    client::GoogleMapsClient,
     directions::request::{
         avoid::Avoid,
         departure_time::DepartureTime,
@@ -51,22 +53,25 @@ use crate::{
     region::Region,
 }; // crate
 
+// -----------------------------------------------------------------------------
+//
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Directions API_ query**. The methods implemented for this struct are what's
 /// used to build your request.
 
 #[derive(Debug)]
 pub struct Request<'a> {
+
     // Required parameters:
     // --------------------
+
+    /// This structure contains the application's API key and other
+    /// user-definable settings such as "maximum retries."
+    client: &'a GoogleMapsClient,
 
     /// The address, latitude/longitude, or place ID to which you wish to
     /// calculate directions.
     destination: Location,
-
-    /// This structure contains the application's API key and other
-    /// user-definable settings such as "maximum retries."
-    client_settings: &'a ClientSettings,
 
     /// The address, latitude/longitude, or place ID from which you wish to
     /// calculate directions.
@@ -137,4 +142,5 @@ pub struct Request<'a> {
 
     /// Has the request been validated?
     validated: bool,
+
 } // struct

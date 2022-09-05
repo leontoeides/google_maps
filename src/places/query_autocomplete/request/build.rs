@@ -19,7 +19,7 @@ impl<'a> Request<'a> {
 
         let mut query = format!(
             "key={}&input={}",
-            self.client_settings.key,
+            self.client.key,
             utf8_percent_encode(&self.input, NON_ALPHANUMERIC),
         );
 

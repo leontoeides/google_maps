@@ -22,7 +22,7 @@ default = [
 	"elevation",
 	"geocoding",
 	"time_zone",
-	"autocomplete", # (Places autocomplete-related APIs, other Places APIs will be under "places" feature)
+	"autocomplete", # Places API autocomplete-related services, other services will be under "places" feature.
 	"roads",
 	"enable-reqwest",
 	"reqwest/default-tls",

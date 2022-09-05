@@ -22,7 +22,7 @@ impl<'a> Request<'a> {
         // string:
 
         let mut query = String::from("key=");
-        query.push_str(&self.client_settings.key);
+        query.push_str(&self.client.key);
 
         // This section builds the "positional request" portion of the query
         // string:

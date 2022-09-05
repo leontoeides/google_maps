@@ -1,10 +1,10 @@
-//! Contains the `ClientSettings` struct and its associated traits. Use its
+//! Contains the `GoogleMapsClient` struct and its associated traits. Use its
 //! implemented methods to set your _Google API key_ and other settings such as:
 //! _rate limiting_, _maxium retries_, & _retry delay times_ for your requests.
 
 // -----------------------------------------------------------------------------
 
-mod finalize;
+mod build;
 mod impls;
 #[cfg(feature = "enable-reqwest")]
 mod with_rate;
@@ -18,7 +18,7 @@ use crate::request_rate::RequestRate;
 
 // -----------------------------------------------------------------------------
 //
-/// Use the `ClientSettings` struct's implemented methods to set your _Google
+/// Use the `GoogleMapsClient` struct's implemented methods to set your _Google
 /// API key_ and other settings such as: _rate limiting_, _maxium retries_, &
 /// _retry delay times_ for your requests.
 ///
@@ -29,15 +29,15 @@ use crate::request_rate::RequestRate;
 /// How to use this structure's methods in a builder pattern:
 ///
 /// ```rust
-/// let mut my_settings = ClientSettings::new(YOUR_GOOGLE_API_KEY_HERE)
+/// let mut my_settings = GoogleMapsClient::new(YOUR_GOOGLE_API_KEY_HERE)
 ///     .with_max_delay(std::time::Duration::from_secs(32))
 ///     .with_max_retries(10)
 ///     .with_rate(Api::All, 1, std::time::Duration::from_secs(2))
-///     .finalize();
+///     .build();
 /// ```
 
 #[derive(Clone, Debug)]
-pub struct ClientSettings {
+pub struct GoogleMapsClient {
 
     /// Your application's API key. This key identifies your application for
     /// purposes of quota management. Learn how to [get a

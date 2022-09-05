@@ -18,7 +18,8 @@ pub use chrono_tz::Tz;
 
 pub use crate::{
     bounds::Bounds,
-    client_settings::ClientSettings,
+    client::GoogleMapsClient,
+    client::GoogleMapsClient as ClientSettings,
     country::Country,
     language::Language,
     latlng::LatLng,

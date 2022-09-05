@@ -15,23 +15,25 @@ mod query_url;
 mod validate;
 pub mod locations;
 
-use crate::{
-    client_settings::ClientSettings,
-    elevation::request::locations::Locations,
-}; // crate
+// -----------------------------------------------------------------------------
 
-/// **Look at this `Request` struct for documentation on how to build your _Time
-/// Zone API_ query**. The methods implemented for this struct are what's used
-/// to build your request.
+use crate::{client::GoogleMapsClient, elevation::request::locations::Locations};
+
+// -----------------------------------------------------------------------------
+//
+/// **Look at this `Request` struct for documentation on how to build your
+/// _Elevation API_ query**. The methods implemented for this struct are what's
+/// used to build your request.
 
 #[derive(Debug)]
 pub struct Request<'a> {
+
     // Required parameters:
     // --------------------
 
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client_settings: &'a ClientSettings,
+    client: &'a GoogleMapsClient,
 
     // Positional Requests:
     // --------------------
@@ -65,4 +67,5 @@ pub struct Request<'a> {
 
     /// Has the request been validated?
     validated: bool,
+
 } // struct

@@ -16,7 +16,7 @@ mod with_interpolation;
 
 // -----------------------------------------------------------------------------
 
-use crate::client_settings::ClientSettings;
+use crate::client::GoogleMapsClient;
 use crate::latlng::LatLng;
 
 // -----------------------------------------------------------------------------
@@ -33,7 +33,7 @@ pub struct Request<'a> {
 
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client_settings: &'a ClientSettings,
+    client: &'a GoogleMapsClient,
 
     /// The path to be snapped. The path parameter accepts a list of
     /// latitude/longitude pairs. Latitude and longitude values should be

@@ -1,12 +1,18 @@
 use crate::request_rate::{
-    api::Api, api_rate::ApiRate,
-    target_rate::TargetRate, RequestRate,
+    api::Api,
+    api_rate::ApiRate,
+    RequestRate,
+    target_rate::TargetRate,
 }; // use crate::request_rate
 use std::time::Duration;
 use stream_throttle::{ThrottleRate, ThrottlePool};
 
+// =============================================================================
+
 impl RequestRate {
 
+    // -------------------------------------------------------------------------
+    //
     /// Specifies the request rate for the selected API. _Do not use this method
     /// to set request rate limits, use `ClientSettings.with_rate()` instead_.
     ///

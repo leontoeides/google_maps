@@ -1,5 +1,5 @@
 use chrono::{DateTime, Utc};
-use crate::client_settings::ClientSettings;
+use crate::client::GoogleMapsClient;
 use crate::latlng::LatLng;
 use crate::time_zone::request::Request;
 
@@ -14,9 +14,9 @@ impl<'a> Request<'a> {
     ///
     /// ## Arguments:
     ///
-    /// * `client_settings` - Your application's Google Maps API client struct.
-    /// * `location` - Latitude & longitude of the desired time zone location.
-    /// * `timestamp` - Time is used to determine if Daylight Savings is
+    /// * `client` ‧ Your application's Google Maps API client struct.
+    /// * `location` ‧ Latitude & longitude of the desired time zone location.
+    /// * `timestamp` ‧ Time is used to determine if Daylight Savings is
     /// applicable.
     ///
     /// ## Example:
@@ -24,6 +24,7 @@ impl<'a> Request<'a> {
     /// ```rust
     /// use google_maps::prelude::TimeZoneRequest;
     /// use google_maps::{LatLng, NaiveDate};
+    ///
     /// let time_zone = TimeZoneRequest::new(
     ///     &my_settings,
     ///     // St. Vitus Cathedral in Prague, Czechia
@@ -34,14 +35,15 @@ impl<'a> Request<'a> {
     /// ```
 
     pub fn new(
-        client_settings: &ClientSettings,
+        client: &GoogleMapsClient,
         location: LatLng,
         timestamp: DateTime<Utc>,
     ) -> Request {
+
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:
-            client_settings,
+            client,
             location,
             timestamp,
             // Optional parameters:
@@ -49,6 +51,7 @@ impl<'a> Request<'a> {
             // Internal use only:
             query: None,
         } // struct
+
     } // fn
 
     // -------------------------------------------------------------------------
@@ -62,21 +65,22 @@ impl<'a> Request<'a> {
     ///
     /// ## Arguments:
     ///
-    /// * `client_settings` - Your application's Google Maps API client struct.
+    /// * `client` ‧ Your application's Google Maps API client struct.
     /// * `coordinate` - `Coordinate` of the desired time zone location.
     /// * `timestamp` - Time is used to determine if Daylight Savings is
     /// applicable.
 
     #[cfg(feature = "geo")]
     pub fn try_new_coordinate<'b>(
-        client_settings: &'a ClientSettings,
+        client: &'a GoogleMapsClient,
         coordinate: &'b geo_types::Coordinate,
         timestamp: DateTime<Utc>,
     ) -> Result<Request<'a>, crate::error::Error> {
+
         // Instantiate struct and return it to caller:
         Ok(Request {
             // Required parameters:
-            client_settings,
+            client,
             location: LatLng::try_from(coordinate)?,
             timestamp,
             // Optional parameters:
@@ -84,6 +88,7 @@ impl<'a> Request<'a> {
             // Internal use only:
             query: None,
         }) // struct
+
     } // fn
 
     // -------------------------------------------------------------------------
@@ -97,21 +102,22 @@ impl<'a> Request<'a> {
     ///
     /// ## Arguments:
     ///
-    /// * `client_settings` - Your application's Google Maps API client struct.
+    /// * `client` ‧ Your application's Google Maps API client struct.
     /// * `point` - `Point` of the desired time zone location.
     /// * `timestamp` - Time is used to determine if Daylight Savings is
     /// applicable.
 
     #[cfg(feature = "geo")]
     pub fn try_new_point<'b>(
-        client_settings: &'a ClientSettings,
+        client: &'a GoogleMapsClient,
         point: &'b geo_types::Point,
         timestamp: DateTime<Utc>,
     ) -> Result<Request<'a>, crate::error::Error> {
+
         // Instantiate struct and return it to caller:
         Ok(Request {
             // Required parameters:
-            client_settings,
+            client,
             location: LatLng::try_from(point)?,
             timestamp,
             // Optional parameters:
@@ -119,6 +125,7 @@ impl<'a> Request<'a> {
             // Internal use only:
             query: None,
         }) // struct
+
     } // fn
 
 } // impl

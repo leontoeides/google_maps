@@ -1,8 +1,12 @@
-use crate::{client_settings::ClientSettings, request_rate::api::Api};
+use crate::{client::GoogleMapsClient, request_rate::api::Api};
 use std::time::Duration;
 
-impl ClientSettings {
+// =============================================================================
 
+impl GoogleMapsClient {
+
+    // -------------------------------------------------------------------------
+    //
     /// Sets the rate limit for the specified API.
     ///
     /// ## Arguments
@@ -112,7 +116,7 @@ impl ClientSettings {
         api: Api,
         requests: u16,
         per_duration: Duration,
-    ) -> &mut ClientSettings {
+    ) -> &mut GoogleMapsClient {
         self.rate_limit.with_rate(api, requests, per_duration);
         self
     } // fn

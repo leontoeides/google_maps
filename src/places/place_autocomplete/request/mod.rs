@@ -24,7 +24,7 @@ pub mod autocomplete_type;
 
 use crate::country::Country;
 use crate::places::place_autocomplete::request::autocomplete_type::AutocompleteType;
-use crate::{client_settings::ClientSettings, language::Language, latlng::LatLng, region::Region};
+use crate::{client::GoogleMapsClient, language::Language, latlng::LatLng, region::Region};
 
 // -----------------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ pub struct Request<'a> {
 
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client_settings: &'a ClientSettings,
+    client: &'a GoogleMapsClient,
 
     /// The text string on which to search. The Place Autocomplete service will
     /// return candidate matches based on this string and order results based on
