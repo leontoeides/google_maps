@@ -310,9 +310,7 @@ impl GoogleMapsClient {
     ///     LatLng::try_from_dec(dec!(60.170880), dec!(24.942795))?,
     ///     LatLng::try_from_dec(dec!(60.170879), dec!(24.942796))?,
     ///     LatLng::try_from_dec(dec!(60.170877), dec!(24.942796))?,
-    /// ])
-    /// .execute()
-    /// .await?;
+    /// ]).execute().await?;
     /// ```
 
     #[cfg(feature = "roads")]

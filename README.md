@@ -34,6 +34,11 @@ renamed to `LatLng::try_from_dec` to fix name collision with the
 [TryFrom](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) trait.
 Added `try_from_f32` and `try_from_f64` methods for the `LatLng` type.
 
+* 3.0.0: 2022-09-04: Initial support for Google Maps Roads API: the **Snap To
+Roads** and the **Nearest Roads** services have been implemented. Unsure about
+supporting **Speed Limits** since, according to the documentation, it requires
+a special Google Maps plan.
+
 * 3.0.0: 2022-09-03: Optional basic support for the
 [geo](https://crates.io/crates/geo) crate and [GeoRust](https://georust.org/)
 ecosystem. This support may be enabled using the `geo` feature flag. When the
