@@ -14,7 +14,8 @@ a special Google Maps plan.
 [geo](https://crates.io/crates/geo) crate and [GeoRust](https://georust.org/)
 ecosystem. This support may be enabled using the `geo` feature flag. When the
 `geo` feature is enabled, some types may loose support for `serde`
-serialization & deserialization.
+serialization & deserialization. If I've missed something you want or if you
+think of a better way of doing this, feel free to reach out.
 
 * 3.0.0: 2022-09-03: This crate's `Waypoint` and `Location` types now have
 variants that represent the [geo](https://crates.io/crates/geo) crate's

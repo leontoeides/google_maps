@@ -43,7 +43,8 @@ a special Google Maps plan.
 [geo](https://crates.io/crates/geo) crate and [GeoRust](https://georust.org/)
 ecosystem. This support may be enabled using the `geo` feature flag. When the
 `geo` feature is enabled, some types may loose support for `serde`
-serialization & deserialization. See
+serialization & deserialization. If I've missed something you want or if you
+think of a better way of doing this, feel free to reach out. See
 [CHANGELOG.md](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md)
 for more information on this update.
 

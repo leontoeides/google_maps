@@ -49,10 +49,11 @@
 //! requires a special Google Maps plan.
 //!
 //! * 3.0.0: 2022-09-03: Optional basic support for the
-//! [geo](https://crates.io/crates/geo) crate and
-//! [GeoRust](https://georust.org/) ecosystem. This support may be enabled using
-//! the `geo` feature flag. When the `geo` feature is enabled, some types may
-//! loose support for `serde` serialization & deserialization. See
+//! [geo](https://crates.io/crates/geo) crate and [GeoRust](https://georust.org/)
+//! ecosystem. This support may be enabled using the `geo` feature flag. When
+//! the `geo` feature is enabled, some types may loose support for `serde`
+//! serialization & deserialization. If I've missed something you want or if you
+//! think of a better way of doing this, feel free to reach out. See
 //! [CHANGELOG.md](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md)
 //! for more information on this update.
 //!
@@ -431,6 +432,8 @@
 //! 5. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
 //! Only partly implemented. If you would like to have any missing pieces
 //! implemented, please contact me.
+
+#![forbid(unsafe_code)]
 
 #![doc(html_favicon_url = "https://www.arkiteq.ca/crates/google_maps/icon.png")]
 #![doc(html_logo_url = "https://www.arkiteq.ca/crates/google_maps/logo.png")]
