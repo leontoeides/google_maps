@@ -21,6 +21,10 @@ pub enum GeocoderStatus {
     /// may occur if the geocoder was passed a non-existent `address`.
     #[serde(alias = "ZERO_RESULTS")]
     ZeroResults,
+    /// Indicates that the request could not be processed due to a server error.
+    /// The request may succeed if you try again.
+    #[serde(alias = "UNKNOWN_ERROR")]
+    UnknownError,
 } // struct
 
 // -----------------------------------------------------------------------------
@@ -47,6 +51,7 @@ impl std::convert::From<&GeocoderStatus> for String {
         match geocoder_status {
             GeocoderStatus::Ok => String::from("OK"),
             GeocoderStatus::ZeroResults => String::from("ZERO_RESULTS"),
+            GeocoderStatus::UnknownError => String::from("UNKNOWN_ERROR"),
         } // match
     } // fn
 } // impl
@@ -56,6 +61,7 @@ impl std::convert::From<&GeocoderStatus> for String {
 static GEOCODER_STATUSES_BY_CODE: phf::Map<&'static str, GeocoderStatus> = phf_map! {
     "OK" => GeocoderStatus::Ok,
     "ZERO_RESULTS" => GeocoderStatus::ZeroResults,
+    "UNKNOWN_ERROR" => GeocoderStatus::UnknownError,
 };
 
 impl std::convert::TryFrom<&str> for GeocoderStatus {
@@ -108,6 +114,7 @@ impl std::fmt::Display for GeocoderStatus {
         match self {
             GeocoderStatus::Ok => write!(f, "OK"),
             GeocoderStatus::ZeroResults => write!(f, "Zero Results"),
+            GeocoderStatus::UnknownError => write!(f, "Unknown Error"),
         } // match
     } // fn
 } // impl
