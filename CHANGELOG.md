@@ -1,5 +1,8 @@
 # Change Log
 
+* 3.0.1: 2022-10-01: Added `UNKNOWN_ERROR` variant to Directions API's geocoder
+status.
+
 * 3.0.0: 2022-09-03: ⚠ **Breaking change**: `LatLng::try_from` had to be
 renamed to `LatLng::try_from_dec` to fix name collision with the
 [TryFrom](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) trait.

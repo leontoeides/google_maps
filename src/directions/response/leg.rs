@@ -1,17 +1,17 @@
 //! A single leg consisting of a set of steps in a DirectionsResult. Some fields
 //! in the leg may not be returned for all requests.
 
-use crate::{
-    directions::response::{
-        directions_distance::DirectionsDistance,
-        directions_duration::DirectionsDuration,
-        step::Step,
-        transit_time::TransitTime,
-    }, // crate::directions::response
-    latlng::LatLng,
-}; // use crate
+use crate::directions::response::{
+    directions_distance::DirectionsDistance,
+    directions_duration::DirectionsDuration,
+    step::Step,
+    transit_time::TransitTime,
+}; // crate::directions::response
+use crate::latlng::LatLng;
 use serde::{Deserialize, Serialize};
 
+// -----------------------------------------------------------------------------
+//
 /// A single leg consisting of a set of steps in a DirectionsResult. Some fields
 /// in the leg may not be returned for all requests. Note that though this
 /// result is "JSON-like," it is not strictly JSON, as it directly and
@@ -56,6 +56,8 @@ pub struct Leg {
     /// individual steps in this leg.
     pub steps: Vec<Step>,
 } // struct
+
+// -----------------------------------------------------------------------------
 
 impl Leg {
 
