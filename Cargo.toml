@@ -47,10 +47,10 @@ rustls = [ "reqwest/rustls-tls" ]
 [dependencies]
 backoff = { version = "0.4", optional = true, features = [ "futures", "tokio" ] }
 chrono = { version = "0.4", optional = true, features = [ "serde" ] }
-chrono-tz = { version = "0.6", optional = true, features = [ "serde" ] }
+chrono-tz = { version = "0.7", optional = true, features = [ "serde" ] }
 futures = { version = "0.3", optional = true }
 geo-types = { version = "0.7", optional = true, features = [ "serde" ] }
-percent-encoding = "2.1"
+percent-encoding = "2.2"
 phf = { version = "0.11", features = [ "macros" ] }
 reqwest = { version = "0.11", optional = true, default-features = false }
 rust_decimal = {version = "1", features = [ "serde-float" ] }
