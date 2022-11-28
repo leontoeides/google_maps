@@ -171,6 +171,42 @@ pub use crate::places::place_autocomplete::{
 
 // -----------------------------------------------------------------------------
 
+#[cfg(feature = "places")]
+pub use crate::places::{
+    business_status::BusinessStatus,
+    error::Error as PlacesError,
+    place::Place,
+    place_editorial_summary::PlaceEditorialSummary,
+    place_opening_hours::PlaceOpeningHours,
+    place_opening_hours_period::PlaceOpeningHoursPeriod,
+    place_opening_hours_period_detail::PlaceOpeningHoursPeriodDetail,
+    place_photo::PlacePhoto,
+    place_review::PlaceReview,
+    place_special_day::PlaceSpecialDay,
+    secondary_hours_type::SecondaryHoursType,
+    status::Status as PlacesStatus,
+}; // crate::places
+
+// -----------------------------------------------------------------------------
+
+#[cfg(feature = "places")]
+pub use crate::places::place_search::text_search::{
+    request::Request as TextSearchRequest,
+    response::Response as TextSearchResponse,
+}; // text_search
+
+// -----------------------------------------------------------------------------
+
+#[cfg(feature = "places")]
+pub use crate::places::place_details::{
+    field::Field,
+    request::Request as PlaceDetailsRequest,
+    response::Response as PlaceDetailsResponse,
+    sort_order::SortOrder,
+}; // place_details
+
+// -----------------------------------------------------------------------------
+
 #[cfg(feature = "roads")]
 pub use crate::roads::{
     error::Error as RoadsError,

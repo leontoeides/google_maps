@@ -1,7 +1,8 @@
 //! An object describing the opening hours of a place.
 
-use chrono::NaiveDate;
-use serde::{Deserialize, Serialize};
+use chrono::{NaiveDate, NaiveTime, Weekday};
+use serde::de::{Unexpected, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 
 // -----------------------------------------------------------------------------
 //
@@ -12,11 +13,13 @@ pub struct PlaceOpeningHoursPeriodDetail {
 
     /// A number from 0–6, corresponding to the days of the week, starting on
     /// Sunday. For example, 2 means Tuesday.
-    pub day: u8,
+    #[serde(deserialize_with = "integer_as_weekday")]
+    pub day: Weekday,
 
     /// May contain a time of day in 24-hour hhmm format. Values are in the
     /// range 0000–2359. The time will be reported in the place’s time zone.
-    pub time: String,
+    #[serde(deserialize_with = "str_as_naive_time")]
+    pub time: NaiveTime,
 
     /// A date expressed in RFC3339 format in the local timezone for the place,
     /// for example 2010-12-31.
@@ -29,6 +32,77 @@ pub struct PlaceOpeningHoursPeriodDetail {
     pub truncated: Option<bool>,
 
 } // struct PlaceOpeningHoursPeriodDetail
+
+// -----------------------------------------------------------------------------
+
+fn integer_as_weekday<'de, D>(deserializer: D) -> Result<Weekday, D::Error>
+where D: Deserializer<'de> {
+    deserializer.deserialize_u64(WeekdayVisitor)
+} // fn integer_as_weekday
+
+struct WeekdayVisitor;
+
+impl<'de> Visitor<'de> for WeekdayVisitor {
+
+    type Value = Weekday;
+
+    fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+        formatter.write_str(
+            "integer representation of weekday"
+        ) // write_str
+    } // fn expecting
+
+    fn visit_u64<E>(self, value: u64) -> Result<Weekday, E>
+    where E: serde::de::Error {
+        match value {
+            0 => Ok(Weekday::Sun),
+            1 => Ok(Weekday::Mon),
+            2 => Ok(Weekday::Tue),
+            3 => Ok(Weekday::Wed),
+            4 => Ok(Weekday::Thu),
+            5 => Ok(Weekday::Fri),
+            6 => Ok(Weekday::Sat),
+            _ => Err(
+                E::invalid_value(
+                    Unexpected::Unsigned(value),
+                    &"weekday between 0 and 6, where 0 is sunday"
+                ) // invalid_value
+            ), // _
+        } // match
+    } // fn visit_u64
+
+} // impl Visitor
+
+// -----------------------------------------------------------------------------
+
+fn str_as_naive_time<'de, D>(deserializer: D) -> Result<NaiveTime, D::Error>
+where D: Deserializer<'de> {
+    deserializer.deserialize_str(NaiveTimeVisitor)
+} // fn integer_as_weekday
+
+struct NaiveTimeVisitor;
+
+impl<'de> Visitor<'de> for NaiveTimeVisitor {
+
+    type Value = NaiveTime;
+
+    fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+        formatter.write_str(
+            "a string representation of time of day in 24-hour hhmm format"
+        ) // write_str
+    } // fn expecting
+
+    fn visit_str<E>(self, value: &str) -> Result<NaiveTime, E>
+    where E: serde::de::Error {
+        NaiveTime::parse_from_str(value, "%H%M").map_err(|_err| {
+            E::invalid_value(
+                Unexpected::Str(value),
+                &"time of day in 24-hour hhmm format. values are in the range 0000–2359"
+            ) // invalid_value
+        }) // map_err
+    } // fn visit_str
+
+} // impl Visitor
 
 // -----------------------------------------------------------------------------
 

@@ -1,6 +1,9 @@
 //! A review of the place submitted by a user.
 
-use serde::{Deserialize, Serialize};
+use chrono::{DateTime, LocalResult, TimeZone, Utc};
+use crate::Language;
+use serde::de::{Unexpected, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 
 // -----------------------------------------------------------------------------
 //
@@ -23,7 +26,8 @@ pub struct PlaceReview {
 
     /// The time that the review was submitted, measured in the number of
     /// seconds since since midnight, January 1, 1970 UTC.
-    pub time: i64,
+    #[serde(deserialize_with = "integer_as_date_time")]
+    pub time: DateTime<Utc>,
 
     /// The URL to the user's Google Maps Local Guides profile, if available.
     pub author_url: Option<String>,
@@ -33,7 +37,7 @@ pub struct PlaceReview {
     /// tag indicating country or region. For example, all the English reviews
     /// are tagged as 'en', and not 'en-AU' or 'en-UK' and so on. This field is
     /// empty if there is only a rating with no review text.
-    pub language: Option<String>,
+    pub language: Option<Language>,
 
     /// An IETF language code indicating the original language of the review. If
     /// the review has been translated, then original_language != language. This
@@ -41,7 +45,7 @@ pub struct PlaceReview {
     /// indicating country or region. For example, all the English reviews are
     /// tagged as 'en', and not 'en-AU' or 'en-UK' and so on. This field is
     /// empty if there is only a rating with no review text.
-    pub original_language: Option<String>,
+    pub original_language: Option<Language>,
 
     /// The URL to the user's profile photo, if available.
     pub profile_photo_url: Option<String>,
@@ -60,6 +64,52 @@ pub struct PlaceReview {
     pub translated: Option<bool>,
 
 } // struct PlaceReview
+
+// -----------------------------------------------------------------------------
+
+fn integer_as_date_time<'de, D>(deserializer: D) -> Result<DateTime<Utc>, D::Error>
+where D: Deserializer<'de> {
+    deserializer.deserialize_u64(DateTimeUtcVisitor)
+} // fn integer_as_date_time
+
+struct DateTimeUtcVisitor;
+
+impl<'de> Visitor<'de> for DateTimeUtcVisitor {
+
+    type Value = DateTime<Utc>;
+
+    fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+        formatter.write_str(
+            "integer representation of seconds since January 1, 1970 UTC"
+        ) // write_str
+    } // fn expecting
+
+    fn visit_u64<E>(self, value: u64) -> Result<DateTime<Utc>, E>
+    where E: serde::de::Error {
+
+        let value: i64 = match value.try_into() {
+            Ok(value_as_i64) => value_as_i64,
+            Err(_error) => return Err(
+                E::invalid_value(
+                    Unexpected::Unsigned(value),
+                    &"UNIX timestamp representing seconds since January 1, 1970 UTC",
+                ) // invalid_value
+            ), // Err
+        }; // match
+
+        match Utc.timestamp_opt(value, 0) {
+            LocalResult::Single(date_time_utc) => Ok(date_time_utc),
+            _ => Err(
+                E::invalid_value(
+                    Unexpected::Signed(value),
+                    &"UNIX timestamp representing seconds since January 1, 1970 UTC",
+                ) // invalid_value
+            ), // Err
+        } // match
+
+    } // fn visit_i64
+
+} // impl Visitor
 
 // -----------------------------------------------------------------------------
 

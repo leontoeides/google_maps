@@ -44,6 +44,7 @@ pub use crate::places::{
     error::Error,
     status::Status
 }; // place_search
+
 pub use crate::places::place_search::text_search::{
     request::Request,
     response::Response,

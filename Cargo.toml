@@ -36,7 +36,7 @@ distance_matrix = [ "chrono", "chrono-tz" ]
 elevation = []
 geo = [ "geo-types" ]
 geocoding = []
-places = []
+places = [ "chrono", "chrono-tz" ]
 roads = []
 time_zone = [ "chrono", "chrono-tz" ]
 # Reqwest features:

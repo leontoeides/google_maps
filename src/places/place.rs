@@ -1,13 +1,8 @@
 //! Attributes describing a place. Not all attributes will be available for all
 //! place types.
 
-use crate::geocoding::AddressComponent;
-use crate::geocoding::Geometry;
-use crate::places::BusinessStatus;
-use crate::places::PlaceEditorialSummary;
-use crate::places::PlaceOpeningHours;
-use crate::places::PlacePhoto;
-use crate::places::PlaceReview;
+use crate::geocoding::{AddressComponent, Geometry};
+use crate::places::{BusinessStatus, PlaceEditorialSummary, PlaceOpeningHours, PlacePhoto, PlaceReview};
 use crate::PlaceType;
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
@@ -16,8 +11,7 @@ use serde::{Deserialize, Serialize};
 //
 /// Attributes describing a place. Not all attributes will be available for all
 /// place types.
-
-#[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, PartialEq, Deserialize, Serialize)]
 pub struct Place {
 
     /// An array containing the separate components applicable to this address.
@@ -225,7 +219,7 @@ pub struct Place {
     /// saving time this would be 660 (+11 hours from UTC), and for places in
     /// California outside of daylight saving time this would be -480 (-8 hours
     /// from UTC).
-    pub utc_offset: Option<i16>,
+    pub utc_offset: Option<i32>,
 
     /// For establishment (`types:["establishment", ...]`) results only, the
     /// `vicinity` field contains a simplified address for the place, including
