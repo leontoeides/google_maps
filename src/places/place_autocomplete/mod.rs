@@ -49,7 +49,7 @@ const OUTPUT_FORMAT: &str = "json"; // json or xml
 // -----------------------------------------------------------------------------
 
 pub use crate::places::place_autocomplete::{
-    error::Error as Error,
+    error::Error,
     response::{
         matched_substring::MatchedSubstring,
         prediction::Prediction,

@@ -205,7 +205,7 @@ impl GoogleMapsClient {
 
     // -------------------------------------------------------------------------
     //
-    /// The Place API **Place Autocomplete** service returns place predictions.
+    /// The Places API **Place Autocomplete** service returns place predictions.
     /// The request specifies a textual search string and optional geographic
     /// bounds. The service can be used to provide autocomplete functionality
     /// for text-based geographic searches, by returning places such as
@@ -221,7 +221,7 @@ impl GoogleMapsClient {
 
     // -------------------------------------------------------------------------
     //
-    /// The Place API **Query Autocomplete** service allows you to add
+    /// The Places API **Query Autocomplete** service allows you to add
     /// on-the-fly geographic query predictions to your application. Instead of
     /// searching for a specific location, a user can type in a categorical
     /// search, such as "pizza near New York" and the service responds with a
@@ -251,6 +251,92 @@ impl GoogleMapsClient {
         input: String,
     ) -> crate::places::query_autocomplete::request::Request {
         crate::places::query_autocomplete::request::Request::new(self, input)
+    } // fn
+
+    // -------------------------------------------------------------------------
+    //
+    /// The Places API **Text Search** service returns information about a set
+    /// of places based on a string — for example "pizza in New York" or "shoe
+    /// stores near Ottawa" or "123 Main Street". The service responds with a
+    /// list of places matching the text string and any location bias that has
+    /// been set.
+    ///
+    /// The service is especially useful for making ambiguous address queries in
+    /// an automated system, and non-address components of the string may match
+    /// businesses as well as addresses. Examples of ambiguous address queries
+    /// are poorly-formatted addresses or requests that include non-address
+    /// components such as business names. Requests like the first two examples
+    /// below may return `ZERO_RESULTS` unless a location bias - such as Region,
+    /// Location, or Bounds - is set.
+    ///
+    /// | "10 High Street, UK" or "123 Main Street, US" | multiple "High Street"s in the UK; multiple "Main Street"s in the US. Query will not return desirable results unless a location restriction is set. |
+    /// |---|---|
+    /// | "ChainRestaurant New York" | multiple "ChainRestaurant" locations in New York; no street address or even street name. Query will not return desirable results unless a location restriction is set. |
+    /// | "10 High Street, Escher UK" or "123 Main Street, Pleasanton US" | only one "High Street" in the UK city of Escher; only one "Main Street" in the US city of Pleasanton CA. |
+    /// | "UniqueRestaurantName New York" | only one establishment with this name in New York; no street address needed to differentiate. |
+    /// | "pizza restaurants in New York" | this query contains its location restriction, and "pizza restaurants" is a well-defined place type. Will yield multiple results, as is expected. |
+    ///
+    /// The search response will include a list of places. You can send a Place
+    /// Details request for more information about any of the places in the
+    /// response.
+    ///
+    /// * Nearby Search and Text Search return all of the available data fields for
+    /// the selected place (a [subset of the supported fields](https://developers.google.com/maps/documentation/places/web-service/place-data-fields#places-api-fields-support)),
+    /// and you will be [billed accordingly](https://developers.google.com/maps/billing/understanding-cost-of-use#nearby-search)
+    /// There is no way to constrain Nearby Search or Text Search to only return
+    /// specific fields. To keep from requesting (and paying for) data that you
+    /// don't need, use a [Find Place request](https://developers.google.com/maps/documentation/places/web-service/search#FindPlaceRequests)
+    /// instead.
+    ///
+    /// ```rust
+    /// use google_maps::prelude::*;
+    /// use rust_decimal_macros::dec;
+    ///
+    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+    ///
+    /// let search_results = google_maps_client.text_search("Edmonton pizza".to_string())
+    ///     .with_location_and_radius(LatLng::try_from_dec(dec!(54), dec!(-114))?, 1_000)
+    ///     .with_type(AutocompleteType::Address)
+    ///     .execute()
+    ///     .await?;
+    ///
+    /// println!("{:#?}", search_results);
+    /// ```
+
+    #[cfg(feature = "places")]
+    pub fn text_search(
+        &self,
+        query: String,
+    ) -> crate::places::place_search::text_search::request::Request {
+        crate::places::place_search::text_search::request::Request::new(self, query)
+    } // fn
+
+    // -------------------------------------------------------------------------
+    //
+    /// The Places API **Place Details** service returns more details about a
+    /// particular establishment or point of interest. A Place Details request
+    /// returns more comprehensive information about the indicated place such as
+    /// its complete address, phone number, user rating and reviews.
+    ///
+    /// ```rust
+    /// use google_maps::prelude::*;
+    /// use rust_decimal_macros::dec;
+    ///
+    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+    ///
+    /// let details = google_maps_client.place_details("ChIJIyEbn74koFMR4xlRm4Ftp6M".to_string())
+    ///     .execute()
+    ///     .await?;
+    ///
+    /// println!("{:#?}", details);
+    /// ```
+
+    #[cfg(feature = "places")]
+    pub fn place_details(
+        &self,
+        place_id: String,
+    ) -> crate::places::place_details::request::Request {
+        crate::places::place_details::request::Request::new(self, place_id)
     } // fn
 
     // -------------------------------------------------------------------------

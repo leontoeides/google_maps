@@ -1,5 +1,11 @@
 # Change Log
 
+* 3.1.0: 2022-11-27: ⚠ **Breaking change**: `Geometry.location_type` is now an
+`Option`.
+
+* 3.1.0: 2022-11-27: Add basic support for Google Maps Places _Text Search_ and
+_Places Details_.
+
 * 3.0.1: 2022-10-01: Added `UNKNOWN_ERROR` variant to Directions API's geocoder
 status.
 

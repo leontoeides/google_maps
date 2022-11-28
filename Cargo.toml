@@ -1,6 +1,6 @@
 [package]
 name = "google_maps"
-version = "3.0.1"
+version = "3.1.0"
 authors = [ "Dylan Bowker <dylan.bowker@arkiteq.ca>" ]
 edition = "2021"
 categories = [ "api-bindings" ]
@@ -17,26 +17,28 @@ doctest = false
 
 [features]
 default = [
+	"autocomplete", # Places API autocomplete-related services, other services will be under "places" feature.
 	"directions",
 	"distance_matrix",
 	"elevation",
 	"geocoding",
-	"time_zone",
-	"autocomplete", # Places API autocomplete-related services, other services will be under "places" feature.
+	"places",
 	"roads",
+	"time_zone",
 	"enable-reqwest",
 	"reqwest/default-tls",
 	"reqwest/gzip",
 ]
 # Google Maps Client API features:
+autocomplete = []
 directions = [ "chrono", "chrono-tz" ]
 distance_matrix = [ "chrono", "chrono-tz" ]
 elevation = []
-geocoding = []
-time_zone = [ "chrono", "chrono-tz" ]
-autocomplete = []
 geo = [ "geo-types" ]
+geocoding = []
+places = []
 roads = []
+time_zone = [ "chrono", "chrono-tz" ]
 # Reqwest features:
 enable-reqwest = [ "reqwest", "backoff", "futures", "stream_throttle" ]
 brotli = [ "reqwest/brotli" ]
@@ -47,7 +49,7 @@ rustls = [ "reqwest/rustls-tls" ]
 [dependencies]
 backoff = { version = "0.4", optional = true, features = [ "futures", "tokio" ] }
 chrono = { version = "0.4", optional = true, features = [ "serde" ] }
-chrono-tz = { version = "0.7", optional = true, features = [ "serde" ] }
+chrono-tz = { version = "0.8", optional = true, features = [ "serde" ] }
 futures = { version = "0.3", optional = true }
 geo-types = { version = "0.7", optional = true, features = [ "serde" ] }
 percent-encoding = "2.2"

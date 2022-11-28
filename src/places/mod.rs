@@ -68,12 +68,12 @@
 //! Billing](https://developers.google.com/maps/documentation/places/web-service/usage-and-billing)
 //! documentation.
 
+// -----------------------------------------------------------------------------
+
 #[cfg(feature = "autocomplete")]
 pub mod place_autocomplete;
 #[cfg(feature = "autocomplete")]
 pub mod query_autocomplete;
-
-// -----------------------------------------------------------------------------
 
 #[cfg(feature = "autocomplete")]
 pub use crate::places::place_autocomplete::{
@@ -92,11 +92,56 @@ pub use crate::places::place_autocomplete::{
     }, // request
 }; // crate::places::place_autocomplete
 
-// -----------------------------------------------------------------------------
-
 #[cfg(feature = "autocomplete")]
 pub use crate::places::place_autocomplete::{
     request::{
         Request as QueryAutocompleteRequest,
     }, // request
 }; // crate::places::place_autocomplete
+
+// -----------------------------------------------------------------------------
+
+#[cfg(feature = "places")]
+pub mod business_status;
+#[cfg(feature = "places")]
+pub mod error;
+#[cfg(feature = "places")]
+pub mod place;
+#[cfg(feature = "places")]
+pub mod place_details;
+#[cfg(feature = "places")]
+pub mod place_editorial_summary;
+#[cfg(feature = "places")]
+pub mod place_opening_hours;
+#[cfg(feature = "places")]
+pub mod place_opening_hours_period;
+#[cfg(feature = "places")]
+pub mod place_opening_hours_period_detail;
+#[cfg(feature = "places")]
+pub mod place_photo;
+#[cfg(feature = "places")]
+pub mod place_review;
+#[cfg(feature = "places")]
+pub mod place_search;
+#[cfg(feature = "places")]
+pub mod place_special_day;
+#[cfg(feature = "places")]
+pub mod secondary_hours_type;
+#[cfg(feature = "places")]
+pub mod status;
+
+#[cfg(feature = "places")]
+pub use crate::places::{
+    business_status::BusinessStatus,
+    error::Error,
+    place::Place,
+    place_editorial_summary::PlaceEditorialSummary,
+    place_opening_hours::PlaceOpeningHours,
+    place_opening_hours_period::PlaceOpeningHoursPeriod,
+    place_opening_hours_period_detail::PlaceOpeningHoursPeriodDetail,
+    place_photo::PlacePhoto,
+    place_review::PlaceReview,
+    place_special_day::PlaceSpecialDay,
+    secondary_hours_type::SecondaryHoursType,
+    status::Status,
+}; // crate::places

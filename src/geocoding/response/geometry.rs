@@ -22,7 +22,7 @@ pub struct Geometry {
     pub location: LatLng,
 
     /// Stores additional data about the specified location.
-    pub location_type: LocationType,
+    pub location_type: Option<LocationType>,
 
     /// Contains the recommended viewport for displaying the returned result,
     /// specified as two latitude/longitude values defining the southwest and
