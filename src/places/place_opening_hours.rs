@@ -1,7 +1,9 @@
 //! An object describing the opening hours of a place.
 
+use chrono::NaiveDate;
 use crate::places::{PlaceOpeningHoursPeriod, PlaceSpecialDay, SecondaryHoursType};
 use serde::{Deserialize, Serialize};
+use std::collections::HashSet;
 
 // -----------------------------------------------------------------------------
 //
@@ -24,7 +26,7 @@ pub struct PlaceOpeningHours {
     ///
     /// See [PlaceSpecialDay](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceSpecialDay)
     /// for more information.
-    pub special_days: Option<PlaceSpecialDay>,
+    pub special_days: Option<Vec<PlaceSpecialDay>>,
 
     /// A type string used to identify the type of secondary hours (for example,
     /// `DRIVE_THROUGH`, `HAPPY_HOUR`, `DELIVERY`, `TAKEOUT`, `KITCHEN`,
@@ -48,3 +50,22 @@ impl std::str::FromStr for PlaceOpeningHours {
         serde_json::from_str(s)
     } // fn from_str
 }  // impl FromStr
+
+// -----------------------------------------------------------------------------
+//
+/// A helper function that returns the dates of upcoming special days for a
+/// place. This is meant to be used with the `Place.current_opening_hours`
+/// field. Using this with the `Place.current_opening_hours` will likely just
+/// return `None`.
+
+impl PlaceOpeningHours {
+    pub fn special_days(&self) -> Option<HashSet<NaiveDate>> {
+        self.special_days.as_ref()
+            .map(|special_days_vec| {
+                special_days_vec
+                    .iter()
+                    .filter_map(|place_special_day| place_special_day.date)
+                    .collect::<HashSet<NaiveDate>>()
+            }) // map
+    } // fn
+} // impl

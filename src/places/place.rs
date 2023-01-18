@@ -203,7 +203,7 @@ pub struct Place {
 
     /// Contains an array of feature types describing the given result. See the
     /// list of [supported types](https://developers.google.com/maps/documentation/places/web-service/supported_types#table2).
-    pub types: Vec<PlaceType>,
+    pub types: Option<Vec<PlaceType>>,
 
     /// Contains the URL of the official Google page for this place. This will
     /// be the Google-owned page that contains the best available information

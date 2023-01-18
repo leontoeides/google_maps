@@ -147,7 +147,7 @@ pub struct Request<'a> {
     /// * Note: Adding both `keyword` and `type` with the same value
     /// (`keyword=cafe&type=cafe` or `keyword=parking&type=parking`) can yield
     /// `ZERO_RESULTS`.
-    place_type: Option<PlaceType>,
+    place_types: Option<Vec<PlaceType>>,
 
     // Internal use only:
     // ------------------

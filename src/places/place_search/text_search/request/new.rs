@@ -39,7 +39,7 @@ impl<'a> Request<'a> {
             pagetoken: None,
             radius: None,
             region: None,
-            place_type: None,
+            place_types: None,
             // Internal use only:
             query: None,
         } // struct

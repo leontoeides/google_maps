@@ -1,3 +1,4 @@
+use crate::place_type::PlaceType;
 use crate::places::place_search::text_search::request::Request;
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 
@@ -57,9 +58,9 @@ impl<'a> Request<'a> {
         }
 
         // Place Type key/value pair:
-        if let Some(place_type) = &self.place_type {
+        if let Some(place_types) = &self.place_types {
             query.push_str("&type=");
-            query.push_str(&String::from(place_type))
+            query.push_str(&PlaceType::vec_to_csv(place_types))
         }
 
         // Set query string in Request struct.
