@@ -270,6 +270,7 @@ static LANGUAGES_BY_CODE: phf::Map<&'static str, Language> = phf_map! {
     "ca" => Language::Catalan,
     "zh" => Language::Chinese,
     "zh-CN" => Language::ChineseSimplified,
+    "zh-Hant" => Language::ChineseTraditional,
     "zh-HK" => Language::ChineseHongKong,
     "zh-TW" => Language::ChineseTraditional,
     "hr" => Language::Croatian,
