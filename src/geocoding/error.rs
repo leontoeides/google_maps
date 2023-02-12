@@ -53,7 +53,7 @@ impl std::fmt::Display for Error {
             Error::GoogleMapsService(status, error_message) => match error_message {
                 // If the Google Maps Geocoding API server generated an error
                 // message, return that:
-                Some(error_message) => write!(f, "Google Maps Geocoding API server: {}", error_message),
+                Some(error_message) => write!(f, "Google Maps Geocoding API server: {error_message}"),
                 // If the Google Maps Geocoding API server did not generate an
                 // error message, return a generic message derived from the
                 // response status:
@@ -83,25 +83,24 @@ impl std::fmt::Display for Error {
             Error::HttpUnsuccessful(status) => write!(f,
                 "Google Maps Geocoding API client: \
                 Could not successfully query the Google Cloud Platform service. \
-                The service last responded with a `{}` status.", status),
+                The service last responded with a `{status}` status."),
             Error::InvalidCountryCode(country_code) => write!(f,
                 "Google Maps Geocoding API client: \
-                `{}` is not a valid ISO 3166-1 Alpha-2 country code. \
+                `{country_code}` is not a valid ISO 3166-1 Alpha-2 country code. \
                 Note that the country code must be in uppercase. \
                 For a list of country codes see \
-                https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes",
-                country_code),
+                https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes"),
             Error::InvalidLocationTypeCode(location_type_code) => write!(f,
                 "Google Maps Geocoding API client: \
-                `{}` is not a known location type code. \
+                `{location_type_code}` is not a known location type code. \
                 Valid codes are `APPROXIMATE`, `GEOMETRIC_CENTER`, \
-                `RANGE_INTERPOLATED`, and `ROOFTOP`.", location_type_code),
+                `RANGE_INTERPOLATED`, and `ROOFTOP`."),
             Error::InvalidStatusCode(status_code) => write!(f,
                 "Google Maps Geocoding API client: \
-                `{}` is not a valid status code. \
+                `{status_code}` is not a valid status code. \
                 Valid codes are `INVALID_REQUEST`, `OK`, `OVER_DAILY_LIMIT`, \
                 `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, `UNKNOWN_ERROR`, and \
-                `ZERO_RESULTS`.", status_code),
+                `ZERO_RESULTS`."),
             Error::QueryNotBuilt => write!(f,
                 "Google Maps Geocoding API client: \
                 The query string must be built before the request may be sent to the Google Cloud Maps Platform. \
@@ -111,10 +110,10 @@ impl std::fmt::Display for Error {
                 The request must be validated before a query string may be built. \
                 Ensure the validate() method is called before build()."),
             #[cfg(feature = "enable-reqwest")]
-            Error::Reqwest(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {}", error),
+            Error::Reqwest(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {error}"),
             #[cfg(feature = "enable-reqwest")]
-            Error::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {}", error),
-            Error::SerdeJson(error) => write!(f, "Google Maps Geocoding API client in the Serde JSON library: {}", error),
+            Error::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {error}"),
+            Error::SerdeJson(error) => write!(f, "Google Maps Geocoding API client in the Serde JSON library: {error}"),
         } // match
     } // fn
 } // impl

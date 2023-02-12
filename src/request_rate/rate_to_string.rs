@@ -84,12 +84,12 @@ pub fn rate_to_string(
     // values and shows more of the fractional portion for small values:
 
     let mut quantity_string = match adjusted_units.0 {
-        q if q < 0.001 => format!("{:.6}", q),
-        q if q < 0.01 => format!("{:.5}", q),
-        q if q < 0.1 => format!("{:.4}", q),
-        q if q < 1.0 => format!("{:.3}", q),
-        q if q < 10.0 => format!("{:.2}", q),
-        q if q < 100.0 => format!("{:.1}", q),
+        q if q < 0.001 => format!("{q:.6}"),
+        q if q < 0.01 => format!("{q:.5}"),
+        q if q < 0.1 => format!("{q:.4}"),
+        q if q < 1.0 => format!("{q:.3}"),
+        q if q < 10.0 => format!("{q:.2}"),
+        q if q < 100.0 => format!("{q:.1}"),
         _ => format!("{:.0}", adjusted_units.0),
     }; // match
 

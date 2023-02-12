@@ -97,40 +97,32 @@ impl std::fmt::Display for Error {
             Error::ArrivalTimeIsForTransitOnly(travel_mode, arrival_time) => write!(f,
                 "Google Maps Distance Matrix API client: \
                 The with_arrival_time() method may only be used when with_travel_mode() is set to `TravelMode::Transit`. \
-                The travel mode is set to `{}` and the arrival time is set to `{}`. \
-                Try again either with a travel mode of `TravelMode::Transit` or no arrival time.",
-                travel_mode,
-                arrival_time),
+                The travel mode is set to `{travel_mode}` and the arrival time is set to `{arrival_time}`. \
+                Try again either with a travel mode of `TravelMode::Transit` or no arrival time."),
             Error::EitherAlternativesOrWaypoints(waypoint_count) => write!(f,
                 "Google Maps Distance Matrix API client: \
                 The with_alternatives() method cannot be set to `true` if with_waypoints() has been set. \
-                {} waypoint(s) are set. \
-                Try again either with no waypoints or no alternatives.",
-                waypoint_count),
+                {waypoint_count} waypoint(s) are set. \
+                Try again either with no waypoints or no alternatives."),
             Error::EitherDepartureTimeOrArrivalTime(arrival_time, departure_time) => write!(f,
                 "Google Maps Distance Matrix API client: \
                 The with_departure_time() method cannot be used when with_arrival_time() has been set. \
-                The arrival time is set to `{}` and the departure time is set to `{}`. \
-                Try again either with no arrival time or no departure time.",
-                arrival_time,
-                departure_time),
+                The arrival time is set to `{arrival_time}` and the departure time is set to `{departure_time}`. \
+                Try again either with no arrival time or no departure time."),
             Error::EitherRestrictionsOrWaypoints(waypoint_count, restrictions) => write!(f,
                 "Google Maps Distance Matrix API client: \
                 The with_restrictions() method cannot be used when with_waypoints() has been set. \
-                {} waypoint(s) are set and the restrictions(s) are set to `{}`. \
-                Try again either with no waypoints or no restrictions.",
-                waypoint_count,
-                restrictions),
+                {waypoint_count} waypoint(s) are set and the restrictions(s) are set to `{restrictions}`. \
+                Try again either with no waypoints or no restrictions."),
             Error::EitherWaypointsOrTransitMode(waypoint_count) => write!(f,
                 "Google Maps Distance Matrix API client: \
                 The with_waypoints() method cannot be used when with_travel_mode() is set to `TravelMode::Transit`. \
-                {} waypoint(s) are set. \
-                Try again either with a different travel mode or no waypoints.",
-                waypoint_count),
+                {waypoint_count} waypoint(s) are set. \
+                Try again either with a different travel mode or no waypoints."),
             Error::GoogleMapsService(status, error_message) => match error_message {
                 // If the Google Maps Distance Matrix API server generated an error
                 // message, return that:
-                Some(error_message) => write!(f, "Google Maps Distance Matrix API service: {}", error_message),
+                Some(error_message) => write!(f, "Google Maps Distance Matrix API service: {error_message}"),
                 // If the Google Maps Distance Matrix API server did not generate an
                 // error message, return a generic message derived from the
                 // response status:
@@ -167,64 +159,61 @@ impl std::fmt::Display for Error {
             Error::HttpUnsuccessful(status) => write!(f,
                 "Google Maps Distance Matrix API client: \
                 Could not successfully query the Google Cloud Platform service. \
-                The service last responded with a `{}` status.", status),
+                The service last responded with a `{status}` status."),
             Error::InvalidAvoidCode(avoid_code) => write!(f,
                 "Google Maps Distance Matrix API client: \
-                `{}` is not a valid restrictions code. \
-                Valid codes are `ferries`, `highways`, `indoor`, and `tolls`.",
-                avoid_code),
+                `{avoid_code}` is not a valid restrictions code. \
+                Valid codes are `ferries`, `highways`, `indoor`, and `tolls`."),
             Error::InvalidElementStatusCode(element_status_code) => write!(f,
                 "Google Maps Distance Matrix API client: \
-                `{}` is not a valid geocoder status code. \
+                `{element_status_code}` is not a valid geocoder status code. \
                 Valid codes are `MAX_ROUTE_LENGTH_EXCEEDED`, `NOT_FOUND`, \
-                `OK`, and `ZERO_RESULTS`.", element_status_code),
+                `OK`, and `ZERO_RESULTS`."),
             Error::InvalidManeuverTypeCode(maneuver_type_code) => write!(f,
                 "Google Maps Distance Matrix API client: \
-                `{}` is not a valid maneuver type code. \
+                `{maneuver_type_code}` is not a valid maneuver type code. \
                 Valid codes are `ferry`, `ferry-train`, `fork-left`, \
                 `fork-right`, `keep-left`, `keep-right`, `merge`, `ramp-left`, \
                 `ramp-right`, `roundabout-left`, `roundabout-right`, \
                 `straight`, `turn-left`, `turn-right`, `turn-sharp-left`, \
                 `turn-sharp-right`, `turn-slight-left`, `turn-slight-right`, \
-                `uturn-left`, and `uturn-right`.", maneuver_type_code),
+                `uturn-left`, and `uturn-right`."),
             Error::InvalidStatusCode(status_code) => write!(f,
                 "Google Maps Distance Matrix API client: \
-                `{}` is not a valid status code. \
+                `{status_code}` is not a valid status code. \
                 Valid codes are `INVALID_REQUEST`, `MAX_ROUTE_LENGTH_EXCEEDED` \
                 `MAX_WAYPOINTS_EXCEEDED`, `NOT_FOUND`, `OK`, \
                 `OVER_DAILY_LIMIT`, `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, \
-                `UNKNOWN_ERROR`, and `ZERO_RESULTS`.", status_code),
+                `UNKNOWN_ERROR`, and `ZERO_RESULTS`."),
             Error::InvalidTrafficModelCode(traffic_model_code) => write!(f,
                 "Google Maps Distance Matrix API client: \
-                `{}` is not a valid traffic model code. \
-                Valid codes are `best_guess`, `optimistic`, and `pessimistic`.",
-                traffic_model_code),
+                `{traffic_model_code}` is not a valid traffic model code. \
+                Valid codes are `best_guess`, `optimistic`, and `pessimistic`."),
             Error::InvalidTransitModeCode(transit_mode_code) => write!(f,
                 "Google Maps Distance Matrix API client: \
-                `{}` is not a valid transit mode code. Valid codes are `bus`,
-                `rail`, `subway`, `train`, and `tram`.", transit_mode_code),
+                `{transit_mode_code}` is not a valid transit mode code. Valid codes are `bus`,
+                `rail`, `subway`, `train`, and `tram`."),
             Error::InvalidTransitRoutePreferenceCode(transit_route_preference_code) =>
                 write!(f, "Google Maps Distance Matrix API client: \
-                `{}` is not a valid transit route preference code. \
-                Valid codes are `fewer_transfers` and `less_walking`.",
-                transit_route_preference_code),
+                `{transit_route_preference_code}` is not a valid transit route preference code. \
+                Valid codes are `fewer_transfers` and `less_walking`."),
             Error::InvalidTravelModeCode(travel_mode_code) => write!(f,
                 "Google Maps Distance Matrix API client: \
-                `{}` is not a valid travel mode code. \
+                `{travel_mode_code}` is not a valid travel mode code. \
                 Valid codes are `bicycling`, `driving`, `transit`, and \
-                `walking`.", travel_mode_code),
+                `walking`."),
             Error::InvalidUnitSystemCode(unit_system_code) => write!(f,
                 "Google Maps Distance Matrix API client: \
-                `{}` is not a valid unit system code. \
-                Valid codes are `imperial`, and `metric`.", unit_system_code),
+                `{unit_system_code}` is not a valid unit system code. \
+                Valid codes are `imperial`, and `metric`."),
             Error::InvalidVehicleTypeCode(vehicle_type_code) => write!(f,
                 "Google Maps Distance Matrix API client: \
-                `{}` is not a valid vehicle type code. \
+                `{vehicle_type_code}` is not a valid vehicle type code. \
                 Valid codes are `BUS`, `CABLE_CAR`, `COMMUTER_TRAIN`,  \
                 `FERRY`, `FUNICULAR`, `GONDOLA_LIFT`, `HEAVY_RAIL`, \
                 `HIGH_SPEED_TRAIN`, `INTERCITY_BUS`, `LONG_DISTANCE_TRAIN`, \
                 `METRO_RAIL`, `MONORAIL`, `OTHER`, `RAIL`, `SHARE_TAXI`, \
-                `SUBWAY`, `TRAM`, and `TROLLEYBUS`.", vehicle_type_code),
+                `SUBWAY`, `TRAM`, and `TROLLEYBUS`."),
             Error::QueryNotBuilt => write!(f,
                 "Google Maps Distance Matrix API client: \
                 The query string must be built before the request may be sent to the Google Cloud Maps Platform. \
@@ -234,10 +223,10 @@ impl std::fmt::Display for Error {
                 The request must be validated before a query string may be built. \
                 Ensure the validate() method is called before build()."),
             #[cfg(feature = "enable-reqwest")]
-            Error::Reqwest(error) => write!(f, "Google Maps Distance Matrix API client in the Reqwest library: {}", error),
+            Error::Reqwest(error) => write!(f, "Google Maps Distance Matrix API client in the Reqwest library: {error}"),
             #[cfg(feature = "enable-reqwest")]
-            Error::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {}", error),
-            Error::SerdeJson(error) => write!(f, "Google Maps Distance Matrix API client in the Serde JSON library: {}", error),
+            Error::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {error}"),
+            Error::SerdeJson(error) => write!(f, "Google Maps Distance Matrix API client in the Serde JSON library: {error}"),
             Error::TooManyWaypoints(waypoint_count) => write!(f,
                 "Google Maps Distance Matrix API client: \
                 The maximum allowed number of waypoints is 25 plus the origin and destination. \
@@ -248,17 +237,13 @@ impl std::fmt::Display for Error {
             Error::TransitModeIsForTransitOnly(travel_mode, transit_modes) => write!(f,
                 "Google Maps Distance Matrix API client: \
                 The with_transit_modes() method may only be used when with_travel_mode() is set to `TravelMode::Transit`. \
-                The travel mode is set to `{}` and the transit mode(s) are set to `{}`. \
-                Try again either with a travel mode of `TravelMode::Transit` or no transit modes.",
-                travel_mode,
-                transit_modes),
+                The travel mode is set to `{travel_mode}` and the transit mode(s) are set to `{transit_modes}`. \
+                Try again either with a travel mode of `TravelMode::Transit` or no transit modes."),
             Error::TransitRoutePreferenceIsForTransitOnly(travel_mode, transit_route_preference) => write!(f,
                 "Google Maps Distance Matrix API client: \
                 The with_transit_route_preference() method may only be used when with_travel_mode() is set to `TravelMode::Transit`. \
-                The travel mode is set to `{}` and the transit route preference is set to `{}`. \
-                Try again either with a travel mode of `TravelMode::Transit` or no transit route preference.",
-                travel_mode,
-                transit_route_preference),
+                The travel mode is set to `{travel_mode}` and the transit route preference is set to `{transit_route_preference}`. \
+                Try again either with a travel mode of `TravelMode::Transit` or no transit route preference."),
         } // match
     } // fn
 } // impl

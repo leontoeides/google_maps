@@ -47,12 +47,12 @@ impl std::convert::From<&Component> for String {
     fn from(component: &Component) -> String {
         match component {
             Component::AdministrativeArea(administrative_area) => {
-                format!("administrative_area:{}", administrative_area)
+                format!("administrative_area:{administrative_area}")
             }
             Component::Country(country) => format!("country:{}", String::from(country)),
-            Component::PostalCode(postal_code) => format!("postal_code:{}", postal_code),
-            Component::Locality(locality) => format!("locality:{}", locality),
-            Component::Route(route) => format!("route:{}", route),
+            Component::PostalCode(postal_code) => format!("postal_code:{postal_code}"),
+            Component::Locality(locality) => format!("locality:{locality}"),
+            Component::Route(route) => format!("route:{route}"),
         } // match
     } // fn
 } // impl

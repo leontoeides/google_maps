@@ -28,7 +28,7 @@ impl<'a> Request<'a> {
             None => self.build().query.as_ref().unwrap(),
         }; // match
 
-        format!("{}/?{}", SERVICE_URL, query_string)
+        format!("{SERVICE_URL}/?{query_string}")
 
     } // fn
 

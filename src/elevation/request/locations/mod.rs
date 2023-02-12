@@ -48,7 +48,7 @@ impl std::convert::From<&Locations> for String {
                     .join("|"),
 
             Locations::Polyline(polyline) =>
-                format!("enc:{}", polyline),
+                format!("enc:{polyline}"),
 
         } // match
     } // fn

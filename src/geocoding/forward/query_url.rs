@@ -27,7 +27,7 @@ impl<'a> ForwardRequest<'a> {
             // If it hasn't been built, build it:
             None => self.validate()?.build()?.query.as_ref().unwrap(),
         }; // match
-        Ok(format!("{}/{}?{}", SERVICE_URL, OUTPUT_FORMAT, query_string))
+        Ok(format!("{SERVICE_URL}/{OUTPUT_FORMAT}?{query_string}"))
     } // fn
 
 } // impl

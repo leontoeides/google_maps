@@ -45,7 +45,7 @@ impl std::fmt::Display for Error {
             Error::GoogleMapsService(status, error_message) => match error_message {
                 // If the Google Maps Elevation API server generated an error
                 // message, return that:
-                Some(error_message) => write!(f, "Google Maps Elevation API service: {}", error_message),
+                Some(error_message) => write!(f, "Google Maps Elevation API service: {error_message}"),
                 // If the Google Maps Elevation API server did not generate an
                 // error message, return a generic message derived from the
                 // response status:
@@ -72,22 +72,22 @@ impl std::fmt::Display for Error {
             Error::HttpUnsuccessful(status) => write!(f,
                 "Google Maps Elevation API client: \
                 Could not successfully query the Google Cloud Platform service. \
-                The service last responded with a `{}` status.", status),
+                The service last responded with a `{status}` status."),
             Error::InvalidStatusCode(status_code) => write!(f,
                 "Google Maps Elevation API client: \
-                `{}` is not a valid status code. \
+                `{status_code}` is not a valid status code. \
                 Valid codes are `INVALID_REQUEST`, `OK`, `OVER_DAILY_LIMIT`, \
                 `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, and `UNKNOWN_ERROR`."
-                , status_code),
+                ),
             Error::RequestNotValidated => write!(f,
                 "Google Maps Elevation API client: \
                 The request must be validated before a query string may be built. \
                 Ensure the validate() method is called before build()."),
             #[cfg(feature = "enable-reqwest")]
-            Error::Reqwest(error) => write!(f, "Google Maps Elevation API client in the Reqwest library: {}", error),
+            Error::Reqwest(error) => write!(f, "Google Maps Elevation API client in the Reqwest library: {error}"),
             #[cfg(feature = "enable-reqwest")]
-            Error::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {}", error),
-            Error::SerdeJson(error) => write!(f, "Google Maps Elevation API client in the Serde JSON library: {}", error),
+            Error::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {error}"),
+            Error::SerdeJson(error) => write!(f, "Google Maps Elevation API client in the Serde JSON library: {error}"),
             Error::QueryNotBuilt => write!(f,
                 "Google Maps Elevation API client: \
                 The query string must be built before the request may be sent to the Google Cloud Maps Platform. \

@@ -36,7 +36,7 @@ impl std::fmt::Display for Error {
             Error::GoogleMapsService(status, error_message) => match error_message {
                 // If the Google Maps Time Zone API server generated an error
                 // message, return that:
-                Some(error_message) => write!(f, "Google Maps Time Zone API service: {}", error_message),
+                Some(error_message) => write!(f, "Google Maps Time Zone API service: {error_message}"),
                 // If the Google Maps Time Zone API server did not generate an
                 // error message, return a generic message derived from the
                 // response status:
@@ -66,20 +66,20 @@ impl std::fmt::Display for Error {
             Error::HttpUnsuccessful(status) => write!(f,
                 "Google Maps Time Zone API client: \
                 Could not successfully query the Google Cloud Platform service. \
-                The service last responded with a `{}` status.", status),
+                The service last responded with a `{status}` status."),
             Error::InvalidStatusCode(status_code) => write!(f, "Google Maps Time Zone API client: \
-                `{}` is not a valid status code. \
+                `{status_code}` is not a valid status code. \
                 Valid codes are `INVALID_REQUEST`, `OK`, `OVER_DAILY_LIMIT`, \
                 `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, `UNKNOWN_ERROR`, and \
-                `ZERO_RESULTS`.", status_code),
+                `ZERO_RESULTS`."),
             Error::QueryNotBuilt => write!(f, "Google Maps Time Zone API client library: \
                 The query string must be built before the request may be sent to the Google Cloud Maps Platform. \
                 Ensure the build() method is called before run()."),
             #[cfg(feature = "enable-reqwest")]
-            Error::Reqwest(error) => write!(f, "Google Maps Time Zone API client in the Reqwest library: {}", error),
+            Error::Reqwest(error) => write!(f, "Google Maps Time Zone API client in the Reqwest library: {error}"),
             #[cfg(feature = "enable-reqwest")]
-            Error::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {}", error),
-            Error::SerdeJson(error) => write!(f, "Google Maps Time Zone API client in the Serde JSON library: {}", error),
+            Error::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {error}"),
+            Error::SerdeJson(error) => write!(f, "Google Maps Time Zone API client in the Serde JSON library: {error}"),
         } // match
     } // fn
 } // impl

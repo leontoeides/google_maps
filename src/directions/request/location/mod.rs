@@ -52,7 +52,7 @@ impl std::convert::From<&Location> for String {
                 utf8_percent_encode(&String::from(latlng), NON_ALPHANUMERIC).to_string(),
 
             Location::PlaceId(place_id) =>
-                utf8_percent_encode(&format!("place_id:{}", place_id), NON_ALPHANUMERIC).to_string(),
+                utf8_percent_encode(&format!("place_id:{place_id}"), NON_ALPHANUMERIC).to_string(),
 
         } // match
     } // fn

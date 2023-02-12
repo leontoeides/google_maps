@@ -27,7 +27,7 @@ impl<'a> Request<'a> {
     pub async fn get(&mut self) -> Result<Response, Error> {
 
         // Build the URL stem for the HTTP get request:
-        let mut url = format!("{}/{}?", SERVICE_URL, OUTPUT_FORMAT);
+        let mut url = format!("{SERVICE_URL}/{OUTPUT_FORMAT}?");
 
         match &self.query {
             // If query string built, append it to the URL stem.

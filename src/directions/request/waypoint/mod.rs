@@ -53,8 +53,8 @@ impl std::convert::From<&Waypoint> for String {
         match waypoint {
             Waypoint::Address(address) => address.clone(),
             Waypoint::LatLng(latlng) => String::from(latlng),
-            Waypoint::PlaceId(place_id) => format!("place_id:{}", place_id),
-            Waypoint::Polyline(polyline) => format!("enc:{}:", polyline),
+            Waypoint::PlaceId(place_id) => format!("place_id:{place_id}"),
+            Waypoint::Polyline(polyline) => format!("enc:{polyline}:"),
         } // match
     } // fn
 } // impl
