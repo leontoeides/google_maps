@@ -29,6 +29,9 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 # What's new?
 
+* 3.1.1: 2023-01-29: Update to Chinese languages.
+Thanks [rick68](https://github.com/rick68)!
+
 * 3.1.0: 2022-11-27: ⚠ **Breaking change**: `Geometry.location_type` is now an
 `Option`.
 
