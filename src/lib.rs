@@ -318,6 +318,7 @@
 //! * time_zone
 //! * autocomplete
 //! * roads
+//! * places
 //! * enable-reqwest (uses [reqwest](https://crates.io/crates/reqwest) for
 //! querying Google Maps API).
 //! * geo (support for [geo](https://crates.io/crates/geo-types) crate types)

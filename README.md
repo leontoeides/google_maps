@@ -362,6 +362,7 @@ include desired Google Maps APIs by using Cargo.toml feature flags.
 * time_zone
 * autocomplete
 * roads
+* places
 * enable-reqwest (uses [reqwest](https://crates.io/crates/reqwest) for querying
 Google Maps API).
 * geo (support for [geo](https://crates.io/crates/geo-types) crate types)
@@ -408,6 +409,7 @@ default = [
 	"time_zone",
 	"autocomplete",
 	"roads",
+	"places",
 
 	# reqwest features:
 	"enable-reqwest",
