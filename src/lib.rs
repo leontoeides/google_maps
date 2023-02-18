@@ -311,14 +311,14 @@
 //!
 //! #### Google Maps API Client feature flags:
 //!
+//! * autocomplete
 //! * directions
 //! * distance_matrix
 //! * elevation
 //! * geocoding
-//! * time_zone
-//! * autocomplete
-//! * roads
 //! * places
+//! * roads
+//! * time_zone
 //! * enable-reqwest (uses [reqwest](https://crates.io/crates/reqwest) for
 //! querying Google Maps API).
 //! * geo (support for [geo](https://crates.io/crates/geo-types) crate types)
@@ -358,12 +358,14 @@
 //!
 //! ```toml
 //! default = [
+//!     "autocomplete",
 //!     "directions",
 //!     "distance_matrix",
 //!     "elevation",
 //!     "geocoding",
-//!     "time_zone",
 //!     "places",
+//!     "roads",
+//!     "time_zone",
 //!     "enable-reqwest",
 //!     "reqwest/default-tls",
 //!     "reqwest/gzip",
