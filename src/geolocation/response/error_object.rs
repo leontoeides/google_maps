@@ -1,7 +1,9 @@
 use crate::geolocation::response::error::Error;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+// -----------------------------------------------------------------------------
+
+#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd, Deserialize, Serialize)]
 pub struct ErrorObject {
     pub errors: Vec<Error>,
     pub code: u16,

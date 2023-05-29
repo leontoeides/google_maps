@@ -7,7 +7,7 @@ mod geo;
 
 // -----------------------------------------------------------------------------
 
-use crate::error::Error;
+use crate::types_error::Error;
 use rust_decimal::Decimal;
 use rust_decimal::prelude::FromPrimitive;
 use rust_decimal::prelude::FromStr;
@@ -150,7 +150,7 @@ impl TryFrom<&str> for LatLng {
 impl std::str::FromStr for LatLng {
     // Error definitions are contained in the
     // `google_maps\src\geocoding\error.rs` module.
-    type Err = crate::error::Error;
+    type Err = crate::types_error::Error;
     /// Gets a `LatLng` struct from a `String` that contains a comma-delimited
     /// latitude & longitude pair.
     fn from_str(value: &str) -> Result<Self, Self::Err> {

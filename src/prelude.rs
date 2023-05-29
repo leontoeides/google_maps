@@ -18,13 +18,15 @@ pub use chrono_tz::Tz;
 
 pub use crate::{
     bounds::Bounds,
-    client::GoogleMapsClient,
     client::GoogleMapsClient as ClientSettings,
+    client::GoogleMapsClient,
     country::Country,
+    error::Error as GoogleMapsError,
     language::Language,
     latlng::LatLng,
     place_type::PlaceType,
     region::Region,
+    types_error::Error as TypesError,
 }; // crate
 
 // =============================================================================
@@ -76,6 +78,7 @@ pub use crate::directions::{
 
 #[cfg(feature = "directions")]
 pub use crate::directions::{
+    error::Error as DirectionsError,
     request::Request as DirectionsRequest,
     response::{
         directions_distance::DirectionsDistance,
@@ -87,6 +90,7 @@ pub use crate::directions::{
 
 #[cfg(feature = "distance_matrix")]
 pub use crate::distance_matrix::{
+    error::Error as DistanceMatrixError,
     request::Request as DistanceMatrixRequest,
     response::Response as DistanceMatrixResponse,
     response::status::Status as DistanceMatrixStatus,

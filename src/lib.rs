@@ -409,6 +409,7 @@ mod serde;
 pub mod country;
 pub mod error;
 pub mod prelude;
+pub mod types_error;
 
 // Optional Google Maps API modules. Their inclusion can be changed with
 // feature flags:
@@ -431,9 +432,10 @@ pub mod roads;
 
 pub use crate::{
     bounds::Bounds,
-    client::GoogleMapsClient,
     client::GoogleMapsClient as ClientSettings,
+    client::GoogleMapsClient,
     country::Country,
+    error::Error,
     language::Language,
     latlng::LatLng,
     place_type::PlaceType,

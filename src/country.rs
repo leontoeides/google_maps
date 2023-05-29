@@ -806,6 +806,8 @@ static COUNTRIES_BY_CODE: phf::Map<&'static str, Country> = phf_map! {
     "ZW" => Country::Zimbabwe,
 };
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::TryFrom<&str> for Country {
     // Error definitions are contained in the
     // `google_maps\src\geocoding\error.rs` module.
@@ -820,6 +822,8 @@ impl std::convert::TryFrom<&str> for Country {
             .ok_or_else(|| Error::InvalidCountryCode(country_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::str::FromStr for Country {
     // Error definitions are contained in the

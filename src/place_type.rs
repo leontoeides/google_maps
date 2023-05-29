@@ -2,7 +2,7 @@
 //! types or categories of a place. For example, a returned place could be a
 //! "country" (as in a nation) or it could be a "shopping mall."
 
-use crate::error::Error;
+use crate::types_error::Error;
 use phf::phf_map;
 use serde::{Deserialize, Serialize, Deserializer};
 
@@ -674,9 +674,11 @@ static PLACE_TYPES_BY_CODE: phf::Map<&'static str, PlaceType> = phf_map! {
     "cities" => PlaceType::Cities,
 };
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::TryFrom<&str> for PlaceType {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Error = crate::error::Error;
+    type Error = crate::types_error::Error;
     /// Gets a `PlaceType` enum from a `String` that contains a supported [place
     /// type](https://developers.google.com/places/web-service/supported_types)
     /// code.
@@ -688,9 +690,11 @@ impl std::convert::TryFrom<&str> for PlaceType {
     } // fn
 } // impl
 
+// -----------------------------------------------------------------------------
+
 impl std::str::FromStr for PlaceType {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Err = crate::error::Error;
+    type Err = crate::types_error::Error;
     /// Gets a `PlaceType` enum from a `String` that contains a supported [place
     /// type](https://developers.google.com/places/web-service/supported_types)
     /// code.

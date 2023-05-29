@@ -1,9 +1,17 @@
 //! Geocoding API error types and error messages.
 
-use crate::geocoding::response::status::Status;
+// -----------------------------------------------------------------------------
 
+use crate::geocoding::response::status::Status;
+use miette::Diagnostic;
+use thiserror::Error;
+
+// -----------------------------------------------------------------------------
+//
 /// Errors that may be produced by the Google Maps Geocoding API client.
-#[derive(Debug)]
+
+#[derive(Debug, Diagnostic, Error)]
+#[diagnostic(code(google_maps::geocoding), url(docsrs))]
 pub enum Error {
     /// Forward geocoding requests (address to latlng) must specify an `address`
     /// or at least one `component`.
@@ -118,29 +126,7 @@ impl std::fmt::Display for Error {
     } // fn
 } // impl
 
-impl std::error::Error for Error {
-    /// If the cause for the error is in an underlying library (not this
-    /// library but a library this one depends on), this trait unwraps the
-    /// original source error. This trait converts a Google Maps Geocoding API
-    /// error type into the native error type of the underlying library.
-    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
-        match self {
-            Error::AddressOrComponentsRequired => None,
-            Error::GoogleMapsService(_error, _message) => None,
-            Error::HttpUnsuccessful(_status) => None,
-            Error::InvalidCountryCode(_country_code) => None,
-            Error::InvalidLocationTypeCode(_location_type_code) => None,
-            Error::InvalidStatusCode(_status_code) => None,
-            Error::QueryNotBuilt => None,
-            Error::RequestNotValidated => None,
-            #[cfg(feature = "enable-reqwest")]
-            Error::Reqwest(error) => Some(error),
-            #[cfg(feature = "enable-reqwest")]
-            Error::ReqwestMessage(_error) => None,
-            Error::SerdeJson(error) => Some(error),
-        } // match
-    } // fn
-} // impl
+// -----------------------------------------------------------------------------
 
 #[cfg(feature = "enable-reqwest")]
 impl From<reqwest::Error> for Error {
@@ -152,6 +138,8 @@ impl From<reqwest::Error> for Error {
         Error::Reqwest(error)
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl From<serde_json::error::Error> for Error {
     /// This trait converts from an Serde JSON (`serde_json::error::Error`)

@@ -1,11 +1,17 @@
 //! Places API _Place Autocomplete_ error types and error messages.
 
-use crate::places::place_autocomplete::response::status::Status;
-
 // -----------------------------------------------------------------------------
 
+use crate::places::place_autocomplete::response::status::Status;
+use miette::Diagnostic;
+use thiserror::Error;
+
+// -----------------------------------------------------------------------------
+//
 /// Errors that may be produced by the Google Maps Places API client.
-#[derive(Debug)]
+
+#[derive(Debug, Diagnostic, Error)]
+#[diagnostic(code(google_maps::place_autocomplete), url(docsrs))]
 pub enum Error {
     /// Google Maps Places API server generated an error. See the `Status`
     /// enum for more information.
@@ -91,29 +97,6 @@ impl std::fmt::Display for Error {
             #[cfg(feature = "enable-reqwest")]
             Error::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {error}"),
             Error::SerdeJson(error) => write!(f, "Google Maps Places API client in the Serde JSON library: {error}"),
-        } // match
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl std::error::Error for Error {
-    /// If the cause for the error is in an underlying library (not this
-    /// library but a library this one depends on), this trait unwraps the
-    /// original source error. This trait converts a Google Maps Places API
-    /// error type into the native error type of the underlying library.
-    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
-        match self {
-            Error::GoogleMapsService(_error, _message) => None,
-            Error::HttpUnsuccessful(_status) => None,
-            Error::InvalidStatusCode(_status_code) => None,
-            Error::InvalidAutocompleteType(_status_code) => None,
-            Error::QueryNotBuilt => None,
-            #[cfg(feature = "enable-reqwest")]
-            Error::Reqwest(error) => Some(error),
-            #[cfg(feature = "enable-reqwest")]
-            Error::ReqwestMessage(_error) => None,
-            Error::SerdeJson(error) => Some(error),
         } // match
     } // fn
 } // impl

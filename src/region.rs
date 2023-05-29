@@ -4,7 +4,7 @@
 //! comprehensive list of countries, it is a list of countries that Google Maps
 //! supports._
 
-use crate::error::Error;
+use crate::types_error::Error;
 use phf::phf_map;
 use serde::{Deserialize, Serialize, Deserializer};
 
@@ -876,9 +876,11 @@ static REGIONS_BY_CODE: phf::Map<&'static str, Region> = phf_map! {
     "ax" => Region::AlandIslands,
 };
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::TryFrom<&str> for Region {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Error = crate::error::Error;
+    type Error = crate::types_error::Error;
     /// Gets a `Region` enum from a `String` that contains a supported
     /// [region](https://developers.google.com/maps/coverage) code.
     fn try_from(region_code: &str) -> Result<Self, Self::Error> {
@@ -889,9 +891,11 @@ impl std::convert::TryFrom<&str> for Region {
     } // fn
 } // impl
 
+// -----------------------------------------------------------------------------
+
 impl std::str::FromStr for Region {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Err = crate::error::Error;
+    type Err = crate::types_error::Error;
     /// Gets a `Region` enum from a `String` that contains a supported
     /// [region](https://developers.google.com/maps/coverage) code.
     fn from_str(region_code: &str) -> Result<Self, Self::Err> {

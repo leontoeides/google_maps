@@ -1,6 +1,6 @@
 [package]
 name = "google_maps"
-version = "3.1.2"
+version = "3.2.0"
 authors = [ "Dylan Bowker <dylan.bowker@arkiteq.ca>" ]
 edition = "2021"
 categories = [ "api-bindings" ]
@@ -52,6 +52,7 @@ chrono = { version = "0.4", optional = true, features = [ "serde" ] }
 chrono-tz = { version = "0.8", optional = true, features = [ "serde" ] }
 futures = { version = "0.3", optional = true }
 geo-types = { version = "0.7", optional = true, features = [ "serde" ] }
+miette = "5.9"
 percent-encoding = "2.2"
 phf = { version = "0.11", features = [ "macros" ] }
 reqwest = { version = "0.11", optional = true, default-features = false }
@@ -60,6 +61,7 @@ rust_decimal_macros = "1"
 serde = { version = "1.0", features = [ "derive" ] }
 serde_json = "1.0"
 stream_throttle = { version = "0.4", optional = true }
+thiserror = "1.0"
 tokio = { version = "1", optional = true, features = [ "time" ] }
 tracing = { version = "0.1", features = [ "log" ] }
 

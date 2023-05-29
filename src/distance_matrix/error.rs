@@ -1,9 +1,17 @@
 //! Distance Matrix API error types and error messages.
 
-use crate::distance_matrix::response::status::Status;
+// -----------------------------------------------------------------------------
 
+use crate::distance_matrix::response::status::Status;
+use miette::Diagnostic;
+use thiserror::Error;
+
+// -----------------------------------------------------------------------------
+//
 /// Errors that may be produced by the Google Maps Distance Matrix API client.
-#[derive(Debug)]
+
+#[derive(Debug, Diagnostic, Error)]
+#[diagnostic(code(google_maps::distance_matrix), url(docsrs))]
 pub enum Error {
     /// An arrival time may only be specified in Transit travel mode.
     ArrivalTimeIsForTransitOnly(String, String),
@@ -248,46 +256,7 @@ impl std::fmt::Display for Error {
     } // fn
 } // impl
 
-impl std::error::Error for Error {
-    /// If the cause for the error is in an underlying library (not this
-    /// library but a library this one depends on), this trait unwraps the
-    /// original source error. This trait converts a Google Maps Distance Matrix
-    /// API error type into the native error type of the underlying library.
-    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
-        match self {
-            Error::ArrivalTimeIsForTransitOnly(_travel_mode, _arrival_time) => None,
-            Error::EitherAlternativesOrWaypoints(_waypoint_count) => None,
-            Error::EitherDepartureTimeOrArrivalTime(_arrival_time, _departure_time) => None,
-            Error::EitherRestrictionsOrWaypoints(_waypoint_count, _restrictions) => None,
-            Error::EitherWaypointsOrTransitMode(_waypoint_count) => None,
-            Error::GoogleMapsService(_error, _message) => None,
-            Error::HttpUnsuccessful(_status) => None,
-            Error::InvalidAvoidCode(_avoid_code) => None,
-            Error::InvalidElementStatusCode(_element_status_code) => None,
-            Error::InvalidManeuverTypeCode(_maneuver_type_code) => None,
-            Error::InvalidStatusCode(_status_code) => None,
-            Error::InvalidTrafficModelCode(_traffic_model_code) => None,
-            Error::InvalidTransitModeCode(_transit_mode_code) => None,
-            Error::InvalidTransitRoutePreferenceCode(_transit_route_preference_code) => None,
-            Error::InvalidTravelModeCode(_travel_mode_code) => None,
-            Error::InvalidUnitSystemCode(_unit_system_code) => None,
-            Error::InvalidVehicleTypeCode(_vehicle_type_code) => None,
-            Error::QueryNotBuilt => None,
-            Error::RequestNotValidated => None,
-            #[cfg(feature = "enable-reqwest")]
-            Error::Reqwest(error) => Some(error),
-            #[cfg(feature = "enable-reqwest")]
-            Error::ReqwestMessage(_error) => None,
-            Error::SerdeJson(error) => Some(error),
-            Error::TooManyWaypoints(_waypoint_count) => None,
-            Error::TransitModeIsForTransitOnly(_travel_mode, _transit_modes) => None,
-            Error::TransitRoutePreferenceIsForTransitOnly(
-                _travel_mode,
-                _transit_route_preference,
-            ) => None,
-        } // match
-    } // fn
-} // impl
+// -----------------------------------------------------------------------------
 
 #[cfg(feature = "enable-reqwest")]
 impl From<reqwest::Error> for Error {
@@ -299,6 +268,8 @@ impl From<reqwest::Error> for Error {
         Error::Reqwest(error)
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl From<serde_json::error::Error> for Error {
     /// This trait converts from an Serde JSON (`serde_json::error::Error`)
