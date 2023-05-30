@@ -3,31 +3,28 @@
 
 use crate::geocoding::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize, Deserializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 // -----------------------------------------------------------------------------
 
 /// Stores additional data about the specified location.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[repr(u8)]
 pub enum LocationType {
     /// Indicates that the returned result is approximate.
-    #[serde(alias = "APPROXIMATE")]
-    Approximate,
+    #[default] Approximate = 0,
     /// Indicates that the returned result is the geometric center of a result
     /// such as a polyline (for example, a street) or polygon (region).
-    #[serde(alias = "GEOMETRIC_CENTER")]
-    GeometricCenter,
+    GeometricCenter = 1,
     /// Indicates that the returned result reflects an approximation (usually on
     /// a road) interpolated between two precise points (such as intersections).
     /// Interpolated results are generally returned when rooftop geocodes are
     /// unavailable for a street address.
-    #[serde(alias = "RANGE_INTERPOLATED")]
-    RangeInterpolated,
+    RangeInterpolated = 2,
     /// Indicates that the returned result is a precise geocode for which we
     /// have location information accurate down to street address precision.
-    #[serde(alias = "ROOFTOP")]
-    RoofTop,
+    RoofTop = 3,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -46,16 +43,46 @@ impl<'de> Deserialize<'de> for LocationType {
 
 // -----------------------------------------------------------------------------
 
+impl Serialize for LocationType {
+    /// Manual implementation of `Serialize` for `serde`.
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where S: Serializer {
+        serializer.serialize_str(std::convert::Into::<&str>::into(self))
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<&LocationType> for &str {
+    /// Converts a `LocationType` enum to a `String` that contains a [location
+    /// type](https://developers.google.com/maps/documentation/geocoding/intro#Results) code.
+    fn from(location_type: &LocationType) -> Self {
+        match location_type {
+            LocationType::Approximate => "APPROXIMATE",
+            LocationType::GeometricCenter => "GEOMETRIC_CENTER",
+            LocationType::RangeInterpolated => "RANGE_INTERPOLATED",
+            LocationType::RoofTop => "ROOFTOP",
+        } // match
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::fmt::Display for LocationType {
+    /// Converts a `LocationType` enum to a `String` that contains a [location
+    /// type](https://developers.google.com/maps/documentation/geocoding/intro#Results) code.
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", std::convert::Into::<&str>::into(self))
+    } // fmt
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&LocationType> for String {
     /// Converts a `LocationType` enum to a `String` that contains a [location
     /// type](https://developers.google.com/maps/documentation/geocoding/intro#Results) code.
-    fn from(location_type: &LocationType) -> String {
-        match location_type {
-            LocationType::Approximate => String::from("APPROXIMATE"),
-            LocationType::GeometricCenter => String::from("GEOMETRIC_CENTER"),
-            LocationType::RangeInterpolated => String::from("RANGE_INTERPOLATED"),
-            LocationType::RoofTop => String::from("ROOFTOP"),
-        } // match
+    fn from(location_type: &LocationType) -> Self {
+        std::convert::Into::<&str>::into(location_type).to_string()
     } // fn
 } // impl
 
@@ -67,6 +94,8 @@ static LOCATION_TYPES_BY_CODE: phf::Map<&'static str, LocationType> = phf_map! {
     "RANGE_INTERPOLATED" => LocationType::RangeInterpolated,
     "ROOFTOP" => LocationType::RoofTop,
 };
+
+// -----------------------------------------------------------------------------
 
 impl std::convert::TryFrom<&str> for LocationType {
     // Error definitions are contained in the
@@ -83,6 +112,8 @@ impl std::convert::TryFrom<&str> for LocationType {
             .ok_or_else(|| Error::InvalidLocationTypeCode(location_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::str::FromStr for LocationType {
     // Error definitions are contained in the
@@ -102,24 +133,15 @@ impl std::str::FromStr for LocationType {
 
 // -----------------------------------------------------------------------------
 
-impl std::default::Default for LocationType {
-    /// Returns a reasonable default variant for the `LocationType` enum type.
-    fn default() -> Self {
-        LocationType::Approximate
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl std::fmt::Display for LocationType {
+impl LocationType {
     /// Formats a `LocationType` enum into a string that is presentable to the
     /// end user.
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    pub fn display(&self) -> &str {
         match self {
-            LocationType::Approximate => write!(f, "Approximate"),
-            LocationType::GeometricCenter => write!(f, "Geometric Center"),
-            LocationType::RangeInterpolated => write!(f, "Range Interpolated"),
-            LocationType::RoofTop => write!(f, "Roof Top"),
+            LocationType::Approximate => "Approximate",
+            LocationType::GeometricCenter => "Geometric Center",
+            LocationType::RangeInterpolated => "Range Interpolated",
+            LocationType::RoofTop => "Roof Top",
         } // match
     } // fn
 } // impl

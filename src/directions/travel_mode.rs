@@ -3,7 +3,7 @@
 
 use crate::directions::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize, Deserializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 // -----------------------------------------------------------------------------
 
@@ -17,27 +17,24 @@ use serde::{Deserialize, Serialize, Deserializer};
 /// clear pedestrian or bicycling paths, so these directions will return
 /// `warnings` in the returned result which you must display to the user.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[repr(u8)]
 pub enum TravelMode {
     /// (Default) Indicates standard driving directions using the road network.
-    #[serde(alias = "DRIVING")]
-    Driving,
+    #[default] Driving = 0,
     /// Requests walking directions via pedestrian paths & sidewalks (where
     /// available).
-    #[serde(alias = "WALKING")]
-    Walking,
+    Walking = 1,
     /// Requests bicycling directions via bicycle paths & preferred streets
     /// (where available).
-    #[serde(alias = "BICYCLING")]
-    Bicycling,
+    Bicycling = 2,
     /// Requests directions via public transit routes (where available). If you
     /// set the mode to `transit`, you can optionally specify either a
     /// `departure_time` or an `arrival_time`. If neither time is specified, the
     /// `departure_time` defaults to now (that is, the departure time defaults
     /// to the current time). You can also optionally include a `transit_mode`
     /// and/or a `transit_routing_preference`.
-    #[serde(alias = "TRANSIT")]
-    Transit,
+    Transit = 3,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -56,17 +53,49 @@ impl<'de> Deserialize<'de> for TravelMode {
 
 // -----------------------------------------------------------------------------
 
+impl Serialize for TravelMode {
+    /// Manual implementation of `Serialize` for `serde`.
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where S: Serializer {
+        serializer.serialize_str(std::convert::Into::<&str>::into(self))
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<&TravelMode> for &str {
+    /// Converts a `TravelMode` enum to a `String` that contains a [travel
+    /// mode](https://developers.google.com/maps/documentation/directions/intro#TravelModes)
+    /// code.
+    fn from(travel_mode: &TravelMode) -> Self {
+        match travel_mode {
+            TravelMode::Bicycling => "BICYCLING",
+            TravelMode::Driving => "DRIVING",
+            TravelMode::Transit => "TRANSIT",
+            TravelMode::Walking => "WALKING",
+        } // match
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::fmt::Display for TravelMode {
+    /// Converts a `TravelMode` enum to a `String` that contains a [travel
+    /// mode](https://developers.google.com/maps/documentation/directions/intro#TravelModes)
+    /// code.
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", std::convert::Into::<&str>::into(self))
+    } // fmt
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&TravelMode> for String {
     /// Converts a `TravelMode` enum to a `String` that contains a [travel
     /// mode](https://developers.google.com/maps/documentation/directions/intro#TravelModes)
     /// code.
-    fn from(travel_mode: &TravelMode) -> String {
-        match travel_mode {
-            TravelMode::Bicycling => String::from("BICYCLING"),
-            TravelMode::Driving => String::from("DRIVING"),
-            TravelMode::Transit => String::from("TRANSIT"),
-            TravelMode::Walking => String::from("WALKING"),
-        } // match
+    fn from(travel_mode: &TravelMode) -> Self {
+        std::convert::Into::<&str>::into(travel_mode).to_string()
     } // fn
 } // impl
 
@@ -78,6 +107,8 @@ static TRAVEL_MODES_BY_CODE: phf::Map<&'static str, TravelMode> = phf_map! {
     "TRANSIT" => TravelMode::Transit,
     "WALKING" => TravelMode::Walking,
 };
+
+// -----------------------------------------------------------------------------
 
 impl std::convert::TryFrom<&str> for TravelMode {
     // Error definitions are contained in the
@@ -93,6 +124,8 @@ impl std::convert::TryFrom<&str> for TravelMode {
             .ok_or_else(|| Error::InvalidTravelModeCode(travel_mode_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::str::FromStr for TravelMode {
     // Error definitions are contained in the
@@ -111,24 +144,15 @@ impl std::str::FromStr for TravelMode {
 
 // -----------------------------------------------------------------------------
 
-impl std::default::Default for TravelMode {
-    /// Returns a reasonable default variant for the `TravelMode` enum type.
-    fn default() -> Self {
-        TravelMode::Driving
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl std::fmt::Display for TravelMode {
+impl TravelMode {
     /// Formats a `TravelMode` enum into a string that is presentable to the
     /// end user.
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    pub fn display(&self) -> &str {
         match self {
-            TravelMode::Bicycling => write!(f, "Bicycling"),
-            TravelMode::Driving => write!(f, "Driving"),
-            TravelMode::Transit => write!(f, "Transit"),
-            TravelMode::Walking => write!(f, "Walking"),
+            TravelMode::Bicycling => "Bicycling",
+            TravelMode::Driving => "Driving",
+            TravelMode::Transit => "Transit",
+            TravelMode::Walking => "Walking",
         } // match
     } // fn
 } // impl

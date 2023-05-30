@@ -39,6 +39,10 @@ pub enum Error {
     /// information.
     InvalidLatLongString(String),
 
+    /// API client library attempted to convert a bounds string that is invalid.
+    /// See `google_maps\src\bounds.rs` for more information.
+    InvalidBoundsString(String),
+
     /// API client library attempted to parse a string that contained an invalid
     /// place type code. See `google_maps\src\place_type.rs` for more
     /// information.
@@ -99,6 +103,11 @@ impl std::fmt::Display for Error {
                 f,
                 "Google Maps Platform API client: \
                 `{value}` is an invalid `LatLng` string."
+            ),
+            Error::InvalidBoundsString(value) => write!(
+                f,
+                "Google Maps Platform API client: \
+                `{value}` is an invalid `Bounds` string."
             ),
         } // match
     } // fn

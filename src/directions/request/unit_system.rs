@@ -3,7 +3,7 @@
 
 use crate::directions::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize, Deserializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 // -----------------------------------------------------------------------------
 
@@ -25,16 +25,15 @@ use serde::{Deserialize, Serialize, Deserializer};
 /// `distance` fields. The `distance` fields also contain `values` which are
 /// always expressed in meters.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[repr(u8)]
 pub enum UnitSystem {
     /// Specifies that distances in the response should be expressed in imperial
     /// units, miles and feet.
-    #[serde(alias = "imperial")]
-    Imperial,
+    Imperial = 0,
     /// Specifies that distances in the response should be expressed in metric
     /// units, using kilometres and metres.
-    #[serde(alias = "metric")]
-    Metric,
+    #[default] Metric = 1,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -53,15 +52,47 @@ impl<'de> Deserialize<'de> for UnitSystem {
 
 // -----------------------------------------------------------------------------
 
+impl Serialize for UnitSystem {
+    /// Manual implementation of `Serialize` for `serde`.
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where S: Serializer {
+        serializer.serialize_str(std::convert::Into::<&str>::into(self))
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<&UnitSystem> for &str {
+    /// Converts a `UnitSystem` enum to a `String` that contains a [unit
+    /// system](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
+    /// code.
+    fn from(units: &UnitSystem) -> Self {
+        match units {
+            UnitSystem::Imperial => "imperial",
+            UnitSystem::Metric => "metric",
+        } // match
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::fmt::Display for UnitSystem {
+    /// Converts a `UnitSystem` enum to a `String` that contains a [unit
+    /// system](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
+    /// code.
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", std::convert::Into::<&str>::into(self))
+    } // fmt
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&UnitSystem> for String {
     /// Converts a `UnitSystem` enum to a `String` that contains a [unit
     /// system](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
     /// code.
-    fn from(units: &UnitSystem) -> String {
-        match units {
-            UnitSystem::Imperial => String::from("imperial"),
-            UnitSystem::Metric => String::from("metric"),
-        } // match
+    fn from(unit_system: &UnitSystem) -> Self {
+        std::convert::Into::<&str>::into(unit_system).to_string()
     } // fn
 } // impl
 
@@ -71,6 +102,8 @@ static UNIT_SYSTEMS_BY_CODE: phf::Map<&'static str, UnitSystem> = phf_map! {
     "imperial" => UnitSystem::Imperial,
     "metric" => UnitSystem::Metric,
 };
+
+// -----------------------------------------------------------------------------
 
 impl std::convert::TryFrom<&str> for UnitSystem {
     // Error definitions are contained in the
@@ -86,6 +119,8 @@ impl std::convert::TryFrom<&str> for UnitSystem {
             .ok_or_else(|| Error::InvalidUnitSystemCode(unit_system_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::str::FromStr for UnitSystem {
     // Error definitions are contained in the
@@ -104,22 +139,13 @@ impl std::str::FromStr for UnitSystem {
 
 // -----------------------------------------------------------------------------
 
-impl std::default::Default for UnitSystem {
-    /// Returns a reasonable default variant for the `UnitSystem` enum type.
-    fn default() -> Self {
-        UnitSystem::Metric
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl std::fmt::Display for UnitSystem {
+impl UnitSystem {
     /// Formats a `UnitSystem` enum into a string that is presentable to the
     /// end user.
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    pub fn display(&self) -> &str {
         match self {
-            UnitSystem::Imperial => write!(f, "Imperial"),
-            UnitSystem::Metric => write!(f, "Metric"),
+            UnitSystem::Imperial => "Imperial",
+            UnitSystem::Metric => "Metric",
         } // match
     } // fn
 } // impl

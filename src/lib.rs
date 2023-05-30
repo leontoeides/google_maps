@@ -409,7 +409,7 @@ mod serde;
 pub mod country;
 pub mod error;
 pub mod prelude;
-pub mod types_error;
+pub mod type_error;
 
 // Optional Google Maps API modules. Their inclusion can be changed with
 // feature flags:

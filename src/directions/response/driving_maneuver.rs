@@ -3,7 +3,7 @@
 
 use crate::directions::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize, Deserializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 // -----------------------------------------------------------------------------
 
@@ -12,50 +12,30 @@ use serde::{Deserialize, Serialize, Deserializer};
 /// [list](https://developers.google.com/maps/documentation/directions/intro#Steps)
 /// are subject to change.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[repr(u8)]
 pub enum DrivingManeuver {
-    #[serde(alias = "ferry")]
-    Ferry,
-    #[serde(alias = "ferry-train")]
-    FerryTrain,
-    #[serde(alias = "fork-left")]
-    ForkLeft,
-    #[serde(alias = "fork-right")]
-    ForkRight,
-    #[serde(alias = "keep-left")]
-    KeepLeft,
-    #[serde(alias = "keep-right")]
-    KeepRight,
-    #[serde(alias = "merge")]
-    Merge,
-    #[serde(alias = "ramp")]
-    Ramp,
-    #[serde(alias = "ramp-left")]
-    RampLeft,
-    #[serde(alias = "ramp-right")]
-    RampRight,
-    #[serde(alias = "roundabout-left")]
-    RoundaboutLeft,
-    #[serde(alias = "roundabout-right")]
-    RoundaboutRight,
-    #[serde(alias = "straight")]
-    Straight,
-    #[serde(alias = "turn-left")]
-    TurnLeft,
-    #[serde(alias = "turn-right")]
-    TurnRight,
-    #[serde(alias = "turn-sharp-left")]
-    TurnSharpLeft,
-    #[serde(alias = "turn-sharp-right")]
-    TurnSharpRight,
-    #[serde(alias = "turn-slight-left")]
-    TurnSlightLeft,
-    #[serde(alias = "turn-slight-right")]
-    TurnSlightRight,
-    #[serde(alias = "uturn-left")]
-    UturnLeft,
-    #[serde(alias = "uturn-right")]
-    UturnRight,
+    Ferry = 0,
+    FerryTrain = 1,
+    ForkLeft = 2,
+    ForkRight = 3,
+    KeepLeft = 4,
+    KeepRight = 5,
+    Merge = 6,
+    Ramp = 7,
+    RampLeft = 8,
+    RampRight = 9,
+    RoundaboutLeft = 10,
+    RoundaboutRight = 11,
+    #[default] Straight = 12,
+    TurnLeft = 13,
+    TurnRight = 14,
+    TurnSharpLeft = 15,
+    TurnSharpRight = 16,
+    TurnSlightLeft = 17,
+    TurnSlightRight = 18,
+    UturnLeft = 19,
+    UturnRight = 20,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -74,35 +54,69 @@ impl<'de> Deserialize<'de> for DrivingManeuver {
 
 // -----------------------------------------------------------------------------
 
+impl Serialize for DrivingManeuver {
+    /// Manual implementation of `Serialize` for `serde`.
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where S: Serializer {
+        serializer.serialize_str(std::convert::Into::<&str>::into(self))
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<&DrivingManeuver> for &str {
+    /// Converts a `DrivingManeuver` enum to a `String` that contains a
+    /// [maneuver
+    /// type](https://developers.google.com/maps/documentation/directions/intro#Steps)
+    /// code.
+    fn from(maneuver_type: &DrivingManeuver) -> Self {
+        match maneuver_type {
+            DrivingManeuver::Ferry => "ferry",
+            DrivingManeuver::FerryTrain => "ferry-train",
+            DrivingManeuver::ForkLeft => "fork-left",
+            DrivingManeuver::ForkRight => "fork-right",
+            DrivingManeuver::KeepLeft => "keep-left",
+            DrivingManeuver::KeepRight => "keep-right",
+            DrivingManeuver::Merge => "merge",
+            DrivingManeuver::Ramp => "ramp",
+            DrivingManeuver::RampLeft => "ramp-left",
+            DrivingManeuver::RampRight => "ramp-right",
+            DrivingManeuver::RoundaboutLeft => "roundabout-left",
+            DrivingManeuver::RoundaboutRight => "roundabout-right",
+            DrivingManeuver::Straight => "straight",
+            DrivingManeuver::TurnLeft => "turn-left",
+            DrivingManeuver::TurnRight => "turn-right",
+            DrivingManeuver::TurnSharpLeft => "turn-sharp-left",
+            DrivingManeuver::TurnSharpRight => "turn-sharp-right",
+            DrivingManeuver::TurnSlightLeft => "turn-slight-left",
+            DrivingManeuver::TurnSlightRight => "turn-slight-right",
+            DrivingManeuver::UturnLeft => "uturn-left",
+            DrivingManeuver::UturnRight => "uturn-right",
+        } // match
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::fmt::Display for DrivingManeuver {
+    /// Converts a `DrivingManeuver` enum to a `String` that contains a
+    /// [maneuver
+    /// type](https://developers.google.com/maps/documentation/directions/intro#Steps)
+    /// code.
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", std::convert::Into::<&str>::into(self))
+    } // fmt
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&DrivingManeuver> for String {
     /// Converts a `DrivingManeuver` enum to a `String` that contains a
     /// [maneuver
     /// type](https://developers.google.com/maps/documentation/directions/intro#Steps)
     /// code.
-    fn from(maneuver_type: &DrivingManeuver) -> String {
-        match maneuver_type {
-            DrivingManeuver::Ferry => String::from("ferry"),
-            DrivingManeuver::FerryTrain => String::from("ferry-train"),
-            DrivingManeuver::ForkLeft => String::from("fork-left"),
-            DrivingManeuver::ForkRight => String::from("fork-right"),
-            DrivingManeuver::KeepLeft => String::from("keep-left"),
-            DrivingManeuver::KeepRight => String::from("keep-right"),
-            DrivingManeuver::Merge => String::from("merge"),
-            DrivingManeuver::Ramp => String::from("ramp"),
-            DrivingManeuver::RampLeft => String::from("ramp-left"),
-            DrivingManeuver::RampRight => String::from("ramp-right"),
-            DrivingManeuver::RoundaboutLeft => String::from("roundabout-left"),
-            DrivingManeuver::RoundaboutRight => String::from("roundabout-right"),
-            DrivingManeuver::Straight => String::from("straight"),
-            DrivingManeuver::TurnLeft => String::from("turn-left"),
-            DrivingManeuver::TurnRight => String::from("turn-right"),
-            DrivingManeuver::TurnSharpLeft => String::from("turn-sharp-left"),
-            DrivingManeuver::TurnSharpRight => String::from("turn-sharp-right"),
-            DrivingManeuver::TurnSlightLeft => String::from("turn-slight-left"),
-            DrivingManeuver::TurnSlightRight => String::from("turn-slight-right"),
-            DrivingManeuver::UturnLeft => String::from("uturn-left"),
-            DrivingManeuver::UturnRight => String::from("uturn-right"),
-        } // match
+    fn from(driving_maneuver: &DrivingManeuver) -> Self {
+        std::convert::Into::<&str>::into(driving_maneuver).to_string()
     } // fn
 } // impl
 
@@ -132,6 +146,8 @@ static DRIVING_MANEUVERS_BY_CODE: phf::Map<&'static str, DrivingManeuver> = phf_
     "uturn-right" => DrivingManeuver::UturnRight,
 };
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::TryFrom<&str> for DrivingManeuver {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -147,6 +163,8 @@ impl std::convert::TryFrom<&str> for DrivingManeuver {
             .ok_or_else(|| Error::InvalidDrivingManeuverCode(driving_maneuver_type_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::str::FromStr for DrivingManeuver {
     // Error definitions are contained in the
@@ -166,42 +184,32 @@ impl std::str::FromStr for DrivingManeuver {
 
 // -----------------------------------------------------------------------------
 
-impl std::default::Default for DrivingManeuver {
-    /// Returns a reasonable default variant for the `DrivingManeuver` enum
-    /// type.
-    fn default() -> Self {
-        DrivingManeuver::Straight
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl std::fmt::Display for DrivingManeuver {
+impl DrivingManeuver {
     /// Formats a `DrivingManeuver` enum into a string that is presentable to
     /// the end user.
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    pub fn display(&self) -> &str {
         match self {
-            DrivingManeuver::Ferry => write!(f, "Ferry"),
-            DrivingManeuver::FerryTrain => write!(f, "Ferry Train"),
-            DrivingManeuver::ForkLeft => write!(f, "Fork Left"),
-            DrivingManeuver::ForkRight => write!(f, "Fork Right"),
-            DrivingManeuver::KeepLeft => write!(f, "Keep Left"),
-            DrivingManeuver::KeepRight => write!(f, "Keep Right"),
-            DrivingManeuver::Merge => write!(f, "Merge"),
-            DrivingManeuver::Ramp => write!(f, "Ramp"),
-            DrivingManeuver::RampLeft => write!(f, "Ramp Left"),
-            DrivingManeuver::RampRight => write!(f, "Ramp Right"),
-            DrivingManeuver::RoundaboutLeft => write!(f, "Roundabout Left"),
-            DrivingManeuver::RoundaboutRight => write!(f, "Roundabout Right"),
-            DrivingManeuver::Straight => write!(f, "Straight"),
-            DrivingManeuver::TurnLeft => write!(f, "Turn Left"),
-            DrivingManeuver::TurnRight => write!(f, "Turn Right"),
-            DrivingManeuver::TurnSharpLeft => write!(f, "Turn Sharp Left"),
-            DrivingManeuver::TurnSharpRight => write!(f, "Turn Sharp Right"),
-            DrivingManeuver::TurnSlightLeft => write!(f, "Turn Slight Left"),
-            DrivingManeuver::TurnSlightRight => write!(f, "Turn Slight Right"),
-            DrivingManeuver::UturnLeft => write!(f, "U-turn Left"),
-            DrivingManeuver::UturnRight => write!(f, "U-turn Right"),
+            DrivingManeuver::Ferry => "Ferry",
+            DrivingManeuver::FerryTrain => "Ferry Train",
+            DrivingManeuver::ForkLeft => "Fork Left",
+            DrivingManeuver::ForkRight => "Fork Right",
+            DrivingManeuver::KeepLeft => "Keep Left",
+            DrivingManeuver::KeepRight => "Keep Right",
+            DrivingManeuver::Merge => "Merge",
+            DrivingManeuver::Ramp => "Ramp",
+            DrivingManeuver::RampLeft => "Ramp Left",
+            DrivingManeuver::RampRight => "Ramp Right",
+            DrivingManeuver::RoundaboutLeft => "Roundabout Left",
+            DrivingManeuver::RoundaboutRight => "Roundabout Right",
+            DrivingManeuver::Straight => "Straight",
+            DrivingManeuver::TurnLeft => "Turn Left",
+            DrivingManeuver::TurnRight => "Turn Right",
+            DrivingManeuver::TurnSharpLeft => "Turn Sharp Left",
+            DrivingManeuver::TurnSharpRight => "Turn Sharp Right",
+            DrivingManeuver::TurnSlightLeft => "Turn Slight Left",
+            DrivingManeuver::TurnSlightRight => "Turn Slight Right",
+            DrivingManeuver::UturnLeft => "U-turn Left",
+            DrivingManeuver::UturnRight => "U-turn Right",
         } // match
     } // fn
 } // impl

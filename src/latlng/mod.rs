@@ -7,7 +7,7 @@ mod geo;
 
 // -----------------------------------------------------------------------------
 
-use crate::types_error::Error;
+use crate::type_error::Error;
 use rust_decimal::Decimal;
 use rust_decimal::prelude::FromPrimitive;
 use rust_decimal::prelude::FromStr;
@@ -26,6 +26,7 @@ use std::cmp::{Ord, Ordering};
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct LatLng {
     /// Latitude. A value between -90.0° and 90.0°.
+    #[serde(alias = "lat")]
     #[serde(alias = "latitude")]
     pub lat: Decimal,
     /// Longitude. A value between -180.0° and 180.0°.
@@ -150,7 +151,7 @@ impl TryFrom<&str> for LatLng {
 impl std::str::FromStr for LatLng {
     // Error definitions are contained in the
     // `google_maps\src\geocoding\error.rs` module.
-    type Err = crate::types_error::Error;
+    type Err = crate::type_error::Error;
     /// Gets a `LatLng` struct from a `String` that contains a comma-delimited
     /// latitude & longitude pair.
     fn from_str(value: &str) -> Result<Self, Self::Err> {
@@ -171,15 +172,25 @@ impl std::str::FromStr for LatLng {
 
 // -----------------------------------------------------------------------------
 
+impl std::fmt::Display for LatLng {
+    /// Converts a `LatLng` struct to a `String` that contains a
+    /// latitude/longitude pair.
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f,
+            "{latitude},{longitude}",
+            latitude=self.lat.normalize(),
+            longitude=self.lng.normalize(),
+        ) // write!
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&LatLng> for String {
     /// Converts a `LatLng` struct to a `String` that contains a
     /// latitude/longitude pair.
-    fn from(latlng: &LatLng) -> String {
-        format!(
-            "{latitude},{longitude}",
-            latitude=latlng.lat.normalize(),
-            longitude=latlng.lng.normalize(),
-        ) // format!
+    fn from(lat_lng: &LatLng) -> Self {
+        lat_lng.to_string()
     } // fn
 } // impl
 
@@ -197,14 +208,13 @@ impl std::default::Default for LatLng {
 
 // -----------------------------------------------------------------------------
 
-impl std::fmt::Display for LatLng {
+impl LatLng {
     /// Formats a `LatLng` struct into a string that is presentable to the end
     /// user.
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    pub fn display(&self) -> String {
         // Display latitude and longitude as decimal degrees with some extra
         // fixins'.
-        write!(
-            f,
+        format!(
             "{lat}°{lat_hem} {lng}°{lng_hem}",
             lat=self.lat.abs().normalize(),
             lat_hem=match self.lat.cmp(&dec!(0.0)) {

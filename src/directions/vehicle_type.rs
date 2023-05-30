@@ -3,73 +3,56 @@
 
 use crate::directions::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize, Deserializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 // -----------------------------------------------------------------------------
 
 /// Indicates the [vehicle
 /// type](https://developers.google.com/maps/documentation/directions/intro#VehicleType)
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[repr(u8)]
 pub enum VehicleType {
     /// Bus.
-    #[serde(alias = "BUS")]
-    Bus,
+    #[default] Bus = 0,
     /// A vehicle that operates on a cable, usually on the ground. Aerial cable
     /// cars may be of the type VehicleType::Gondola.
-    #[serde(alias = "CABLE_CAR")]
-    CableCar,
+    CableCar = 1,
     /// Commuter rail.
-    #[serde(alias = "COMMUTER_TRAIN")]
-    CommuterTrain,
+    CommuterTrain = 2,
     /// Ferry.
-    #[serde(alias = "FERRY")]
-    Ferry,
+    Ferry = 3,
     /// A vehicle that is pulled up a steep incline by a cable. A Funicular
     /// typically consists of two cars, with each car acting as a counterweight
     /// for the other.
-    #[serde(alias = "FUNICULAR")]
-    Funicular,
+    Funicular = 4,
     /// An aerial cable car.
-    #[serde(alias = "GONDOLA_LIFT")]
-    GondolaLift,
+    GondolaLift = 5,
     /// Heavy rail.
-    #[serde(alias = "HEAVY_RAIL")]
-    HeavyRail,
+    HeavyRail = 6,
     /// High speed train.
-    #[serde(alias = "HIGH_SPEED_TRAIN")]
-    HighSpeedTrain,
+    HighSpeedTrain = 7,
     /// Intercity bus.
-    #[serde(alias = "INTERCITY_BUS")]
-    IntercityBus,
+    IntercityBus = 8,
     /// Long distance train.
-    #[serde(alias = "LONG_DISTANCE_TRAIN")]
-    LongDistanceTrain,
+    LongDistanceTrain = 9,
     /// Light rail transit.
-    #[serde(alias = "METRO_RAIL")]
-    MetroRail,
+    MetroRail = 10,
     /// Monorail.
-    #[serde(alias = "MONORAIL")]
-    Monorail,
+    Monorail = 11,
     /// All other vehicles will return this type.
-    #[serde(alias = "OTHER")]
-    Other,
+    Other = 12,
     /// Rail.
-    #[serde(alias = "RAIL")]
-    Rail,
+    Rail = 13,
     /// Share taxi is a kind of bus with the ability to drop off and pick up
     /// passengers anywhere on its route.
-    #[serde(alias = "SHARE_TAXI")]
-    ShareTaxi,
+    ShareTaxi = 14,
     /// Underground light rail.
-    #[serde(alias = "SUBWAY")]
-    Subway,
+    Subway = 15,
     /// Above ground light rail.
-    #[serde(alias = "TRAM")]
-    Tram,
+    Tram = 16,
     /// Trolleybus.
-    #[serde(alias = "TROLLEYBUS")]
-    Trolleybus,
+    Trolleybus = 17,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -88,31 +71,63 @@ impl<'de> Deserialize<'de> for VehicleType {
 
 // -----------------------------------------------------------------------------
 
+impl Serialize for VehicleType {
+    /// Manual implementation of `Serialize` for `serde`.
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where S: Serializer {
+        serializer.serialize_str(std::convert::Into::<&str>::into(self))
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<&VehicleType> for &str {
+    /// Converts a `VehicleType` enum to a `String` that contains a [vehicle
+    /// type](https://developers.google.com/maps/documentation/directions/intro#VehicleType)
+    /// code.
+    fn from(vehicle_type: &VehicleType) -> Self {
+        match vehicle_type {
+            VehicleType::Bus => "BUS",
+            VehicleType::CableCar => "CABLE_CAR",
+            VehicleType::CommuterTrain => "COMMUTER_TRAIN",
+            VehicleType::Ferry => "FERRY",
+            VehicleType::Funicular => "FUNICULAR",
+            VehicleType::GondolaLift => "GONDOLA_LIFT",
+            VehicleType::HeavyRail => "HEAVY_RAIL",
+            VehicleType::HighSpeedTrain => "HIGH_SPEED_TRAIN",
+            VehicleType::IntercityBus => "INTERCITY_BUS",
+            VehicleType::LongDistanceTrain => "LONG_DISTANCE_TRAIN",
+            VehicleType::MetroRail => "METRO_RAIL",
+            VehicleType::Monorail => "MONORAIL",
+            VehicleType::Other => "OTHER",
+            VehicleType::Rail => "RAIL",
+            VehicleType::ShareTaxi => "SHARE_TAXI",
+            VehicleType::Subway => "SUBWAY",
+            VehicleType::Tram => "TRAM",
+            VehicleType::Trolleybus => "TROLLEYBUS",
+        } // match
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::fmt::Display for VehicleType {
+    /// Converts a `VehicleType` enum to a `String` that contains a [vehicle
+    /// type](https://developers.google.com/maps/documentation/directions/intro#VehicleType)
+    /// code.
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", std::convert::Into::<&str>::into(self))
+    } // fmt
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&VehicleType> for String {
     /// Converts a `VehicleType` enum to a `String` that contains a [vehicle
     /// type](https://developers.google.com/maps/documentation/directions/intro#VehicleType)
     /// code.
-    fn from(vehicle_type: &VehicleType) -> String {
-        match vehicle_type {
-            VehicleType::Bus => String::from("BUS"),
-            VehicleType::CableCar => String::from("CABLE_CAR"),
-            VehicleType::CommuterTrain => String::from("COMMUTER_TRAIN"),
-            VehicleType::Ferry => String::from("FERRY"),
-            VehicleType::Funicular => String::from("FUNICULAR"),
-            VehicleType::GondolaLift => String::from("GONDOLA_LIFT"),
-            VehicleType::HeavyRail => String::from("HEAVY_RAIL"),
-            VehicleType::HighSpeedTrain => String::from("HIGH_SPEED_TRAIN"),
-            VehicleType::IntercityBus => String::from("INTERCITY_BUS"),
-            VehicleType::LongDistanceTrain => String::from("LONG_DISTANCE_TRAIN"),
-            VehicleType::MetroRail => String::from("METRO_RAIL"),
-            VehicleType::Monorail => String::from("MONORAIL"),
-            VehicleType::Other => String::from("OTHER"),
-            VehicleType::Rail => String::from("RAIL"),
-            VehicleType::ShareTaxi => String::from("SHARE_TAXI"),
-            VehicleType::Subway => String::from("SUBWAY"),
-            VehicleType::Tram => String::from("TRAM"),
-            VehicleType::Trolleybus => String::from("TROLLEYBUS"),
-        } // match
+    fn from(vehicle_type: &VehicleType) -> Self {
+        std::convert::Into::<&str>::into(vehicle_type).to_string()
     } // fn
 } // impl
 
@@ -139,6 +154,8 @@ static VEHICLE_TYPES_BY_CODE: phf::Map<&'static str, VehicleType> = phf_map! {
     "TROLLEYBUS" => VehicleType::Trolleybus,
 };
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::TryFrom<&str> for VehicleType {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -153,6 +170,8 @@ impl std::convert::TryFrom<&str> for VehicleType {
             .ok_or_else(|| Error::InvalidVehicleTypeCode(vehicle_type_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::str::FromStr for VehicleType {
     // Error definitions are contained in the
@@ -171,38 +190,29 @@ impl std::str::FromStr for VehicleType {
 
 // -----------------------------------------------------------------------------
 
-impl std::default::Default for VehicleType {
-    /// Returns a reasonable default variant for the `VehicleType` enum type.
-    fn default() -> Self {
-        VehicleType::Bus
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl std::fmt::Display for VehicleType {
+impl VehicleType {
     /// Formats a `VehicleType` enum into a string that is presentable to the
     /// end user.
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    pub fn display(&self) -> &str {
         match self {
-            VehicleType::Bus => write!(f, "Bus"),
-            VehicleType::CableCar => write!(f, "Cable Car"),
-            VehicleType::CommuterTrain => write!(f, "Commuter Train"),
-            VehicleType::Ferry => write!(f, "Ferry"),
-            VehicleType::Funicular => write!(f, "Funicular"),
-            VehicleType::GondolaLift => write!(f, "Gondola Lift"),
-            VehicleType::HeavyRail => write!(f, "Heavy Rail"),
-            VehicleType::HighSpeedTrain => write!(f, "High Speed Train"),
-            VehicleType::IntercityBus => write!(f, "Intercity Bus"),
-            VehicleType::LongDistanceTrain => write!(f, "Long Distance Train"),
-            VehicleType::MetroRail => write!(f, "Metro Rail"),
-            VehicleType::Monorail => write!(f, "Monorail"),
-            VehicleType::Other => write!(f, "Other"),
-            VehicleType::Rail => write!(f, "Rail"),
-            VehicleType::ShareTaxi => write!(f, "Share Taxi"),
-            VehicleType::Subway => write!(f, "Subway"),
-            VehicleType::Tram => write!(f, "Tram"),
-            VehicleType::Trolleybus => write!(f, "Trolleybus"),
+            VehicleType::Bus => "Bus",
+            VehicleType::CableCar => "Cable Car",
+            VehicleType::CommuterTrain => "Commuter Train",
+            VehicleType::Ferry => "Ferry",
+            VehicleType::Funicular => "Funicular",
+            VehicleType::GondolaLift => "Gondola Lift",
+            VehicleType::HeavyRail => "Heavy Rail",
+            VehicleType::HighSpeedTrain => "High Speed Train",
+            VehicleType::IntercityBus => "Intercity Bus",
+            VehicleType::LongDistanceTrain => "Long Distance Train",
+            VehicleType::MetroRail => "Metro Rail",
+            VehicleType::Monorail => "Monorail",
+            VehicleType::Other => "Other",
+            VehicleType::Rail => "Rail",
+            VehicleType::ShareTaxi => "Share Taxi",
+            VehicleType::Subway => "Subway",
+            VehicleType::Tram => "Tram",
+            VehicleType::Trolleybus => "Trolleybus",
         } // match
     } // fn
 } // impl

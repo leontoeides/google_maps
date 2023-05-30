@@ -8,6 +8,7 @@ mod geo_conversions;
 // -----------------------------------------------------------------------------
 
 use crate::latlng::LatLng;
+use crate::type_error::Error;
 use serde::{Deserialize, Serialize};
 
 // -----------------------------------------------------------------------------
@@ -27,16 +28,49 @@ pub struct Bounds {
 
 // -----------------------------------------------------------------------------
 
+impl std::fmt::Display for Bounds {
+    /// Converts a `Bounds` struct to a `String` that contains two
+    /// latitude & longitude pairs that represent a bounding box.
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f,
+            "{},{}|{},{}",
+            self.southwest.lat,
+            self.southwest.lng,
+            self.northeast.lat,
+            self.northeast.lng,
+        ) // write!
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&Bounds> for String {
     /// Converts a `Bounds` struct to a `String` that contains two
     /// latitude & longitude pairs that represent a bounding box.
-    fn from(bounds: &Bounds) -> String {
-        format!(
-            "{},{}|{},{}",
-            bounds.southwest.lat,
-            bounds.southwest.lng,
-            bounds.northeast.lat,
-            bounds.northeast.lng,
-        ) // format!
+    fn from(bounds: &Bounds) -> Self {
+        bounds.to_string()
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::str::FromStr for Bounds {
+    // Error definitions are contained in the `type_error.rs` module.
+    type Err = crate::type_error::Error;
+    /// Gets a `Bounds` struct from a `String` that contains two pipe-delimited
+    /// latitude & longitude pairs.
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
+        let corner: Vec<&str> = value.trim()
+            .split('|')
+            .collect();
+        if corner.len() != 2 {
+            Err(Error::InvalidBoundsString(value.to_owned()))
+        } else {
+            let southwest = LatLng::from_str(corner[0].trim());
+            let southwest = southwest.map_err(|_| Error::InvalidBoundsString(value.to_owned()))?;
+            let northeast = LatLng::from_str(corner[1].trim());
+            let northeast = northeast.map_err(|_| Error::InvalidBoundsString(value.to_owned()))?;
+            Ok(Bounds { southwest, northeast })
+        } // if
     } // fn
 } // impl

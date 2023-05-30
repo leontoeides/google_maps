@@ -26,7 +26,7 @@ pub use crate::{
     latlng::LatLng,
     place_type::PlaceType,
     region::Region,
-    types_error::Error as TypesError,
+    type_error::Error as TypeError,
 }; // crate
 
 // =============================================================================

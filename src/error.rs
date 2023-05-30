@@ -16,7 +16,7 @@ pub enum Error {
 
     /// Errors from the types and structs in the `google_maps` crate.
     #[error(transparent)]
-    Types(#[from] crate::types_error::Error),
+    Type(#[from] crate::type_error::Error),
 
     /// Errors from the `directions` module in the `google_maps` crate.
     #[error(transparent)]

@@ -4,7 +4,7 @@
 
 use crate::directions::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize, Deserializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 // -----------------------------------------------------------------------------
 
@@ -15,28 +15,24 @@ use serde::{Deserialize, Serialize, Deserializer};
 /// request includes an API key or a Google Maps Platform Premium Plan client
 /// ID.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[repr(u8)]
 pub enum TransitMode {
     /// Indicates that the calculated route should prefer travel by bus.
-    #[serde(alias = "bus")]
-    Bus,
+    #[default] Bus = 0,
     /// Indicates that the calculated route should prefer travel by train, tram,
     /// light rail, and subway. This is equivalent to
     /// `transit_mode=train|tram|subway`.
-    #[serde(alias = "rail")]
-    Rail,
+    Rail = 1,
     /// Indicates that the calculated route should prefer travel by subway.
-    #[serde(alias = "subway")]
-    Subway,
+    Subway = 2,
     /// Indicates that the calculated route should prefer travel by train.
-    #[serde(alias = "train")]
-    Train,
+    Train = 3,
     /// Indicates that the calculated route should prefer travel by tram and
     /// light rail.
     /// Indicates that the calculated route should prefer travel by tram and
     /// light rail.
-    #[serde(alias = "tram")]
-    Tram,
+    Tram = 4,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -55,18 +51,50 @@ impl<'de> Deserialize<'de> for TransitMode {
 
 // -----------------------------------------------------------------------------
 
+impl Serialize for TransitMode {
+    /// Manual implementation of `Serialize` for `serde`.
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where S: Serializer {
+        serializer.serialize_str(std::convert::Into::<&str>::into(self))
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<&TransitMode> for &str {
+    /// Converts a `TransitMode` enum to a `String` that contains a [transit
+    /// mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitMode)
+    /// code.
+    fn from(transit_mode: &TransitMode) -> Self {
+        match transit_mode {
+            TransitMode::Bus => "bus",
+            TransitMode::Rail => "rail",
+            TransitMode::Subway => "subway",
+            TransitMode::Train => "train",
+            TransitMode::Tram => "tram",
+        } // match
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::fmt::Display for TransitMode {
+    /// Converts a `TransitMode` enum to a `String` that contains a [transit
+    /// mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitMode)
+    /// code.
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", std::convert::Into::<&str>::into(self))
+    } // fmt
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&TransitMode> for String {
     /// Converts a `TransitMode` enum to a `String` that contains a [transit
     /// mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitMode)
     /// code.
-    fn from(transit_mode: &TransitMode) -> String {
-        match transit_mode {
-            TransitMode::Bus => String::from("bus"),
-            TransitMode::Rail => String::from("rail"),
-            TransitMode::Subway => String::from("subway"),
-            TransitMode::Train => String::from("train"),
-            TransitMode::Tram => String::from("tram"),
-        } // match
+    fn from(transit_mode: &TransitMode) -> Self {
+        std::convert::Into::<&str>::into(transit_mode).to_string()
     } // fn
 } // impl
 
@@ -79,6 +107,8 @@ static TRANSIT_MODES_BY_CODE: phf::Map<&'static str, TransitMode> = phf_map! {
     "train" => TransitMode::Train,
     "tram" => TransitMode::Tram,
 };
+
+// -----------------------------------------------------------------------------
 
 impl std::convert::TryFrom<&str> for TransitMode {
     // Error definitions are contained in the
@@ -94,6 +124,8 @@ impl std::convert::TryFrom<&str> for TransitMode {
             .ok_or_else(|| Error::InvalidTransitModeCode(transit_mode_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::str::FromStr for TransitMode {
     // Error definitions are contained in the
@@ -112,25 +144,16 @@ impl std::str::FromStr for TransitMode {
 
 // -----------------------------------------------------------------------------
 
-impl std::default::Default for TransitMode {
-    /// Returns a reasonable default variant for the `TransitMode` enum type.
-    fn default() -> Self {
-        TransitMode::Bus
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl std::fmt::Display for TransitMode {
+impl TransitMode {
     /// Formats a `TransitMode` enum into a string that is presentable to the
     /// end user.
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    pub fn display(&self) -> &str {
         match self {
-            TransitMode::Bus => write!(f, "Bus"),
-            TransitMode::Rail => write!(f, "Rail"),
-            TransitMode::Subway => write!(f, "Subway"),
-            TransitMode::Train => write!(f, "Train"),
-            TransitMode::Tram => write!(f, "Tram"),
+            TransitMode::Bus => "Bus",
+            TransitMode::Rail => "Rail",
+            TransitMode::Subway => "Subway",
+            TransitMode::Train => "Train",
+            TransitMode::Tram => "Tram",
         } // match
     } // fn
 } // impl

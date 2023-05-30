@@ -3,8 +3,10 @@
 //! directions.
 
 use chrono::NaiveDateTime;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
+// -----------------------------------------------------------------------------
+//
 /// Specifies the desired [time of
 /// departure](https://developers.google.com/maps/documentation/directions/intro#optional-parameters).
 ///
@@ -32,14 +34,17 @@ use serde::{Deserialize, Serialize};
 /// the service. Results may also vary between nearly-equivalent routes at any
 /// time or frequency.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[repr(u8)]
 pub enum DepartureTime {
     /// You can specify a value of now, which sets the departure time to the
     /// current time (correct to the nearest second).
-    Now,
+    #[default] Now = 0,
     /// Specifies the desired time of departure.
-    At(NaiveDateTime),
+    At(NaiveDateTime) = 1,
 } // enum
+
+// -----------------------------------------------------------------------------
 
 impl std::convert::From<&DepartureTime> for String {
     /// Converts a `DepartureTime` enum to a `String` that contains a [departure
@@ -52,22 +57,26 @@ impl std::convert::From<&DepartureTime> for String {
     } // fn
 } // impl
 
-impl std::default::Default for DepartureTime {
-    /// Returns a reasonable default variant for the `DepartureTime` enum type.
-    fn default() -> Self {
-        DepartureTime::Now
+// -----------------------------------------------------------------------------
+
+impl std::fmt::Display for DepartureTime {
+    /// Converts a `DepartureTime` enum to a `String` that contains a [departure
+    /// time](https://developers.google.com/maps/documentation/directions/intro#optional-parameters).
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{departure_time}", departure_time=String::from(self))
     } // fn
 } // impl
 
-impl std::fmt::Display for DepartureTime {
+// -----------------------------------------------------------------------------
+
+impl DepartureTime {
     /// Formats a `DepartureTime` enum into a string that is presentable to the
     /// end user.
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    pub fn display(&self) -> String {
         match self {
-            DepartureTime::Now => write!(f, "Now"),
-            DepartureTime::At(departure_time) => {
-                write!(f, "At {}", departure_time.format("At %F %r"))
-            }
+            DepartureTime::Now => "Now".to_string(),
+            DepartureTime::At(departure_time) =>
+                format!("At {}", departure_time.format("At %F %r")),
         } // match
     } // fn
 } // impl
