@@ -1,13 +1,16 @@
+use crate::error::Error as GoogleMapsError;
 use crate::places::place_autocomplete::{
-    error::Error,
-    request::Request,
-    response::Response
+    request::Request as PlaceAutocompleteRequest,
+    response::Response as PlaceAutocompleteResponse,
 }; // crate::places::place_autocomplete
+use miette::Result;
 
-// -----------------------------------------------------------------------------
+// =============================================================================
 
-impl<'a> Request<'a> {
+impl<'a> PlaceAutocompleteRequest<'a> {
 
+    // -------------------------------------------------------------------------
+    //
     /// Executes the query you've built.
     ///
     /// ## Description:
@@ -20,8 +23,12 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub async fn execute(&'a mut self) -> Result<Response, Error> {
+    pub async fn execute(
+        &'a mut self
+    ) -> Result<PlaceAutocompleteResponse, GoogleMapsError> {
+
         self.build().get().await
+
     } // fn
 
 } // impl

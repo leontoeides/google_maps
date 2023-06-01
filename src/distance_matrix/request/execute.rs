@@ -1,9 +1,16 @@
+use crate::error::Error as GoogleMapsError;
 use crate::distance_matrix::{
-    error::Error, request::Request, response::Response
-}; // use crate::distance_matrix
+    request::Request as DistanceMatrixRequest,
+    response::Response as DistanceMatrixResponse,
+}; // crate::distance_matrix
+use miette::Result;
 
-impl<'a> Request<'a> {
+// =============================================================================
 
+impl<'a> DistanceMatrixRequest<'a> {
+
+    // -------------------------------------------------------------------------
+    //
     /// Executes the query you've built.
     ///
     /// ## Description:
@@ -16,8 +23,12 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub async fn execute(&'a mut self) -> Result<Response, Error> {
+    pub async fn execute(
+        &'a mut self
+    ) -> Result<DistanceMatrixResponse, GoogleMapsError> {
+
         self.validate()?.build()?.get().await
+
     } // fn
 
 } // impl

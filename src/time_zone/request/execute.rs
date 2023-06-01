@@ -1,7 +1,16 @@
-use crate::time_zone::{error::Error, request::Request, response::Response};
+use crate::error::Error as GoogleMapsError;
+use crate::time_zone::{
+    request::Request as TimeZoneRequest,
+    response::Response as TimeZoneResponse,
+}; // crate::time_zone
+use miette::Result;
 
-impl<'a> Request<'a> {
+// =============================================================================
 
+impl<'a> TimeZoneRequest<'a> {
+
+    // -------------------------------------------------------------------------
+    //
     /// Executes the query you've built.
     ///
     /// ## Description:
@@ -14,8 +23,12 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub async fn execute(&'a mut self) -> Result<Response, Error> {
+    pub async fn execute(
+        &'a mut self
+    ) -> Result<TimeZoneResponse, GoogleMapsError> {
+
         self.build().get().await
+
     } // fn
 
 } // impl

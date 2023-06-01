@@ -26,6 +26,10 @@ pub enum Error {
     #[error(transparent)]
     DistanceMatrix(#[from] crate::distance_matrix::error::Error),
 
+    /// Errors from the `elevation` module in the `google_maps` crate.
+    #[error(transparent)]
+    Elevation(#[from] crate::elevation::error::Error),
+
     /// Errors from the `geocoding` module in the `google_maps` crate.
     #[error(transparent)]
     Geocoding(#[from] crate::geocoding::error::Error),

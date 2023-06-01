@@ -1,9 +1,16 @@
+use crate::error::Error as GoogleMapsError;
 use crate::geocoding::{
-    error::Error, forward::ForwardRequest, response::Response
-}; // use crate
+    forward::ForwardRequest as GeocodingForwardRequest,
+    response::Response as GeocodingResponse,
+}; // crate::geocoding
+use miette::Result;
 
-impl<'a> ForwardRequest<'a> {
+// =============================================================================
 
+impl<'a> GeocodingForwardRequest<'a> {
+
+    // -------------------------------------------------------------------------
+    //
     /// Executes the query you've built.
     ///
     /// ## Description:
@@ -16,8 +23,12 @@ impl<'a> ForwardRequest<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub async fn execute(&'a mut self) -> Result<Response, Error> {
+    pub async fn execute(
+        &'a mut self
+    ) -> Result<GeocodingResponse, GoogleMapsError> {
+
         self.validate()?.build()?.get().await
+
     } // fn
 
 } // impl

@@ -1,13 +1,16 @@
-use crate::places::error::Error;
+use crate::error::Error as GoogleMapsError;
 use crate::places::place_details::{
-    request::Request,
-    response::Response
+    request::Request as PlaceDetailsRequest,
+    response::Response as PlaceDetailsResponse,
 }; // crate::places::place_details
+use miette::Result;
 
-// -----------------------------------------------------------------------------
+// =============================================================================
 
-impl<'a> Request<'a> {
+impl<'a> PlaceDetailsRequest<'a> {
 
+    // -------------------------------------------------------------------------
+    //
     /// Executes the query you've built.
     ///
     /// ## Description:
@@ -20,8 +23,12 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub async fn execute(&'a mut self) -> Result<Response, Error> {
+    pub async fn execute(
+        &'a mut self
+    ) -> Result<PlaceDetailsResponse, GoogleMapsError> {
+
         self.build().get().await
+
     } // fn
 
 } // impl

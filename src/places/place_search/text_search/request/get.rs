@@ -1,19 +1,21 @@
 use backoff::Error::{Permanent, Transient};
 use backoff::ExponentialBackoff;
 use backoff::future::retry;
+use crate::error::Error as GoogleMapsError;
 use crate::request_rate::api::Api;
-use crate::places::status::Status;
+use crate::places::status::Status as PlacesStatus;
 use crate::places::place_search::text_search::{
     SERVICE_URL,
     OUTPUT_FORMAT,
-    Error,
-    request::Request,
-    response::Response,
+    Error as PlacesTextSearchError,
+    request::Request as PlacesTextSearchRequest,
+    response::Response as PlacesTextSearchResponse,
 }; // crate::places::place_search::text_search
+use miette::Result;
 
 // -----------------------------------------------------------------------------
 
-impl<'a> Request<'a> {
+impl<'a> PlacesTextSearchRequest<'a> {
 
     /// Performs the HTTP get request and returns the response to the caller.
     ///
@@ -22,7 +24,7 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     #[tracing::instrument(level = "debug", name = "Google Maps Places Text Search", skip(self))]
-    pub async fn get(&mut self) -> Result<Response, Error> {
+    pub async fn get(&mut self) -> Result<PlacesTextSearchResponse, GoogleMapsError> {
 
         // Build the URL stem for the HTTP get request:
         let mut url = format!("{SERVICE_URL}/{OUTPUT_FORMAT}?");
@@ -31,21 +33,20 @@ impl<'a> Request<'a> {
             // If query string built, append it to the URL stem.
             Some(query) => url.push_str(query.as_ref()),
             // If query string not built, return an error.
-            None => return Err(Error::QueryNotBuilt),
+            None => return Err(PlacesTextSearchError::QueryNotBuilt)?,
         } // match
 
         // Observe any rate limiting before executing request:
-        self.client.rate_limit.limit_apis(vec![&Api::All, &Api::Places])
-            .await;
+        self.client.rate_limit.limit_apis(vec![&Api::All, &Api::Places]).await;
 
         // Emit debug message so client can monitor activity:
-        tracing::info!("Making HTTP GET request to Google Maps Places Text Search API: `{url}`");
+        tracing::debug!("Making HTTP GET request to Google Maps Places Text Search API: `{url}`");
 
         // Retries the get request until successful, an error ineligible for
         // retries is returned, or we have reached the maximum retries. Note:
         // errors wrapped in `Transient()` will retried by the `backoff` crate
         // while errors wrapped in `Permanent()` will exit the retry loop.
-        retry(ExponentialBackoff::default(), || async {
+        let response = retry(ExponentialBackoff::default(), || async {
 
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
@@ -66,12 +67,12 @@ impl<'a> Request<'a> {
                         let text = &response.text().await;
                         match text {
                             Ok(text) => {
-                                match serde_json::from_str::<Response>(text) {
+                                match serde_json::from_str::<PlacesTextSearchResponse>(text) {
                                     Ok(deserialized) => {
                                         // If the response JSON was successfully
                                         // parsed, check the Google API status
                                         // before returning it to the caller:
-                                        if deserialized.status == Status::Ok {
+                                        if deserialized.status == PlacesStatus::Ok {
                                             // If Google's response was "Ok"
                                             // return the struct deserialized
                                             // from JSON:
@@ -81,13 +82,13 @@ impl<'a> Request<'a> {
                                         // In most cases, retrying will not
                                         // help:
                                         } else {
-                                            let error = Error::GoogleMapsService(
+                                            let error = PlacesTextSearchError::GoogleMapsService(
                                                 deserialized.status.to_owned(),
                                                 deserialized.error_message,
                                             );
                                             // Check Google API response status
                                             // for error type:
-                                            if deserialized.status == Status::UnknownError {
+                                            if deserialized.status == PlacesStatus::UnknownError {
                                                 // Only Google's "Unknown Error"
                                                 // is eligible for retries:
                                                 tracing::warn!("{}", error);
@@ -103,13 +104,13 @@ impl<'a> Request<'a> {
                                     }, // Ok(deserialized)
                                     Err(error) => {
                                         tracing::error!("JSON parsing error: {}", error);
-                                        Err(Permanent(Error::SerdeJson(error)))
+                                        Err(Permanent(PlacesTextSearchError::SerdeJson(error)))
                                     }, // Err
                                 } // match
                             }, // Ok(text)
                             Err(error) => {
                                 tracing::error!("HTTP client returned: {}", error);
-                                Err(Permanent(Error::ReqwestMessage(error.to_string())))
+                                Err(Permanent(PlacesTextSearchError::ReqwestMessage(error.to_string())))
                             }, // Err
                         } // match
                     // We got a response from the server but it was not OK.
@@ -117,22 +118,25 @@ impl<'a> Request<'a> {
                     // Requests" are eligible for retries.
                     } else if response.status().is_server_error() || response.status() == 429 {
                         tracing::warn!("HTTP client returned: {}", response.status());
-                        Err(Transient { err: Error::HttpUnsuccessful(response.status().to_string()), retry_after: None })
+                        Err(Transient { err: PlacesTextSearchError::HttpUnsuccessful(response.status().to_string()), retry_after: None })
                     // Not a 500 Server Error or "429 Too Many Requests" error.
                     // The error is permanent, do not retry:
                     } else {
                         tracing::error!("HTTP client returned: {}", response.status());
-                        Err(Permanent(Error::HttpUnsuccessful(response.status().to_string())))
+                        Err(Permanent(PlacesTextSearchError::HttpUnsuccessful(response.status().to_string())))
                     } // if
                 } // case
                 // HTTP client did not get a response from the server. Retry:
                 Err(error) => {
                     tracing::warn!("HTTP client returned: {}", error);
-                    Err(Transient { err: Error::Reqwest(error), retry_after: None })
+                    Err(Transient { err: PlacesTextSearchError::Reqwest(error), retry_after: None })
                 } // case
             } // match
 
-        }).await
+        }).await?;
+
+        // Return response to caller:
+        Ok(response)
 
     } // fn
 

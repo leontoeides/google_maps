@@ -1,19 +1,21 @@
 use backoff::Error::{Permanent, Transient};
 use backoff::ExponentialBackoff;
 use backoff::future::retry;
+use crate::error::Error as GoogleMapsError;
 use crate::geocoding::{
     SERVICE_URL,
     OUTPUT_FORMAT,
-    error::Error,
-    forward::ForwardRequest,
-    response::Response,
-    response::status::Status,
+    error::Error as GeocodingError,
+    forward::ForwardRequest as FordwardGeocodingRequest,
+    response::Response as GeocodingResponse,
+    response::status::Status as GeocodingStatus,
 }; // use crate::geocoding
 use crate::request_rate::api::Api;
+use miette::Result;
 
 // -----------------------------------------------------------------------------
 
-impl<'a> ForwardRequest<'a> {
+impl<'a> FordwardGeocodingRequest<'a> {
 
     /// Performs the HTTP get request and returns the response to the caller.
     ///
@@ -22,7 +24,7 @@ impl<'a> ForwardRequest<'a> {
     /// This method accepts no arguments.
 
     #[tracing::instrument(level = "debug", name = "Google Maps Geocoding", skip(self))]
-    pub async fn get(&mut self) -> Result<Response, Error> {
+    pub async fn get(&mut self) -> Result<GeocodingResponse, GoogleMapsError> {
 
         // Build the URL stem for the HTTP get request:
         let mut url = format!("{SERVICE_URL}/{OUTPUT_FORMAT}?");
@@ -31,7 +33,7 @@ impl<'a> ForwardRequest<'a> {
             // If query string built, append it to the URL stem.
             Some(query) => url.push_str(query.as_ref()),
             // If query string not built, return an error.
-            None => return Err(Error::QueryNotBuilt),
+            None => return Err(GeocodingError::QueryNotBuilt)?,
         } // match
 
         // Observe any rate limiting before executing request:
@@ -39,13 +41,13 @@ impl<'a> ForwardRequest<'a> {
             .await;
 
         // Emit debug message so client can monitor activity:
-        tracing::info!("Making HTTP GET request to Google Maps Geocoding API: `{url}`");
+        tracing::debug!("Making HTTP GET request to Google Maps Geocoding API: `{url}`");
 
         // Retries the get request until successful, an error ineligible for
         // retries is returned, or we have reached the maximum retries. Note:
         // errors wrapped in `Transient()` will retried by the `backoff` crate
         // while errors wrapped in `Permanent()` will exit the retry loop.
-        retry(ExponentialBackoff::default(), || async {
+        let response = retry(ExponentialBackoff::default(), || async {
 
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
@@ -66,12 +68,12 @@ impl<'a> ForwardRequest<'a> {
                         let text = &response.text().await;
                         match text {
                             Ok(text) => {
-                                match serde_json::from_str::<Response>(text) {
+                                match serde_json::from_str::<GeocodingResponse>(text) {
                                     Ok(deserialized) => {
                                         // If the response JSON was successfully
                                         // parsed, check the Google API status
                                         // before returning it to the caller:
-                                        if deserialized.status == Status::Ok {
+                                        if deserialized.status == GeocodingStatus::Ok {
                                             // If Google's response was "Ok"
                                             // return the struct deserialized
                                             // from JSON:
@@ -81,13 +83,13 @@ impl<'a> ForwardRequest<'a> {
                                         // In most cases, retrying will not
                                         // help:
                                         } else {
-                                            let error = Error::GoogleMapsService(
+                                            let error = GeocodingError::GoogleMapsService(
                                                 deserialized.status.to_owned(),
                                                 deserialized.error_message,
                                             );
                                             // Check Google API response status
                                             // for error type:
-                                            if deserialized.status == Status::UnknownError {
+                                            if deserialized.status == GeocodingStatus::UnknownError {
                                                 // Only Google's "Unknown Error"
                                                 // is eligible for retries:
                                                 tracing::warn!("{}", error);
@@ -103,13 +105,13 @@ impl<'a> ForwardRequest<'a> {
                                     }, // Ok(deserialized)
                                     Err(error) => {
                                         tracing::error!("JSON parsing error: {}", error);
-                                        Err(Permanent(Error::SerdeJson(error)))
+                                        Err(Permanent(GeocodingError::SerdeJson(error)))
                                     }, // Err
                                 } // match
                             }, // Ok(text)
                             Err(error) => {
                                 tracing::error!("HTTP client returned: {}", error);
-                                Err(Permanent(Error::ReqwestMessage(error.to_string())))
+                                Err(Permanent(GeocodingError::ReqwestMessage(error.to_string())))
                             }, // Err
                         } // match
                     // We got a response from the server but it was not OK.
@@ -117,22 +119,25 @@ impl<'a> ForwardRequest<'a> {
                     // Requests" are eligible for retries.
                     } else if response.status().is_server_error() || response.status() == 429 {
                         tracing::warn!("HTTP client returned: {}", response.status());
-                        Err(Transient { err: Error::HttpUnsuccessful(response.status().to_string()), retry_after: None })
+                        Err(Transient { err: GeocodingError::HttpUnsuccessful(response.status().to_string()), retry_after: None })
                     // Not a 500 Server Error or "429 Too Many Requests" error.
                     // The error is permanent, do not retry:
                     } else {
                         tracing::error!("HTTP client returned: {}", response.status());
-                        Err(Permanent(Error::HttpUnsuccessful(response.status().to_string())))
+                        Err(Permanent(GeocodingError::HttpUnsuccessful(response.status().to_string())))
                     } // if
                 } // case
                 // HTTP client did not get a response from the server. Retry:
                 Err(error) => {
                     tracing::warn!("HTTP client returned: {}", error);
-                    Err(Transient { err: Error::Reqwest(error), retry_after: None })
+                    Err(Transient { err: GeocodingError::Reqwest(error), retry_after: None })
                 } // case
             } // match
 
-        }).await
+        }).await?;
+
+        // Return response to caller:
+        Ok(response)
 
     } // fn
 

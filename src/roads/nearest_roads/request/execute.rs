@@ -1,9 +1,13 @@
-use crate::roads::error::Error;
-use crate::roads::nearest_roads::{request::Request, response::Response};
+use crate::error::Error as GoogleMapsError;
+use crate::roads::nearest_roads::{
+    request::Request as NearestRoadsRequest,
+    response::Response as NearestRoadsResponse,
+}; // crate::roads::nearest_roads
+use miette::Result;
 
 // =============================================================================
 
-impl<'a> Request<'a> {
+impl<'a> NearestRoadsRequest<'a> {
 
     // -------------------------------------------------------------------------
     //
@@ -19,8 +23,12 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub async fn execute(&'a mut self) -> Result<Response, Error> {
+    pub async fn execute(
+        &'a mut self
+    ) -> Result<NearestRoadsResponse, GoogleMapsError> {
+
         self.build().get().await
+
     } // fn
 
 } // impl

@@ -1,10 +1,13 @@
-use crate::roads::error::Error;
-use crate::roads::snap_to_roads::request::Request;
-use crate::roads::snap_to_roads::response::Response;
+use crate::error::Error as GoogleMapsError;
+use crate::roads::snap_to_roads::{
+    request::Request as SnapToRoadsRequest,
+    response::Response as SnapToRoadsResponse,
+}; // crate::roads::snap_to_roads
+use miette::Result;
 
 // =============================================================================
 
-impl<'a> Request<'a> {
+impl<'a> SnapToRoadsRequest<'a> {
 
     // -------------------------------------------------------------------------
     //
@@ -20,8 +23,12 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub async fn execute(&'a mut self) -> Result<Response, Error> {
+    pub async fn execute(
+        &'a mut self
+    ) -> Result<SnapToRoadsResponse, GoogleMapsError> {
+
         self.build().get().await
+
     } // fn
 
 } // impl
