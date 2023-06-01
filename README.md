@@ -33,6 +33,8 @@ to give back to the Rust community. I hope it saves someone out there some work.
 now return the same error type. Previously, each API would return a different
 error type. This would be tedious when using several different APIs.
 
+* 3.2.0: 2023-05-31: Adjusted `tracing` log levels.
+
 * 3.2.0: 2023-05-31: Some house-keeping.
 
 * 3.2.0: 2023-05-30: ⚠ **Breaking change**: `google_maps` types will now
@@ -91,59 +93,6 @@ for more information on this update.
 * 3.0.0: 2022-09-04: `ClientSettings` renamed to `GoogleMapsClient`.
 
 * 3.0.0: 2022-08-27: Adjusted `tracing` log levels.
-
-* 2.1.7: 2022-08-27: `String` to `enum` table look-ups are now powered by the
-[phf](https://crates.io/crates/phf) (perfect hash functions) crate. Added manual
-implementations of `serde` deserializers for Google Maps client types, which
-take advantage of the new `phf` tables.
-
-* 2.1.7: 2022-08-27: Google Maps client types now implement `FromStr` which
-gives access to `parse`. For example:
-`let the_golden_boy: LatLng = "49.8845224,-97.1469436".parse()?;`
-
-* 2.1.7: 2022-08-22: Added debug logging message to show Google Maps client's
-request activity.
-
-* 2.1.6: 2022-08-19: Support for geocoding from Google Maps
-[Place IDs](https://developers.google.com/maps/documentation/places/web-service/place-id).
-Thank you [E-gy](https://github.com/E-gy)!
-
-* 2.1.6: 2022-04-10: `country` was moved up the hierarchy because it's now being
-shared amongst several APIs. Made `google_maps::country` module public.
-
-* 2.1.5: 2022-03-23: Partial support for the `Google Maps` `Places API`.
-Implemented the `Place Autocomplete` and `Query Autocomplete` services.
-
-* 2.1.3: 2021-07-22: Web Assembly (WASM) support: if Google Maps API Client's
-`default-features` are set to false, all desired reqwest features (`brotli`,
-`rustls`, etc.) must be manually added to the `Cargo.toml` file. Now, the
-`enable-reqwest` feature starts with no reqwest features so that Web Assembly
-users may rely on reqwest's JS fetch API. Also, changed `query_string()` to
-`query_url()`. See
-[CHANGELOG.md](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md)
-for example usage.
-
-* 2.1.2: 2021-07-18: Made more dependencies optional. This adds the ability to
-slim down this client when needed. Also, spruced up the `query_string()`
-methods.
-
-* 2.1.1: 2021-07-18: House-keeping. Fixed issue with Google Maps API `features`.
-Added support for using your own HTTP client.
-
-* 2.1.0: 2021-07-17: Transitioned from an in-house retry/backoff implementation
-to the `backoff` crate. Google Maps APIs are now optional through the use of
-feature flags. Improved examples.
-
-* 2.0.2: 2021-07-16: Added support for using rustls-tls in reqwest dependency -
-thanks [seanpianka](https://github.com/seanpianka)! Transitioned from `log`
-crate to the `tracing` crate.
-
-* 2.0.1: 2021-07-15: Now supports a user-configured Reqwest client in the Google
-Maps client builder.
-`GoogleMapsClient::new("YOUR_API_KEY_HERE").with_reqwest_client(your_reqwest_client).build();`
-
-* 2.0.0: 2021-07-13: The Rust Google Maps client is now async thanks to
-[seanpianka](https://github.com/seanpianka)!
 
 * The full [change
 log](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md) is
