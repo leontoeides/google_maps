@@ -246,6 +246,11 @@ impl std::fmt::Display for Error {
                 `HIGH_SPEED_TRAIN`, `INTERCITY_BUS`, `LONG_DISTANCE_TRAIN`, \
                 `METRO_RAIL`, `MONORAIL`, `OTHER`, `RAIL`, `SHARE_TAXI`, \
                 `SUBWAY`, `TRAM`, and `TROLLEYBUS`."),
+            Error::InvalidDepartureTime(invalid_departure_time_string) => write!(f,
+                "Google Maps Directions API client: \
+                `{invalid_departure_time_string}` is not a valid departure time. \
+                Valid departure times are `now`, or a UNIX timestamp."
+            ),
             Error::QueryNotBuilt => write!(f,
                 "Google Maps Directions API client: \
                 The query string must be built before the request may be sent to the Google Cloud Maps Platform. \
