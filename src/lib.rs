@@ -14,7 +14,6 @@
 //! [serde](https://crates.io/crates/serde) and, by default,
 //! [reqwest](https://crates.io/crates/reqwest) do most of the heavy lifting!
 //!
-//!
 //! I created this client library because I needed several Google Maps Platform
 //! features for a project that I'm working on. So, I've decided to spin my
 //! library off into a public crate. This is a very small token of gratitude and
@@ -25,7 +24,7 @@
 //!
 //! * In your project's `Cargo.toml` file, under the `[dependencies]` section:
 //!
-//!     * Add `google_maps = "3.1"`. Check
+//!     * Add `google_maps = "3.2"`. Check
 //!         [crates.io](https://crates.io/crates/google_maps) for the latest
 //!         version number.
 //!
@@ -37,41 +36,6 @@
 //! * The full documentation is available at [docs.rs](https://docs.rs/google_maps/)
 //!
 //! # What's new?
-//!
-//! * 3.1.1: 2023-01-29: Update to Chinese languages. Thanks
-//! [rick68](https://github.com/rick68)!
-//!
-//! * 3.1.0: 2022-11-27: ⚠ **Breaking change**: `Geometry.location_type` is
-//! now an `Option`.
-//!
-//! * 3.1.0: 2022-11-27: Add basic support for Google Maps Places _Text Search_
-//! and _Places Details_.
-//!
-//! * 3.0.1: 2022-10-01: Added `UNKNOWN_ERROR` variant to Directions API's
-//! geocoder status.
-//!
-//! * 3.0.0: 2022-09-03: ⚠ **Breaking change**: `LatLng::try_from` had to be
-//! renamed to `LatLng::try_from_dec` to fix name collision with the
-//! [TryFrom](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) trait.
-//! Added `try_from_f32` and `try_from_f64` methods for the `LatLng` type.
-//!
-//! * 3.0.0: 2022-09-04: Initial support for Google Maps Roads API: the **Snap
-//! To Roads** and the **Nearest Roads** services have been implemented. Unsure
-//! about supporting **Speed Limits** since, according to the documentation, it
-//! requires a special Google Maps plan.
-//!
-//! * 3.0.0: 2022-09-03: Optional basic support for the
-//! [geo](https://crates.io/crates/geo) crate and [GeoRust](https://georust.org/)
-//! ecosystem. This support may be enabled using the `geo` feature flag. When
-//! the `geo` feature is enabled, some types may loose support for `serde`
-//! serialization & deserialization. If I've missed something you want or if you
-//! think of a better way of doing this, feel free to reach out. See
-//! [CHANGELOG.md](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md)
-//! for more information on this update.
-//!
-//! * 3.0.0: 2022-09-04: `ClientSettings` renamed to `GoogleMapsClient`.
-//!
-//! * 3.0.0: 2022-08-27: Adjusted `tracing` log levels.
 //!
 //! * The full [change
 //! log](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md) is
