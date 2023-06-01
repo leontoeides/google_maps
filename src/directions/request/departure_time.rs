@@ -3,7 +3,7 @@
 //! directions.
 
 use chrono::NaiveDateTime;
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Deserialize, Serialize};
 
 // -----------------------------------------------------------------------------
 //
@@ -64,6 +64,44 @@ impl std::fmt::Display for DepartureTime {
     /// time](https://developers.google.com/maps/documentation/directions/intro#optional-parameters).
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         write!(f, "{departure_time}", departure_time=String::from(self))
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::TryFrom<&str> for DepartureTime {
+    // Error definitions are contained in the
+    // `google_maps\src\directions\error.rs` module.
+    type Error = crate::directions::error::Error;
+    /// Converts `String` that contains a [departure
+    /// time](https://developers.google.com/maps/documentation/directions/intro#optional-parameters)
+    /// to a `DepartureTime` enum.
+    fn try_from(departure_time: &str) -> Result<Self, Self::Error> {
+        if departure_time == "now" {
+            Ok(DepartureTime::Now)
+        } else {
+            match departure_time.parse::<i64>() {
+                Ok(integer) => match NaiveDateTime::from_timestamp_opt(integer, 0) {
+                    Some(naive_date_time) => Ok(DepartureTime::At(naive_date_time)),
+                    None => Err(Self::Error::InvalidDepartureTime(departure_time.to_string())),
+                }, // Ok
+                Err(_error) => Err(Self::Error::InvalidDepartureTime(departure_time.to_string())),
+            } // match
+        } // if
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::str::FromStr for DepartureTime {
+    // Error definitions are contained in the
+    // `google_maps\src\directions\error.rs` module.
+    type Err = crate::directions::error::Error;
+    /// Converts `String` that contains a [departure
+    /// time](https://developers.google.com/maps/documentation/directions/intro#optional-parameters)
+    /// to a `DepartureTime` enum.
+    fn from_str(departure_time: &str) -> Result<Self, Self::Err> {
+        DepartureTime::try_from(departure_time)
     } // fn
 } // impl
 

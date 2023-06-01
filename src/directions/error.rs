@@ -83,6 +83,11 @@ pub enum Error {
     /// vehicle type code. See `google_maps\src\directions\vehicle_type.rs` for
     /// more information.
     InvalidVehicleTypeCode(String),
+    /// API client library attempted to parse a string that contained an invalid
+    /// departure time. See
+    /// `google_maps\src\directions\request\departure_time.rs` for more
+    /// information.
+    InvalidDepartureTime(String),
     /// The query string must be built before the request may be sent to the
     /// Google Maps Directions API service.
     QueryNotBuilt,
