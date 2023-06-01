@@ -1,6 +1,6 @@
 //! Contains information about the stop/station for this part of the trip.
 
-use crate::latlng::LatLng;
+use crate::types::LatLng;
 use serde::{Deserialize, Serialize};
 
 /// Contains information about the stop/station for this part of the trip.

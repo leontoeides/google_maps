@@ -1,6 +1,6 @@
 use crate::client::GoogleMapsClient;
 use crate::geocoding::reverse::ReverseRequest;
-use crate::latlng::LatLng;
+use crate::types::LatLng;
 
 // =============================================================================
 

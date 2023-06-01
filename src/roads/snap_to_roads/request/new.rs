@@ -1,5 +1,5 @@
 use crate::client::GoogleMapsClient;
-use crate::latlng::LatLng;
+use crate::types::LatLng;
 use crate::roads::snap_to_roads::request::Request;
 
 // =============================================================================

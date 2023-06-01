@@ -20,7 +20,7 @@ mod with_sessiontoken;
 // -----------------------------------------------------------------------------
 
 use crate::places::place_details::{Field, SortOrder};
-use crate::{client::GoogleMapsClient, language::Language, region::Region};
+use crate::{client::GoogleMapsClient, types::Language, types::Region};
 
 // -----------------------------------------------------------------------------
 

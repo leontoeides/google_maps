@@ -36,22 +36,19 @@ pub mod waypoint;
 // -----------------------------------------------------------------------------
 
 use chrono::NaiveDateTime;
-use crate::{
-    client::GoogleMapsClient,
-    directions::request::{
-        avoid::Avoid,
-        departure_time::DepartureTime,
-        location::Location,
-        traffic_model::TrafficModel,
-        transit_mode::TransitMode,
-        transit_route_preference::TransitRoutePreference,
-        unit_system::UnitSystem,
-        waypoint::Waypoint,
-    }, // directions::request
-    directions::travel_mode::TravelMode,
-    language::Language,
-    region::Region,
-}; // crate
+use crate::directions::request::{
+    avoid::Avoid,
+    departure_time::DepartureTime,
+    location::Location,
+    traffic_model::TrafficModel,
+    transit_mode::TransitMode,
+    transit_route_preference::TransitRoutePreference,
+    unit_system::UnitSystem,
+    waypoint::Waypoint,
+}; // crate::directions::request
+use crate::client::GoogleMapsClient;
+use crate::directions::travel_mode::TravelMode;
+use crate::types::{Language, Region};
 
 // -----------------------------------------------------------------------------
 //

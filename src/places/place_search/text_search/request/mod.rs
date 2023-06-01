@@ -21,7 +21,7 @@ mod with_type;
 
 // -----------------------------------------------------------------------------
 
-use crate::{client::GoogleMapsClient, language::Language, latlng::LatLng, place_type::PlaceType, region::Region};
+use crate::{client::GoogleMapsClient, types::Language, types::LatLng, types::PlaceType, types::Region};
 
 // -----------------------------------------------------------------------------
 

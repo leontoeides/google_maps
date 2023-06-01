@@ -1,4 +1,4 @@
-use crate::{directions::request::Request, language::Language};
+use crate::{directions::request::Request, types::Language};
 
 impl<'a> Request<'a> {
 

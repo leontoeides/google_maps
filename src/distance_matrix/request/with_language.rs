@@ -1,5 +1,5 @@
 use crate::distance_matrix::request::Request;
-use crate::language::Language;
+use crate::types::Language;
 
 impl<'a> Request<'a> {
 

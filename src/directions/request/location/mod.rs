@@ -7,7 +7,7 @@ mod geo_conversions;
 
 // -----------------------------------------------------------------------------
 
-use crate::latlng::LatLng;
+use crate::types::LatLng;
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 
 // -----------------------------------------------------------------------------

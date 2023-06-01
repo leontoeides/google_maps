@@ -1,4 +1,4 @@
-use crate::language::Language;
+use crate::types::Language;
 use crate::places::query_autocomplete::request::Request;
 
 // -----------------------------------------------------------------------------

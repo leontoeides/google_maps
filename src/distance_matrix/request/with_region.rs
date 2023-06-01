@@ -1,5 +1,5 @@
 use crate::distance_matrix::request::Request;
-use crate::region::Region;
+use crate::types::Region;
 
 impl<'a> Request<'a> {
 

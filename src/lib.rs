@@ -363,17 +363,11 @@
 
 // Common / global modules:
 
-mod bounds;
 mod client;
-mod language;
-mod latlng;
-mod place_type;
-mod region;
 mod serde;
-pub mod country;
+mod types;
 pub mod error;
 pub mod prelude;
-pub mod type_error;
 
 // Optional Google Maps API modules. Their inclusion can be changed with
 // feature flags:
@@ -392,18 +386,18 @@ pub mod places;
 #[cfg(feature = "roads")]
 pub mod roads;
 
-// Re-exports:
+// Re-exports. Not great for organization but needed for backward compatibility.
 
 pub use crate::{
-    bounds::Bounds,
     client::GoogleMapsClient as ClientSettings,
     client::GoogleMapsClient,
-    country::Country,
     error::Error,
-    language::Language,
-    latlng::LatLng,
-    place_type::PlaceType,
-    region::Region,
+    types::bounds::Bounds,
+    types::country::Country,
+    types::language::Language,
+    types::latlng::LatLng,
+    types::place_type::PlaceType,
+    types::region::Region,
 }; // crate
 
 // Optional dependencies:

@@ -1,6 +1,6 @@
 //! The `"predictions"` are the results from a search.
 
-use crate::place_type::PlaceType;
+use crate::types::PlaceType;
 use crate::places::place_autocomplete::response::{
     matched_substring::MatchedSubstring,
     structured_format::StructuredFormat,

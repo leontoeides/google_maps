@@ -16,7 +16,7 @@ mod with_offset;
 
 // -----------------------------------------------------------------------------
 
-use crate::{client::GoogleMapsClient, language::Language, latlng::LatLng};
+use crate::{client::GoogleMapsClient, types::Language, types::LatLng};
 
 // -----------------------------------------------------------------------------
 //

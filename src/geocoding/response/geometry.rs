@@ -2,9 +2,8 @@
 //! displaying the returned result, the bounding box, and other additional
 //! data.
 
-use crate::bounds::Bounds;
 use crate::geocoding::location_type::LocationType;
-use crate::latlng::LatLng;
+use crate::types::{Bounds, LatLng};
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 

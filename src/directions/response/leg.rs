@@ -7,7 +7,7 @@ use crate::directions::response::{
     step::Step,
     transit_time::TransitTime,
 }; // crate::directions::response
-use crate::latlng::LatLng;
+use crate::types::LatLng;
 use serde::{Deserialize, Serialize};
 
 // -----------------------------------------------------------------------------

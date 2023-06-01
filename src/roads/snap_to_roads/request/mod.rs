@@ -17,7 +17,7 @@ mod with_interpolation;
 // -----------------------------------------------------------------------------
 
 use crate::client::GoogleMapsClient;
-use crate::latlng::LatLng;
+use crate::types::LatLng;
 
 // -----------------------------------------------------------------------------
 //

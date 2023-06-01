@@ -1,4 +1,4 @@
-use crate::{geocoding::forward::ForwardRequest, region::Region};
+use crate::{geocoding::forward::ForwardRequest, types::Region};
 
 impl<'a> ForwardRequest<'a> {
 

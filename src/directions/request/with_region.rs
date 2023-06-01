@@ -1,4 +1,4 @@
-use crate::{directions::request::Request, region::Region};
+use crate::{directions::request::Request, types::Region};
 
 impl<'a> Request<'a> {
 

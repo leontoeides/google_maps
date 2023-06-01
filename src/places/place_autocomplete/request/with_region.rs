@@ -1,4 +1,4 @@
-use crate::region::Region;
+use crate::types::Region;
 use crate::places::place_autocomplete::request::Request;
 
 // -----------------------------------------------------------------------------

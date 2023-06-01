@@ -22,9 +22,9 @@ pub mod autocomplete_type;
 
 // -----------------------------------------------------------------------------
 
-use crate::country::Country;
+use crate::client::GoogleMapsClient;
 use crate::places::place_autocomplete::request::autocomplete_type::AutocompleteType;
-use crate::{client::GoogleMapsClient, language::Language, latlng::LatLng, region::Region};
+use crate::types::{Country, Language, LatLng, Region};
 
 // -----------------------------------------------------------------------------
 

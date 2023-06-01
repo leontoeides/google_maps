@@ -2,7 +2,7 @@
 //! specify a series of location in the form of latitude & longitude pairs,
 //! or as an Encoded Polyline.
 
-use crate::latlng::LatLng;
+use crate::types::LatLng;
 use rust_decimal_macros::dec;
 
 // -----------------------------------------------------------------------------

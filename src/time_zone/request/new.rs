@@ -1,6 +1,6 @@
 use chrono::{DateTime, Utc};
 use crate::client::GoogleMapsClient;
-use crate::latlng::LatLng;
+use crate::types::LatLng;
 use crate::time_zone::request::Request;
 
 // =============================================================================

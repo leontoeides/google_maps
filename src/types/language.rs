@@ -2,7 +2,7 @@
 //! specify a desired language for a response. _This is not a comprehensive list
 //! of languages, it is a list of languages that Google Maps supports._
 
-use crate::type_error::Error;
+use crate::types::error::Error;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::convert::TryFrom;
@@ -378,7 +378,7 @@ static LANGUAGES_BY_CODE: phf::Map<&'static str, Language> = phf_map! {
 
 impl std::convert::TryFrom<&str> for Language {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Error = crate::type_error::Error;
+    type Error = crate::types::Error;
     /// Gets a `Language` enum from a `String` that contains a supported
     /// [language](https://developers.google.com/maps/faq#languagesupport) code.
     fn try_from(language_code: &str) -> Result<Self, Self::Error> {
@@ -393,7 +393,7 @@ impl std::convert::TryFrom<&str> for Language {
 
 impl std::str::FromStr for Language {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Err = crate::type_error::Error;
+    type Err = crate::types::Error;
     /// Gets a `Language` enum from a `String` that contains a supported
     /// [language](https://developers.google.com/maps/faq#languagesupport) code.
     fn from_str(language_code: &str) -> Result<Self, Self::Err> {

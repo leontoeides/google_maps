@@ -17,13 +17,9 @@ mod with_result_types;
 
 // -----------------------------------------------------------------------------
 
-use crate::{
-    client::GoogleMapsClient,
-    geocoding::location_type::LocationType,
-    language::Language,
-    latlng::LatLng,
-    place_type::PlaceType,
-}; // crate
+use crate::client::GoogleMapsClient;
+use crate::geocoding::location_type::LocationType;
+use crate::types::{Language, LatLng, PlaceType};
 
 // -----------------------------------------------------------------------------
 //

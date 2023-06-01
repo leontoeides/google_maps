@@ -1,4 +1,4 @@
-use crate::{geocoding::reverse::ReverseRequest, language::Language};
+use crate::{geocoding::reverse::ReverseRequest, types::Language};
 
 impl<'a> ReverseRequest<'a> {
 

@@ -1,4 +1,4 @@
-use crate::{geocoding::reverse::ReverseRequest, place_type::PlaceType};
+use crate::{geocoding::reverse::ReverseRequest, types::PlaceType};
 
 impl<'a> ReverseRequest<'a> {
 

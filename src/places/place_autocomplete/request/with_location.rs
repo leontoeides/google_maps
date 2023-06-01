@@ -1,4 +1,4 @@
-use crate::latlng::LatLng;
+use crate::types::LatLng;
 use crate::places::place_autocomplete::request::Request;
 
 // -----------------------------------------------------------------------------

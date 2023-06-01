@@ -1,4 +1,7 @@
-use crate::{language::Language, time_zone::request::Request};
+use crate::time_zone::request::Request;
+use crate::types::Language;
+
+// -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
 

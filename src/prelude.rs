@@ -17,16 +17,16 @@ pub use chrono_tz::Tz;
 // Common structures:
 
 pub use crate::{
-    bounds::Bounds,
     client::GoogleMapsClient as ClientSettings,
     client::GoogleMapsClient,
-    country::Country,
     error::Error as GoogleMapsError,
-    language::Language,
-    latlng::LatLng,
-    place_type::PlaceType,
-    region::Region,
-    type_error::Error as TypeError,
+    types::bounds::Bounds,
+    types::country::Country,
+    types::error::Error as TypeError,
+    types::language::Language,
+    types::latlng::LatLng,
+    types::place_type::PlaceType,
+    types::region::Region,
 }; // crate
 
 // =============================================================================

@@ -24,24 +24,19 @@ mod with_unit_system;
 
 // -----------------------------------------------------------------------------
 
-use crate::{
-    client::GoogleMapsClient,
-    directions::{
-        request::{
-            avoid::Avoid,
-            departure_time::DepartureTime,
-            traffic_model::TrafficModel,
-            transit_mode::TransitMode,
-            transit_route_preference::TransitRoutePreference,
-            unit_system::UnitSystem,
-            waypoint::Waypoint,
-        }, // request
-        travel_mode::TravelMode,
-    }, // directions
-    language::Language,
-    region::Region,
-}; // crate
 use chrono::NaiveDateTime;
+use crate::directions::request::{
+    avoid::Avoid,
+    departure_time::DepartureTime,
+    traffic_model::TrafficModel,
+    transit_mode::TransitMode,
+    transit_route_preference::TransitRoutePreference,
+    unit_system::UnitSystem,
+    waypoint::Waypoint,
+}; // crate::directions::request
+use crate::client::GoogleMapsClient;
+use crate::directions::travel_mode::TravelMode;
+use crate::types::{Language, Region};
 
 // -----------------------------------------------------------------------------
 //

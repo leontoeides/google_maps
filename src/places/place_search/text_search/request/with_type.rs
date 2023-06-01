@@ -1,4 +1,4 @@
-use crate::place_type::PlaceType;
+use crate::types::PlaceType;
 use crate::places::place_search::text_search::request::Request;
 
 // -----------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-use crate::{directions::response::geocoder_status::GeocoderStatus, place_type::PlaceType}; // use
+use crate::{directions::response::geocoder_status::GeocoderStatus, types::PlaceType}; // use
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]

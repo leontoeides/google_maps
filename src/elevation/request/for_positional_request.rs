@@ -1,5 +1,5 @@
 use crate::elevation::request::{locations::Locations, Request};
-use crate::latlng::LatLng;
+use crate::types::LatLng;
 
 // =============================================================================
 

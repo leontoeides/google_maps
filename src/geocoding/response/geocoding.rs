@@ -1,11 +1,12 @@
-use crate::{
-    geocoding::response::{
-        address_component::AddressComponent, geometry::Geometry,
-        plus_code::PlusCode,
-    }, // geocoding::response
-    place_type::PlaceType,
-}; // use crate
+use crate::geocoding::response::{
+    address_component::AddressComponent,
+    geometry::Geometry,
+    plus_code::PlusCode,
+}; // use crate::geocoding::response
+use crate::types::PlaceType;
 use serde::{Deserialize, Serialize};
+
+// -----------------------------------------------------------------------------
 
 /// When the geocoder returns results, it places them within a results array.
 /// Even if the geocoder returns no results (such as if the address doesn't

@@ -1,4 +1,7 @@
-use crate::{bounds::Bounds, geocoding::forward::ForwardRequest}; // use
+use crate::types::Bounds;
+use crate::geocoding::forward::ForwardRequest;
+
+// -----------------------------------------------------------------------------
 
 impl<'a> ForwardRequest<'a> {
 

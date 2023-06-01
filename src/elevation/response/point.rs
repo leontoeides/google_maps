@@ -1,4 +1,4 @@
-use crate::latlng::LatLng;
+use crate::types::LatLng;
 use serde::{Deserialize, Serialize};
 
 /// Structure for an elevation sample point.

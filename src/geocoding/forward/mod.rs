@@ -22,13 +22,11 @@ pub mod component;
 
 // -----------------------------------------------------------------------------
 
-use crate::{
-    bounds::Bounds,
-    client::GoogleMapsClient,
-    geocoding::forward::component::Component,
-    language::Language,
-    region::Region,
-}; // crate
+use crate::client::GoogleMapsClient;
+use crate::geocoding::forward::component::Component;
+use crate::types::{Bounds, Language, Region};
+
+// -----------------------------------------------------------------------------
 
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Geocoding API_ query**. The methods implemented for this struct are what's

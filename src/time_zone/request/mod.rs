@@ -13,7 +13,7 @@ mod query_url;
 mod with_language;
 
 use chrono::{DateTime, Utc};
-use crate::{client::GoogleMapsClient, language::Language, latlng::LatLng};
+use crate::{client::GoogleMapsClient, types::Language, types::LatLng};
 
 // -----------------------------------------------------------------------------
 //

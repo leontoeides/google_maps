@@ -1,16 +1,15 @@
 //! Each element in the `steps` array defines a single step of the calculated
 //! directions. A step is the most atomic unit of a direction's route.
 
-use crate::{
-    directions::{
-        response::{
-            directions_distance::DirectionsDistance, directions_duration::DirectionsDuration,
-            driving_maneuver::DrivingManeuver, polyline::Polyline, transit_details::TransitDetails,
-        }, // crate::directions::response
-        travel_mode::TravelMode,
-    }, // crate::directions
-    latlng::LatLng,
-}; // use crate
+use crate::directions::response::{
+    directions_distance::DirectionsDistance,
+    directions_duration::DirectionsDuration,
+    driving_maneuver::DrivingManeuver,
+    polyline::Polyline,
+    transit_details::TransitDetails,
+}; // crate::directions::response
+use crate::directions::travel_mode::TravelMode;
+use crate::types::LatLng;
 use serde::{Deserialize, Serialize};
 
 /// Each element in the `steps` array defines a single step of the calculated

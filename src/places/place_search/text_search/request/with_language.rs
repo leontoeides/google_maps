@@ -1,4 +1,4 @@
-use crate::language::Language;
+use crate::types::Language;
 use crate::places::place_search::text_search::request::Request;
 
 // -----------------------------------------------------------------------------

@@ -1,11 +1,11 @@
 //! A single route containing a set of legs.
 
-use crate::{
-    bounds::Bounds,
-    directions::response::{
-        leg::Leg, overview_polyline::OverviewPolyline, transit_fare::TransitFare,
-    }, // crate::directions::response
-}; // use
+use crate::directions::response::{
+    leg::Leg,
+    overview_polyline::OverviewPolyline,
+    transit_fare::TransitFare,
+}; // crate::directions::response
+use crate::types::Bounds;
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 

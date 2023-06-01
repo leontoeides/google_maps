@@ -1,5 +1,5 @@
 use crate::places::place_details::request::Request;
-use crate::region::Region;
+use crate::types::Region;
 
 // -----------------------------------------------------------------------------
 
