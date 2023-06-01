@@ -1,9 +1,7 @@
 # Change Log
 
 * 3.2.0: 2023-05-31: ⚠ **Breaking change**: All `GoogleMapsClient` methods will
-now return the same error type.
-
-Previously, each API would return a different
+now return the same error type. Previously, each API would return a different
 error type. This would be tedious when using several different APIs.
 
 * 3.2.0: 2023-05-31: Some house-keeping.
@@ -11,23 +9,24 @@ error type. This would be tedious when using several different APIs.
 * 3.2.0: 2023-05-30: ⚠ **Breaking change**: `google_maps` types will now
 round-trip through strings.
 
-This crate previously "took advantage" of the `String::from` and `ToString`
-traits being able to have different outputs. However, this clever setup did not
-play nice with other crates.
+	This crate previously "took advantage" of the `String::from` and
+	`ToString` traits being able to have different outputs. However, this
+	clever setup did not play nice with other crates.
 
-This is a "breaking change" because `Display` and `to_string` both now have
-different outputs compared to previous versions:
+	This is a "breaking change" because `Display` and `to_string` both now
+	have different outputs compared to previous versions:
 
-* Previously: `println!("{}", Language::ChineseHongKong)` would result in
-`Chinese (Hong Kong)`.
+	* Previously: `println!("{}", Language::ChineseHongKong)` would result
+	in`Chinese (Hong Kong)`.
 
-* Now: `println!("{}", Language::ChineseHongKong)` will result in `zh-HK`.
+	* Now: `println!("{}", Language::ChineseHongKong)` will result in
+	`zh-HK`.
 
-* Now, to see the `Chinese (Hong Kong)` name, use the `display` method. For
-example: `println!("{}", Language::ChineseHongKong.display())`
+	* Now, to see the `Chinese (Hong Kong)` name, use the `display` method.
+	For example: `println!("{}", Language::ChineseHongKong.display())`
 
-This update applies to all `google_maps` crate types, including `Country`,
-`PlaceType`, and so on.
+	This update applies to all `google_maps` crate types, including
+	`Country`, `PlaceType`, and so on.
 
 * 3.1.1: 2023-01-29: Update to Chinese languages.
 Thanks [rick68](https://github.com/rick68)!
