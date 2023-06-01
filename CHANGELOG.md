@@ -13,11 +13,11 @@ round-trip through strings.
 	`ToString` traits being able to have different outputs. However, this
 	clever setup did not play nice with other crates.
 
-	This is a "breaking change" because `Display` and `to_string` both now
-	have different outputs compared to previous versions:
+	This is a "breaking change" because the `Display` and `ToString` traits
+	both now have different outputs compared to previous versions:
 
 	* Previously: `println!("{}", Language::ChineseHongKong)` would result
-	in`Chinese (Hong Kong)`.
+	in `Chinese (Hong Kong)`.
 
 	* Now: `println!("{}", Language::ChineseHongKong)` will result in
 	`zh-HK`.
