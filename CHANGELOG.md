@@ -24,7 +24,7 @@ round-trip through strings.
 
 * 3.2.0: 2023-05-31: ⚠ **Breaking change**: All `GoogleMapsClient` methods will
 now return the same error type. Previously, each API would return a different
-error type. This would be tedious when using several different APIs.
+error type. This could be tedious or annoying when using several different APIs.
 
 * 3.2.0: 2023-05-31: Adjusted `tracing` log levels.
 
