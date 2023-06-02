@@ -3,7 +3,7 @@
 
 use crate::places::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize, Deserializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 // -----------------------------------------------------------------------------
 //
@@ -12,30 +12,20 @@ use serde::{Deserialize, Serialize, Deserializer};
 /// `BREAKFAST`, `LUNCH`, `DINNER`, `BRUNCH`, `PICKUP`, `SENIOR_HOURS`). Set for
 /// `secondary_opening_hours` only.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[derive(Clone, Debug, Eq, Default, Hash, Ord, PartialEq, PartialOrd)]
+#[repr(u8)]
 pub enum SecondaryHoursType {
-    #[serde(alias = "DRIVE_THROUGH")]
-    DriveThrough,
-    #[serde(alias = "HAPPY_HOUR")]
-    HappyHour,
-    #[serde(alias = "DELIVERY")]
-    Delivery,
-    #[serde(alias = "TAKEOUT")]
-    Takeout,
-    #[serde(alias = "KITCHEN")]
-    Kitchen,
-    #[serde(alias = "BREAKFAST")]
-    Breakfast,
-    #[serde(alias = "LUNCH")]
-    Lunch,
-    #[serde(alias = "DINNER")]
-    Dinner,
-    #[serde(alias = "BRUNCH")]
-    Brunch,
-    #[serde(alias = "PICKUP")]
-    Pickup,
-    #[serde(alias = "SENIOR_HOURS")]
-    SeniorHours,
+    #[default] DriveThrough = 0,
+    HappyHour = 1,
+    Delivery = 2,
+    Takeout = 3,
+    Kitchen = 4,
+    Breakfast = 5,
+    Lunch = 6,
+    Dinner = 7,
+    Brunch = 8,
+    Pickup = 9,
+    SeniorHours = 10,
 } // struct
 
 // -----------------------------------------------------------------------------
@@ -54,24 +44,56 @@ impl<'de> Deserialize<'de> for SecondaryHoursType {
 
 // -----------------------------------------------------------------------------
 
+impl Serialize for SecondaryHoursType {
+    /// Manual implementation of `Serialize` for `serde`.
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where S: Serializer {
+        serializer.serialize_str(std::convert::Into::<&str>::into(self))
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<&SecondaryHoursType> for &str {
+    /// Converts a `SecondaryHoursType` enum to a `String` that contains a
+    /// [secondary hours type](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceOpeningHours-type)
+    /// code.
+    fn from(hours_type: &SecondaryHoursType) -> Self {
+        match hours_type {
+            SecondaryHoursType::DriveThrough => "DRIVE_THROUGH",
+            SecondaryHoursType::HappyHour => "HAPPY_HOUR",
+            SecondaryHoursType::Delivery => "DELIVERY",
+            SecondaryHoursType::Takeout => "TAKEOUT",
+            SecondaryHoursType::Kitchen => "KITCHEN",
+            SecondaryHoursType::Breakfast => "BREAKFAST",
+            SecondaryHoursType::Lunch => "LUNCH",
+            SecondaryHoursType::Dinner => "DINNER",
+            SecondaryHoursType::Brunch => "BRUNCH",
+            SecondaryHoursType::Pickup => "PICKUP",
+            SecondaryHoursType::SeniorHours => "SENIOR_HOURS",
+        } // match
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::fmt::Display for SecondaryHoursType {
+    /// Converts a `SecondaryHoursType` enum to a `String` that contains a
+    /// [secondary hours type](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceOpeningHours-type)
+    /// code.
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", std::convert::Into::<&str>::into(self))
+    } // fmt
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&SecondaryHoursType> for String {
     /// Converts a `SecondaryHoursType` enum to a `String` that contains a
     /// [secondary hours type](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceOpeningHours-type)
     /// code.
-    fn from(hours_type: &SecondaryHoursType) -> String {
-        match hours_type {
-            SecondaryHoursType::DriveThrough => String::from("DRIVE_THROUGH"),
-            SecondaryHoursType::HappyHour => String::from("HAPPY_HOUR"),
-            SecondaryHoursType::Delivery => String::from("DELIVERY"),
-            SecondaryHoursType::Takeout => String::from("TAKEOUT"),
-            SecondaryHoursType::Kitchen => String::from("KITCHEN"),
-            SecondaryHoursType::Breakfast => String::from("BREAKFAST"),
-            SecondaryHoursType::Lunch => String::from("LUNCH"),
-            SecondaryHoursType::Dinner => String::from("DINNER"),
-            SecondaryHoursType::Brunch => String::from("BRUNCH"),
-            SecondaryHoursType::Pickup => String::from("PICKUP"),
-            SecondaryHoursType::SeniorHours => String::from("SENIOR_HOURS"),
-        } // match
+    fn from(secondary_hours_type: &SecondaryHoursType) -> Self {
+        std::convert::Into::<&str>::into(secondary_hours_type).to_string()
     } // fn
 } // impl
 
@@ -91,6 +113,8 @@ static STATUSES_BY_CODE: phf::Map<&'static str, SecondaryHoursType> = phf_map! {
     "SENIOR_HOURS" => SecondaryHoursType::SeniorHours,
 };
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::TryFrom<&str> for SecondaryHoursType {
     // Error definitions are contained in the
     // `google_maps\src\places\error.rs` module.
@@ -105,6 +129,8 @@ impl std::convert::TryFrom<&str> for SecondaryHoursType {
             .ok_or_else(|| Error::InvalidSecondaryHoursType(hours_type.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::str::FromStr for SecondaryHoursType {
     // Error definitions are contained in the
@@ -123,32 +149,22 @@ impl std::str::FromStr for SecondaryHoursType {
 
 // -----------------------------------------------------------------------------
 
-impl std::default::Default for SecondaryHoursType {
-    /// Returns a reasonable default variant for the `SecondaryHoursType` enum
-    /// type.
-    fn default() -> Self {
-        SecondaryHoursType::DriveThrough
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl std::fmt::Display for SecondaryHoursType {
+impl SecondaryHoursType {
     /// Formats a `SecondaryHoursType` enum into a string that is presentable to the
     /// end user.
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    pub fn display(&self) -> &str {
         match self {
-            SecondaryHoursType::DriveThrough => write!(f, "Drive Through"),
-            SecondaryHoursType::HappyHour => write!(f, "Happy Hour"),
-            SecondaryHoursType::Delivery => write!(f, "Delivery"),
-            SecondaryHoursType::Takeout => write!(f, "Takeout"),
-            SecondaryHoursType::Kitchen => write!(f, "Kitchen"),
-            SecondaryHoursType::Breakfast => write!(f, "Breakfast"),
-            SecondaryHoursType::Lunch => write!(f, "Lunch"),
-            SecondaryHoursType::Dinner => write!(f, "Dinner"),
-            SecondaryHoursType::Brunch => write!(f, "Brunch"),
-            SecondaryHoursType::Pickup => write!(f, "Pickup"),
-            SecondaryHoursType::SeniorHours => write!(f, "Senior Hours"),
+            SecondaryHoursType::DriveThrough => "Drive Through",
+            SecondaryHoursType::HappyHour => "Happy Hour",
+            SecondaryHoursType::Delivery => "Delivery",
+            SecondaryHoursType::Takeout => "Takeout",
+            SecondaryHoursType::Kitchen => "Kitchen",
+            SecondaryHoursType::Breakfast => "Breakfast",
+            SecondaryHoursType::Lunch => "Lunch",
+            SecondaryHoursType::Dinner => "Dinner",
+            SecondaryHoursType::Brunch => "Brunch",
+            SecondaryHoursType::Pickup => "Pickup",
+            SecondaryHoursType::SeniorHours => "Senior Hours",
         } // match
     } // fn
 } // impl

@@ -3,7 +3,7 @@
 
 use crate::distance_matrix::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize, Deserializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 // -----------------------------------------------------------------------------
 
@@ -13,21 +13,18 @@ use serde::{Deserialize, Serialize, Deserializer};
 /// general, as well as a status field for each element field, with information
 /// about that particular origin-destination pairing.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[repr(u8)]
 pub enum ElementStatus {
     /// Indicates the requested route is too long and cannot be processed.
-    #[serde(alias = "MAX_ROUTE_LENGTH_EXCEEDED")]
-    MaxRouteLengthExceeded,
+    MaxRouteLengthExceeded = 0,
     /// Indicates that the origin and/or destination of this pairing could not
     /// be geocoded.
-    #[serde(alias = "NOT_FOUND")]
-    NotFound,
+    NotFound = 1,
     /// Indicates the response contains a valid result.
-    #[serde(alias = "OK")]
-    Ok,
+    #[default] Ok = 2,
     /// Indicates no route could be found between the origin and destination.
-    #[serde(alias = "ZERO_RESULTS")]
-    ZeroResults,
+    ZeroResults = 3,
 } // struct
 
 // -----------------------------------------------------------------------------
@@ -46,17 +43,49 @@ impl<'de> Deserialize<'de> for ElementStatus {
 
 // -----------------------------------------------------------------------------
 
+impl Serialize for ElementStatus {
+    /// Manual implementation of `Serialize` for `serde`.
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where S: Serializer {
+        serializer.serialize_str(std::convert::Into::<&str>::into(self))
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<&ElementStatus> for &str {
+    /// Converts a `ElementStatus` enum to a `String` that contains a [element
+    /// status](https://developers.google.com/maps/documentation/distance-matrix/intro#element-level-status-codes)
+    /// code.
+    fn from(element_status: &ElementStatus) -> Self {
+        match element_status {
+            ElementStatus::MaxRouteLengthExceeded => "MAX_ROUTE_LENGTH_EXCEEDED",
+            ElementStatus::NotFound => "NOT_FOUND",
+            ElementStatus::Ok => "OK",
+            ElementStatus::ZeroResults => "ZERO_RESULTS",
+        } // match
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::fmt::Display for ElementStatus {
+    /// Converts a `ElementStatus` enum to a `String` that contains a [element
+    /// status](https://developers.google.com/maps/documentation/distance-matrix/intro#element-level-status-codes)
+    /// code.
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", std::convert::Into::<&str>::into(self))
+    } // fmt
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&ElementStatus> for String {
     /// Converts a `ElementStatus` enum to a `String` that contains a [element
     /// status](https://developers.google.com/maps/documentation/distance-matrix/intro#element-level-status-codes)
     /// code.
-    fn from(element_status: &ElementStatus) -> String {
-        match element_status {
-            ElementStatus::MaxRouteLengthExceeded => String::from("MAX_ROUTE_LENGTH_EXCEEDED"),
-            ElementStatus::NotFound => String::from("NOT_FOUND"),
-            ElementStatus::Ok => String::from("OK"),
-            ElementStatus::ZeroResults => String::from("ZERO_RESULTS"),
-        } // match
+    fn from(element_status: &ElementStatus) -> Self {
+        std::convert::Into::<&str>::into(element_status).to_string()
     } // fn
 } // impl
 
@@ -68,6 +97,8 @@ static ELEMENT_STATUSES_BY_CODE: phf::Map<&'static str, ElementStatus> = phf_map
     "OK" => ElementStatus::Ok,
     "ZERO_RESULTS" => ElementStatus::ZeroResults,
 };
+
+// -----------------------------------------------------------------------------
 
 impl std::convert::TryFrom<&str> for ElementStatus {
     // Error definitions are contained in the
@@ -84,6 +115,8 @@ impl std::convert::TryFrom<&str> for ElementStatus {
             .ok_or_else(|| Error::InvalidElementStatusCode(element_status_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::str::FromStr for ElementStatus {
     // Error definitions are contained in the
@@ -103,24 +136,15 @@ impl std::str::FromStr for ElementStatus {
 
 // -----------------------------------------------------------------------------
 
-impl std::default::Default for ElementStatus {
-    /// Returns a reasonable default variant for the `ElementStatus` enum type.
-    fn default() -> Self {
-        ElementStatus::Ok
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl std::fmt::Display for ElementStatus {
+impl ElementStatus {
     /// Formats a `ElementStatus` enum into a string that is presentable to the
     /// end user.
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    pub fn display(&self) -> &str {
         match self {
-            ElementStatus::MaxRouteLengthExceeded => write!(f, "Maximum Route Length Exceeded"),
-            ElementStatus::NotFound => write!(f, "Not Found"),
-            ElementStatus::Ok => write!(f, "OK"),
-            ElementStatus::ZeroResults => write!(f, "Zero Results"),
+            ElementStatus::MaxRouteLengthExceeded => "Maximum Route Length Exceeded",
+            ElementStatus::NotFound => "Not Found",
+            ElementStatus::Ok => "OK",
+            ElementStatus::ZeroResults => "Zero Results",
         } // match
     } // fn
 } // impl

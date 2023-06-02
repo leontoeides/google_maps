@@ -1,9 +1,9 @@
-//! The `"business_status"` field within the _Places API_ _Place_ response
+//! The `business_status` field within the _Places API_ _Place_ response
 //! object indicates the operational status of the place, if it is a business.
 
 use crate::places::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize, Deserializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 // -----------------------------------------------------------------------------
 //
@@ -11,13 +11,10 @@ use serde::{Deserialize, Serialize, Deserializer};
 /// data exists, business_status is not returned. The allowed values include:
 /// `OPERATIONAL`, `CLOSED_TEMPORARILY`, and `CLOSED_PERMANENTLY`.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum BusinessStatus {
-    #[serde(alias = "OPERATIONAL")]
-    Operational,
-    #[serde(alias = "CLOSED_TEMPORARILY")]
+    #[default] Operational,
     ClosedTemporarily,
-    #[serde(alias = "CLOSED_PERMANENTLY")]
     ClosedPermanently,
 } // struct
 
@@ -37,16 +34,48 @@ impl<'de> Deserialize<'de> for BusinessStatus {
 
 // -----------------------------------------------------------------------------
 
+impl Serialize for BusinessStatus {
+    /// Manual implementation of `Serialize` for `serde`.
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where S: Serializer {
+        serializer.serialize_str(std::convert::Into::<&str>::into(self))
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<&BusinessStatus> for &str {
+    /// Converts a `BusinessStatus` enum to a `String` that contains a
+    /// [business status](https://developers.google.com/maps/documentation/places/web-service/search-text#Place-business_status)
+    /// code.
+    fn from(status: &BusinessStatus) -> Self {
+        match status {
+            BusinessStatus::Operational => "OPERATIONAL",
+            BusinessStatus::ClosedTemporarily => "CLOSED_TEMPORARILY",
+            BusinessStatus::ClosedPermanently => "CLOSED_PERMANENTLY",
+        } // match
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::fmt::Display for BusinessStatus {
+    /// Converts a `BusinessStatus` enum to a `String` that contains a
+    /// [business status](https://developers.google.com/maps/documentation/places/web-service/search-text#Place-business_status)
+    /// code.
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", std::convert::Into::<&str>::into(self))
+    } // fmt
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&BusinessStatus> for String {
     /// Converts a `BusinessStatus` enum to a `String` that contains a
     /// [business status](https://developers.google.com/maps/documentation/places/web-service/search-text#Place-business_status)
     /// code.
-    fn from(status: &BusinessStatus) -> String {
-        match status {
-            BusinessStatus::Operational => String::from("OPERATIONAL"),
-            BusinessStatus::ClosedTemporarily => String::from("CLOSED_TEMPORARILY"),
-            BusinessStatus::ClosedPermanently => String::from("CLOSED_PERMANENTLY"),
-        } // match
+    fn from(business_status: &BusinessStatus) -> Self {
+        std::convert::Into::<&str>::into(business_status).to_string()
     } // fn
 } // impl
 
@@ -57,6 +86,8 @@ static STATUSES_BY_CODE: phf::Map<&'static str, BusinessStatus> = phf_map! {
     "CLOSED_TEMPORARILY" => BusinessStatus::ClosedTemporarily,
     "CLOSED_PERMANENTLY" => BusinessStatus::ClosedPermanently,
 };
+
+// -----------------------------------------------------------------------------
 
 impl std::convert::TryFrom<&str> for BusinessStatus {
     // Error definitions are contained in the
@@ -72,6 +103,8 @@ impl std::convert::TryFrom<&str> for BusinessStatus {
             .ok_or_else(|| Error::InvalidBusinessStatusCode(status_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::str::FromStr for BusinessStatus {
     // Error definitions are contained in the
@@ -90,23 +123,14 @@ impl std::str::FromStr for BusinessStatus {
 
 // -----------------------------------------------------------------------------
 
-impl std::default::Default for BusinessStatus {
-    /// Returns a reasonable default variant for the `BusinessStatus` enum type.
-    fn default() -> Self {
-        BusinessStatus::Operational
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl std::fmt::Display for BusinessStatus {
+impl BusinessStatus {
     /// Formats a `BusinessStatus` enum into a string that is presentable to the
     /// end user.
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    pub fn display(&self) -> &str {
         match self {
-            BusinessStatus::Operational => write!(f, "Operational"),
-            BusinessStatus::ClosedTemporarily => write!(f, "Closed Temporarily"),
-            BusinessStatus::ClosedPermanently => write!(f, "Closed Permanently"),
+            BusinessStatus::Operational => "Operational",
+            BusinessStatus::ClosedTemporarily => "Closed Temporarily",
+            BusinessStatus::ClosedPermanently => "Closed Permanently",
         } // match
     } // fn
 } // impl

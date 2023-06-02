@@ -4,7 +4,7 @@
 
 use crate::directions::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize, Deserializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 // -----------------------------------------------------------------------------
 
@@ -13,366 +13,188 @@ use serde::{Deserialize, Serialize, Deserializer};
 /// the currency code `String` to an `enum` is for efficient currency
 /// conversions, information lookups, and manipulation in the future.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[repr(u16)]
 pub enum TransitCurrency {
-    #[serde(alias = "AED")]
-    UnitedArabEmiratesDirham,
-    #[serde(alias = "AFN")]
-    AfghanAfghani,
-    #[serde(alias = "ALL")]
-    AlbanianLek,
-    #[serde(alias = "AMD")]
-    ArmenianDram,
-    #[serde(alias = "ANG")]
-    NetherlandsAntilleanGuilder,
-    #[serde(alias = "AOA")]
-    AngolanKwanza,
-    #[serde(alias = "ARS")]
-    ArgentinePeso,
-    #[serde(alias = "AUD")]
-    AustralianDollar,
-    #[serde(alias = "AWG")]
-    ArubanFlorin,
-    #[serde(alias = "AZN")]
-    AzerbaijaniManat,
-    #[serde(alias = "BAM")]
-    BosniaAndHerzegovinaConvertibleMark,
-    #[serde(alias = "BBD")]
-    BarbadosDollar,
-    #[serde(alias = "BDT")]
-    BangladeshiTaka,
-    #[serde(alias = "BGN")]
-    BulgarianLev,
-    #[serde(alias = "BHD")]
-    BahrainiDinar,
-    #[serde(alias = "BIF")]
-    BurundianFranc,
-    #[serde(alias = "BMD")]
-    BermudianDollar,
-    #[serde(alias = "BND")]
-    BruneiDollar,
-    #[serde(alias = "BOB")]
-    Boliviano,
-    #[serde(alias = "BOV")]
-    BolivianMvdol,
-    #[serde(alias = "BRL")]
-    BrazilianReal,
-    #[serde(alias = "BSD")]
-    BahamianDollar,
-    #[serde(alias = "BTN")]
-    BhutaneseNgultrum,
-    #[serde(alias = "BWP")]
-    BotswanaPula,
-    #[serde(alias = "BYN")]
-    BelarusianRuble,
-    #[serde(alias = "BZD")]
-    BelizeDollar,
-    #[serde(alias = "CAD")]
-    CanadianDollar,
-    #[serde(alias = "CDF")]
-    CongoleseFranc,
-    #[serde(alias = "CHE")]
-    WirEuro,
-    #[serde(alias = "CHF")]
-    SwissFranc,
-    #[serde(alias = "CHW")]
-    WirFranc,
-    #[serde(alias = "CLF")]
-    UnidadDeFomento,
-    #[serde(alias = "CLP")]
-    ChileanPeso,
-    #[serde(alias = "CNY")]
-    RenminbiYuan,
-    #[serde(alias = "COP")]
-    ColombianPeso,
-    #[serde(alias = "COU")]
-    UnidadDeValorReal,
-    #[serde(alias = "CRC")]
-    CostaRicanColon,
-    #[serde(alias = "CUC")]
-    CubanConvertiblePeso,
-    #[serde(alias = "CUP")]
-    CubanPeso,
-    #[serde(alias = "CVE")]
-    CapeVerdeanEscudo,
-    #[serde(alias = "CZK")]
-    CzechKoruna,
-    #[serde(alias = "DJF")]
-    DjiboutianFranc,
-    #[serde(alias = "DKK")]
-    DanishKrone,
-    #[serde(alias = "DOP")]
-    DominicanPeso,
-    #[serde(alias = "DZD")]
-    AlgerianDinar,
-    #[serde(alias = "EGP")]
-    EgyptianPound,
-    #[serde(alias = "ERN")]
-    EritreanNakfa,
-    #[serde(alias = "ETB")]
-    EthiopianBirr,
-    #[serde(alias = "EUR")]
-    Euro,
-    #[serde(alias = "FJD")]
-    FijiDollar,
-    #[serde(alias = "FKP")]
-    FalklandIslandsPound,
-    #[serde(alias = "GBP")]
-    PoundSterling,
-    #[serde(alias = "GEL")]
-    GeorgianLari,
-    #[serde(alias = "GHS")]
-    GhanaianCedi,
-    #[serde(alias = "GIP")]
-    GibraltarPound,
-    #[serde(alias = "GMD")]
-    GambianDalasi,
-    #[serde(alias = "GNF")]
-    GuineanFranc,
-    #[serde(alias = "GTQ")]
-    GuatemalanQuetzal,
-    #[serde(alias = "GYD")]
-    GuyaneseDollar,
-    #[serde(alias = "HKD")]
-    HongKongDollar,
-    #[serde(alias = "HNL")]
-    HonduranLempira,
-    #[serde(alias = "HRK")]
-    CroatianKuna,
-    #[serde(alias = "HTG")]
-    HaitianGourde,
-    #[serde(alias = "HUF")]
-    HungarianForint,
-    #[serde(alias = "IDR")]
-    IndonesianRupiah,
-    #[serde(alias = "ILS")]
-    IsraeliNewShekel,
-    #[serde(alias = "INR")]
-    IndianRupee,
-    #[serde(alias = "IQD")]
-    IraqiDinar,
-    #[serde(alias = "IRR")]
-    IranianRial,
-    #[serde(alias = "ISK")]
-    IcelandicKrona,
-    #[serde(alias = "JMD")]
-    JamaicanDollar,
-    #[serde(alias = "JOD")]
-    JordanianDinar,
-    #[serde(alias = "JPY")]
-    JapaneseYen,
-    #[serde(alias = "KES")]
-    KenyanShilling,
-    #[serde(alias = "KGS")]
-    KyrgyzstaniSom,
-    #[serde(alias = "KHR")]
-    CambodianRiel,
-    #[serde(alias = "KMF")]
-    ComoroFranc,
-    #[serde(alias = "KPW")]
-    NorthKoreanWon,
-    #[serde(alias = "KRW")]
-    SouthKoreanWon,
-    #[serde(alias = "KWD")]
-    KuwaitiDinar,
-    #[serde(alias = "KYD")]
-    CaymanIslandsDollar,
-    #[serde(alias = "KZT")]
-    KazakhstaniTenge,
-    #[serde(alias = "LAK")]
-    LaoKip,
-    #[serde(alias = "LBP")]
-    LebanesePound,
-    #[serde(alias = "LKR")]
-    SriLankanRupee,
-    #[serde(alias = "LRD")]
-    LiberianDollar,
-    #[serde(alias = "LSL")]
-    LesothoLoti,
-    #[serde(alias = "LYD")]
-    LibyanDinar,
-    #[serde(alias = "MAD")]
-    MoroccanDirham,
-    #[serde(alias = "MDL")]
-    MoldovanLeu,
-    #[serde(alias = "MGA")]
-    MalagasyAriary,
-    #[serde(alias = "MKD")]
-    MacedonianDenar,
-    #[serde(alias = "MMK")]
-    MyanmarKyat,
-    #[serde(alias = "MNT")]
-    MongolianTogrog,
-    #[serde(alias = "MOP")]
-    MacanesePataca,
-    #[serde(alias = "MRU")]
-    MauritanianOuguiya,
-    #[serde(alias = "MUR")]
-    MauritianRupee,
-    #[serde(alias = "MVR")]
-    MaldivianRufiyaa,
-    #[serde(alias = "MWK")]
-    MalawianKwacha,
-    #[serde(alias = "MXN")]
-    MexicanPeso,
-    #[serde(alias = "MXV")]
-    MexicanUnidadDeInversion,
-    #[serde(alias = "MYR")]
-    MalaysianRinggit,
-    #[serde(alias = "MZN")]
-    MozambicanMetical,
-    #[serde(alias = "NAD")]
-    NamibianDollar,
-    #[serde(alias = "NGN")]
-    NigerianNaira,
-    #[serde(alias = "NIO")]
-    NicaraguanCordoba,
-    #[serde(alias = "NOK")]
-    NorwegianKrone,
-    #[serde(alias = "NPR")]
-    NepaleseRupee,
-    #[serde(alias = "NZD")]
-    NewZealandDollar,
-    #[serde(alias = "OMR")]
-    OmaniRial,
-    #[serde(alias = "PAB")]
-    PanamanianBalboa,
-    #[serde(alias = "PEN")]
-    PeruvianSol,
-    #[serde(alias = "PGK")]
-    PapuaNewGuineanKina,
-    #[serde(alias = "PHP")]
-    PhilippinePeso,
-    #[serde(alias = "PKR")]
-    PakistaniRupee,
-    #[serde(alias = "PLN")]
-    PolishZloty,
-    #[serde(alias = "PYG")]
-    ParaguayanGuarani,
-    #[serde(alias = "QAR")]
-    QatariRiyal,
-    #[serde(alias = "RON")]
-    RomanianLeu,
-    #[serde(alias = "RSD")]
-    SerbianDinar,
-    #[serde(alias = "RUB")]
-    RussianRuble,
-    #[serde(alias = "RWF")]
-    RwandanFranc,
-    #[serde(alias = "SAR")]
-    SaudiRiyal,
-    #[serde(alias = "SBD")]
-    SolomonIslandsDollar,
-    #[serde(alias = "SCR")]
-    SeychellesRupee,
-    #[serde(alias = "SDG")]
-    SudanesePound,
-    #[serde(alias = "SHP")]
-    SwedishKrona,
-    #[serde(alias = "SLL")]
-    SingaporeDollar,
-    #[serde(alias = "SHP")]
-    SaintHelenaPound,
-    #[serde(alias = "SLL")]
-    SierraLeoneanLeone,
-    #[serde(alias = "SOS")]
-    SomaliShilling,
-    #[serde(alias = "SRD")]
-    SurinameseDollar,
-    #[serde(alias = "SSP")]
-    SouthSudanesePound,
-    #[serde(alias = "STN")]
-    SaoTomeAndPrincipeDobra,
-    #[serde(alias = "SVC")]
-    SalvadoranColon,
-    #[serde(alias = "SYP")]
-    SyrianPound,
-    #[serde(alias = "SZL")]
-    SwaziLilangeni,
-    #[serde(alias = "THB")]
-    ThaiBaht,
-    #[serde(alias = "TJS")]
-    TajikistaniSomoni,
-    #[serde(alias = "TMT")]
-    TurkmenistanManat,
-    #[serde(alias = "TND")]
-    TunisianDinar,
-    #[serde(alias = "TOP")]
-    TonganPaanga,
-    #[serde(alias = "TRY")]
-    TurkishLira,
-    #[serde(alias = "TTD")]
-    TrinidadAndTobagoDollar,
-    #[serde(alias = "TWD")]
-    NewTaiwanDollar,
-    #[serde(alias = "TZS")]
-    TanzanianShilling,
-    #[serde(alias = "UAH")]
-    UkrainianHryvnia,
-    #[serde(alias = "UGX")]
-    UgandanShilling,
-    #[serde(alias = "USD")]
-    UnitedStatesDollar,
-    #[serde(alias = "USN")]
-    UnitedStatesDollarNextDay,
-    #[serde(alias = "UYI")]
-    UruguayPesoEnUnidadesIndexadas,
-    #[serde(alias = "UYU")]
-    UruguayanPeso,
-    #[serde(alias = "UYW")]
-    UnidadPrevisional,
-    #[serde(alias = "UZS")]
-    UzbekistanSom,
-    #[serde(alias = "VES")]
-    VenezuelanBolivarSoberano,
-    #[serde(alias = "VND")]
-    VietnameseDong,
-    #[serde(alias = "VUV")]
-    VanuatuVatu,
-    #[serde(alias = "WST")]
-    SamoanTala,
-    #[serde(alias = "XAF")]
-    CfaFrancBeac,
-    #[serde(alias = "XAG")]
-    Silver,
-    #[serde(alias = "XAU")]
-    Gold,
-    #[serde(alias = "XBA")]
-    EuropeanCompositeUnit,
-    #[serde(alias = "XBB")]
-    EuropeanMonetaryUnit,
-    #[serde(alias = "XBC")]
-    EuropeanUnitOfAccount9,
-    #[serde(alias = "XBD")]
-    EuropeanUnitOfAccount17,
-    #[serde(alias = "XCD")]
-    EastCaribbeanDollar,
-    #[serde(alias = "XDR")]
-    SpecialDrawingRights,
-    #[serde(alias = "XOF")]
-    CfaFrancBceao,
-    #[serde(alias = "XPD")]
-    Palladium,
-    #[serde(alias = "XPF")]
-    CfpFranc,
-    #[serde(alias = "XPT")]
-    Platinum,
-    #[serde(alias = "XSU")]
-    Sucre,
-    #[serde(alias = "XTS")]
-    CodeReservedForTesting,
-    #[serde(alias = "XUA")]
-    AdbUnitOfAccount,
-    #[serde(alias = "XXX")]
-    NoCurrency,
-    #[serde(alias = "YER")]
-    YemeniRial,
-    #[serde(alias = "ZAR")]
-    SouthAfricanRand,
-    #[serde(alias = "ZMW")]
-    ZambianKwacha,
-    #[serde(alias = "ZWL")]
-    ZimbabweanDollar,
+    UnitedArabEmiratesDirham = 0,
+    AfghanAfghani = 1,
+    AlbanianLek = 2,
+    ArmenianDram = 3,
+    NetherlandsAntilleanGuilder = 4,
+    AngolanKwanza = 5,
+    ArgentinePeso = 6,
+    AustralianDollar = 7,
+    ArubanFlorin = 8,
+    AzerbaijaniManat = 9,
+    BosniaAndHerzegovinaConvertibleMark = 10,
+    BarbadosDollar = 11,
+    BangladeshiTaka = 12,
+    BulgarianLev = 13,
+    BahrainiDinar = 14,
+    BurundianFranc = 15,
+    BermudianDollar = 16,
+    BruneiDollar = 17,
+    Boliviano = 18,
+    BolivianMvdol = 19,
+    BrazilianReal = 20,
+    BahamianDollar = 21,
+    BhutaneseNgultrum = 22,
+    BotswanaPula = 23,
+    BelarusianRuble = 24,
+    BelizeDollar = 25,
+    CanadianDollar = 26,
+    CongoleseFranc = 27,
+    WirEuro = 28,
+    SwissFranc = 29,
+    WirFranc = 30,
+    UnidadDeFomento = 31,
+    ChileanPeso = 32,
+    RenminbiYuan = 33,
+    ColombianPeso = 34,
+    UnidadDeValorReal = 35,
+    CostaRicanColon = 36,
+    CubanConvertiblePeso = 37,
+    CubanPeso = 38,
+    CapeVerdeanEscudo = 39,
+    CzechKoruna = 40,
+    DjiboutianFranc = 41,
+    DanishKrone = 42,
+    DominicanPeso = 43,
+    AlgerianDinar = 44,
+    EgyptianPound = 45,
+    EritreanNakfa = 46,
+    EthiopianBirr = 47,
+    Euro = 48,
+    FijiDollar = 49,
+    FalklandIslandsPound = 50,
+    PoundSterling = 51,
+    GeorgianLari = 52,
+    GhanaianCedi = 53,
+    GibraltarPound = 54,
+    GambianDalasi = 55,
+    GuineanFranc = 56,
+    GuatemalanQuetzal = 57,
+    GuyaneseDollar = 58,
+    HongKongDollar = 59,
+    HonduranLempira = 60,
+    CroatianKuna = 61,
+    HaitianGourde = 62,
+    HungarianForint = 63,
+    IndonesianRupiah = 64,
+    IsraeliNewShekel = 65,
+    IndianRupee = 66,
+    IraqiDinar = 67,
+    IranianRial = 68,
+    IcelandicKrona = 69,
+    JamaicanDollar = 70,
+    JordanianDinar = 71,
+    JapaneseYen = 72,
+    KenyanShilling = 73,
+    KyrgyzstaniSom = 74,
+    CambodianRiel = 75,
+    ComoroFranc = 76,
+    NorthKoreanWon = 77,
+    SouthKoreanWon = 78,
+    KuwaitiDinar = 79,
+    CaymanIslandsDollar = 80,
+    KazakhstaniTenge = 81,
+    LaoKip = 82,
+    LebanesePound = 83,
+    SriLankanRupee = 84,
+    LiberianDollar = 85,
+    LesothoLoti = 86,
+    LibyanDinar = 87,
+    MoroccanDirham = 88,
+    MoldovanLeu = 89,
+    MalagasyAriary = 90,
+    MacedonianDenar = 91,
+    MyanmarKyat = 92,
+    MongolianTogrog = 93,
+    MacanesePataca = 94,
+    MauritanianOuguiya = 95,
+    MauritianRupee = 96,
+    MaldivianRufiyaa = 97,
+    MalawianKwacha = 98,
+    MexicanPeso = 99,
+    MexicanUnidadDeInversion = 100,
+    MalaysianRinggit = 101,
+    MozambicanMetical = 102,
+    NamibianDollar = 103,
+    NigerianNaira = 104,
+    NicaraguanCordoba = 105,
+    NorwegianKrone = 106,
+    NepaleseRupee = 107,
+    NewZealandDollar = 108,
+    OmaniRial = 109,
+    PanamanianBalboa = 110,
+    PeruvianSol = 111,
+    PapuaNewGuineanKina = 112,
+    PhilippinePeso = 113,
+    PakistaniRupee = 114,
+    PolishZloty = 115,
+    ParaguayanGuarani = 116,
+    QatariRiyal = 117,
+    RomanianLeu = 118,
+    SerbianDinar = 119,
+    RussianRuble = 120,
+    RwandanFranc = 121,
+    SaudiRiyal = 122,
+    SolomonIslandsDollar = 123,
+    SeychellesRupee = 124,
+    SudanesePound = 125,
+    SwedishKrona = 126,
+    SingaporeDollar = 127,
+    SaintHelenaPound = 128,
+    SierraLeoneanLeone = 129,
+    SomaliShilling = 130,
+    SurinameseDollar = 131,
+    SouthSudanesePound = 132,
+    SaoTomeAndPrincipeDobra = 133,
+    SalvadoranColon = 134,
+    SyrianPound = 135,
+    SwaziLilangeni = 136,
+    ThaiBaht = 137,
+    TajikistaniSomoni = 138,
+    TurkmenistanManat = 139,
+    TunisianDinar = 140,
+    TonganPaanga = 141,
+    TurkishLira = 142,
+    TrinidadAndTobagoDollar = 143,
+    NewTaiwanDollar = 144,
+    TanzanianShilling = 145,
+    UkrainianHryvnia = 146,
+    UgandanShilling = 147,
+    #[default] UnitedStatesDollar = 148,
+    UnitedStatesDollarNextDay = 149,
+    UruguayPesoEnUnidadesIndexadas = 150,
+    UruguayanPeso = 151,
+    UnidadPrevisional = 152,
+    UzbekistanSom = 153,
+    VenezuelanBolivarSoberano = 154,
+    VietnameseDong = 155,
+    VanuatuVatu = 156,
+    SamoanTala = 157,
+    CfaFrancBeac = 158,
+    Silver = 159,
+    Gold = 160,
+    EuropeanCompositeUnit = 161,
+    EuropeanMonetaryUnit = 162,
+    EuropeanUnitOfAccount9 = 163,
+    EuropeanUnitOfAccount17 = 164,
+    EastCaribbeanDollar = 165,
+    SpecialDrawingRights = 166,
+    CfaFrancBceao = 167,
+    Palladium = 168,
+    CfpFranc = 169,
+    Platinum = 170,
+    Sucre = 171,
+    CodeReservedForTesting = 172,
+    AdbUnitOfAccount = 173,
+    NoCurrency = 174,
+    YemeniRial = 175,
+    SouthAfricanRand = 176,
+    ZambianKwacha = 177,
+    ZimbabweanDollar = 178,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -391,191 +213,221 @@ impl<'de> Deserialize<'de> for TransitCurrency {
 
 // -----------------------------------------------------------------------------
 
+impl Serialize for TransitCurrency {
+    /// Manual implementation of `Serialize` for `serde`.
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where S: Serializer {
+        serializer.serialize_str(std::convert::Into::<&str>::into(self))
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<&TransitCurrency> for &str {
+    /// Converts a `TransitCurrency` enum to a `String` that contains an [ISO
+    /// 4217 currency code](https://en.wikipedia.org/wiki/ISO_4217).
+    fn from(currency: &TransitCurrency) -> Self {
+        match currency {
+            TransitCurrency::UnitedArabEmiratesDirham => "AED",
+            TransitCurrency::AfghanAfghani => "AFN",
+            TransitCurrency::AlbanianLek => "ALL",
+            TransitCurrency::ArmenianDram => "AMD",
+            TransitCurrency::NetherlandsAntilleanGuilder => "ANG",
+            TransitCurrency::AngolanKwanza => "AOA",
+            TransitCurrency::ArgentinePeso => "ARS",
+            TransitCurrency::AustralianDollar => "AUD",
+            TransitCurrency::ArubanFlorin => "AWG",
+            TransitCurrency::AzerbaijaniManat => "AZN",
+            TransitCurrency::BosniaAndHerzegovinaConvertibleMark => "BAM",
+            TransitCurrency::BarbadosDollar => "BBD",
+            TransitCurrency::BangladeshiTaka => "BDT",
+            TransitCurrency::BulgarianLev => "BGN",
+            TransitCurrency::BahrainiDinar => "BHD",
+            TransitCurrency::BurundianFranc => "BIF",
+            TransitCurrency::BermudianDollar => "BMD",
+            TransitCurrency::BruneiDollar => "BND",
+            TransitCurrency::Boliviano => "BOB",
+            TransitCurrency::BolivianMvdol => "BOV",
+            TransitCurrency::BrazilianReal => "BRL",
+            TransitCurrency::BahamianDollar => "BSD",
+            TransitCurrency::BhutaneseNgultrum => "BTN",
+            TransitCurrency::BotswanaPula => "BWP",
+            TransitCurrency::BelarusianRuble => "BYN",
+            TransitCurrency::BelizeDollar => "BZD",
+            TransitCurrency::CanadianDollar => "CAD",
+            TransitCurrency::CongoleseFranc => "CDF",
+            TransitCurrency::WirEuro => "CHE",
+            TransitCurrency::SwissFranc => "CHF",
+            TransitCurrency::WirFranc => "CHW",
+            TransitCurrency::UnidadDeFomento => "CLF",
+            TransitCurrency::ChileanPeso => "CLP",
+            TransitCurrency::RenminbiYuan => "CNY",
+            TransitCurrency::ColombianPeso => "COP",
+            TransitCurrency::UnidadDeValorReal => "COU",
+            TransitCurrency::CostaRicanColon => "CRC",
+            TransitCurrency::CubanConvertiblePeso => "CUC",
+            TransitCurrency::CubanPeso => "CUP",
+            TransitCurrency::CapeVerdeanEscudo => "CVE",
+            TransitCurrency::CzechKoruna => "CZK",
+            TransitCurrency::DjiboutianFranc => "DJF",
+            TransitCurrency::DanishKrone => "DKK",
+            TransitCurrency::DominicanPeso => "DOP",
+            TransitCurrency::AlgerianDinar => "DZD",
+            TransitCurrency::EgyptianPound => "EGP",
+            TransitCurrency::EritreanNakfa => "ERN",
+            TransitCurrency::EthiopianBirr => "ETB",
+            TransitCurrency::Euro => "EUR",
+            TransitCurrency::FijiDollar => "FJD",
+            TransitCurrency::FalklandIslandsPound => "FKP",
+            TransitCurrency::PoundSterling => "GBP",
+            TransitCurrency::GeorgianLari => "GEL",
+            TransitCurrency::GhanaianCedi => "GHS",
+            TransitCurrency::GibraltarPound => "GIP",
+            TransitCurrency::GambianDalasi => "GMD",
+            TransitCurrency::GuineanFranc => "GNF",
+            TransitCurrency::GuatemalanQuetzal => "GTQ",
+            TransitCurrency::GuyaneseDollar => "GYD",
+            TransitCurrency::HongKongDollar => "HKD",
+            TransitCurrency::HonduranLempira => "HNL",
+            TransitCurrency::CroatianKuna => "HRK",
+            TransitCurrency::HaitianGourde => "HTG",
+            TransitCurrency::HungarianForint => "HUF",
+            TransitCurrency::IndonesianRupiah => "IDR",
+            TransitCurrency::IsraeliNewShekel => "ILS",
+            TransitCurrency::IndianRupee => "INR",
+            TransitCurrency::IraqiDinar => "IQD",
+            TransitCurrency::IranianRial => "IRR",
+            TransitCurrency::IcelandicKrona => "ISK",
+            TransitCurrency::JamaicanDollar => "JMD",
+            TransitCurrency::JordanianDinar => "JOD",
+            TransitCurrency::JapaneseYen => "JPY",
+            TransitCurrency::KenyanShilling => "KES",
+            TransitCurrency::KyrgyzstaniSom => "KGS",
+            TransitCurrency::CambodianRiel => "KHR",
+            TransitCurrency::ComoroFranc => "KMF",
+            TransitCurrency::NorthKoreanWon => "KPW",
+            TransitCurrency::SouthKoreanWon => "KRW",
+            TransitCurrency::KuwaitiDinar => "KWD",
+            TransitCurrency::CaymanIslandsDollar => "KYD",
+            TransitCurrency::KazakhstaniTenge => "KZT",
+            TransitCurrency::LaoKip => "LAK",
+            TransitCurrency::LebanesePound => "LBP",
+            TransitCurrency::SriLankanRupee => "LKR",
+            TransitCurrency::LiberianDollar => "LRD",
+            TransitCurrency::LesothoLoti => "LSL",
+            TransitCurrency::LibyanDinar => "LYD",
+            TransitCurrency::MoroccanDirham => "MAD",
+            TransitCurrency::MoldovanLeu => "MDL",
+            TransitCurrency::MalagasyAriary => "MGA",
+            TransitCurrency::MacedonianDenar => "MKD",
+            TransitCurrency::MyanmarKyat => "MMK",
+            TransitCurrency::MongolianTogrog => "MNT",
+            TransitCurrency::MacanesePataca => "MOP",
+            TransitCurrency::MauritanianOuguiya => "MRU",
+            TransitCurrency::MauritianRupee => "MUR",
+            TransitCurrency::MaldivianRufiyaa => "MVR",
+            TransitCurrency::MalawianKwacha => "MWK",
+            TransitCurrency::MexicanPeso => "MXN",
+            TransitCurrency::MexicanUnidadDeInversion => "MXV",
+            TransitCurrency::MalaysianRinggit => "MYR",
+            TransitCurrency::MozambicanMetical => "MZN",
+            TransitCurrency::NamibianDollar => "NAD",
+            TransitCurrency::NigerianNaira => "NGN",
+            TransitCurrency::NicaraguanCordoba => "NIO",
+            TransitCurrency::NorwegianKrone => "NOK",
+            TransitCurrency::NepaleseRupee => "NPR",
+            TransitCurrency::NewZealandDollar => "NZD",
+            TransitCurrency::OmaniRial => "OMR",
+            TransitCurrency::PanamanianBalboa => "PAB",
+            TransitCurrency::PeruvianSol => "PEN",
+            TransitCurrency::PapuaNewGuineanKina => "PGK",
+            TransitCurrency::PhilippinePeso => "PHP",
+            TransitCurrency::PakistaniRupee => "PKR",
+            TransitCurrency::PolishZloty => "PLN",
+            TransitCurrency::ParaguayanGuarani => "PYG",
+            TransitCurrency::QatariRiyal => "QAR",
+            TransitCurrency::RomanianLeu => "RON",
+            TransitCurrency::SerbianDinar => "RSD",
+            TransitCurrency::RussianRuble => "RUB",
+            TransitCurrency::RwandanFranc => "RWF",
+            TransitCurrency::SaudiRiyal => "SAR",
+            TransitCurrency::SolomonIslandsDollar => "SBD",
+            TransitCurrency::SeychellesRupee => "SCR",
+            TransitCurrency::SudanesePound => "SDG",
+            TransitCurrency::SwedishKrona => "SEK",
+            TransitCurrency::SingaporeDollar => "SGD",
+            TransitCurrency::SaintHelenaPound => "SHP",
+            TransitCurrency::SierraLeoneanLeone => "SLL",
+            TransitCurrency::SomaliShilling => "SOS",
+            TransitCurrency::SurinameseDollar => "SRD",
+            TransitCurrency::SouthSudanesePound => "SSP",
+            TransitCurrency::SaoTomeAndPrincipeDobra => "STN",
+            TransitCurrency::SalvadoranColon => "SVC",
+            TransitCurrency::SyrianPound => "SYP",
+            TransitCurrency::SwaziLilangeni => "SZL",
+            TransitCurrency::ThaiBaht => "THB",
+            TransitCurrency::TajikistaniSomoni => "TJS",
+            TransitCurrency::TurkmenistanManat => "TMT",
+            TransitCurrency::TunisianDinar => "TND",
+            TransitCurrency::TonganPaanga => "TOP",
+            TransitCurrency::TurkishLira => "TRY",
+            TransitCurrency::TrinidadAndTobagoDollar => "TTD",
+            TransitCurrency::NewTaiwanDollar => "TWD",
+            TransitCurrency::TanzanianShilling => "TZS",
+            TransitCurrency::UkrainianHryvnia => "UAH",
+            TransitCurrency::UgandanShilling => "UGX",
+            TransitCurrency::UnitedStatesDollar => "USD",
+            TransitCurrency::UnitedStatesDollarNextDay => "USN",
+            TransitCurrency::UruguayPesoEnUnidadesIndexadas => "UYI",
+            TransitCurrency::UruguayanPeso => "UYU",
+            TransitCurrency::UnidadPrevisional => "UYW",
+            TransitCurrency::UzbekistanSom => "UZS",
+            TransitCurrency::VenezuelanBolivarSoberano => "VES",
+            TransitCurrency::VietnameseDong => "VND",
+            TransitCurrency::VanuatuVatu => "VUV",
+            TransitCurrency::SamoanTala => "WST",
+            TransitCurrency::CfaFrancBeac => "XAF",
+            TransitCurrency::Silver => "XAG",
+            TransitCurrency::Gold => "XAU",
+            TransitCurrency::EuropeanCompositeUnit => "XBA",
+            TransitCurrency::EuropeanMonetaryUnit => "XBB",
+            TransitCurrency::EuropeanUnitOfAccount9 => "XBC",
+            TransitCurrency::EuropeanUnitOfAccount17 => "XBD",
+            TransitCurrency::EastCaribbeanDollar => "XCD",
+            TransitCurrency::SpecialDrawingRights => "XDR",
+            TransitCurrency::CfaFrancBceao => "XOF",
+            TransitCurrency::Palladium => "XPD",
+            TransitCurrency::CfpFranc => "CFP franc",
+            TransitCurrency::Platinum => "XPT",
+            TransitCurrency::Sucre => "XSU",
+            TransitCurrency::CodeReservedForTesting => "XTS",
+            TransitCurrency::AdbUnitOfAccount => "XUA",
+            TransitCurrency::NoCurrency => "XXX",
+            TransitCurrency::YemeniRial => "YER",
+            TransitCurrency::SouthAfricanRand => "ZAR",
+            TransitCurrency::ZambianKwacha => "ZMW",
+            TransitCurrency::ZimbabweanDollar => "ZWL",
+        } // match
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::fmt::Display for TransitCurrency {
+    /// Converts a `TransitCurrency` enum to a `String` that contains an [ISO
+    /// 4217 currency code](https://en.wikipedia.org/wiki/ISO_4217).
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", std::convert::Into::<&str>::into(self))
+    } // fmt
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&TransitCurrency> for String {
     /// Converts a `TransitCurrency` enum to a `String` that contains an [ISO
     /// 4217 currency code](https://en.wikipedia.org/wiki/ISO_4217).
-    fn from(currency: &TransitCurrency) -> String {
-        match currency {
-            TransitCurrency::UnitedArabEmiratesDirham => String::from("AED"),
-            TransitCurrency::AfghanAfghani => String::from("AFN"),
-            TransitCurrency::AlbanianLek => String::from("ALL"),
-            TransitCurrency::ArmenianDram => String::from("AMD"),
-            TransitCurrency::NetherlandsAntilleanGuilder => String::from("ANG"),
-            TransitCurrency::AngolanKwanza => String::from("AOA"),
-            TransitCurrency::ArgentinePeso => String::from("ARS"),
-            TransitCurrency::AustralianDollar => String::from("AUD"),
-            TransitCurrency::ArubanFlorin => String::from("AWG"),
-            TransitCurrency::AzerbaijaniManat => String::from("AZN"),
-            TransitCurrency::BosniaAndHerzegovinaConvertibleMark => String::from("BAM"),
-            TransitCurrency::BarbadosDollar => String::from("BBD"),
-            TransitCurrency::BangladeshiTaka => String::from("BDT"),
-            TransitCurrency::BulgarianLev => String::from("BGN"),
-            TransitCurrency::BahrainiDinar => String::from("BHD"),
-            TransitCurrency::BurundianFranc => String::from("BIF"),
-            TransitCurrency::BermudianDollar => String::from("BMD"),
-            TransitCurrency::BruneiDollar => String::from("BND"),
-            TransitCurrency::Boliviano => String::from("BOB"),
-            TransitCurrency::BolivianMvdol => String::from("BOV"),
-            TransitCurrency::BrazilianReal => String::from("BRL"),
-            TransitCurrency::BahamianDollar => String::from("BSD"),
-            TransitCurrency::BhutaneseNgultrum => String::from("BTN"),
-            TransitCurrency::BotswanaPula => String::from("BWP"),
-            TransitCurrency::BelarusianRuble => String::from("BYN"),
-            TransitCurrency::BelizeDollar => String::from("BZD"),
-            TransitCurrency::CanadianDollar => String::from("CAD"),
-            TransitCurrency::CongoleseFranc => String::from("CDF"),
-            TransitCurrency::WirEuro => String::from("CHE"),
-            TransitCurrency::SwissFranc => String::from("CHF"),
-            TransitCurrency::WirFranc => String::from("CHW"),
-            TransitCurrency::UnidadDeFomento => String::from("CLF"),
-            TransitCurrency::ChileanPeso => String::from("CLP"),
-            TransitCurrency::RenminbiYuan => String::from("CNY"),
-            TransitCurrency::ColombianPeso => String::from("COP"),
-            TransitCurrency::UnidadDeValorReal => String::from("COU"),
-            TransitCurrency::CostaRicanColon => String::from("CRC"),
-            TransitCurrency::CubanConvertiblePeso => String::from("CUC"),
-            TransitCurrency::CubanPeso => String::from("CUP"),
-            TransitCurrency::CapeVerdeanEscudo => String::from("CVE"),
-            TransitCurrency::CzechKoruna => String::from("CZK"),
-            TransitCurrency::DjiboutianFranc => String::from("DJF"),
-            TransitCurrency::DanishKrone => String::from("DKK"),
-            TransitCurrency::DominicanPeso => String::from("DOP"),
-            TransitCurrency::AlgerianDinar => String::from("DZD"),
-            TransitCurrency::EgyptianPound => String::from("EGP"),
-            TransitCurrency::EritreanNakfa => String::from("ERN"),
-            TransitCurrency::EthiopianBirr => String::from("ETB"),
-            TransitCurrency::Euro => String::from("EUR"),
-            TransitCurrency::FijiDollar => String::from("FJD"),
-            TransitCurrency::FalklandIslandsPound => String::from("FKP"),
-            TransitCurrency::PoundSterling => String::from("GBP"),
-            TransitCurrency::GeorgianLari => String::from("GEL"),
-            TransitCurrency::GhanaianCedi => String::from("GHS"),
-            TransitCurrency::GibraltarPound => String::from("GIP"),
-            TransitCurrency::GambianDalasi => String::from("GMD"),
-            TransitCurrency::GuineanFranc => String::from("GNF"),
-            TransitCurrency::GuatemalanQuetzal => String::from("GTQ"),
-            TransitCurrency::GuyaneseDollar => String::from("GYD"),
-            TransitCurrency::HongKongDollar => String::from("HKD"),
-            TransitCurrency::HonduranLempira => String::from("HNL"),
-            TransitCurrency::CroatianKuna => String::from("HRK"),
-            TransitCurrency::HaitianGourde => String::from("HTG"),
-            TransitCurrency::HungarianForint => String::from("HUF"),
-            TransitCurrency::IndonesianRupiah => String::from("IDR"),
-            TransitCurrency::IsraeliNewShekel => String::from("ILS"),
-            TransitCurrency::IndianRupee => String::from("INR"),
-            TransitCurrency::IraqiDinar => String::from("IQD"),
-            TransitCurrency::IranianRial => String::from("IRR"),
-            TransitCurrency::IcelandicKrona => String::from("ISK"),
-            TransitCurrency::JamaicanDollar => String::from("JMD"),
-            TransitCurrency::JordanianDinar => String::from("JOD"),
-            TransitCurrency::JapaneseYen => String::from("JPY"),
-            TransitCurrency::KenyanShilling => String::from("KES"),
-            TransitCurrency::KyrgyzstaniSom => String::from("KGS"),
-            TransitCurrency::CambodianRiel => String::from("KHR"),
-            TransitCurrency::ComoroFranc => String::from("KMF"),
-            TransitCurrency::NorthKoreanWon => String::from("KPW"),
-            TransitCurrency::SouthKoreanWon => String::from("KRW"),
-            TransitCurrency::KuwaitiDinar => String::from("KWD"),
-            TransitCurrency::CaymanIslandsDollar => String::from("KYD"),
-            TransitCurrency::KazakhstaniTenge => String::from("KZT"),
-            TransitCurrency::LaoKip => String::from("LAK"),
-            TransitCurrency::LebanesePound => String::from("LBP"),
-            TransitCurrency::SriLankanRupee => String::from("LKR"),
-            TransitCurrency::LiberianDollar => String::from("LRD"),
-            TransitCurrency::LesothoLoti => String::from("LSL"),
-            TransitCurrency::LibyanDinar => String::from("LYD"),
-            TransitCurrency::MoroccanDirham => String::from("MAD"),
-            TransitCurrency::MoldovanLeu => String::from("MDL"),
-            TransitCurrency::MalagasyAriary => String::from("MGA"),
-            TransitCurrency::MacedonianDenar => String::from("MKD"),
-            TransitCurrency::MyanmarKyat => String::from("MMK"),
-            TransitCurrency::MongolianTogrog => String::from("MNT"),
-            TransitCurrency::MacanesePataca => String::from("MOP"),
-            TransitCurrency::MauritanianOuguiya => String::from("MRU"),
-            TransitCurrency::MauritianRupee => String::from("MUR"),
-            TransitCurrency::MaldivianRufiyaa => String::from("MVR"),
-            TransitCurrency::MalawianKwacha => String::from("MWK"),
-            TransitCurrency::MexicanPeso => String::from("MXN"),
-            TransitCurrency::MexicanUnidadDeInversion => String::from("MXV"),
-            TransitCurrency::MalaysianRinggit => String::from("MYR"),
-            TransitCurrency::MozambicanMetical => String::from("MZN"),
-            TransitCurrency::NamibianDollar => String::from("NAD"),
-            TransitCurrency::NigerianNaira => String::from("NGN"),
-            TransitCurrency::NicaraguanCordoba => String::from("NIO"),
-            TransitCurrency::NorwegianKrone => String::from("NOK"),
-            TransitCurrency::NepaleseRupee => String::from("NPR"),
-            TransitCurrency::NewZealandDollar => String::from("NZD"),
-            TransitCurrency::OmaniRial => String::from("OMR"),
-            TransitCurrency::PanamanianBalboa => String::from("PAB"),
-            TransitCurrency::PeruvianSol => String::from("PEN"),
-            TransitCurrency::PapuaNewGuineanKina => String::from("PGK"),
-            TransitCurrency::PhilippinePeso => String::from("PHP"),
-            TransitCurrency::PakistaniRupee => String::from("PKR"),
-            TransitCurrency::PolishZloty => String::from("PLN"),
-            TransitCurrency::ParaguayanGuarani => String::from("PYG"),
-            TransitCurrency::QatariRiyal => String::from("QAR"),
-            TransitCurrency::RomanianLeu => String::from("RON"),
-            TransitCurrency::SerbianDinar => String::from("RSD"),
-            TransitCurrency::RussianRuble => String::from("RUB"),
-            TransitCurrency::RwandanFranc => String::from("RWF"),
-            TransitCurrency::SaudiRiyal => String::from("SAR"),
-            TransitCurrency::SolomonIslandsDollar => String::from("SBD"),
-            TransitCurrency::SeychellesRupee => String::from("SCR"),
-            TransitCurrency::SudanesePound => String::from("SDG"),
-            TransitCurrency::SwedishKrona => String::from("SEK"),
-            TransitCurrency::SingaporeDollar => String::from("SGD"),
-            TransitCurrency::SaintHelenaPound => String::from("SHP"),
-            TransitCurrency::SierraLeoneanLeone => String::from("SLL"),
-            TransitCurrency::SomaliShilling => String::from("SOS"),
-            TransitCurrency::SurinameseDollar => String::from("SRD"),
-            TransitCurrency::SouthSudanesePound => String::from("SSP"),
-            TransitCurrency::SaoTomeAndPrincipeDobra => String::from("STN"),
-            TransitCurrency::SalvadoranColon => String::from("SVC"),
-            TransitCurrency::SyrianPound => String::from("SYP"),
-            TransitCurrency::SwaziLilangeni => String::from("SZL"),
-            TransitCurrency::ThaiBaht => String::from("THB"),
-            TransitCurrency::TajikistaniSomoni => String::from("TJS"),
-            TransitCurrency::TurkmenistanManat => String::from("TMT"),
-            TransitCurrency::TunisianDinar => String::from("TND"),
-            TransitCurrency::TonganPaanga => String::from("TOP"),
-            TransitCurrency::TurkishLira => String::from("TRY"),
-            TransitCurrency::TrinidadAndTobagoDollar => String::from("TTD"),
-            TransitCurrency::NewTaiwanDollar => String::from("TWD"),
-            TransitCurrency::TanzanianShilling => String::from("TZS"),
-            TransitCurrency::UkrainianHryvnia => String::from("UAH"),
-            TransitCurrency::UgandanShilling => String::from("UGX"),
-            TransitCurrency::UnitedStatesDollar => String::from("USD"),
-            TransitCurrency::UnitedStatesDollarNextDay => String::from("USN"),
-            TransitCurrency::UruguayPesoEnUnidadesIndexadas => String::from("UYI"),
-            TransitCurrency::UruguayanPeso => String::from("UYU"),
-            TransitCurrency::UnidadPrevisional => String::from("UYW"),
-            TransitCurrency::UzbekistanSom => String::from("UZS"),
-            TransitCurrency::VenezuelanBolivarSoberano => String::from("VES"),
-            TransitCurrency::VietnameseDong => String::from("VND"),
-            TransitCurrency::VanuatuVatu => String::from("VUV"),
-            TransitCurrency::SamoanTala => String::from("WST"),
-            TransitCurrency::CfaFrancBeac => String::from("XAF"),
-            TransitCurrency::Silver => String::from("XAG"),
-            TransitCurrency::Gold => String::from("XAU"),
-            TransitCurrency::EuropeanCompositeUnit => String::from("XBA"),
-            TransitCurrency::EuropeanMonetaryUnit => String::from("XBB"),
-            TransitCurrency::EuropeanUnitOfAccount9 => String::from("XBC"),
-            TransitCurrency::EuropeanUnitOfAccount17 => String::from("XBD"),
-            TransitCurrency::EastCaribbeanDollar => String::from("XCD"),
-            TransitCurrency::SpecialDrawingRights => String::from("XDR"),
-            TransitCurrency::CfaFrancBceao => String::from("XOF"),
-            TransitCurrency::Palladium => String::from("XPD"),
-            TransitCurrency::CfpFranc => String::from("CFP franc"),
-            TransitCurrency::Platinum => String::from("XPT"),
-            TransitCurrency::Sucre => String::from("XSU"),
-            TransitCurrency::CodeReservedForTesting => String::from("XTS"),
-            TransitCurrency::AdbUnitOfAccount => String::from("XUA"),
-            TransitCurrency::NoCurrency => String::from("XXX"),
-            TransitCurrency::YemeniRial => String::from("YER"),
-            TransitCurrency::SouthAfricanRand => String::from("ZAR"),
-            TransitCurrency::ZambianKwacha => String::from("ZMW"),
-            TransitCurrency::ZimbabweanDollar => String::from("ZWL"),
-        } // match
+    fn from(transit_currency: &TransitCurrency) -> Self {
+        std::convert::Into::<&str>::into(transit_currency).to_string()
     } // fn
 } // impl
 
@@ -763,6 +615,8 @@ static TRANSIT_CURRENCIES_BY_CODE: phf::Map<&'static str, TransitCurrency> = phf
     "ZWL" => TransitCurrency::ZimbabweanDollar,
 };
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::TryFrom<&str> for TransitCurrency {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
@@ -776,6 +630,8 @@ impl std::convert::TryFrom<&str> for TransitCurrency {
             .ok_or_else(|| Error::InvalidCurrencyCode(currency_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::str::FromStr for TransitCurrency {
     // Error definitions are contained in the
@@ -793,200 +649,190 @@ impl std::str::FromStr for TransitCurrency {
 
 // -----------------------------------------------------------------------------
 
-impl std::default::Default for TransitCurrency {
-    /// Returns a reasonable default variant for the `TransitCurrency` enum
-    /// type:
-    fn default() -> Self {
-        TransitCurrency::UnitedStatesDollar
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl std::fmt::Display for TransitCurrency {
+impl TransitCurrency {
     /// Formats a `TransitCurrency` enum into a string that is presentable to
     /// the end user.
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    pub fn display(&self) -> &str {
         match self {
-            TransitCurrency::UnitedArabEmiratesDirham => write!(f, "United Arab Emirates dirham"),
-            TransitCurrency::AfghanAfghani => write!(f, "Afghan afghani"),
-            TransitCurrency::AlbanianLek => write!(f, "Albanian lek"),
-            TransitCurrency::ArmenianDram => write!(f, "Armenian dram"),
-            TransitCurrency::NetherlandsAntilleanGuilder => write!(f, "Netherlands Antillean guilder"),
-            TransitCurrency::AngolanKwanza => write!(f, "Angolan kwanza"),
-            TransitCurrency::ArgentinePeso => write!(f, "Argentine peso"),
-            TransitCurrency::AustralianDollar => write!(f, "Australian dollar"),
-            TransitCurrency::ArubanFlorin => write!(f, "Aruban florin"),
-            TransitCurrency::AzerbaijaniManat => write!(f, "Azerbaijani manat"),
-            TransitCurrency::BosniaAndHerzegovinaConvertibleMark => write!(f, "Bosnia and Herzegovina convertible mark"),
-            TransitCurrency::BarbadosDollar => write!(f, "Barbados dollar"),
-            TransitCurrency::BangladeshiTaka => write!(f, "Bangladeshi taka"),
-            TransitCurrency::BulgarianLev => write!(f, "Bulgarian lev"),
-            TransitCurrency::BahrainiDinar => write!(f, "Bahraini dinar"),
-            TransitCurrency::BurundianFranc => write!(f, "Burundian franc"),
-            TransitCurrency::BermudianDollar => write!(f, "Bermudian dollar"),
-            TransitCurrency::BruneiDollar => write!(f, "Brunei dollar"),
-            TransitCurrency::Boliviano => write!(f, "Boliviano"),
-            TransitCurrency::BolivianMvdol => write!(f, "Bolivian Mvdol"),
-            TransitCurrency::BrazilianReal => write!(f, "Brazilian real"),
-            TransitCurrency::BahamianDollar => write!(f, "Bahamian dollar"),
-            TransitCurrency::BhutaneseNgultrum => write!(f, "Bhutanese ngultrum"),
-            TransitCurrency::BotswanaPula => write!(f, "Botswana pula"),
-            TransitCurrency::BelarusianRuble => write!(f, "Belarusian ruble"),
-            TransitCurrency::BelizeDollar => write!(f, "Belize dollar"),
-            TransitCurrency::CanadianDollar => write!(f, "Canadian dollar"),
-            TransitCurrency::CongoleseFranc => write!(f, "Congolese franc"),
-            TransitCurrency::WirEuro => write!(f, "WIR Euro"),
-            TransitCurrency::SwissFranc => write!(f, "Swiss franc"),
-            TransitCurrency::WirFranc => write!(f, "WIR Franc"),
-            TransitCurrency::UnidadDeFomento => write!(f, "Unidad de Fomento"),
-            TransitCurrency::ChileanPeso => write!(f, "Chilean peso"),
-            TransitCurrency::RenminbiYuan => write!(f, "Renminbi yuan"),
-            TransitCurrency::ColombianPeso => write!(f, "Colombian peso"),
-            TransitCurrency::UnidadDeValorReal => write!(f, "Unidad de Valor Real"),
-            TransitCurrency::CostaRicanColon => write!(f, "Costa Rican colon"),
-            TransitCurrency::CubanConvertiblePeso => write!(f, "Cuban convertible peso"),
-            TransitCurrency::CubanPeso => write!(f, "Cuban peso"),
-            TransitCurrency::CapeVerdeanEscudo => write!(f, "Cape Verdean escudo"),
-            TransitCurrency::CzechKoruna => write!(f, "Czech koruna"),
-            TransitCurrency::DjiboutianFranc => write!(f, "Djiboutian franc"),
-            TransitCurrency::DanishKrone => write!(f, "Danish krone"),
-            TransitCurrency::DominicanPeso => write!(f, "Dominican peso"),
-            TransitCurrency::AlgerianDinar => write!(f, "Algerian dinar"),
-            TransitCurrency::EgyptianPound => write!(f, "Egyptian pound"),
-            TransitCurrency::EritreanNakfa => write!(f, "Eritrean nakfa"),
-            TransitCurrency::EthiopianBirr => write!(f, "Ethiopian birr"),
-            TransitCurrency::Euro => write!(f, "Euro"),
-            TransitCurrency::FijiDollar => write!(f, "Fiji dollar"),
-            TransitCurrency::FalklandIslandsPound => write!(f, "Falkland Islands pound"),
-            TransitCurrency::PoundSterling => write!(f, "Pound sterling"),
-            TransitCurrency::GeorgianLari => write!(f, "Georgian lari"),
-            TransitCurrency::GhanaianCedi => write!(f, "Ghanaian cedi"),
-            TransitCurrency::GibraltarPound => write!(f, "Gibraltar pound"),
-            TransitCurrency::GambianDalasi => write!(f, "Gambian dalasi"),
-            TransitCurrency::GuineanFranc => write!(f, "Guinean franc"),
-            TransitCurrency::GuatemalanQuetzal => write!(f, "Guatemalan quetzal"),
-            TransitCurrency::GuyaneseDollar => write!(f, "Guyanese dollar"),
-            TransitCurrency::HongKongDollar => write!(f, "Hong Kong dollar"),
-            TransitCurrency::HonduranLempira => write!(f, "Honduran lempira"),
-            TransitCurrency::CroatianKuna => write!(f, "Croatian kuna"),
-            TransitCurrency::HaitianGourde => write!(f, "Haitian gourde"),
-            TransitCurrency::HungarianForint => write!(f, "Hungarian forint"),
-            TransitCurrency::IndonesianRupiah => write!(f, "Indonesian rupiah"),
-            TransitCurrency::IsraeliNewShekel => write!(f, "Israeli new shekel"),
-            TransitCurrency::IndianRupee => write!(f, "Indian rupee"),
-            TransitCurrency::IraqiDinar => write!(f, "Iraqi dinar"),
-            TransitCurrency::IranianRial => write!(f, "Iranian rial"),
-            TransitCurrency::IcelandicKrona => write!(f, "Icelandic króna"),
-            TransitCurrency::JamaicanDollar => write!(f, "Jamaican dollar"),
-            TransitCurrency::JordanianDinar => write!(f, "Jordanian dinar"),
-            TransitCurrency::JapaneseYen => write!(f, "Japanese yen"),
-            TransitCurrency::KenyanShilling => write!(f, "Kenyan shilling"),
-            TransitCurrency::KyrgyzstaniSom => write!(f, "Kyrgyzstani som"),
-            TransitCurrency::CambodianRiel => write!(f, "Cambodian riel"),
-            TransitCurrency::ComoroFranc => write!(f, "Comoro franc"),
-            TransitCurrency::NorthKoreanWon => write!(f, "North Korean won"),
-            TransitCurrency::SouthKoreanWon => write!(f, "South Korean won"),
-            TransitCurrency::KuwaitiDinar => write!(f, "Kuwaiti dinar"),
-            TransitCurrency::CaymanIslandsDollar => write!(f, "Cayman Islands dollar"),
-            TransitCurrency::KazakhstaniTenge => write!(f, "Kazakhstani tenge"),
-            TransitCurrency::LaoKip => write!(f, "Lao kip"),
-            TransitCurrency::LebanesePound => write!(f, "Lebanese pound"),
-            TransitCurrency::SriLankanRupee => write!(f, "Sri Lankan rupee"),
-            TransitCurrency::LiberianDollar => write!(f, "Liberian dollar"),
-            TransitCurrency::LesothoLoti => write!(f, "Lesotho loti"),
-            TransitCurrency::LibyanDinar => write!(f, "Libyan dinar"),
-            TransitCurrency::MoroccanDirham => write!(f, "Moroccan dirham"),
-            TransitCurrency::MoldovanLeu => write!(f, "Moldovan leu"),
-            TransitCurrency::MalagasyAriary => write!(f, "Malagasy ariary"),
-            TransitCurrency::MacedonianDenar => write!(f, "Macedonian denar"),
-            TransitCurrency::MyanmarKyat => write!(f, "Myanmar kyat"),
-            TransitCurrency::MongolianTogrog => write!(f, "Mongolian tögrög"),
-            TransitCurrency::MacanesePataca => write!(f, "Macanese pataca"),
-            TransitCurrency::MauritanianOuguiya => write!(f, "Mauritanian ouguiya"),
-            TransitCurrency::MauritianRupee => write!(f, "Mauritian rupee"),
-            TransitCurrency::MaldivianRufiyaa => write!(f, "Maldivian rufiyaa"),
-            TransitCurrency::MalawianKwacha => write!(f, "Malawian kwacha"),
-            TransitCurrency::MexicanPeso => write!(f, "Mexican peso"),
-            TransitCurrency::MexicanUnidadDeInversion => write!(f, "Mexican Unidad de Inversion"),
-            TransitCurrency::MalaysianRinggit => write!(f, "Malaysian ringgit"),
-            TransitCurrency::MozambicanMetical => write!(f, "Mozambican metical"),
-            TransitCurrency::NamibianDollar => write!(f, "Namibian dollar"),
-            TransitCurrency::NigerianNaira => write!(f, "Nigerian naira"),
-            TransitCurrency::NicaraguanCordoba => write!(f, "Nicaraguan córdoba"),
-            TransitCurrency::NorwegianKrone => write!(f, "Norwegian krone"),
-            TransitCurrency::NepaleseRupee => write!(f, "Nepalese rupee"),
-            TransitCurrency::NewZealandDollar => write!(f, "New Zealand dollar"),
-            TransitCurrency::OmaniRial => write!(f, "Omani rial"),
-            TransitCurrency::PanamanianBalboa => write!(f, "Panamanian balboa"),
-            TransitCurrency::PeruvianSol => write!(f, "Peruvian sol"),
-            TransitCurrency::PapuaNewGuineanKina => write!(f, "Papua New Guinean kina"),
-            TransitCurrency::PhilippinePeso => write!(f, "Philippine peso"),
-            TransitCurrency::PakistaniRupee => write!(f, "Pakistani rupee"),
-            TransitCurrency::PolishZloty => write!(f, "Polish złoty"),
-            TransitCurrency::ParaguayanGuarani => write!(f, "Paraguayan guaraní"),
-            TransitCurrency::QatariRiyal => write!(f, "Qatari riyal"),
-            TransitCurrency::RomanianLeu => write!(f, "Romanian leu"),
-            TransitCurrency::SerbianDinar => write!(f, "Serbian dinar"),
-            TransitCurrency::RussianRuble => write!(f, "Russian ruble"),
-            TransitCurrency::RwandanFranc => write!(f, "Rwandan franc"),
-            TransitCurrency::SaudiRiyal => write!(f, "Saudi riyal"),
-            TransitCurrency::SolomonIslandsDollar => write!(f, "Solomon Islands dollar"),
-            TransitCurrency::SeychellesRupee => write!(f, "Seychelles rupee"),
-            TransitCurrency::SudanesePound => write!(f, "Sudanese pound"),
-            TransitCurrency::SwedishKrona => write!(f, "Swedish krona"),
-            TransitCurrency::SingaporeDollar => write!(f, "Singapore dollar"),
-            TransitCurrency::SaintHelenaPound => write!(f, "Saint Helena pound"),
-            TransitCurrency::SierraLeoneanLeone => write!(f, "Sierra Leonean leone"),
-            TransitCurrency::SomaliShilling => write!(f, "Somali shilling"),
-            TransitCurrency::SurinameseDollar => write!(f, "Surinamese dollar"),
-            TransitCurrency::SouthSudanesePound => write!(f, "South Sudanese pound"),
-            TransitCurrency::SaoTomeAndPrincipeDobra => write!(f, "São Tomé and Príncipe dobra"),
-            TransitCurrency::SalvadoranColon => write!(f, "Salvadoran colón"),
-            TransitCurrency::SyrianPound => write!(f, "Syrian pound"),
-            TransitCurrency::SwaziLilangeni => write!(f, "Swazi lilangeni"),
-            TransitCurrency::ThaiBaht => write!(f, "Thai baht"),
-            TransitCurrency::TajikistaniSomoni => write!(f, "Tajikistani somoni"),
-            TransitCurrency::TurkmenistanManat => write!(f, "Turkmenistan manat"),
-            TransitCurrency::TunisianDinar => write!(f, "Tunisian dinar"),
-            TransitCurrency::TonganPaanga => write!(f, "Tongan paʻanga"),
-            TransitCurrency::TurkishLira => write!(f, "Turkish lira"),
-            TransitCurrency::TrinidadAndTobagoDollar => write!(f, "Trinidad and Tobago dollar"),
-            TransitCurrency::NewTaiwanDollar => write!(f, "New Taiwan dollar"),
-            TransitCurrency::TanzanianShilling => write!(f, "Tanzanian shilling"),
-            TransitCurrency::UkrainianHryvnia => write!(f, "Ukrainian hryvnia"),
-            TransitCurrency::UgandanShilling => write!(f, "Ugandan shilling"),
-            TransitCurrency::UnitedStatesDollar => write!(f, "United States dollar"),
-            TransitCurrency::UnitedStatesDollarNextDay => write!(f, "United States dollar next day"),
-            TransitCurrency::UruguayPesoEnUnidadesIndexadas => write!(f, "Uruguay Peso en Unidades Indexadas"),
-            TransitCurrency::UruguayanPeso => write!(f, "Uruguayan peso"),
-            TransitCurrency::UnidadPrevisional => write!(f, "Unidad previsional"),
-            TransitCurrency::UzbekistanSom => write!(f, "Uzbekistan som"),
-            TransitCurrency::VenezuelanBolivarSoberano => write!(f, "Venezuelan bolívar soberano"),
-            TransitCurrency::VietnameseDong => write!(f, "Vietnamese đồng"),
-            TransitCurrency::VanuatuVatu => write!(f, "Vanuatu vatu"),
-            TransitCurrency::SamoanTala => write!(f, "Samoan tala"),
-            TransitCurrency::CfaFrancBeac => write!(f, "CFA franc BEAC"),
-            TransitCurrency::Silver => write!(f, "Silver"),
-            TransitCurrency::Gold => write!(f, "Gold"),
-            TransitCurrency::EuropeanCompositeUnit => write!(f, "European Composite Unit"),
-            TransitCurrency::EuropeanMonetaryUnit => write!(f, "European Monetary Unit"),
-            TransitCurrency::EuropeanUnitOfAccount9 => write!(f, "European Unit of Account 9"),
-            TransitCurrency::EuropeanUnitOfAccount17 => write!(f, "European Unit of Account 17"),
-            TransitCurrency::EastCaribbeanDollar => write!(f, "East Caribbean dollar"),
-            TransitCurrency::SpecialDrawingRights => write!(f, "Special drawing rights"),
-            TransitCurrency::CfaFrancBceao => write!(f, "CFA franc BCEAO"),
-            TransitCurrency::Palladium => write!(f, "Palladium"),
-            TransitCurrency::CfpFranc => write!(f, "CFP franc"),
-            TransitCurrency::Platinum => write!(f, "Platinum"),
-            TransitCurrency::Sucre => write!(f, "SUCRE"),
-            TransitCurrency::CodeReservedForTesting => write!(f, "Code reserved for testing"),
-            TransitCurrency::AdbUnitOfAccount => write!(f, "ADB Unit of Account"),
-            TransitCurrency::NoCurrency => write!(f, "No currency"),
-            TransitCurrency::YemeniRial => write!(f, "Yemeni rial"),
-            TransitCurrency::SouthAfricanRand => write!(f, "South African rand"),
-            TransitCurrency::ZambianKwacha => write!(f, "Zambian kwacha"),
-            TransitCurrency::ZimbabweanDollar => write!(f, "Zimbabwean dollar"),
+            TransitCurrency::UnitedArabEmiratesDirham => "United Arab Emirates dirham",
+            TransitCurrency::AfghanAfghani => "Afghan afghani",
+            TransitCurrency::AlbanianLek => "Albanian lek",
+            TransitCurrency::ArmenianDram => "Armenian dram",
+            TransitCurrency::NetherlandsAntilleanGuilder => "Netherlands Antillean guilder",
+            TransitCurrency::AngolanKwanza => "Angolan kwanza",
+            TransitCurrency::ArgentinePeso => "Argentine peso",
+            TransitCurrency::AustralianDollar => "Australian dollar",
+            TransitCurrency::ArubanFlorin => "Aruban florin",
+            TransitCurrency::AzerbaijaniManat => "Azerbaijani manat",
+            TransitCurrency::BosniaAndHerzegovinaConvertibleMark => "Bosnia and Herzegovina convertible mark",
+            TransitCurrency::BarbadosDollar => "Barbados dollar",
+            TransitCurrency::BangladeshiTaka => "Bangladeshi taka",
+            TransitCurrency::BulgarianLev => "Bulgarian lev",
+            TransitCurrency::BahrainiDinar => "Bahraini dinar",
+            TransitCurrency::BurundianFranc => "Burundian franc",
+            TransitCurrency::BermudianDollar => "Bermudian dollar",
+            TransitCurrency::BruneiDollar => "Brunei dollar",
+            TransitCurrency::Boliviano => "Boliviano",
+            TransitCurrency::BolivianMvdol => "Bolivian Mvdol",
+            TransitCurrency::BrazilianReal => "Brazilian real",
+            TransitCurrency::BahamianDollar => "Bahamian dollar",
+            TransitCurrency::BhutaneseNgultrum => "Bhutanese ngultrum",
+            TransitCurrency::BotswanaPula => "Botswana pula",
+            TransitCurrency::BelarusianRuble => "Belarusian ruble",
+            TransitCurrency::BelizeDollar => "Belize dollar",
+            TransitCurrency::CanadianDollar => "Canadian dollar",
+            TransitCurrency::CongoleseFranc => "Congolese franc",
+            TransitCurrency::WirEuro => "WIR Euro",
+            TransitCurrency::SwissFranc => "Swiss franc",
+            TransitCurrency::WirFranc => "WIR Franc",
+            TransitCurrency::UnidadDeFomento => "Unidad de Fomento",
+            TransitCurrency::ChileanPeso => "Chilean peso",
+            TransitCurrency::RenminbiYuan => "Renminbi yuan",
+            TransitCurrency::ColombianPeso => "Colombian peso",
+            TransitCurrency::UnidadDeValorReal => "Unidad de Valor Real",
+            TransitCurrency::CostaRicanColon => "Costa Rican colon",
+            TransitCurrency::CubanConvertiblePeso => "Cuban convertible peso",
+            TransitCurrency::CubanPeso => "Cuban peso",
+            TransitCurrency::CapeVerdeanEscudo => "Cape Verdean escudo",
+            TransitCurrency::CzechKoruna => "Czech koruna",
+            TransitCurrency::DjiboutianFranc => "Djiboutian franc",
+            TransitCurrency::DanishKrone => "Danish krone",
+            TransitCurrency::DominicanPeso => "Dominican peso",
+            TransitCurrency::AlgerianDinar => "Algerian dinar",
+            TransitCurrency::EgyptianPound => "Egyptian pound",
+            TransitCurrency::EritreanNakfa => "Eritrean nakfa",
+            TransitCurrency::EthiopianBirr => "Ethiopian birr",
+            TransitCurrency::Euro => "Euro",
+            TransitCurrency::FijiDollar => "Fiji dollar",
+            TransitCurrency::FalklandIslandsPound => "Falkland Islands pound",
+            TransitCurrency::PoundSterling => "Pound sterling",
+            TransitCurrency::GeorgianLari => "Georgian lari",
+            TransitCurrency::GhanaianCedi => "Ghanaian cedi",
+            TransitCurrency::GibraltarPound => "Gibraltar pound",
+            TransitCurrency::GambianDalasi => "Gambian dalasi",
+            TransitCurrency::GuineanFranc => "Guinean franc",
+            TransitCurrency::GuatemalanQuetzal => "Guatemalan quetzal",
+            TransitCurrency::GuyaneseDollar => "Guyanese dollar",
+            TransitCurrency::HongKongDollar => "Hong Kong dollar",
+            TransitCurrency::HonduranLempira => "Honduran lempira",
+            TransitCurrency::CroatianKuna => "Croatian kuna",
+            TransitCurrency::HaitianGourde => "Haitian gourde",
+            TransitCurrency::HungarianForint => "Hungarian forint",
+            TransitCurrency::IndonesianRupiah => "Indonesian rupiah",
+            TransitCurrency::IsraeliNewShekel => "Israeli new shekel",
+            TransitCurrency::IndianRupee => "Indian rupee",
+            TransitCurrency::IraqiDinar => "Iraqi dinar",
+            TransitCurrency::IranianRial => "Iranian rial",
+            TransitCurrency::IcelandicKrona => "Icelandic króna",
+            TransitCurrency::JamaicanDollar => "Jamaican dollar",
+            TransitCurrency::JordanianDinar => "Jordanian dinar",
+            TransitCurrency::JapaneseYen => "Japanese yen",
+            TransitCurrency::KenyanShilling => "Kenyan shilling",
+            TransitCurrency::KyrgyzstaniSom => "Kyrgyzstani som",
+            TransitCurrency::CambodianRiel => "Cambodian riel",
+            TransitCurrency::ComoroFranc => "Comoro franc",
+            TransitCurrency::NorthKoreanWon => "North Korean won",
+            TransitCurrency::SouthKoreanWon => "South Korean won",
+            TransitCurrency::KuwaitiDinar => "Kuwaiti dinar",
+            TransitCurrency::CaymanIslandsDollar => "Cayman Islands dollar",
+            TransitCurrency::KazakhstaniTenge => "Kazakhstani tenge",
+            TransitCurrency::LaoKip => "Lao kip",
+            TransitCurrency::LebanesePound => "Lebanese pound",
+            TransitCurrency::SriLankanRupee => "Sri Lankan rupee",
+            TransitCurrency::LiberianDollar => "Liberian dollar",
+            TransitCurrency::LesothoLoti => "Lesotho loti",
+            TransitCurrency::LibyanDinar => "Libyan dinar",
+            TransitCurrency::MoroccanDirham => "Moroccan dirham",
+            TransitCurrency::MoldovanLeu => "Moldovan leu",
+            TransitCurrency::MalagasyAriary => "Malagasy ariary",
+            TransitCurrency::MacedonianDenar => "Macedonian denar",
+            TransitCurrency::MyanmarKyat => "Myanmar kyat",
+            TransitCurrency::MongolianTogrog => "Mongolian tögrög",
+            TransitCurrency::MacanesePataca => "Macanese pataca",
+            TransitCurrency::MauritanianOuguiya => "Mauritanian ouguiya",
+            TransitCurrency::MauritianRupee => "Mauritian rupee",
+            TransitCurrency::MaldivianRufiyaa => "Maldivian rufiyaa",
+            TransitCurrency::MalawianKwacha => "Malawian kwacha",
+            TransitCurrency::MexicanPeso => "Mexican peso",
+            TransitCurrency::MexicanUnidadDeInversion => "Mexican Unidad de Inversion",
+            TransitCurrency::MalaysianRinggit => "Malaysian ringgit",
+            TransitCurrency::MozambicanMetical => "Mozambican metical",
+            TransitCurrency::NamibianDollar => "Namibian dollar",
+            TransitCurrency::NigerianNaira => "Nigerian naira",
+            TransitCurrency::NicaraguanCordoba => "Nicaraguan córdoba",
+            TransitCurrency::NorwegianKrone => "Norwegian krone",
+            TransitCurrency::NepaleseRupee => "Nepalese rupee",
+            TransitCurrency::NewZealandDollar => "New Zealand dollar",
+            TransitCurrency::OmaniRial => "Omani rial",
+            TransitCurrency::PanamanianBalboa => "Panamanian balboa",
+            TransitCurrency::PeruvianSol => "Peruvian sol",
+            TransitCurrency::PapuaNewGuineanKina => "Papua New Guinean kina",
+            TransitCurrency::PhilippinePeso => "Philippine peso",
+            TransitCurrency::PakistaniRupee => "Pakistani rupee",
+            TransitCurrency::PolishZloty => "Polish złoty",
+            TransitCurrency::ParaguayanGuarani => "Paraguayan guaraní",
+            TransitCurrency::QatariRiyal => "Qatari riyal",
+            TransitCurrency::RomanianLeu => "Romanian leu",
+            TransitCurrency::SerbianDinar => "Serbian dinar",
+            TransitCurrency::RussianRuble => "Russian ruble",
+            TransitCurrency::RwandanFranc => "Rwandan franc",
+            TransitCurrency::SaudiRiyal => "Saudi riyal",
+            TransitCurrency::SolomonIslandsDollar => "Solomon Islands dollar",
+            TransitCurrency::SeychellesRupee => "Seychelles rupee",
+            TransitCurrency::SudanesePound => "Sudanese pound",
+            TransitCurrency::SwedishKrona => "Swedish krona",
+            TransitCurrency::SingaporeDollar => "Singapore dollar",
+            TransitCurrency::SaintHelenaPound => "Saint Helena pound",
+            TransitCurrency::SierraLeoneanLeone => "Sierra Leonean leone",
+            TransitCurrency::SomaliShilling => "Somali shilling",
+            TransitCurrency::SurinameseDollar => "Surinamese dollar",
+            TransitCurrency::SouthSudanesePound => "South Sudanese pound",
+            TransitCurrency::SaoTomeAndPrincipeDobra => "São Tomé and Príncipe dobra",
+            TransitCurrency::SalvadoranColon => "Salvadoran colón",
+            TransitCurrency::SyrianPound => "Syrian pound",
+            TransitCurrency::SwaziLilangeni => "Swazi lilangeni",
+            TransitCurrency::ThaiBaht => "Thai baht",
+            TransitCurrency::TajikistaniSomoni => "Tajikistani somoni",
+            TransitCurrency::TurkmenistanManat => "Turkmenistan manat",
+            TransitCurrency::TunisianDinar => "Tunisian dinar",
+            TransitCurrency::TonganPaanga => "Tongan paʻanga",
+            TransitCurrency::TurkishLira => "Turkish lira",
+            TransitCurrency::TrinidadAndTobagoDollar => "Trinidad and Tobago dollar",
+            TransitCurrency::NewTaiwanDollar => "New Taiwan dollar",
+            TransitCurrency::TanzanianShilling => "Tanzanian shilling",
+            TransitCurrency::UkrainianHryvnia => "Ukrainian hryvnia",
+            TransitCurrency::UgandanShilling => "Ugandan shilling",
+            TransitCurrency::UnitedStatesDollar => "United States dollar",
+            TransitCurrency::UnitedStatesDollarNextDay => "United States dollar next day",
+            TransitCurrency::UruguayPesoEnUnidadesIndexadas => "Uruguay Peso en Unidades Indexadas",
+            TransitCurrency::UruguayanPeso => "Uruguayan peso",
+            TransitCurrency::UnidadPrevisional => "Unidad previsional",
+            TransitCurrency::UzbekistanSom => "Uzbekistan som",
+            TransitCurrency::VenezuelanBolivarSoberano => "Venezuelan bolívar soberano",
+            TransitCurrency::VietnameseDong => "Vietnamese đồng",
+            TransitCurrency::VanuatuVatu => "Vanuatu vatu",
+            TransitCurrency::SamoanTala => "Samoan tala",
+            TransitCurrency::CfaFrancBeac => "CFA franc BEAC",
+            TransitCurrency::Silver => "Silver",
+            TransitCurrency::Gold => "Gold",
+            TransitCurrency::EuropeanCompositeUnit => "European Composite Unit",
+            TransitCurrency::EuropeanMonetaryUnit => "European Monetary Unit",
+            TransitCurrency::EuropeanUnitOfAccount9 => "European Unit of Account 9",
+            TransitCurrency::EuropeanUnitOfAccount17 => "European Unit of Account 17",
+            TransitCurrency::EastCaribbeanDollar => "East Caribbean dollar",
+            TransitCurrency::SpecialDrawingRights => "Special drawing rights",
+            TransitCurrency::CfaFrancBceao => "CFA franc BCEAO",
+            TransitCurrency::Palladium => "Palladium",
+            TransitCurrency::CfpFranc => "CFP franc",
+            TransitCurrency::Platinum => "Platinum",
+            TransitCurrency::Sucre => "SUCRE",
+            TransitCurrency::CodeReservedForTesting => "Code reserved for testing",
+            TransitCurrency::AdbUnitOfAccount => "ADB Unit of Account",
+            TransitCurrency::NoCurrency => "No currency",
+            TransitCurrency::YemeniRial => "Yemeni rial",
+            TransitCurrency::SouthAfricanRand => "South African rand",
+            TransitCurrency::ZambianKwacha => "Zambian kwacha",
+            TransitCurrency::ZimbabweanDollar => "Zimbabwean dollar",
         } // match
     } // fn
 } // impl

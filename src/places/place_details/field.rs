@@ -4,7 +4,7 @@
 
 use crate::places::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize, Deserializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 // -----------------------------------------------------------------------------
 //
@@ -28,89 +28,51 @@ use serde::{Deserialize, Serialize, Deserializer};
 /// the fields that are unavailable in a Place Search request, see
 /// [Places API fields support](https://developers.google.com/maps/documentation/places/web-service/place-data-fields#places-api-fields-support).
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[repr(u8)]
 pub enum Field {
     // Basic
-    #[serde(alias = "address_component")]
-    AddressComponent,
-    #[serde(alias = "adr_address")]
-    AdrAddress,
-    #[serde(alias = "business_status")]
-    BusinessStatus,
-    #[serde(alias = "formatted_address")]
-    FormattedAddress,
-    #[serde(alias = "geometry")]
-    Geometry,
-    #[serde(alias = "icon")]
-    Icon,
-    #[serde(alias = "icon_mask_base_uri")]
-    IconMaskBaseUri,
-    #[serde(alias = "icon_background_color")]
-    IconBackgroundColor,
-    #[serde(alias = "name")]
-    Name,
-    #[serde(alias = "photo")]
-    Photo,
-    #[serde(alias = "place_id")]
-    PlaceId,
-    #[serde(alias = "plus_code")]
-    PlusCode,
-    #[serde(alias = "type")]
-    Type,
-    #[serde(alias = "url")]
-    Url,
-    #[serde(alias = "utc_offset")]
-    UtcOffset,
-    #[serde(alias = "vicinity")]
-    Vicinity,
-    #[serde(alias = "wheelchair_accessible_entrance")]
-    WheelchairAccessibleEntrance,
+    AddressComponent = 0,
+    AdrAddress = 1,
+    BusinessStatus = 2,
+    FormattedAddress = 3,
+    Geometry = 4,
+    Icon = 5,
+    IconMaskBaseUri = 6,
+    IconBackgroundColor = 8,
+    #[default] Name = 9,
+    Photo = 10,
+    PlaceId = 11,
+    PlusCode = 12,
+    Type = 13,
+    Url = 14,
+    UtcOffset = 15,
+    Vicinity = 16,
+    WheelchairAccessibleEntrance = 17,
     // Contact
-    #[serde(alias = "current_opening_hours")]
-    CurrentOpeningHours,
-    #[serde(alias = "formatted_phone_number")]
-    FormattedPhoneNumber,
-    #[serde(alias = "international_phone_number")]
-    InternationalPhoneNumber,
-    #[serde(alias = "opening_hours")]
-    OpeningHours,
-    #[serde(alias = "secondary_opening_hours")]
-    SecondaryOpeningHours,
-    #[serde(alias = "website")]
-    Website,
+    CurrentOpeningHours = 18,
+    FormattedPhoneNumber = 19,
+    InternationalPhoneNumber = 20,
+    OpeningHours = 21,
+    SecondaryOpeningHours = 22,
+    Website = 23,
     // Atmosphere
-    #[serde(alias = "curbside_pickup")]
-    CurbsidePickup,
-    #[serde(alias = "delivery")]
-    Delivery,
-    #[serde(alias = "dine_in")]
-    DineIn,
-    #[serde(alias = "editorial_summary")]
-    EditorialSummary,
-    #[serde(alias = "price_level")]
-    PriceLevel,
-    #[serde(alias = "rating")]
-    Rating,
-    #[serde(alias = "reservable")]
-    Reservable,
-    #[serde(alias = "reviews")]
-    Reviews,
-    #[serde(alias = "serves_beer")]
-    ServesBeer,
-    #[serde(alias = "serves_breakfast")]
-    ServesBreakfast,
-    #[serde(alias = "serves_brunch")]
-    ServesBrunch,
-    #[serde(alias = "serves_lunch")]
-    ServesLunch,
-    #[serde(alias = "serves_vegetarian_food")]
-    ServesVegetarianFood,
-    #[serde(alias = "serves_wine")]
-    ServesWine,
-    #[serde(alias = "takeout")]
-    Takeout,
-    #[serde(alias = "user_ratings_total")]
-    UserRatingsTotal,
+    CurbsidePickup = 24,
+    Delivery = 25,
+    DineIn = 26,
+    EditorialSummary = 27,
+    PriceLevel = 28,
+    Rating = 29,
+    Reservable = 30,
+    Reviews = 31,
+    ServesBeer = 32,
+    ServesBreakfast = 33,
+    ServesBrunch = 34,
+    ServesLunch = 35,
+    ServesVegetarianFood = 36,
+    ServesWine = 37,
+    Takeout = 38,
+    UserRatingsTotal = 39,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -129,55 +91,87 @@ impl<'de> Deserialize<'de> for Field {
 
 // -----------------------------------------------------------------------------
 
+impl Serialize for Field {
+    /// Manual implementation of `Serialize` for `serde`.
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where S: Serializer {
+        serializer.serialize_str(std::convert::Into::<&str>::into(self))
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<&Field> for &str {
+    /// Converts a `Field` enum to a `String` that contains a
+    /// [field](https://developers.google.com/maps/documentation/places/web-service/details#fields)
+    /// code.
+    fn from(field: &Field) -> Self {
+        match field {
+            // Basic
+            Field::AddressComponent => "address_component",
+            Field::AdrAddress => "adr_address",
+            Field::BusinessStatus => "business_status",
+            Field::FormattedAddress => "formatted_address",
+            Field::Geometry => "geometry",
+            Field::Icon => "icon",
+            Field::IconMaskBaseUri => "icon_mask_base_uri",
+            Field::IconBackgroundColor => "icon_background_color",
+            Field::Name => "name",
+            Field::Photo => "photo",
+            Field::PlaceId => "place_id",
+            Field::PlusCode => "plus_code",
+            Field::Type => "type",
+            Field::Url => "url",
+            Field::UtcOffset => "utc_offset",
+            Field::Vicinity => "vicinity",
+            Field::WheelchairAccessibleEntrance => "wheelchair_accessible_entrance",
+            // Contact
+            Field::CurrentOpeningHours => "current_opening_hours",
+            Field::FormattedPhoneNumber => "formatted_phone_number",
+            Field::InternationalPhoneNumber => "international_phone_number",
+            Field::OpeningHours => "opening_hours",
+            Field::SecondaryOpeningHours => "secondary_opening_hours",
+            Field::Website => "website",
+            // Atmosphere
+            Field::CurbsidePickup => "curbside_pickup",
+            Field::Delivery => "delivery",
+            Field::DineIn => "dine_in",
+            Field::EditorialSummary => "editorial_summary",
+            Field::PriceLevel => "price_level",
+            Field::Rating => "rating",
+            Field::Reservable => "reservable",
+            Field::Reviews => "reviews",
+            Field::ServesBeer => "serves_beer",
+            Field::ServesBreakfast => "serves_breakfast",
+            Field::ServesBrunch => "serves_brunch",
+            Field::ServesLunch => "serves_lunch",
+            Field::ServesVegetarianFood => "serves_vegetarian_food",
+            Field::ServesWine => "serves_wine",
+            Field::Takeout => "takeout",
+            Field::UserRatingsTotal => "user_ratings_total",
+        } // match
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::fmt::Display for Field {
+    /// Converts a `Field` enum to a `String` that contains a
+    /// [field](https://developers.google.com/maps/documentation/places/web-service/details#fields)
+    /// code.
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", std::convert::Into::<&str>::into(self))
+    } // fmt
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&Field> for String {
     /// Converts a `Field` enum to a `String` that contains a
     /// [field](https://developers.google.com/maps/documentation/places/web-service/details#fields)
     /// code.
-    fn from(field: &Field) -> String {
-        match field {
-            // Basic
-            Field::AddressComponent => String::from("address_component"),
-            Field::AdrAddress => String::from("adr_address"),
-            Field::BusinessStatus => String::from("business_status"),
-            Field::FormattedAddress => String::from("formatted_address"),
-            Field::Geometry => String::from("geometry"),
-            Field::Icon => String::from("icon"),
-            Field::IconMaskBaseUri => String::from("icon_mask_base_uri"),
-            Field::IconBackgroundColor => String::from("icon_background_color"),
-            Field::Name => String::from("name"),
-            Field::Photo => String::from("photo"),
-            Field::PlaceId => String::from("place_id"),
-            Field::PlusCode => String::from("plus_code"),
-            Field::Type => String::from("type"),
-            Field::Url => String::from("url"),
-            Field::UtcOffset => String::from("utc_offset"),
-            Field::Vicinity => String::from("vicinity"),
-            Field::WheelchairAccessibleEntrance => String::from("wheelchair_accessible_entrance"),
-            // Contact
-            Field::CurrentOpeningHours => String::from("current_opening_hours"),
-            Field::FormattedPhoneNumber => String::from("formatted_phone_number"),
-            Field::InternationalPhoneNumber => String::from("international_phone_number"),
-            Field::OpeningHours => String::from("opening_hours"),
-            Field::SecondaryOpeningHours => String::from("secondary_opening_hours"),
-            Field::Website => String::from("website"),
-            // Atmosphere
-            Field::CurbsidePickup => String::from("curbside_pickup"),
-            Field::Delivery => String::from("delivery"),
-            Field::DineIn => String::from("dine_in"),
-            Field::EditorialSummary => String::from("editorial_summary"),
-            Field::PriceLevel => String::from("price_level"),
-            Field::Rating => String::from("rating"),
-            Field::Reservable => String::from("reservable"),
-            Field::Reviews => String::from("reviews"),
-            Field::ServesBeer => String::from("serves_beer"),
-            Field::ServesBreakfast => String::from("serves_breakfast"),
-            Field::ServesBrunch => String::from("serves_brunch"),
-            Field::ServesLunch => String::from("serves_lunch"),
-            Field::ServesVegetarianFood => String::from("serves_vegetarian_food"),
-            Field::ServesWine => String::from("serves_wine"),
-            Field::Takeout => String::from("takeout"),
-            Field::UserRatingsTotal => String::from("user_ratings_total"),
-        } // match
+    fn from(field: &Field) -> Self {
+        std::convert::Into::<&str>::into(field).to_string()
     } // fn
 } // impl
 
@@ -228,6 +222,8 @@ static FIELD_TYPES_BY_CODE: phf::Map<&'static str, Field> = phf_map! {
     "user_ratings_total" => Field::UserRatingsTotal,
 };
 
+// -----------------------------------------------------------------------------
+
 impl std::convert::TryFrom<&str> for Field {
     // Error definitions are contained in the `google_maps\src\places\error.rs` module.
     type Error = crate::places::error::Error;
@@ -241,6 +237,8 @@ impl std::convert::TryFrom<&str> for Field {
             .ok_or_else(|| Error::InvalidFieldCode(field_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::str::FromStr for Field {
     // Error definitions are contained in the `google_maps\src\places\error.rs` module.
@@ -258,61 +256,52 @@ impl std::str::FromStr for Field {
 
 // -----------------------------------------------------------------------------
 
-impl std::default::Default for Field {
-    /// Returns a reasonable default variant for the `Field` enum type.
-    fn default() -> Self {
-        Field::Name
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl std::fmt::Display for Field {
+impl Field {
     /// Formats a `Field` enum into a string that is presentable to the end
     /// user.
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    pub fn display(&self) -> &str {
         match self {
-            Field::AddressComponent => write!(f, "Address Component"),
-            Field::AdrAddress => write!(f, "adr Address"),
-            Field::BusinessStatus => write!(f, "Business Status"),
-            Field::FormattedAddress => write!(f, "Formatted Address"),
-            Field::Geometry => write!(f, "Geometry"),
-            Field::Icon => write!(f, "Icon"),
-            Field::IconMaskBaseUri => write!(f, "Icon Mask Base URI"),
-            Field::IconBackgroundColor => write!(f, "Icon Background Color"),
-            Field::Name => write!(f, "Name"),
-            Field::Photo => write!(f, "Photo"),
-            Field::PlaceId => write!(f, "Place ID"),
-            Field::PlusCode => write!(f, "Plus Code"),
-            Field::Type => write!(f, "Type"),
-            Field::Url => write!(f, "URL"),
-            Field::UtcOffset => write!(f, "UTC Offset"),
-            Field::Vicinity => write!(f, "Vicinity"),
-            Field::WheelchairAccessibleEntrance => write!(f, "Wheelchair Accessible Entrance"),
+            Field::AddressComponent => "Address Component",
+            Field::AdrAddress => "adr Address",
+            Field::BusinessStatus => "Business Status",
+            Field::FormattedAddress => "Formatted Address",
+            Field::Geometry => "Geometry",
+            Field::Icon => "Icon",
+            Field::IconMaskBaseUri => "Icon Mask Base URI",
+            Field::IconBackgroundColor => "Icon Background Color",
+            Field::Name => "Name",
+            Field::Photo => "Photo",
+            Field::PlaceId => "Place ID",
+            Field::PlusCode => "Plus Code",
+            Field::Type => "Type",
+            Field::Url => "URL",
+            Field::UtcOffset => "UTC Offset",
+            Field::Vicinity => "Vicinity",
+            Field::WheelchairAccessibleEntrance => "Wheelchair Accessible Entrance",
             // Contact
-            Field::CurrentOpeningHours => write!(f, "Current Opening Hours"),
-            Field::FormattedPhoneNumber => write!(f, "Formatted Phone Number"),
-            Field::InternationalPhoneNumber => write!(f, "International Phone Number"),
-            Field::OpeningHours => write!(f, "Opening Hours"),
-            Field::SecondaryOpeningHours => write!(f, "Secondary Opening Hours"),
-            Field::Website => write!(f, "Website"),
+            Field::CurrentOpeningHours => "Current Opening Hours",
+            Field::FormattedPhoneNumber => "Formatted Phone Number",
+            Field::InternationalPhoneNumber => "International Phone Number",
+            Field::OpeningHours => "Opening Hours",
+            Field::SecondaryOpeningHours => "Secondary Opening Hours",
+            Field::Website => "Website",
             // Atmosphere
-            Field::CurbsidePickup => write!(f, "Curbside Pickup"),
-            Field::Delivery => write!(f, "Delivery"),
-            Field::DineIn => write!(f, "Dine In"),
-            Field::EditorialSummary => write!(f, "Editorial Summary"),
-            Field::PriceLevel => write!(f, "Price Level"),
-            Field::Rating => write!(f, "Rating"),
-            Field::Reservable => write!(f, "Reservable"),
-            Field::Reviews => write!(f, "Reviews"),
-            Field::ServesBeer => write!(f, "Serves Beer"),
-            Field::ServesBreakfast => write!(f, "Serves Breakfast"),
-            Field::ServesBrunch => write!(f, "Serves Brunch"),
-            Field::ServesLunch => write!(f, "Serves Lunch"),
-            Field::ServesVegetarianFood => write!(f, "Serves Vegetarian Food"),
-            Field::ServesWine => write!(f, "Serves Wine"),
-            Field::Takeout => write!(f, "Takeout"),
-            Field::UserRatingsTotal => write!(f, "User Ratings Total"),
+            Field::CurbsidePickup => "Curbside Pickup",
+            Field::Delivery => "Delivery",
+            Field::DineIn => "Dine In",
+            Field::EditorialSummary => "Editorial Summary",
+            Field::PriceLevel => "Price Level",
+            Field::Rating => "Rating",
+            Field::Reservable => "Reservable",
+            Field::Reviews => "Reviews",
+            Field::ServesBeer => "Serves Beer",
+            Field::ServesBreakfast => "Serves Breakfast",
+            Field::ServesBrunch => "Serves Brunch",
+            Field::ServesLunch => "Serves Lunch",
+            Field::ServesVegetarianFood => "Serves Vegetarian Food",
+            Field::ServesWine => "Serves Wine",
+            Field::Takeout => "Takeout",
+            Field::UserRatingsTotal => "User Ratings Total",
         } // match
     } // fn
 } // impl

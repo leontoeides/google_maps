@@ -1,21 +1,13 @@
 # Change Log
 
-* 3.2.0: 2023-05-31: ⚠ **Breaking change**: All `GoogleMapsClient` methods will
-now return the same error type. Previously, each API would return a different
-error type. This would be tedious when using several different APIs.
-
-* 3.2.0: 2023-05-31: Adjusted `tracing` log levels.
-
-* 3.2.0: 2023-05-31: Some house-keeping.
-
-* 3.2.0: 2023-05-30: ⚠ **Breaking change**: `google_maps` types will now
+* 3.2.0: 2023-06-01: ⚠ **Breaking change**: `google_maps` types will now
 round-trip through strings.
 
-	This crate previously "took advantage" of the `String::from` and
+	This crate previously “took advantage” of the `String::from` and
 	`ToString` traits being able to have different outputs. However, this
 	clever setup did not play nice with other crates.
 
-	This is a "breaking change" because the `Display` and `ToString` traits
+	This is a “breaking change” because the `Display` and `ToString` traits
 	both now have different outputs compared to previous versions:
 
 	* Previously: `println!("{}", Language::ChineseHongKong)` would result
@@ -27,8 +19,16 @@ round-trip through strings.
 	* Now, to see the `Chinese (Hong Kong)` name, use the `display` method.
 	For example: `println!("{}", Language::ChineseHongKong.display())`
 
-	This update applies to all `google_maps` crate types, including
+	This update applies to all `google_maps` crate `enum` types, including
 	`Country`, `PlaceType`, and so on.
+
+* 3.2.0: 2023-05-31: ⚠ **Breaking change**: All `GoogleMapsClient` methods will
+now return the same error type. Previously, each API would return a different
+error type. This would be tedious when using several different APIs.
+
+* 3.2.0: 2023-05-31: Adjusted `tracing` log levels.
+
+* 3.2.0: 2023-05-31: Some house-keeping.
 
 * 3.1.1: 2023-01-29: Update to Chinese languages.
 Thanks [rick68](https://github.com/rick68)!

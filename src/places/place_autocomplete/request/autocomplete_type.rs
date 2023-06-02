@@ -5,7 +5,7 @@
 
 use crate::places::place_autocomplete::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize, Deserializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 // -----------------------------------------------------------------------------
 
@@ -18,24 +18,22 @@ use serde::{Deserialize, Serialize, Deserializer};
 /// mix the geocode and establishment types, but note that this will have the
 /// same effect as specifying no types.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[repr(u8)]
 pub enum AutocompleteType {
     /// Instructs the Place Autocomplete service to return only geocoding
     /// results, rather than business results. Generally, you use this request
     /// to disambiguate results where the location specified may be
     /// indeterminate.
-    #[serde(alias = "geocode")]
-    Geocode,
+    Geocode = 0,
     /// Instructs the Place Autocomplete service to return only geocoding
     /// results with a precise address. Generally, you use this request when you
     /// know the user will be looking for a fully specified address.
     /// indeterminate.
-    #[serde(alias = "address")]
-    Address,
+    #[default] Address = 1,
     /// Instructs the Place Autocomplete service to return only business
     /// results.
-    #[serde(alias = "establishment")]
-    Establishment,
+    Establishment = 2,
     /// Type collection instructs the Places service to return any result
     /// matching the following types:
     /// * `locality`
@@ -44,12 +42,10 @@ pub enum AutocompleteType {
     /// * `country`
     /// * `administrative_area_level_1`
     /// * `administrative_area_level_2`
-    #[serde(alias = "(regions)")]
-    Regions,
+    Regions = 3,
     /// Type collection instructs the Places service to return results that
     /// match `locality` or `administrative_area_level_3`.
-    #[serde(alias = "(cities)")]
-    Cities,
+    Cities = 4,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -68,19 +64,53 @@ impl<'de> Deserialize<'de> for AutocompleteType {
 
 // -----------------------------------------------------------------------------
 
+impl Serialize for AutocompleteType {
+    /// Manual implementation of `Serialize` for `serde`.
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where S: Serializer {
+        serializer.serialize_str(std::convert::Into::<&str>::into(self))
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<&AutocompleteType> for &str {
+    /// Converts a `AutocompleteType` enum to a `String` that contains a
+    /// [autocomplete
+    /// type](https://developers.google.com/maps/documentation/places/web-service/autocomplete#types)
+    /// code.
+    fn from(autocomplete_type: &AutocompleteType) -> Self {
+        match autocomplete_type {
+            AutocompleteType::Geocode => "geocode",
+            AutocompleteType::Address => "address",
+            AutocompleteType::Establishment => "establishment",
+            AutocompleteType::Regions => "(regions)",
+            AutocompleteType::Cities => "(cities)",
+        } // match
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::fmt::Display for AutocompleteType {
+    /// Converts a `AutocompleteType` enum to a `String` that contains a
+    /// [autocomplete
+    /// type](https://developers.google.com/maps/documentation/places/web-service/autocomplete#types)
+    /// code.
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", std::convert::Into::<&str>::into(self))
+    } // fmt
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&AutocompleteType> for String {
     /// Converts a `AutocompleteType` enum to a `String` that contains a
     /// [autocomplete
     /// type](https://developers.google.com/maps/documentation/places/web-service/autocomplete#types)
     /// code.
-    fn from(autocomplete_type: &AutocompleteType) -> String {
-        match autocomplete_type {
-            AutocompleteType::Geocode => String::from("geocode"),
-            AutocompleteType::Address => String::from("address"),
-            AutocompleteType::Establishment => String::from("establishment"),
-            AutocompleteType::Regions => String::from("(regions)"),
-            AutocompleteType::Cities => String::from("(cities)"),
-        } // match
+    fn from(autocomplete_type: &AutocompleteType) -> Self {
+        std::convert::Into::<&str>::into(autocomplete_type).to_string()
     } // fn
 } // impl
 
@@ -95,6 +125,8 @@ static AUTOCOMPLETE_TYPES_BY_CODE: phf::Map<&'static str, AutocompleteType> = ph
     "(cities)" => AutocompleteType::Cities,
     "cities" => AutocompleteType::Cities,
 };
+
+// -----------------------------------------------------------------------------
 
 impl std::convert::TryFrom<&str> for AutocompleteType {
     // Error definitions are contained in the
@@ -111,6 +143,8 @@ impl std::convert::TryFrom<&str> for AutocompleteType {
             .ok_or_else(|| Error::InvalidAutocompleteType(autocomplete_code.to_string()))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::str::FromStr for AutocompleteType {
     // Error definitions are contained in the
@@ -130,26 +164,16 @@ impl std::str::FromStr for AutocompleteType {
 
 // -----------------------------------------------------------------------------
 
-impl std::default::Default for AutocompleteType {
-    /// Returns a reasonable default variant for the `AutocompleteType` enum
-    /// type.
-    fn default() -> Self {
-        AutocompleteType::Address
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl std::fmt::Display for AutocompleteType {
+impl AutocompleteType {
     /// Formats a `AutocompleteType` enum into a string that is presentable to
     /// the end user.
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    pub fn display(&self) -> &str {
         match self {
-            AutocompleteType::Geocode => write!(f, "Geocode"),
-            AutocompleteType::Address => write!(f, "Address"),
-            AutocompleteType::Establishment => write!(f, "Establishment"),
-            AutocompleteType::Regions => write!(f, "Regions"),
-            AutocompleteType::Cities => write!(f, "Cities"),
+            AutocompleteType::Geocode => "Geocode",
+            AutocompleteType::Address => "Address",
+            AutocompleteType::Establishment => "Establishment",
+            AutocompleteType::Regions => "Regions",
+            AutocompleteType::Cities => "Cities",
         } // match
     } // fn
 } // impl

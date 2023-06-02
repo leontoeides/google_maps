@@ -365,9 +365,9 @@
 
 mod client;
 mod serde;
-mod types;
 pub mod error;
 pub mod prelude;
+pub mod types;
 
 // Optional Google Maps API modules. Their inclusion can be changed with
 // feature flags:
