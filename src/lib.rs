@@ -31,7 +31,8 @@
 //!     * Optionally, add `rust_decimal = "1"` and `rust_decimal_macros = "1"`
 //!         for access to the `dec!` macro. This macro can be used to define
 //!         decimal numbers in your program. This is useful for efficiently
-//!         hard-coding latitudes and longitudes in your code.
+//!         hard-coding latitudes and longitudes into your code for development
+//!         and testing.
 //!
 //! * The full documentation is available at [docs.rs](https://docs.rs/google_maps/)
 //!

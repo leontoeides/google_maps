@@ -25,6 +25,12 @@ to give back to the Rust community. I hope it saves someone out there some work.
 		[crates.io](https://crates.io/crates/google_maps) for the latest
 		version number.
 
+	* Optionally, add `rust_decimal = "1"` and `rust_decimal_macros = "1"`
+		for access to the `dec!` macro. This macro can be used to define
+		decimal numbers in your program. This is useful for efficiently
+		hard-coding latitudes and longitudes into your code for development
+		and testing.
+
 * The full documentation is available at [docs.rs](https://docs.rs/google_maps/)
 
 # What's new?
