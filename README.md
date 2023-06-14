@@ -35,6 +35,11 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 # What's new?
 
+* 3.2.1: 2023-06-13: By default, `google_maps` will now use the `rust_decimal`
+crate's `serde` feature. To switch back to the explicit `serde-float` format,
+use the `google_maps` crate's `decimal-serde-float` feature. Thanks for the
+contribution, [popen2](https://github.com/popen2)!
+
 * 3.2.0: 2023-06-01: ⚠ **Breaking change**: `google_maps` types will now
 round-trip through strings.
 
@@ -398,6 +403,9 @@ default = [
 	"enable-reqwest",
 	"reqwest/default-tls",
 	"reqwest/gzip",
+
+	# rust_decimal features:
+	"rust_decimal/serde"
 ]
 ```
 

@@ -1,6 +1,6 @@
 [package]
 name = "google_maps"
-version = "3.2.0"
+version = "3.2.1"
 authors = [ "Dylan Bowker <dylan.bowker@arkiteq.ca>" ]
 edition = "2021"
 categories = [ "api-bindings" ]
@@ -28,6 +28,7 @@ default = [
 	"enable-reqwest",
 	"reqwest/default-tls",
 	"reqwest/gzip",
+	"rust_decimal/serde",
 ]
 # Google Maps Client API features:
 autocomplete = []
@@ -45,6 +46,14 @@ brotli = [ "reqwest/brotli" ]
 gzip = [ "reqwest/gzip" ]
 native-tls = [ "reqwest/default-tls" ]
 rustls = [ "reqwest/rustls-tls" ]
+# Rust Decimal features:
+decimal-serde = [ "rust_decimal/serde" ]
+decimal-serde-float = [ "rust_decimal/serde-float" ]
+decimal-serde-str = [ "rust_decimal/serde-str" ]
+decimal-serde-arbitrary-precision = [ "rust_decimal/serde-arbitrary-precision" ]
+decimal-serde-with-float = [ "rust_decimal/serde-with-float" ]
+decimal-serde-with-str = [ "rust_decimal/serde-with-arbitrary-precision" ]
+decimal-serde-with-arbitrary-precision = [ "rust_decimal/serde-with-arbitrary-precision" ]
 
 [dependencies]
 backoff = { version = "0.4", optional = true, features = [ "futures", "tokio" ] }
@@ -52,11 +61,11 @@ chrono = { version = "0.4", optional = true, features = [ "serde" ] }
 chrono-tz = { version = "0.8", optional = true, features = [ "serde" ] }
 futures = { version = "0.3", optional = true }
 geo-types = { version = "0.7", optional = true, features = [ "serde" ] }
-miette = "5.9"
-percent-encoding = "2.2"
+miette = "5"
+percent-encoding = "2.3"
 phf = { version = "0.11", features = [ "macros" ] }
 reqwest = { version = "0.11", optional = true, default-features = false }
-rust_decimal = {version = "1", features = [ "serde" ] }
+rust_decimal = { version = "1", features = [ "serde" ] }
 rust_decimal_macros = "1"
 serde = { version = "1.0", features = [ "derive" ] }
 serde_json = "1.0"
