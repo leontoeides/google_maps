@@ -3,6 +3,11 @@
 * 3.2.2: 2023-06-16: `time 0.1` dependency was removed using `chrono` feature
 flags. Thanks for the contribution, [popen2](https://github.com/popen2)!
 
+* 3.2.2: 2023-06-16: More streamlining of crate's `Error` types. Not expected to
+have much impact to end-users.
+
+* 3.2.2: 2023-06-16: Fixes for `geo` feature.
+
 * 3.2.1: 2023-06-13: By default, `google_maps` will now use the `rust_decimal`
 crate's `serde` feature. To switch back to the explicit `serde-float` format,
 use the `google_maps` crate's `decimal-serde-float` feature. Thanks for the
