@@ -2,7 +2,7 @@
 //! [geo](https://crates.io/crates/geo) crate.
 
 use crate::{Bounds, LatLng};
-use geo_types::geometry::{Coordinate, Polygon, Rect};
+use geo_types::geometry::{Coord, Polygon, Rect};
 
 // -----------------------------------------------------------------------------
 
@@ -15,8 +15,8 @@ impl TryFrom<&Rect> for Bounds {
     /// `google_maps::Bounds` struct.
     fn try_from(rect: &Rect) -> Result<Self, Self::Error> {
 
-        let min_coordinate: Coordinate = rect.min();
-        let max_coordinate: Coordinate = rect.max();
+        let min_coordinate: Coord = rect.min();
+        let max_coordinate: Coord = rect.max();
 
         let southwest: LatLng = LatLng::try_from_f64(max_coordinate.y, min_coordinate.x)?;
         let northeast: LatLng = LatLng::try_from_f64(min_coordinate.y, max_coordinate.x)?;
@@ -38,8 +38,8 @@ impl TryFrom<&Bounds> for Rect {
     /// `geo_types::geometry::Rect` struct.
     fn try_from(bounds: &Bounds) -> Result<Self, Self::Error> {
 
-        let c1: Coordinate = Coordinate::try_from(&bounds.southwest)?;
-        let c2: Coordinate = Coordinate::try_from(&bounds.northeast)?;
+        let c1: Coord = Coord::try_from(&bounds.southwest)?;
+        let c2: Coord = Coord::try_from(&bounds.northeast)?;
 
         Ok(Rect::new(c1, c2))
 

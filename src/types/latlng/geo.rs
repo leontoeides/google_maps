@@ -1,26 +1,26 @@
 //! Provides some `LatLng` conversion `TryFrom` traits for the
 //! [geo](https://crates.io/crates/geo) crate.
 
-use crate::{error::Error, LatLng};
-use geo_types::geometry::{Coordinate, Point};
+use crate::{error::Error as GoogleMapsError, LatLng, types::Error as TypesError};
+use geo_types::geometry::{Coord, Point};
 use rust_decimal::{Decimal, prelude::FromPrimitive, prelude::ToPrimitive};
 
 // -----------------------------------------------------------------------------
 
-impl TryFrom<&Coordinate> for LatLng {
+impl TryFrom<&Coord> for LatLng {
 
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Error = crate::error::Error;
+    type Error = GoogleMapsError;
 
-    /// Attempts to convert a `geo_types::geometry::Coordinate` struct to a
+    /// Attempts to convert a `geo_types::geometry::Coord` struct to a
     /// `google_maps::LatLng` struct.
-    fn try_from(coordinate: &Coordinate) -> Result<Self, Self::Error> {
+    fn try_from(coordinate: &Coord) -> Result<Self, Self::Error> {
 
         let lat: Decimal = Decimal::from_f64(coordinate.y)
-            .ok_or_else(|| Error::FloatToDecimalConversionError(coordinate.y.to_string()))?;
+            .ok_or_else(|| TypesError::FloatToDecimalConversionError(coordinate.y.to_string()))?;
 
         let lng: Decimal = Decimal::from_f64(coordinate.x)
-            .ok_or_else(|| Error::FloatToDecimalConversionError(coordinate.x.to_string()))?;
+            .ok_or_else(|| TypesError::FloatToDecimalConversionError(coordinate.x.to_string()))?;
 
         LatLng::try_from_dec(lat, lng)
 
@@ -30,22 +30,22 @@ impl TryFrom<&Coordinate> for LatLng {
 
 // -----------------------------------------------------------------------------
 
-impl TryFrom<&LatLng> for Coordinate {
+impl TryFrom<&LatLng> for Coord {
 
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Error = crate::error::Error;
+    type Error = GoogleMapsError;
 
     /// Attempts to convert a `google_maps::LatLng` struct to a
-    /// `geo_types::geometry::Coordinate` struct.
+    /// `geo_types::geometry::Coord` struct.
     fn try_from(lat_lng: &LatLng) -> Result<Self, Self::Error> {
 
         let x: f64 = lat_lng.lng.to_f64()
-            .ok_or(Error::InvalidLongitude(lat_lng.lat, lat_lng.lng))?;
+            .ok_or(TypesError::InvalidLongitude(lat_lng.lat, lat_lng.lng))?;
 
         let y: f64 = lat_lng.lat.to_f64()
-            .ok_or(Error::InvalidLatitude(lat_lng.lat, lat_lng.lng))?;
+            .ok_or(TypesError::InvalidLatitude(lat_lng.lat, lat_lng.lng))?;
 
-        Ok(Coordinate { x, y })
+        Ok(Coord { x, y })
 
     } // fn
 
@@ -56,17 +56,17 @@ impl TryFrom<&LatLng> for Coordinate {
 impl TryFrom<&Point> for LatLng {
 
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Error = crate::error::Error;
+    type Error = GoogleMapsError;
 
     /// Attempts to convert a `geo_types::geometry::Point` struct to a
     /// `google_maps::LatLng` struct.
     fn try_from(point: &Point) -> Result<Self, Self::Error> {
 
         let lat: Decimal = Decimal::from_f64(point.y())
-            .ok_or_else(|| Error::FloatToDecimalConversionError(point.y().to_string()))?;
+            .ok_or_else(|| TypesError::FloatToDecimalConversionError(point.y().to_string()))?;
 
         let lng: Decimal = Decimal::from_f64(point.x())
-            .ok_or_else(|| Error::FloatToDecimalConversionError(point.x().to_string()))?;
+            .ok_or_else(|| TypesError::FloatToDecimalConversionError(point.x().to_string()))?;
 
         LatLng::try_from_dec(lat, lng)
 
@@ -79,17 +79,17 @@ impl TryFrom<&Point> for LatLng {
 impl TryFrom<&LatLng> for Point {
 
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Error = crate::error::Error;
+    type Error = GoogleMapsError;
 
     /// Attempts to convert a `google_maps::LatLng` struct to a
     /// `geo_types::geometry::Point` struct.
     fn try_from(lat_lng: &LatLng) -> Result<Self, Self::Error> {
 
         let x: f64 = lat_lng.lng.to_f64()
-            .ok_or(Error::InvalidLongitude(lat_lng.lat, lat_lng.lng))?;
+            .ok_or(TypesError::InvalidLongitude(lat_lng.lat, lat_lng.lng))?;
 
         let y: f64 = lat_lng.lat.to_f64()
-            .ok_or(Error::InvalidLatitude(lat_lng.lat, lat_lng.lng))?;
+            .ok_or(TypesError::InvalidLatitude(lat_lng.lat, lat_lng.lng))?;
 
         Ok(Point::new(x, y))
 

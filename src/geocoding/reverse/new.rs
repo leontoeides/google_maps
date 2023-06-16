@@ -44,18 +44,18 @@ impl<'a> ReverseRequest<'a> {
     ///
     /// This function is the same as `new` but it supports
     /// the [geo](https://crates.io/crates/geo) crate's
-    /// [Coordinate](https://docs.rs/geo/latest/geo/geometry/struct.Coordinate.html) type.
+    /// [Coord](https://docs.rs/geo/latest/geo/geometry/struct.Coord.html) type.
     ///
     /// # Arguments:
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
-    /// * `coordinate` ‧ The `Coordinate` specifying the location for which you
+    /// * `coordinate` ‧ The `Coord` specifying the location for which you
     /// wish to obtain the closest, human-readable address.
 
     #[cfg(feature = "geo")]
     pub fn try_new_coordinate(
         client: &'a GoogleMapsClient,
-        coordinate: &geo_types::Coordinate,
+        coordinate: &geo_types::Coord,
     ) -> Result<ReverseRequest<'a>, crate::error::Error> {
 
         // Instantiate struct and return it to caller:

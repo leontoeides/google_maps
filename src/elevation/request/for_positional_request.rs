@@ -71,17 +71,17 @@ impl<'a> Request<'a> {
     ///
     /// This function is the same as `for_positional_request` but it supports
     /// the [geo](https://crates.io/crates/geo) crate's
-    /// [Coordinate](https://docs.rs/geo/latest/geo/geometry/struct.Coordinate.html) type.
+    /// [Coord](https://docs.rs/geo/latest/geo/geometry/struct.Coord.html) type.
     ///
     /// ## Arguments:
     ///
     /// * `coordinate` ‧ Defines the location on the earth from which to
-    /// return elevation data. This parameter takes a single `Coordinate`.
+    /// return elevation data. This parameter takes a single `Coord`.
 
     #[cfg(feature = "geo")]
     pub fn for_coordinate_request(
         &'a mut self,
-        coordinate: &geo_types::Coordinate,
+        coordinate: &geo_types::Coord,
     ) -> Result<&'a mut Request, crate::error::Error> {
         // Set the path in Request struct.
         self.locations = Some(Locations::LatLngs(vec![LatLng::try_from(coordinate)?]));

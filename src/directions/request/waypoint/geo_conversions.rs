@@ -2,27 +2,28 @@
 //! [geo](https://crates.io/crates/geo) crate.
 
 use crate::directions::Waypoint;
-use crate::error::Error;
+use crate::error::Error as GoogleMapsError;
+use crate::types::error::Error as TypesError;
 use crate::LatLng;
-use geo_types::geometry::{Coordinate, Point};
+use geo_types::geometry::{Coord, Point};
 use rust_decimal::{Decimal, prelude::FromPrimitive};
 
 // -----------------------------------------------------------------------------
 
-impl TryFrom<&Coordinate> for Waypoint {
+impl TryFrom<&Coord> for Waypoint {
 
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Error = crate::error::Error;
+    type Error = GoogleMapsError;
 
-    /// Attempts to convert a `geo_types::geometry::Coordinate` struct to a
+    /// Attempts to convert a `geo_types::geometry::Coord` struct to a
     /// `google_maps::directions::Waypoint` struct.
-    fn try_from(coordinate: &Coordinate) -> Result<Self, Self::Error> {
+    fn try_from(coordinate: &Coord) -> Result<Self, Self::Error> {
 
         let lat: Decimal = Decimal::from_f64(coordinate.y)
-            .ok_or_else(|| Error::FloatToDecimalConversionError(coordinate.y.to_string()))?;
+            .ok_or_else(|| TypesError::FloatToDecimalConversionError(coordinate.y.to_string()))?;
 
         let lng: Decimal = Decimal::from_f64(coordinate.x)
-            .ok_or_else(|| Error::FloatToDecimalConversionError(coordinate.x.to_string()))?;
+            .ok_or_else(|| TypesError::FloatToDecimalConversionError(coordinate.x.to_string()))?;
 
         let lat_lng: LatLng = LatLng::try_from_dec(lat, lng)?;
 
@@ -37,17 +38,17 @@ impl TryFrom<&Coordinate> for Waypoint {
 impl TryFrom<&Point> for Waypoint {
 
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Error = crate::error::Error;
+    type Error = GoogleMapsError;
 
     /// Attempts to convert a `geo_types::geometry::Point` struct to a
     /// `google_maps::directions::Waypoint` struct.
     fn try_from(point: &Point) -> Result<Self, Self::Error> {
 
         let lat: Decimal = Decimal::from_f64(point.y())
-            .ok_or_else(|| Error::FloatToDecimalConversionError(point.y().to_string()))?;
+            .ok_or_else(|| TypesError::FloatToDecimalConversionError(point.y().to_string()))?;
 
         let lng: Decimal = Decimal::from_f64(point.x())
-            .ok_or_else(|| Error::FloatToDecimalConversionError(point.x().to_string()))?;
+            .ok_or_else(|| TypesError::FloatToDecimalConversionError(point.x().to_string()))?;
 
         let lat_lng: LatLng = LatLng::try_from_dec(lat, lng)?;
 

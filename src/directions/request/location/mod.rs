@@ -84,8 +84,8 @@ pub enum Location {
     /// If you pass coordinates, they are used unchanged to calculate
     /// directions. This variant supports the
     /// [geo](https://crates.io/crates/geo) crate's
-    /// [Coordinate](https://docs.rs/geo/latest/geo/geometry/struct.Coordinate.html) type.
-    Coordinate(geo_types::geometry::Coordinate),
+    /// [Coord](https://docs.rs/geo/latest/geo/geometry/struct.Coord.html) type.
+    Coord(geo_types::geometry::Coord),
     /// If you pass a point, it is used unchanged to calculate directions. This
     /// variant supports the [geo](https://crates.io/crates/geo) crate's
     /// [Point](https://docs.rs/geo/latest/geo/geometry/struct.Point.html) type.
@@ -111,7 +111,7 @@ impl std::convert::From<&Location> for String {
             Location::PlaceId(place_id) =>
                 utf8_percent_encode(&format!("place_id:{place_id}"), NON_ALPHANUMERIC).to_string(),
 
-            Location::Coordinate(coordinate) =>
+            Location::Coord(coordinate) =>
                 utf8_percent_encode(&format!(
                     "{latitude},{longitude}",
                     latitude=coordinate.y,

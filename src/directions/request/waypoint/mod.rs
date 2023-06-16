@@ -93,8 +93,8 @@ pub enum Waypoint {
     /// If you pass coordinates, they are used unchanged to calculate
     /// directions. This variant supports the
     /// [geo](https://crates.io/crates/geo) crate's
-    /// [Coordinate](https://docs.rs/geo/latest/geo/geometry/struct.Coordinate.html) type.
-    Coordinate(geo_types::geometry::Coordinate),
+    /// [Coord](https://docs.rs/geo/latest/geo/geometry/struct.Coord.html) type.
+    Coord(geo_types::geometry::Coord),
     /// If you pass coordinates, they are used unchanged to calculate
     /// directions. This variant supports the
     /// [geo](https://crates.io/crates/geo) crate's
@@ -124,7 +124,7 @@ impl std::convert::From<&Waypoint> for String {
             Waypoint::Polyline(polyline) =>
                 format!("enc:{polyline}:"),
 
-            Waypoint::Coordinate(coordinate) =>
+            Waypoint::Coord(coordinate) =>
                 format!("{latitude},{longitude}", latitude=coordinate.y, longitude=coordinate.x),
 
             Waypoint::Point(point) =>

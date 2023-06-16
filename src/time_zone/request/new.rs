@@ -61,19 +61,19 @@ impl<'a> Request<'a> {
     ///
     /// This function is the same as `new` but it supports
     /// the [geo](https://crates.io/crates/geo) crate's
-    /// [Coordinate](https://docs.rs/geo/latest/geo/geometry/struct.Coordinate.html) type.
+    /// [Coord](https://docs.rs/geo/latest/geo/geometry/struct.Coord.html) type.
     ///
     /// ## Arguments:
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
-    /// * `coordinate` - `Coordinate` of the desired time zone location.
+    /// * `coordinate` - `Coord` of the desired time zone location.
     /// * `timestamp` - Time is used to determine if Daylight Savings is
     /// applicable.
 
     #[cfg(feature = "geo")]
     pub fn try_new_coordinate<'b>(
         client: &'a GoogleMapsClient,
-        coordinate: &'b geo_types::Coordinate,
+        coordinate: &'b geo_types::Coord,
         timestamp: DateTime<Utc>,
     ) -> Result<Request<'a>, crate::error::Error> {
 
