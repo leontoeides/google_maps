@@ -2,7 +2,8 @@
 //! specify a currency. Included for use with the transit fares returned by
 //! Google Maps Directions API.
 
-use crate::directions::error::Error;
+use crate::directions::error::Error as DirectionsError;
+use crate::error::Error as GoogleMapsError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -620,14 +621,14 @@ static TRANSIT_CURRENCIES_BY_CODE: phf::Map<&'static str, TransitCurrency> = phf
 impl std::convert::TryFrom<&str> for TransitCurrency {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
-    type Error = crate::directions::error::Error;
+    type Error = GoogleMapsError;
     /// Gets a `TransitCurrency` enum from a `String` that contains a supported
     /// [ISO 4217 currency code](https://en.wikipedia.org/wiki/ISO_4217).
     fn try_from(currency_code: &str) -> Result<Self, Self::Error> {
-        TRANSIT_CURRENCIES_BY_CODE
+        Ok(TRANSIT_CURRENCIES_BY_CODE
             .get(currency_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidCurrencyCode(currency_code.to_string()))
+            .ok_or_else(|| DirectionsError::InvalidCurrencyCode(currency_code.to_string()))?)
     } // fn
 } // impl
 
@@ -636,14 +637,14 @@ impl std::convert::TryFrom<&str> for TransitCurrency {
 impl std::str::FromStr for TransitCurrency {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
-    type Err = crate::directions::error::Error;
+    type Err = GoogleMapsError;
     /// Gets a `TransitCurrency` enum from a `String` that contains a supported
     /// [ISO 4217 currency code](https://en.wikipedia.org/wiki/ISO_4217).
     fn from_str(currency_code: &str) -> Result<Self, Self::Err> {
-        TRANSIT_CURRENCIES_BY_CODE
+        Ok(TRANSIT_CURRENCIES_BY_CODE
             .get(currency_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidCurrencyCode(currency_code.to_string()))
+            .ok_or_else(|| DirectionsError::InvalidCurrencyCode(currency_code.to_string()))?)
     } // fn
 } // impl
 

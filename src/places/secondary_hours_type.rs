@@ -1,7 +1,8 @@
 //! The `"type"` field within the _Places API_ _PlaceOpeningHours_ response
 //! object describing the opening hours of a place.
 
-use crate::places::error::Error;
+use crate::error::Error as GoogleMapsError;
+use crate::places::error::Error as PlacesError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -118,15 +119,15 @@ static STATUSES_BY_CODE: phf::Map<&'static str, SecondaryHoursType> = phf_map! {
 impl std::convert::TryFrom<&str> for SecondaryHoursType {
     // Error definitions are contained in the
     // `google_maps\src\places\error.rs` module.
-    type Error = crate::places::error::Error;
+    type Error = GoogleMapsError;
     /// Gets a `SecondaryHoursType` enum from a `String` that contains a valid
     /// [secondary hours type](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceOpeningHours-type)
     /// code.
     fn try_from(hours_type: &str) -> Result<Self, Self::Error> {
-        STATUSES_BY_CODE
+        Ok(STATUSES_BY_CODE
             .get(hours_type)
             .cloned()
-            .ok_or_else(|| Error::InvalidSecondaryHoursType(hours_type.to_string()))
+            .ok_or_else(|| PlacesError::InvalidSecondaryHoursType(hours_type.to_string()))?)
     } // fn
 } // impl
 
@@ -135,15 +136,15 @@ impl std::convert::TryFrom<&str> for SecondaryHoursType {
 impl std::str::FromStr for SecondaryHoursType {
     // Error definitions are contained in the
     // `google_maps\src\places\error.rs` module.
-    type Err = crate::places::error::Error;
+    type Err = GoogleMapsError;
     /// Gets a `SecondaryHoursType` enum from a `String` that contains a valid
     /// [secondary hours type](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceOpeningHours-type)
     /// code.
     fn from_str(hours_type: &str) -> Result<Self, Self::Err> {
-        STATUSES_BY_CODE
+        Ok(STATUSES_BY_CODE
             .get(hours_type)
             .cloned()
-            .ok_or_else(|| Error::InvalidSecondaryHoursType(hours_type.to_string()))
+            .ok_or_else(|| PlacesError::InvalidSecondaryHoursType(hours_type.to_string()))?)
     } // fn
 } // impl
 

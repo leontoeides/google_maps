@@ -1,7 +1,8 @@
 //! Contains the `DrivingManeuver` enum and its associated traits. It is often used
 //! to determine which icon to display for the current step.
 
-use crate::directions::error::Error;
+use crate::error::Error as GoogleMapsError;
+use crate::directions::error::Error as DirectionsError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -151,16 +152,16 @@ static DRIVING_MANEUVERS_BY_CODE: phf::Map<&'static str, DrivingManeuver> = phf_
 impl std::convert::TryFrom<&str> for DrivingManeuver {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
-    type Error = crate::directions::error::Error;
+    type Error = GoogleMapsError;
     /// Gets a `DrivingManeuver` enum from a `String` that contains a valid
     /// [maneuver
     /// type](https://developers.google.com/maps/documentation/directions/intro#Steps)
     /// code.
     fn try_from(driving_maneuver_type_code: &str) -> Result<Self, Self::Error> {
-        DRIVING_MANEUVERS_BY_CODE
+        Ok(DRIVING_MANEUVERS_BY_CODE
             .get(driving_maneuver_type_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidDrivingManeuverCode(driving_maneuver_type_code.to_string()))
+            .ok_or_else(|| DirectionsError::InvalidDrivingManeuverCode(driving_maneuver_type_code.to_string()))?)
     } // fn
 } // impl
 
@@ -169,16 +170,16 @@ impl std::convert::TryFrom<&str> for DrivingManeuver {
 impl std::str::FromStr for DrivingManeuver {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
-    type Err = crate::directions::error::Error;
+    type Err = GoogleMapsError;
     /// Gets a `DrivingManeuver` enum from a `String` that contains a valid
     /// [maneuver
     /// type](https://developers.google.com/maps/documentation/directions/intro#Steps)
     /// code.
     fn from_str(driving_maneuver_type_code: &str) -> Result<Self, Self::Err> {
-        DRIVING_MANEUVERS_BY_CODE
+        Ok(DRIVING_MANEUVERS_BY_CODE
             .get(driving_maneuver_type_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidDrivingManeuverCode(driving_maneuver_type_code.to_string()))
+            .ok_or_else(|| DirectionsError::InvalidDrivingManeuverCode(driving_maneuver_type_code.to_string()))?)
     } // fn
 } // impl
 

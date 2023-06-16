@@ -3,7 +3,8 @@
 
 // -----------------------------------------------------------------------------
 
-use crate::places::place_autocomplete::error::Error;
+use crate::error::Error as GoogleMapsError;
+use crate::places::place_autocomplete::error::Error as PlaceAutocompleteError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -131,16 +132,16 @@ static AUTOCOMPLETE_TYPES_BY_CODE: phf::Map<&'static str, AutocompleteType> = ph
 impl std::convert::TryFrom<&str> for AutocompleteType {
     // Error definitions are contained in the
     // `google_maps\src\places\place_autocomplete\error.rs` module.
-    type Error = crate::places::place_autocomplete::error::Error;
+    type Error = GoogleMapsError;
     /// Gets a `AutocompleteType` enum from a `String` that contains a valid
     /// [autocomplete
     /// type](https://developers.google.com/maps/documentation/places/web-service/autocomplete#types)
     /// code.
     fn try_from(autocomplete_code: &str) -> Result<Self, Self::Error> {
-        AUTOCOMPLETE_TYPES_BY_CODE
+        Ok(AUTOCOMPLETE_TYPES_BY_CODE
             .get(autocomplete_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidAutocompleteType(autocomplete_code.to_string()))
+            .ok_or_else(|| PlaceAutocompleteError::InvalidAutocompleteType(autocomplete_code.to_string()))?)
     } // fn
 } // impl
 
@@ -149,16 +150,16 @@ impl std::convert::TryFrom<&str> for AutocompleteType {
 impl std::str::FromStr for AutocompleteType {
     // Error definitions are contained in the
     // `google_maps\src\places\place_autocomplete\error.rs` module.
-    type Err = crate::places::place_autocomplete::error::Error;
+    type Err = GoogleMapsError;
     /// Gets a `AutocompleteType` enum from a `String` that contains a valid
     /// [autocomplete
     /// type](https://developers.google.com/maps/documentation/places/web-service/autocomplete#types)
     /// code.
     fn from_str(autocomplete_code: &str) -> Result<Self, Self::Err> {
-        AUTOCOMPLETE_TYPES_BY_CODE
+        Ok(AUTOCOMPLETE_TYPES_BY_CODE
             .get(autocomplete_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidAutocompleteType(autocomplete_code.to_string()))
+            .ok_or_else(|| PlaceAutocompleteError::InvalidAutocompleteType(autocomplete_code.to_string()))?)
     } // fn
 } // impl
 

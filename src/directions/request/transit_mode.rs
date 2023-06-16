@@ -2,7 +2,8 @@
 //! prioritize certain transit modes such as _bus_ or _subway_ when generating
 //! transit directions.
 
-use crate::directions::error::Error;
+use crate::directions::error::Error as DirectionsError;
+use crate::error::Error as GoogleMapsError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -113,15 +114,15 @@ static TRANSIT_MODES_BY_CODE: phf::Map<&'static str, TransitMode> = phf_map! {
 impl std::convert::TryFrom<&str> for TransitMode {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
-    type Error = crate::directions::error::Error;
+    type Error = GoogleMapsError;
     /// Gets a `TransitMode` enum from a `String` that contains a valid [transit
     /// mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitMode)
     /// code.
     fn try_from(transit_mode_code: &str) -> Result<Self, Self::Error> {
-        TRANSIT_MODES_BY_CODE
+        Ok(TRANSIT_MODES_BY_CODE
             .get(transit_mode_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidTransitModeCode(transit_mode_code.to_string()))
+            .ok_or_else(|| DirectionsError::InvalidTransitModeCode(transit_mode_code.to_string()))?)
     } // fn
 } // impl
 
@@ -130,15 +131,15 @@ impl std::convert::TryFrom<&str> for TransitMode {
 impl std::str::FromStr for TransitMode {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
-    type Err = crate::directions::error::Error;
+    type Err = GoogleMapsError;
     /// Gets a `TransitMode` enum from a `String` that contains a valid [transit
     /// mode](https://developers.google.com/maps/documentation/javascript/reference/directions#TransitMode)
     /// code.
     fn from_str(transit_mode_code: &str) -> Result<Self, Self::Err> {
-        TRANSIT_MODES_BY_CODE
+        Ok(TRANSIT_MODES_BY_CODE
             .get(transit_mode_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidTransitModeCode(transit_mode_code.to_string()))
+            .ok_or_else(|| DirectionsError::InvalidTransitModeCode(transit_mode_code.to_string()))?)
     } // fn
 } // impl
 

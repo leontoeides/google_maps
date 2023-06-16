@@ -2,7 +2,8 @@
 //! select a traffic model that is as accurate as possible, optimistic, or
 //! pessimistic.
 
-use crate::directions::error::Error;
+use crate::directions::error::Error as DirectionsError;
+use crate::error::Error as GoogleMapsError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -117,16 +118,16 @@ static TRAFFIC_MODELS_BY_CODE: phf::Map<&'static str, TrafficModel> = phf_map! {
 impl std::convert::TryFrom<&str> for TrafficModel {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
-    type Error = crate::directions::error::Error;
+    type Error = GoogleMapsError;
     /// Gets a `TrafficModel` enum from a `String` that contains a valid
     /// [traffic
     /// model](https://developers.google.com/maps/documentation/javascript/reference/directions#TrafficModel)
     /// code.
     fn try_from(traffic_model_code: &str) -> Result<Self, Self::Error> {
-        TRAFFIC_MODELS_BY_CODE
+        Ok(TRAFFIC_MODELS_BY_CODE
             .get(traffic_model_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidTrafficModelCode(traffic_model_code.to_string()))
+            .ok_or_else(|| DirectionsError::InvalidTrafficModelCode(traffic_model_code.to_string()))?)
     } // fn
 } // impl
 
@@ -135,16 +136,16 @@ impl std::convert::TryFrom<&str> for TrafficModel {
 impl std::str::FromStr for TrafficModel {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
-    type Err = crate::directions::error::Error;
+    type Err = GoogleMapsError;
     /// Gets a `TrafficModel` enum from a `String` that contains a valid
     /// [traffic
     /// model](https://developers.google.com/maps/documentation/javascript/reference/directions#TrafficModel)
     /// code.
     fn from_str(traffic_model_code: &str) -> Result<Self, Self::Err> {
-        TRAFFIC_MODELS_BY_CODE
+        Ok(TRAFFIC_MODELS_BY_CODE
             .get(traffic_model_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidTrafficModelCode(traffic_model_code.to_string()))
+            .ok_or_else(|| DirectionsError::InvalidTrafficModelCode(traffic_model_code.to_string()))?)
     } // fn
 } // impl
 

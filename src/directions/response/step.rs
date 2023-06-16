@@ -12,6 +12,8 @@ use crate::directions::travel_mode::TravelMode;
 use crate::types::LatLng;
 use serde::{Deserialize, Serialize};
 
+// -----------------------------------------------------------------------------
+
 /// Each element in the `steps` array defines a single step of the calculated
 /// directions. A step is the most atomic unit of a direction's route,
 /// containing a single step describing a specific, single instruction on the
@@ -62,6 +64,8 @@ pub struct Step {
     /// The mode of travel used in this step.
     pub travel_mode: TravelMode,
 } // struct
+
+// -----------------------------------------------------------------------------
 
 impl Step {
 

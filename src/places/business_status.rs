@@ -1,7 +1,8 @@
 //! The `business_status` field within the _Places API_ _Place_ response
 //! object indicates the operational status of the place, if it is a business.
 
-use crate::places::error::Error;
+use crate::error::Error as GoogleMapsError;
+use crate::places::error::Error as PlacesError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -92,15 +93,15 @@ static STATUSES_BY_CODE: phf::Map<&'static str, BusinessStatus> = phf_map! {
 impl std::convert::TryFrom<&str> for BusinessStatus {
     // Error definitions are contained in the
     // `google_maps\src\places\place_autocomplete\error.rs` module.
-    type Error = crate::places::error::Error;
+    type Error = GoogleMapsError;
     /// Gets a `BusinessStatus` enum from a `String` that contains a valid
     /// [status](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlacesAutocompleteBusinessStatus)
     /// code.
     fn try_from(status_code: &str) -> Result<Self, Self::Error> {
-        STATUSES_BY_CODE
+        Ok(STATUSES_BY_CODE
             .get(status_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidBusinessStatusCode(status_code.to_string()))
+            .ok_or_else(|| PlacesError::InvalidBusinessStatusCode(status_code.to_string()))?)
     } // fn
 } // impl
 
@@ -109,15 +110,15 @@ impl std::convert::TryFrom<&str> for BusinessStatus {
 impl std::str::FromStr for BusinessStatus {
     // Error definitions are contained in the
     // `google_maps\src\places\place_autocomplete\error.rs` module.
-    type Err = crate::places::error::Error;
+    type Err = GoogleMapsError;
     /// Gets a `BusinessStatus` enum from a `String` that contains a valid
     /// [status](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlacesAutocompleteBusinessStatus)
     /// code.
     fn from_str(status_code: &str) -> Result<Self, Self::Err> {
-        STATUSES_BY_CODE
+        Ok(STATUSES_BY_CODE
             .get(status_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidBusinessStatusCode(status_code.to_string()))
+            .ok_or_else(|| PlacesError::InvalidBusinessStatusCode(status_code.to_string()))?)
     } // fn
 } // impl
 

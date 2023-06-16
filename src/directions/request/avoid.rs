@@ -1,7 +1,8 @@
 //! Contains the `Avoid` enum and its associated traits. It is used to route
 //! around features such as ferries, highways, and tolls.
 
-use crate::directions::error::Error;
+use crate::directions::error::Error as DirectionsError;
+use crate::error::Error as GoogleMapsError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -118,15 +119,15 @@ static RESTRICTIONS_BY_CODE: phf::Map<&'static str, Avoid> = phf_map! {
 impl std::convert::TryFrom<&str> for Avoid {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
-    type Error = crate::directions::error::Error;
+    type Error = GoogleMapsError;
     /// Gets an `Avoid` enum from a `String` that contains a valid
     /// [restrictions](https://developers.google.com/maps/documentation/directions/intro#Restrictions)
     /// code.
     fn try_from(restriction_code: &str) -> Result<Self, Self::Error> {
-        RESTRICTIONS_BY_CODE
+        Ok(RESTRICTIONS_BY_CODE
             .get(restriction_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidAvoidCode(restriction_code.to_string()))
+            .ok_or_else(|| DirectionsError::InvalidAvoidCode(restriction_code.to_string()))?)
     } // fn
 } // impl
 
@@ -135,15 +136,15 @@ impl std::convert::TryFrom<&str> for Avoid {
 impl std::str::FromStr for Avoid {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
-    type Err = crate::directions::error::Error;
+    type Err = GoogleMapsError;
     /// Gets an `Avoid` enum from a `String` that contains a valid
     /// [restrictions](https://developers.google.com/maps/documentation/directions/intro#Restrictions)
     /// code.
     fn from_str(restriction_code: &str) -> Result<Self, Self::Err> {
-        RESTRICTIONS_BY_CODE
+        Ok(RESTRICTIONS_BY_CODE
             .get(restriction_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidAvoidCode(restriction_code.to_string()))
+            .ok_or_else(|| DirectionsError::InvalidAvoidCode(restriction_code.to_string()))?)
     } // fn
 } // impl
 

@@ -1,7 +1,8 @@
 //! Contains the `UnitSystem` enum and its associated traits. It is used specify
 //! whether imperial or metric units are used in Directions responses.
 
-use crate::directions::error::Error;
+use crate::directions::error::Error as DirectionsError;
+use crate::error::Error as GoogleMapsError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -108,15 +109,15 @@ static UNIT_SYSTEMS_BY_CODE: phf::Map<&'static str, UnitSystem> = phf_map! {
 impl std::convert::TryFrom<&str> for UnitSystem {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
-    type Error = crate::directions::error::Error;
+    type Error = GoogleMapsError;
     /// Gets a `UnitSystem` enum from a `String` that contains a valid [unit
     /// system](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
     /// code.
     fn try_from(unit_system_code: &str) -> Result<Self, Self::Error> {
-        UNIT_SYSTEMS_BY_CODE
+        Ok(UNIT_SYSTEMS_BY_CODE
             .get(unit_system_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidUnitSystemCode(unit_system_code.to_string()))
+            .ok_or_else(|| DirectionsError::InvalidUnitSystemCode(unit_system_code.to_string()))?)
     } // fn
 } // impl
 
@@ -125,15 +126,15 @@ impl std::convert::TryFrom<&str> for UnitSystem {
 impl std::str::FromStr for UnitSystem {
     // Error definitions are contained in the
     // `google_maps\src\directions\error.rs` module.
-    type Err = crate::directions::error::Error;
+    type Err = GoogleMapsError;
     /// Gets a `UnitSystem` enum from a `String` that contains a valid [unit
     /// system](https://developers.google.com/maps/documentation/directions/intro#UnitSystems)
     /// code.
     fn from_str(unit_system_code: &str) -> Result<Self, Self::Err> {
-        UNIT_SYSTEMS_BY_CODE
+        Ok(UNIT_SYSTEMS_BY_CODE
             .get(unit_system_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidUnitSystemCode(unit_system_code.to_string()))
+            .ok_or_else(|| DirectionsError::InvalidUnitSystemCode(unit_system_code.to_string()))?)
     } // fn
 } // impl
 
