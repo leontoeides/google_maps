@@ -57,7 +57,7 @@ decimal-serde-with-arbitrary-precision = [ "rust_decimal/serde-with-arbitrary-pr
 
 [dependencies]
 backoff = { version = "0.4", optional = true, features = [ "futures", "tokio" ] }
-chrono = { version = "0.4", optional = true, features = [ "serde" ] }
+chrono = { version = "0.4", optional = true, default-features = false, features = [ "clock", "serde", "std" ] }
 chrono-tz = { version = "0.8", optional = true, features = [ "serde" ] }
 futures = { version = "0.3", optional = true }
 geo-types = { version = "0.7", optional = true, features = [ "serde" ] }
