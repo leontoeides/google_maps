@@ -7,10 +7,10 @@ mod geo;
 
 // -----------------------------------------------------------------------------
 
-use crate::types::error::Error;
+use crate::error::Error as GoogleMapsError;
+use crate::types::error::Error as TypesError;
 use rust_decimal::Decimal;
-use rust_decimal::prelude::FromPrimitive;
-use rust_decimal::prelude::FromStr;
+use rust_decimal::prelude::{FromPrimitive, FromStr};
 use rust_decimal_macros::dec;
 use serde::{Deserialize, Serialize};
 use std::cmp::{Ord, Ordering};
@@ -43,14 +43,14 @@ impl LatLng {
     /// converts them into a `LatLng` structure. If either the latitude
     /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
     /// function will return an error.
-    pub fn try_from_dec(lat: Decimal, lng: Decimal) -> Result<LatLng, Error> {
+    pub fn try_from_dec(lat: Decimal, lng: Decimal) -> Result<LatLng, GoogleMapsError> {
 
         if lat < dec!(-90.0) || lat > dec!(90.0) {
-            return Err(Error::InvalidLatitude(lat, lng));
+            Err(TypesError::InvalidLatitude(lat, lng))?
         } // if
 
         if lng < dec!(-180.0) || lng > dec!(180.0) {
-            return Err(Error::InvalidLongitude(lat, lng));
+            Err(TypesError::InvalidLongitude(lat, lng))?
         } // if
 
         Ok(LatLng {
@@ -68,20 +68,20 @@ impl LatLng {
     /// converts them into a `LatLng` structure. If either the latitude
     /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
     /// function will return an error.
-    pub fn try_from_f32(lat: f32, lng: f32) -> Result<LatLng, Error> {
+    pub fn try_from_f32(lat: f32, lng: f32) -> Result<LatLng, GoogleMapsError> {
 
         let lat: Decimal = Decimal::from_f32(lat)
-            .ok_or_else(|| Error::FloatToDecimalConversionError(lat.to_string()))?;
+            .ok_or_else(|| TypesError::FloatToDecimalConversionError(lat.to_string()))?;
 
         let lng: Decimal = Decimal::from_f32(lng)
-            .ok_or_else(|| Error::FloatToDecimalConversionError(lng.to_string()))?;
+            .ok_or_else(|| TypesError::FloatToDecimalConversionError(lng.to_string()))?;
 
         if lat < dec!(-90.0) || lat > dec!(90.0) {
-            return Err(Error::InvalidLatitude(lat, lng));
+            Err(TypesError::InvalidLatitude(lat, lng))?
         } // if
 
         if lng < dec!(-180.0) || lng > dec!(180.0) {
-            return Err(Error::InvalidLongitude(lat, lng));
+            Err(TypesError::InvalidLongitude(lat, lng))?
         } // if
 
         Ok(LatLng {
@@ -99,20 +99,20 @@ impl LatLng {
     /// converts them into a `LatLng` structure. If either the latitude
     /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
     /// function will return an error.
-    pub fn try_from_f64(lat: f64, lng: f64) -> Result<LatLng, Error> {
+    pub fn try_from_f64(lat: f64, lng: f64) -> Result<LatLng, GoogleMapsError> {
 
         let lat: Decimal = Decimal::from_f64(lat)
-            .ok_or_else(|| Error::FloatToDecimalConversionError(lat.to_string()))?;
+            .ok_or_else(|| TypesError::FloatToDecimalConversionError(lat.to_string()))?;
 
         let lng: Decimal = Decimal::from_f64(lng)
-            .ok_or_else(|| Error::FloatToDecimalConversionError(lng.to_string()))?;
+            .ok_or_else(|| TypesError::FloatToDecimalConversionError(lng.to_string()))?;
 
         if lat < dec!(-90.0) || lat > dec!(90.0) {
-            return Err(Error::InvalidLatitude(lat, lng));
+            Err(TypesError::InvalidLatitude(lat, lng))?
         } // if
 
         if lng < dec!(-180.0) || lng > dec!(180.0) {
-            return Err(Error::InvalidLongitude(lat, lng));
+            Err(TypesError::InvalidLongitude(lat, lng))?
         } // if
 
         Ok(LatLng {
@@ -126,7 +126,7 @@ impl LatLng {
 // -----------------------------------------------------------------------------
 
 impl TryFrom<&str> for LatLng {
-    type Error = Error;
+    type Error = GoogleMapsError;
     ///
     /// Convert string to lat lng
     ///
@@ -135,12 +135,12 @@ impl TryFrom<&str> for LatLng {
             .split(',')
             .collect();
         if coords.len() != 2 {
-            Err(Error::InvalidLatLongString(value.to_owned()))
+            Err(TypesError::InvalidLatLongString(value.to_owned()))?
         } else {
             let lat = Decimal::from_str(coords[0].trim());
-            let lat = lat.map_err(|_| Error::InvalidLatLongString(value.to_owned()))?;
+            let lat = lat.map_err(|_| TypesError::InvalidLatLongString(value.to_owned()))?;
             let lon = Decimal::from_str(coords[1].trim());
-            let lon = lon.map_err(|_| Error::InvalidLatLongString(value.to_owned()))?;
+            let lon = lon.map_err(|_| TypesError::InvalidLatLongString(value.to_owned()))?;
             LatLng::try_from_dec(lat, lon)
         }
     }
@@ -151,7 +151,7 @@ impl TryFrom<&str> for LatLng {
 impl std::str::FromStr for LatLng {
     // Error definitions are contained in the
     // `google_maps\src\geocoding\error.rs` module.
-    type Err = crate::types::Error;
+    type Err = GoogleMapsError;
     /// Gets a `LatLng` struct from a `String` that contains a comma-delimited
     /// latitude & longitude pair.
     fn from_str(value: &str) -> Result<Self, Self::Err> {
@@ -159,12 +159,12 @@ impl std::str::FromStr for LatLng {
             .split(',')
             .collect();
         if coords.len() != 2 {
-            Err(Error::InvalidLatLongString(value.to_owned()))
+            Err(TypesError::InvalidLatLongString(value.to_owned()))?
         } else {
             let lat = Decimal::from_str(coords[0].trim());
-            let lat = lat.map_err(|_| Error::InvalidLatLongString(value.to_owned()))?;
+            let lat = lat.map_err(|_| TypesError::InvalidLatLongString(value.to_owned()))?;
             let lon = Decimal::from_str(coords[1].trim());
-            let lon = lon.map_err(|_| Error::InvalidLatLongString(value.to_owned()))?;
+            let lon = lon.map_err(|_| TypesError::InvalidLatLongString(value.to_owned()))?;
             LatLng::try_from_dec(lat, lon)
         } // if
     } // fn

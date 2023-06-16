@@ -7,7 +7,8 @@ mod geo_conversions;
 
 // -----------------------------------------------------------------------------
 
-use crate::types::error::Error;
+use crate::types::error::Error as GoogleMapsError;
+use crate::types::error::Error as TypesError;
 use crate::types::latlng::LatLng;
 use serde::{Deserialize, Serialize};
 
@@ -56,7 +57,7 @@ impl std::convert::From<&Bounds> for String {
 
 impl std::str::FromStr for Bounds {
     // Error definitions are contained in the `type_error.rs` module.
-    type Err = crate::types::Error;
+    type Err = GoogleMapsError;
     /// Gets a `Bounds` struct from a `String` that contains two pipe-delimited
     /// latitude & longitude pairs.
     fn from_str(value: &str) -> Result<Self, Self::Err> {
@@ -64,12 +65,12 @@ impl std::str::FromStr for Bounds {
             .split('|')
             .collect();
         if corner.len() != 2 {
-            Err(Error::InvalidBoundsString(value.to_owned()))
+            Err(TypesError::InvalidBoundsString(value.to_owned()))?
         } else {
             let southwest = LatLng::from_str(corner[0].trim());
-            let southwest = southwest.map_err(|_| Error::InvalidBoundsString(value.to_owned()))?;
+            let southwest = southwest.map_err(|_| TypesError::InvalidBoundsString(value.to_owned()))?;
             let northeast = LatLng::from_str(corner[1].trim());
-            let northeast = northeast.map_err(|_| Error::InvalidBoundsString(value.to_owned()))?;
+            let northeast = northeast.map_err(|_| TypesError::InvalidBoundsString(value.to_owned()))?;
             Ok(Bounds { southwest, northeast })
         } // if
     } // fn

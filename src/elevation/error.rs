@@ -11,7 +11,7 @@ use thiserror::Error;
 /// Errors that may be produced by the Google Maps Elevation API client.
 
 #[derive(Debug, Diagnostic, Error)]
-#[diagnostic(code(google_maps::elevation), url(docsrs))]
+#[diagnostic(code(google_maps::elevation::error), url(docsrs))]
 pub enum Error {
     /// A sampled_path_request() method cannot be used when postional_request()
     /// has been set.
@@ -40,6 +40,8 @@ pub enum Error {
     /// The dependency library Serde JSON generated an error.
     SerdeJson(serde_json::error::Error),
 } // enum
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for Error {
     /// This trait converts the error code into a format that may be presented

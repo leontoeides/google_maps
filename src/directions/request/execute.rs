@@ -3,7 +3,6 @@ use crate::directions::{
     request::Request as DirectionsRequest,
     response::Response as DirectionsResponse,
 }; // crate::directions
-use miette::Result;
 
 // =============================================================================
 

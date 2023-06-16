@@ -3,7 +3,6 @@ use crate::time_zone::{
     request::Request as TimeZoneRequest,
     response::Response as TimeZoneResponse,
 }; // crate::time_zone
-use miette::Result;
 
 // =============================================================================
 

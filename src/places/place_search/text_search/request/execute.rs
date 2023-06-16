@@ -3,7 +3,6 @@ use crate::places::place_search::text_search::{
     request::Request as TextSearchRequest,
     response::Response as TextSearchResponse,
 }; // crate::places::place_search::text_search
-use miette::Result;
 
 // =============================================================================
 

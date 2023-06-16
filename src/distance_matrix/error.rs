@@ -11,7 +11,7 @@ use thiserror::Error;
 /// Errors that may be produced by the Google Maps Distance Matrix API client.
 
 #[derive(Debug, Diagnostic, Error)]
-#[diagnostic(code(google_maps::distance_matrix), url(docsrs))]
+#[diagnostic(code(google_maps::distance_matrix::error), url(docsrs))]
 pub enum Error {
     /// An arrival time may only be specified in Transit travel mode.
     ArrivalTimeIsForTransitOnly(String, String),
@@ -96,6 +96,8 @@ pub enum Error {
     /// Transit routing preference may only be specified in Transit travel mode.
     TransitRoutePreferenceIsForTransitOnly(String, String),
 } // enum
+
+// -----------------------------------------------------------------------------
 
 impl std::fmt::Display for Error {
     /// This trait converts the error code into a format that may be presented

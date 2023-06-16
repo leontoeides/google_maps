@@ -11,7 +11,6 @@ use crate::places::place_autocomplete::{
 }; // crate::places::place_autocomplete
 use crate::error::Error as GoogleMapsError;
 use crate::request_rate::api::Api;
-use miette::Result;
 
 // -----------------------------------------------------------------------------
 

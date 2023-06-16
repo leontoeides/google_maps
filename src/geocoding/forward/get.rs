@@ -11,7 +11,6 @@ use crate::geocoding::{
     response::status::Status as GeocodingStatus,
 }; // use crate::geocoding
 use crate::request_rate::api::Api;
-use miette::Result;
 
 // -----------------------------------------------------------------------------
 

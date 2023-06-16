@@ -11,7 +11,6 @@ use crate::geocoding::{
     reverse::ReverseRequest as ReverseGeocodingRequest,
 }; // use crate::geocoding
 use crate::request_rate::api::Api;
-use miette::Result;
 
 // -----------------------------------------------------------------------------
 

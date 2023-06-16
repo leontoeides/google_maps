@@ -11,7 +11,6 @@ use crate::time_zone::{
     response::Response as TimeZoneResponse,
     response::status::Status as TimeZoneStatus,
 }; // use
-use miette::Result;
 
 // -----------------------------------------------------------------------------
 

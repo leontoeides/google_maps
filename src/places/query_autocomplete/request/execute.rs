@@ -1,7 +1,6 @@
 use crate::error::Error as GoogleMapsError;
 use crate::places::place_autocomplete::response::Response as PlaceAutocompleteResponse;
 use crate::places::query_autocomplete::request::Request as QueryAutocompleteRequest;
-use miette::Result;
 
 // =============================================================================
 

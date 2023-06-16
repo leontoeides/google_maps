@@ -3,7 +3,6 @@ use crate::roads::snap_to_roads::{
     request::Request as SnapToRoadsRequest,
     response::Response as SnapToRoadsResponse,
 }; // crate::roads::snap_to_roads
-use miette::Result;
 
 // =============================================================================
 

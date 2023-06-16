@@ -11,7 +11,6 @@ use crate::places::place_search::text_search::{
     request::Request as PlacesTextSearchRequest,
     response::Response as PlacesTextSearchResponse,
 }; // crate::places::place_search::text_search
-use miette::Result;
 
 // -----------------------------------------------------------------------------
 

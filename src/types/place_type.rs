@@ -2,7 +2,8 @@
 //! types or categories of a place. For example, a returned place could be a
 //! "country" (as in a nation) or it could be a "shopping mall."
 
-use crate::types::error::Error;
+use crate::types::error::Error as TypesError;
+use crate::error::Error as GoogleMapsError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -569,15 +570,15 @@ static PLACE_TYPES_BY_CODE: phf::Map<&'static str, PlaceType> = phf_map! {
 
 impl std::convert::TryFrom<&str> for PlaceType {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Error = crate::types::Error;
+    type Error = GoogleMapsError;
     /// Gets a `PlaceType` enum from a `String` that contains a supported [place
     /// type](https://developers.google.com/places/web-service/supported_types)
     /// code.
     fn try_from(place_type_code: &str) -> Result<Self, Self::Error> {
-        PLACE_TYPES_BY_CODE
+        Ok(PLACE_TYPES_BY_CODE
             .get(place_type_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidPlaceTypeCode(place_type_code.to_string()))
+            .ok_or_else(|| TypesError::InvalidPlaceTypeCode(place_type_code.to_string()))?)
     } // fn
 } // impl
 
@@ -585,15 +586,15 @@ impl std::convert::TryFrom<&str> for PlaceType {
 
 impl std::str::FromStr for PlaceType {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Err = crate::types::Error;
+    type Err = GoogleMapsError;
     /// Gets a `PlaceType` enum from a `String` that contains a supported [place
     /// type](https://developers.google.com/places/web-service/supported_types)
     /// code.
     fn from_str(place_type_code: &str) -> Result<Self, Self::Err> {
-        PLACE_TYPES_BY_CODE
+        Ok(PLACE_TYPES_BY_CODE
             .get(place_type_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidPlaceTypeCode(place_type_code.to_string()))
+            .ok_or_else(|| TypesError::InvalidPlaceTypeCode(place_type_code.to_string()))?)
     } // fn
 } // impl
 

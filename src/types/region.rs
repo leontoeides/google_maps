@@ -4,7 +4,8 @@
 //! comprehensive list of countries, it is a list of countries that Google Maps
 //! supports._
 
-use crate::types::error::Error;
+use crate::types::error::Error as TypesError;
+use crate::error::Error as GoogleMapsError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -911,14 +912,14 @@ static REGIONS_BY_CODE: phf::Map<&'static str, Region> = phf_map! {
 
 impl std::convert::TryFrom<&str> for Region {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Error = crate::types::Error;
+    type Error = GoogleMapsError;
     /// Gets a `Region` enum from a `String` that contains a supported
     /// [region](https://developers.google.com/maps/coverage) code.
     fn try_from(region_code: &str) -> Result<Self, Self::Error> {
-        REGIONS_BY_CODE
+        Ok(REGIONS_BY_CODE
             .get(region_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidRegionCode(region_code.to_string()))
+            .ok_or_else(|| TypesError::InvalidRegionCode(region_code.to_string()))?)
     } // fn
 } // impl
 
@@ -926,14 +927,14 @@ impl std::convert::TryFrom<&str> for Region {
 
 impl std::str::FromStr for Region {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Err = crate::types::Error;
+    type Err = GoogleMapsError;
     /// Gets a `Region` enum from a `String` that contains a supported
     /// [region](https://developers.google.com/maps/coverage) code.
     fn from_str(region_code: &str) -> Result<Self, Self::Err> {
-        REGIONS_BY_CODE
+        Ok(REGIONS_BY_CODE
             .get(region_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidRegionCode(region_code.to_string()))
+            .ok_or_else(|| TypesError::InvalidRegionCode(region_code.to_string()))?)
     } // fn
 } // impl
 

@@ -11,7 +11,7 @@ use thiserror::Error;
 /// Errors that may be produced by the Google Maps Places API client.
 
 #[derive(Debug, Diagnostic, Error)]
-#[diagnostic(code(google_maps::places), url(docsrs))]
+#[diagnostic(code(google_maps::places::error), url(docsrs))]
 pub enum Error {
     /// Google Maps Places API server generated an error. See the `Status`
     /// enum for more information.

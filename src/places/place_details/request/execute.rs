@@ -3,7 +3,6 @@ use crate::places::place_details::{
     request::Request as PlaceDetailsRequest,
     response::Response as PlaceDetailsResponse,
 }; // crate::places::place_details
-use miette::Result;
 
 // =============================================================================
 

@@ -11,43 +11,58 @@ use thiserror::Error;
 /// client.
 
 #[derive(Debug, Diagnostic, Error)]
-#[diagnostic(code(google_maps::types::error), url(docsrs))]
+#[diagnostic(url(docsrs))]
 pub enum Error {
 
-    /// Errors from the types and structs in the `google_maps` crate.
+    /// Error originating from the types and structs in the `google_maps` crate.
     #[error(transparent)]
+    #[diagnostic(code(google_maps::types))]
     Type(#[from] crate::types::Error),
 
-    /// Errors from the `directions` module in the `google_maps` crate.
+    /// Error originating from the `directions` module in the `google_maps`
+    /// crate.
     #[error(transparent)]
+    #[diagnostic(code(google_maps::directions))]
     Directions(#[from] crate::directions::error::Error),
 
-    /// Errors from the `distance_matrix` module in the `google_maps` crate.
+    /// Error originating from the `distance_matrix` module in the `google_maps`
+    /// crate.
     #[error(transparent)]
+    #[diagnostic(code(google_maps::distance_matrix))]
     DistanceMatrix(#[from] crate::distance_matrix::error::Error),
 
-    /// Errors from the `elevation` module in the `google_maps` crate.
+    /// Error originating from the `elevation` module in the `google_maps`
+    /// crate.
     #[error(transparent)]
+    #[diagnostic(code(google_maps::elevation))]
     Elevation(#[from] crate::elevation::error::Error),
 
-    /// Errors from the `geocoding` module in the `google_maps` crate.
+    /// Error originating from the `geocoding` module in the `google_maps`
+    /// crate.
     #[error(transparent)]
+    #[diagnostic(code(google_maps::geocoding))]
     Geocoding(#[from] crate::geocoding::error::Error),
 
-    /// Errors from the `places` module in the `google_maps` crate.
+    /// Error originating from the `places` module in the `google_maps` crate.
     #[error(transparent)]
+    #[diagnostic(code(google_maps::places))]
     Places(#[from] crate::places::error::Error),
 
-    /// Errors from the `place_autocomplete` module in the `google_maps` crate.
+    /// Error originating from the `place_autocomplete` module in the
+    /// `google_maps` crate.
     #[error(transparent)]
+    #[diagnostic(code(google_maps::place_autocomplete))]
     PlaceAutocomplete(#[from] crate::places::place_autocomplete::error::Error),
 
-    /// Errors from the `roads` module in the `google_maps` crate.
+    /// Error originating from the `roads` module in the `google_maps` crate.
     #[error(transparent)]
+    #[diagnostic(code(google_maps::roads))]
     Roads(#[from] crate::roads::error::Error),
 
-    /// Errors from the `time_zone` module in the `google_maps` crate.
+    /// Error originating from the `time_zone` module in the `google_maps`
+    /// crate.
     #[error(transparent)]
+    #[diagnostic(code(google_maps::time_zone))]
     TimeZone(#[from] crate::time_zone::error::Error),
 
 } // enum Error

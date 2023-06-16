@@ -1,5 +1,8 @@
 # Change Log
 
+* 3.2.2: 2023-06-16: `time 0.1` dependency was removed using `chrono` feature
+flags. Thanks for the contribution, [popen2](https://github.com/popen2)!
+
 * 3.2.1: 2023-06-13: By default, `google_maps` will now use the `rust_decimal`
 crate's `serde` feature. To switch back to the explicit `serde-float` format,
 use the `google_maps` crate's `decimal-serde-float` feature. Thanks for the
@@ -13,7 +16,8 @@ round-trip through strings.
 	clever setup did not play nice with other crates.
 
 	This is a “breaking change” because the `Display` and `ToString` traits
-	both now have different outputs compared to previous versions:
+	both now have different outputs compared to previous versions of the
+	`google_maps` crate:
 
 	* Previously: `println!("{}", Language::ChineseHongKong)` would result
 	in `Chinese (Hong Kong)`.

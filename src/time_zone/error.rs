@@ -11,7 +11,7 @@ use thiserror::Error;
 /// Errors that may be produced by the Google Maps Time Zone API client.
 
 #[derive(Debug, Diagnostic, Error)]
-#[diagnostic(code(google_maps::time_zone), url(docsrs))]
+#[diagnostic(code(google_maps::time_zone::error), url(docsrs))]
 pub enum Error {
     /// Google Maps Time Zone API server generated an error. See the `Status`
     /// enum for more information.

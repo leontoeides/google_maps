@@ -11,7 +11,7 @@ use thiserror::Error;
 /// Errors that may be produced by the Google Maps Roads API client.
 
 #[derive(Debug, Diagnostic, Error)]
-#[diagnostic(code(google_maps::roads), url(docsrs))]
+#[diagnostic(code(google_maps::roads::error), url(docsrs))]
 pub enum Error {
 
     /// Google Maps Roads API server generated an error. See the `Status`

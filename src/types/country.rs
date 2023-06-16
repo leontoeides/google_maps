@@ -2,7 +2,8 @@
 //! country or a nation. See also [ISO 3166 country
 //! codes](https://en.wikipedia.org/wiki/ISO_3166-1).
 
-use crate::geocoding::error::Error;
+use crate::geocoding::error::Error as GeocodingError;
+use crate::error::Error as GoogleMapsError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::convert::TryFrom;
@@ -23,7 +24,6 @@ use std::convert::TryFrom;
 /// information at [Wikipedia: List of ISO 3166 country
 /// codes](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) or the
 /// [ISO Online Browsing Platform](https://www.iso.org/obp/ui/#search).**
-
 
 #[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[repr(u16)]
@@ -845,15 +845,15 @@ static COUNTRIES_BY_CODE: phf::Map<&'static str, Country> = phf_map! {
 impl std::convert::TryFrom<&str> for Country {
     // Error definitions are contained in the
     // `google_maps\src\geocoding\error.rs` module.
-    type Error = crate::geocoding::error::Error;
+    type Error = GoogleMapsError;
     /// Gets a `Country` enum from a `String` that contains a valid [ISO 3166-1
     /// Alpha-2](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
     /// country code.
     fn try_from(country_code: &str) -> Result<Self, Self::Error> {
-        COUNTRIES_BY_CODE
+        Ok(COUNTRIES_BY_CODE
             .get(country_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidCountryCode(country_code.to_string()))
+            .ok_or_else(|| GeocodingError::InvalidCountryCode(country_code.to_string()))?)
     } // fn
 } // impl
 
@@ -862,15 +862,15 @@ impl std::convert::TryFrom<&str> for Country {
 impl std::str::FromStr for Country {
     // Error definitions are contained in the
     // `google_maps\src\geocoding\error.rs` module.
-    type Err = crate::geocoding::error::Error;
+    type Err = GoogleMapsError;
     /// Gets a `Country` enum from a `String` that contains a valid [ISO 3166-1
     /// Alpha-2](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
     /// country code.
     fn from_str(country_code: &str) -> Result<Self, Self::Err> {
-        COUNTRIES_BY_CODE
+        Ok(COUNTRIES_BY_CODE
             .get(country_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidCountryCode(country_code.to_string()))
+            .ok_or_else(|| GeocodingError::InvalidCountryCode(country_code.to_string()))?)
     } // fn
 } // impl
 

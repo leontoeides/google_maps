@@ -3,7 +3,6 @@ use crate::geocoding::{
     forward::ForwardRequest as GeocodingForwardRequest,
     response::Response as GeocodingResponse,
 }; // crate::geocoding
-use miette::Result;
 
 // =============================================================================
 

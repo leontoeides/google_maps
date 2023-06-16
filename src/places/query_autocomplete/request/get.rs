@@ -13,7 +13,6 @@ use crate::places::query_autocomplete::{
     request::Request as QueryAutocompleteRequest,
 }; // crate::places::query_autocomplete
 use crate::request_rate::api::Api;
-use miette::Result;
 
 // -----------------------------------------------------------------------------
 

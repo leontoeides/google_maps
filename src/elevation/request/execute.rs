@@ -3,7 +3,6 @@ use crate::elevation::{
     request::Request as ElevationRequest,
     response::Response as ElevationResponse,
 }; // crate::elevation
-use miette::Result;
 
 // =============================================================================
 

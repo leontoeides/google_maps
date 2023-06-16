@@ -3,7 +3,6 @@ use crate::places::place_autocomplete::{
     request::Request as PlaceAutocompleteRequest,
     response::Response as PlaceAutocompleteResponse,
 }; // crate::places::place_autocomplete
-use miette::Result;
 
 // =============================================================================
 

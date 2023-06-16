@@ -3,7 +3,6 @@ use crate::roads::nearest_roads::{
     request::Request as NearestRoadsRequest,
     response::Response as NearestRoadsResponse,
 }; // crate::roads::nearest_roads
-use miette::Result;
 
 // =============================================================================
 

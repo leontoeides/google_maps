@@ -11,7 +11,7 @@ use thiserror::Error;
 /// Errors that may be produced by the Google Maps Geocoding API client.
 
 #[derive(Debug, Diagnostic, Error)]
-#[diagnostic(code(google_maps::geocoding), url(docsrs))]
+#[diagnostic(code(google_maps::geocoding::error), url(docsrs))]
 pub enum Error {
     /// Forward geocoding requests (address to latlng) must specify an `address`
     /// or at least one `component`.

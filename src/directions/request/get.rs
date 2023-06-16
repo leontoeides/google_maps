@@ -11,7 +11,6 @@ use crate::directions::{
 }; // use crate::directions
 use crate::error::Error as GoogleMapsError;
 use crate::request_rate::api::Api;
-use miette::Result;
 
 // -----------------------------------------------------------------------------
 

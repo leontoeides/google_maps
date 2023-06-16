@@ -3,7 +3,6 @@ use crate::distance_matrix::{
     request::Request as DistanceMatrixRequest,
     response::Response as DistanceMatrixResponse,
 }; // crate::distance_matrix
-use miette::Result;
 
 // =============================================================================
 

@@ -2,10 +2,10 @@
 //! specify a desired language for a response. _This is not a comprehensive list
 //! of languages, it is a list of languages that Google Maps supports._
 
-use crate::types::error::Error;
+use crate::types::error::Error as TypesError;
+use crate::error::Error as GoogleMapsError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
-use std::convert::TryFrom;
 
 // -----------------------------------------------------------------------------
 
@@ -378,14 +378,14 @@ static LANGUAGES_BY_CODE: phf::Map<&'static str, Language> = phf_map! {
 
 impl std::convert::TryFrom<&str> for Language {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Error = crate::types::Error;
+    type Error = GoogleMapsError;
     /// Gets a `Language` enum from a `String` that contains a supported
     /// [language](https://developers.google.com/maps/faq#languagesupport) code.
     fn try_from(language_code: &str) -> Result<Self, Self::Error> {
-        LANGUAGES_BY_CODE
+        Ok(LANGUAGES_BY_CODE
             .get(language_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidLanguageCode(language_code.to_string()))
+            .ok_or_else(|| TypesError::InvalidLanguageCode(language_code.to_string()))?)
     } // fn
 } // impl
 
@@ -393,14 +393,14 @@ impl std::convert::TryFrom<&str> for Language {
 
 impl std::str::FromStr for Language {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Err = crate::types::Error;
+    type Err = GoogleMapsError;
     /// Gets a `Language` enum from a `String` that contains a supported
     /// [language](https://developers.google.com/maps/faq#languagesupport) code.
     fn from_str(language_code: &str) -> Result<Self, Self::Err> {
-        LANGUAGES_BY_CODE
+        Ok(LANGUAGES_BY_CODE
             .get(language_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidLanguageCode(language_code.to_string()))
+            .ok_or_else(|| TypesError::InvalidLanguageCode(language_code.to_string()))?)
     } // fn
 } // impl
 
