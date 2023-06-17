@@ -1,5 +1,7 @@
 # Change Log
 
+* 3.2.3: 2023-06-17: Fixes for using this crate's optional feature flags.
+
 * 3.2.2: 2023-06-16: `time 0.1` dependency was removed using `chrono` feature
 flags. Thanks for the contribution, [popen2](https://github.com/popen2)!
 

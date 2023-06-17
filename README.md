@@ -35,6 +35,8 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 # What's new?
 
+* 3.2.3: 2023-06-17: Fixes for using this crate's optional feature flags.
+
 * 3.2.2: 2023-06-16: `time 0.1` dependency was removed using `chrono` feature
 flags. Thanks for the contribution, [popen2](https://github.com/popen2)!
 
@@ -78,41 +80,6 @@ error type. This could be tedious or annoying when using several different APIs.
 * 3.2.0: 2023-05-31: Adjusted `tracing` log levels.
 
 * 3.2.0: 2023-05-31: Some house-keeping.
-
-* 3.1.1: 2023-01-29: Update to Chinese languages.
-Thanks [rick68](https://github.com/rick68)!
-
-* 3.1.0: 2022-11-27: ⚠ **Breaking change**: `Geometry.location_type` is now an
-`Option`.
-
-* 3.1.0: 2022-11-27: Add basic support for Google Maps Places _Text Search_ and
-_Places Details_.
-
-* 3.0.1: 2022-10-01: Added `UNKNOWN_ERROR` variant to Directions API's geocoder
-status.
-
-* 3.0.0: 2022-09-03: ⚠ **Breaking change**: `LatLng::try_from` had to be
-renamed to `LatLng::try_from_dec` to fix name collision with the
-[TryFrom](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) trait.
-Added `try_from_f32` and `try_from_f64` methods for the `LatLng` type.
-
-* 3.0.0: 2022-09-04: Initial support for Google Maps Roads API: the **Snap To
-Roads** and the **Nearest Roads** services have been implemented. Unsure about
-supporting **Speed Limits** since, according to the documentation, it requires
-a special Google Maps plan.
-
-* 3.0.0: 2022-09-03: Optional basic support for the
-[geo](https://crates.io/crates/geo) crate and [GeoRust](https://georust.org/)
-ecosystem. This support may be enabled using the `geo` feature flag. When the
-`geo` feature is enabled, some types may loose support for `serde`
-serialization & deserialization. If I've missed something you want or if you
-think of a better way of doing this, feel free to reach out. See
-[CHANGELOG.md](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md)
-for more information on this update.
-
-* 3.0.0: 2022-09-04: `ClientSettings` renamed to `GoogleMapsClient`.
-
-* 3.0.0: 2022-08-27: Adjusted `tracing` log levels.
 
 * The full [change
 log](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md) is
