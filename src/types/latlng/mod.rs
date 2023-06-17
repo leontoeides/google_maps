@@ -8,7 +8,7 @@ mod geo;
 // -----------------------------------------------------------------------------
 
 use crate::error::Error as GoogleMapsError;
-use crate::types::error::Error as TypesError;
+use crate::types::error::Error as TypeError;
 use rust_decimal::Decimal;
 use rust_decimal::prelude::{FromPrimitive, FromStr};
 use rust_decimal_macros::dec;
@@ -46,11 +46,11 @@ impl LatLng {
     pub fn try_from_dec(lat: Decimal, lng: Decimal) -> Result<LatLng, GoogleMapsError> {
 
         if lat < dec!(-90.0) || lat > dec!(90.0) {
-            Err(TypesError::InvalidLatitude(lat, lng))?
+            Err(TypeError::InvalidLatitude(lat, lng))?
         } // if
 
         if lng < dec!(-180.0) || lng > dec!(180.0) {
-            Err(TypesError::InvalidLongitude(lat, lng))?
+            Err(TypeError::InvalidLongitude(lat, lng))?
         } // if
 
         Ok(LatLng {
@@ -71,17 +71,17 @@ impl LatLng {
     pub fn try_from_f32(lat: f32, lng: f32) -> Result<LatLng, GoogleMapsError> {
 
         let lat: Decimal = Decimal::from_f32(lat)
-            .ok_or_else(|| TypesError::FloatToDecimalConversionError(lat.to_string()))?;
+            .ok_or_else(|| TypeError::FloatToDecimalConversionError(lat.to_string()))?;
 
         let lng: Decimal = Decimal::from_f32(lng)
-            .ok_or_else(|| TypesError::FloatToDecimalConversionError(lng.to_string()))?;
+            .ok_or_else(|| TypeError::FloatToDecimalConversionError(lng.to_string()))?;
 
         if lat < dec!(-90.0) || lat > dec!(90.0) {
-            Err(TypesError::InvalidLatitude(lat, lng))?
+            Err(TypeError::InvalidLatitude(lat, lng))?
         } // if
 
         if lng < dec!(-180.0) || lng > dec!(180.0) {
-            Err(TypesError::InvalidLongitude(lat, lng))?
+            Err(TypeError::InvalidLongitude(lat, lng))?
         } // if
 
         Ok(LatLng {
@@ -102,17 +102,17 @@ impl LatLng {
     pub fn try_from_f64(lat: f64, lng: f64) -> Result<LatLng, GoogleMapsError> {
 
         let lat: Decimal = Decimal::from_f64(lat)
-            .ok_or_else(|| TypesError::FloatToDecimalConversionError(lat.to_string()))?;
+            .ok_or_else(|| TypeError::FloatToDecimalConversionError(lat.to_string()))?;
 
         let lng: Decimal = Decimal::from_f64(lng)
-            .ok_or_else(|| TypesError::FloatToDecimalConversionError(lng.to_string()))?;
+            .ok_or_else(|| TypeError::FloatToDecimalConversionError(lng.to_string()))?;
 
         if lat < dec!(-90.0) || lat > dec!(90.0) {
-            Err(TypesError::InvalidLatitude(lat, lng))?
+            Err(TypeError::InvalidLatitude(lat, lng))?
         } // if
 
         if lng < dec!(-180.0) || lng > dec!(180.0) {
-            Err(TypesError::InvalidLongitude(lat, lng))?
+            Err(TypeError::InvalidLongitude(lat, lng))?
         } // if
 
         Ok(LatLng {
@@ -135,12 +135,12 @@ impl TryFrom<&str> for LatLng {
             .split(',')
             .collect();
         if coords.len() != 2 {
-            Err(TypesError::InvalidLatLongString(value.to_owned()))?
+            Err(TypeError::InvalidLatLongString(value.to_owned()))?
         } else {
             let lat = Decimal::from_str(coords[0].trim());
-            let lat = lat.map_err(|_| TypesError::InvalidLatLongString(value.to_owned()))?;
+            let lat = lat.map_err(|_| TypeError::InvalidLatLongString(value.to_owned()))?;
             let lon = Decimal::from_str(coords[1].trim());
-            let lon = lon.map_err(|_| TypesError::InvalidLatLongString(value.to_owned()))?;
+            let lon = lon.map_err(|_| TypeError::InvalidLatLongString(value.to_owned()))?;
             LatLng::try_from_dec(lat, lon)
         }
     }
@@ -159,12 +159,12 @@ impl std::str::FromStr for LatLng {
             .split(',')
             .collect();
         if coords.len() != 2 {
-            Err(TypesError::InvalidLatLongString(value.to_owned()))?
+            Err(TypeError::InvalidLatLongString(value.to_owned()))?
         } else {
             let lat = Decimal::from_str(coords[0].trim());
-            let lat = lat.map_err(|_| TypesError::InvalidLatLongString(value.to_owned()))?;
+            let lat = lat.map_err(|_| TypeError::InvalidLatLongString(value.to_owned()))?;
             let lon = Decimal::from_str(coords[1].trim());
-            let lon = lon.map_err(|_| TypesError::InvalidLatLongString(value.to_owned()))?;
+            let lon = lon.map_err(|_| TypeError::InvalidLatLongString(value.to_owned()))?;
             LatLng::try_from_dec(lat, lon)
         } // if
     } // fn

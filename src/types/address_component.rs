@@ -3,6 +3,8 @@
 use crate::types::PlaceType;
 use serde::{Deserialize, Serialize};
 
+// -----------------------------------------------------------------------------
+//
 /// Contains the separate components applicable to this address.
 ///
 /// Note the following facts about the address_components array:

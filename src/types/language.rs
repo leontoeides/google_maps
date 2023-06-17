@@ -2,7 +2,7 @@
 //! specify a desired language for a response. _This is not a comprehensive list
 //! of languages, it is a list of languages that Google Maps supports._
 
-use crate::types::error::Error as TypesError;
+use crate::types::error::Error as TypeError;
 use crate::error::Error as GoogleMapsError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
@@ -385,7 +385,7 @@ impl std::convert::TryFrom<&str> for Language {
         Ok(LANGUAGES_BY_CODE
             .get(language_code)
             .cloned()
-            .ok_or_else(|| TypesError::InvalidLanguageCode(language_code.to_string()))?)
+            .ok_or_else(|| TypeError::InvalidLanguageCode(language_code.to_string()))?)
     } // fn
 } // impl
 
@@ -400,7 +400,7 @@ impl std::str::FromStr for Language {
         Ok(LANGUAGES_BY_CODE
             .get(language_code)
             .cloned()
-            .ok_or_else(|| TypesError::InvalidLanguageCode(language_code.to_string()))?)
+            .ok_or_else(|| TypeError::InvalidLanguageCode(language_code.to_string()))?)
     } // fn
 } // impl
 

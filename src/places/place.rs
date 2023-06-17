@@ -1,9 +1,8 @@
 //! Attributes describing a place. Not all attributes will be available for all
 //! place types.
 
-use crate::geocoding::{AddressComponent, Geometry};
+use crate::types::{AddressComponent, Geometry, PlaceType};
 use crate::places::{BusinessStatus, PlaceEditorialSummary, PlaceOpeningHours, PlacePhoto, PlaceReview};
-use crate::PlaceType;
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 

@@ -1,7 +1,7 @@
 //! A review of the place submitted by a user.
 
 use chrono::{DateTime, LocalResult, TimeZone, Utc};
-use crate::Language;
+use crate::types::Language;
 use serde::de::{Unexpected, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 

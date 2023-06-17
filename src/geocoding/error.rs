@@ -22,16 +22,7 @@ pub enum Error {
     /// The HTTP request was unsuccessful.
     HttpUnsuccessful(String),
     /// API client library attempted to parse a string that contained an invalid
-    /// country code. See `google_maps\src\geocoding\forward\country.rs` for
-    /// more information.
-    InvalidCountryCode(String),
-    /// API client library attempted to parse a string that contained an invalid
-    /// location type code. See `google_maps\src\geocoding\location_types.rs`
-    /// for more information.
-    InvalidLocationTypeCode(String),
-    /// API client library attempted to parse a string that contained an invalid
-    /// status code. See `google_maps\src\geocoding\response\status.rs` for more
-    /// information.
+    /// status code.
     InvalidStatusCode(String),
     /// The query string must be built before the request may be sent to the
     /// Google Maps Geocoding API server.
@@ -92,17 +83,6 @@ impl std::fmt::Display for Error {
                 "Google Maps Geocoding API client: \
                 Could not successfully query the Google Cloud Platform service. \
                 The service last responded with a `{status}` status."),
-            Error::InvalidCountryCode(country_code) => write!(f,
-                "Google Maps Geocoding API client: \
-                `{country_code}` is not a valid ISO 3166-1 Alpha-2 country code. \
-                Note that the country code must be in uppercase. \
-                For a list of country codes see \
-                https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes"),
-            Error::InvalidLocationTypeCode(location_type_code) => write!(f,
-                "Google Maps Geocoding API client: \
-                `{location_type_code}` is not a known location type code. \
-                Valid codes are `APPROXIMATE`, `GEOMETRIC_CENTER`, \
-                `RANGE_INTERPOLATED`, and `ROOFTOP`."),
             Error::InvalidStatusCode(status_code) => write!(f,
                 "Google Maps Geocoding API client: \
                 `{status_code}` is not a valid status code. \

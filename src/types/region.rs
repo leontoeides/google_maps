@@ -4,7 +4,7 @@
 //! comprehensive list of countries, it is a list of countries that Google Maps
 //! supports._
 
-use crate::types::error::Error as TypesError;
+use crate::types::error::Error as TypeError;
 use crate::error::Error as GoogleMapsError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
@@ -919,7 +919,7 @@ impl std::convert::TryFrom<&str> for Region {
         Ok(REGIONS_BY_CODE
             .get(region_code)
             .cloned()
-            .ok_or_else(|| TypesError::InvalidRegionCode(region_code.to_string()))?)
+            .ok_or_else(|| TypeError::InvalidRegionCode(region_code.to_string()))?)
     } // fn
 } // impl
 
@@ -934,7 +934,7 @@ impl std::str::FromStr for Region {
         Ok(REGIONS_BY_CODE
             .get(region_code)
             .cloned()
-            .ok_or_else(|| TypesError::InvalidRegionCode(region_code.to_string()))?)
+            .ok_or_else(|| TypeError::InvalidRegionCode(region_code.to_string()))?)
     } // fn
 } // impl
 

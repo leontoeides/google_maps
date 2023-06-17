@@ -20,14 +20,28 @@ pub use crate::{
     client::GoogleMapsClient as ClientSettings,
     client::GoogleMapsClient,
     error::Error as GoogleMapsError,
-    types::bounds::Bounds,
-    types::country::Country,
     types::error::Error as TypeError,
-    types::language::Language,
-    types::latlng::LatLng,
-    types::place_type::PlaceType,
-    types::region::Region,
 }; // crate
+
+#[cfg(any(feature = "geocoding", feature = "places", feature = "geocoding"))]
+pub use crate::types::address_component::AddressComponent;
+#[cfg(any(feature = "directions", feature = "distance_matrix", feature = "geocoding", feature = "places"))]
+pub use crate::types::bounds::Bounds;
+#[cfg(any(feature = "autocomplete", feature = "directions", feature = "geocoding"))]
+pub use crate::types::country::Country;
+pub use crate::types::error::Error;
+#[cfg(any(feature = "geocoding", feature = "places", feature = "geocoding"))]
+pub use crate::types::geometry::Geometry;
+#[cfg(any(feature = "autocomplete", feature = "directions", feature = "distance_matrix", feature = "geocoding", feature = "places", feature = "time_zone"))]
+pub use crate::types::language::Language;
+#[cfg(any(feature = "autocomplete", feature = "directions", feature = "distance_matrix", feature = "elevation", feature = "geocoding", feature = "places", feature = "roads", feature = "time_zone"))]
+pub use crate::types::latlng::LatLng;
+#[cfg(any(feature = "geocoding", feature = "places", feature = "geocoding"))]
+pub use crate::types::location_type::LocationType;
+#[cfg(any(feature = "autocomplete", feature = "directions", feature = "distance_matrix", feature = "geocoding", feature = "places"))]
+pub use crate::types::place_type::PlaceType;
+#[cfg(any(feature = "autocomplete", feature = "directions", feature = "distance_matrix", feature = "geocoding", feature = "places"))]
+pub use crate::types::region::Region;
 
 // =============================================================================
 //
@@ -121,11 +135,8 @@ pub use crate::geocoding::{
         component::Component as GeocodingComponent,
         ForwardRequest as GeocodingRequest,
     }, // forward
-    location_type::LocationType,
     response::{
-        address_component::AddressComponent,
         geocoding::Geocoding,
-        geometry::Geometry,
         plus_code::PlusCode,
         Response as GeocodingResponse,
         status::Status as GeocodingStatus,

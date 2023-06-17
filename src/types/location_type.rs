@@ -1,7 +1,8 @@
 //! Contains the `LocationType` enum and its associated traits. It specifies the
 //! nature and accuracy of the Geocoding response.
 
-use crate::geocoding::error::Error;
+use crate::error::Error as GoogleMapsError;
+use crate::types::Error as TypeError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -100,16 +101,16 @@ static LOCATION_TYPES_BY_CODE: phf::Map<&'static str, LocationType> = phf_map! {
 impl std::convert::TryFrom<&str> for LocationType {
     // Error definitions are contained in the
     // `google_maps\src\geocoding\error.rs` module.
-    type Error = crate::geocoding::error::Error;
+    type Error = GoogleMapsError;
     /// Gets a `LocationType` enum from a `String` that contains a supported
     /// [location
     /// type](https://developers.google.com/maps/documentation/geocoding/intro#Results)
     /// code.
     fn try_from(location_code: &str) -> Result<Self, Self::Error> {
-        LOCATION_TYPES_BY_CODE
+        Ok(LOCATION_TYPES_BY_CODE
             .get(location_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidLocationTypeCode(location_code.to_string()))
+            .ok_or_else(|| TypeError::InvalidLocationTypeCode(location_code.to_string()))?)
     } // fn
 } // impl
 
@@ -118,16 +119,16 @@ impl std::convert::TryFrom<&str> for LocationType {
 impl std::str::FromStr for LocationType {
     // Error definitions are contained in the
     // `google_maps\src\geocoding\error.rs` module.
-    type Err = crate::geocoding::error::Error;
+    type Err = GoogleMapsError;
     /// Gets a `LocationType` enum from a `String` that contains a supported
     /// [location
     /// type](https://developers.google.com/maps/documentation/geocoding/intro#Results)
     /// code.
     fn from_str(location_code: &str) -> Result<Self, Self::Err> {
-        LOCATION_TYPES_BY_CODE
+        Ok(LOCATION_TYPES_BY_CODE
             .get(location_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidLocationTypeCode(location_code.to_string()))
+            .ok_or_else(|| TypeError::InvalidLocationTypeCode(location_code.to_string()))?)
     } // fn
 } // impl
 

@@ -2,15 +2,17 @@
 //! from the Google Maps Platform. Look in here for more information about the
 //! data returned from Google's server and how to parse it with your program.
 
-pub mod address_component;
 pub mod geocoding;
-pub mod geometry;
 pub mod plus_code;
 pub mod status;
+
+// -----------------------------------------------------------------------------
 
 use crate::geocoding::response::{geocoding::Geocoding, status::Status};
 use serde::{Deserialize, Serialize};
 
+// -----------------------------------------------------------------------------
+//
 /// The response from the Google Maps Geolocation API will be stored in this
 /// structure.
 
@@ -35,6 +37,8 @@ pub struct Response {
     /// track down why geocoding is not working.
     pub status: Status,
 } // struct
+
+// -----------------------------------------------------------------------------
 
 impl std::str::FromStr for Response {
     type Err = serde_json::error::Error;

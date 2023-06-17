@@ -82,7 +82,6 @@
 
 pub mod error;
 pub mod forward;
-pub mod location_type;
 pub mod response;
 pub mod reverse;
 
@@ -99,14 +98,13 @@ pub use crate::geocoding::{
         component::Component as GeocodingComponent,
         ForwardRequest as GeocodingRequest,
     }, // forward
-    location_type::LocationType,
     response::{
-        address_component::AddressComponent,
         geocoding::Geocoding,
-        geometry::Geometry,
         plus_code::PlusCode,
         Response as GeocodingResponse,
         status::Status as GeocodingStatus,
     }, // response
     reverse::ReverseRequest as GeocodingReverseRequest,
 }; // geocoding
+
+pub use crate::types::{LocationType, AddressComponent, Geometry};

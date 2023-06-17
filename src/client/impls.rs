@@ -5,7 +5,7 @@ use crate::request_rate::RequestRate;
 use crate::directions::request::location::Location;
 #[cfg(feature = "distance_matrix")]
 use crate::directions::request::waypoint::Waypoint;
-#[cfg(any(feature = "geocoding", feature = "time_zone"))]
+#[cfg(any(feature = "geocoding", feature = "time_zone", feature = "roads"))]
 use crate::types::LatLng;
 #[cfg(feature = "time_zone")]
 use chrono::{DateTime, Utc};

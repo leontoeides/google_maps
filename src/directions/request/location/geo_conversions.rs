@@ -4,7 +4,7 @@
 use crate::directions::Location;
 use crate::error::Error as GoogleMapsError;
 use crate::LatLng;
-use crate::types::error::Error as TypesError;
+use crate::types::error::Error as TypeError;
 use geo_types::geometry::{Coord, Point};
 use rust_decimal::{Decimal, prelude::FromPrimitive};
 
@@ -20,10 +20,10 @@ impl TryFrom<&Coord> for Location {
     fn try_from(coordinate: &Coord) -> Result<Self, Self::Error> {
 
         let lat: Decimal = Decimal::from_f64(coordinate.y)
-            .ok_or_else(|| TypesError::FloatToDecimalConversionError(coordinate.y.to_string()))?;
+            .ok_or_else(|| TypeError::FloatToDecimalConversionError(coordinate.y.to_string()))?;
 
         let lng: Decimal = Decimal::from_f64(coordinate.x)
-            .ok_or_else(|| TypesError::FloatToDecimalConversionError(coordinate.x.to_string()))?;
+            .ok_or_else(|| TypeError::FloatToDecimalConversionError(coordinate.x.to_string()))?;
 
         let lat_lng: LatLng = LatLng::try_from_dec(lat, lng)?;
 
@@ -45,10 +45,10 @@ impl TryFrom<&Point> for Location {
     fn try_from(point: &Point) -> Result<Self, Self::Error> {
 
         let lat: Decimal = Decimal::from_f64(point.y())
-            .ok_or_else(|| TypesError::FloatToDecimalConversionError(point.y().to_string()))?;
+            .ok_or_else(|| TypeError::FloatToDecimalConversionError(point.y().to_string()))?;
 
         let lng: Decimal = Decimal::from_f64(point.x())
-            .ok_or_else(|| TypesError::FloatToDecimalConversionError(point.x().to_string()))?;
+            .ok_or_else(|| TypeError::FloatToDecimalConversionError(point.x().to_string()))?;
 
         let lat_lng: LatLng = LatLng::try_from_dec(lat, lng)?;
 

@@ -1,9 +1,5 @@
-use crate::geocoding::response::{
-    address_component::AddressComponent,
-    geometry::Geometry,
-    plus_code::PlusCode,
-}; // use crate::geocoding::response
-use crate::types::PlaceType;
+use crate::geocoding::response::plus_code::PlusCode;
+use crate::types::{AddressComponent, Geometry, PlaceType};
 use serde::{Deserialize, Serialize};
 
 // -----------------------------------------------------------------------------

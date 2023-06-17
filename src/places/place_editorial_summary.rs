@@ -2,7 +2,7 @@
 //! overview, and also includes the language code for these if applicable.
 //! Summary text must be presented as-is and can not be modified or altered.
 
-use crate::Language;
+use crate::types::Language;
 use serde::{Deserialize, Serialize};
 
 // -----------------------------------------------------------------------------

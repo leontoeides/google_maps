@@ -2,7 +2,7 @@
 //! types or categories of a place. For example, a returned place could be a
 //! "country" (as in a nation) or it could be a "shopping mall."
 
-use crate::types::error::Error as TypesError;
+use crate::types::error::Error as TypeError;
 use crate::error::Error as GoogleMapsError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
@@ -578,7 +578,7 @@ impl std::convert::TryFrom<&str> for PlaceType {
         Ok(PLACE_TYPES_BY_CODE
             .get(place_type_code)
             .cloned()
-            .ok_or_else(|| TypesError::InvalidPlaceTypeCode(place_type_code.to_string()))?)
+            .ok_or_else(|| TypeError::InvalidPlaceTypeCode(place_type_code.to_string()))?)
     } // fn
 } // impl
 
@@ -594,7 +594,7 @@ impl std::str::FromStr for PlaceType {
         Ok(PLACE_TYPES_BY_CODE
             .get(place_type_code)
             .cloned()
-            .ok_or_else(|| TypesError::InvalidPlaceTypeCode(place_type_code.to_string()))?)
+            .ok_or_else(|| TypeError::InvalidPlaceTypeCode(place_type_code.to_string()))?)
     } // fn
 } // impl
 

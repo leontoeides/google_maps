@@ -17,40 +17,43 @@ use thiserror::Error;
 pub enum Error {
 
     /// API client library attempted to parse a string that contained an invalid
-    /// language code. See `google_maps\src\language.rs` for more information.
+    /// language code.
     InvalidLanguageCode(String),
 
     /// API client library attempted to convert a latitude/longitude pair that
-    /// contained an invalid latitude. See `google_maps\src\latlng.rs` for more
-    /// information.
+    /// contained an invalid latitude.
     InvalidLatitude(Decimal, Decimal),
 
     /// API client library attempted to convert a latitude/longitude pair that
-    /// contained an invalid longitude. See `google_maps\src\latlng.rs` for more
-    /// information.
+    /// contained an invalid longitude.
     InvalidLongitude(Decimal, Decimal),
 
     /// API client library attempted to convert a latitude/longitude pair that
     /// contained an invalid floating-point value.
     FloatToDecimalConversionError(String),
 
-    /// API client library attempted to convert a latitude/longitude pair string
-    /// that is invalid. See `google_maps\src\latlng.rs` for more
-    /// information.
-    InvalidLatLongString(String),
-
     /// API client library attempted to convert a bounds string that is invalid.
-    /// See `google_maps\src\bounds.rs` for more information.
     InvalidBoundsString(String),
 
     /// API client library attempted to parse a string that contained an invalid
-    /// place type code. See `google_maps\src\place_type.rs` for more
-    /// information.
+    /// country code.
+    InvalidCountryCode(String),
+
+    /// API client library attempted to convert a latitude/longitude pair string
+    /// that is invalid.
+    InvalidLatLongString(String),
+
+    /// API client library attempted to parse a string that contained an invalid
+    /// place type code.
     InvalidPlaceTypeCode(String),
 
     /// API client library attempted to parse a string that contained an invalid
-    /// region code. See `google_maps\src\region.rs` for more information.
+    /// region code.
     InvalidRegionCode(String),
+
+    /// API client library attempted to parse a string that contained an invalid
+    /// location type code.
+    InvalidLocationTypeCode(String),
 
 } // enum
 
@@ -85,6 +88,22 @@ impl std::fmt::Display for Error {
                 "Google Maps Platform API client: \
                 `{value}` could not be converted from a `f64` type to a `Decimal` type.",
             ),
+            Error::InvalidBoundsString(value) => write!(
+                f,
+                "Google Maps Platform API client: \
+                `{value}` is an invalid `Bounds` string."
+            ),
+            Error::InvalidCountryCode(country_code) => write!(f,
+                "Google Maps Geocoding API client: \
+                `{country_code}` is not a valid ISO 3166-1 Alpha-2 country code. \
+                Note that the country code must be in uppercase. \
+                For a list of country codes see \
+                https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes"),
+            Error::InvalidLatLongString(value) => write!(
+                f,
+                "Google Maps Platform API client: \
+                `{value}` is an invalid `LatLng` string."
+            ),
             Error::InvalidPlaceTypeCode(place_type_code) => write!(
                 f,
                 "Google Maps Platform API client: \
@@ -99,16 +118,11 @@ impl std::fmt::Display for Error {
                 For a list of supported regions see \
                 https://developers.google.com/maps/coverage"
             ),
-            Error::InvalidLatLongString(value) => write!(
-                f,
-                "Google Maps Platform API client: \
-                `{value}` is an invalid `LatLng` string."
-            ),
-            Error::InvalidBoundsString(value) => write!(
-                f,
-                "Google Maps Platform API client: \
-                `{value}` is an invalid `Bounds` string."
-            ),
+            Error::InvalidLocationTypeCode(location_type_code) => write!(f,
+                "Google Maps Geocoding API client: \
+                `{location_type_code}` is not a known location type code. \
+                Valid codes are `APPROXIMATE`, `GEOMETRIC_CENTER`, \
+                `RANGE_INTERPOLATED`, and `ROOFTOP`."),
         } // match
     } // fn
 } // impl

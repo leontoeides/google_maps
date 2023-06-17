@@ -2,8 +2,8 @@
 //! country or a nation. See also [ISO 3166 country
 //! codes](https://en.wikipedia.org/wiki/ISO_3166-1).
 
-use crate::geocoding::error::Error as GeocodingError;
 use crate::error::Error as GoogleMapsError;
+use crate::types::Error as TypeError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::convert::TryFrom;
@@ -853,7 +853,7 @@ impl std::convert::TryFrom<&str> for Country {
         Ok(COUNTRIES_BY_CODE
             .get(country_code)
             .cloned()
-            .ok_or_else(|| GeocodingError::InvalidCountryCode(country_code.to_string()))?)
+            .ok_or_else(|| TypeError::InvalidCountryCode(country_code.to_string()))?)
     } // fn
 } // impl
 
@@ -870,7 +870,7 @@ impl std::str::FromStr for Country {
         Ok(COUNTRIES_BY_CODE
             .get(country_code)
             .cloned()
-            .ok_or_else(|| GeocodingError::InvalidCountryCode(country_code.to_string()))?)
+            .ok_or_else(|| TypeError::InvalidCountryCode(country_code.to_string()))?)
     } // fn
 } // impl
 
