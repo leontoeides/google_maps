@@ -20,6 +20,7 @@ pub use crate::{
     client::GoogleMapsClient as ClientSettings,
     client::GoogleMapsClient,
     error::Error as GoogleMapsError,
+    error::Error,
     types::error::Error as TypeError,
 }; // crate
 
@@ -29,7 +30,6 @@ pub use crate::types::address_component::AddressComponent;
 pub use crate::types::bounds::Bounds;
 #[cfg(any(feature = "autocomplete", feature = "directions", feature = "geocoding"))]
 pub use crate::types::country::Country;
-pub use crate::types::error::Error;
 #[cfg(any(feature = "geocoding", feature = "places", feature = "geocoding"))]
 pub use crate::types::geometry::Geometry;
 #[cfg(any(feature = "autocomplete", feature = "directions", feature = "distance_matrix", feature = "geocoding", feature = "places", feature = "time_zone"))]

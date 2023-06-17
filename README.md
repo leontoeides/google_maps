@@ -35,6 +35,8 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 # What's new?
 
+* 3.2.4: 2023-06-17: Emergency update. Important types were moved.
+
 * 3.2.3: 2023-06-17: Fixes for using this crate's optional feature flags.
 
 * 3.2.2: 2023-06-16: `time 0.1` dependency was removed using `chrono` feature
