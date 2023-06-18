@@ -1,7 +1,8 @@
 //! Contains the `SortOrder` enum and its associated traits. It is used to
 //! specify the sort order of reviews in the place details.
 
-use crate::places::error::Error;
+use crate::error::Error as GoogleMapsError;
+use crate::places::error::Error as PlacesError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -92,15 +93,15 @@ static SORT_ORDER_TYPES_BY_CODE: phf::Map<&'static str, SortOrder> = phf_map! {
 
 impl std::convert::TryFrom<&str> for SortOrder {
     // Error definitions are contained in the `google_maps\src\places\error.rs` module.
-    type Error = crate::places::error::Error;
+    type Error = GoogleMapsError;
     /// Gets a `SortOrder` enum from a `String` that contains a supported
     /// [sort order](https://developers.google.com/maps/documentation/places/web-service/details#reviews_sort)
     /// code.
     fn try_from(sort_order_code: &str) -> Result<Self, Self::Error> {
-        SORT_ORDER_TYPES_BY_CODE
+        Ok(SORT_ORDER_TYPES_BY_CODE
             .get(sort_order_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidSortOrderCode(sort_order_code.to_string()))
+            .ok_or_else(|| PlacesError::InvalidSortOrderCode(sort_order_code.to_string()))?)
     } // fn
 } // impl
 
@@ -108,15 +109,15 @@ impl std::convert::TryFrom<&str> for SortOrder {
 
 impl std::str::FromStr for SortOrder {
     // Error definitions are contained in the `google_maps\src\places\error.rs` module.
-    type Err = crate::places::error::Error;
+    type Err = GoogleMapsError;
     /// Gets a `SortOrder` enum from a `String` that contains a supported
     /// [sort order](https://developers.google.com/maps/documentation/places/web-service/details#reviews_sort)
     /// code.
     fn from_str(sort_order_code: &str) -> Result<Self, Self::Err> {
-        SORT_ORDER_TYPES_BY_CODE
+        Ok(SORT_ORDER_TYPES_BY_CODE
             .get(sort_order_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidSortOrderCode(sort_order_code.to_string()))
+            .ok_or_else(|| PlacesError::InvalidSortOrderCode(sort_order_code.to_string()))?)
     } // fn
 } // impl
 

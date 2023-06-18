@@ -2,7 +2,8 @@
 //! fields in the place details that should be returned. For example, business
 //! status, price level, wheelchair accessible, and so on.
 
-use crate::places::error::Error;
+use crate::error::Error as GoogleMapsError;
+use crate::places::error::Error as PlacesError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -226,15 +227,15 @@ static FIELD_TYPES_BY_CODE: phf::Map<&'static str, Field> = phf_map! {
 
 impl std::convert::TryFrom<&str> for Field {
     // Error definitions are contained in the `google_maps\src\places\error.rs` module.
-    type Error = crate::places::error::Error;
+    type Error = GoogleMapsError;
     /// Gets a `Field` enum from a `String` that contains a supported
     /// [field](https://developers.google.com/maps/documentation/places/web-service/details#fields)
     /// code.
     fn try_from(field_code: &str) -> Result<Self, Self::Error> {
-        FIELD_TYPES_BY_CODE
+        Ok(FIELD_TYPES_BY_CODE
             .get(field_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidFieldCode(field_code.to_string()))
+            .ok_or_else(|| PlacesError::InvalidFieldCode(field_code.to_string()))?)
     } // fn
 } // impl
 
@@ -242,15 +243,15 @@ impl std::convert::TryFrom<&str> for Field {
 
 impl std::str::FromStr for Field {
     // Error definitions are contained in the `google_maps\src\places\error.rs` module.
-    type Err = crate::places::error::Error;
+    type Err = GoogleMapsError;
     /// Gets a `Field` enum from a `String` that contains a supported
     /// [field](https://developers.google.com/maps/documentation/places/web-service/details#fields)
     /// code.
     fn from_str(field_code: &str) -> Result<Self, Self::Err> {
-        FIELD_TYPES_BY_CODE
+        Ok(FIELD_TYPES_BY_CODE
             .get(field_code)
             .cloned()
-            .ok_or_else(|| Error::InvalidFieldCode(field_code.to_string()))
+            .ok_or_else(|| PlacesError::InvalidFieldCode(field_code.to_string()))?)
     } // fn
 } // impl
 
