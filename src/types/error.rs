@@ -67,20 +67,20 @@ impl std::fmt::Display for Error {
             Error::InvalidLanguageCode(language_code) => write!(
                 f,
                 "Google Maps Platform API client: \
-                `{language_code}` is not a recognized language code.
+                `{language_code}` is not a recognized language code. \
                 For a list of supported languages see \
                 https://developers.google.com/maps/faq#languagesupport"
             ),
             Error::InvalidLatitude(latitude, longitude) => write!(
                 f,
                 "Google Maps Platform API client: \
-                `{latitude}` from the `{latitude},{longitude}` pair is an invalid latitudinal value.
+                `{latitude}` from the `{latitude},{longitude}` pair is an invalid latitudinal value. \
                 A latitude must be between -90.0° and 90.0°."
             ),
             Error::InvalidLongitude(latitude, longitude) => write!(
                 f,
                 "Google Maps Platform API client: \
-                `{longitude}` from the `{latitude},{longitude}` pair is an invalid longitudinal value.
+                `{longitude}` from the `{latitude},{longitude}` pair is an invalid longitudinal value. \
                 A longitude must be between -180.0° and 180.0°."
             ),
             Error::FloatToDecimalConversionError(value) => write!(
@@ -107,14 +107,14 @@ impl std::fmt::Display for Error {
             Error::InvalidPlaceTypeCode(place_type_code) => write!(
                 f,
                 "Google Maps Platform API client: \
-                `{place_type_code}` is not a recognized place type code.
+                `{place_type_code}` is not a recognized place type code. \
                 For a list of supported place types see \
                 https://developers.google.com/places/web-service/supported_types"
             ),
             Error::InvalidRegionCode(region_code) => write!(
                 f,
                 "Google Maps Platform API client: \
-                `{region_code}` is not a recognized region code.
+                `{region_code}` is not a recognized region code. \
                 For a list of supported regions see \
                 https://developers.google.com/maps/coverage"
             ),
