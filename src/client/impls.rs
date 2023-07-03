@@ -25,9 +25,8 @@ impl GoogleMapsClient {
     #[cfg(feature = "enable-reqwest")]
     pub fn new(key: &str) -> GoogleMapsClient {
 
-        const VERSION: &str = env!("CARGO_PKG_VERSION");
         let reqwest_client = reqwest::Client::builder()
-            .user_agent(format!("Google Maps Rust Client {VERSION}"))
+            .user_agent(format!("google-maps-rust/{version}", version=env!("CARGO_PKG_VERSION")))
             .build()
             .unwrap();
 
