@@ -90,8 +90,7 @@ impl std::fmt::Display for Error {
             ),
             Error::FloatToDecimalConversionError(value) => write!(
                 f,
-                "Google Maps Platform API client: \
-                `{value}` could not be converted from a `f64` type to a `Decimal` type.",
+                "`{value}` could not be converted from a `f64` type to a `Decimal` type.",
             ),
             Error::InvalidBoundsString(value) => write!(
                 f,
