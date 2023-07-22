@@ -10,7 +10,7 @@ mod geo;
 use crate::error::Error as GoogleMapsError;
 use crate::types::error::Error as TypeError;
 use rust_decimal::Decimal;
-use rust_decimal::prelude::{FromPrimitive, FromStr};
+use rust_decimal::prelude::FromPrimitive;
 use rust_decimal_macros::dec;
 use serde::{Deserialize, Serialize};
 use std::cmp::{Ord, Ordering};
@@ -26,10 +26,12 @@ use std::cmp::{Ord, Ordering};
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct LatLng {
     /// Latitude. A value between -90.0° and 90.0°.
+    #[serde(alias = "y")]
     #[serde(alias = "lat")]
     #[serde(alias = "latitude")]
     pub lat: Decimal,
     /// Longitude. A value between -180.0° and 180.0°.
+    #[serde(alias = "x")]
     #[serde(alias = "lon")]
     #[serde(alias = "long")]
     #[serde(alias = "longitude")]

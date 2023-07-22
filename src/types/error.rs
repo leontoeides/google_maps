@@ -73,15 +73,20 @@ impl std::fmt::Display for Error {
             ),
             Error::InvalidLatitude(latitude, longitude) => write!(
                 f,
-                "Google Maps Platform API client: \
-                `{latitude}` from the `{latitude},{longitude}` pair is an invalid latitudinal value. \
+                "`{latitude}` from the `{latitude},{longitude}` pair is an invalid latitudinal value. \
                 A latitude must be between -90.0° and 90.0°."
             ),
             Error::InvalidLongitude(latitude, longitude) => write!(
                 f,
-                "Google Maps Platform API client: \
-                `{longitude}` from the `{latitude},{longitude}` pair is an invalid longitudinal value. \
+                "`{longitude}` from the `{latitude},{longitude}` pair is an invalid longitudinal value. \
                 A longitude must be between -180.0° and 180.0°."
+            ),
+            Error::InvalidLatLongString(value) => write!(
+                f,
+                "`{value}` is an invalid latitude & longitude coordinate string. \
+                The string must consist of two comma-separated coordinates \
+                where the latitude is specified first \
+                and the longitude is specified second."
             ),
             Error::FloatToDecimalConversionError(value) => write!(
                 f,
@@ -99,14 +104,6 @@ impl std::fmt::Display for Error {
                 Note that the country code must be in uppercase. \
                 For a list of country codes see \
                 https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes"),
-            Error::InvalidLatLongString(value) => write!(
-                f,
-                "Google Maps Platform API client: \
-                `{value}` is an invalid `LatLng` string. \
-                The string must consist of two comma-separated coordinates \
-                where the latitude is specified first \
-                and the longitude is specified second."
-            ),
             Error::InvalidPlaceTypeCode(place_type_code) => write!(
                 f,
                 "Google Maps Platform API client: \
