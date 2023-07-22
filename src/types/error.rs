@@ -102,7 +102,10 @@ impl std::fmt::Display for Error {
             Error::InvalidLatLongString(value) => write!(
                 f,
                 "Google Maps Platform API client: \
-                `{value}` is an invalid `LatLng` string."
+                `{value}` is an invalid `LatLng` string. \
+                The string must consist of two comma-separated coordinates \
+                where the latitude is specified first \
+                and the longitude is specified second."
             ),
             Error::InvalidPlaceTypeCode(place_type_code) => write!(
                 f,

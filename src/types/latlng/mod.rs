@@ -39,24 +39,26 @@ pub struct LatLng {
 // -----------------------------------------------------------------------------
 
 impl LatLng {
+
     /// Takes individual latitude & longitude `Decimal` coordinates and
     /// converts them into a `LatLng` structure. If either the latitude
     /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
     /// function will return an error.
-    pub fn try_from_dec(lat: Decimal, lng: Decimal) -> Result<LatLng, GoogleMapsError> {
 
-        if lat < dec!(-90.0) || lat > dec!(90.0) {
-            Err(TypeError::InvalidLatitude(lat, lng))?
+    pub fn try_from_dec(
+        latitude: Decimal,
+        longitude: Decimal,
+    ) -> Result<LatLng, GoogleMapsError> {
+
+        if latitude < dec!(-90.0) || latitude > dec!(90.0) {
+            Err(TypeError::InvalidLatitude(latitude, longitude))?
         } // if
 
-        if lng < dec!(-180.0) || lng > dec!(180.0) {
-            Err(TypeError::InvalidLongitude(lat, lng))?
+        if longitude < dec!(-180.0) || longitude > dec!(180.0) {
+            Err(TypeError::InvalidLongitude(latitude, longitude))?
         } // if
 
-        Ok(LatLng {
-            lat,
-            lng,
-        }) // LatLng
+        Ok(LatLng { lat: latitude, lng: longitude })
 
     } // fn
 } // impl
@@ -64,133 +66,155 @@ impl LatLng {
 // -----------------------------------------------------------------------------
 
 impl LatLng {
+
     /// Takes individual latitude & longitude `f32` coordinates and
     /// converts them into a `LatLng` structure. If either the latitude
     /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
     /// function will return an error.
-    pub fn try_from_f32(lat: f32, lng: f32) -> Result<LatLng, GoogleMapsError> {
 
-        let lat: Decimal = Decimal::from_f32(lat)
-            .ok_or_else(|| TypeError::FloatToDecimalConversionError(lat.to_string()))?;
+    pub fn try_from_f32(
+        latitude: f32,
+        longitude: f32,
+    ) -> Result<LatLng, GoogleMapsError> {
 
-        let lng: Decimal = Decimal::from_f32(lng)
-            .ok_or_else(|| TypeError::FloatToDecimalConversionError(lng.to_string()))?;
+        let lat: Decimal = Decimal::from_f32(latitude)
+            .ok_or_else(|| TypeError::FloatToDecimalConversionError(latitude.to_string()))?;
+
+        let lng: Decimal = Decimal::from_f32(longitude)
+            .ok_or_else(|| TypeError::FloatToDecimalConversionError(longitude.to_string()))?;
 
         if lat < dec!(-90.0) || lat > dec!(90.0) {
-            Err(TypeError::InvalidLatitude(lat, lng))?
+            Err(TypeError::InvalidLongitude(lat, lng))?
         } // if
 
         if lng < dec!(-180.0) || lng > dec!(180.0) {
             Err(TypeError::InvalidLongitude(lat, lng))?
         } // if
 
-        Ok(LatLng {
-            lat,
-            lng,
-        }) // LatLng
+        Ok(LatLng { lat, lng })
 
     } // fn
+
 } // impl
 
 // -----------------------------------------------------------------------------
 
 impl LatLng {
+
     /// Takes individual latitude & longitude `f64` coordinates and
     /// converts them into a `LatLng` structure. If either the latitude
     /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
     /// function will return an error.
-    pub fn try_from_f64(lat: f64, lng: f64) -> Result<LatLng, GoogleMapsError> {
 
-        let lat: Decimal = Decimal::from_f64(lat)
-            .ok_or_else(|| TypeError::FloatToDecimalConversionError(lat.to_string()))?;
+    pub fn try_from_f64(
+        latitude: f64,
+        longitude: f64,
+    ) -> Result<LatLng, GoogleMapsError> {
 
-        let lng: Decimal = Decimal::from_f64(lng)
-            .ok_or_else(|| TypeError::FloatToDecimalConversionError(lng.to_string()))?;
+        let lat: Decimal = Decimal::from_f64(latitude)
+            .ok_or_else(|| TypeError::FloatToDecimalConversionError(latitude.to_string()))?;
+
+        let lng: Decimal = Decimal::from_f64(longitude)
+            .ok_or_else(|| TypeError::FloatToDecimalConversionError(longitude.to_string()))?;
 
         if lat < dec!(-90.0) || lat > dec!(90.0) {
-            Err(TypeError::InvalidLatitude(lat, lng))?
+            Err(TypeError::InvalidLongitude(lat, lng))?
         } // if
 
         if lng < dec!(-180.0) || lng > dec!(180.0) {
             Err(TypeError::InvalidLongitude(lat, lng))?
         } // if
 
-        Ok(LatLng {
-            lat,
-            lng,
-        }) // LatLng
+        Ok(LatLng { lat, lng })
 
     } // fn
+
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::str::FromStr for LatLng {
+
+    // Error definitions are contained in the
+    // `google_maps\src\geocoding\error.rs` module.
+    type Err = GoogleMapsError;
+
+    /// Attempts to get a `LatLng` struct from a borrowed `&str` that contains a
+    /// comma-delimited latitude & longitude pair.
+    fn from_str(str: &str) -> Result<Self, Self::Err> {
+
+        let coordinates: Vec<&str> = str.trim().split(',').collect();
+
+        if coordinates.len() != 2 {
+            Err(TypeError::InvalidLatLongString(str.to_owned()))?
+        } else {
+            let lat = Decimal::from_str(coordinates[0].trim());
+            let lat = lat.map_err(|_| TypeError::InvalidLatLongString(str.to_owned()))?;
+            let lon = Decimal::from_str(coordinates[1].trim());
+            let lon = lon.map_err(|_| TypeError::InvalidLatLongString(str.to_owned()))?;
+            LatLng::try_from_dec(lat, lon)
+        } // if
+
+    } // fn
+
 } // impl
 
 // -----------------------------------------------------------------------------
 
 impl TryFrom<&str> for LatLng {
     type Error = GoogleMapsError;
-    ///
-    /// Convert string to lat lng
-    ///
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
-        let coords: Vec<&str> = value.trim()
-            .split(',')
-            .collect();
-        if coords.len() != 2 {
-            Err(TypeError::InvalidLatLongString(value.to_owned()))?
-        } else {
-            let lat = Decimal::from_str(coords[0].trim());
-            let lat = lat.map_err(|_| TypeError::InvalidLatLongString(value.to_owned()))?;
-            let lon = Decimal::from_str(coords[1].trim());
-            let lon = lon.map_err(|_| TypeError::InvalidLatLongString(value.to_owned()))?;
-            LatLng::try_from_dec(lat, lon)
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-
-impl std::str::FromStr for LatLng {
-    // Error definitions are contained in the
-    // `google_maps\src\geocoding\error.rs` module.
-    type Err = GoogleMapsError;
-    /// Gets a `LatLng` struct from a `String` that contains a comma-delimited
-    /// latitude & longitude pair.
-    fn from_str(value: &str) -> Result<Self, Self::Err> {
-        let coords: Vec<&str> = value.trim()
-            .split(',')
-            .collect();
-        if coords.len() != 2 {
-            Err(TypeError::InvalidLatLongString(value.to_owned()))?
-        } else {
-            let lat = Decimal::from_str(coords[0].trim());
-            let lat = lat.map_err(|_| TypeError::InvalidLatLongString(value.to_owned()))?;
-            let lon = Decimal::from_str(coords[1].trim());
-            let lon = lon.map_err(|_| TypeError::InvalidLatLongString(value.to_owned()))?;
-            LatLng::try_from_dec(lat, lon)
-        } // if
-    } // fn
+    /// Attempts to get a `LatLng` struct from a borrowed `&str` that contains a
+    /// comma-delimited latitude & longitude pair.
+    fn try_from(str: &str) -> Result<Self, Self::Error> { str.parse() }
 } // impl
 
 // -----------------------------------------------------------------------------
 
-impl std::fmt::Display for LatLng {
-    /// Converts a `LatLng` struct to a `String` that contains a
-    /// latitude/longitude pair.
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f,
-            "{latitude},{longitude}",
-            latitude=self.lat.normalize(),
-            longitude=self.lng.normalize(),
-        ) // write!
-    } // fn
+impl TryFrom<&String> for LatLng {
+    type Error = GoogleMapsError;
+    /// Attempts to get a `LatLng` struct from a borrowed `&String` that
+    /// contains a comma-delimited latitude & longitude pair.
+    fn try_from(string: &String) -> Result<Self, Self::Error> { string.parse() }
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl TryFrom<String> for LatLng {
+    type Error = GoogleMapsError;
+    /// Attempts to get a `LatLng` struct from an owned `String` that contains a
+    /// comma-delimited latitude & longitude pair.
+    fn try_from(string: String) -> Result<Self, Self::Error> { string.parse() }
 } // impl
 
 // -----------------------------------------------------------------------------
 
 impl std::convert::From<&LatLng> for String {
-    /// Converts a `LatLng` struct to a `String` that contains a
+    /// Converts a borrowed `&LatLng` struct to a `String` that contains a
     /// latitude/longitude pair.
     fn from(lat_lng: &LatLng) -> Self {
-        lat_lng.to_string()
+        format!(
+            "{latitude},{longitude}",
+            latitude=lat_lng.lat.normalize(),
+            longitude=lat_lng.lng.normalize(),
+        ) // format!
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<LatLng> for String {
+    /// Converts an owned `LatLng` struct to a `String` that contains a
+    /// latitude/longitude pair.
+    fn from(lat_lng: LatLng) -> Self { String::from(&lat_lng) }
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::fmt::Display for LatLng {
+    /// Converts a `LatLng` struct to a string that contains a
+    /// latitude/longitude pair.
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", String::from(self))
     } // fn
 } // impl
 
@@ -199,10 +223,7 @@ impl std::convert::From<&LatLng> for String {
 impl std::default::Default for LatLng {
     /// Returns a reasonable default value for the `LatLng` struct.
     fn default() -> Self {
-        LatLng {
-            lat: dec!(0.0),
-            lng: dec!(0.0),
-        } // struct
+        LatLng { lat: dec!(0.0), lng: dec!(0.0) }
     } // fn
 } // impl
 
