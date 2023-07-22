@@ -28,6 +28,10 @@ pub enum Error {
     /// contained an invalid longitude.
     InvalidLongitude(Decimal, Decimal),
 
+    /// API client library attempted to convert a latitude/longitude pair string
+    /// that is invalid.
+    InvalidLatLongString(String),
+
     /// API client library attempted to convert a latitude/longitude pair that
     /// contained an invalid floating-point value.
     FloatToDecimalConversionError(String),
@@ -38,10 +42,6 @@ pub enum Error {
     /// API client library attempted to parse a string that contained an invalid
     /// country code.
     InvalidCountryCode(String),
-
-    /// API client library attempted to convert a latitude/longitude pair string
-    /// that is invalid.
-    InvalidLatLongString(String),
 
     /// API client library attempted to parse a string that contained an invalid
     /// place type code.
