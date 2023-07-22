@@ -231,3 +231,23 @@ impl LatLng {
         ) // write!
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
+
+impl LatLng {
+    /// Returns the north-south latitudinal (or vertical) coordinate.
+    pub fn y(&self) -> &Decimal { &self.lat }
+    /// Returns the north-south latitudinal (or vertical) coordinate.
+    pub fn lat(&self) -> &Decimal { &self.lat }
+    /// Returns the north-south latitudinal (or vertical) coordinate.
+    pub fn latitude(&self) -> &Decimal { &self.lat }
+
+    /// Returns the east-west longitudinal (or horizontal) coordinate.
+    pub fn x(&self) -> &Decimal { &self.lng }
+    /// Returns the east-west longitudinal (or horizontal) coordinate.
+    pub fn lng(&self) -> &Decimal { &self.lng }
+    /// Returns the east-west longitudinal (or horizontal) coordinate.
+    pub fn lon(&self) -> &Decimal { &self.lng }
+    /// Returns the east-west longitudinal (or horizontal) coordinate.
+    pub fn longitude(&self) -> &Decimal { &self.lng }
+} // impl
