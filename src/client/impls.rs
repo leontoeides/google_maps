@@ -20,7 +20,7 @@ impl GoogleMapsClient {
     ///
     /// ## Arguments:
     ///
-    /// This method accepts no arguments.
+    /// This method accepts no arguments. Use the methods of the resulting type. Use the methods of the resulting type.
 
     #[cfg(feature = "enable-reqwest")]
     pub fn new(key: &str) -> GoogleMapsClient {
@@ -44,7 +44,7 @@ impl GoogleMapsClient {
     ///
     /// ## Arguments:
     ///
-    /// This method accepts no arguments.
+    /// This method accepts no arguments. Use the methods of the resulting type.
 
     #[cfg(not(feature = "enable-reqwest"))]
     pub fn new(key: &str) -> GoogleMapsClient {
@@ -130,6 +130,10 @@ impl GoogleMapsClient {
     /// The Elevation API provides elevation data for all locations on the
     /// surface of the earth, including depth locations on the ocean floor
     /// (which return negative values).
+    ///
+    /// ## Arguments:
+    ///
+    /// This method accepts no arguments. Use the methods of the resulting type.
 
     #[cfg(feature = "elevation")]
     pub fn elevation(&self) -> crate::elevation::request::Request {
@@ -143,6 +147,10 @@ impl GoogleMapsClient {
     /// addresses (like a street address) into geographic coordinates (like
     /// latitude and longitude), which you can use to place markers on a map, or
     /// position the map.
+    ///
+    /// ## Arguments:
+    ///
+    /// This method accepts no arguments. Use the methods of the resulting type.
 
     #[cfg(feature = "geocoding")]
     pub fn geocoding(&self) -> crate::geocoding::forward::ForwardRequest {
@@ -256,7 +264,7 @@ impl GoogleMapsClient {
     ///
     /// * `input` ‧ The text string on which to search.
     ///
-    /// ## Additional information:
+    /// ## Basic usage:
     ///
     /// ```rust
     /// use google_maps::prelude::*;
