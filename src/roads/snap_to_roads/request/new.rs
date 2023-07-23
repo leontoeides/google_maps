@@ -14,6 +14,7 @@ impl<'a> Request<'a> {
     /// ## Arguments:
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
+    ///
     /// * `path` ‧ The path to be snapped. Note: The snapping algorithm works
     /// best for points that are not too far apart. If you observe odd snapping
     /// behavior, try creating paths that have points closer together. To ensure

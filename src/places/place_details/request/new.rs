@@ -13,6 +13,7 @@ impl<'a> Request<'a> {
     /// ## Arguments:
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
+    ///
     /// * `place_id` ‧ A textual identifier that uniquely identifies a place,
     /// returned from a
     /// [Place Search](https://developers.google.com/maps/documentation/places/web-service/search).

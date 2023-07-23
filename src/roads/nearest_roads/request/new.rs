@@ -22,6 +22,7 @@ impl<'a> Request<'a> {
     /// ## Arguments:
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
+    ///
     /// * `points` ‧ The points to be snapped. The points parameter accepts a
     /// list of latitude/longitude pairs.
 

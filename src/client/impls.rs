@@ -59,6 +59,8 @@ impl GoogleMapsClient {
     /// locations. You can search for directions for several modes of
     /// transportation, including transit, driving, walking, or cycling.
     ///
+    /// ## Basic usage:
+    ///
     /// ```rust
     /// use google_maps::prelude::*;
     /// use rust_decimal_macros::dec;
@@ -87,6 +89,8 @@ impl GoogleMapsClient {
     /// The Distance Matrix API is a service that provides travel distance and
     /// time for a matrix of origins and destinations, based on the recommended
     /// route between start and end points.
+    ///
+    /// ## Basic usage:
     ///
     /// ```rust
     /// use google_maps::prelude::*;
@@ -151,6 +155,13 @@ impl GoogleMapsClient {
     /// geocoding of addresses. **Reverse geocoding** is the process of
     /// converting geographic coordinates into a human-readable address.
     ///
+    /// ## Arguments:
+    ///
+    /// * `latlng` ‧ The latitude and longitude values specifying the location
+    /// for which you wish to obtain the closest, human-readable address.
+    ///
+    /// ## Basic usage:
+    ///
     /// ```rust
     /// use google_maps::prelude::*;
     /// use rust_decimal_macros::dec;
@@ -178,6 +189,15 @@ impl GoogleMapsClient {
     /// specific latitude/longitude pair and date. The API returns the name of
     /// that time zone, the time offset from UTC, and the daylight savings
     /// offset.
+    ///
+    /// ## Arguments:
+    ///
+    /// * `location` ‧ Latitude & longitude of the desired time zone location.
+    ///
+    /// * `timestamp` ‧ Time is used to determine if Daylight Savings is
+    /// applicable.
+    ///
+    /// ## Basic usage:
     ///
     /// ```rust
     /// use google_maps::prelude::*;
@@ -209,6 +229,10 @@ impl GoogleMapsClient {
     /// bounds. The service can be used to provide autocomplete functionality
     /// for text-based geographic searches, by returning places such as
     /// businesses, addresses and points of interest as a user types.
+    ///
+    /// ## Arguments:
+    ///
+    /// * `input` ‧ The text string on which to search.
 
     #[cfg(feature = "autocomplete")]
     pub fn place_autocomplete(
@@ -228,6 +252,11 @@ impl GoogleMapsClient {
     /// service can match on both full words and substrings, applications can
     /// send queries as the user types to provide on-the-fly predictions.
     ///
+    /// ## Arguments:
+    ///
+    /// * `input` ‧ The text string on which to search.
+    ///
+    /// ## Additional information:
     ///
     /// ```rust
     /// use google_maps::prelude::*;
@@ -260,6 +289,37 @@ impl GoogleMapsClient {
     /// list of places matching the text string and any location bias that has
     /// been set.
     ///
+    /// ## Arguments:
+    ///
+    /// * `query` ‧ The text string on which to search, for example:
+    /// "restaurant" or "123 Main Street". This must a place name, address, or
+    /// category of establishments. Any other types of input can generate errors
+    /// and are not guaranteed to return valid results. The Google Places
+    /// service will return candidate matches based on this string and order the
+    /// results based on their perceived relevance.
+    ///
+    /// * `radius` ‧ Defines the distance (in meters) within which to return
+    /// place results. You may bias results to a specified circle by passing a
+    /// `location` and a `radius` parameter. Doing so instructs the Places
+    /// service to prefer showing results within that circle; results outside of
+    /// the defined area may still be displayed.
+    ///
+    /// The radius will automatically be clamped to a maximum value depending on
+    /// the type of search and other parameters.
+    ///
+    /// * Autocomplete: 50,000 meters
+    /// * Nearby Search:
+    ///     * with `keyword` or `name`: 50,000 meters
+    ///     * without `keyword` or `name`
+    ///         * Up to 50,000 meters, adjusted dynamically based on area
+    ///         density, independent of `rankby` parameter.
+    ///         * When using `rankby=distance`, the radius parameter will not be
+    ///         accepted, and will result in an `INVALID_REQUEST`.
+    /// * Query Autocomplete: 50,000 meters
+    /// * Nearby Search: 50,000 meters
+    ///
+    /// ## Additional information:
+    ///
     /// The service is especially useful for making ambiguous address queries in
     /// an automated system, and non-address components of the string may match
     /// businesses as well as addresses. Examples of ambiguous address queries
@@ -287,15 +347,16 @@ impl GoogleMapsClient {
     /// don't need, use a [Find Place request](https://developers.google.com/maps/documentation/places/web-service/search#FindPlaceRequests)
     /// instead.
     ///
+    /// ## Basic usage:
+    ///
     /// ```rust
     /// use google_maps::prelude::*;
     /// use rust_decimal_macros::dec;
     ///
     /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
     ///
-    /// let search_results = google_maps_client.text_search("Edmonton pizza".to_string())
-    ///     .with_location_and_radius(LatLng::try_from_dec(dec!(54), dec!(-114))?, 1_000)
-    ///     .with_type(AutocompleteType::Address)
+    /// let search_results = google_maps_client.text_search("123 Main Street".to_string(), 50_000)
+    ///     .with_type(PlaceType::Restaurant)
     ///     .execute()
     ///     .await?;
     ///
@@ -306,8 +367,65 @@ impl GoogleMapsClient {
     pub fn text_search(
         &self,
         query: String,
+        radius: u32,
     ) -> crate::places::place_search::text_search::request::Request {
-        crate::places::place_search::text_search::request::Request::new(self, query)
+        crate::places::place_search::text_search::request::Request::new(self, query, radius)
+    } // fn
+
+    // -------------------------------------------------------------------------
+    //
+    /// The Places API **Nearby Search** service lets you search for places
+    /// within a specified area. You can refine your search request by supplying
+    /// keywords or specifying the type of place you are searching for.
+    ///
+    /// ## Arguments:
+    ///
+    /// * `location` ‧ The point around which to retrieve place information.
+    /// This must be specified as `latitude,longitude`.
+    ///
+    /// * `radius` ‧ Defines the distance (in meters) within which to return
+    /// place results. You may bias results to a specified circle by passing a
+    /// `location` and a `radius` parameter. Doing so instructs the Places
+    /// service to prefer showing results within that circle; results outside of
+    /// the defined area may still be displayed.
+    ///
+    /// The radius will automatically be clamped to a maximum value depending on
+    /// the type of search and other parameters.
+    ///
+    /// * Autocomplete: 50,000 meters
+    /// * Nearby Search:
+    ///     * with `keyword` or `name`: 50,000 meters
+    ///     * without `keyword` or `name`
+    ///         * Up to 50,000 meters, adjusted dynamically based on area
+    ///         density, independent of `rankby` parameter.
+    ///         * When using `rankby=distance`, the radius parameter will not be
+    ///         accepted, and will result in an `INVALID_REQUEST`.
+    /// * Query Autocomplete: 50,000 meters
+    /// * Nearby Search: 50,000 meters
+    ///
+    /// ## Basic usage:
+    ///
+    /// ```rust
+    /// use google_maps::prelude::*;
+    /// use rust_decimal_macros::dec;
+    ///
+    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+    ///
+    /// let search_results = google_maps_client.nearby_search(LatLng::try_from_dec(dec!(53.540_989), dec!(-113.493_768))?, 1_000)
+    ///     .with_type(PlaceType::Restaurant)
+    ///     .execute()
+    ///     .await?;
+    ///
+    /// println!("{:#?}", search_results);
+    /// ```
+
+    #[cfg(feature = "places")]
+    pub fn nearby_search(
+        &self,
+        location: LatLng,
+        radius: u32,
+    ) -> crate::places::place_search::nearby_search::request::Request {
+        crate::places::place_search::nearby_search::request::Request::new(self, location, radius)
     } // fn
 
     // -------------------------------------------------------------------------
@@ -316,6 +434,16 @@ impl GoogleMapsClient {
     /// particular establishment or point of interest. A Place Details request
     /// returns more comprehensive information about the indicated place such as
     /// its complete address, phone number, user rating and reviews.
+    ///
+    /// ## Arguments:
+    ///
+    /// * `place_id` ‧ A textual identifier that uniquely identifies a place,
+    /// returned from a
+    /// [Place Search](https://developers.google.com/maps/documentation/places/web-service/search).
+    /// For more information about place IDs, see the
+    /// [place ID overview](https://developers.google.com/maps/documentation/places/web-service/place-id).
+    ///
+    /// ## Basic usage:
     ///
     /// ```rust
     /// use google_maps::prelude::*;
@@ -345,6 +473,18 @@ impl GoogleMapsClient {
     /// points snapped to the most likely roads the vehicle was traveling along.
     /// Optionally, you can request that the points be interpolated, resulting
     /// in a path that smoothly follows the geometry of the road.
+    ///
+    /// ## Arguments:
+    ///
+    /// * `path` ‧ The path to be snapped. Note: The snapping algorithm works
+    /// best for points that are not too far apart. If you observe odd snapping
+    /// behavior, try creating paths that have points closer together. To ensure
+    /// the best snap-to-road quality, you should aim to provide paths on which
+    /// consecutive pairs of points are within 300m of each other. This will
+    /// also help in handling any isolated, long jumps between consecutive
+    /// points caused by GPS signal loss, or noise.
+    ///
+    /// ## Basic usage:
     ///
     /// ```rust
     /// use google_maps::prelude::*;
@@ -384,6 +524,13 @@ impl GoogleMapsClient {
     ///
     /// **If you are working with sequential GPS points, use Nearest Roads.**
     ///
+    /// ## Arguments:
+    ///
+    /// * `points` ‧ The points to be snapped. The points parameter accepts a
+    /// list of latitude/longitude pairs.
+    ///
+    /// ## Basic usage:
+    ///
     /// ```rust
     /// use google_maps::prelude::*;
     /// use rust_decimal_macros::dec;
@@ -401,9 +548,9 @@ impl GoogleMapsClient {
     #[cfg(feature = "roads")]
     pub fn nearest_roads(
         &self,
-        path: Vec<LatLng>,
+        points: Vec<LatLng>,
     ) -> crate::roads::snap_to_roads::request::Request {
-        crate::roads::snap_to_roads::request::Request::new(self, path)
+        crate::roads::snap_to_roads::request::Request::new(self, points)
     } // fn
 
 } // impl

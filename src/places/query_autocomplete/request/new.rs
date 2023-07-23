@@ -13,6 +13,7 @@ impl<'a> Request<'a> {
     /// ## Arguments:
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
+    ///
     /// * `input` ‧ The text string on which to search.
 
     pub fn new(

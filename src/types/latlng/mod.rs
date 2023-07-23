@@ -272,5 +272,14 @@ impl LatLng {
     /// Returns the east-west longitudinal (or horizontal) coordinate.
     pub fn lon(&self) -> &Decimal { &self.lng }
     /// Returns the east-west longitudinal (or horizontal) coordinate.
+    pub fn long(&self) -> &Decimal { &self.lng }
+    /// Returns the east-west longitudinal (or horizontal) coordinate.
     pub fn longitude(&self) -> &Decimal { &self.lng }
+
+    /// Returns a tuple containing 1. the latitude (y) coordinate, and then 2.
+    /// the longitude (x) coordinate, in that order.
+    pub fn coords(&self) -> (&Decimal, &Decimal) { (&self.lat, &self.lng) }
+    /// Returns a tuple containing 1. the latitude (y) coordinate, and then 2.
+    /// the longitude (x) coordinate, in that order.
+    pub fn coordinates(&self) -> (&Decimal, &Decimal) { (&self.lat, &self.lng) }
 } // impl

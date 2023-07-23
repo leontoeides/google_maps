@@ -126,6 +126,8 @@ pub mod place_search;
 #[cfg(feature = "places")]
 pub mod place_special_day;
 #[cfg(feature = "places")]
+pub mod rank_by;
+#[cfg(feature = "places")]
 pub mod secondary_hours_type;
 #[cfg(feature = "places")]
 pub mod status;
@@ -142,6 +144,7 @@ pub use crate::places::{
     place_photo::PlacePhoto,
     place_review::PlaceReview,
     place_special_day::PlaceSpecialDay,
+    rank_by::RankBy,
     secondary_hours_type::SecondaryHoursType,
     status::Status,
 }; // crate::places

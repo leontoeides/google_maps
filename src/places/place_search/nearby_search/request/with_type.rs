@@ -1,11 +1,11 @@
 use crate::types::PlaceType;
-use crate::places::place_search::text_search::request::Request;
+use crate::places::place_search::nearby_search::request::Request;
 
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
 
-    /// Adds the types parameter to the Places API _Text Search_ query.
+    /// Adds the types parameter to the Places API _Nearby Search_ query.
     ///
     /// ## Arguments:
     ///

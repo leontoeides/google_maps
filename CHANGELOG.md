@@ -1,5 +1,27 @@
 # Change Log
 
+* 3.3.0: 2023-07-23: Implemented to Google Maps Places API “Nearby Search”
+interface.
+
+```rust
+use google_maps::prelude::*;
+use rust_decimal_macros::dec;
+
+let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+
+let search_results = google_maps_client.nearby_search(LatLng::try_from_dec(dec!(53.540_989), dec!(-113.493_768))?, 1_000)
+    .with_type(PlaceType::Restaurant)
+    .execute()
+    .await?;
+
+println!("{:#?}", search_results);
+```
+
+* 3.3.0: 2023-07-23: ⚠ **Breaking change**: Corrections to Google Maps
+Places API “Text Search” implementation.
+
+* 3.3.0: 2023-07-23: Improvements to documentation
+
 * 3.2.4: 2023-06-17: Emergency update. Important types were moved.
 
 * 3.2.3: 2023-06-17: Fixes for using this crate's optional feature flags.

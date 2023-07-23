@@ -15,7 +15,9 @@ impl<'a> Request<'a> {
     /// ## Arguments:
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
+    ///
     /// * `location` ‧ Latitude & longitude of the desired time zone location.
+    ///
     /// * `timestamp` ‧ Time is used to determine if Daylight Savings is
     /// applicable.
     ///

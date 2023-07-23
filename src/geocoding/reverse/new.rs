@@ -14,6 +14,7 @@ impl<'a> ReverseRequest<'a> {
     /// # Arguments:
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
+    ///
     /// * `latlng` ‧ The latitude and longitude values specifying the location
     /// for which you wish to obtain the closest, human-readable address.
 

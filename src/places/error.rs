@@ -36,6 +36,10 @@ pub enum Error {
     /// `google_maps\src\places\place_details\field.rs` for more information.
     InvalidFieldCode(String),
     /// API client library attempted to parse a string that contained an invalid
+    /// rank by order type code. See
+    /// `google_maps\src\places\place_details\rank_by.rs` for more information.
+    InvalidRankByCode(String),
+    /// API client library attempted to parse a string that contained an invalid
     /// sort order type code. See
     /// `google_maps\src\places\place_details\sort_order.rs` for more information.
     InvalidSortOrderCode(String),
@@ -91,20 +95,23 @@ impl std::fmt::Display for Error {
                 "Google Maps Places API client: \
                 Could not successfully query the Google Cloud Platform service. \
                 The service last responded with a `{status}` status."),
+            Error::InvalidBusinessStatusCode(status_code) => write!(f, "Google Maps Places API client: \
+                `{status_code}` is not a valid business status code. \
+                Valid codes are `OPERATIONAL`, `CLOSED_TEMPORARILY`, and \
+                `CLOSED_PERMANENTLY`."),
+            Error::InvalidRankByCode(type_code) => write!(f, "Google Maps Places API client: \
+                `{type_code}` is not a valid rankby order type. \
+                Valid codes are `prominence`, and `distance`."),
+            Error::InvalidSecondaryHoursType(type_code) => write!(f, "Google Maps Places API client: \
+                `{type_code}` is not a valid secondary hours type. \
+                Valid codes are `DRIVE_THROUGH`, `HAPPY_HOUR`, `DELIVERY`, \
+                `TAKEOUT`, `KITCHEN`, `BREAKFAST`, `LUNCH`, `DINNER`, \
+                `BRUNCH`, `PICKUP`, and `SENIOR_HOURS`."),
             Error::InvalidStatusCode(status_code) => write!(f, "Google Maps Places API client: \
                 `{status_code}` is not a valid status code. \
                 Valid codes are `INVALID_REQUEST`, `OK`, `OVER_DAILY_LIMIT`, \
                 `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, `UNKNOWN_ERROR`, and \
                 `ZERO_RESULTS`."),
-            Error::InvalidBusinessStatusCode(status_code) => write!(f, "Google Maps Places API client: \
-                `{status_code}` is not a valid business status code. \
-                Valid codes are `OPERATIONAL`, `CLOSED_TEMPORARILY`, and \
-                `CLOSED_PERMANENTLY`."),
-            Error::InvalidSecondaryHoursType(type_code) => write!(f, "Google Maps Places API client: \
-                `{type_code}` is not a valid secondary hours type. \
-                Valid codes are `DRIVE_THROUGH`, `HAPPY_HOUR`, `DELIVERY`, \
-                `TAKEOUT`, `KITCHEN`, `BREAKFAST`, `LUNCH`, `DINNER`, \
-                `BRUNCH`, `PICKUP`, `SENIOR_HOURS`."),
             Error::InvalidFieldCode(type_code) => write!(f, "Google Maps Places API client: \
                 `{type_code}` is not a valid field type. \
                 See `https://developers.google.com/maps/documentation/places/web-service/details#fields` \
