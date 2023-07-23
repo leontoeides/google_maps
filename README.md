@@ -21,7 +21,7 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 * In your project's `Cargo.toml` file, under the `[dependencies]` section:
 
-	* Add `google_maps = "3.2"`. Check
+	* Add `google_maps = "3.3"`. Check
 		[crates.io](https://crates.io/crates/google_maps) for the latest
 		version number.
 
@@ -34,6 +34,14 @@ to give back to the Rust community. I hope it saves someone out there some work.
 * The full documentation is available at [docs.rs](https://docs.rs/google_maps/)
 
 # What's new?
+
+* 3.3.0: 2023-07-23: ⚠ **Breaking change**: Corrections to Google Maps
+Places API “Text Search” implementation.
+
+* 3.3.0: 2023-07-23: Implemented to Google Maps Places API “Nearby Search”
+interface.
+
+* 3.3.0: 2023-07-23: Improvements to documentation.
 
 * 3.2.4: 2023-06-17: Emergency update. Important types were moved.
 

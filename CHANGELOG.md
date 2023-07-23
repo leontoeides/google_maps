@@ -1,5 +1,8 @@
 # Change Log
 
+* 3.3.0: 2023-07-23: ⚠ **Breaking change**: Corrections to Google Maps
+Places API “Text Search” implementation.
+
 * 3.3.0: 2023-07-23: Implemented to Google Maps Places API “Nearby Search”
 interface.
 
@@ -17,10 +20,7 @@ let search_results = google_maps_client.nearby_search(LatLng::try_from_dec(dec!(
 println!("{:#?}", search_results);
 ```
 
-* 3.3.0: 2023-07-23: ⚠ **Breaking change**: Corrections to Google Maps
-Places API “Text Search” implementation.
-
-* 3.3.0: 2023-07-23: Improvements to documentation
+* 3.3.0: 2023-07-23: Improvements to documentation.
 
 * 3.2.4: 2023-06-17: Emergency update. Important types were moved.
 
