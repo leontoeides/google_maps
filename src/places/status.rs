@@ -77,6 +77,7 @@ impl std::convert::From<&Status> for String {
             Status::RequestDenied => String::from("REQUEST_DENIED"),
             Status::UnknownError => String::from("UNKNOWN_ERROR"),
             Status::ZeroResults => String::from("ZERO_RESULTS"),
+            Status::NotFound => String::from("NOT_FOUND"),
         } // match
     } // fn
 } // impl
@@ -90,6 +91,7 @@ static STATUSES_BY_CODE: phf::Map<&'static str, Status> = phf_map! {
     "REQUEST_DENIED" => Status::RequestDenied,
     "UNKNOWN_ERROR" => Status::UnknownError,
     "ZERO_RESULTS" => Status::ZeroResults,
+    "NOT_FOUND" => Status::NotFound,
 };
 
 impl std::convert::TryFrom<&str> for Status {
@@ -144,6 +146,7 @@ impl std::fmt::Display for Status {
             Status::RequestDenied => write!(f, "Request Denied"),
             Status::UnknownError => write!(f, "Unknown Error"),
             Status::ZeroResults => write!(f, "Zero Results"),
+            Status::NotFound => write!(f, "Not Found"),
         } // match
     } // fn
 } // impl
