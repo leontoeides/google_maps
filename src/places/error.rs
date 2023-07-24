@@ -82,13 +82,17 @@ impl std::fmt::Display for Error {
                         Over query limit. \
                         Requestor has exceeded quota."),
                     Status::RequestDenied => write!(f, "Google Maps Places API service: \
-                        Request denied \
+                        Request denied. \
                         Service did not complete the request."),
                     Status::UnknownError => write!(f, "Google Maps Places API service: \
                         Unknown error."),
                     Status::ZeroResults => write!(f, "Google Maps Places API service: \
                         Zero results. \
                         This may occur if the geocoder was passed a non-existent address."),
+                    Status::NotFound => write!(f, "Google Maps Places API service: \
+                        Not found. \
+                        Referenced location, `place_id`, was not found \
+                        in the Places database."),
                 } // match
             }, // match
             Error::HttpUnsuccessful(status) => write!(f,
@@ -110,8 +114,8 @@ impl std::fmt::Display for Error {
             Error::InvalidStatusCode(status_code) => write!(f, "Google Maps Places API client: \
                 `{status_code}` is not a valid status code. \
                 Valid codes are `INVALID_REQUEST`, `OK`, `OVER_DAILY_LIMIT`, \
-                `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, `UNKNOWN_ERROR`, and \
-                `ZERO_RESULTS`."),
+                `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, `UNKNOWN_ERROR`, \
+                `ZERO_RESULTS`, and `NOT_FOUND`."),
             Error::InvalidFieldCode(type_code) => write!(f, "Google Maps Places API client: \
                 `{type_code}` is not a valid field type. \
                 See `https://developers.google.com/maps/documentation/places/web-service/details#fields` \

@@ -43,6 +43,10 @@ pub enum Status {
     /// Indicates an unknown error.
     #[serde(alias = "UNKNOWN_ERROR")]
     UnknownError,
+    /// Indicates that that the referenced location, `place_id`, was not found
+    /// in the Places database.
+    #[serde(alias = "NOT_FOUND")]
+    NotFound,
 } // struct
 
 // -----------------------------------------------------------------------------
