@@ -26,7 +26,7 @@ pub struct Response {
     ///
     /// See [Place](https://developers.google.com/maps/documentation/places/web-service/details#Place)
     /// for more information.
-    pub result: Place,
+    pub result: Option<Place>,
 
     /// Contains the status of the request, and may contain debugging
     /// information to help you track down why the request failed.
