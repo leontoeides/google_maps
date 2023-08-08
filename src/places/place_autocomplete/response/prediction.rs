@@ -1,11 +1,9 @@
 //! The `"predictions"` are the results from a search.
 
-use crate::types::PlaceType;
 use crate::places::place_autocomplete::response::{
-    matched_substring::MatchedSubstring,
-    structured_format::StructuredFormat,
-    term::Term,
+    matched_substring::MatchedSubstring, structured_format::StructuredFormat, term::Term,
 }; // crate::places::place_autocomplete::response
+use crate::types::PlaceType;
 use serde::{Deserialize, Serialize};
 
 /// ----------------------------------------------------------------------------
@@ -29,7 +27,7 @@ pub struct Prediction {
     /// A list of substrings that describe the location of the entered term in
     /// the prediction result text, so that the term can be highlighted if
     /// desired.
-    /// 
+    ///
     /// See [PlaceAutocompleteMatchedSubstring](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlaceAutocompleteMatchedSubstring)
     /// for more information.
     #[serde(alias = "matched_substrings")]
@@ -44,12 +42,16 @@ pub struct Prediction {
     #[serde(alias = "structured_formatting")]
     pub structured_formatting: StructuredFormat,
 
+    /// The straight-line distance in meters from the origin.
+    /// This field is only returned for requests made with an `origin`.
+    pub distance_meters: Option<u64>,
+
     /// Contains an array of terms identifying each section of the returned
     /// description (a section of the description is generally terminated with a
     /// comma). Each entry in the array has a `value` field, containing the text
     /// of the term, and an `offset` field, defining the start position of this
     /// term in the description, measured in Unicode characters.
-    /// 
+    ///
     /// See [PlaceAutocompleteTerm](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlaceAutocompleteTerm)
     /// for more information.
     #[serde(alias = "terms")]
@@ -80,4 +82,4 @@ impl std::str::FromStr for Prediction {
     fn from_str(s: &str) -> Result<Self, serde_json::error::Error> {
         serde_json::from_str(s)
     } // fn from_str
-}  // impl FromStr
+} // impl FromStr
