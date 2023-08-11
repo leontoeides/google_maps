@@ -211,7 +211,7 @@ pub struct Place {
     pub url: Option<String>,
 
     /// The total number of reviews, with or without text, for this place.
-    pub user_ratings_total: Option<u16>,
+    pub user_ratings_total: Option<u64>,
 
     /// Contains the number of minutes this place’s current timezone is offset
     /// from UTC. For example, for places in Sydney, Australia during daylight
