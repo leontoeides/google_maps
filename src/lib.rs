@@ -38,6 +38,9 @@
 //!
 //! # What's new?
 //!
+//! * The release notes on [GitHub](https://github.com/leontoeides/google_maps/releases)
+//! will be used as the changelog going forward.
+//!
 //! * The full [change
 //! log](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md) is
 //! available on GitHub.

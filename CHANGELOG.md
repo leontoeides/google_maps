@@ -1,5 +1,8 @@
 # Change Log
 
+* The release notes on [GitHub](https://github.com/leontoeides/google_maps/releases)
+will be used as the changelog going forward.
+
 * 3.3.0: 2023-07-23: ⚠ **Breaking change**: Corrections to Google Maps
 Places API “Text Search” implementation.
 
