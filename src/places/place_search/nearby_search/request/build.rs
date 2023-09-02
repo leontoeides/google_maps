@@ -29,7 +29,7 @@ impl<'a> Request<'a> {
 
         if let Some(keyword) = &self.keyword {
             query.push_str("&keyword={}");
-            query.push_str(&utf8_percent_encode(&keyword, NON_ALPHANUMERIC).to_string())
+            query.push_str(&utf8_percent_encode(keyword, NON_ALPHANUMERIC).to_string())
         }
 
         if let Some(language) = &self.language {
