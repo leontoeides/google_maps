@@ -40,10 +40,10 @@ impl TryFrom<&LatLng> for Coord {
     fn try_from(lat_lng: &LatLng) -> Result<Self, Self::Error> {
 
         let x: f64 = lat_lng.lng.to_f64()
-            .ok_or(TypeError::InvalidLongitude(lat_lng.lat, lat_lng.lng))?;
+            .ok_or_else(|| TypeError::InvalidLongitude(lat_lng.lat, lat_lng.lng))?;
 
         let y: f64 = lat_lng.lat.to_f64()
-            .ok_or(TypeError::InvalidLatitude(lat_lng.lat, lat_lng.lng))?;
+            .ok_or_else(|| TypeError::InvalidLatitude(lat_lng.lat, lat_lng.lng))?;
 
         Ok(Coord { x, y })
 
@@ -86,10 +86,10 @@ impl TryFrom<&LatLng> for Point {
     fn try_from(lat_lng: &LatLng) -> Result<Self, Self::Error> {
 
         let x: f64 = lat_lng.lng.to_f64()
-            .ok_or(TypeError::InvalidLongitude(lat_lng.lat, lat_lng.lng))?;
+            .ok_or_else(|| TypeError::InvalidLongitude(lat_lng.lat, lat_lng.lng))?;
 
         let y: f64 = lat_lng.lat.to_f64()
-            .ok_or(TypeError::InvalidLatitude(lat_lng.lat, lat_lng.lng))?;
+            .ok_or_else(|| TypeError::InvalidLatitude(lat_lng.lat, lat_lng.lng))?;
 
         Ok(Point::new(x, y))
 
