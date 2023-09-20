@@ -1,7 +1,15 @@
 # Change Log
 
-* The release notes on [GitHub](https://github.com/leontoeides/google_maps/releases)
-will be used as the changelog going forward.
+* Release notes are available on
+[GitHub](https://github.com/leontoeides/google_maps/releases).
+
+* 3.3.2: 2023-08-08: Add support for distance_meters in Places Autocomplete
+response. Thanks for the contribution,
+[victorcrimea](https://github.com/victorcrimea)!
+
+* 3.3.2: 2023-08-08: Use u64 type to accomodate all possible values for
+`user_ratings_total` from Google Maps API. Thanks for the contribution,
+[victorcrimea](https://github.com/victorcrimea)!
 
 * 3.3.0: 2023-07-23: ⚠ **Breaking change**: Corrections to Google Maps
 Places API “Text Search” implementation.

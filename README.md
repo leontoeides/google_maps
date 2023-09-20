@@ -35,64 +35,8 @@ to give back to the Rust community. I hope it saves someone out there some work.
 
 # What's new?
 
-* The release notes on [GitHub](https://github.com/leontoeides/google_maps/releases)
-will be used as the changelog going forward.
-
-* 3.3.0: 2023-07-23: ⚠ **Breaking change**: Corrections to Google Maps
-Places API “Text Search” implementation.
-
-* 3.3.0: 2023-07-23: Implemented to Google Maps Places API “Nearby Search”
-interface.
-
-* 3.3.0: 2023-07-23: Improvements to documentation.
-
-* 3.2.4: 2023-06-17: Emergency update. Important types were moved.
-
-* 3.2.3: 2023-06-17: Fixes for using this crate's optional feature flags.
-
-* 3.2.2: 2023-06-16: `time 0.1` dependency was removed using `chrono` feature
-flags. Thanks for the contribution, [popen2](https://github.com/popen2)!
-
-* 3.2.2: 2023-06-16: More streamlining of crate's `Error` types. Not expected to
-have much impact to end-users.
-
-* 3.2.2: 2023-06-16: Fixes for `geo` feature.
-
-* 3.2.1: 2023-06-13: By default, `google_maps` will now use the `rust_decimal`
-crate's `serde` feature. To switch back to the explicit `serde-float` format,
-use the `google_maps` crate's `decimal-serde-float` feature. Thanks for the
-contribution, [popen2](https://github.com/popen2)!
-
-* 3.2.0: 2023-06-01: ⚠ **Breaking change**: `google_maps` types will now
-round-trip through strings.
-
-	This crate previously “took advantage” of the `String::from` and
-	`ToString` traits being able to have different outputs. However, this
-	clever setup did not play nice with other crates.
-
-	This is a “breaking change” because the `Display` and `ToString` traits
-	both now have different outputs compared to previous versions of the
-	`google_maps` crate:
-
-	* Previously: `println!("{}", Language::ChineseHongKong)` would result
-	in `Chinese (Hong Kong)`.
-
-	* Now: `println!("{}", Language::ChineseHongKong)` will result in
-	`zh-HK`.
-
-	* Now, to see the `Chinese (Hong Kong)` name, use the `display` method.
-	For example: `println!("{}", Language::ChineseHongKong.display())`
-
-	This update applies to all `google_maps` crate `enum` types, including
-	`Country`, `PlaceType`, and so on.
-
-* 3.2.0: 2023-05-31: ⚠ **Breaking change**: All `GoogleMapsClient` methods will
-now return the same error type. Previously, each API would return a different
-error type. This could be tedious or annoying when using several different APIs.
-
-* 3.2.0: 2023-05-31: Adjusted `tracing` log levels.
-
-* 3.2.0: 2023-05-31: Some house-keeping.
+* Release notes are available on
+[GitHub](https://github.com/leontoeides/google_maps/releases).
 
 * The full [change
 log](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md) is
