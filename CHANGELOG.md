@@ -11,6 +11,9 @@ response. Thanks for the contribution,
 `user_ratings_total` from Google Maps API. Thanks for the contribution,
 [victorcrimea](https://github.com/victorcrimea)!
 
+* 3.3.1: 2023-09-01: Place Details does not always return a result, now an
+`Option`.
+
 * 3.3.0: 2023-07-23: ⚠ **Breaking change**: Corrections to Google Maps
 Places API “Text Search” implementation.
 
