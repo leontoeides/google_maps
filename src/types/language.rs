@@ -57,7 +57,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 /// You can see what the map will look like in any of the languages listed above
 /// in this [sample application](https://developers.google.com/maps/documentation/javascript/demos/localization/).
 
-#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[repr(u16)]
 pub enum Language {
     Afrikaans = 0,

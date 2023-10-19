@@ -75,7 +75,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 /// level and do not appear in this list. Please note that data coverage can
 /// change if licensing agreements with the data providers change.
 
-#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[repr(u16)]
 pub enum Region {
     AlandIslands = 0,

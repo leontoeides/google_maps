@@ -25,7 +25,7 @@ use std::convert::TryFrom;
 /// codes](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) or the
 /// [ISO Online Browsing Platform](https://www.iso.org/obp/ui/#search).**
 
-#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[repr(u16)]
 pub enum Country {
     Afghanistan = 0,

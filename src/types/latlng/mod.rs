@@ -23,7 +23,7 @@ use std::cmp::{Ord, Ordering};
 /// invalid latitude or longitude value, your request will be rejected as a bad
 /// request.
 
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct LatLng {
     /// Latitude. A value between -90.0° and 90.0°.
     #[serde(alias = "y")]

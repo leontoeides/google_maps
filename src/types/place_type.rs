@@ -16,7 +16,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 /// sought. See [Place
 /// Types](https://developers.google.com/places/web-service/supported_types)
 /// for more information.
-#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[repr(u8)]
 pub enum PlaceType {
     // [Table 1: Place types](https://developers.google.com/places/web-service/supported_types#table1)
