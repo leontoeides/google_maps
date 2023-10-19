@@ -1,7 +1,6 @@
 use crate::directions::request::{transit_mode::TransitMode, Request};
 
 impl<'a> Request<'a> {
-
     /// Specify the preferred mode of transit.
     ///
     /// ## Arguments
@@ -48,10 +47,7 @@ impl<'a> Request<'a> {
     /// ])
     /// ```
 
-    pub fn with_transit_mode(
-        &'a mut self,
-        transit_mode: TransitMode
-    ) -> &'a mut Request {
+    pub fn with_transit_mode(&'a mut self, transit_mode: TransitMode) -> &'a mut Request {
         // Add restiction to Request struct.
         match &mut self.transit_modes {
             // If there are no transit modes in the request struct, initialize:
@@ -59,7 +55,7 @@ impl<'a> Request<'a> {
             // If there are already transit modes, append to them:
             Some(transit_modes) => transit_modes.push(transit_mode),
         } // match
-        // Return modified Request struct to caller.
+          // Return modified Request struct to caller.
         self
     } // fn
 
@@ -87,12 +83,11 @@ impl<'a> Request<'a> {
             // If there are no transit modes in the request struct, initialize:
             None => self.transit_modes = Some(transit_modes_slice.to_vec()),
             // If there are already transit modes, append to them:
-            Some(transit_modes) => transit_modes_slice.iter().for_each(|transit_mode|
-                transit_modes.push(transit_mode.to_owned())
-            ), // iter
+            Some(transit_modes) => transit_modes_slice
+                .iter()
+                .for_each(|transit_mode| transit_modes.push(transit_mode.to_owned())), // iter
         } // match
-        // Return modified Request struct to caller.
+          // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl

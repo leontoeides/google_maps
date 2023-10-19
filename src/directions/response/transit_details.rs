@@ -1,9 +1,7 @@
 //! Transit directions return additional information.
 
 use crate::directions::response::{
-    transit_line::TransitLine,
-    transit_stop::TransitStop,
-    transit_time::TransitTime,
+    transit_line::TransitLine, transit_stop::TransitStop, transit_time::TransitTime,
 }; // use crate::directions::response
 use serde::{Deserialize, Serialize};
 

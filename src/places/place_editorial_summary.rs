@@ -13,13 +13,11 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct PlaceEditorialSummary {
-
     /// The language of the previous fields. May not always be present.
     pub language: Option<Language>,
 
     /// A medium-length textual summary of the place.
     pub overview: Option<String>,
-
 } // struct PlaceEditorialSummary
 
 // -----------------------------------------------------------------------------
@@ -31,4 +29,4 @@ impl std::str::FromStr for PlaceEditorialSummary {
     fn from_str(s: &str) -> Result<Self, serde_json::error::Error> {
         serde_json::from_str(s)
     } // fn from_str
-}  // impl FromStr
+} // impl FromStr

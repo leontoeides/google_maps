@@ -4,7 +4,6 @@ use crate::types::Language;
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
-
     /// Adds the language parameter to the Time Zone API query.
     ///
     /// ## Arguments:
@@ -25,5 +24,4 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl

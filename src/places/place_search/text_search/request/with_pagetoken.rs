@@ -3,7 +3,6 @@ use crate::places::place_search::text_search::request::Request;
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
-
     /// Adds the page token parameter to the Places API _Text Search_ query.
     ///
     /// ## Arguments:
@@ -19,5 +18,4 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl

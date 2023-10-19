@@ -11,10 +11,7 @@ pub mod term;
 
 // -----------------------------------------------------------------------------
 
-use crate::places::place_autocomplete::response::{
-    prediction::Prediction,
-    status::Status,
-}; // crate::places::place_autocomplete::response
+use crate::places::place_autocomplete::response::{prediction::Prediction, status::Status}; // crate::places::place_autocomplete::response
 use serde::{Deserialize, Serialize};
 
 /// The response from the Google Maps Places API _Place Autocomplete_ request

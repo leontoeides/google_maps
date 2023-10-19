@@ -5,7 +5,6 @@ use crate::types::LatLng;
 // =============================================================================
 
 impl<'a> ReverseRequest<'a> {
-
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Geolocation API query with the
@@ -18,11 +17,7 @@ impl<'a> ReverseRequest<'a> {
     /// * `latlng` ‧ The latitude and longitude values specifying the location
     /// for which you wish to obtain the closest, human-readable address.
 
-    pub fn new(
-        client: &'a GoogleMapsClient,
-        latlng: LatLng
-    ) -> ReverseRequest<'a> {
-
+    pub fn new(client: &'a GoogleMapsClient, latlng: LatLng) -> ReverseRequest<'a> {
         // Instantiate struct and return it to caller:
         ReverseRequest {
             // Required parameters:
@@ -35,7 +30,6 @@ impl<'a> ReverseRequest<'a> {
             // Internal use only:
             query: None,
         } // struct
-
     } // fn
 
     // -------------------------------------------------------------------------
@@ -58,7 +52,6 @@ impl<'a> ReverseRequest<'a> {
         client: &'a GoogleMapsClient,
         coordinate: &geo_types::Coord,
     ) -> Result<ReverseRequest<'a>, crate::error::Error> {
-
         // Instantiate struct and return it to caller:
         Ok(ReverseRequest {
             // Required parameters:
@@ -71,7 +64,6 @@ impl<'a> ReverseRequest<'a> {
             // Internal use only:
             query: None,
         }) // struct
-
     } // fn
 
     // -------------------------------------------------------------------------
@@ -94,7 +86,6 @@ impl<'a> ReverseRequest<'a> {
         client: &'a GoogleMapsClient,
         point: &geo_types::Point,
     ) -> Result<ReverseRequest<'a>, crate::error::Error> {
-
         // Instantiate struct and return it to caller:
         Ok(ReverseRequest {
             // Required parameters:
@@ -107,7 +98,5 @@ impl<'a> ReverseRequest<'a> {
             // Internal use only:
             query: None,
         }) // struct
-
     } // fn
-
 } // impl

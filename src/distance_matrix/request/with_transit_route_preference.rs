@@ -2,7 +2,6 @@ use crate::directions::request::transit_route_preference::TransitRoutePreference
 use crate::distance_matrix::request::Request;
 
 impl<'a> Request<'a> {
-
     /// Specifies the preference for transit routes.
     ///
     /// ## Arguments
@@ -40,5 +39,4 @@ impl<'a> Request<'a> {
         self.transit_route_preference = Some(transit_route_preference);
         self
     } // fn
-
 } // impl

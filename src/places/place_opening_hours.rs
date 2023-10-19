@@ -1,7 +1,7 @@
 //! An object describing the opening hours of a place.
 
-use chrono::NaiveDate;
 use crate::places::{PlaceOpeningHoursPeriod, PlaceSpecialDay, SecondaryHoursType};
+use chrono::NaiveDate;
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 
@@ -11,7 +11,6 @@ use std::collections::HashSet;
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct PlaceOpeningHours {
-
     /// A boolean value indicating if the place is open at the current time.
     pub open_now: Option<bool>,
 
@@ -37,7 +36,6 @@ pub struct PlaceOpeningHours {
     /// An array of strings describing in human-readable text the hours of the
     /// place.
     pub weekday_text: Option<Vec<String>>,
-
 } // struct PlaceOpeningHours
 
 // -----------------------------------------------------------------------------
@@ -49,7 +47,7 @@ impl std::str::FromStr for PlaceOpeningHours {
     fn from_str(s: &str) -> Result<Self, serde_json::error::Error> {
         serde_json::from_str(s)
     } // fn from_str
-}  // impl FromStr
+} // impl FromStr
 
 // -----------------------------------------------------------------------------
 //
@@ -60,12 +58,11 @@ impl std::str::FromStr for PlaceOpeningHours {
 
 impl PlaceOpeningHours {
     pub fn special_days(&self) -> Option<HashSet<NaiveDate>> {
-        self.special_days.as_ref()
-            .map(|special_days_vec| {
-                special_days_vec
-                    .iter()
-                    .filter_map(|place_special_day| place_special_day.date)
-                    .collect::<HashSet<NaiveDate>>()
-            }) // map
+        self.special_days.as_ref().map(|special_days_vec| {
+            special_days_vec
+                .iter()
+                .filter_map(|place_special_day| place_special_day.date)
+                .collect::<HashSet<NaiveDate>>()
+        }) // map
     } // fn
 } // impl

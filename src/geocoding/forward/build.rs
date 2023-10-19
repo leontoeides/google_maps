@@ -2,7 +2,6 @@ use crate::{geocoding::error::Error, geocoding::forward::ForwardRequest};
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 
 impl<'a> ForwardRequest<'a> {
-
     /// Builds the query string for the Google Maps Geocoding API based on the
     /// input provided by the client.
     ///
@@ -11,10 +10,11 @@ impl<'a> ForwardRequest<'a> {
     /// This method accepts no arguments.
 
     pub fn build(&mut self) -> Result<&'a mut ForwardRequest, Error> {
-
         // Ensure request has been validated before building the query string:
 
-        if !self.validated { return Err(Error::RequestNotValidated) }
+        if !self.validated {
+            return Err(Error::RequestNotValidated);
+        }
 
         // This section builds the "required parameters" portion of the query
         // string:
@@ -43,9 +43,8 @@ impl<'a> ForwardRequest<'a> {
         // Bounds key/value pair:
         if let Some(bounds) = &self.bounds {
             query.push_str("&bounds=");
-            query.push_str(
-                &utf8_percent_encode(&String::from(bounds), NON_ALPHANUMERIC).to_string(),
-            )
+            query
+                .push_str(&utf8_percent_encode(&String::from(bounds), NON_ALPHANUMERIC).to_string())
         }
 
         // Components key/value pair:
@@ -59,7 +58,8 @@ impl<'a> ForwardRequest<'a> {
                         .collect::<Vec<String>>()
                         .join("|"),
                     NON_ALPHANUMERIC,
-                ).to_string(),
+                )
+                .to_string(),
             ) // push_str
         }
 
@@ -80,7 +80,5 @@ impl<'a> ForwardRequest<'a> {
 
         // Return modified ForwardRequest struct to caller.
         Ok(self)
-
     } // fn
-
 } // impl

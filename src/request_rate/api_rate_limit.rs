@@ -1,9 +1,6 @@
-use crate::request_rate::{
-    api_rate::ApiRate,
-}; // use crate::request_rate
+use crate::request_rate::api_rate::ApiRate; // use crate::request_rate
 
 impl ApiRate {
-
     /// This method is not for public consumption. It is for internal use only.
     ///
     /// ## Description
@@ -17,7 +14,7 @@ impl ApiRate {
     pub async fn limit(&self) {
         match &self.throttle_pool {
             Some(wait_pool) => wait_pool.queue().await,
-            None => ()
+            None => (),
         }
         /*
         match self.current_rate.first_request {
@@ -87,5 +84,4 @@ impl ApiRate {
         } // match
         */
     } // fn
-
 } // impl

@@ -4,7 +4,6 @@ use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
-
     /// Builds the query string for the Google Maps Places API _Nearby Search_
     /// query based on the input provided by the client.
     ///
@@ -13,7 +12,6 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub fn build(&mut self) -> &'a mut Request {
-
         // This section builds the "required parameters" portion of the query
         // string:
 
@@ -48,7 +46,9 @@ impl<'a> Request<'a> {
         }
 
         if let Some(opennow) = &self.opennow {
-            if *opennow { query.push_str("&opennow") }
+            if *opennow {
+                query.push_str("&opennow")
+            }
         }
 
         if let Some(pagetoken) = &self.pagetoken {
@@ -71,7 +71,5 @@ impl<'a> Request<'a> {
 
         // Return modified Request struct to caller.
         self
-
     } // fn
-
 } // impl

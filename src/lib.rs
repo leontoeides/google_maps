@@ -361,16 +361,15 @@
 //! implemented, please contact me.
 
 #![forbid(unsafe_code)]
-
 #![doc(html_favicon_url = "https://www.arkiteq.ca/crates/google_maps/icon.png")]
 #![doc(html_logo_url = "https://www.arkiteq.ca/crates/google_maps/logo.png")]
 
 // Common / global modules:
 
 mod client;
-mod serde;
 pub mod error;
 pub mod prelude;
+mod serde;
 pub mod types;
 
 // Optional Google Maps API modules. Their inclusion can be changed with
@@ -384,39 +383,73 @@ pub mod distance_matrix;
 pub mod elevation;
 #[cfg(feature = "geocoding")]
 pub mod geocoding;
-#[cfg(feature = "time_zone")]
-pub mod time_zone;
 pub mod places;
 #[cfg(feature = "roads")]
 pub mod roads;
+#[cfg(feature = "time_zone")]
+pub mod time_zone;
 
 // Re-exports. Not great for organization but needed for backward compatibility.
 
 pub use crate::{
-    client::GoogleMapsClient as ClientSettings,
-    client::GoogleMapsClient,
-    error::Error as GoogleMapsError,
-    error::Error,
-    types::error::Error as TypeError,
+    client::GoogleMapsClient as ClientSettings, client::GoogleMapsClient,
+    error::Error as GoogleMapsError, error::Error, types::error::Error as TypeError,
 }; // crate
 
 #[cfg(any(feature = "geocoding", feature = "places", feature = "geocoding"))]
 pub use crate::types::address_component::AddressComponent;
-#[cfg(any(feature = "directions", feature = "distance_matrix", feature = "geocoding", feature = "places"))]
+#[cfg(any(
+    feature = "directions",
+    feature = "distance_matrix",
+    feature = "geocoding",
+    feature = "places"
+))]
 pub use crate::types::bounds::Bounds;
-#[cfg(any(feature = "autocomplete", feature = "directions", feature = "geocoding"))]
+#[cfg(any(
+    feature = "autocomplete",
+    feature = "directions",
+    feature = "geocoding"
+))]
 pub use crate::types::country::Country;
 #[cfg(any(feature = "geocoding", feature = "places", feature = "geocoding"))]
 pub use crate::types::geometry::Geometry;
-#[cfg(any(feature = "autocomplete", feature = "directions", feature = "distance_matrix", feature = "geocoding", feature = "places", feature = "time_zone"))]
+#[cfg(any(
+    feature = "autocomplete",
+    feature = "directions",
+    feature = "distance_matrix",
+    feature = "geocoding",
+    feature = "places",
+    feature = "time_zone"
+))]
 pub use crate::types::language::Language;
-#[cfg(any(feature = "autocomplete", feature = "directions", feature = "distance_matrix", feature = "elevation", feature = "geocoding", feature = "places", feature = "roads", feature = "time_zone"))]
+#[cfg(any(
+    feature = "autocomplete",
+    feature = "directions",
+    feature = "distance_matrix",
+    feature = "elevation",
+    feature = "geocoding",
+    feature = "places",
+    feature = "roads",
+    feature = "time_zone"
+))]
 pub use crate::types::latlng::LatLng;
 #[cfg(any(feature = "geocoding", feature = "places", feature = "geocoding"))]
 pub use crate::types::location_type::LocationType;
-#[cfg(any(feature = "autocomplete", feature = "directions", feature = "distance_matrix", feature = "geocoding", feature = "places"))]
+#[cfg(any(
+    feature = "autocomplete",
+    feature = "directions",
+    feature = "distance_matrix",
+    feature = "geocoding",
+    feature = "places"
+))]
 pub use crate::types::place_type::PlaceType;
-#[cfg(any(feature = "autocomplete", feature = "directions", feature = "distance_matrix", feature = "geocoding", feature = "places"))]
+#[cfg(any(
+    feature = "autocomplete",
+    feature = "directions",
+    feature = "distance_matrix",
+    feature = "geocoding",
+    feature = "places"
+))]
 pub use crate::types::region::Region;
 
 // Optional dependencies:

@@ -5,7 +5,6 @@ use crate::places::query_autocomplete::request::Request as QueryAutocompleteRequ
 // =============================================================================
 
 impl<'a> QueryAutocompleteRequest<'a> {
-
     // -------------------------------------------------------------------------
     //
     /// Executes the query you've built.
@@ -20,12 +19,7 @@ impl<'a> QueryAutocompleteRequest<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub async fn execute(
-        &'a mut self
-    ) -> Result<PlaceAutocompleteResponse, GoogleMapsError> {
-
+    pub async fn execute(&'a mut self) -> Result<PlaceAutocompleteResponse, GoogleMapsError> {
         self.build().get().await
-
     } // fn
-
 } // impl

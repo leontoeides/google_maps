@@ -4,7 +4,6 @@ use std::time::Duration;
 // =============================================================================
 
 impl GoogleMapsClient {
-
     // -------------------------------------------------------------------------
     //
     /// Sets the rate limit for the specified API.
@@ -120,5 +119,4 @@ impl GoogleMapsClient {
         self.rate_limit.with_rate(api, requests, per_duration);
         self
     } // fn
-
 } // impl

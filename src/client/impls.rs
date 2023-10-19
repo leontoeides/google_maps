@@ -1,21 +1,20 @@
 use crate::client::GoogleMapsClient;
-#[cfg(feature = "enable-reqwest")]
-use crate::request_rate::RequestRate;
 #[cfg(feature = "directions")]
 use crate::directions::request::location::Location;
 #[cfg(feature = "distance_matrix")]
 use crate::directions::request::waypoint::Waypoint;
+#[cfg(feature = "enable-reqwest")]
+use crate::request_rate::RequestRate;
 #[cfg(any(feature = "geocoding", feature = "time_zone", feature = "roads"))]
 use crate::types::LatLng;
+use crate::ReqError;
 #[cfg(feature = "time_zone")]
 use chrono::{DateTime, Utc};
 use reqwest::Response;
-use crate::ReqError;
 
 // =============================================================================
 
 impl GoogleMapsClient {
-
     // -------------------------------------------------------------------------
     //
     /// Initialize the settings needed for a Google Cloud Maps API transaction.
@@ -26,9 +25,11 @@ impl GoogleMapsClient {
 
     #[cfg(feature = "enable-reqwest")]
     pub fn new(key: &str) -> GoogleMapsClient {
-
         let reqwest_client = reqwest::Client::builder()
-            .user_agent(format!("RustGoogleMaps/{version}", version=env!("CARGO_PKG_VERSION")))
+            .user_agent(format!(
+                "RustGoogleMaps/{version}",
+                version = env!("CARGO_PKG_VERSION")
+            ))
             .build()
             .unwrap();
 
@@ -37,7 +38,6 @@ impl GoogleMapsClient {
             rate_limit: RequestRate::default(),
             reqwest_client: reqwest_maybe_middleware::Client::Vanilla(reqwest_client),
         } // GoogleMapsClient
-
     } // fn
 
     // -------------------------------------------------------------------------
@@ -185,10 +185,7 @@ impl GoogleMapsClient {
     /// ```
 
     #[cfg(feature = "geocoding")]
-    pub fn reverse_geocoding(
-        &self,
-        latlng: LatLng,
-    ) -> crate::geocoding::reverse::ReverseRequest {
+    pub fn reverse_geocoding(&self, latlng: LatLng) -> crate::geocoding::reverse::ReverseRequest {
         crate::geocoding::reverse::ReverseRequest::new(self, latlng)
     } // fn
 
@@ -569,5 +566,4 @@ impl GoogleMapsClient {
             Err(error) => Err(ReqError::from(error)),
         }
     }
-
 } // impl

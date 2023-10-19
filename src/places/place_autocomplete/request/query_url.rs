@@ -1,13 +1,8 @@
-use crate::places::place_autocomplete::{
-    OUTPUT_FORMAT,
-    SERVICE_URL,
-    request::Request,
-}; // crate::places::place_autocomplete
+use crate::places::place_autocomplete::{request::Request, OUTPUT_FORMAT, SERVICE_URL}; // crate::places::place_autocomplete
 
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
-
     /// Returns the URL query string that represents the query you've built.
     ///
     /// ## Description:
@@ -30,5 +25,4 @@ impl<'a> Request<'a> {
         }; // match
         format!("{SERVICE_URL}/{OUTPUT_FORMAT}?{query_string}")
     } // fn
-
 } // impl

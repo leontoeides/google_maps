@@ -1,13 +1,11 @@
-use crate::error::Error as GoogleMapsError;
 use crate::directions::{
-    request::Request as DirectionsRequest,
-    response::Response as DirectionsResponse,
-}; // crate::directions
+    request::Request as DirectionsRequest, response::Response as DirectionsResponse,
+};
+use crate::error::Error as GoogleMapsError; // crate::directions
 
 // =============================================================================
 
 impl<'a> DirectionsRequest<'a> {
-
     // -------------------------------------------------------------------------
     //
     /// Executes the query you've built.
@@ -22,12 +20,7 @@ impl<'a> DirectionsRequest<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub async fn execute(
-        &'a mut self
-    ) -> Result<DirectionsResponse, GoogleMapsError> {
-
+    pub async fn execute(&'a mut self) -> Result<DirectionsResponse, GoogleMapsError> {
         self.validate()?.build()?.get().await
-
     } // fn
-
 } // impl

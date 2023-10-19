@@ -1,11 +1,6 @@
-use crate::time_zone::{
-    OUTPUT_FORMAT,
-    SERVICE_URL,
-    request::Request,
-}; // crate::time_zone
+use crate::time_zone::{request::Request, OUTPUT_FORMAT, SERVICE_URL}; // crate::time_zone
 
 impl<'a> Request<'a> {
-
     /// Returns the URL query string that represents the query you've built.
     ///
     /// ## Description:
@@ -28,5 +23,4 @@ impl<'a> Request<'a> {
         }; // match
         format!("{SERVICE_URL}/{OUTPUT_FORMAT}?{query_string}")
     } // fn
-
 } // impl

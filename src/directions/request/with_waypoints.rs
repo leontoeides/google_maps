@@ -1,7 +1,6 @@
 use crate::directions::request::{waypoint::Waypoint, Request};
 
 impl<'a> Request<'a> {
-
     /// Specify pass throughs or stopovers at intermediate locations.
     ///
     /// ## Arguments
@@ -99,7 +98,7 @@ impl<'a> Request<'a> {
             // If there are already waypoints, append to them:
             Some(waypoints) => waypoints.push(waypoint),
         } // match
-        // Return modified Request struct to caller.
+          // Return modified Request struct to caller.
         self
     } // fn
 
@@ -123,21 +122,17 @@ impl<'a> Request<'a> {
     /// ])
     /// ```
 
-    pub fn with_waypoints(
-        &'a mut self,
-        waypoints_slice: &[Waypoint]
-    ) -> &'a mut Request {
+    pub fn with_waypoints(&'a mut self, waypoints_slice: &[Waypoint]) -> &'a mut Request {
         // Add waypoints to Request struct.
         match &mut self.waypoints {
             // If there are no waypoints in the request struct, initialize:
             None => self.waypoints = Some(waypoints_slice.to_vec()),
             // If there are already waypoints, append to them:
-            Some(waypoints) => waypoints_slice.iter().for_each(|waypoint|
-                waypoints.push(waypoint.to_owned())
-            ), // iter
+            Some(waypoints) => waypoints_slice
+                .iter()
+                .for_each(|waypoint| waypoints.push(waypoint.to_owned())), // iter
         } // match
-        // Return modified Request struct to caller.
+          // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl

@@ -4,8 +4,8 @@
 //! comprehensive list of countries, it is a list of countries that Google Maps
 //! supports._
 
-use crate::types::error::Error as TypeError;
 use crate::error::Error as GoogleMapsError;
+use crate::types::error::Error as TypeError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -322,7 +322,8 @@ pub enum Region {
     Ukraine = 241,
     UnitedArabEmirates = 242,
     UnitedKingdom = 243,
-    #[default] UnitedStates = 244,
+    #[default]
+    UnitedStates = 244,
     Uruguay = 245,
     Uzbekistan = 246,
     Vanuatu = 247,
@@ -345,7 +346,7 @@ impl<'de> Deserialize<'de> for Region {
         let string = String::deserialize(deserializer)?;
         match Region::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -355,7 +356,9 @@ impl<'de> Deserialize<'de> for Region {
 impl Serialize for Region {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl
@@ -1148,7 +1151,9 @@ impl Region {
             Region::SolomonIslands => "Solomon Islands",
             Region::Somalia => "Somalia",
             Region::SouthAfrica => "South Africa",
-            Region::SouthGeorgiaAndTheSouthSandwichIslands => "South Georgia & South Sandwich Islands",
+            Region::SouthGeorgiaAndTheSouthSandwichIslands => {
+                "South Georgia & South Sandwich Islands"
+            }
             Region::SouthKorea => "South Korea",
             Region::SouthSudan => "South Sudan",
             Region::Spain => "Spain",

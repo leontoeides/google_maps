@@ -20,7 +20,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct Response {
-
     /// An array of snapped points. See
     /// [SnappedPoint](https://developers.google.com/maps/documentation/roads/nearest#SnappedPoint)
     /// for more information.
@@ -34,7 +33,6 @@ pub struct Response {
     /// In the case of an error, a standard format error response body will be
     /// returned and the HTTP status code will be set to an error status.
     pub error: Option<ErrorResponse>,
-
 } // struct
 
 // -----------------------------------------------------------------------------

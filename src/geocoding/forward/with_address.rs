@@ -1,7 +1,6 @@
 use crate::geocoding::forward::ForwardRequest;
 
 impl<'a> ForwardRequest<'a> {
-
     /// Specifies the street address to geocode.
     ///
     /// ## Arguments:
@@ -27,5 +26,4 @@ impl<'a> ForwardRequest<'a> {
         // Return modified ForwardRequest struct to caller.
         self
     } // fn
-
 } // impl

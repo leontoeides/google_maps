@@ -4,7 +4,6 @@ use crate::places::place_details::SortOrder;
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
-
     /// Specifies the sort order of user reviews in the Places API _Place
     /// Details_ response.
     ///
@@ -29,5 +28,4 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl

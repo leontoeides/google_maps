@@ -38,7 +38,6 @@ use crate::request_rate::RequestRate;
 
 #[derive(Clone, Debug)]
 pub struct GoogleMapsClient {
-
     /// Your application's API key. This key identifies your application for
     /// purposes of quota management. Learn how to [get a
     /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
@@ -53,5 +52,4 @@ pub struct GoogleMapsClient {
     /// that will be used by the Google Maps client.
     #[cfg(feature = "enable-reqwest")]
     pub reqwest_client: reqwest_maybe_middleware::Client,
-
 } // struct

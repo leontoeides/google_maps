@@ -31,7 +31,6 @@ pub fn rate_to_string(
     numerator_singular: &str,
     numerator_plural: &str,
 ) -> String {
-
     // Multiplication is much faster than division:
 
     const MILLISECONDS_IN_A_SECOND: f64 = 1.0 / 0.001;
@@ -130,5 +129,4 @@ pub fn rate_to_string(
     // Formats the final string and returns it to the caller:
 
     quantity_string + " " + rate_type_string + " per " + &units_string
-
 } // fn

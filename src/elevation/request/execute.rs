@@ -1,13 +1,11 @@
-use crate::error::Error as GoogleMapsError;
 use crate::elevation::{
-    request::Request as ElevationRequest,
-    response::Response as ElevationResponse,
-}; // crate::elevation
+    request::Request as ElevationRequest, response::Response as ElevationResponse,
+};
+use crate::error::Error as GoogleMapsError; // crate::elevation
 
 // =============================================================================
 
 impl<'a> ElevationRequest<'a> {
-
     // -------------------------------------------------------------------------
     //
     /// Executes the query you've built.
@@ -22,12 +20,7 @@ impl<'a> ElevationRequest<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub async fn execute(
-        &'a mut self
-    ) -> Result<ElevationResponse, GoogleMapsError> {
-
+    pub async fn execute(&'a mut self) -> Result<ElevationResponse, GoogleMapsError> {
         self.validate()?.build()?.get().await
-
     } // fn
-
 } // impl

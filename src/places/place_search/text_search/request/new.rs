@@ -4,7 +4,6 @@ use crate::places::place_search::text_search::request::Request;
 // =============================================================================
 
 impl<'a> Request<'a> {
-
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Places API _Text Search_ query
@@ -41,12 +40,7 @@ impl<'a> Request<'a> {
     /// * Query Autocomplete: 50,000 meters
     /// * Nearby Search: 50,000 meters
 
-    pub fn new(
-        client: &GoogleMapsClient,
-        query: String,
-        radius: u32,
-    ) -> Request {
-
+    pub fn new(client: &GoogleMapsClient, query: String, radius: u32) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:
@@ -65,7 +59,5 @@ impl<'a> Request<'a> {
             // Internal use only:
             query: None,
         } // struct
-
     } // fn
-
 } // impl

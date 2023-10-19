@@ -1,10 +1,9 @@
 use crate::roads::snap_to_roads::request::Request;
-use percent_encoding::{NON_ALPHANUMERIC, utf8_percent_encode};
+use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 
 // =============================================================================
 
 impl<'a> Request<'a> {
-
     // -------------------------------------------------------------------------
     //
     /// Builds the query string for the Google Maps Snap to Roads request based
@@ -15,26 +14,22 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub fn build(&mut self) -> &'a mut Request {
-
         // This section builds the "required parameters" portion of the query
         // string:
 
         // Convert `Vec<LatLng>` to `String`:
-        let path: String = self.path
+        let path: String = self
+            .path
             .iter()
             .map(String::from)
             .collect::<Vec<String>>()
             .join("|");
 
         // URL encode path `String`:
-        let path: String =
-            utf8_percent_encode(&path, NON_ALPHANUMERIC).to_string();
+        let path: String = utf8_percent_encode(&path, NON_ALPHANUMERIC).to_string();
 
         // Build "required parameters" portion of the query string:
-        let mut query = format!(
-            "key={key}&path={path}",
-            key=self.client.key,
-        );
+        let mut query = format!("key={key}&path={path}", key = self.client.key,);
 
         // This section builds the "optional parameters" portion of the query
         // string:
@@ -50,7 +45,5 @@ impl<'a> Request<'a> {
 
         // Return modified Request struct to caller.
         self
-
     } // fn
-
 } // impl

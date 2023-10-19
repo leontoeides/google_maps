@@ -4,7 +4,6 @@ use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
-
     /// Builds the query string for the Google Maps Places API _Place
     /// Autocomplete_ query based on the input provided by the client.
     ///
@@ -13,7 +12,6 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub fn build(&mut self) -> &'a mut Request {
-
         // This section builds the "required parameters" portion of the query
         // string:
 
@@ -29,7 +27,8 @@ impl<'a> Request<'a> {
         // Components key/value pair:
         if !self.components.is_empty() {
             query.push_str("&components=");
-            let components = self.components
+            let components = self
+                .components
                 .iter()
                 .map(|component| format!("country:{}", String::from(component).to_lowercase()))
                 .collect::<Vec<String>>()
@@ -88,7 +87,8 @@ impl<'a> Request<'a> {
         // Types key/value pair:
         if !self.types.is_empty() {
             query.push_str("&types=");
-            let types = self.types
+            let types = self
+                .types
                 .iter()
                 .map(String::from)
                 .collect::<Vec<String>>()
@@ -101,7 +101,5 @@ impl<'a> Request<'a> {
 
         // Return modified Request struct to caller.
         self
-
     } // fn
-
 } // impl

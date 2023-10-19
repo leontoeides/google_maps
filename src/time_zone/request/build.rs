@@ -1,7 +1,6 @@
 use crate::time_zone::request::Request;
 
 impl<'a> Request<'a> {
-
     /// Builds the query string for the Google Maps Time Zone API based on the
     /// input provided by the client.
     ///
@@ -10,7 +9,6 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub fn build(&mut self) -> &'a mut Request {
-
         // This section builds the "required parameters" portion of the query
         // string:
 
@@ -35,7 +33,5 @@ impl<'a> Request<'a> {
 
         // Return modified Request struct to caller.
         self
-
     } // fn
-
 } // impl

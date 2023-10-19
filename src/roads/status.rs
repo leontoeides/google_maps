@@ -4,7 +4,7 @@
 
 use crate::roads::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize, Deserializer};
+use serde::{Deserialize, Deserializer, Serialize};
 
 // -----------------------------------------------------------------------------
 
@@ -12,7 +12,6 @@ use serde::{Deserialize, Serialize, Deserializer};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub enum Status {
-
     /// 1. Your API key is not valid or was not included in the request. Please
     /// ensure that you've included the entire key, and that you've enabled the
     /// API for this key.
@@ -65,7 +64,6 @@ pub enum Status {
     /// to all users. See Capping API Usage to configure these limits.
     #[serde(alias = "RESOURCE_EXHAUSTED")]
     ResourceExhausted,
-
 } // struct
 
 // -----------------------------------------------------------------------------
@@ -77,7 +75,7 @@ impl<'de> Deserialize<'de> for Status {
         let string = String::deserialize(deserializer)?;
         match Status::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -151,7 +149,7 @@ impl std::fmt::Display for Status {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Status::InvalidArgument => write!(f, "Invalid Argument"),
-            Status::PermissionDenied  => write!(f, "Permission Denied"),
+            Status::PermissionDenied => write!(f, "Permission Denied"),
             Status::NotFound => write!(f, "Not Found"),
             Status::ResourceExhausted => write!(f, "Resource Exhausted"),
         } // match

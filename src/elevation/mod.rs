@@ -86,12 +86,6 @@ const OUTPUT_FORMAT: &str = "json"; // json or xml
 
 pub use crate::elevation::{
     error::Error as ElevationError,
-    request::{
-        locations::Locations as ElevationLocations,
-        Request as ElevationRequest,
-    }, // request
-    response::{
-        point::Point, status::Status as ElevationStatus,
-        Response as ElevationResponse
-    }, // response
+    request::{locations::Locations as ElevationLocations, Request as ElevationRequest}, // request
+    response::{point::Point, status::Status as ElevationStatus, Response as ElevationResponse}, // response
 }; // crate::elevation

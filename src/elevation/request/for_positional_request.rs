@@ -4,7 +4,6 @@ use crate::types::LatLng;
 // =============================================================================
 
 impl<'a> Request<'a> {
-
     // -------------------------------------------------------------------------
     //
     /// Adds the _positional request_ parameter to the Elevation API query.
@@ -22,10 +21,7 @@ impl<'a> Request<'a> {
     /// .for_positional_request(LatLng::try_from_dec(dec!(39.7391536), dec!(-104.9847034))?)
     /// ```
 
-    pub fn for_positional_request(
-        &'a mut self,
-        location: LatLng,
-    ) -> &'a mut Request {
+    pub fn for_positional_request(&'a mut self, location: LatLng) -> &'a mut Request {
         // Set the path in Request struct.
         self.locations = Some(Locations::LatLngs(vec![location]));
         // Return modified Request struct to caller.
@@ -55,10 +51,7 @@ impl<'a> Request<'a> {
     /// ]))
     /// ```
 
-    pub fn for_positional_requests(
-        &'a mut self,
-        locations: Locations,
-    ) -> &'a mut Request {
+    pub fn for_positional_requests(&'a mut self, locations: Locations) -> &'a mut Request {
         // Set the path in Request struct.
         self.locations = Some(locations);
         // Return modified Request struct to caller.
@@ -112,5 +105,4 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         Ok(self)
     } // fn
-
 } // impl

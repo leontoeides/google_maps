@@ -4,7 +4,6 @@ use crate::places::place_details::request::Request;
 // =============================================================================
 
 impl<'a> Request<'a> {
-
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Places API _Place Details_ query
@@ -20,11 +19,7 @@ impl<'a> Request<'a> {
     /// For more information about place IDs, see the
     /// [place ID overview](https://developers.google.com/maps/documentation/places/web-service/place-id).
 
-    pub fn new(
-        client: &GoogleMapsClient,
-        place_id: String,
-    ) -> Request {
-
+    pub fn new(client: &GoogleMapsClient, place_id: String) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:
@@ -40,7 +35,5 @@ impl<'a> Request<'a> {
             // Internal use only:
             query: None,
         } // struct
-
     } // fn
-
 } // impl

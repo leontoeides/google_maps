@@ -4,7 +4,6 @@ use crate::places::RankBy;
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
-
     /// Adds the rank-by order parameter to the Places API _Nearby Search_
     /// query.
     ///
@@ -31,5 +30,4 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl

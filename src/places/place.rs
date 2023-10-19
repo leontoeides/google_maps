@@ -1,8 +1,10 @@
 //! Attributes describing a place. Not all attributes will be available for all
 //! place types.
 
+use crate::places::{
+    BusinessStatus, PlaceEditorialSummary, PlaceOpeningHours, PlacePhoto, PlaceReview,
+};
 use crate::types::{AddressComponent, Geometry, PlaceType};
-use crate::places::{BusinessStatus, PlaceEditorialSummary, PlaceOpeningHours, PlacePhoto, PlaceReview};
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 
@@ -12,7 +14,6 @@ use serde::{Deserialize, Serialize};
 /// place types.
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Deserialize, Serialize)]
 pub struct Place {
-
     /// An array containing the separate components applicable to this address.
     ///
     /// See [AddressComponent](https://developers.google.com/maps/documentation/places/web-service/search-text#AddressComponent)
@@ -238,7 +239,6 @@ pub struct Place {
 
     /// Specifies if the place has an entrance that is wheelchair-accessible.
     pub wheelchair_accessible_entrance: Option<bool>,
-
 } // struct Place
 
 /// ----------------------------------------------------------------------------
@@ -250,4 +250,4 @@ impl std::str::FromStr for Place {
     fn from_str(s: &str) -> Result<Self, serde_json::error::Error> {
         serde_json::from_str(s)
     } // fn from_str
-}  // impl FromStr
+} // impl FromStr

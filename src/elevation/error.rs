@@ -3,9 +3,9 @@
 // -----------------------------------------------------------------------------
 
 use crate::elevation::response::status::Status;
+use crate::ReqError;
 use miette::Diagnostic;
 use thiserror::Error;
-use crate::ReqError;
 
 // -----------------------------------------------------------------------------
 //

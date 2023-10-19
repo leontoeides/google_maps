@@ -22,7 +22,8 @@ pub enum ElementStatus {
     /// be geocoded.
     NotFound = 1,
     /// Indicates the response contains a valid result.
-    #[default] Ok = 2,
+    #[default]
+    Ok = 2,
     /// Indicates no route could be found between the origin and destination.
     ZeroResults = 3,
 } // struct
@@ -36,7 +37,7 @@ impl<'de> Deserialize<'de> for ElementStatus {
         let string = String::deserialize(deserializer)?;
         match ElementStatus::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -46,7 +47,9 @@ impl<'de> Deserialize<'de> for ElementStatus {
 impl Serialize for ElementStatus {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl

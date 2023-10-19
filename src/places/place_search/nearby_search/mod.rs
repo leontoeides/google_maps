@@ -20,12 +20,6 @@ const OUTPUT_FORMAT: &str = "json"; // json or xml
 
 // -----------------------------------------------------------------------------
 
-pub use crate::places::{
-    error::Error,
-    status::Status
-}; // place_search
+pub use crate::places::{error::Error, status::Status}; // place_search
 
-pub use crate::places::place_search::nearby_search::{
-    request::Request,
-    response::Response,
-}; // nearby_search
+pub use crate::places::place_search::nearby_search::{request::Request, response::Response}; // nearby_search

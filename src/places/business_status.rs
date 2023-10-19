@@ -14,7 +14,8 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum BusinessStatus {
-    #[default] Operational,
+    #[default]
+    Operational,
     ClosedTemporarily,
     ClosedPermanently,
 } // struct
@@ -28,7 +29,7 @@ impl<'de> Deserialize<'de> for BusinessStatus {
         let string = String::deserialize(deserializer)?;
         match BusinessStatus::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -38,7 +39,9 @@ impl<'de> Deserialize<'de> for BusinessStatus {
 impl Serialize for BusinessStatus {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl

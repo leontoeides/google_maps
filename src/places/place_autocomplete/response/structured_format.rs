@@ -22,7 +22,7 @@ pub struct StructuredFormat {
     /// Contains an array with `offset` value and `length`. These describe the
     /// location of the entered term in the prediction result text, so that the
     /// term can be highlighted if desired.
-    /// 
+    ///
     /// See [PlaceAutocompleteMatchedSubstring](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlaceAutocompleteMatchedSubstring)
     /// for more information.
     #[serde(alias = "main_text_matched_substrings")]
@@ -36,7 +36,7 @@ pub struct StructuredFormat {
     /// Contains an array with `offset` value and `length`. These describe the
     /// location of the entered term in the prediction result text, so that the
     /// term can be highlighted if desired.
-    /// 
+    ///
     /// See [PlaceAutocompleteMatchedSubstring](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlaceAutocompleteMatchedSubstring)
     /// for more information.
     #[serde(alias = "secondary_text_matched_substrings")]
@@ -52,4 +52,4 @@ impl std::str::FromStr for StructuredFormat {
     fn from_str(s: &str) -> Result<Self, serde_json::error::Error> {
         serde_json::from_str(s)
     } // fn from_str
-}  // impl FromStr
+} // impl FromStr

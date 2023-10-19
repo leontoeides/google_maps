@@ -3,7 +3,6 @@ use crate::places::place_autocomplete::request::Request;
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
-
     /// Adds the session token parameter to the Place API _Place Autocomplete_
     /// query.
     ///
@@ -44,5 +43,4 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl

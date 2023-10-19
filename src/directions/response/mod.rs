@@ -23,11 +23,7 @@ pub mod transit_time;
 pub mod transit_vehicle;
 
 use crate::directions::{
-    response::{
-        geocoded_waypoint::GeocodedWaypoint,
-        route::Route,
-        status::Status
-    }, // response
+    response::{geocoded_waypoint::GeocodedWaypoint, route::Route, status::Status}, // response
     travel_mode::TravelMode,
 }; // crate::directions
 use serde::{Deserialize, Serialize};

@@ -16,7 +16,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd, Deserialize, Serialize)]
 pub struct ErrorResponse {
-
     /// This is the same as the
     /// [HTTP status](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
     /// of the response.
@@ -27,5 +26,4 @@ pub struct ErrorResponse {
 
     /// A status code indicating the nature of the error.
     pub status: Status,
-
 } // struct

@@ -74,7 +74,6 @@ pub struct Geocoding {
 } // struct
 
 impl Geocoding {
-
     /// A helper function for destructuring the optional `plus_code` field. If
     /// the _plus_code_ field is populated, this function will return the
     /// global plus code. If the _plus_code_ field is empty, this function
@@ -83,7 +82,9 @@ impl Geocoding {
     /// let plus_code = geocoding.get_global_plus_code();
     /// ```
     pub fn get_global_plus_code(&self) -> Option<String> {
-        self.plus_code.as_ref().map(|plus_code| plus_code.global_code.to_string())
+        self.plus_code
+            .as_ref()
+            .map(|plus_code| plus_code.global_code.to_string())
     } // fn
 
     /// A helper function for destructuring the optional `compound_code`
@@ -95,9 +96,11 @@ impl Geocoding {
     /// ```
     pub fn get_compound_plus_code(&self) -> Option<String> {
         match &self.plus_code {
-            Some(plus_code) => plus_code.compound_code.as_ref().map(|compound_code| compound_code.to_string()),
+            Some(plus_code) => plus_code
+                .compound_code
+                .as_ref()
+                .map(|compound_code| compound_code.to_string()),
             None => None,
         } // match
     } // fn
-
 } // impl

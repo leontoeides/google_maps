@@ -3,7 +3,6 @@ use crate::client::GoogleMapsClient;
 // =============================================================================
 
 impl GoogleMapsClient {
-
     // -------------------------------------------------------------------------
     //
     /// Passes a user configured reqwest client for the Google Maps client to
@@ -53,5 +52,4 @@ impl GoogleMapsClient {
         self.reqwest_client = reqwest_client;
         self
     } // fn
-
 } // impl

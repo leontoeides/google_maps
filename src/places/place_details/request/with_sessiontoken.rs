@@ -3,7 +3,6 @@ use crate::places::place_details::request::Request;
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
-
     /// Specifies the session token for the Places API _Place Details_ request.
     ///
     /// ## Arguments:
@@ -43,5 +42,4 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl

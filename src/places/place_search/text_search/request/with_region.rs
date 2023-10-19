@@ -4,7 +4,6 @@ use crate::types::Region;
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
-
     /// Adds the region parameter to the Places API _Text Search_ query.
     ///
     /// ## Arguments:
@@ -22,5 +21,4 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl

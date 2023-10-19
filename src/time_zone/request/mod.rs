@@ -12,8 +12,8 @@ mod new;
 mod query_url;
 mod with_language;
 
-use chrono::{DateTime, Utc};
 use crate::{client::GoogleMapsClient, types::Language, types::LatLng};
+use chrono::{DateTime, Utc};
 
 // -----------------------------------------------------------------------------
 //
@@ -23,10 +23,8 @@ use crate::{client::GoogleMapsClient, types::Language, types::LatLng};
 
 #[derive(Debug)]
 pub struct Request<'a> {
-
     // Required parameters:
     // --------------------
-
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
     client: &'a GoogleMapsClient,
@@ -44,7 +42,6 @@ pub struct Request<'a> {
 
     // Optional parameters:
     // --------------------
-
     /// The language in which to return results. See the
     /// [list of supported domain languages](https://developers.google.com/maps/faq#languagesupport).
     /// Note that we often update supported languages so this list may not be
@@ -53,8 +50,6 @@ pub struct Request<'a> {
 
     // Internal use only:
     // ------------------
-
     /// Query string that is to be submitted to the Google Cloud Maps Platform.
     query: Option<String>,
-
 } // struct

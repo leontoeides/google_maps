@@ -264,7 +264,8 @@ pub enum Country {
     Ukraine = 233,
     UnitedArabEmirates = 234,
     UnitedKingdom = 235,
-    #[default] UnitedStates = 236,
+    #[default]
+    UnitedStates = 236,
     UnitedStatesMinorOutlyingIslands = 237,
     Uruguay = 238,
     USVirginIslands = 239,
@@ -288,7 +289,7 @@ impl<'de> Deserialize<'de> for Country {
         let string = String::deserialize(deserializer)?;
         match Country::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -298,7 +299,9 @@ impl<'de> Deserialize<'de> for Country {
 impl Serialize for Country {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl
@@ -1081,7 +1084,9 @@ impl Country {
             Country::SolomonIslands => "Solomon Islands",
             Country::Somalia => "Somalia",
             Country::SouthAfrica => "SouthA frica",
-            Country::SouthGeorgiaAndSouthSandwichIslands => "South Georgia and the South Sandwich Islands",
+            Country::SouthGeorgiaAndSouthSandwichIslands => {
+                "South Georgia and the South Sandwich Islands"
+            }
             Country::SouthKorea => "South Korea",
             Country::SouthSudan => "South Sudan",
             Country::Spain => "Spain",

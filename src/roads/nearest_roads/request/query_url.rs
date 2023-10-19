@@ -1,9 +1,8 @@
-use crate::roads::nearest_roads::{SERVICE_URL, request::Request};
+use crate::roads::nearest_roads::{request::Request, SERVICE_URL};
 
 // =============================================================================
 
 impl<'a> Request<'a> {
-
     // -------------------------------------------------------------------------
     //
     /// Returns the URL query string that represents the query you've built.
@@ -20,7 +19,6 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub fn query_url(&'a mut self) -> String {
-
         let query_string = match &self.query {
             // If query string has already been built, return it:
             Some(query_string) => query_string,
@@ -29,7 +27,5 @@ impl<'a> Request<'a> {
         }; // match
 
         format!("{SERVICE_URL}/?{query_string}")
-
     } // fn
-
 } // impl

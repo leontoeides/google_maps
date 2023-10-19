@@ -1,10 +1,9 @@
-use crate::places::place_details::Field;
 use crate::places::place_details::request::Request;
+use crate::places::place_details::Field;
 
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
-
     /// Adds the requested fields to the Places API _Place Details_ query.
     ///
     /// ## Arguments:
@@ -42,5 +41,4 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl

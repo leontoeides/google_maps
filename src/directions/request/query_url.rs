@@ -1,12 +1,6 @@
-use crate::directions::{
-    SERVICE_URL,
-    OUTPUT_FORMAT,
-    error::Error,
-    request::Request,
-}; // crate::directions
+use crate::directions::{error::Error, request::Request, OUTPUT_FORMAT, SERVICE_URL}; // crate::directions
 
 impl<'a> Request<'a> {
-
     /// Returns the URL query string that represents the query you've built.
     ///
     /// ## Description:
@@ -29,5 +23,4 @@ impl<'a> Request<'a> {
         }; // match
         Ok(format!("{SERVICE_URL}/{OUTPUT_FORMAT}?{query_string}"))
     } // fn
-
 } // impl

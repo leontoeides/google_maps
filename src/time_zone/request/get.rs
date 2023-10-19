@@ -1,21 +1,17 @@
-use backoff::Error::{Permanent, Transient};
-use backoff::ExponentialBackoff;
-use backoff::future::retry;
 use crate::error::Error as GoogleMapsError;
 use crate::request_rate::api::Api;
 use crate::time_zone::{
-    SERVICE_URL,
-    OUTPUT_FORMAT,
-    error::Error as TimeZoneError,
-    request::Request as TimeZoneRequest,
-    response::Response as TimeZoneResponse,
-    response::status::Status as TimeZoneStatus,
-}; // use
+    error::Error as TimeZoneError, request::Request as TimeZoneRequest,
+    response::status::Status as TimeZoneStatus, response::Response as TimeZoneResponse,
+    OUTPUT_FORMAT, SERVICE_URL,
+};
+use backoff::future::retry;
+use backoff::Error::{Permanent, Transient};
+use backoff::ExponentialBackoff; // use
 
 // -----------------------------------------------------------------------------
 
 impl<'a> TimeZoneRequest<'a> {
-
     /// Performs the HTTP get request and returns the response to the caller.
     ///
     /// ## Arguments:
@@ -24,7 +20,6 @@ impl<'a> TimeZoneRequest<'a> {
 
     #[tracing::instrument(level = "debug", name = "Google Maps Time Zone", skip(self))]
     pub async fn get(&mut self) -> Result<TimeZoneResponse, GoogleMapsError> {
-
         // Build the URL stem for the HTTP get request:
         let mut url = format!("{SERVICE_URL}/{OUTPUT_FORMAT}?");
 
@@ -36,7 +31,9 @@ impl<'a> TimeZoneRequest<'a> {
         } // match
 
         // Observe any rate limiting before executing request:
-        self.client.rate_limit.limit_apis(vec![&Api::All, &Api::TimeZone])
+        self.client
+            .rate_limit
+            .limit_apis(vec![&Api::All, &Api::TimeZone])
             .await;
 
         // Emit debug message so client can monitor activity:
@@ -47,7 +44,6 @@ impl<'a> TimeZoneRequest<'a> {
         // errors wrapped in `Transient()` will retried by the `backoff` crate
         // while errors wrapped in `Permanent()` will exit the retry loop.
         let response = retry(ExponentialBackoff::default(), || async {
-
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
             let response = self.client.get_request(&url).await;
@@ -88,7 +84,10 @@ impl<'a> TimeZoneRequest<'a> {
                                                 // Only Google's "Unknown Error"
                                                 // is eligible for retries:
                                                 tracing::warn!("{}", error);
-                                                Err(Transient { err: error, retry_after: None })
+                                                Err(Transient {
+                                                    err: error,
+                                                    retry_after: None,
+                                                })
                                             } else {
                                                 // Not an "Unknown Error." The
                                                 // error is permanent, do not
@@ -97,43 +96,49 @@ impl<'a> TimeZoneRequest<'a> {
                                                 Err(Permanent(error))
                                             } // if
                                         } // if
-                                    }, // Ok(deserialized)
+                                    } // Ok(deserialized)
                                     Err(error) => {
                                         tracing::error!("JSON parsing error: {}", error);
                                         Err(Permanent(TimeZoneError::SerdeJson(error)))
-                                    }, // Err
+                                    } // Err
                                 } // match
-                            }, // Ok(text)
+                            } // Ok(text)
                             Err(error) => {
                                 tracing::error!("HTTP client returned: {}", error);
                                 Err(Permanent(TimeZoneError::ReqwestMessage(error.to_string())))
-                            }, // Err
+                            } // Err
                         } // match
-                    // We got a response from the server but it was not OK.
-                    // Only HTTP "500 Server Errors", and HTTP "429 Too Many
-                    // Requests" are eligible for retries.
+                          // We got a response from the server but it was not OK.
+                          // Only HTTP "500 Server Errors", and HTTP "429 Too Many
+                          // Requests" are eligible for retries.
                     } else if response.status().is_server_error() || response.status() == 429 {
                         tracing::warn!("HTTP client returned: {}", response.status());
-                        Err(Transient { err: TimeZoneError::HttpUnsuccessful(response.status().to_string()), retry_after: None })
+                        Err(Transient {
+                            err: TimeZoneError::HttpUnsuccessful(response.status().to_string()),
+                            retry_after: None,
+                        })
                     // Not a 500 Server Error or "429 Too Many Requests" error.
                     // The error is permanent, do not retry:
                     } else {
                         tracing::error!("HTTP client returned: {}", response.status());
-                        Err(Permanent(TimeZoneError::HttpUnsuccessful(response.status().to_string())))
+                        Err(Permanent(TimeZoneError::HttpUnsuccessful(
+                            response.status().to_string(),
+                        )))
                     } // if
                 } // case
                 // HTTP client did not get a response from the server. Retry:
                 Err(error) => {
                     tracing::warn!("HTTP client returned: {}", error);
-                    Err(Transient { err: TimeZoneError::Reqwest(error), retry_after: None })
+                    Err(Transient {
+                        err: TimeZoneError::Reqwest(error),
+                        retry_after: None,
+                    })
                 } // case
             } // match
-
-        }).await?;
+        })
+        .await?;
 
         // Return response to caller:
         Ok(response)
-
     } // fn
-
 } // impl

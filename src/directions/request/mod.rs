@@ -3,14 +3,22 @@
 //! builder pattern. This module contains the tools (enums, structs, methods)
 //! for building your Google Maps Platform request.
 
+pub mod avoid;
 mod build;
+pub mod departure_time;
 #[cfg(feature = "enable-reqwest")]
 mod execute;
 #[cfg(feature = "enable-reqwest")]
 mod get;
+pub mod location;
 mod new;
 mod query_url;
+pub mod traffic_model;
+pub mod transit_mode;
+pub mod transit_route_preference;
+pub mod unit_system;
 mod validate;
+pub mod waypoint;
 mod with_alternatives;
 mod with_arrival_time;
 mod with_departure_time;
@@ -24,31 +32,18 @@ mod with_travel_mode;
 mod with_unit_system;
 mod with_waypoint_optimization;
 mod with_waypoints;
-pub mod avoid;
-pub mod departure_time;
-pub mod location;
-pub mod traffic_model;
-pub mod transit_mode;
-pub mod transit_route_preference;
-pub mod unit_system;
-pub mod waypoint;
 
 // -----------------------------------------------------------------------------
 
-use chrono::NaiveDateTime;
-use crate::directions::request::{
-    avoid::Avoid,
-    departure_time::DepartureTime,
-    location::Location,
-    traffic_model::TrafficModel,
-    transit_mode::TransitMode,
-    transit_route_preference::TransitRoutePreference,
-    unit_system::UnitSystem,
-    waypoint::Waypoint,
-}; // crate::directions::request
 use crate::client::GoogleMapsClient;
+use crate::directions::request::{
+    avoid::Avoid, departure_time::DepartureTime, location::Location, traffic_model::TrafficModel,
+    transit_mode::TransitMode, transit_route_preference::TransitRoutePreference,
+    unit_system::UnitSystem, waypoint::Waypoint,
+}; // crate::directions::request
 use crate::directions::travel_mode::TravelMode;
 use crate::types::{Language, Region};
+use chrono::NaiveDateTime;
 
 // -----------------------------------------------------------------------------
 //
@@ -58,10 +53,8 @@ use crate::types::{Language, Region};
 
 #[derive(Debug)]
 pub struct Request<'a> {
-
     // Required parameters:
     // --------------------
-
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
     client: &'a GoogleMapsClient,
@@ -76,7 +69,6 @@ pub struct Request<'a> {
 
     // Optional parameters:
     // --------------------
-
     /// Whether service may provide more than one route alternative in the
     /// response. See method `with_alternatives()` for more information.
     alternatives: Option<bool>,
@@ -132,12 +124,10 @@ pub struct Request<'a> {
 
     // Internal use only:
     // ------------------
-
     /// The URL-encoded query string that is passed to the Google Maps
     /// Directions API through cURL.
     query: Option<String>,
 
     /// Has the request been validated?
     validated: bool,
-
 } // struct

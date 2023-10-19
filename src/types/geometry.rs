@@ -14,7 +14,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Geometry {
-
     /// Contains the geocoded latitude, longitude value. For normal address
     /// lookups, this field is typically the most important.
     pub location: LatLng,
@@ -35,13 +34,11 @@ pub struct Geometry {
     /// technically part of the city, but probably should not be returned in the
     /// viewport.)
     pub bounds: Option<Bounds>,
-
 } // struct
 
 // =============================================================================
 
 impl Geometry {
-
     // -------------------------------------------------------------------------
     //
     /// A helper function for destructuring the optional `bounds` field. If
@@ -97,5 +94,4 @@ impl Geometry {
     pub fn get_bounds_northeast_lng(&self) -> Option<Decimal> {
         self.bounds.as_ref().map(|bounds| bounds.northeast.lng)
     } // fn
-
 } // impl

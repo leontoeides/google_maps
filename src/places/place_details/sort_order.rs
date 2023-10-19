@@ -15,7 +15,8 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SortOrder {
     /// **Default** Reviews are sorted by relevance; the service will bias the
     /// results to return reviews originally written in the preferred language.
-    #[default] MostRelevant = 0,
+    #[default]
+    MostRelevant = 0,
     /// Reviews are sorted in chronological order; the preferred language does
     /// not affect the sort order.
     Newest = 1,
@@ -30,7 +31,7 @@ impl<'de> Deserialize<'de> for SortOrder {
         let string = String::deserialize(deserializer)?;
         match SortOrder::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -40,7 +41,9 @@ impl<'de> Deserialize<'de> for SortOrder {
 impl Serialize for SortOrder {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl

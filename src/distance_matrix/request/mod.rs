@@ -24,19 +24,15 @@ mod with_unit_system;
 
 // -----------------------------------------------------------------------------
 
-use chrono::NaiveDateTime;
-use crate::directions::request::{
-    avoid::Avoid,
-    departure_time::DepartureTime,
-    traffic_model::TrafficModel,
-    transit_mode::TransitMode,
-    transit_route_preference::TransitRoutePreference,
-    unit_system::UnitSystem,
-    waypoint::Waypoint,
-}; // crate::directions::request
 use crate::client::GoogleMapsClient;
+use crate::directions::request::{
+    avoid::Avoid, departure_time::DepartureTime, traffic_model::TrafficModel,
+    transit_mode::TransitMode, transit_route_preference::TransitRoutePreference,
+    unit_system::UnitSystem, waypoint::Waypoint,
+}; // crate::directions::request
 use crate::directions::travel_mode::TravelMode;
 use crate::types::{Language, Region};
+use chrono::NaiveDateTime;
 
 // -----------------------------------------------------------------------------
 //
@@ -46,10 +42,8 @@ use crate::types::{Language, Region};
 
 #[derive(Debug)]
 pub struct Request<'a> {
-
     // Required parameters:
     // --------------------
-
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
     client: &'a GoogleMapsClient,
@@ -65,7 +59,6 @@ pub struct Request<'a> {
 
     // Optional parameters:
     // --------------------
-
     /// Desired arrival time. See method `with_arrival_time()` for more
     /// information.
     arrival_time: Option<NaiveDateTime>,
@@ -109,12 +102,10 @@ pub struct Request<'a> {
 
     // Internal use only:
     // ------------------
-
     /// The URL-encoded query string that is passed to the Google Maps
     /// Directions API through cURL.
     query: Option<String>,
 
     /// Has the request been validated?
     validated: bool,
-
 } // struct

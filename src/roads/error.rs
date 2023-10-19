@@ -3,9 +3,9 @@
 // -----------------------------------------------------------------------------
 
 use crate::roads::status::Status;
+use crate::ReqError;
 use miette::Diagnostic;
 use thiserror::Error;
-use crate::ReqError;
 
 // -----------------------------------------------------------------------------
 //
@@ -14,7 +14,6 @@ use crate::ReqError;
 #[derive(Debug, Diagnostic, Error)]
 #[diagnostic(code(google_maps::roads::error), url(docsrs))]
 pub enum Error {
-
     /// Google Maps Roads API server generated an error. See the `Status`
     /// enum for more information.
     GoogleMapsService(Status, Option<String>),
@@ -42,7 +41,6 @@ pub enum Error {
 
     /// The dependency library Serde JSON generated an error.
     SerdeJson(serde_json::error::Error),
-
 } // enum
 
 // -----------------------------------------------------------------------------

@@ -4,7 +4,6 @@ use crate::types::location_type::LocationType;
 // -----------------------------------------------------------------------------
 
 impl<'a> ReverseRequest<'a> {
-
     /// Restricts the results from the geocoder to the specified location
     /// type(s).
     ///
@@ -69,7 +68,7 @@ impl<'a> ReverseRequest<'a> {
             // If there are already filters, append to them:
             Some(location_types) => location_types.push(location_type_element),
         } // match
-        // Return modified ReverseRequest struct to caller.
+          // Return modified ReverseRequest struct to caller.
         self
     } // fn
 
@@ -109,12 +108,11 @@ impl<'a> ReverseRequest<'a> {
             // If there are no filters in the request struct, initialize field:
             None => self.location_types = Some(location_type_slice.to_vec()),
             // If there are already filters, append to them:
-            Some(reverse_request_struct) => location_type_slice.iter().for_each(|location_type|
-                reverse_request_struct.push(location_type.to_owned())
-            ), // iter
+            Some(reverse_request_struct) => location_type_slice
+                .iter()
+                .for_each(|location_type| reverse_request_struct.push(location_type.to_owned())), // iter
         } // match
-        // Return modified ReverseRequest struct to caller.
+          // Return modified ReverseRequest struct to caller.
         self
     } // fn
-
 } // impl

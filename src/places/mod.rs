@@ -78,26 +78,16 @@ pub mod query_autocomplete;
 #[cfg(feature = "autocomplete")]
 pub use crate::places::place_autocomplete::{
     error::Error as AutocompleteError,
+    request::{autocomplete_type::AutocompleteType, Request as PlaceAutocompleteRequest}, // request
     response::{
-        matched_substring::MatchedSubstring,
-        prediction::Prediction,
+        matched_substring::MatchedSubstring, prediction::Prediction,
+        status::Status as AutocompleteStatus, structured_format::StructuredFormat, term::Term,
         Response as AutocompleteResponse,
-        status::Status as AutocompleteStatus,
-        structured_format::StructuredFormat,
-        term::Term,
     }, // response
-    request::{
-        autocomplete_type::AutocompleteType,
-        Request as PlaceAutocompleteRequest,
-    }, // request
 }; // crate::places::place_autocomplete
 
 #[cfg(feature = "autocomplete")]
-pub use crate::places::place_autocomplete::{
-    request::{
-        Request as QueryAutocompleteRequest,
-    }, // request
-}; // crate::places::place_autocomplete
+pub use crate::places::place_autocomplete::request::Request as QueryAutocompleteRequest; // crate::places::place_autocomplete
 
 // -----------------------------------------------------------------------------
 
@@ -134,17 +124,10 @@ pub mod status;
 
 #[cfg(feature = "places")]
 pub use crate::places::{
-    business_status::BusinessStatus,
-    error::Error,
-    place::Place,
-    place_editorial_summary::PlaceEditorialSummary,
-    place_opening_hours::PlaceOpeningHours,
+    business_status::BusinessStatus, error::Error, place::Place,
+    place_editorial_summary::PlaceEditorialSummary, place_opening_hours::PlaceOpeningHours,
     place_opening_hours_period::PlaceOpeningHoursPeriod,
-    place_opening_hours_period_detail::PlaceOpeningHoursPeriodDetail,
-    place_photo::PlacePhoto,
-    place_review::PlaceReview,
-    place_special_day::PlaceSpecialDay,
-    rank_by::RankBy,
-    secondary_hours_type::SecondaryHoursType,
-    status::Status,
+    place_opening_hours_period_detail::PlaceOpeningHoursPeriodDetail, place_photo::PlacePhoto,
+    place_review::PlaceReview, place_special_day::PlaceSpecialDay, rank_by::RankBy,
+    secondary_hours_type::SecondaryHoursType, status::Status,
 }; // crate::places

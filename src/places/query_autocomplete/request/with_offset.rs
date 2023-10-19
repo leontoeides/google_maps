@@ -3,7 +3,6 @@ use crate::places::query_autocomplete::request::Request;
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
-
     /// Adds the offset parameter to the Place API _Query Autocomplete_ query.
     ///
     /// ## Arguments:
@@ -23,5 +22,4 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl

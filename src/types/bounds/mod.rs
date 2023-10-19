@@ -33,12 +33,10 @@ impl std::fmt::Display for Bounds {
     /// Converts a `Bounds` struct to a `String` that contains two
     /// latitude & longitude pairs that represent a bounding box.
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f,
+        write!(
+            f,
             "{},{}|{},{}",
-            self.southwest.lat,
-            self.southwest.lng,
-            self.northeast.lat,
-            self.northeast.lng,
+            self.southwest.lat, self.southwest.lng, self.northeast.lat, self.northeast.lng,
         ) // write!
     } // fn
 } // impl
@@ -61,17 +59,20 @@ impl std::str::FromStr for Bounds {
     /// Gets a `Bounds` struct from a `String` that contains two pipe-delimited
     /// latitude & longitude pairs.
     fn from_str(value: &str) -> Result<Self, Self::Err> {
-        let corner: Vec<&str> = value.trim()
-            .split('|')
-            .collect();
+        let corner: Vec<&str> = value.trim().split('|').collect();
         if corner.len() != 2 {
             Err(TypeError::InvalidBoundsString(value.to_owned()))?
         } else {
             let southwest = LatLng::from_str(corner[0].trim());
-            let southwest = southwest.map_err(|_| TypeError::InvalidBoundsString(value.to_owned()))?;
+            let southwest =
+                southwest.map_err(|_| TypeError::InvalidBoundsString(value.to_owned()))?;
             let northeast = LatLng::from_str(corner[1].trim());
-            let northeast = northeast.map_err(|_| TypeError::InvalidBoundsString(value.to_owned()))?;
-            Ok(Bounds { southwest, northeast })
+            let northeast =
+                northeast.map_err(|_| TypeError::InvalidBoundsString(value.to_owned()))?;
+            Ok(Bounds {
+                southwest,
+                northeast,
+            })
         } // if
     } // fn
 } // impl

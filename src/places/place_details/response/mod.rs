@@ -5,8 +5,8 @@
 
 // -----------------------------------------------------------------------------
 
-use crate::places::Place;
 use crate::places::status::Status;
+use crate::places::Place;
 use serde::{Deserialize, Serialize};
 
 /// The response from the Google Maps Places API _Place Details_ request
@@ -17,7 +17,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct Response {
-
     /// May contain a set of attributions about this listing which must be
     /// displayed to the user (some listings may not have attribution).
     pub html_attributions: Vec<String>,
@@ -41,7 +40,6 @@ pub struct Response {
     /// requests. It may not always be returned, and its content is subject to
     /// change.
     pub info_messages: Option<Vec<String>>,
-
 } // struct
 
 // -----------------------------------------------------------------------------

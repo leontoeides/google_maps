@@ -2,8 +2,8 @@
 //! specify a desired language for a response. _This is not a comprehensive list
 //! of languages, it is a list of languages that Google Maps supports._
 
-use crate::types::error::Error as TypeError;
 use crate::error::Error as GoogleMapsError;
+use crate::types::error::Error as TypeError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -82,7 +82,8 @@ pub enum Language {
     Czech = 19,
     Danish = 20,
     Dutch = 21,
-    #[default] English = 22,
+    #[default]
+    English = 22,
     EnglishAustralian = 23,
     EnglishCanada = 24,
     EnglishGreatBritain = 25,
@@ -155,7 +156,7 @@ impl<'de> Deserialize<'de> for Language {
         let string = String::deserialize(deserializer)?;
         match Language::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -165,7 +166,9 @@ impl<'de> Deserialize<'de> for Language {
 impl Serialize for Language {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl

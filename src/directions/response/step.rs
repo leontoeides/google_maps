@@ -2,11 +2,8 @@
 //! directions. A step is the most atomic unit of a direction's route.
 
 use crate::directions::response::{
-    directions_distance::DirectionsDistance,
-    directions_duration::DirectionsDuration,
-    driving_maneuver::DrivingManeuver,
-    polyline::Polyline,
-    transit_details::TransitDetails,
+    directions_distance::DirectionsDistance, directions_duration::DirectionsDuration,
+    driving_maneuver::DrivingManeuver, polyline::Polyline, transit_details::TransitDetails,
 }; // crate::directions::response
 use crate::directions::travel_mode::TravelMode;
 use crate::types::LatLng;
@@ -68,7 +65,6 @@ pub struct Step {
 // -----------------------------------------------------------------------------
 
 impl Step {
-
     /// A helper function for destructuring (or serializing) the optional
     /// `maneuver` field. If the `ManeuverType` enum in the step is populated,
     /// this function will return it as a `String`. If the _ManeuverType_ enum
@@ -80,5 +76,4 @@ impl Step {
     pub fn get_maneuver(&self) -> Option<String> {
         self.maneuver.as_ref().map(String::from)
     } // fn
-
 } // impl
