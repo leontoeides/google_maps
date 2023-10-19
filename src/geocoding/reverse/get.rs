@@ -1,6 +1,7 @@
 use backoff::Error::{Permanent, Transient};
 use backoff::ExponentialBackoff;
 use backoff::future::retry;
+use reqwest::Response;
 use crate::error::Error as GoogleMapsError;
 use crate::geocoding::{
     SERVICE_URL,
@@ -9,7 +10,9 @@ use crate::geocoding::{
     response::Response as GeocodingResponse,
     response::status::Status as GeocodingStatus,
     reverse::ReverseRequest as ReverseGeocodingRequest,
-}; // use crate::geocoding
+};
+use crate::ReqError;
+// use crate::geocoding
 use crate::request_rate::api::Api;
 
 // -----------------------------------------------------------------------------
@@ -50,11 +53,7 @@ impl<'a> ReverseGeocodingRequest<'a> {
 
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
-            let response: Result<reqwest::Response, reqwest::Error> =
-                match self.client.reqwest_client.get(&*url).build() {
-                    Ok(request) => self.client.reqwest_client.execute(request).await,
-                    Err(error) => Err(error),
-                }; // match
+            let response: Result<Response, ReqError> = self.client.get_request(&url).await;
 
             // Check response from the HTTP client:
             match response {

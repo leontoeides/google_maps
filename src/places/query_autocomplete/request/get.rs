@@ -1,6 +1,7 @@
 use backoff::Error::{Permanent, Transient};
 use backoff::ExponentialBackoff;
 use backoff::future::retry;
+use reqwest::Response;
 use crate::error::Error as GoogleMapsError;
 use crate::places::place_autocomplete::{
     error::Error as PlacesAutocompleteError,
@@ -11,7 +12,9 @@ use crate::places::query_autocomplete::{
     SERVICE_URL,
     OUTPUT_FORMAT,
     request::Request as QueryAutocompleteRequest,
-}; // crate::places::query_autocomplete
+};
+use crate::ReqError;
+// crate::places::query_autocomplete
 use crate::request_rate::api::Api;
 
 // -----------------------------------------------------------------------------
@@ -51,11 +54,7 @@ impl<'a>QueryAutocompleteRequest<'a> {
 
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
-            let response: Result<reqwest::Response, reqwest::Error> =
-                match self.client.reqwest_client.get(&*url).build() {
-                    Ok(request) => self.client.reqwest_client.execute(request).await,
-                    Err(error) => Err(error),
-                }; // match
+            let response: Result<Response, ReqError> = self.client.get_request(&url).await;
 
             // Check response from the HTTP client:
             match response {

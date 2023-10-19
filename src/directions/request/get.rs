@@ -1,6 +1,8 @@
 use backoff::Error::{Permanent, Transient};
 use backoff::ExponentialBackoff;
 use backoff::future::retry;
+use reqwest::Response;
+use reqwest_maybe_middleware::Error;
 use crate::directions::{
     SERVICE_URL,
     OUTPUT_FORMAT,
@@ -49,10 +51,10 @@ impl<'a> DirectionsRequest<'a> {
 
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
-            let response: Result<reqwest::Response, reqwest::Error> =
+            let response: Result<Response, Error> =
                 match self.client.reqwest_client.get(&*url).build() {
                     Ok(request) => self.client.reqwest_client.execute(request).await,
-                    Err(error) => Err(error),
+                    Err(error) => Err(Error::from(error)),
                 }; // match
 
             // Check response from the HTTP client:

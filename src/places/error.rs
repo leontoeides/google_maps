@@ -5,6 +5,7 @@
 use crate::places::status::Status;
 use miette::Diagnostic;
 use thiserror::Error;
+use crate::ReqError;
 
 // -----------------------------------------------------------------------------
 //
@@ -48,7 +49,7 @@ pub enum Error {
     QueryNotBuilt,
     /// The dependency library Reqwest generated an error.
     #[cfg(feature = "enable-reqwest")]
-    Reqwest(reqwest::Error),
+    Reqwest(ReqError),
     /// The dependency library Reqwest generated an error. The error could
     /// not be passed normally so a `String` representation is passed instead.
     #[cfg(feature = "enable-reqwest")]

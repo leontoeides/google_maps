@@ -426,3 +426,6 @@ mod request_rate;
 
 #[cfg(feature = "enable-reqwest")]
 pub use crate::request_rate::api::Api;
+
+#[cfg(feature = "enable-reqwest")]
+type ReqError = reqwest_maybe_middleware::Error;

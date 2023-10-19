@@ -48,11 +48,7 @@ impl<'a> NearestRoadsRequest<'a> {
 
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
-            let response: Result<reqwest::Response, reqwest::Error> =
-                match self.client.reqwest_client.get(&*url).build() {
-                    Ok(request) => self.client.reqwest_client.execute(request).await,
-                    Err(error) => Err(error),
-                }; // match
+            let response = self.client.get_request(&url).await;
 
             // Check response from the HTTP client:
             match response {

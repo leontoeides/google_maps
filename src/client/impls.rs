@@ -9,6 +9,8 @@ use crate::directions::request::waypoint::Waypoint;
 use crate::types::LatLng;
 #[cfg(feature = "time_zone")]
 use chrono::{DateTime, Utc};
+use reqwest::Response;
+use crate::ReqError;
 
 // =============================================================================
 
@@ -33,7 +35,7 @@ impl GoogleMapsClient {
         GoogleMapsClient {
             key: key.to_string(),
             rate_limit: RequestRate::default(),
-            reqwest_client,
+            reqwest_client: reqwest_maybe_middleware::Client::Vanilla(reqwest_client),
         } // GoogleMapsClient
 
     } // fn
@@ -560,5 +562,12 @@ impl GoogleMapsClient {
     ) -> crate::roads::snap_to_roads::request::Request {
         crate::roads::snap_to_roads::request::Request::new(self, points)
     } // fn
+
+    pub async fn get_request(&self, url: &str) -> Result<Response, ReqError> {
+        match self.reqwest_client.get(url).build() {
+            Ok(request) => self.reqwest_client.execute(request).await,
+            Err(error) => Err(ReqError::from(error)),
+        }
+    }
 
 } // impl
