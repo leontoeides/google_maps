@@ -2,9 +2,7 @@
 //! in the leg may not be returned for all requests.
 
 use crate::directions::response::{
-    directions_distance::DirectionsDistance,
-    directions_duration::DirectionsDuration,
-    step::Step,
+    directions_distance::DirectionsDistance, directions_duration::DirectionsDuration, step::Step,
     transit_time::TransitTime,
 }; // crate::directions::response
 use crate::types::LatLng;
@@ -60,7 +58,6 @@ pub struct Leg {
 // -----------------------------------------------------------------------------
 
 impl Leg {
-
     /// A helper function for destructuring (or serializing) the optional
     /// `duration_in_traffic` field. If the `Duration` struct is populated, this
     /// function will return the _text_ field as a `String`. If the _Duration_
@@ -85,7 +82,9 @@ impl Leg {
     /// ```
 
     pub fn get_duration_in_traffic_value(&self) -> Option<i64> {
-        self.duration_in_traffic.as_ref().map(|duration| duration.value.num_seconds())
+        self.duration_in_traffic
+            .as_ref()
+            .map(|duration| duration.value.num_seconds())
     } // fn
 
     /// A helper function for destructuring (or serializing) the optional
@@ -109,7 +108,9 @@ impl Leg {
     /// ```
 
     pub fn get_arrival_time_value(&self) -> Option<i64> {
-        self.arrival_time.as_ref().map(|time| time.value.timestamp())
+        self.arrival_time
+            .as_ref()
+            .map(|time| time.value.timestamp())
     } // fn
 
     /// A helper function for destructuring (or serializing) the optional
@@ -121,7 +122,9 @@ impl Leg {
     /// ```
 
     pub fn get_arrival_time_zone(&self) -> Option<String> {
-        self.arrival_time.as_ref().map(|time| time.time_zone.name().to_string())
+        self.arrival_time
+            .as_ref()
+            .map(|time| time.time_zone.name().to_string())
     } // fn
 
     /// A helper function for destructuring (or serializing) the optional
@@ -145,7 +148,9 @@ impl Leg {
     /// ```
 
     pub fn get_departure_time_value(&self) -> Option<i64> {
-        self.departure_time.as_ref().map(|time| time.value.timestamp())
+        self.departure_time
+            .as_ref()
+            .map(|time| time.value.timestamp())
     } // fn
 
     /// A helper function for destructuring (or serializing) the optional
@@ -157,7 +162,8 @@ impl Leg {
     /// ```
 
     pub fn get_departure_time_zone(&self) -> Option<String> {
-        self.departure_time.as_ref().map(|time| time.time_zone.name().to_string())
+        self.departure_time
+            .as_ref()
+            .map(|time| time.time_zone.name().to_string())
     } // fn
-
 } // impl

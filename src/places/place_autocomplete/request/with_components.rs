@@ -1,10 +1,9 @@
-use crate::Country;
 use crate::places::place_autocomplete::request::Request;
+use crate::Country;
 
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
-
     /// Adds the components parameter to the Place API _Place Autocomplete_
     /// query.
     ///
@@ -22,13 +21,11 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl
 
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
-
     /// Adds the components parameter to the Place API _Place Autocomplete_
     /// query.
     ///
@@ -46,5 +43,4 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl

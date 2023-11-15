@@ -5,8 +5,8 @@
 
 // -----------------------------------------------------------------------------
 
-use crate::places::Place;
 use crate::places::status::Status;
+use crate::places::Place;
 use serde::{Deserialize, Serialize};
 
 /// The response from the Google Maps Places API _Text Search_ request will be
@@ -17,7 +17,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct Response {
-
     /// May contain a set of attributions about this listing which must be
     /// displayed to the user (some listings may not have attribution).
     pub html_attributions: Vec<String>,
@@ -60,7 +59,6 @@ pub struct Response {
     /// is 60. There is a short delay between when a next_page_token is issued,
     /// and when it will become valid.
     pub next_page_token: Option<String>,
-
 } // struct
 
 // -----------------------------------------------------------------------------

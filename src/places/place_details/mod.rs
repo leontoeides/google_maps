@@ -16,14 +16,8 @@ const OUTPUT_FORMAT: &str = "json"; // json or xml
 
 // -----------------------------------------------------------------------------
 
-pub use crate::places::{
-    error::Error,
-    status::Status
-}; // place_search
+pub use crate::places::{error::Error, status::Status}; // place_search
 
 pub use crate::places::place_details::{
-    field::Field,
-    request::Request,
-    response::Response,
-    sort_order::SortOrder,
+    field::Field, request::Request, response::Response, sort_order::SortOrder,
 }; // place_details

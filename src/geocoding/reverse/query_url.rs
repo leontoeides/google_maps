@@ -1,11 +1,6 @@
-use crate::geocoding::{
-    OUTPUT_FORMAT,
-    SERVICE_URL,
-    reverse::ReverseRequest,
-}; // crate::geocoding
+use crate::geocoding::{reverse::ReverseRequest, OUTPUT_FORMAT, SERVICE_URL}; // crate::geocoding
 
 impl<'a> ReverseRequest<'a> {
-
     /// Returns the URL query string that represents the query you've built.
     ///
     /// ## Description:
@@ -28,5 +23,4 @@ impl<'a> ReverseRequest<'a> {
         }; // match
         format!("{SERVICE_URL}/{OUTPUT_FORMAT}?{query_string}")
     } // fn
-
 } // impl

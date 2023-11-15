@@ -1,13 +1,8 @@
-use crate::request_rate::{
-    api::Api,
-    duration_to_string::duration_to_string,
-    RequestRate,
-}; // use crate::request_rate
+use crate::request_rate::{api::Api, duration_to_string::duration_to_string, RequestRate}; // use crate::request_rate
 use futures::future;
 use std::time::SystemTime;
 
 impl RequestRate {
-
     /// This method is not for public consumption. It is for internal use only.
     ///
     /// ## Description
@@ -34,10 +29,13 @@ impl RequestRate {
         match wait_time {
             Ok(duration) => {
                 if duration.as_millis() > 10 {
-                    tracing::debug!("Waited for {} under rate limiter.", duration_to_string(&duration))
+                    tracing::debug!(
+                        "Waited for {} under rate limiter.",
+                        duration_to_string(&duration)
+                    )
                 }
-            },
-            _ => tracing::warn!("Clock went backwards!")
+            }
+            _ => tracing::warn!("Clock went backwards!"),
         }
     }
 } // impl

@@ -29,10 +29,8 @@ use crate::types::{Language, LatLng, LocationType, PlaceType};
 
 #[derive(Debug)]
 pub struct ReverseRequest<'a> {
-
     // Required parameters:
     // --------------------
-
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
     client: &'a GoogleMapsClient,
@@ -43,7 +41,6 @@ pub struct ReverseRequest<'a> {
 
     // Optional parameters:
     // --------------------
-
     /// The language in which to return results.
     language: Option<Language>,
 
@@ -67,8 +64,6 @@ pub struct ReverseRequest<'a> {
 
     // Internal use only:
     // ------------------
-
     /// Query string that is to be submitted to the Google Cloud Maps Platform.
     query: Option<String>,
-
 } // impl

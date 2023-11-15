@@ -1,12 +1,6 @@
-use crate::elevation::{
-    OUTPUT_FORMAT,
-    SERVICE_URL,
-    error::Error,
-    request::Request,
-}; // crate::elevation
+use crate::elevation::{error::Error, request::Request, OUTPUT_FORMAT, SERVICE_URL}; // crate::elevation
 
 impl<'a> Request<'a> {
-
     /// Returns the URL query string that represents the query you've built.
     ///
     /// ## Description:
@@ -29,5 +23,4 @@ impl<'a> Request<'a> {
         }; // match
         Ok(format!("{SERVICE_URL}/{OUTPUT_FORMAT}?{query_string}"))
     } // fn
-
 } // impl

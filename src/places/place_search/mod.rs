@@ -44,5 +44,5 @@
 //! Nearby Search and Text Search allow additional parameters to filter results,
 //! (e.g. `minprice`, `maxprice`, `opennow`, and `type`).
 
-pub mod text_search;
 pub mod nearby_search;
+pub mod text_search;

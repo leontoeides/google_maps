@@ -1,7 +1,7 @@
 //! A review of the place submitted by a user.
 
-use chrono::{DateTime, LocalResult, TimeZone, Utc};
 use crate::types::Language;
+use chrono::{DateTime, LocalResult, TimeZone, Utc};
 use serde::de::{Unexpected, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 
@@ -11,7 +11,6 @@ use serde::{Deserialize, Deserializer, Serialize};
 
 #[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct PlaceReview {
-    
     /// The name of the user who submitted the review. Anonymous reviews are
     /// attributed to "A Google user".
     pub author_name: String,
@@ -62,39 +61,41 @@ pub struct PlaceReview {
     /// this to your users. For example, you can add the following string,
     /// “Translated by Google”, to the review.
     pub translated: Option<bool>,
-
 } // struct PlaceReview
 
 // -----------------------------------------------------------------------------
 
 fn integer_as_date_time<'de, D>(deserializer: D) -> Result<DateTime<Utc>, D::Error>
-where D: Deserializer<'de> {
+where
+    D: Deserializer<'de>,
+{
     deserializer.deserialize_u64(DateTimeUtcVisitor)
 } // fn integer_as_date_time
 
 struct DateTimeUtcVisitor;
 
 impl<'de> Visitor<'de> for DateTimeUtcVisitor {
-
     type Value = DateTime<Utc>;
 
     fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
-        formatter.write_str(
-            "integer representation of seconds since January 1, 1970 UTC"
-        ) // write_str
+        formatter.write_str("integer representation of seconds since January 1, 1970 UTC")
+        // write_str
     } // fn expecting
 
     fn visit_u64<E>(self, value: u64) -> Result<DateTime<Utc>, E>
-    where E: serde::de::Error {
-
+    where
+        E: serde::de::Error,
+    {
         let value: i64 = match value.try_into() {
             Ok(value_as_i64) => value_as_i64,
-            Err(_error) => return Err(
-                E::invalid_value(
-                    Unexpected::Unsigned(value),
-                    &"UNIX timestamp representing seconds since January 1, 1970 UTC",
-                ) // invalid_value
-            ), // Err
+            Err(_error) => {
+                return Err(
+                    E::invalid_value(
+                        Unexpected::Unsigned(value),
+                        &"UNIX timestamp representing seconds since January 1, 1970 UTC",
+                    ), // invalid_value
+                )
+            } // Err
         }; // match
 
         match Utc.timestamp_opt(value, 0) {
@@ -103,12 +104,10 @@ impl<'de> Visitor<'de> for DateTimeUtcVisitor {
                 E::invalid_value(
                     Unexpected::Signed(value),
                     &"UNIX timestamp representing seconds since January 1, 1970 UTC",
-                ) // invalid_value
+                ), // invalid_value
             ), // Err
         } // match
-
     } // fn visit_i64
-
 } // impl Visitor
 
 // -----------------------------------------------------------------------------
@@ -120,4 +119,4 @@ impl std::str::FromStr for PlaceReview {
     fn from_str(s: &str) -> Result<Self, serde_json::error::Error> {
         serde_json::from_str(s)
     } // fn from_str
-}  // impl FromStr
+} // impl FromStr

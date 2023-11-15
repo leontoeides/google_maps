@@ -3,6 +3,7 @@
 // -----------------------------------------------------------------------------
 
 use crate::distance_matrix::response::status::Status;
+use crate::ReqError;
 use miette::Diagnostic;
 use thiserror::Error;
 
@@ -82,7 +83,7 @@ pub enum Error {
     RequestNotValidated,
     /// The dependency library Reqwest generated an error.
     #[cfg(feature = "enable-reqwest")]
-    Reqwest(reqwest::Error),
+    Reqwest(ReqError),
     /// The dependency library Reqwest generated an error. The error could
     /// not be passed normally so a `String` representation is passed instead.
     #[cfg(feature = "enable-reqwest")]
@@ -267,7 +268,7 @@ impl From<reqwest::Error> for Error {
     /// (`google_maps::distance_matrix::error::Error`) by wrapping it inside.
     /// This function is required to use the `?` operator.
     fn from(error: reqwest::Error) -> Error {
-        Error::Reqwest(error)
+        Error::Reqwest(ReqError::from(error))
     } // fn
 } // impl
 

@@ -3,7 +3,6 @@ use crate::roads::snap_to_roads::request::Request;
 // =============================================================================
 
 impl<'a> Request<'a> {
-
     // -------------------------------------------------------------------------
     //
     /// Whether to interpolate a path to include all points forming the full
@@ -25,13 +24,10 @@ impl<'a> Request<'a> {
     /// ```
 
     pub fn with_interpolation(&'a mut self, interpolate: bool) -> &'a mut Request {
-
         // Set language in Request struct.
         self.interpolate = Some(interpolate);
 
         // Return modified Request struct to caller.
         self
-
     } // fn
-
 } // impl

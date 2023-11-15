@@ -2,9 +2,9 @@
 //! specify when the user would like to depart for traffic modelling and transit
 //! directions.
 
-use chrono::NaiveDateTime;
 use crate::directions::error::Error as DirectionsError;
 use crate::error::Error as GoogleMapsError;
+use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 
 // -----------------------------------------------------------------------------
@@ -41,7 +41,8 @@ use serde::{Deserialize, Serialize};
 pub enum DepartureTime {
     /// You can specify a value of now, which sets the departure time to the
     /// current time (correct to the nearest second).
-    #[default] Now = 0,
+    #[default]
+    Now = 0,
     /// Specifies the desired time of departure.
     At(NaiveDateTime) = 1,
 } // enum
@@ -65,7 +66,7 @@ impl std::fmt::Display for DepartureTime {
     /// Converts a `DepartureTime` enum to a `String` that contains a [departure
     /// time](https://developers.google.com/maps/documentation/directions/intro#optional-parameters).
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{departure_time}", departure_time=String::from(self))
+        write!(f, "{departure_time}", departure_time = String::from(self))
     } // fn
 } // impl
 
@@ -85,9 +86,13 @@ impl std::convert::TryFrom<&str> for DepartureTime {
             match departure_time.parse::<i64>() {
                 Ok(integer) => match NaiveDateTime::from_timestamp_opt(integer, 0) {
                     Some(naive_date_time) => Ok(DepartureTime::At(naive_date_time)),
-                    None => Err(DirectionsError::InvalidDepartureTime(departure_time.to_string()))?,
+                    None => Err(DirectionsError::InvalidDepartureTime(
+                        departure_time.to_string(),
+                    ))?,
                 }, // Ok
-                Err(_error) => Err(DirectionsError::InvalidDepartureTime(departure_time.to_string()))?,
+                Err(_error) => Err(DirectionsError::InvalidDepartureTime(
+                    departure_time.to_string(),
+                ))?,
             } // match
         } // if
     } // fn
@@ -115,8 +120,9 @@ impl DepartureTime {
     pub fn display(&self) -> String {
         match self {
             DepartureTime::Now => "Now".to_string(),
-            DepartureTime::At(departure_time) =>
-                format!("At {}", departure_time.format("At %F %r")),
+            DepartureTime::At(departure_time) => {
+                format!("At {}", departure_time.format("At %F %r"))
+            }
         } // match
     } // fn
 } // impl

@@ -2,7 +2,6 @@ use crate::directions::request::departure_time::DepartureTime;
 use crate::distance_matrix::request::Request;
 
 impl<'a> Request<'a> {
-
     /// Specifies the desired departure time.
     ///
     /// ## Arguments:
@@ -58,12 +57,8 @@ impl<'a> Request<'a> {
     /// ))
     /// ```
 
-    pub fn with_departure_time(
-        &'a mut self,
-        departure_time: DepartureTime
-    ) -> &'a mut Request {
+    pub fn with_departure_time(&'a mut self, departure_time: DepartureTime) -> &'a mut Request {
         self.departure_time = Some(departure_time);
         self
     } // fn
-
 } // impl

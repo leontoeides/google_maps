@@ -11,7 +11,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct PlaceSpecialDay {
-
     /// A date expressed in RFC3339 format in the local timezone for the place,
     /// for example 2010-12-31.
     pub date: Option<NaiveDate>,
@@ -23,7 +22,6 @@ pub struct PlaceSpecialDay {
     /// `open_now`. The exceptions apply to the hours, and the hours are used to
     /// generate the other fields.
     pub exceptional_hours: Option<bool>,
-
 } // struct PlaceSpecialDay
 
 // -----------------------------------------------------------------------------
@@ -35,4 +33,4 @@ impl std::str::FromStr for PlaceSpecialDay {
     fn from_str(s: &str) -> Result<Self, serde_json::error::Error> {
         serde_json::from_str(s)
     } // fn from_str
-}  // impl FromStr
+} // impl FromStr

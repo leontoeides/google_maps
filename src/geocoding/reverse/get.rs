@@ -1,21 +1,20 @@
-use backoff::Error::{Permanent, Transient};
-use backoff::ExponentialBackoff;
-use backoff::future::retry;
 use crate::error::Error as GoogleMapsError;
 use crate::geocoding::{
-    SERVICE_URL,
-    OUTPUT_FORMAT,
-    error::Error as GeocodingError,
-    response::Response as GeocodingResponse,
-    response::status::Status as GeocodingStatus,
-    reverse::ReverseRequest as ReverseGeocodingRequest,
-}; // use crate::geocoding
+    error::Error as GeocodingError, response::status::Status as GeocodingStatus,
+    response::Response as GeocodingResponse, reverse::ReverseRequest as ReverseGeocodingRequest,
+    OUTPUT_FORMAT, SERVICE_URL,
+};
+use crate::ReqError;
+use backoff::future::retry;
+use backoff::Error::{Permanent, Transient};
+use backoff::ExponentialBackoff;
+use reqwest::Response;
+// use crate::geocoding
 use crate::request_rate::api::Api;
 
 // -----------------------------------------------------------------------------
 
 impl<'a> ReverseGeocodingRequest<'a> {
-
     /// Performs the HTTP get request and returns the response to the caller.
     ///
     /// ## Arguments:
@@ -24,7 +23,6 @@ impl<'a> ReverseGeocodingRequest<'a> {
 
     #[tracing::instrument(level = "debug", name = "Google Maps Geocoding", skip(self))]
     pub async fn get(&mut self) -> Result<GeocodingResponse, GoogleMapsError> {
-
         // Build the URL stem for the HTTP get request:
         let mut url = format!("{SERVICE_URL}/{OUTPUT_FORMAT}?");
 
@@ -36,7 +34,9 @@ impl<'a> ReverseGeocodingRequest<'a> {
         } // match
 
         // Observe any rate limiting before executing request:
-        self.client.rate_limit.limit_apis(vec![&Api::All, &Api::Geocoding])
+        self.client
+            .rate_limit
+            .limit_apis(vec![&Api::All, &Api::Geocoding])
             .await;
 
         // Emit debug message so client can monitor activity:
@@ -47,14 +47,9 @@ impl<'a> ReverseGeocodingRequest<'a> {
         // errors wrapped in `Transient()` will retried by the `backoff` crate
         // while errors wrapped in `Permanent()` will exit the retry loop.
         let response = retry(ExponentialBackoff::default(), || async {
-
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
-            let response: Result<reqwest::Response, reqwest::Error> =
-                match self.client.reqwest_client.get(&*url).build() {
-                    Ok(request) => self.client.reqwest_client.execute(request).await,
-                    Err(error) => Err(error),
-                }; // match
+            let response: Result<Response, ReqError> = self.client.get_request(&url).await;
 
             // Check response from the HTTP client:
             match response {
@@ -88,11 +83,15 @@ impl<'a> ReverseGeocodingRequest<'a> {
                                             );
                                             // Check Google API response status
                                             // for error type:
-                                            if deserialized.status == GeocodingStatus::UnknownError {
+                                            if deserialized.status == GeocodingStatus::UnknownError
+                                            {
                                                 // Only Google's "Unknown Error"
                                                 // is eligible for retries:
                                                 tracing::warn!("{}", error);
-                                                Err(Transient { err: error, retry_after: None })
+                                                Err(Transient {
+                                                    err: error,
+                                                    retry_after: None,
+                                                })
                                             } else {
                                                 // Not an "Unknown Error." The
                                                 // error is permanent, do not
@@ -101,43 +100,49 @@ impl<'a> ReverseGeocodingRequest<'a> {
                                                 Err(Permanent(error))
                                             } // if
                                         } // if
-                                    }, // Ok(deserialized)
+                                    } // Ok(deserialized)
                                     Err(error) => {
                                         tracing::error!("JSON parsing error: {}", error);
                                         Err(Permanent(GeocodingError::SerdeJson(error)))
-                                    }, // Err
+                                    } // Err
                                 } // match
-                            }, // Ok(text)
+                            } // Ok(text)
                             Err(error) => {
                                 tracing::error!("HTTP client returned: {}", error);
                                 Err(Permanent(GeocodingError::ReqwestMessage(error.to_string())))
-                            }, // Err
+                            } // Err
                         } // match
-                    // We got a response from the server but it was not OK.
-                    // Only HTTP "500 Server Errors", and HTTP "429 Too Many
-                    // Requests" are eligible for retries.
+                          // We got a response from the server but it was not OK.
+                          // Only HTTP "500 Server Errors", and HTTP "429 Too Many
+                          // Requests" are eligible for retries.
                     } else if response.status().is_server_error() || response.status() == 429 {
                         tracing::warn!("HTTP client returned: {}", response.status());
-                        Err(Transient { err: GeocodingError::HttpUnsuccessful(response.status().to_string()), retry_after: None })
+                        Err(Transient {
+                            err: GeocodingError::HttpUnsuccessful(response.status().to_string()),
+                            retry_after: None,
+                        })
                     // Not a 500 Server Error or "429 Too Many Requests" error.
                     // The error is permanent, do not retry:
                     } else {
                         tracing::error!("HTTP client returned: {}", response.status());
-                        Err(Permanent(GeocodingError::HttpUnsuccessful(response.status().to_string())))
+                        Err(Permanent(GeocodingError::HttpUnsuccessful(
+                            response.status().to_string(),
+                        )))
                     } // if
                 } // case
                 // HTTP client did not get a response from the server. Retry:
                 Err(error) => {
                     tracing::warn!("HTTP client returned: {}", error);
-                    Err(Transient { err: GeocodingError::Reqwest(error), retry_after: None })
+                    Err(Transient {
+                        err: GeocodingError::Reqwest(error),
+                        retry_after: None,
+                    })
                 } // case
             } // match
-
-        }).await?;
+        })
+        .await?;
 
         // Return response to caller:
         Ok(response)
-
     } // fn
-
 } // impl

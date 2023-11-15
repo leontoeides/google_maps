@@ -3,7 +3,6 @@ use crate::places::place_search::nearby_search::request::Request;
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
-
     /// Adds the searched text string to the Places API _Nearby Search_ query.
     ///
     /// ## Arguments:
@@ -28,5 +27,4 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl

@@ -3,9 +3,9 @@
 //! current request rate.
 
 use crate::request_rate::target_rate::TargetRate; // use
-use stream_throttle::ThrottlePool;
 use std::fmt;
 use std::hash::{Hash, Hasher};
+use stream_throttle::ThrottlePool;
 
 /// Contains the user's specified request rate and the effective current request
 /// rate.
@@ -42,11 +42,9 @@ impl PartialEq for ApiRate {
 
 impl Eq for ApiRate {}
 
-
 impl Hash for ApiRate {
     fn hash<H: Hasher>(&self, state: &mut H) {
         // self.current_rate.hash(state);
         self.target_rate.hash(state);
     }
 }
-

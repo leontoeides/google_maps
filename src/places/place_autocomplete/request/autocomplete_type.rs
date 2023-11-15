@@ -31,7 +31,8 @@ pub enum AutocompleteType {
     /// results with a precise address. Generally, you use this request when you
     /// know the user will be looking for a fully specified address.
     /// indeterminate.
-    #[default] Address = 1,
+    #[default]
+    Address = 1,
     /// Instructs the Place Autocomplete service to return only business
     /// results.
     Establishment = 2,
@@ -58,7 +59,7 @@ impl<'de> Deserialize<'de> for AutocompleteType {
         let string = String::deserialize(deserializer)?;
         match AutocompleteType::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -68,7 +69,9 @@ impl<'de> Deserialize<'de> for AutocompleteType {
 impl Serialize for AutocompleteType {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl
@@ -141,7 +144,9 @@ impl std::convert::TryFrom<&str> for AutocompleteType {
         Ok(AUTOCOMPLETE_TYPES_BY_CODE
             .get(autocomplete_code)
             .cloned()
-            .ok_or_else(|| PlaceAutocompleteError::InvalidAutocompleteType(autocomplete_code.to_string()))?)
+            .ok_or_else(|| {
+                PlaceAutocompleteError::InvalidAutocompleteType(autocomplete_code.to_string())
+            })?)
     } // fn
 } // impl
 
@@ -159,7 +164,9 @@ impl std::str::FromStr for AutocompleteType {
         Ok(AUTOCOMPLETE_TYPES_BY_CODE
             .get(autocomplete_code)
             .cloned()
-            .ok_or_else(|| PlaceAutocompleteError::InvalidAutocompleteType(autocomplete_code.to_string()))?)
+            .ok_or_else(|| {
+                PlaceAutocompleteError::InvalidAutocompleteType(autocomplete_code.to_string())
+            })?)
     } // fn
 } // impl
 

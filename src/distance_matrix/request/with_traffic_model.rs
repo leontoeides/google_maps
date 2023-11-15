@@ -2,7 +2,6 @@ use crate::directions::request::traffic_model::TrafficModel;
 use crate::distance_matrix::request::Request;
 
 impl<'a> Request<'a> {
-
     /// Specifies the assumptions to use when calculating time in traffic.
     ///
     /// ## Arguments
@@ -50,12 +49,8 @@ impl<'a> Request<'a> {
     /// .with_traffic_model(TrafficModel::Pessimistic)
     /// ```
 
-    pub fn with_traffic_model(
-        &'a mut self,
-        traffic_model: TrafficModel
-    ) -> &'a mut Request {
+    pub fn with_traffic_model(&'a mut self, traffic_model: TrafficModel) -> &'a mut Request {
         self.traffic_model = Some(traffic_model);
         self
     } // fn
-
 } // impl

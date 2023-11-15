@@ -1,11 +1,6 @@
-use crate::directions::{
-    error::Error,
-    request::Request,
-    travel_mode::TravelMode
-}; // crate::directions
+use crate::directions::{error::Error, request::Request, travel_mode::TravelMode}; // crate::directions
 
 impl<'a> Request<'a> {
-
     /// Ensures the built query is valid. This function checks the combination
     /// of parameters to ensure that they make sense together and that Google
     /// Maps Directions API will accept them - i.e. it will not allow both a
@@ -18,12 +13,9 @@ impl<'a> Request<'a> {
     /// This method accepts no arguments.
 
     pub fn validate(&'a mut self) -> Result<&'a mut Request, Error> {
-
         if let Some(travel_mode) = &self.travel_mode {
-
             // If the travel mode has been set to TravelMode::Transit...
             if *travel_mode == TravelMode::Transit {
-
                 // ...waypoints cannot be set:
                 if let Some(waypoints) = &self.waypoints {
                     return Err(Error::EitherWaypointsOrTransitMode(waypoints.len()));
@@ -31,7 +23,6 @@ impl<'a> Request<'a> {
 
             // If the transit mode is not set to TravelMode::Transit...
             } else {
-
                 // ...an arrival time cannot be set:
                 if let Some(arrival_time) = &self.arrival_time {
                     return Err(Error::ArrivalTimeIsForTransitOnly(
@@ -59,14 +50,11 @@ impl<'a> Request<'a> {
                         transit_route_preference.to_string(),
                     )); // Err
                 } // if
-
             } // if
-
         } // if
 
         // If waypoints have been set...
         if let Some(waypoints) = &self.waypoints {
-
             // ...alternatives cannot be set to true:
             if let Some(alternatives) = &self.alternatives {
                 if !alternatives {
@@ -91,12 +79,10 @@ impl<'a> Request<'a> {
             if waypoints.len() > 25 {
                 return Err(Error::TooManyWaypoints(waypoints.len()));
             } // if
-
         } // if
 
         // If an arrival time has been set...
         if let Some(arrival_time) = &self.arrival_time {
-
             // ...a departure time cannot be set:
             if let Some(departure_time) = &self.departure_time {
                 return Err(Error::EitherDepartureTimeOrArrivalTime(
@@ -104,7 +90,6 @@ impl<'a> Request<'a> {
                     departure_time.to_string(),
                 )); // Err
             } // if
-
         } // if
 
         // Indicate that the request passed validation.
@@ -112,7 +97,5 @@ impl<'a> Request<'a> {
 
         // Return modified Request struct to caller.
         Ok(self)
-
     } // fn
-
 } // impl

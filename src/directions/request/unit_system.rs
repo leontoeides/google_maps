@@ -34,7 +34,8 @@ pub enum UnitSystem {
     Imperial = 0,
     /// Specifies that distances in the response should be expressed in metric
     /// units, using kilometres and metres.
-    #[default] Metric = 1,
+    #[default]
+    Metric = 1,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -46,7 +47,7 @@ impl<'de> Deserialize<'de> for UnitSystem {
         let string = String::deserialize(deserializer)?;
         match UnitSystem::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -56,7 +57,9 @@ impl<'de> Deserialize<'de> for UnitSystem {
 impl Serialize for UnitSystem {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl

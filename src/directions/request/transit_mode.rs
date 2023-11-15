@@ -20,7 +20,8 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[repr(u8)]
 pub enum TransitMode {
     /// Indicates that the calculated route should prefer travel by bus.
-    #[default] Bus = 0,
+    #[default]
+    Bus = 0,
     /// Indicates that the calculated route should prefer travel by train, tram,
     /// light rail, and subway. This is equivalent to
     /// `transit_mode=train|tram|subway`.
@@ -45,7 +46,7 @@ impl<'de> Deserialize<'de> for TransitMode {
         let string = String::deserialize(deserializer)?;
         match TransitMode::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -55,7 +56,9 @@ impl<'de> Deserialize<'de> for TransitMode {
 impl Serialize for TransitMode {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl
@@ -122,7 +125,9 @@ impl std::convert::TryFrom<&str> for TransitMode {
         Ok(TRANSIT_MODES_BY_CODE
             .get(transit_mode_code)
             .cloned()
-            .ok_or_else(|| DirectionsError::InvalidTransitModeCode(transit_mode_code.to_string()))?)
+            .ok_or_else(|| {
+                DirectionsError::InvalidTransitModeCode(transit_mode_code.to_string())
+            })?)
     } // fn
 } // impl
 
@@ -139,7 +144,9 @@ impl std::str::FromStr for TransitMode {
         Ok(TRANSIT_MODES_BY_CODE
             .get(transit_mode_code)
             .cloned()
-            .ok_or_else(|| DirectionsError::InvalidTransitModeCode(transit_mode_code.to_string()))?)
+            .ok_or_else(|| {
+                DirectionsError::InvalidTransitModeCode(transit_mode_code.to_string())
+            })?)
     } // fn
 } // impl
 

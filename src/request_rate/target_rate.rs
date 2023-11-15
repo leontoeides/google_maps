@@ -35,7 +35,7 @@ impl std::default::Default for TargetRate {
     /// Returns a reasonable default values for the `TargetRate` struct.
     fn default() -> Self {
         TargetRate {
-            requests: 0,  // disabled
+            requests: 0, // disabled
             duration: Duration::from_secs(1),
         } // struct
     } // fn

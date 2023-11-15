@@ -1,12 +1,11 @@
-use chrono::{DateTime, Utc};
 use crate::client::GoogleMapsClient;
-use crate::types::LatLng;
 use crate::time_zone::request::Request;
+use crate::types::LatLng;
+use chrono::{DateTime, Utc};
 
 // =============================================================================
 
 impl<'a> Request<'a> {
-
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Time Zone API query with the
@@ -36,12 +35,7 @@ impl<'a> Request<'a> {
     /// ).execute();
     /// ```
 
-    pub fn new(
-        client: &GoogleMapsClient,
-        location: LatLng,
-        timestamp: DateTime<Utc>,
-    ) -> Request {
-
+    pub fn new(client: &GoogleMapsClient, location: LatLng, timestamp: DateTime<Utc>) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:
@@ -53,7 +47,6 @@ impl<'a> Request<'a> {
             // Internal use only:
             query: None,
         } // struct
-
     } // fn
 
     // -------------------------------------------------------------------------
@@ -78,7 +71,6 @@ impl<'a> Request<'a> {
         coordinate: &'b geo_types::Coord,
         timestamp: DateTime<Utc>,
     ) -> Result<Request<'a>, crate::error::Error> {
-
         // Instantiate struct and return it to caller:
         Ok(Request {
             // Required parameters:
@@ -90,7 +82,6 @@ impl<'a> Request<'a> {
             // Internal use only:
             query: None,
         }) // struct
-
     } // fn
 
     // -------------------------------------------------------------------------
@@ -115,7 +106,6 @@ impl<'a> Request<'a> {
         point: &'b geo_types::Point,
         timestamp: DateTime<Utc>,
     ) -> Result<Request<'a>, crate::error::Error> {
-
         // Instantiate struct and return it to caller:
         Ok(Request {
             // Required parameters:
@@ -127,7 +117,5 @@ impl<'a> Request<'a> {
             // Internal use only:
             query: None,
         }) // struct
-
     } // fn
-
 } // impl

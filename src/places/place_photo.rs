@@ -1,7 +1,6 @@
 //! A photo of a Place. The photo can be accesed via the
 /// [Place Photo](https://developers.google.com/places/web-service/photos) API
 /// using a URL.
-
 use serde::{Deserialize, Serialize};
 
 // -----------------------------------------------------------------------------
@@ -37,4 +36,4 @@ impl std::str::FromStr for PlacePhoto {
     fn from_str(s: &str) -> Result<Self, serde_json::error::Error> {
         serde_json::from_str(s)
     } // fn from_str
-}  // impl FromStr
+} // impl FromStr

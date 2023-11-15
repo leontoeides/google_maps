@@ -3,21 +3,21 @@
 //! this module to set request rates. Use the `GoogleMapsClient` methods
 //! instead.**
 
+pub mod api;
 mod api_rate;
+pub mod api_rate_limit;
+mod current_rate;
 mod duration_to_string;
 mod duration_unit;
 mod limit;
 mod rate_to_string;
 mod target_rate;
 mod with_rate;
-pub mod api;
-pub mod api_rate_limit;
-mod current_rate;
 
 // -----------------------------------------------------------------------------
 
-use crate::request_rate::api_rate::ApiRate;
 use crate::request_rate::api::Api;
+use crate::request_rate::api_rate::ApiRate;
 use std::collections::HashMap;
 
 // -----------------------------------------------------------------------------

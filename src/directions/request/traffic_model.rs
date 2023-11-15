@@ -33,7 +33,8 @@ pub enum TrafficModel {
     /// estimate of travel time given what is known about both historical
     /// traffic conditions and live traffic. Live traffic becomes more important
     /// the closer the `departure_time` is to now.
-    #[default] BestGuess = 0,
+    #[default]
+    BestGuess = 0,
     /// Indicates that the returned duration_in_traffic should be shorter than
     /// the actual travel time on most days, though occasional days with
     /// particularly good traffic conditions may be faster than this value.
@@ -53,7 +54,7 @@ impl<'de> Deserialize<'de> for TrafficModel {
         let string = String::deserialize(deserializer)?;
         match TrafficModel::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -63,7 +64,9 @@ impl<'de> Deserialize<'de> for TrafficModel {
 impl Serialize for TrafficModel {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl
@@ -127,7 +130,9 @@ impl std::convert::TryFrom<&str> for TrafficModel {
         Ok(TRAFFIC_MODELS_BY_CODE
             .get(traffic_model_code)
             .cloned()
-            .ok_or_else(|| DirectionsError::InvalidTrafficModelCode(traffic_model_code.to_string()))?)
+            .ok_or_else(|| {
+                DirectionsError::InvalidTrafficModelCode(traffic_model_code.to_string())
+            })?)
     } // fn
 } // impl
 
@@ -145,7 +150,9 @@ impl std::str::FromStr for TrafficModel {
         Ok(TRAFFIC_MODELS_BY_CODE
             .get(traffic_model_code)
             .cloned()
-            .ok_or_else(|| DirectionsError::InvalidTrafficModelCode(traffic_model_code.to_string()))?)
+            .ok_or_else(|| {
+                DirectionsError::InvalidTrafficModelCode(traffic_model_code.to_string())
+            })?)
     } // fn
 } // impl
 

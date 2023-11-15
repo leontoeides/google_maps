@@ -1,9 +1,7 @@
 //! A single route containing a set of legs.
 
 use crate::directions::response::{
-    leg::Leg,
-    overview_polyline::OverviewPolyline,
-    transit_fare::TransitFare,
+    leg::Leg, overview_polyline::OverviewPolyline, transit_fare::TransitFare,
 }; // crate::directions::response
 use crate::types::Bounds;
 use rust_decimal::Decimal;
@@ -68,7 +66,6 @@ pub struct Route {
 // -----------------------------------------------------------------------------
 
 impl Route {
-
     /// A helper function for destructuring (or serializing) the `summary`
     /// field. If the _summary_ text is populated, this function will return the
     /// _summary_ text in the `String` format. If the _summary_ text is empty,
@@ -148,8 +145,13 @@ impl Route {
         if self.waypoint_order.is_empty() {
             None
         } else {
-            Some(self.waypoint_order.iter().map(|integer| integer.to_string()).collect::<Vec<String>>().join("|"))
+            Some(
+                self.waypoint_order
+                    .iter()
+                    .map(|integer| integer.to_string())
+                    .collect::<Vec<String>>()
+                    .join("|"),
+            )
         } // if
     } // fn
-
 } // impl

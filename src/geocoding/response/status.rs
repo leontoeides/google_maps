@@ -4,7 +4,7 @@
 
 use crate::geocoding::error::Error;
 use phf::phf_map;
-use serde::{Deserialize, Serialize, Deserializer};
+use serde::{Deserialize, Deserializer, Serialize};
 
 // -----------------------------------------------------------------------------
 
@@ -60,7 +60,7 @@ impl<'de> Deserialize<'de> for Status {
         let string = String::deserialize(deserializer)?;
         match Status::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl

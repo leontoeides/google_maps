@@ -1,13 +1,11 @@
 use crate::error::Error as GoogleMapsError;
 use crate::geocoding::{
-    response::Response as GeocodingResponse,
-    reverse::ReverseRequest as GeocodingReverseRequest,
+    response::Response as GeocodingResponse, reverse::ReverseRequest as GeocodingReverseRequest,
 }; // use crate::geocoding
 
 // =============================================================================
 
 impl<'a> GeocodingReverseRequest<'a> {
-
     // -------------------------------------------------------------------------
     //
     /// Executes the query you've built.
@@ -22,12 +20,7 @@ impl<'a> GeocodingReverseRequest<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub async fn execute(
-        &'a mut self
-    ) -> Result<GeocodingResponse, GoogleMapsError> {
-
+    pub async fn execute(&'a mut self) -> Result<GeocodingResponse, GoogleMapsError> {
         self.build().get().await
-
     } // fn
-
 } // impl

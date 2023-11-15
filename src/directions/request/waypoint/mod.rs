@@ -14,7 +14,9 @@ use crate::types::LatLng;
 /// Used to specify pass throughs or stopovers at intermediate locations.
 
 #[cfg(not(feature = "geo"))]
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize,
+)]
 pub enum Waypoint {
     /// If you pass an address, the Directions service geocodes the string and
     /// converts it to latitude & longitude coordinates to calculate directions.
@@ -111,25 +113,25 @@ impl std::convert::From<&Waypoint> for String {
     /// value.
     fn from(waypoint: &Waypoint) -> String {
         match waypoint {
+            Waypoint::Address(address) => address.clone(),
 
-            Waypoint::Address(address) =>
-                address.clone(),
+            Waypoint::LatLng(latlng) => String::from(latlng),
 
-            Waypoint::LatLng(latlng) =>
-                String::from(latlng),
+            Waypoint::PlaceId(place_id) => format!("place_id:{place_id}"),
 
-            Waypoint::PlaceId(place_id) =>
-                format!("place_id:{place_id}"),
+            Waypoint::Polyline(polyline) => format!("enc:{polyline}:"),
 
-            Waypoint::Polyline(polyline) =>
-                format!("enc:{polyline}:"),
+            Waypoint::Coord(coordinate) => format!(
+                "{latitude},{longitude}",
+                latitude = coordinate.y,
+                longitude = coordinate.x
+            ),
 
-            Waypoint::Coord(coordinate) =>
-                format!("{latitude},{longitude}", latitude=coordinate.y, longitude=coordinate.x),
-
-            Waypoint::Point(point) =>
-                format!("{latitude},{longitude}", latitude=point.y(), longitude=point.x()),
-
+            Waypoint::Point(point) => format!(
+                "{latitude},{longitude}",
+                latitude = point.y(),
+                longitude = point.x()
+            ),
         } // match
     } // fn
 } // impl

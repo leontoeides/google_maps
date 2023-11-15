@@ -21,8 +21,8 @@ mod with_type;
 
 // -----------------------------------------------------------------------------
 
-use crate::LatLng;
 use crate::places::RankBy;
+use crate::LatLng;
 use crate::{client::GoogleMapsClient, types::Language, types::PlaceType};
 
 // -----------------------------------------------------------------------------
@@ -35,7 +35,6 @@ use crate::{client::GoogleMapsClient, types::Language, types::PlaceType};
 pub struct Request<'a> {
     // Required parameters:
     // --------------------
-
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
     client: &'a GoogleMapsClient,
@@ -67,7 +66,6 @@ pub struct Request<'a> {
 
     // Optional parameters:
     // --------------------
-
     /// The text string on which to search, for example: "restaurant" or "123
     /// Main Street". This must be a place name, address, or category of
     /// establishments. Any other types of input can generate errors and are not
@@ -164,8 +162,6 @@ pub struct Request<'a> {
 
     // Internal use only:
     // ------------------
-
     /// Query string that is to be submitted to the Google Cloud Maps Platform.
     query: Option<String>,
-
 } // struct

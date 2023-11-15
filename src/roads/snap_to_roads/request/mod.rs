@@ -27,10 +27,8 @@ use crate::types::LatLng;
 
 #[derive(Debug)]
 pub struct Request<'a> {
-
     // Required parameters:
     // --------------------
-
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
     client: &'a GoogleMapsClient,
@@ -44,7 +42,6 @@ pub struct Request<'a> {
 
     // Optional parameters:
     // --------------------
-
     /// Whether to interpolate a path to include all points forming the full
     /// road-geometry. When `true`, additional interpolated points will also be
     /// returned, resulting in a path that smoothly follows the geometry of the
@@ -55,8 +52,6 @@ pub struct Request<'a> {
 
     // Internal use only:
     // ------------------
-
     /// Query string that is to be submitted to the Google Cloud Maps Platform.
     query: Option<String>,
-
 } // struct

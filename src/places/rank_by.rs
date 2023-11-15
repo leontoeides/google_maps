@@ -13,19 +13,18 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, Default, Hash, Ord, PartialEq, PartialOrd)]
 #[repr(u8)]
 pub enum RankBy {
-
     /// This option sorts results based on their importance. Ranking will favor
     /// prominent places within the set radius over nearby places that match but
     /// that are less prominent. Prominence can be affected by a place's ranking
     /// in Google's index, global popularity, and other factors. When prominence
     /// is specified, the `radius` parameter is required.
-    #[default] Prominence = 0,
+    #[default]
+    Prominence = 0,
 
     /// This option biases search results in ascending order by their distance
     /// from the specified location. When `distance` is specified, one or more
     /// of `keyword`, `name`, or `type` is required and radius is disallowed.
     Distance = 1,
-
 } // struct
 
 // -----------------------------------------------------------------------------
@@ -37,7 +36,7 @@ impl<'de> Deserialize<'de> for RankBy {
         let string = String::deserialize(deserializer)?;
         match RankBy::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -47,7 +46,9 @@ impl<'de> Deserialize<'de> for RankBy {
 impl Serialize for RankBy {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl

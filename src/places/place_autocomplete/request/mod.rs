@@ -3,6 +3,7 @@
 //! for examples of the builder pattern. This module contains the tools (enums,
 //! structs, methods) for building your Google Maps Platform request.
 
+pub mod autocomplete_type;
 mod build;
 #[cfg(feature = "enable-reqwest")]
 mod execute;
@@ -10,15 +11,14 @@ mod execute;
 mod get;
 mod new;
 mod query_url;
+mod with_components;
 mod with_language;
 mod with_location;
 mod with_offset;
 mod with_origin;
 mod with_region;
 mod with_sessiontoken;
-mod with_components;
 mod with_types;
-pub mod autocomplete_type;
 
 // -----------------------------------------------------------------------------
 
@@ -36,7 +36,6 @@ use crate::types::{Country, Language, LatLng, Region};
 pub struct Request<'a> {
     // Required parameters:
     // --------------------
-
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
     client: &'a GoogleMapsClient,
@@ -48,7 +47,6 @@ pub struct Request<'a> {
 
     // Optional parameters:
     // --------------------
-
     /// A grouping of places to which you would like to restrict your results.
     /// Currently, you can use components to filter by up to 5 countries.
     ///
@@ -185,8 +183,6 @@ pub struct Request<'a> {
 
     // Internal use only:
     // ------------------
-
     /// Query string that is to be submitted to the Google Cloud Maps Platform.
     query: Option<String>,
-
 } // struct

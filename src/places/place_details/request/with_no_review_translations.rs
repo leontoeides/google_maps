@@ -3,7 +3,6 @@ use crate::places::place_details::request::Request;
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
-
     /// Specifies whether Google should provide translations of user reviews in
     /// the Places API _Place Details_ response.
     ///
@@ -25,5 +24,4 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl

@@ -20,7 +20,9 @@ use rust_decimal_macros::dec;
 /// pair, multiple latitude/longitude pairs, or an encoded polyline.
 
 #[cfg(not(feature = "geo"))]
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize,
+)]
 pub enum Locations {
     /// A single or multiple
     /// [latitude/longitude](https://developers.google.com/maps/documentation/elevation/intro#Locations)
@@ -38,18 +40,14 @@ impl std::convert::From<&Locations> for String {
     /// Converts a `Locations` enum to a `String` that contains
     /// [locations](https://developers.google.com/maps/documentation/elevation/intro#Locations).
     fn from(locations: &Locations) -> Self {
-
         match locations {
+            Locations::LatLngs(latlngs) => latlngs
+                .iter()
+                .map(String::from)
+                .collect::<Vec<String>>()
+                .join("|"),
 
-            Locations::LatLngs(latlngs) =>
-                latlngs.iter()
-                    .map(String::from)
-                    .collect::<Vec<String>>()
-                    .join("|"),
-
-            Locations::Polyline(polyline) =>
-                format!("enc:{polyline}"),
-
+            Locations::Polyline(polyline) => format!("enc:{polyline}"),
         } // match
     } // fn
 } // impl
@@ -90,38 +88,29 @@ impl std::convert::From<&Locations> for String {
     /// Converts a `Locations` enum to a `String` that contains
     /// [locations](https://developers.google.com/maps/documentation/elevation/intro#Locations).
     fn from(locations: &Locations) -> Self {
-
         match locations {
+            Locations::LatLngs(latlngs) => latlngs
+                .iter()
+                .map(String::from)
+                .collect::<Vec<String>>()
+                .join("|"),
 
-            Locations::LatLngs(latlngs) =>
-                latlngs.iter()
-                    .map(String::from)
-                    .collect::<Vec<String>>()
-                    .join("|"),
+            Locations::Polyline(polyline) => format!("enc:{}", polyline),
 
-            Locations::Polyline(polyline) =>
-                format!("enc:{}", polyline),
+            Locations::Line(line) => format!(
+                "{start_lat},{start_lng}|{end_lat},{end_lng}",
+                start_lat = line.start.y,
+                start_lng = line.start.x,
+                end_lat = line.start.y,
+                end_lng = line.start.x,
+            ), // format!
 
-            Locations::Line(line) =>
-                format!(
-                    "{start_lat},{start_lng}|{end_lat},{end_lng}",
-                    start_lat=line.start.y,
-                    start_lng=line.start.x,
-                    end_lat=line.start.y,
-                    end_lng=line.start.x,
-                ), // format!
-
-            Locations::LineString(line_string) =>
-                line_string
-                    .coords()
-                    .map(|coordinate|
-                        format!("{lat},{lng}", lat=coordinate.y, lng=coordinate.x)
-                    ) // map
-                    .collect::<Vec<String>>()
-                    .join("|"),
-
+            Locations::LineString(line_string) => line_string
+                .coords()
+                .map(|coordinate| format!("{lat},{lng}", lat = coordinate.y, lng = coordinate.x)) // map
+                .collect::<Vec<String>>()
+                .join("|"),
         } // match
-
     } // fn
 } // impl
 

@@ -12,6 +12,9 @@ pub struct DirectionsDuration {
     /// A string representation of the duration value.
     pub text: String,
     /// The duration in seconds.
-    #[serde(deserialize_with = "seconds_to_duration", serialize_with = "duration_to_seconds")]
+    #[serde(
+        deserialize_with = "seconds_to_duration",
+        serialize_with = "duration_to_seconds"
+    )]
     pub value: Duration,
 } // struct

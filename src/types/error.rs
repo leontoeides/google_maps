@@ -15,7 +15,6 @@ use thiserror::Error;
 #[derive(Debug, Diagnostic, Error)]
 #[diagnostic(code(google_maps::types::error), url(docsrs))]
 pub enum Error {
-
     /// API client library attempted to parse a string that contained an invalid
     /// language code.
     InvalidLanguageCode(String),
@@ -54,7 +53,6 @@ pub enum Error {
     /// API client library attempted to parse a string that contained an invalid
     /// location type code.
     InvalidLocationTypeCode(String),
-
 } // enum
 
 // -----------------------------------------------------------------------------

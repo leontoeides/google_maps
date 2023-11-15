@@ -41,7 +41,8 @@ pub enum Field {
     Icon = 5,
     IconMaskBaseUri = 6,
     IconBackgroundColor = 8,
-    #[default] Name = 9,
+    #[default]
+    Name = 9,
     Photo = 10,
     PlaceId = 11,
     PlusCode = 12,
@@ -85,7 +86,7 @@ impl<'de> Deserialize<'de> for Field {
         let string = String::deserialize(deserializer)?;
         match Field::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -95,7 +96,9 @@ impl<'de> Deserialize<'de> for Field {
 impl Serialize for Field {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl

@@ -1,12 +1,6 @@
-use crate::geocoding::{
-    error::Error,
-    forward::ForwardRequest,
-    OUTPUT_FORMAT,
-    SERVICE_URL,
-}; // crate::geocoding
+use crate::geocoding::{error::Error, forward::ForwardRequest, OUTPUT_FORMAT, SERVICE_URL}; // crate::geocoding
 
 impl<'a> ForwardRequest<'a> {
-
     /// Returns the URL query string that represents the query you've built.
     ///
     /// ## Description:
@@ -29,5 +23,4 @@ impl<'a> ForwardRequest<'a> {
         }; // match
         Ok(format!("{SERVICE_URL}/{OUTPUT_FORMAT}?{query_string}"))
     } // fn
-
 } // impl

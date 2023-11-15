@@ -9,7 +9,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct PlaceOpeningHoursPeriod {
-
     /// Contains a pair of day and time objects describing when the place opens.
     ///
     /// See [PlaceOpeningHoursPeriodDetail](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceOpeningHoursPeriodDetail)
@@ -25,7 +24,6 @@ pub struct PlaceOpeningHoursPeriod {
     /// See [PlaceOpeningHoursPeriodDetail](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceOpeningHoursPeriodDetail)
     /// for more information.
     pub close: Option<PlaceOpeningHoursPeriodDetail>,
-
 } // struct PlaceOpeningHoursPeriod
 
 // -----------------------------------------------------------------------------
@@ -37,4 +35,4 @@ impl std::str::FromStr for PlaceOpeningHoursPeriod {
     fn from_str(s: &str) -> Result<Self, serde_json::error::Error> {
         serde_json::from_str(s)
     } // fn from_str
-}  // impl FromStr
+} // impl FromStr

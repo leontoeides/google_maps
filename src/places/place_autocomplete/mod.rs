@@ -50,16 +50,9 @@ const OUTPUT_FORMAT: &str = "json"; // json or xml
 
 pub use crate::places::place_autocomplete::{
     error::Error,
+    request::{autocomplete_type::AutocompleteType, Request}, // request
     response::{
-        matched_substring::MatchedSubstring,
-        prediction::Prediction,
-        Response,
-        status::Status,
-        structured_format::StructuredFormat,
-        term::Term,
+        matched_substring::MatchedSubstring, prediction::Prediction, status::Status,
+        structured_format::StructuredFormat, term::Term, Response,
     }, // response
-    request::{
-        autocomplete_type::AutocompleteType,
-        Request,
-    }, // request
 }; // place_autocomplete

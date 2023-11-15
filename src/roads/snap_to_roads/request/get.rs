@@ -1,19 +1,18 @@
-use backoff::Error::{Permanent, Transient};
-use backoff::ExponentialBackoff;
-use backoff::future::retry;
 use crate::error::Error as GoogleMapsError;
 use crate::request_rate::api::Api;
 use crate::roads::error::Error as RoadsError;
 use crate::roads::snap_to_roads::{
-    SERVICE_URL,
-    request::Request as SnapToRoadsRequest,
-    response::Response as SnapToRoadsResponse,
-}; // crate::roads::snap_to_roads
+    request::Request as SnapToRoadsRequest, response::Response as SnapToRoadsResponse, SERVICE_URL,
+};
+use crate::ReqError;
+use backoff::future::retry;
+use backoff::Error::{Permanent, Transient};
+use backoff::ExponentialBackoff;
+use reqwest::Response; // crate::roads::snap_to_roads
 
 // -----------------------------------------------------------------------------
 
 impl<'a> SnapToRoadsRequest<'a> {
-
     /// Performs the HTTP get request and returns the response to the caller.
     ///
     /// ## Arguments:
@@ -22,7 +21,6 @@ impl<'a> SnapToRoadsRequest<'a> {
 
     #[tracing::instrument(level = "debug", name = "Google Maps Snap-To-Roads", skip(self))]
     pub async fn get(&mut self) -> Result<SnapToRoadsResponse, GoogleMapsError> {
-
         // Build the URL stem for the HTTP get request:
         let mut url = format!("{SERVICE_URL}/?");
 
@@ -34,7 +32,9 @@ impl<'a> SnapToRoadsRequest<'a> {
         } // match
 
         // Observe any rate limiting before executing request:
-        self.client.rate_limit.limit_apis(vec![&Api::All, &Api::Roads])
+        self.client
+            .rate_limit
+            .limit_apis(vec![&Api::All, &Api::Roads])
             .await;
 
         // Emit debug message so client can monitor activity:
@@ -45,14 +45,9 @@ impl<'a> SnapToRoadsRequest<'a> {
         // errors wrapped in `Transient()` will retried by the `backoff` crate
         // while errors wrapped in `Permanent()` will exit the retry loop.
         let response = retry(ExponentialBackoff::default(), || async {
-
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
-            let response: Result<reqwest::Response, reqwest::Error> =
-                match self.client.reqwest_client.get(&*url).build() {
-                    Ok(request) => self.client.reqwest_client.execute(request).await,
-                    Err(error) => Err(error),
-                }; // match
+            let response: Result<Response, ReqError> = self.client.get_request(&url).await;
 
             // Check response from the HTTP client:
             match response {
@@ -88,43 +83,49 @@ impl<'a> SnapToRoadsRequest<'a> {
                                             // deserialized from JSON:
                                             Ok(deserialized)
                                         } // if
-                                    }, // Ok(deserialized)
+                                    } // Ok(deserialized)
                                     Err(error) => {
                                         tracing::error!("JSON parsing error: {}", error);
                                         Err(Permanent(RoadsError::SerdeJson(error)))
-                                    }, // Err
+                                    } // Err
                                 } // match
-                            }, // Ok(text)
+                            } // Ok(text)
                             Err(error) => {
                                 tracing::error!("HTTP client returned: {}", error);
                                 Err(Permanent(RoadsError::ReqwestMessage(error.to_string())))
-                            }, // Err
+                            } // Err
                         } // match
-                    // We got a response from the server but it was not OK.
-                    // Only HTTP "500 Server Errors", and HTTP "429 Too Many
-                    // Requests" are eligible for retries.
+                          // We got a response from the server but it was not OK.
+                          // Only HTTP "500 Server Errors", and HTTP "429 Too Many
+                          // Requests" are eligible for retries.
                     } else if response.status().is_server_error() || response.status() == 429 {
                         tracing::warn!("HTTP client returned: {}", response.status());
-                        Err(Transient { err: RoadsError::HttpUnsuccessful(response.status().to_string()), retry_after: None })
+                        Err(Transient {
+                            err: RoadsError::HttpUnsuccessful(response.status().to_string()),
+                            retry_after: None,
+                        })
                     // Not a 500 Server Error or "429 Too Many Requests" error.
                     // The error is permanent, do not retry:
                     } else {
                         tracing::error!("HTTP client returned: {}", response.status());
-                        Err(Permanent(RoadsError::HttpUnsuccessful(response.status().to_string())))
+                        Err(Permanent(RoadsError::HttpUnsuccessful(
+                            response.status().to_string(),
+                        )))
                     } // if
                 } // case
                 // HTTP client did not get a response from the server. Retry:
                 Err(error) => {
                     tracing::warn!("HTTP client returned: {}", error);
-                    Err(Transient { err: RoadsError::Reqwest(error), retry_after: None })
+                    Err(Transient {
+                        err: RoadsError::Reqwest(error),
+                        retry_after: None,
+                    })
                 } // case
             } // match
-
-        }).await?;
+        })
+        .await?;
 
         // Return response to caller:
         Ok(response)
-
     } // fn
-
 } // impl

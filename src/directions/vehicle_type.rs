@@ -14,7 +14,8 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[repr(u8)]
 pub enum VehicleType {
     /// Bus.
-    #[default] Bus = 0,
+    #[default]
+    Bus = 0,
     /// A vehicle that operates on a cable, usually on the ground. Aerial cable
     /// cars may be of the type VehicleType::Gondola.
     CableCar = 1,
@@ -64,7 +65,7 @@ impl<'de> Deserialize<'de> for VehicleType {
         let string = String::deserialize(deserializer)?;
         match VehicleType::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -74,7 +75,9 @@ impl<'de> Deserialize<'de> for VehicleType {
 impl Serialize for VehicleType {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl

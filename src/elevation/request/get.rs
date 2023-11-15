@@ -1,21 +1,19 @@
-use backoff::Error::{Permanent, Transient};
-use backoff::ExponentialBackoff;
-use backoff::future::retry;
 use crate::elevation::{
-    OUTPUT_FORMAT,
-    SERVICE_URL,
-    error::Error as ElevationError,
-    request::Request as ElevationRequest,
-    response::Response as ElevationResponse,
-    response::status::Status as ElevationStatus,
+    error::Error as ElevationError, request::Request as ElevationRequest,
+    response::status::Status as ElevationStatus, response::Response as ElevationResponse,
+    OUTPUT_FORMAT, SERVICE_URL,
 }; // use crate
 use crate::error::Error as GoogleMapsError;
 use crate::request_rate::api::Api;
+use crate::ReqError;
+use backoff::future::retry;
+use backoff::Error::{Permanent, Transient};
+use backoff::ExponentialBackoff;
+use reqwest::Response;
 
 // -----------------------------------------------------------------------------
 
 impl<'a> ElevationRequest<'a> {
-
     /// Performs the HTTP get request and returns the response to the caller.
     ///
     /// ## Arguments:
@@ -24,7 +22,6 @@ impl<'a> ElevationRequest<'a> {
 
     #[tracing::instrument(level = "debug", name = "Google Maps Elevation", skip(self))]
     pub async fn get(&mut self) -> Result<ElevationResponse, GoogleMapsError> {
-
         // Build the URL stem for the HTTP get request:
         let mut url = format!("{SERVICE_URL}/{OUTPUT_FORMAT}?");
 
@@ -36,7 +33,10 @@ impl<'a> ElevationRequest<'a> {
         } // match
 
         // Observe any rate limiting before executing request:
-        self.client.rate_limit.limit_apis(vec![&Api::All, &Api::Elevation]).await;
+        self.client
+            .rate_limit
+            .limit_apis(vec![&Api::All, &Api::Elevation])
+            .await;
 
         // Emit debug message so client can monitor activity:
         tracing::debug!("Making HTTP GET request to Google Maps Elevation API: `{url}`");
@@ -46,14 +46,9 @@ impl<'a> ElevationRequest<'a> {
         // errors wrapped in `Transient()` will retried by the `backoff` crate
         // while errors wrapped in `Permanent()` will exit the retry loop.
         let response = retry(ExponentialBackoff::default(), || async {
-
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
-            let response: Result<reqwest::Response, reqwest::Error> =
-                match self.client.reqwest_client.get(&*url).build() {
-                    Ok(request) => self.client.reqwest_client.execute(request).await,
-                    Err(error) => Err(error),
-                }; // match
+            let response: Result<Response, ReqError> = self.client.get_request(&url).await;
 
             // Check response from the HTTP client:
             match response {
@@ -87,11 +82,15 @@ impl<'a> ElevationRequest<'a> {
                                             );
                                             // Check Google API response status
                                             // for error type:
-                                            if deserialized.status == ElevationStatus::UnknownError {
+                                            if deserialized.status == ElevationStatus::UnknownError
+                                            {
                                                 // Only Google's "Unknown Error"
                                                 // is eligible for retries:
                                                 tracing::warn!("{}", error);
-                                                Err(Transient { err: error, retry_after: None })
+                                                Err(Transient {
+                                                    err: error,
+                                                    retry_after: None,
+                                                })
                                             } else {
                                                 // Not an "Unknown Error." The
                                                 // error is permanent, do not
@@ -100,43 +99,49 @@ impl<'a> ElevationRequest<'a> {
                                                 Err(Permanent(error))
                                             } // if
                                         } // if
-                                    }, // Ok(deserialized)
+                                    } // Ok(deserialized)
                                     Err(error) => {
                                         tracing::error!("JSON parsing error: {}", error);
                                         Err(Permanent(ElevationError::SerdeJson(error)))
-                                    }, // Err
+                                    } // Err
                                 } // match
-                            }, // Ok(text)
+                            } // Ok(text)
                             Err(error) => {
                                 tracing::error!("HTTP client returned: {}", error);
                                 Err(Permanent(ElevationError::ReqwestMessage(error.to_string())))
-                            }, // Err
+                            } // Err
                         } // match
-                    // We got a response from the server but it was not OK.
-                    // Only HTTP "500 Server Errors", and HTTP "429 Too Many
-                    // Requests" are eligible for retries.
+                          // We got a response from the server but it was not OK.
+                          // Only HTTP "500 Server Errors", and HTTP "429 Too Many
+                          // Requests" are eligible for retries.
                     } else if response.status().is_server_error() || response.status() == 429 {
                         tracing::warn!("HTTP client returned: {}", response.status());
-                        Err(Transient { err: ElevationError::HttpUnsuccessful(response.status().to_string()), retry_after: None })
+                        Err(Transient {
+                            err: ElevationError::HttpUnsuccessful(response.status().to_string()),
+                            retry_after: None,
+                        })
                     // Not a 500 Server Error or "429 Too Many Requests" error.
                     // The error is permanent, do not retry:
                     } else {
                         tracing::error!("HTTP client returned: {}", response.status());
-                        Err(Permanent(ElevationError::HttpUnsuccessful(response.status().to_string())))
+                        Err(Permanent(ElevationError::HttpUnsuccessful(
+                            response.status().to_string(),
+                        )))
                     } // if
                 } // case
                 // HTTP client did not get a response from the server. Retry:
                 Err(error) => {
                     tracing::warn!("HTTP client returned: {}", error);
-                    Err(Transient { err: ElevationError::Reqwest(error), retry_after: None })
+                    Err(Transient {
+                        err: ElevationError::Reqwest(error),
+                        retry_after: None,
+                    })
                 } // case
             } // match
-
-        }).await?;
+        })
+        .await?;
 
         // Return response to caller:
         Ok(response)
-
     } // fn
-
 } // impl

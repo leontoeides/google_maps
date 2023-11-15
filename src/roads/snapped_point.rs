@@ -13,12 +13,11 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct SnappedPoint {
-
     /// See [LatitudeLongitudeLiteral](https://developers.google.com/maps/documentation/roads/snap#LatitudeLongitudeLiteral)
     /// for more information.
     pub location: LatLng,
 
-    /// A unique identifier for a place. **All place IDs returned by the Roads 
+    /// A unique identifier for a place. **All place IDs returned by the Roads
     /// API correspond to road segments.**
     #[serde(alias = "placeId")]
     pub place_id: Option<String>,
@@ -33,5 +32,4 @@ pub struct SnappedPoint {
     /// parameter.
     #[serde(alias = "originalIndex")]
     pub origin_index: Option<usize>,
-
 } // struct

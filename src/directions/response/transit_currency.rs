@@ -165,7 +165,8 @@ pub enum TransitCurrency {
     TanzanianShilling = 145,
     UkrainianHryvnia = 146,
     UgandanShilling = 147,
-    #[default] UnitedStatesDollar = 148,
+    #[default]
+    UnitedStatesDollar = 148,
     UnitedStatesDollarNextDay = 149,
     UruguayPesoEnUnidadesIndexadas = 150,
     UruguayanPeso = 151,
@@ -207,7 +208,7 @@ impl<'de> Deserialize<'de> for TransitCurrency {
         let string = String::deserialize(deserializer)?;
         match TransitCurrency::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -217,7 +218,9 @@ impl<'de> Deserialize<'de> for TransitCurrency {
 impl Serialize for TransitCurrency {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl
@@ -665,7 +668,9 @@ impl TransitCurrency {
             TransitCurrency::AustralianDollar => "Australian dollar",
             TransitCurrency::ArubanFlorin => "Aruban florin",
             TransitCurrency::AzerbaijaniManat => "Azerbaijani manat",
-            TransitCurrency::BosniaAndHerzegovinaConvertibleMark => "Bosnia and Herzegovina convertible mark",
+            TransitCurrency::BosniaAndHerzegovinaConvertibleMark => {
+                "Bosnia and Herzegovina convertible mark"
+            }
             TransitCurrency::BarbadosDollar => "Barbados dollar",
             TransitCurrency::BangladeshiTaka => "Bangladeshi taka",
             TransitCurrency::BulgarianLev => "Bulgarian lev",

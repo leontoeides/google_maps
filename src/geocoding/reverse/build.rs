@@ -2,7 +2,6 @@ use crate::geocoding::reverse::ReverseRequest;
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 
 impl<'a> ReverseRequest<'a> {
-
     /// Builds the query string for the Google Maps Geocoding API based on the
     /// input provided by the client.
     ///
@@ -11,7 +10,6 @@ impl<'a> ReverseRequest<'a> {
     /// This method accepts no arguments.
 
     pub fn build(&mut self) -> &'a mut ReverseRequest {
-
         // This section builds the "required parameters" portion of the query
         // string:
 
@@ -41,7 +39,8 @@ impl<'a> ReverseRequest<'a> {
                         .collect::<Vec<String>>()
                         .join("|"),
                     NON_ALPHANUMERIC,
-                ).to_string(),
+                )
+                .to_string(),
             ) // push_str
         } // if
 
@@ -56,7 +55,8 @@ impl<'a> ReverseRequest<'a> {
                         .collect::<Vec<String>>()
                         .join("|"),
                     NON_ALPHANUMERIC,
-                ).to_string(),
+                )
+                .to_string(),
             ) // push_str
         } // if
 
@@ -65,7 +65,5 @@ impl<'a> ReverseRequest<'a> {
 
         // Return modified ReverseRequest struct to caller.
         self
-
     } // fn
-
 } // impl

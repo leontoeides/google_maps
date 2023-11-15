@@ -1,10 +1,6 @@
-use crate::directions::request::{
-    transit_route_preference::TransitRoutePreference,
-    Request
-}; // crate::directions::request
+use crate::directions::request::{transit_route_preference::TransitRoutePreference, Request}; // crate::directions::request
 
 impl<'a> Request<'a> {
-
     /// Specifies the preferences for transit routes.
     ///
     /// ## Arguments
@@ -42,5 +38,4 @@ impl<'a> Request<'a> {
         self.transit_route_preference = Some(transit_route_preference);
         self
     } // fn
-
 } // impl

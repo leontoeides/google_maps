@@ -1,10 +1,9 @@
-use crate::types::LatLng;
 use crate::places::place_autocomplete::request::Request;
+use crate::types::LatLng;
 
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
-
     /// Adds the location and radius parameters to the Place API _Place
     /// Autocomplete_ query.
     ///
@@ -47,13 +46,11 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl
 
 // -----------------------------------------------------------------------------
 
 impl<'a> Request<'a> {
-
     /// Adds the location and radius parameters to the Place API _Place
     /// Autocomplete_ query.
     ///
@@ -91,5 +88,4 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
-
 } // impl

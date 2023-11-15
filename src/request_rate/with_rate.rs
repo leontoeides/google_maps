@@ -1,16 +1,10 @@
-use crate::request_rate::{
-    api::Api,
-    api_rate::ApiRate,
-    RequestRate,
-    target_rate::TargetRate,
-}; // use crate::request_rate
+use crate::request_rate::{api::Api, api_rate::ApiRate, target_rate::TargetRate, RequestRate}; // use crate::request_rate
 use std::time::Duration;
-use stream_throttle::{ThrottleRate, ThrottlePool};
+use stream_throttle::{ThrottlePool, ThrottleRate};
 
 // =============================================================================
 
 impl RequestRate {
-
     // -------------------------------------------------------------------------
     //
     /// Specifies the request rate for the selected API. _Do not use this method
@@ -52,13 +46,7 @@ impl RequestRate {
     /// with_rate(Api::TimeZone, 2, Duration::from_secs(60)) // 1 second
     /// ```
 
-    pub fn with_rate(
-        &mut self,
-        api: Api,
-        requests: u16,
-        duration: Duration
-    ) -> &mut RequestRate {
-
+    pub fn with_rate(&mut self, api: Api, requests: u16, duration: Duration) -> &mut RequestRate {
         // Select `RequestRate` field for the API specified by the caller.
         let api_ref = self.rate_map.get_mut(&api); // api
         let throttle_pool = match requests {
@@ -73,10 +61,13 @@ impl RequestRate {
         match api_ref {
             // If not, initialize the structure:
             None => {
-                self.rate_map.insert(api.clone(), ApiRate {
-                    target_rate: TargetRate { requests, duration },
-                    throttle_pool,
-                });
+                self.rate_map.insert(
+                    api.clone(),
+                    ApiRate {
+                        target_rate: TargetRate { requests, duration },
+                        throttle_pool,
+                    },
+                );
             }
             // If it has, set the new target request rate but preserve the
             // current effective request rate:
@@ -90,7 +81,5 @@ impl RequestRate {
         } // match
 
         self
-
     } // fn
-
 } // impl

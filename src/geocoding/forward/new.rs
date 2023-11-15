@@ -3,7 +3,6 @@ use crate::{client::GoogleMapsClient, geocoding::forward::ForwardRequest};
 // =============================================================================
 
 impl<'a> ForwardRequest<'a> {
-
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Geolocation API query with the
@@ -14,7 +13,6 @@ impl<'a> ForwardRequest<'a> {
     /// * `client` ‧ Your application's Google Maps API client struct.
 
     pub fn new(client: &GoogleMapsClient) -> ForwardRequest {
-
         // Instantiate struct and return it to caller:
         ForwardRequest {
             // Required parameters:
@@ -30,7 +28,5 @@ impl<'a> ForwardRequest<'a> {
             validated: false,
             query: None,
         } // struct
-
     } // fn
-
 } // impl

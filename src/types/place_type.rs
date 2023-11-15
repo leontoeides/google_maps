@@ -2,8 +2,8 @@
 //! types or categories of a place. For example, a returned place could be a
 //! "country" (as in a nation) or it could be a "shopping mall."
 
-use crate::types::error::Error as TypeError;
 use crate::error::Error as GoogleMapsError;
+use crate::types::error::Error as TypeError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -16,7 +16,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 /// sought. See [Place
 /// Types](https://developers.google.com/places/web-service/supported_types)
 /// for more information.
-#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[repr(u8)]
 pub enum PlaceType {
     // [Table 1: Place types](https://developers.google.com/places/web-service/supported_types#table1)
@@ -165,7 +165,8 @@ pub enum PlaceType {
     /// Indicates a major intersection, usually of two major roads.
     Intersection = 114,
     /// Indicates an incorporated city or town political entity.
-    #[default] Locality = 115,
+    #[default]
+    Locality = 115,
     /// Indicates a prominent natural feature.
     NaturalFeature = 116,
     /// Indicates a named neighborhood.
@@ -228,7 +229,7 @@ impl<'de> Deserialize<'de> for PlaceType {
         let string = String::deserialize(deserializer)?;
         match PlaceType::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -238,7 +239,9 @@ impl<'de> Deserialize<'de> for PlaceType {
 impl Serialize for PlaceType {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl

@@ -5,6 +5,7 @@
 //! geocoding converts a street address to latitude & longitude coordinates.
 
 mod build;
+pub mod component;
 #[cfg(feature = "enable-reqwest")]
 mod execute;
 #[cfg(feature = "enable-reqwest")]
@@ -13,12 +14,11 @@ mod new;
 mod query_url;
 mod validate;
 mod with_address;
-mod with_place_id;
 mod with_bounds;
 mod with_components;
 mod with_language;
+mod with_place_id;
 mod with_region;
-pub mod component;
 
 // -----------------------------------------------------------------------------
 
@@ -35,17 +35,14 @@ use crate::types::{Bounds, Language, Region};
 
 #[derive(Debug)]
 pub struct ForwardRequest<'a> {
-
     // Required parameters:
     // --------------------
-
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
     client: &'a GoogleMapsClient,
 
     // Optional parameters:
     // --------------------
-
     /// The street address that you want to geocode, in the format used by the
     /// national postal service of the country concerned. Additional address
     //elements such as business names and unit, suite or floor numbers should be
@@ -89,11 +86,9 @@ pub struct ForwardRequest<'a> {
 
     // Internal use only:
     // ------------------
-
     /// Query string that is to be submitted to the Google Cloud Maps Platform.
     query: Option<String>,
 
     /// Has the request been validated?
     validated: bool,
-
 } // struct

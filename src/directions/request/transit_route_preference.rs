@@ -22,7 +22,8 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum TransitRoutePreference {
     /// Indicates that the calculated route should prefer a limited number of
     /// transfers.
-    #[default] FewerTransfers = 0,
+    #[default]
+    FewerTransfers = 0,
     /// Indicates that the calculated route should prefer limited amounts of
     /// walking.
     LessWalking = 1,
@@ -37,7 +38,7 @@ impl<'de> Deserialize<'de> for TransitRoutePreference {
         let string = String::deserialize(deserializer)?;
         match TransitRoutePreference::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -47,7 +48,9 @@ impl<'de> Deserialize<'de> for TransitRoutePreference {
 impl Serialize for TransitRoutePreference {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl
@@ -112,7 +115,11 @@ impl std::convert::TryFrom<&str> for TransitRoutePreference {
         Ok(TRANSIT_ROUTE_PREFERENCE_BY_CODE
             .get(transit_route_preference_code)
             .cloned()
-            .ok_or_else(|| DirectionsError::InvalidTransitRoutePreferenceCode(transit_route_preference_code.to_string()))?)
+            .ok_or_else(|| {
+                DirectionsError::InvalidTransitRoutePreferenceCode(
+                    transit_route_preference_code.to_string(),
+                )
+            })?)
     } // fn
 } // impl
 
@@ -130,7 +137,11 @@ impl std::str::FromStr for TransitRoutePreference {
         Ok(TRANSIT_ROUTE_PREFERENCE_BY_CODE
             .get(transit_route_preference_code)
             .cloned()
-            .ok_or_else(|| DirectionsError::InvalidTransitRoutePreferenceCode(transit_route_preference_code.to_string()))?)
+            .ok_or_else(|| {
+                DirectionsError::InvalidTransitRoutePreferenceCode(
+                    transit_route_preference_code.to_string(),
+                )
+            })?)
     } // fn
 } // impl
 

@@ -1,7 +1,6 @@
 use crate::geocoding::forward::{component::Component, ForwardRequest};
 
 impl<'a> ForwardRequest<'a> {
-
     /// Restricts the results from the geocoder to the specified component
     /// type(s).
     ///
@@ -63,10 +62,7 @@ impl<'a> ForwardRequest<'a> {
     /// .with_component(GeocodingComponent::Locality(String::from("London")))
     /// ```
 
-    pub fn with_component(
-        &'a mut self,
-        component: Component
-    ) -> &'a mut ForwardRequest {
+    pub fn with_component(&'a mut self, component: Component) -> &'a mut ForwardRequest {
         // Add component to ForwardRequest struct.
         match &mut self.components {
             // If there are no components in the request struct, initialize:
@@ -94,21 +90,17 @@ impl<'a> ForwardRequest<'a> {
     /// ])
     /// ```
 
-    pub fn with_components(
-        &'a mut self,
-        components_slice: &[Component]
-    ) -> &'a mut ForwardRequest {
+    pub fn with_components(&'a mut self, components_slice: &[Component]) -> &'a mut ForwardRequest {
         // Add components to ForwardRequest struct.
         match &mut self.components {
             // If there are no filters in the request struct, initialize field:
             None => self.components = Some(components_slice.to_vec()),
             // If there are already filters, append to them:
-            Some(components) => components_slice.iter().for_each(|component|
-                components.push(component.to_owned())
-            ), // iter
+            Some(components) => components_slice
+                .iter()
+                .for_each(|component| components.push(component.to_owned())), // iter
         } // match
-        // Return modified ForwardRequest struct to caller.
+          // Return modified ForwardRequest struct to caller.
         self
     } // fn
-
 } // impl

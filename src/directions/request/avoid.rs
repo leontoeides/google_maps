@@ -40,7 +40,8 @@ pub enum Avoid {
     /// by default.
     Indoor = 2,
     /// Indicates that the calculated route should avoid toll roads/bridges.
-    #[default] Tolls = 3,
+    #[default]
+    Tolls = 3,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -52,7 +53,7 @@ impl<'de> Deserialize<'de> for Avoid {
         let string = String::deserialize(deserializer)?;
         match Avoid::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -62,7 +63,9 @@ impl<'de> Deserialize<'de> for Avoid {
 impl Serialize for Avoid {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl

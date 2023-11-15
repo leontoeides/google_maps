@@ -3,7 +3,6 @@ use crate::client::GoogleMapsClient;
 // =============================================================================
 
 impl GoogleMapsClient {
-
     // -------------------------------------------------------------------------
     //
     /// Completes the builder pattern into a final structure.
@@ -63,5 +62,4 @@ impl GoogleMapsClient {
     pub fn finalize(&self) -> GoogleMapsClient {
         self.build()
     } // fn
-
 } // impl

@@ -32,7 +32,6 @@ use crate::{client::GoogleMapsClient, types::Language, types::Region};
 pub struct Request<'a> {
     // Required parameters:
     // --------------------
-
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
     client: &'a GoogleMapsClient,
@@ -45,7 +44,6 @@ pub struct Request<'a> {
 
     // Optional parameters:
     // --------------------
-
     /// Use the fields parameter to specify a comma-separated list of place data
     /// types to return. For example: `fields=formatted_address,name,geometry`.
     /// Use a forward slash when specifying compound values. For example:
@@ -161,8 +159,6 @@ pub struct Request<'a> {
 
     // Internal use only:
     // ------------------
-
     /// Query string that is to be submitted to the Google Cloud Maps Platform.
     query: Option<String>,
-
 } // struct

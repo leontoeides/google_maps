@@ -78,8 +78,5 @@ const OUTPUT_FORMAT: &str = "json"; // json or xml
 pub use crate::time_zone::{
     error::Error as TimeZoneError,
     request::Request as TimeZoneRequest,
-    response::{
-        status::Status as TimeZoneStatus,
-        Response as TimeZoneResponse
-    }, // reponse
+    response::{status::Status as TimeZoneStatus, Response as TimeZoneResponse}, // reponse
 }; // crate::time_zone

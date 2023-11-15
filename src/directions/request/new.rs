@@ -6,7 +6,6 @@ use crate::{
 // =============================================================================
 
 impl<'a> Request<'a> {
-
     // -------------------------------------------------------------------------
     //
     /// Initializes the data structure for the builder pattern.
@@ -20,7 +19,6 @@ impl<'a> Request<'a> {
         origin: Location,
         destination: Location,
     ) -> Request<'a> {
-
         Request {
             // Required parameters:
             client,
@@ -44,7 +42,5 @@ impl<'a> Request<'a> {
             query: None,
             validated: false,
         } // struct
-
     } // fn
-
 } // impl

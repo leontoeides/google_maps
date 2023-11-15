@@ -13,7 +13,6 @@ use thiserror::Error;
 #[derive(Debug, Diagnostic, Error)]
 #[diagnostic(url(docsrs))]
 pub enum Error {
-
     /// Error originating from the types and structs in the `google_maps` crate.
     #[error(transparent)]
     #[diagnostic(code(google_maps::types))]
@@ -72,5 +71,4 @@ pub enum Error {
     #[error(transparent)]
     #[diagnostic(code(google_maps::time_zone))]
     TimeZone(#[from] crate::time_zone::error::Error),
-
 } // enum Error

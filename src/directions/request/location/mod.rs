@@ -16,7 +16,9 @@ use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 /// and destination.
 
 #[cfg(not(feature = "geo"))]
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize,
+)]
 pub enum Location {
     /// If you pass an address, the Directions service geocodes the string and
     /// converts it to a latitude/longitude coordinate to calculate directions.
@@ -44,16 +46,17 @@ impl std::convert::From<&Location> for String {
     /// value.
     fn from(location: &Location) -> String {
         match location {
+            Location::Address(address) => {
+                utf8_percent_encode(address, NON_ALPHANUMERIC).to_string()
+            }
 
-            Location::Address(address) =>
-                utf8_percent_encode(address, NON_ALPHANUMERIC).to_string(),
+            Location::LatLng(latlng) => {
+                utf8_percent_encode(&String::from(latlng), NON_ALPHANUMERIC).to_string()
+            }
 
-            Location::LatLng(latlng) =>
-                utf8_percent_encode(&String::from(latlng), NON_ALPHANUMERIC).to_string(),
-
-            Location::PlaceId(place_id) =>
-                utf8_percent_encode(&format!("place_id:{place_id}"), NON_ALPHANUMERIC).to_string(),
-
+            Location::PlaceId(place_id) => {
+                utf8_percent_encode(&format!("place_id:{place_id}"), NON_ALPHANUMERIC).to_string()
+            }
         } // match
     } // fn
 } // impl
@@ -101,30 +104,37 @@ impl std::convert::From<&Location> for String {
     /// value.
     fn from(location: &Location) -> String {
         match location {
+            Location::Address(address) => {
+                utf8_percent_encode(address, NON_ALPHANUMERIC).to_string()
+            }
 
-            Location::Address(address) =>
-                utf8_percent_encode(address, NON_ALPHANUMERIC).to_string(),
+            Location::LatLng(latlng) => {
+                utf8_percent_encode(&String::from(latlng), NON_ALPHANUMERIC).to_string()
+            }
 
-            Location::LatLng(latlng) =>
-                utf8_percent_encode(&String::from(latlng), NON_ALPHANUMERIC).to_string(),
+            Location::PlaceId(place_id) => {
+                utf8_percent_encode(&format!("place_id:{place_id}"), NON_ALPHANUMERIC).to_string()
+            }
 
-            Location::PlaceId(place_id) =>
-                utf8_percent_encode(&format!("place_id:{place_id}"), NON_ALPHANUMERIC).to_string(),
-
-            Location::Coord(coordinate) =>
-                utf8_percent_encode(&format!(
+            Location::Coord(coordinate) => utf8_percent_encode(
+                &format!(
                     "{latitude},{longitude}",
-                    latitude=coordinate.y,
-                    longitude=coordinate.x,
-                ), NON_ALPHANUMERIC).to_string(),
+                    latitude = coordinate.y,
+                    longitude = coordinate.x,
+                ),
+                NON_ALPHANUMERIC,
+            )
+            .to_string(),
 
-            Location::Point(point) =>
-                utf8_percent_encode(&format!(
+            Location::Point(point) => utf8_percent_encode(
+                &format!(
                     "{latitude},{longitude}",
-                    latitude=point.y(),
-                    longitude=point.x()
-                ), NON_ALPHANUMERIC).to_string(),
-
+                    latitude = point.y(),
+                    longitude = point.x()
+                ),
+                NON_ALPHANUMERIC,
+            )
+            .to_string(),
         } // match
     } // fn
 } // impl

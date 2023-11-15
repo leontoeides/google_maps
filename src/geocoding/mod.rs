@@ -94,17 +94,12 @@ const OUTPUT_FORMAT: &str = "json"; // json or xml
 
 pub use crate::geocoding::{
     error::Error as GeocodingError,
-    forward::{
-        component::Component as GeocodingComponent,
-        ForwardRequest as GeocodingRequest,
-    }, // forward
+    forward::{component::Component as GeocodingComponent, ForwardRequest as GeocodingRequest}, // forward
     response::{
-        geocoding::Geocoding,
-        plus_code::PlusCode,
+        geocoding::Geocoding, plus_code::PlusCode, status::Status as GeocodingStatus,
         Response as GeocodingResponse,
-        status::Status as GeocodingStatus,
     }, // response
     reverse::ReverseRequest as GeocodingReverseRequest,
 }; // geocoding
 
-pub use crate::types::{LocationType, AddressComponent, Geometry};
+pub use crate::types::{AddressComponent, Geometry, LocationType};

@@ -1,6 +1,6 @@
 [package]
 name = "google_maps"
-version = "3.3.2"
+version = "3.4.0"
 authors = [ "Dylan Bowker <dylan.bowker@arkiteq.ca>" ]
 edition = "2021"
 categories = [ "api-bindings" ]
@@ -28,6 +28,7 @@ default = [
 	"enable-reqwest",
 	"reqwest/default-tls",
 	"reqwest/gzip",
+	"enable-reqwest-middleware",
 	"rust_decimal/serde",
 ]
 # Google Maps Client API features:
@@ -42,6 +43,7 @@ roads = []
 time_zone = [ "chrono", "chrono-tz" ]
 # Reqwest features:
 enable-reqwest = [ "reqwest", "backoff", "futures", "stream_throttle" ]
+enable-reqwest-middleware = ["reqwest-maybe-middleware/middleware", "reqwest-middleware"]
 brotli = [ "reqwest/brotli" ]
 gzip = [ "reqwest/gzip" ]
 native-tls = [ "reqwest/default-tls" ]
@@ -65,6 +67,8 @@ miette = "5"
 percent-encoding = "2.3"
 phf = { version = "0.11", features = [ "macros" ] }
 reqwest = { version = "0.11", optional = true, default-features = false }
+reqwest-middleware = {version = "0.2.3", optional = true}
+reqwest-maybe-middleware = "0.2.2"
 rust_decimal = { version = "1", features = [ "serde" ] }
 rust_decimal_macros = "1"
 serde = { version = "1.0", features = [ "derive" ] }

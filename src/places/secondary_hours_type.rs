@@ -16,7 +16,8 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, Default, Hash, Ord, PartialEq, PartialOrd)]
 #[repr(u8)]
 pub enum SecondaryHoursType {
-    #[default] DriveThrough = 0,
+    #[default]
+    DriveThrough = 0,
     HappyHour = 1,
     Delivery = 2,
     Takeout = 3,
@@ -38,7 +39,7 @@ impl<'de> Deserialize<'de> for SecondaryHoursType {
         let string = String::deserialize(deserializer)?;
         match SecondaryHoursType::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -48,7 +49,9 @@ impl<'de> Deserialize<'de> for SecondaryHoursType {
 impl Serialize for SecondaryHoursType {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl

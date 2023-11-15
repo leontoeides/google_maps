@@ -4,7 +4,6 @@ use crate::elevation::request::Request;
 // =============================================================================
 
 impl<'a> Request<'a> {
-
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Elevation API query with the
@@ -15,7 +14,6 @@ impl<'a> Request<'a> {
     /// * `client` ‧ Your application's Google Maps API client struct.
 
     pub fn new(client: &GoogleMapsClient) -> Request {
-
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:
@@ -29,7 +27,5 @@ impl<'a> Request<'a> {
             query: None,
             validated: false,
         } // struct
-
     } // fn
-
 } // impl

@@ -10,11 +10,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 /// Stores additional data about the specified location.
 
-#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[repr(u8)]
 pub enum LocationType {
     /// Indicates that the returned result is approximate.
-    #[default] Approximate = 0,
+    #[default]
+    Approximate = 0,
     /// Indicates that the returned result is the geometric center of a result
     /// such as a polyline (for example, a street) or polygon (region).
     GeometricCenter = 1,
@@ -37,7 +38,7 @@ impl<'de> Deserialize<'de> for LocationType {
         let string = String::deserialize(deserializer)?;
         match LocationType::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -47,7 +48,9 @@ impl<'de> Deserialize<'de> for LocationType {
 impl Serialize for LocationType {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl

@@ -21,7 +21,8 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[repr(u8)]
 pub enum TravelMode {
     /// (Default) Indicates standard driving directions using the road network.
-    #[default] Driving = 0,
+    #[default]
+    Driving = 0,
     /// Requests walking directions via pedestrian paths & sidewalks (where
     /// available).
     Walking = 1,
@@ -46,7 +47,7 @@ impl<'de> Deserialize<'de> for TravelMode {
         let string = String::deserialize(deserializer)?;
         match TravelMode::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
-            Err(error) => Err(serde::de::Error::custom(error.to_string()))
+            Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
     } // fn
 } // impl
@@ -56,7 +57,9 @@ impl<'de> Deserialize<'de> for TravelMode {
 impl Serialize for TravelMode {
     /// Manual implementation of `Serialize` for `serde`.
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer {
+    where
+        S: Serializer,
+    {
         serializer.serialize_str(std::convert::Into::<&str>::into(self))
     } // fn
 } // impl
