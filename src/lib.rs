@@ -24,7 +24,7 @@
 //!
 //! * In your project's `Cargo.toml` file, under the `[dependencies]` section:
 //!
-//!     * Add `google_maps = "3.3"`. Check
+//!     * Add `google_maps = "3.4"`. Check
 //!         [crates.io](https://crates.io/crates/google_maps) for the latest
 //!         version number.
 //!
@@ -337,6 +337,7 @@
 //!     "enable-reqwest",
 //!     "reqwest/default-tls",
 //!     "reqwest/gzip",
+//!     "enable-reqwest-middleware",
 //! ]
 //! ```
 //!

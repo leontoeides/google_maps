@@ -43,7 +43,7 @@ roads = []
 time_zone = [ "chrono", "chrono-tz" ]
 # Reqwest features:
 enable-reqwest = [ "reqwest", "backoff", "futures", "stream_throttle" ]
-enable-reqwest-middleware = ["reqwest-maybe-middleware/middleware", "reqwest-middleware"]
+enable-reqwest-middleware = [ "reqwest-maybe-middleware/middleware", "reqwest-middleware" ]
 brotli = [ "reqwest/brotli" ]
 gzip = [ "reqwest/gzip" ]
 native-tls = [ "reqwest/default-tls" ]
