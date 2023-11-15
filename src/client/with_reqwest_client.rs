@@ -37,6 +37,7 @@ impl GoogleMapsClient {
         self
     } // fn
 
+    #[cfg(feature = "enable-reqwest-middleware")]
     pub fn with_reqwest_middleware_client(
         &mut self,
         reqwest_client: reqwest_middleware::ClientWithMiddleware,
