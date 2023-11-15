@@ -3,6 +3,17 @@
 * Release notes are available on
 [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+* 3.4.0: 2023-11-15: Add Copy to types where it makes semantic sense and is
+efficient.
+
+* 3.4.0: 2023-11-15: Switch over to use reqwest-maybe-middleware crate to enable
+users to pass in a request client with middleware.
+
+* 3.4.0: 2023-11-15: Run `rustfmt`
+
+Thanks for the contributions,
+[ChristianGoldapp](https://github.com/ChristianGoldapp)!
+
 * 3.3.2: 2023-08-08: Add support for distance_meters in Places Autocomplete
 response. Thanks for the contribution,
 [victorcrimea](https://github.com/victorcrimea)!
