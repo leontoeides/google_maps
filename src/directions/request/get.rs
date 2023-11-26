@@ -20,7 +20,7 @@ impl<'a> DirectionsRequest<'a> {
     ///
     /// This method accepts no arguments.
 
-    #[tracing::instrument(level = "debug", name = "Google Maps Directions", skip(self))]
+    #[tracing::instrument(level = "debug", name = "google_maps.directions", skip(self))]
     pub async fn get(&mut self) -> Result<DirectionsResponse, GoogleMapsError> {
         // Build the URL stem for the HTTP get request:
         let mut url = format!("{SERVICE_URL}/{OUTPUT_FORMAT}?");

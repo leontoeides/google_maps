@@ -21,7 +21,7 @@ impl<'a> FordwardGeocodingRequest<'a> {
     ///
     /// This method accepts no arguments.
 
-    #[tracing::instrument(level = "debug", name = "Google Maps Geocoding", skip(self))]
+    #[tracing::instrument(level = "debug", name = "google_maps.forward_geocoding", skip(self))]
     pub async fn get(&mut self) -> Result<GeocodingResponse, GoogleMapsError> {
         // Build the URL stem for the HTTP get request:
         let mut url = format!("{SERVICE_URL}/{OUTPUT_FORMAT}?");

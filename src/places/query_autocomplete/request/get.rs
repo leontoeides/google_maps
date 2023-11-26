@@ -23,7 +23,7 @@ impl<'a> QueryAutocompleteRequest<'a> {
     ///
     /// This method accepts no arguments.
 
-    #[tracing::instrument(level = "debug", name = "Google Maps Query Autocomplete", skip(self))]
+    #[tracing::instrument(level = "debug", name = "google_maps.query_autocomplete", skip(self))]
     pub async fn get(&mut self) -> Result<PlacesAutocompleteResponse, GoogleMapsError> {
         // Build the URL stem for the HTTP get request:
         let mut url = format!("{SERVICE_URL}/{OUTPUT_FORMAT}?");

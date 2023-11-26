@@ -20,7 +20,7 @@ impl<'a> DistanceMatrixRequest<'a> {
     ///
     /// This method accepts no arguments.
 
-    #[tracing::instrument(level = "debug", name = "Google Maps Distance Matrix", skip(self))]
+    #[tracing::instrument(level = "debug", name = "google_maps.distance_matrix", skip(self))]
     pub async fn get(&mut self) -> Result<DistanceMatrixResponse, GoogleMapsError> {
         // Build the URL stem for the HTTP get request:
         let mut url = format!("{SERVICE_URL}/{OUTPUT_FORMAT}?");

@@ -18,7 +18,7 @@ impl<'a> NearestRoadsRequest<'a> {
     ///
     /// This method accepts no arguments.
 
-    #[tracing::instrument(level = "debug", name = "Google Maps Nearest Roads", skip(self))]
+    #[tracing::instrument(level = "debug", name = "google_maps.nearest_roads", skip(self))]
     pub async fn get(&mut self) -> Result<NearestRoadsResponse, GoogleMapsError> {
         // Build the URL stem for the HTTP get request:
         let mut url = format!("{SERVICE_URL}/?");

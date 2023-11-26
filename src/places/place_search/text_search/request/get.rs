@@ -20,7 +20,7 @@ impl<'a> PlacesTextSearchRequest<'a> {
     ///
     /// This method accepts no arguments.
 
-    #[tracing::instrument(level = "debug", name = "Google Maps Places Text Search", skip(self))]
+    #[tracing::instrument(level = "debug", name = "google_maps.places_text_search", skip(self))]
     pub async fn get(&mut self) -> Result<PlacesTextSearchResponse, GoogleMapsError> {
         // Build the URL stem for the HTTP get request:
         let mut url = format!("{SERVICE_URL}/{OUTPUT_FORMAT}?");
