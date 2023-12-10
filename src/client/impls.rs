@@ -1,4 +1,5 @@
 use crate::client::GoogleMapsClient;
+use std::time::Duration;
 #[cfg(feature = "directions")]
 use crate::directions::request::location::Location;
 #[cfg(feature = "distance_matrix")]
@@ -30,6 +31,8 @@ impl GoogleMapsClient {
                 "RustGoogleMaps/{version}",
                 version = env!("CARGO_PKG_VERSION")
             ))
+            .connect_timeout(Duration::from_secs(10))
+            .timeout(Duration::from_secs(30))
             .build()
             .unwrap();
 
