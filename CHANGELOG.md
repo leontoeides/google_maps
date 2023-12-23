@@ -3,6 +3,11 @@
 * Release notes are available on
 [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+* 3.4.1: 2023-12-23: Added `Landmark` and `Other` variants to the `PlaceType`
+enum.
+
+* 3.4.1: 2023-12-10: Added default timeouts for the `reqwest` client.
+
 * 3.4.0: 2023-11-15: Add Copy to types where it makes semantic sense and is
 efficient.
 
