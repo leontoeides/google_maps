@@ -218,6 +218,8 @@ pub enum PlaceType {
     // Establishment,
     Regions = 140,
     Cities = 141,
+    Landmark = 142,
+    Other = 143,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -396,6 +398,8 @@ impl std::convert::From<&PlaceType> for &str {
             PlaceType::Address => "address",
             PlaceType::Regions => "regions",
             PlaceType::Cities => "cities",
+            PlaceType::Landmark => "landmark",
+            PlaceType::Other => "other",
         } // match
     } // fn
 } // impl
@@ -567,6 +571,8 @@ static PLACE_TYPES_BY_CODE: phf::Map<&'static str, PlaceType> = phf_map! {
     "address" => PlaceType::Address,
     "regions" => PlaceType::Regions,
     "cities" => PlaceType::Cities,
+    "landmark" => PlaceType::Landmark,
+    "other" => PlaceType::Other,
 };
 
 // -----------------------------------------------------------------------------
@@ -626,7 +632,7 @@ impl PlaceType {
             PlaceType::Campground => "Campground",
             PlaceType::CarDealer => "Car Dealer",
             PlaceType::CarRental => "Car Rental",
-            PlaceType::CarRepair => "Car Rrepair",
+            PlaceType::CarRepair => "Car Repair",
             PlaceType::CarWash => "Car Wash",
             PlaceType::Casino => "Casino",
             PlaceType::Cemetery => "Cemetery",
@@ -750,6 +756,8 @@ impl PlaceType {
             PlaceType::Address => "Address",
             PlaceType::Regions => "Regions",
             PlaceType::Cities => "Cities",
+            PlaceType::Landmark => "Landmark",
+            PlaceType::Other => "Other",
         } // match
     } // fn
 } // impl
