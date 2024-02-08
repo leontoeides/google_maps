@@ -25,7 +25,6 @@ impl GoogleMapsClient {
     /// * `key` ‧ Your application's API key. This key identifies your
     /// application for purposes of quota management. Learn how to [get a
     /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
-    /// Contains the application's API key and other settings.
     ///
     /// ## Panics
     ///
@@ -47,7 +46,6 @@ impl GoogleMapsClient {
     /// * `key` ‧ Your application's API key. This key identifies your
     /// application for purposes of quota management. Learn how to [get a
     /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
-    /// Contains the application's API key and other settings.
 
     #[cfg(feature = "enable-reqwest")]
     pub fn try_new(key: &str) -> Result<Self, crate::GoogleMapsError> {
@@ -73,7 +71,9 @@ impl GoogleMapsClient {
     ///
     /// ## Arguments
     ///
-    /// This method accepts no arguments. Use the methods of the resulting type.
+    /// * `key` ‧ Your application's API key. This key identifies your
+    /// application for purposes of quota management. Learn how to [get a
+    /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
 
     #[cfg(not(feature = "enable-reqwest"))]
     pub fn new(key: &str) -> GoogleMapsClient {
