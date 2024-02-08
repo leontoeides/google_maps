@@ -20,12 +20,37 @@ impl GoogleMapsClient {
     //
     /// Initialize the settings needed for a Google Cloud Maps API transaction.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
-    /// This method accepts no arguments. Use the methods of the resulting type.
+    /// * `key` ‧ Your application's API key. This key identifies your
+    /// application for purposes of quota management. Learn how to [get a
+    /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
+    /// Contains the application's API key and other settings.
+    ///
+    /// ## Panics
+    ///
+    /// * This function will panic if the `reqwest` client builder chain fails.
+    /// Realistically this shouldn't happen. However you may want to use
+    /// `try_new` to instantiate a new `GoogleMapsClient` instead.
 
     #[cfg(feature = "enable-reqwest")]
-    pub fn new(key: &str) -> Result<Self, crate::GoogleMapsError> {
+    #[deprecated(since="3.4.2", note="use `try_new` instead")]
+    #[must_use]
+    pub fn new(key: &str) -> Self { Self::try_new(key).unwrap() }
+
+    // -------------------------------------------------------------------------
+    //
+    /// Initialize the settings needed for a Google Cloud Maps API transaction.
+    ///
+    /// ## Arguments:
+    ///
+    /// * `key` ‧ Your application's API key. This key identifies your
+    /// application for purposes of quota management. Learn how to [get a
+    /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
+    /// Contains the application's API key and other settings.
+
+    #[cfg(feature = "enable-reqwest")]
+    pub fn try_new(key: &str) -> Result<Self, crate::GoogleMapsError> {
         let reqwest_client = reqwest::Client::builder()
             .user_agent(format!(
                 "RustGoogleMaps/{version}",
