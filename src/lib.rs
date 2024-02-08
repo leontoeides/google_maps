@@ -1,7 +1,7 @@
 //! # `google_maps`
 //! [![Docs](https://docs.rs/google_maps/badge.svg)](https://docs.rs/google_maps)
 //! [![Crates.io](https://img.shields.io/crates/v/google_maps.svg?maxAge=2592000)](https://crates.io/crates/google_maps)
-//! [![rustc](https://img.shields.io/badge/msrv-1.70+-red)](https://blog.rust-lang.org/2023/06/01/Rust-1.70.0.html)
+//! [![msrv](https://img.shields.io/badge/rustc-1.70.0+-red)](https://blog.rust-lang.org/2023/06/01/Rust-1.70.0.html)
 //!
 //! An unofficial Google Maps Platform client library for the Rust programming
 //! language.
