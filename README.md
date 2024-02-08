@@ -1,6 +1,7 @@
 # google_maps 
 [![Docs](https://docs.rs/google_maps/badge.svg)](https://docs.rs/google_maps)
 [![Crates.io](https://img.shields.io/crates/v/google_maps.svg?maxAge=2592000)](https://crates.io/crates/google_maps)
+[![MSRV Badge](https://img.shields.io/badge/MSRV-1.70.0-lightgray)]
 
 An unofficial Google Maps Platform client library for the Rust programming language. 
 
