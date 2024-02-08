@@ -78,7 +78,7 @@ impl LatLng {
             .ok_or_else(|| TypeError::FloatToDecimalConversionError(longitude.to_string()))?;
 
         if lat < dec!(-90.0) || lat > dec!(90.0) {
-            Err(TypeError::InvalidLongitude(lat, lng))?
+            Err(TypeError::InvalidLatitude(lat, lng))?
         } // if
 
         if lng < dec!(-180.0) || lng > dec!(180.0) {
@@ -105,7 +105,7 @@ impl LatLng {
             .ok_or_else(|| TypeError::FloatToDecimalConversionError(longitude.to_string()))?;
 
         if lat < dec!(-90.0) || lat > dec!(90.0) {
-            Err(TypeError::InvalidLongitude(lat, lng))?
+            Err(TypeError::InvalidLatitude(lat, lng))?
         } // if
 
         if lng < dec!(-180.0) || lng > dec!(180.0) {
