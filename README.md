@@ -1,4 +1,4 @@
-# google_maps 
+# `google_maps`
 [![Docs](https://docs.rs/google_maps/badge.svg)](https://docs.rs/google_maps)
 [![Crates.io](https://img.shields.io/crates/v/google_maps.svg?maxAge=2592000)](https://crates.io/crates/google_maps)
 [![rustc](https://img.shields.io/badge/msrv-1.70+-red)](https://blog.rust-lang.org/2023/06/01/Rust-1.70.0.html)
@@ -30,16 +30,16 @@ Additionally, usage of rustls for Reqwest is supported.
 
 ### Google Maps Client Feature Flags:
 
-* autocomplete
-* directions
-* distance_matrix
-* elevation
-* geocoding
-* places
-* roads
-* time_zone
-* enable-reqwest (uses [reqwest](https://crates.io/crates/reqwest) for querying the Google Maps API).
-* geo (support for the [geo](https://crates.io/crates/geo-types) crate's types)
+* `autocomplete`
+* `directions`
+* `distance_matrix`
+* `elevation`
+* `geocoding`
+* `places`
+* `roads`
+* `time_zone`
+* `enable-reqwest` (uses [reqwest](https://crates.io/crates/reqwest) for querying the Google Maps API).
+* `geo` (support for the [geo](https://crates.io/crates/geo-types) crate's types)
 
 Note: The Places API's autocomplete feature have been put in the `autocomplete` feature flag. The rest of the Places APIs will be put under the `places` feature flag.
 
@@ -47,10 +47,10 @@ Note: The Places API's autocomplete feature have been put in the `autocomplete` 
 
 For use with `enable-reqwest` only.
 
-* native-tls
-* rustls
-* gzip
-* brotli
+* `native-tls`
+* `rustls`
+* `gzip`
+* `brotli`
 
 ### Default Feature Flags
 
@@ -340,7 +340,7 @@ responding but I will respond. Thanks!
 # Roadmap
 
 - [ ] Track both _requests_ and request _elements_ for rate limiting.
-- [ ] Make a generic get() function for that can be used by all APIs.
+- [ ] Make a generic `get()` function for that can be used by all APIs.
 - [ ] Convert explicit query validation to session types wherever reasonable.
 - [ ] [Places API](https://developers.google.com/places/web-service/intro). Only
 partly implemented. If you would like to have any missing pieces implemented,
