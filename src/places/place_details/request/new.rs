@@ -19,7 +19,8 @@ impl<'a> Request<'a> {
     /// For more information about place IDs, see the
     /// [place ID overview](https://developers.google.com/maps/documentation/places/web-service/place-id).
 
-    #[must_use] pub fn new(client: &GoogleMapsClient, place_id: String) -> Request {
+    #[must_use]
+    pub fn new(client: &GoogleMapsClient, place_id: String) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:

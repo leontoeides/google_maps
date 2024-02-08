@@ -156,7 +156,8 @@ impl std::str::FromStr for Avoid {
 impl Avoid {
     /// Formats a `Avoid` enum into a string that is presentable to the end
     /// user.
-    #[must_use] pub fn display(&self) -> &str {
+    #[must_use]
+    pub fn display(&self) -> &str {
         match self {
             Self::Ferries => "Ferries",
             Self::Highways => "Highways",

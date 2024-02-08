@@ -29,10 +29,7 @@ impl GoogleMapsClient {
     ///     .build();
     /// ```
 
-    pub fn with_reqwest_client(
-        &mut self,
-        reqwest_client: reqwest::Client,
-    ) -> &mut Self {
+    pub fn with_reqwest_client(&mut self, reqwest_client: reqwest::Client) -> &mut Self {
         self.reqwest_client = reqwest_maybe_middleware::Client::Vanilla(reqwest_client);
         self
     } // fn
@@ -46,10 +43,7 @@ impl GoogleMapsClient {
         self
     } // fn
 
-    pub fn with_reqwest(
-        &mut self,
-        reqwest_client: reqwest_maybe_middleware::Client,
-    ) -> &mut Self {
+    pub fn with_reqwest(&mut self, reqwest_client: reqwest_maybe_middleware::Client) -> &mut Self {
         self.reqwest_client = reqwest_client;
         self
     } // fn

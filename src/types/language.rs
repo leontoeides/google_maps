@@ -412,7 +412,8 @@ impl std::str::FromStr for Language {
 impl Language {
     /// Formats a `Language` enum into a string that is presentable to the
     /// end user.
-    #[must_use] pub fn display(&self) -> &str {
+    #[must_use]
+    pub fn display(&self) -> &str {
         match self {
             Self::Afrikaans => "Afrikaans",
             Self::Albanian => "Albanian",

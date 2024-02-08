@@ -161,7 +161,8 @@ impl std::str::FromStr for TrafficModel {
 impl TrafficModel {
     /// Formats a `TrafficModel` enum into a string that is presentable to the
     /// end user.
-    #[must_use] pub fn display(&self) -> &str {
+    #[must_use]
+    pub fn display(&self) -> &str {
         match self {
             Self::BestGuess => "Best Guess",
             Self::Optimistic => "Optimistic",

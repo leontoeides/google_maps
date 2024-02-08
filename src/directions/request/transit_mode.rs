@@ -155,7 +155,8 @@ impl std::str::FromStr for TransitMode {
 impl TransitMode {
     /// Formats a `TransitMode` enum into a string that is presentable to the
     /// end user.
-    #[must_use] pub fn display(&self) -> &str {
+    #[must_use]
+    pub fn display(&self) -> &str {
         match self {
             Self::Bus => "Bus",
             Self::Rail => "Rail",

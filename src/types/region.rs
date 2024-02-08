@@ -946,7 +946,8 @@ impl std::str::FromStr for Region {
 impl Region {
     /// Formats a `Region` enum into a string that is presentable to the end
     /// user.
-    #[must_use] pub fn display(&self) -> &str {
+    #[must_use]
+    pub fn display(&self) -> &str {
         match self {
             Self::Afghanistan => "Afghanistan",
             Self::Albania => "Albania",

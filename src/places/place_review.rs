@@ -94,7 +94,7 @@ impl<'de> Visitor<'de> for DateTimeUtcVisitor {
                         Unexpected::Unsigned(value),
                         &"UNIX timestamp representing seconds since January 1, 1970 UTC",
                     ), // invalid_value
-                )
+                );
             } // Err
         }; // match
 

@@ -117,7 +117,8 @@ impl std::str::FromStr for DepartureTime {
 impl DepartureTime {
     /// Formats a `DepartureTime` enum into a string that is presentable to the
     /// end user.
-    #[must_use] pub fn display(&self) -> String {
+    #[must_use]
+    pub fn display(&self) -> String {
         match self {
             Self::Now => "Now".to_string(),
             Self::At(departure_time) => {

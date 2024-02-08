@@ -156,7 +156,8 @@ impl std::str::FromStr for SecondaryHoursType {
 impl SecondaryHoursType {
     /// Formats a `SecondaryHoursType` enum into a string that is presentable to the
     /// end user.
-    #[must_use] pub fn display(&self) -> &str {
+    #[must_use]
+    pub fn display(&self) -> &str {
         match self {
             Self::DriveThrough => "Drive Through",
             Self::HappyHour => "Happy Hour",

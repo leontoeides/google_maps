@@ -150,7 +150,8 @@ impl std::str::FromStr for TravelMode {
 impl TravelMode {
     /// Formats a `TravelMode` enum into a string that is presentable to the
     /// end user.
-    #[must_use] pub fn display(&self) -> &str {
+    #[must_use]
+    pub fn display(&self) -> &str {
         match self {
             Self::Bicycling => "Bicycling",
             Self::Driving => "Driving",

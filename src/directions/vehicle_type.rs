@@ -196,7 +196,8 @@ impl std::str::FromStr for VehicleType {
 impl VehicleType {
     /// Formats a `VehicleType` enum into a string that is presentable to the
     /// end user.
-    #[must_use] pub fn display(&self) -> &str {
+    #[must_use]
+    pub fn display(&self) -> &str {
         match self {
             Self::Bus => "Bus",
             Self::CableCar => "Cable Car",

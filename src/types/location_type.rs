@@ -140,7 +140,8 @@ impl std::str::FromStr for LocationType {
 impl LocationType {
     /// Formats a `LocationType` enum into a string that is presentable to the
     /// end user.
-    #[must_use] pub fn display(&self) -> &str {
+    #[must_use]
+    pub fn display(&self) -> &str {
         match self {
             Self::Approximate => "Approximate",
             Self::GeometricCenter => "Geometric Center",

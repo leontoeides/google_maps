@@ -12,7 +12,8 @@ impl GoogleMapsClient {
     /// This method accepts no arguments.
 
     #[cfg(feature = "enable-reqwest")]
-    #[must_use] pub fn build(&self) -> Self {
+    #[must_use]
+    pub fn build(&self) -> Self {
         self.clone()
     } // fn
 
@@ -43,7 +44,8 @@ impl GoogleMapsClient {
     /// This method accepts no arguments.
 
     #[cfg(feature = "enable-reqwest")]
-    #[must_use] pub fn finalize(&self) -> Self {
+    #[must_use]
+    pub fn finalize(&self) -> Self {
         self.build()
     } // fn
 

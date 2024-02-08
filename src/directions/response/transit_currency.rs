@@ -656,7 +656,8 @@ impl std::str::FromStr for TransitCurrency {
 impl TransitCurrency {
     /// Formats a `TransitCurrency` enum into a string that is presentable to
     /// the end user.
-    #[must_use] pub fn display(&self) -> &str {
+    #[must_use]
+    pub fn display(&self) -> &str {
         match self {
             Self::UnitedArabEmiratesDirham => "United Arab Emirates dirham",
             Self::AfghanAfghani => "Afghan afghani",
@@ -668,9 +669,7 @@ impl TransitCurrency {
             Self::AustralianDollar => "Australian dollar",
             Self::ArubanFlorin => "Aruban florin",
             Self::AzerbaijaniManat => "Azerbaijani manat",
-            Self::BosniaAndHerzegovinaConvertibleMark => {
-                "Bosnia and Herzegovina convertible mark"
-            }
+            Self::BosniaAndHerzegovinaConvertibleMark => "Bosnia and Herzegovina convertible mark",
             Self::BarbadosDollar => "Barbados dollar",
             Self::BangladeshiTaka => "Bangladeshi taka",
             Self::BulgarianLev => "Bulgarian lev",

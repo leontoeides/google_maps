@@ -81,7 +81,8 @@ impl Geocoding {
     /// ```rust
     /// let plus_code = geocoding.get_global_plus_code();
     /// ```
-    #[must_use] pub fn get_global_plus_code(&self) -> Option<String> {
+    #[must_use]
+    pub fn get_global_plus_code(&self) -> Option<String> {
         self.plus_code
             .as_ref()
             .map(|plus_code| plus_code.global_code.to_string())
@@ -94,7 +95,8 @@ impl Geocoding {
     /// ```rust
     /// let compound_code = geocoding.get_compound_plus_code();
     /// ```
-    #[must_use] pub fn get_compound_plus_code(&self) -> Option<String> {
+    #[must_use]
+    pub fn get_compound_plus_code(&self) -> Option<String> {
         match &self.plus_code {
             Some(plus_code) => plus_code
                 .compound_code

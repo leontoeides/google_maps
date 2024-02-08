@@ -146,7 +146,8 @@ impl std::str::FromStr for UnitSystem {
 impl UnitSystem {
     /// Formats a `UnitSystem` enum into a string that is presentable to the
     /// end user.
-    #[must_use] pub fn display(&self) -> &str {
+    #[must_use]
+    pub fn display(&self) -> &str {
         match self {
             Self::Imperial => "Imperial",
             Self::Metric => "Metric",

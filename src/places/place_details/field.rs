@@ -263,7 +263,8 @@ impl std::str::FromStr for Field {
 impl Field {
     /// Formats a `Field` enum into a string that is presentable to the end
     /// user.
-    #[must_use] pub fn display(&self) -> &str {
+    #[must_use]
+    pub fn display(&self) -> &str {
         match self {
             Self::AddressComponent => "Address Component",
             Self::AdrAddress => "adr Address",

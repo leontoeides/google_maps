@@ -224,7 +224,8 @@ impl std::default::Default for LatLng {
 impl LatLng {
     /// Formats a `LatLng` struct into a string that is presentable to the end
     /// user.
-    #[must_use] pub fn display(&self) -> String {
+    #[must_use]
+    pub fn display(&self) -> String {
         // Display latitude and longitude as decimal degrees with some extra
         // fixins'.
         format!(
@@ -249,47 +250,57 @@ impl LatLng {
 
 impl LatLng {
     /// Returns the north-south latitudinal (or vertical) coordinate.
-    #[must_use] pub fn y(&self) -> &Decimal {
+    #[must_use]
+    pub fn y(&self) -> &Decimal {
         &self.lat
     }
     /// Returns the north-south latitudinal (or vertical) coordinate.
-    #[must_use] pub fn lat(&self) -> &Decimal {
+    #[must_use]
+    pub fn lat(&self) -> &Decimal {
         &self.lat
     }
     /// Returns the north-south latitudinal (or vertical) coordinate.
-    #[must_use] pub fn latitude(&self) -> &Decimal {
+    #[must_use]
+    pub fn latitude(&self) -> &Decimal {
         &self.lat
     }
 
     /// Returns the east-west longitudinal (or horizontal) coordinate.
-    #[must_use] pub fn x(&self) -> &Decimal {
+    #[must_use]
+    pub fn x(&self) -> &Decimal {
         &self.lng
     }
     /// Returns the east-west longitudinal (or horizontal) coordinate.
-    #[must_use] pub fn lng(&self) -> &Decimal {
+    #[must_use]
+    pub fn lng(&self) -> &Decimal {
         &self.lng
     }
     /// Returns the east-west longitudinal (or horizontal) coordinate.
-    #[must_use] pub fn lon(&self) -> &Decimal {
+    #[must_use]
+    pub fn lon(&self) -> &Decimal {
         &self.lng
     }
     /// Returns the east-west longitudinal (or horizontal) coordinate.
-    #[must_use] pub fn long(&self) -> &Decimal {
+    #[must_use]
+    pub fn long(&self) -> &Decimal {
         &self.lng
     }
     /// Returns the east-west longitudinal (or horizontal) coordinate.
-    #[must_use] pub fn longitude(&self) -> &Decimal {
+    #[must_use]
+    pub fn longitude(&self) -> &Decimal {
         &self.lng
     }
 
     /// Returns a tuple containing 1. the latitude (y) coordinate, and then 2.
     /// the longitude (x) coordinate, in that order.
-    #[must_use] pub fn coords(&self) -> (&Decimal, &Decimal) {
+    #[must_use]
+    pub fn coords(&self) -> (&Decimal, &Decimal) {
         (&self.lat, &self.lng)
     }
     /// Returns a tuple containing 1. the latitude (y) coordinate, and then 2.
     /// the longitude (x) coordinate, in that order.
-    #[must_use] pub fn coordinates(&self) -> (&Decimal, &Decimal) {
+    #[must_use]
+    pub fn coordinates(&self) -> (&Decimal, &Decimal) {
         (&self.lat, &self.lng)
     }
 } // impl

@@ -13,7 +13,8 @@ impl<'a> Request<'a> {
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
 
-    #[must_use] pub fn new(client: &GoogleMapsClient) -> Request {
+    #[must_use]
+    pub fn new(client: &GoogleMapsClient) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:

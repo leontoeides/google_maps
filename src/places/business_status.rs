@@ -130,7 +130,8 @@ impl std::str::FromStr for BusinessStatus {
 impl BusinessStatus {
     /// Formats a `BusinessStatus` enum into a string that is presentable to the
     /// end user.
-    #[must_use] pub fn display(&self) -> &str {
+    #[must_use]
+    pub fn display(&self) -> &str {
         match self {
             Self::Operational => "Operational",
             Self::ClosedTemporarily => "Closed Temporarily",

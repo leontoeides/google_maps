@@ -43,8 +43,9 @@ impl<'a> ForwardRequest<'a> {
         // Bounds key/value pair:
         if let Some(bounds) = &self.bounds {
             query.push_str("&bounds=");
-            query
-                .push_str(&utf8_percent_encode(&String::from(bounds), NON_ALPHANUMERIC).to_string());
+            query.push_str(
+                &utf8_percent_encode(&String::from(bounds), NON_ALPHANUMERIC).to_string(),
+            );
         }
 
         // Components key/value pair:

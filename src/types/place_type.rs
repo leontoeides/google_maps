@@ -612,7 +612,8 @@ impl std::str::FromStr for PlaceType {
 impl PlaceType {
     /// Formats a `PlaceType` enum into a string that is presentable to the end
     /// user.
-    #[must_use] pub fn display(&self) -> &str {
+    #[must_use]
+    pub fn display(&self) -> &str {
         match self {
             Self::Accounting => "Accounting",
             Self::Airport => "Airport",
