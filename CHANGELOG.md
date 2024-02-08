@@ -3,6 +3,11 @@
 * Release notes are available on
 [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+* 3.4.2: 2024-02-07: Applied many `clippy` suggestions.
+
+* 3.4.2: 2024-02-07: `README.MD` makeover. Thank you
+[seanpianka](https://github.com/seanpianka)!
+
 * 3.4.1: 2023-12-23: Added `Landmark` and `Other` variants to the `PlaceType`
 enum.
 
