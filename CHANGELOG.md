@@ -3,10 +3,18 @@
 * Release notes are available on
 [GitHub](https://github.com/leontoeides/google_maps/releases).
 
-* 3.4.2: 2024-02-07: Applied many `clippy` suggestions.
+* 3.4.2: 2024-02-08: `google_maps::GoogleMapsClient::new` has been deprecated
+in favour of `google_maps::GoogleMapsClient::try_new`
+
+* 3.4.2: 2024-02-08: Minor breaking change:
+`google_maps::GoogleMapsClient.with_rate` now uses a reference to the selected
+API (i.e. `.with_rate(&google_maps::Api::All)` instead of
+`.with_rate(google_maps::Api::All)`)
 
 * 3.4.2: 2024-02-07: `README.MD` makeover. Thank you
 [seanpianka](https://github.com/seanpianka)!
+
+* 3.4.2: 2024-02-07: Applied many `clippy` suggestions.
 
 * 3.4.1: 2023-12-23: Added `Landmark` and `Other` variants to the `PlaceType`
 enum.
