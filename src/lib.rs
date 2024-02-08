@@ -340,7 +340,7 @@
 //! let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE")
 //!     // For all Google Maps Platform APIs, the client will limit 2 sucessful
 //!     // requests for every 10 seconds:
-//!     .with_rate(Api::All, 2, std::time::Duration::from_secs(10))
+//!     .with_rate(&Api::All, 2, std::time::Duration::from_secs(10))
 //!     // Returns the `GoogleMapsClient` struct to the caller. This struct is used
 //!     // to make Google Maps Platform requests.
 //!     .build();

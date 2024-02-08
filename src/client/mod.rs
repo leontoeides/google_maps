@@ -32,7 +32,7 @@ use crate::request_rate::RequestRate;
 /// let mut my_settings = GoogleMapsClient::new(YOUR_GOOGLE_API_KEY_HERE)
 ///     .with_max_delay(std::time::Duration::from_secs(32))
 ///     .with_max_retries(10)
-///     .with_rate(Api::All, 1, std::time::Duration::from_secs(2))
+///     .with_rate(&Api::All, 1, std::time::Duration::from_secs(2))
 ///     .build();
 /// ```
 
