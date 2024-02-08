@@ -46,15 +46,14 @@ impl RequestRate {
     /// with_rate(Api::TimeZone, 2, Duration::from_secs(60)) // 1 second
     /// ```
 
-    pub fn with_rate(&mut self, api: Api, requests: u16, duration: Duration) -> &mut Self {
+    pub fn with_rate(&mut self, api: &Api, requests: u16, duration: Duration) -> &mut Self {
         // Select `RequestRate` field for the API specified by the caller.
-        let api_ref = self.rate_map.get_mut(&api); // api
-        let throttle_pool = match requests {
-            0 => None,
-            _ => {
-                let throttle_rate = ThrottleRate::new(requests as usize, duration);
-                Some(ThrottlePool::new(throttle_rate))
-            }
+        let api_ref = self.rate_map.get_mut(api);
+        let throttle_pool = if requests == 0 {
+            None
+        } else {
+            let throttle_rate = ThrottleRate::new(requests as usize, duration);
+            Some(ThrottlePool::new(throttle_rate))
         };
 
         // Has the ApiRate been set already?

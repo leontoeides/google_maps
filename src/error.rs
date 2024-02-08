@@ -71,4 +71,10 @@ pub enum Error {
     #[error(transparent)]
     #[diagnostic(code(google_maps::time_zone))]
     TimeZone(#[from] crate::time_zone::error::Error),
+
+    /// Error originating from the `reqwest` crate.
+    #[cfg(feature = "enable-reqwest")]
+    #[error(transparent)]
+    #[diagnostic(code(google_maps::reqwest))]
+    Reqwest(#[from] reqwest::Error),
 } // enum Error

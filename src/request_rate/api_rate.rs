@@ -29,8 +29,7 @@ impl fmt::Debug for ApiRate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         f.debug_struct("ApiRate")
             .field("target_rate", &self.target_rate.to_string())
-            //.field("current_rate", &self.current_rate)
-            .finish()
+            .finish_non_exhaustive()
     }
 }
 

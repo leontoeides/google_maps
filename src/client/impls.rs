@@ -22,11 +22,10 @@ impl GoogleMapsClient {
     ///
     /// ## Arguments:
     ///
-    /// This method accepts no arguments. Use the methods of the resulting type. Use the methods of the resulting type.
+    /// This method accepts no arguments. Use the methods of the resulting type.
 
     #[cfg(feature = "enable-reqwest")]
-    #[must_use]
-    pub fn new(key: &str) -> Self {
+    pub fn new(key: &str) -> Result<Self, crate::GoogleMapsError> {
         let reqwest_client = reqwest::Client::builder()
             .user_agent(format!(
                 "RustGoogleMaps/{version}",
@@ -34,14 +33,13 @@ impl GoogleMapsClient {
             ))
             .connect_timeout(Duration::from_secs(10))
             .timeout(Duration::from_secs(30))
-            .build()
-            .unwrap();
+            .build()?;
 
-        Self {
+        Ok(Self {
             key: key.to_string(),
             rate_limit: RequestRate::default(),
             reqwest_client: reqwest_maybe_middleware::Client::Vanilla(reqwest_client),
-        } // GoogleMapsClient
+        }) // GoogleMapsClient
     } // fn
 
     // -------------------------------------------------------------------------
@@ -83,7 +81,7 @@ impl GoogleMapsClient {
 
     #[cfg(feature = "directions")]
     #[must_use]
-    pub fn directions(
+    pub const fn directions(
         &self,
         origin: Location,
         destination: Location,
@@ -145,7 +143,7 @@ impl GoogleMapsClient {
 
     #[cfg(feature = "elevation")]
     #[must_use]
-    pub fn elevation(&self) -> crate::elevation::request::Request {
+    pub const fn elevation(&self) -> crate::elevation::request::Request {
         crate::elevation::request::Request::new(self)
     } // fn
 
@@ -163,7 +161,7 @@ impl GoogleMapsClient {
 
     #[cfg(feature = "geocoding")]
     #[must_use]
-    pub fn geocoding(&self) -> crate::geocoding::forward::ForwardRequest {
+    pub const fn geocoding(&self) -> crate::geocoding::forward::ForwardRequest {
         crate::geocoding::forward::ForwardRequest::new(self)
     } // fn
 
@@ -194,7 +192,10 @@ impl GoogleMapsClient {
 
     #[cfg(feature = "geocoding")]
     #[must_use]
-    pub fn reverse_geocoding(&self, latlng: LatLng) -> crate::geocoding::reverse::ReverseRequest {
+    pub const fn reverse_geocoding(
+        &self,
+        latlng: LatLng,
+    ) -> crate::geocoding::reverse::ReverseRequest {
         crate::geocoding::reverse::ReverseRequest::new(self, latlng)
     } // fn
 
@@ -231,7 +232,7 @@ impl GoogleMapsClient {
 
     #[cfg(feature = "time_zone")]
     #[must_use]
-    pub fn time_zone(
+    pub const fn time_zone(
         &self,
         location: LatLng,
         timestamp: DateTime<Utc>,
@@ -293,7 +294,7 @@ impl GoogleMapsClient {
 
     #[cfg(feature = "autocomplete")]
     #[must_use]
-    pub fn query_autocomplete(
+    pub const fn query_autocomplete(
         &self,
         input: String,
     ) -> crate::places::query_autocomplete::request::Request {
@@ -384,7 +385,7 @@ impl GoogleMapsClient {
 
     #[cfg(feature = "places")]
     #[must_use]
-    pub fn text_search(
+    pub const fn text_search(
         &self,
         query: String,
         radius: u32,
@@ -441,7 +442,7 @@ impl GoogleMapsClient {
 
     #[cfg(feature = "places")]
     #[must_use]
-    pub fn nearby_search(
+    pub const fn nearby_search(
         &self,
         location: LatLng,
         radius: u32,
@@ -481,7 +482,7 @@ impl GoogleMapsClient {
 
     #[cfg(feature = "places")]
     #[must_use]
-    pub fn place_details(
+    pub const fn place_details(
         &self,
         place_id: String,
     ) -> crate::places::place_details::request::Request {

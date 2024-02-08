@@ -136,10 +136,10 @@ impl RankBy {
     /// Formats a `RankBy` enum into a string that is presentable to the
     /// end user.
     #[must_use]
-    pub fn display(&self) -> &str {
+    pub const fn display(&self) -> &str {
         match self {
             Self::Prominence => "Prominence",
-            Self::Distance => "Ditance",
+            Self::Distance => "Distance",
         } // match
     } // fn
 } // impl

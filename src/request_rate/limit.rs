@@ -1,4 +1,4 @@
-use crate::request_rate::{api::Api, duration_to_string::duration_to_string, RequestRate}; // use crate::request_rate
+use crate::request_rate::{api::Api, duration_to_string::duration_to_string, RequestRate};
 use futures::future;
 use std::time::SystemTime;
 
@@ -8,10 +8,10 @@ impl RequestRate {
     /// ## Description
     ///
     /// This method performs rate limiting, using the throttler under `rate_map`
-    /// specified by the list of apis, which was calculated using targeted requests/duration
-    /// rates during initialization. If the current rate exceeds any of the targeted rate,
-    /// this method will put the thread to sleep until it is ready for the next
-    /// request.
+    /// specified by the list of apis, which was calculated using targeted
+    /// requests/duration rates during initialization. If the current rate
+    /// exceeds any of the targeted rate, this method will put the thread to
+    /// sleep until it is ready for the next request.
     ///
     /// ## Arguments:
     ///
@@ -26,16 +26,15 @@ impl RequestRate {
         let start = SystemTime::now();
         future::join_all(limit_futures).await;
         let wait_time = SystemTime::now().duration_since(start);
-        match wait_time {
-            Ok(duration) => {
-                if duration.as_millis() > 10 {
-                    tracing::debug!(
-                        "Waited for {} under rate limiter.",
-                        duration_to_string(&duration)
-                    );
-                }
+        if let Ok(duration) = wait_time {
+            if duration.as_millis() > 10 {
+                tracing::debug!(
+                    "Waited for {} under rate limiter.",
+                    duration_to_string(&duration)
+                );
             }
-            _ => tracing::warn!("Clock went backwards!"),
+        } else {
+            tracing::warn!("Clock went backwards!")
         }
     }
 } // impl

@@ -23,7 +23,7 @@ impl std::convert::From<&TargetRate> for String {
     /// human-friendly & readable rate.
     fn from(target_rate: &TargetRate) -> Self {
         rate_to_string(
-            &u64::from(target_rate.requests),
+            u64::from(target_rate.requests),
             &target_rate.duration,
             "request",
             "requests",

@@ -38,7 +38,7 @@ impl<'a> Request<'a> {
     /// * Nearby Search: 50,000 meters
 
     #[must_use]
-    pub fn new(client: &GoogleMapsClient, location: LatLng, radius: u32) -> Request {
+    pub const fn new(client: &GoogleMapsClient, location: LatLng, radius: u32) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:

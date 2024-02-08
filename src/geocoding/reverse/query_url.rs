@@ -1,4 +1,7 @@
-use crate::geocoding::{reverse::ReverseRequest, OUTPUT_FORMAT, SERVICE_URL}; // crate::geocoding
+use crate::geocoding::{reverse::ReverseRequest, OUTPUT_FORMAT, SERVICE_URL};
+use std::borrow::Cow;
+
+// =============================================================================
 
 impl<'a> ReverseRequest<'a> {
     /// Returns the URL query string that represents the query you've built.
@@ -17,10 +20,11 @@ impl<'a> ReverseRequest<'a> {
     pub fn query_url(&'a mut self) -> String {
         let query_string = match &self.query {
             // If query string has already been built, return it:
-            Some(query_string) => query_string,
+            Some(query_string) => Cow::from(query_string),
             // If it hasn't been built, build it:
-            None => self.build().query.as_ref().unwrap(),
+            None => Cow::from(self.build().query.clone().unwrap_or_default()),
         }; // match
+
         format!("{SERVICE_URL}/{OUTPUT_FORMAT}?{query_string}")
     } // fn
 } // impl

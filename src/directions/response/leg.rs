@@ -68,10 +68,9 @@ impl Leg {
 
     #[must_use]
     pub fn get_duration_in_traffic_text(&self) -> Option<&String> {
-        match &self.duration_in_traffic {
-            Some(duration) => Some(&duration.text),
-            None => None,
-        } // match
+        self.duration_in_traffic
+            .as_ref()
+            .map(|duration| &duration.text)
     } // fn
 
     /// A helper function for destructuring (or serializing) the optional

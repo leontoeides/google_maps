@@ -60,9 +60,7 @@ impl std::str::FromStr for Bounds {
     /// latitude & longitude pairs.
     fn from_str(value: &str) -> Result<Self, Self::Err> {
         let corner: Vec<&str> = value.trim().split('|').collect();
-        if corner.len() != 2 {
-            Err(TypeError::InvalidBoundsString(value.to_owned()))?
-        } else {
+        if corner.len() == 2 {
             let southwest = LatLng::from_str(corner[0].trim());
             let southwest =
                 southwest.map_err(|_| TypeError::InvalidBoundsString(value.to_owned()))?;
@@ -73,6 +71,8 @@ impl std::str::FromStr for Bounds {
                 southwest,
                 northeast,
             })
+        } else {
+            Err(TypeError::InvalidBoundsString(value.to_owned()))?
         } // if
     } // fn
 } // impl

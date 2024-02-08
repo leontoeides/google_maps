@@ -20,15 +20,17 @@ impl std::convert::From<&CurrentRate> for String {
     /// Converts a `CurrentRate` enum to a `String` that contains a
     /// human-friendly & readable rate.
     fn from(current_rate: &CurrentRate) -> Self {
-        match current_rate.first_request {
-            None => Self::from("None"),
-            Some(first_request) => rate_to_string(
-                &current_rate.request_count,
-                &first_request.elapsed(),
-                "request",
-                "requests",
-            ),
-        } // match
+        current_rate.first_request.map_or_else(
+            || Self::from("None"),
+            |first_request| {
+                rate_to_string(
+                    current_rate.request_count,
+                    &first_request.elapsed(),
+                    "request",
+                    "requests",
+                )
+            }, // rate_to_string
+        ) // map_or_else
     } // fn
 } // impl
 

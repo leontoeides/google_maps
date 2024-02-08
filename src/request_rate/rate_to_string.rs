@@ -26,7 +26,7 @@ use std::time::Duration;
 /// this function.
 
 pub fn rate_to_string(
-    numerator: &u64,
+    numerator: u64,
     duration: &Duration,
     numerator_singular: &str,
     numerator_plural: &str,
@@ -49,7 +49,7 @@ pub fn rate_to_string(
     // index 0, and the duration unit of time in index 1:
 
     let duration_in_secs = duration.as_secs_f64();
-    let numerator = *numerator as f64;
+    let numerator = numerator as f64;
 
     let adjusted_units = match duration_in_secs {
         s if numerator / (s * MILLISECONDS_IN_A_SECOND) > 1.0 => (

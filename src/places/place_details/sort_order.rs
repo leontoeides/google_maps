@@ -130,7 +130,7 @@ impl SortOrder {
     /// Formats a `SortOrder` enum into a string that is presentable to the end
     /// user.
     #[must_use]
-    pub fn display(&self) -> &str {
+    pub const fn display(&self) -> &str {
         match self {
             Self::MostRelevant => "Most Relevant",
             Self::Newest => "Newest",

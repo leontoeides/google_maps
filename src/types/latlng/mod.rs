@@ -128,14 +128,14 @@ impl std::str::FromStr for LatLng {
     fn from_str(str: &str) -> Result<Self, Self::Err> {
         let coordinates: Vec<&str> = str.trim().split(',').collect();
 
-        if coordinates.len() != 2 {
-            Err(TypeError::InvalidLatLongString(str.to_owned()))?
-        } else {
+        if coordinates.len() == 2 {
             let lat = Decimal::from_str(coordinates[0].trim());
             let lat = lat.map_err(|_| TypeError::InvalidLatLongString(str.to_owned()))?;
             let lon = Decimal::from_str(coordinates[1].trim());
             let lon = lon.map_err(|_| TypeError::InvalidLatLongString(str.to_owned()))?;
             Self::try_from_dec(lat, lon)
+        } else {
+            Err(TypeError::InvalidLatLongString(str.to_owned()))?
         } // if
     } // fn
 } // impl
@@ -251,56 +251,56 @@ impl LatLng {
 impl LatLng {
     /// Returns the north-south latitudinal (or vertical) coordinate.
     #[must_use]
-    pub fn y(&self) -> &Decimal {
+    pub const fn y(&self) -> &Decimal {
         &self.lat
     }
     /// Returns the north-south latitudinal (or vertical) coordinate.
     #[must_use]
-    pub fn lat(&self) -> &Decimal {
+    pub const fn lat(&self) -> &Decimal {
         &self.lat
     }
     /// Returns the north-south latitudinal (or vertical) coordinate.
     #[must_use]
-    pub fn latitude(&self) -> &Decimal {
+    pub const fn latitude(&self) -> &Decimal {
         &self.lat
     }
 
     /// Returns the east-west longitudinal (or horizontal) coordinate.
     #[must_use]
-    pub fn x(&self) -> &Decimal {
+    pub const fn x(&self) -> &Decimal {
         &self.lng
     }
     /// Returns the east-west longitudinal (or horizontal) coordinate.
     #[must_use]
-    pub fn lng(&self) -> &Decimal {
+    pub const fn lng(&self) -> &Decimal {
         &self.lng
     }
     /// Returns the east-west longitudinal (or horizontal) coordinate.
     #[must_use]
-    pub fn lon(&self) -> &Decimal {
+    pub const fn lon(&self) -> &Decimal {
         &self.lng
     }
     /// Returns the east-west longitudinal (or horizontal) coordinate.
     #[must_use]
-    pub fn long(&self) -> &Decimal {
+    pub const fn long(&self) -> &Decimal {
         &self.lng
     }
     /// Returns the east-west longitudinal (or horizontal) coordinate.
     #[must_use]
-    pub fn longitude(&self) -> &Decimal {
+    pub const fn longitude(&self) -> &Decimal {
         &self.lng
     }
 
     /// Returns a tuple containing 1. the latitude (y) coordinate, and then 2.
     /// the longitude (x) coordinate, in that order.
     #[must_use]
-    pub fn coords(&self) -> (&Decimal, &Decimal) {
+    pub const fn coords(&self) -> (&Decimal, &Decimal) {
         (&self.lat, &self.lng)
     }
     /// Returns a tuple containing 1. the latitude (y) coordinate, and then 2.
     /// the longitude (x) coordinate, in that order.
     #[must_use]
-    pub fn coordinates(&self) -> (&Decimal, &Decimal) {
+    pub const fn coordinates(&self) -> (&Decimal, &Decimal) {
         (&self.lat, &self.lng)
     }
 } // impl

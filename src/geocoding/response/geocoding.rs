@@ -97,12 +97,11 @@ impl Geocoding {
     /// ```
     #[must_use]
     pub fn get_compound_plus_code(&self) -> Option<String> {
-        match &self.plus_code {
-            Some(plus_code) => plus_code
+        self.plus_code.as_ref().and_then(|plus_code| {
+            plus_code
                 .compound_code
                 .as_ref()
-                .map(std::string::ToString::to_string),
-            None => None,
-        } // match
+                .map(std::string::ToString::to_string)
+        }) // and_then
     } // fn
 } // impl

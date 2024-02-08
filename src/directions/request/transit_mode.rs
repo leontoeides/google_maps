@@ -156,7 +156,7 @@ impl TransitMode {
     /// Formats a `TransitMode` enum into a string that is presentable to the
     /// end user.
     #[must_use]
-    pub fn display(&self) -> &str {
+    pub const fn display(&self) -> &str {
         match self {
             Self::Bus => "Bus",
             Self::Rail => "Rail",

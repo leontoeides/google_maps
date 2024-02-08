@@ -1,4 +1,5 @@
 use crate::roads::snap_to_roads::{request::Request, SERVICE_URL};
+use std::borrow::Cow;
 
 // =============================================================================
 
@@ -21,9 +22,9 @@ impl<'a> Request<'a> {
     pub fn query_url(&'a mut self) -> String {
         let query_string = match &self.query {
             // If query string has already been built, return it:
-            Some(query_string) => query_string,
+            Some(query_string) => Cow::from(query_string),
             // If it hasn't been built, build it:
-            None => self.build().query.as_ref().unwrap(),
+            None => Cow::from(self.build().query.clone().unwrap_or_default()),
         }; // match
 
         format!("{SERVICE_URL}/?{query_string}")

@@ -151,7 +151,7 @@ impl TransitRoutePreference {
     /// Formats a `TransitRoutePreference` enum into a string that is
     /// presentable to the end user.
     #[must_use]
-    pub fn display(&self) -> &str {
+    pub const fn display(&self) -> &str {
         match self {
             Self::FewerTransfers => "Fewer Transfers",
             Self::LessWalking => "Less Walking",

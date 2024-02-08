@@ -1,4 +1,5 @@
-use crate::places::place_search::nearby_search::{request::Request, OUTPUT_FORMAT, SERVICE_URL}; // crate::places::place_search::nearby_search
+use crate::places::place_search::nearby_search::{request::Request, OUTPUT_FORMAT, SERVICE_URL};
+use std::borrow::Cow;
 
 // -----------------------------------------------------------------------------
 
@@ -19,10 +20,11 @@ impl<'a> Request<'a> {
     pub fn query_url(&'a mut self) -> String {
         let query_string = match &self.query {
             // If query string has already been built, return it:
-            Some(query_string) => query_string,
+            Some(query_string) => Cow::from(query_string),
             // If it hasn't been built, build it:
-            None => self.build().query.as_ref().unwrap(),
+            None => Cow::from(self.build().query.clone().unwrap_or_default()),
         }; // match
+
         format!("{SERVICE_URL}/{OUTPUT_FORMAT}?{query_string}")
     } // fn
 } // impl
