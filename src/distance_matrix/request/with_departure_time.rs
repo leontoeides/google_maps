@@ -22,7 +22,7 @@ impl<'a> Request<'a> {
     /// is, the departure time defaults to the current time).
     ///
     /// * For requests where the travel mode is driving: You can specify the
-    /// departure_time to receive a route and trip duration (response field:
+    /// `departure_time` to receive a route and trip duration (response field:
     /// `duration_in_traffic`) that take traffic conditions into account. This
     /// option is only available if the request contains a valid API key, or a
     /// valid Google Maps Platform Premium Plan client ID and signature. The

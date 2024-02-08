@@ -67,7 +67,7 @@ pub struct Step {
 impl Step {
     /// A helper function for destructuring (or serializing) the optional
     /// `maneuver` field. If the `ManeuverType` enum in the step is populated,
-    /// this function will return it as a `String`. If the _ManeuverType_ enum
+    /// this function will return it as a `String`. If the _`ManeuverType`_ enum
     /// is empty, this function will return `None`.
     /// ```rust
     /// let maneuver = step.get_maneuver();

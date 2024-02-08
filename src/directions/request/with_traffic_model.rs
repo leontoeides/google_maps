@@ -14,7 +14,7 @@ impl<'a> Request<'a> {
     /// Specifies the assumptions to use when calculating time in traffic. This
     /// setting affects the value returned in the `duration_in_traffic` field in
     /// the response, which contains the predicted time in traffic based on
-    /// historical averages. The traffic_model parameter may only be specified
+    /// historical averages. The `traffic_model` parameter may only be specified
     /// for driving directions where the request includes a `departure_time`,
     /// and only if the request includes an API key or a Google Maps Platform
     /// Premium Plan client ID. The available values for this parameter are:
@@ -22,7 +22,7 @@ impl<'a> Request<'a> {
     /// * `TrafficModel::BestGuess` (default) indicates that the returned
     /// `duration_in_traffic` should be the best estimate of travel time given
     /// what is known about both historical traffic conditions and live traffic.
-    /// Live traffic becomes more important the closer the departure_time is to
+    /// Live traffic becomes more important the closer the `departure_time` is to
     /// now.
     ///
     /// * `TrafficModel::Pessimistic` indicates that the returned

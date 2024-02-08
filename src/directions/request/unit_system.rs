@@ -45,7 +45,7 @@ impl<'de> Deserialize<'de> for UnitSystem {
     /// advantage of the `phf`-powered `TryFrom` implementation for this type.
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let string = String::deserialize(deserializer)?;
-        match UnitSystem::try_from(string.as_str()) {
+        match Self::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
             Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
@@ -146,10 +146,10 @@ impl std::str::FromStr for UnitSystem {
 impl UnitSystem {
     /// Formats a `UnitSystem` enum into a string that is presentable to the
     /// end user.
-    pub fn display(&self) -> &str {
+    #[must_use] pub fn display(&self) -> &str {
         match self {
-            UnitSystem::Imperial => "Imperial",
-            UnitSystem::Metric => "Metric",
+            Self::Imperial => "Imperial",
+            Self::Metric => "Metric",
         } // match
     } // fn
 } // impl

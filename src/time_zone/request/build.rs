@@ -25,7 +25,7 @@ impl<'a> Request<'a> {
         // Language key/value pair:
         if let Some(language) = &self.language {
             query.push_str("&language=");
-            query.push_str(&String::from(language))
+            query.push_str(&String::from(language));
         }
 
         // Set query string in Request struct.

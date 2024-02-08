@@ -50,7 +50,7 @@ impl std::fmt::Display for Error {
     /// to the user.
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Error::GoogleMapsService(status, error_message) => match error_message {
+            Self::GoogleMapsService(status, error_message) => match error_message {
                 // If the Google Maps Places API server generated an error
                 // message, return that:
                 Some(error_message) => write!(f, "Google Maps Places API service: {error_message}"),
@@ -77,27 +77,27 @@ impl std::fmt::Display for Error {
                         This may occur if the geocoder was passed a non-existent address."),
                 } // match
             }, // match
-            Error::HttpUnsuccessful(status) => write!(f,
+            Self::HttpUnsuccessful(status) => write!(f,
                 "Google Maps Places API client: \
                 Could not successfully query the Google Cloud Platform service. \
                 The service last responded with a `{status}` status."),
-            Error::InvalidStatusCode(status_code) => write!(f, "Google Maps Places API client: \
+            Self::InvalidStatusCode(status_code) => write!(f, "Google Maps Places API client: \
                 `{status_code}` is not a valid status code. \
                 Valid codes are `INVALID_REQUEST`, `OK`, `OVER_DAILY_LIMIT`, \
                 `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, `UNKNOWN_ERROR`, and \
                 `ZERO_RESULTS`."),
-            Error::InvalidAutocompleteType(autocomplete_type) => write!(f, "Google Maps Places API client: \
+            Self::InvalidAutocompleteType(autocomplete_type) => write!(f, "Google Maps Places API client: \
                 `{autocomplete_type}` is not a valid autocomplete type. \
                 Valid types are `geocode`, `address`, `establishment`, \
                 `(regions)`, `(cities)`."),
-            Error::QueryNotBuilt => write!(f, "Google Maps Places API client library: \
+            Self::QueryNotBuilt => write!(f, "Google Maps Places API client library: \
                 The query string must be built before the request may be sent to the Google Cloud Maps Platform. \
                 Ensure the build() method is called before run()."),
             #[cfg(feature = "enable-reqwest")]
-            Error::Reqwest(error) => write!(f, "Google Maps Places API client in the Reqwest library: {error}"),
+            Self::Reqwest(error) => write!(f, "Google Maps Places API client in the Reqwest library: {error}"),
             #[cfg(feature = "enable-reqwest")]
-            Error::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {error}"),
-            Error::SerdeJson(error) => write!(f, "Google Maps Places API client in the Serde JSON library: {error}"),
+            Self::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {error}"),
+            Self::SerdeJson(error) => write!(f, "Google Maps Places API client in the Serde JSON library: {error}"),
         } // match
     } // fn
 } // impl
@@ -110,8 +110,8 @@ impl From<reqwest::Error> for Error {
     /// Google Maps Places API error type
     /// (`google_maps::time_zone::error::Error`) by wrapping it inside. This
     /// function is required to use the `?` operator.
-    fn from(error: reqwest::Error) -> Error {
-        Error::Reqwest(ReqError::from(error))
+    fn from(error: reqwest::Error) -> Self {
+        Self::Reqwest(ReqError::from(error))
     } // fn
 } // impl
 
@@ -122,7 +122,7 @@ impl From<serde_json::error::Error> for Error {
     /// error type into a Google Maps Places API error type
     /// (`google_maps::time_zone::error::Error`) by wrapping it inside. This
     /// function is required to use the `?` operator.
-    fn from(error: serde_json::error::Error) -> Error {
-        Error::SerdeJson(error)
+    fn from(error: serde_json::error::Error) -> Self {
+        Self::SerdeJson(error)
     } // fn
 } // impl

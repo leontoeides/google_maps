@@ -1,4 +1,4 @@
-//! The `"type"` field within the _Places API_ _PlaceOpeningHours_ response
+//! The `"type"` field within the _Places API_ _`PlaceOpeningHours`_ response
 //! object describing the opening hours of a place.
 
 use crate::error::Error as GoogleMapsError;
@@ -37,7 +37,7 @@ impl<'de> Deserialize<'de> for SecondaryHoursType {
     /// advantage of the `phf`-powered `TryFrom` implementation for this type.
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let string = String::deserialize(deserializer)?;
-        match SecondaryHoursType::try_from(string.as_str()) {
+        match Self::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
             Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
@@ -156,19 +156,19 @@ impl std::str::FromStr for SecondaryHoursType {
 impl SecondaryHoursType {
     /// Formats a `SecondaryHoursType` enum into a string that is presentable to the
     /// end user.
-    pub fn display(&self) -> &str {
+    #[must_use] pub fn display(&self) -> &str {
         match self {
-            SecondaryHoursType::DriveThrough => "Drive Through",
-            SecondaryHoursType::HappyHour => "Happy Hour",
-            SecondaryHoursType::Delivery => "Delivery",
-            SecondaryHoursType::Takeout => "Takeout",
-            SecondaryHoursType::Kitchen => "Kitchen",
-            SecondaryHoursType::Breakfast => "Breakfast",
-            SecondaryHoursType::Lunch => "Lunch",
-            SecondaryHoursType::Dinner => "Dinner",
-            SecondaryHoursType::Brunch => "Brunch",
-            SecondaryHoursType::Pickup => "Pickup",
-            SecondaryHoursType::SeniorHours => "Senior Hours",
+            Self::DriveThrough => "Drive Through",
+            Self::HappyHour => "Happy Hour",
+            Self::Delivery => "Delivery",
+            Self::Takeout => "Takeout",
+            Self::Kitchen => "Kitchen",
+            Self::Breakfast => "Breakfast",
+            Self::Lunch => "Lunch",
+            Self::Dinner => "Dinner",
+            Self::Brunch => "Brunch",
+            Self::Pickup => "Pickup",
+            Self::SeniorHours => "Senior Hours",
         } // match
     } // fn
 } // impl

@@ -27,25 +27,25 @@ impl<'a> Request<'a> {
         // Language key/value pair:
         if let Some(language) = &self.language {
             query.push_str("&language=");
-            query.push_str(&String::from(language))
+            query.push_str(&String::from(language));
         }
 
         // Location key/value pair:
         if let Some(location) = &self.location {
             query.push_str("&location=");
-            query.push_str(&String::from(location))
+            query.push_str(&String::from(location));
         }
 
         // Offset key/value pair:
         if let Some(offset) = &self.offset {
             query.push_str("&offset=");
-            query.push_str(&offset.to_string())
+            query.push_str(&offset.to_string());
         }
 
         // Radius key/value pair:
         if let Some(radius) = &self.radius {
             query.push_str("&radius=");
-            query.push_str(&radius.to_string())
+            query.push_str(&radius.to_string());
         }
 
         // Set query string in Request struct.

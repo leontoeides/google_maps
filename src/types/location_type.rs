@@ -36,7 +36,7 @@ impl<'de> Deserialize<'de> for LocationType {
     /// advantage of the `phf`-powered `TryFrom` implementation for this type.
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let string = String::deserialize(deserializer)?;
-        match LocationType::try_from(string.as_str()) {
+        match Self::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
             Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
@@ -112,7 +112,7 @@ impl std::convert::TryFrom<&str> for LocationType {
     fn try_from(location_code: &str) -> Result<Self, Self::Error> {
         Ok(LOCATION_TYPES_BY_CODE
             .get(location_code)
-            .cloned()
+            .copied()
             .ok_or_else(|| TypeError::InvalidLocationTypeCode(location_code.to_string()))?)
     } // fn
 } // impl
@@ -130,7 +130,7 @@ impl std::str::FromStr for LocationType {
     fn from_str(location_code: &str) -> Result<Self, Self::Err> {
         Ok(LOCATION_TYPES_BY_CODE
             .get(location_code)
-            .cloned()
+            .copied()
             .ok_or_else(|| TypeError::InvalidLocationTypeCode(location_code.to_string()))?)
     } // fn
 } // impl
@@ -140,12 +140,12 @@ impl std::str::FromStr for LocationType {
 impl LocationType {
     /// Formats a `LocationType` enum into a string that is presentable to the
     /// end user.
-    pub fn display(&self) -> &str {
+    #[must_use] pub fn display(&self) -> &str {
         match self {
-            LocationType::Approximate => "Approximate",
-            LocationType::GeometricCenter => "Geometric Center",
-            LocationType::RangeInterpolated => "Range Interpolated",
-            LocationType::RoofTop => "Roof Top",
+            Self::Approximate => "Approximate",
+            Self::GeometricCenter => "Geometric Center",
+            Self::RangeInterpolated => "Range Interpolated",
+            Self::RoofTop => "Roof Top",
         } // match
     } // fn
 } // impl

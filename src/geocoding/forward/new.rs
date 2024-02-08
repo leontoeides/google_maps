@@ -12,7 +12,7 @@ impl<'a> ForwardRequest<'a> {
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
 
-    pub fn new(client: &GoogleMapsClient) -> ForwardRequest {
+    #[must_use] pub fn new(client: &GoogleMapsClient) -> ForwardRequest {
         // Instantiate struct and return it to caller:
         ForwardRequest {
             // Required parameters:

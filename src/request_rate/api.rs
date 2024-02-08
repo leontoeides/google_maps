@@ -27,16 +27,16 @@ pub enum Api {
 
 impl std::convert::From<&Api> for String {
     /// Converts an `Api` enum to a `String` that contains an API name.
-    fn from(api: &Api) -> String {
+    fn from(api: &Api) -> Self {
         match api {
-            Api::All => String::from("All"),
-            Api::Directions => String::from("Directions"),
-            Api::DistanceMatrix => String::from("Distance Matrix"),
-            Api::Elevation => String::from("Elevation"),
-            Api::Geocoding => String::from("Geocoding"),
-            Api::TimeZone => String::from("Time Zone"),
-            Api::Places => String::from("Places"),
-            Api::Roads => String::from("Roads"),
+            Api::All => Self::from("All"),
+            Api::Directions => Self::from("Directions"),
+            Api::DistanceMatrix => Self::from("Distance Matrix"),
+            Api::Elevation => Self::from("Elevation"),
+            Api::Geocoding => Self::from("Geocoding"),
+            Api::TimeZone => Self::from("Time Zone"),
+            Api::Places => Self::from("Places"),
+            Api::Roads => Self::from("Roads"),
         } // match
     } // fn
 } // impl
@@ -46,7 +46,7 @@ impl std::convert::From<&Api> for String {
 impl std::default::Default for Api {
     /// Returns a reasonable default variant for the `Api` enum.
     fn default() -> Self {
-        Api::All
+        Self::All
     } // fn
 } // impl
 

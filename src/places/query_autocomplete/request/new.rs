@@ -15,7 +15,7 @@ impl<'a> Request<'a> {
     ///
     /// * `input` ‧ The text string on which to search.
 
-    pub fn new(client: &GoogleMapsClient, input: String) -> Request {
+    #[must_use] pub fn new(client: &GoogleMapsClient, input: String) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:

@@ -69,7 +69,7 @@ impl std::str::FromStr for Bounds {
             let northeast = LatLng::from_str(corner[1].trim());
             let northeast =
                 northeast.map_err(|_| TypeError::InvalidBoundsString(value.to_owned()))?;
-            Ok(Bounds {
+            Ok(Self {
                 southwest,
                 northeast,
             })

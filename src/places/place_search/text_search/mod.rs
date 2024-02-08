@@ -13,9 +13,9 @@
 //!
 //! | "10 High Street, UK" or "123 Main Street, US" | multiple "High Street"s in the UK; multiple "Main Street"s in the US. Query will not return desirable results unless a location restriction is set. |
 //! |---|---|
-//! | "ChainRestaurant New York" | multiple "ChainRestaurant" locations in New York; no street address or even street name. Query will not return desirable results unless a location restriction is set. |
+//! | "`ChainRestaurant` New York" | multiple "`ChainRestaurant`" locations in New York; no street address or even street name. Query will not return desirable results unless a location restriction is set. |
 //! | "10 High Street, Escher UK" or "123 Main Street, Pleasanton US" | only one "High Street" in the UK city of Escher; only one "Main Street" in the US city of Pleasanton CA. |
-//! | "UniqueRestaurantName New York" | only one establishment with this name in New York; no street address needed to differentiate. |
+//! | "`UniqueRestaurantName` New York" | only one establishment with this name in New York; no street address needed to differentiate. |
 //! | "pizza restaurants in New York" | this query contains its location restriction, and "pizza restaurants" is a well-defined place type. Will yield multiple results, as is expected. |
 //!
 //! The search response will include a list of places. You can send a Place

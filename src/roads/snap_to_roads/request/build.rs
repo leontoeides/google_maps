@@ -37,7 +37,7 @@ impl<'a> Request<'a> {
         // Language key/value pair:
         if let Some(interpolate) = &self.interpolate {
             query.push_str("&interpolate=");
-            query.push_str(&interpolate.to_string())
+            query.push_str(&interpolate.to_string());
         }
 
         // Set query string in Request struct.

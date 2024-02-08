@@ -27,7 +27,7 @@ impl<'a> Request<'a> {
         // Locations key/value pair:
         if let Some(locations) = &self.locations {
             query.push_str("&locations=");
-            query.push_str(&String::from(locations))
+            query.push_str(&String::from(locations));
         } // if
 
         // This section builds the "sampled path request" portion of the query
@@ -36,7 +36,7 @@ impl<'a> Request<'a> {
         // Path key/value pair:
         if let Some(path) = &self.path {
             query.push_str("&path=");
-            query.push_str(&String::from(path))
+            query.push_str(&String::from(path));
         } // if
 
         // Samples key/value pair:

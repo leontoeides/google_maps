@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 //
 /// Contains the separate components applicable to this address.
 ///
-/// Note the following facts about the address_components array:
+/// Note the following facts about the `address_components` array:
 ///
 /// * The array of address components may contain more components than the
 /// `formatted_address`.

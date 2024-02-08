@@ -42,12 +42,12 @@ pub enum Component {
 impl std::convert::From<&Component> for String {
     /// Converts a `Component` struct to a `String` that contains a
     /// component:value pair for filtering results.
-    fn from(component: &Component) -> String {
+    fn from(component: &Component) -> Self {
         match component {
             Component::AdministrativeArea(administrative_area) => {
                 format!("administrative_area:{administrative_area}")
             }
-            Component::Country(country) => format!("country:{}", String::from(country)),
+            Component::Country(country) => format!("country:{}", Self::from(country)),
             Component::PostalCode(postal_code) => format!("postal_code:{postal_code}"),
             Component::Locality(locality) => format!("locality:{locality}"),
             Component::Route(route) => format!("route:{route}"),
@@ -58,6 +58,6 @@ impl std::convert::From<&Component> for String {
 impl std::default::Default for Component {
     /// Returns a reasonable default variant for the `Component` enum type.
     fn default() -> Self {
-        Component::Country(Country::UnitedStates)
+        Self::Country(Country::UnitedStates)
     } // fn
 } // impl

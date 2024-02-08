@@ -84,7 +84,7 @@ impl<'de> Deserialize<'de> for Field {
     /// advantage of the `phf`-powered `TryFrom` implementation for this type.
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let string = String::deserialize(deserializer)?;
-        match Field::try_from(string.as_str()) {
+        match Self::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
             Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
@@ -263,49 +263,49 @@ impl std::str::FromStr for Field {
 impl Field {
     /// Formats a `Field` enum into a string that is presentable to the end
     /// user.
-    pub fn display(&self) -> &str {
+    #[must_use] pub fn display(&self) -> &str {
         match self {
-            Field::AddressComponent => "Address Component",
-            Field::AdrAddress => "adr Address",
-            Field::BusinessStatus => "Business Status",
-            Field::FormattedAddress => "Formatted Address",
-            Field::Geometry => "Geometry",
-            Field::Icon => "Icon",
-            Field::IconMaskBaseUri => "Icon Mask Base URI",
-            Field::IconBackgroundColor => "Icon Background Color",
-            Field::Name => "Name",
-            Field::Photo => "Photo",
-            Field::PlaceId => "Place ID",
-            Field::PlusCode => "Plus Code",
-            Field::Type => "Type",
-            Field::Url => "URL",
-            Field::UtcOffset => "UTC Offset",
-            Field::Vicinity => "Vicinity",
-            Field::WheelchairAccessibleEntrance => "Wheelchair Accessible Entrance",
+            Self::AddressComponent => "Address Component",
+            Self::AdrAddress => "adr Address",
+            Self::BusinessStatus => "Business Status",
+            Self::FormattedAddress => "Formatted Address",
+            Self::Geometry => "Geometry",
+            Self::Icon => "Icon",
+            Self::IconMaskBaseUri => "Icon Mask Base URI",
+            Self::IconBackgroundColor => "Icon Background Color",
+            Self::Name => "Name",
+            Self::Photo => "Photo",
+            Self::PlaceId => "Place ID",
+            Self::PlusCode => "Plus Code",
+            Self::Type => "Type",
+            Self::Url => "URL",
+            Self::UtcOffset => "UTC Offset",
+            Self::Vicinity => "Vicinity",
+            Self::WheelchairAccessibleEntrance => "Wheelchair Accessible Entrance",
             // Contact
-            Field::CurrentOpeningHours => "Current Opening Hours",
-            Field::FormattedPhoneNumber => "Formatted Phone Number",
-            Field::InternationalPhoneNumber => "International Phone Number",
-            Field::OpeningHours => "Opening Hours",
-            Field::SecondaryOpeningHours => "Secondary Opening Hours",
-            Field::Website => "Website",
+            Self::CurrentOpeningHours => "Current Opening Hours",
+            Self::FormattedPhoneNumber => "Formatted Phone Number",
+            Self::InternationalPhoneNumber => "International Phone Number",
+            Self::OpeningHours => "Opening Hours",
+            Self::SecondaryOpeningHours => "Secondary Opening Hours",
+            Self::Website => "Website",
             // Atmosphere
-            Field::CurbsidePickup => "Curbside Pickup",
-            Field::Delivery => "Delivery",
-            Field::DineIn => "Dine In",
-            Field::EditorialSummary => "Editorial Summary",
-            Field::PriceLevel => "Price Level",
-            Field::Rating => "Rating",
-            Field::Reservable => "Reservable",
-            Field::Reviews => "Reviews",
-            Field::ServesBeer => "Serves Beer",
-            Field::ServesBreakfast => "Serves Breakfast",
-            Field::ServesBrunch => "Serves Brunch",
-            Field::ServesLunch => "Serves Lunch",
-            Field::ServesVegetarianFood => "Serves Vegetarian Food",
-            Field::ServesWine => "Serves Wine",
-            Field::Takeout => "Takeout",
-            Field::UserRatingsTotal => "User Ratings Total",
+            Self::CurbsidePickup => "Curbside Pickup",
+            Self::Delivery => "Delivery",
+            Self::DineIn => "Dine In",
+            Self::EditorialSummary => "Editorial Summary",
+            Self::PriceLevel => "Price Level",
+            Self::Rating => "Rating",
+            Self::Reservable => "Reservable",
+            Self::Reviews => "Reviews",
+            Self::ServesBeer => "Serves Beer",
+            Self::ServesBreakfast => "Serves Breakfast",
+            Self::ServesBrunch => "Serves Brunch",
+            Self::ServesLunch => "Serves Lunch",
+            Self::ServesVegetarianFood => "Serves Vegetarian Food",
+            Self::ServesWine => "Serves Wine",
+            Self::Takeout => "Takeout",
+            Self::UserRatingsTotal => "User Ratings Total",
         } // match
     } // fn
 } // impl
@@ -317,7 +317,7 @@ impl Field {
     /// `Field` enum) to a `String` that contains a comma-delimited list of
     /// [field](https://developers.google.com/maps/documentation/places/web-service/details#fields)
     /// codes.
-    pub fn vec_to_csv(fields: &[Field]) -> String {
+    pub fn vec_to_csv(fields: &[Self]) -> String {
         fields
             .iter()
             .map(String::from)

@@ -14,7 +14,7 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub fn new(
+    #[must_use] pub fn new(
         client: &'a GoogleMapsClient,
         origin: Location,
         destination: Location,

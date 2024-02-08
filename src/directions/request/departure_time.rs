@@ -52,9 +52,9 @@ pub enum DepartureTime {
 impl std::convert::From<&DepartureTime> for String {
     /// Converts a `DepartureTime` enum to a `String` that contains a [departure
     /// time](https://developers.google.com/maps/documentation/directions/intro#optional-parameters).
-    fn from(departure_time: &DepartureTime) -> String {
+    fn from(departure_time: &DepartureTime) -> Self {
         match departure_time {
-            DepartureTime::Now => String::from("now"),
+            DepartureTime::Now => Self::from("now"),
             DepartureTime::At(departure_time) => departure_time.timestamp().to_string(),
         } // match
     } // fn
@@ -81,11 +81,11 @@ impl std::convert::TryFrom<&str> for DepartureTime {
     /// to a `DepartureTime` enum.
     fn try_from(departure_time: &str) -> Result<Self, Self::Error> {
         if departure_time == "now" {
-            Ok(DepartureTime::Now)
+            Ok(Self::Now)
         } else {
             match departure_time.parse::<i64>() {
                 Ok(integer) => match NaiveDateTime::from_timestamp_opt(integer, 0) {
-                    Some(naive_date_time) => Ok(DepartureTime::At(naive_date_time)),
+                    Some(naive_date_time) => Ok(Self::At(naive_date_time)),
                     None => Err(DirectionsError::InvalidDepartureTime(
                         departure_time.to_string(),
                     ))?,
@@ -108,7 +108,7 @@ impl std::str::FromStr for DepartureTime {
     /// time](https://developers.google.com/maps/documentation/directions/intro#optional-parameters)
     /// to a `DepartureTime` enum.
     fn from_str(departure_time: &str) -> Result<Self, Self::Err> {
-        DepartureTime::try_from(departure_time)
+        Self::try_from(departure_time)
     } // fn
 } // impl
 
@@ -117,10 +117,10 @@ impl std::str::FromStr for DepartureTime {
 impl DepartureTime {
     /// Formats a `DepartureTime` enum into a string that is presentable to the
     /// end user.
-    pub fn display(&self) -> String {
+    #[must_use] pub fn display(&self) -> String {
         match self {
-            DepartureTime::Now => "Now".to_string(),
-            DepartureTime::At(departure_time) => {
+            Self::Now => "Now".to_string(),
+            Self::At(departure_time) => {
                 format!("At {}", departure_time.format("At %F %r"))
             }
         } // match

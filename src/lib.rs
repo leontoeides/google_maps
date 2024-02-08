@@ -1,4 +1,4 @@
-//! # google_maps
+//! # `google_maps`
 //!
 //! 🗺 An unofficial Google Maps Platform client library for the Rust
 //! programming language. This client currently implements the Directions API,
@@ -281,12 +281,12 @@
 //!
 //! * autocomplete
 //! * directions
-//! * distance_matrix
+//! * `distance_matrix`
 //! * elevation
 //! * geocoding
 //! * places
 //! * roads
-//! * time_zone
+//! * `time_zone`
 //! * enable-reqwest (uses [reqwest](https://crates.io/crates/reqwest) for
 //! querying Google Maps API).
 //! * geo (support for [geo](https://crates.io/crates/geo-types) crate types)
@@ -352,7 +352,7 @@
 //! # To do
 //!
 //! 1. Track both _requests_ and request _elements_ for rate limiting.
-//! 2. Make a generic get() function for that can be used by all APIs.
+//! 2. Make a generic `get()` function for that can be used by all APIs.
 //! 3. Convert explicit query validation to session types wherever reasonable.
 //! 4. [Places API](https://developers.google.com/places/web-service/intro).
 //! Only partly implemented. If you would like to have any missing pieces

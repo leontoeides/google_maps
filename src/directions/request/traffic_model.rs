@@ -52,7 +52,7 @@ impl<'de> Deserialize<'de> for TrafficModel {
     /// advantage of the `phf`-powered `TryFrom` implementation for this type.
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let string = String::deserialize(deserializer)?;
-        match TrafficModel::try_from(string.as_str()) {
+        match Self::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
             Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
@@ -161,11 +161,11 @@ impl std::str::FromStr for TrafficModel {
 impl TrafficModel {
     /// Formats a `TrafficModel` enum into a string that is presentable to the
     /// end user.
-    pub fn display(&self) -> &str {
+    #[must_use] pub fn display(&self) -> &str {
         match self {
-            TrafficModel::BestGuess => "Best Guess",
-            TrafficModel::Optimistic => "Optimistic",
-            TrafficModel::Pessimistic => "Pessimistic",
+            Self::BestGuess => "Best Guess",
+            Self::Optimistic => "Optimistic",
+            Self::Pessimistic => "Pessimistic",
         } // match
     } // fn
 } // impl

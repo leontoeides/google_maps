@@ -51,10 +51,10 @@ impl std::convert::From<&Waypoint> for String {
     /// Converts a `Waypoint` enum to a `String` that contains a
     /// [waypoint](https://developers.google.com/maps/documentation/directions/intro#Waypoints)
     /// value.
-    fn from(waypoint: &Waypoint) -> String {
+    fn from(waypoint: &Waypoint) -> Self {
         match waypoint {
             Waypoint::Address(address) => address.clone(),
-            Waypoint::LatLng(latlng) => String::from(latlng),
+            Waypoint::LatLng(latlng) => Self::from(latlng),
             Waypoint::PlaceId(place_id) => format!("place_id:{place_id}"),
             Waypoint::Polyline(polyline) => format!("enc:{polyline}:"),
         } // match

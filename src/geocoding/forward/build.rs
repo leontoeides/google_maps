@@ -29,7 +29,7 @@ impl<'a> ForwardRequest<'a> {
             query.push_str("&address=");
             query.push_str(
                 &utf8_percent_encode(&String::from(address), NON_ALPHANUMERIC).to_string(),
-            )
+            );
         }
 
         // Place Id key/value pair:
@@ -37,14 +37,14 @@ impl<'a> ForwardRequest<'a> {
             query.push_str("&place_id=");
             query.push_str(
                 &utf8_percent_encode(&String::from(place_id), NON_ALPHANUMERIC).to_string(),
-            )
+            );
         }
 
         // Bounds key/value pair:
         if let Some(bounds) = &self.bounds {
             query.push_str("&bounds=");
             query
-                .push_str(&utf8_percent_encode(&String::from(bounds), NON_ALPHANUMERIC).to_string())
+                .push_str(&utf8_percent_encode(&String::from(bounds), NON_ALPHANUMERIC).to_string());
         }
 
         // Components key/value pair:
@@ -60,19 +60,19 @@ impl<'a> ForwardRequest<'a> {
                     NON_ALPHANUMERIC,
                 )
                 .to_string(),
-            ) // push_str
+            ); // push_str
         }
 
         // Language key/value pair:
         if let Some(language) = &self.language {
             query.push_str("&language=");
-            query.push_str(&String::from(language))
+            query.push_str(&String::from(language));
         }
 
         // Region key/value pair:
         if let Some(region) = &self.region {
             query.push_str("&region=");
-            query.push_str(&String::from(region))
+            query.push_str(&String::from(region));
         }
 
         // Set query string in ForwardRequest struct.

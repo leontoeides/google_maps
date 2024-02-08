@@ -65,7 +65,7 @@ impl std::fmt::Display for Error {
     /// to the user.
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Error::GoogleMapsService(status, error_message) => match error_message {
+            Self::GoogleMapsService(status, error_message) => match error_message {
                 // If the Google Maps Places API server generated an error
                 // message, return that:
                 Some(error_message) => write!(f, "Google Maps Places API service: {error_message}"),
@@ -96,42 +96,42 @@ impl std::fmt::Display for Error {
                         in the Places database."),
                 } // match
             }, // match
-            Error::HttpUnsuccessful(status) => write!(f,
+            Self::HttpUnsuccessful(status) => write!(f,
                 "Google Maps Places API client: \
                 Could not successfully query the Google Cloud Platform service. \
                 The service last responded with a `{status}` status."),
-            Error::InvalidBusinessStatusCode(status_code) => write!(f, "Google Maps Places API client: \
+            Self::InvalidBusinessStatusCode(status_code) => write!(f, "Google Maps Places API client: \
                 `{status_code}` is not a valid business status code. \
                 Valid codes are `OPERATIONAL`, `CLOSED_TEMPORARILY`, and \
                 `CLOSED_PERMANENTLY`."),
-            Error::InvalidRankByCode(type_code) => write!(f, "Google Maps Places API client: \
+            Self::InvalidRankByCode(type_code) => write!(f, "Google Maps Places API client: \
                 `{type_code}` is not a valid rankby order type. \
                 Valid codes are `prominence`, and `distance`."),
-            Error::InvalidSecondaryHoursType(type_code) => write!(f, "Google Maps Places API client: \
+            Self::InvalidSecondaryHoursType(type_code) => write!(f, "Google Maps Places API client: \
                 `{type_code}` is not a valid secondary hours type. \
                 Valid codes are `DRIVE_THROUGH`, `HAPPY_HOUR`, `DELIVERY`, \
                 `TAKEOUT`, `KITCHEN`, `BREAKFAST`, `LUNCH`, `DINNER`, \
                 `BRUNCH`, `PICKUP`, and `SENIOR_HOURS`."),
-            Error::InvalidStatusCode(status_code) => write!(f, "Google Maps Places API client: \
+            Self::InvalidStatusCode(status_code) => write!(f, "Google Maps Places API client: \
                 `{status_code}` is not a valid status code. \
                 Valid codes are `INVALID_REQUEST`, `OK`, `OVER_DAILY_LIMIT`, \
                 `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, `UNKNOWN_ERROR`, \
                 `ZERO_RESULTS`, and `NOT_FOUND`."),
-            Error::InvalidFieldCode(type_code) => write!(f, "Google Maps Places API client: \
+            Self::InvalidFieldCode(type_code) => write!(f, "Google Maps Places API client: \
                 `{type_code}` is not a valid field type. \
                 See `https://developers.google.com/maps/documentation/places/web-service/details#fields` \
                 for a list of valid fields."),
-            Error::InvalidSortOrderCode(sort_order_code) => write!(f, "Google Maps Places API client: \
+            Self::InvalidSortOrderCode(sort_order_code) => write!(f, "Google Maps Places API client: \
                 `{sort_order_code}` is not a valid sort order code. \
                 Valid codes are `most_relevant` and `newest`."),
-            Error::QueryNotBuilt => write!(f, "Google Maps Places API client library: \
+            Self::QueryNotBuilt => write!(f, "Google Maps Places API client library: \
                 The query string must be built before the request may be sent to the Google Cloud Maps Platform. \
                 Ensure the build() method is called before run()."),
             #[cfg(feature = "enable-reqwest")]
-            Error::Reqwest(error) => write!(f, "Google Maps Places API client in the Reqwest library: {error}"),
+            Self::Reqwest(error) => write!(f, "Google Maps Places API client in the Reqwest library: {error}"),
             #[cfg(feature = "enable-reqwest")]
-            Error::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {error}"),
-            Error::SerdeJson(error) => write!(f, "Google Maps Places API client in the Serde JSON library: {error}"),
+            Self::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {error}"),
+            Self::SerdeJson(error) => write!(f, "Google Maps Places API client in the Serde JSON library: {error}"),
         } // match
     } // fn
 } // impl
@@ -143,7 +143,7 @@ impl From<serde_json::error::Error> for Error {
     /// error type into a Google Maps Places API error type
     /// (`google_maps::place::error::Error`) by wrapping it inside. This
     /// function is required to use the `?` operator.
-    fn from(error: serde_json::error::Error) -> Error {
-        Error::SerdeJson(error)
+    fn from(error: serde_json::error::Error) -> Self {
+        Self::SerdeJson(error)
     } // fn
 } // impl

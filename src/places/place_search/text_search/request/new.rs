@@ -40,7 +40,7 @@ impl<'a> Request<'a> {
     /// * Query Autocomplete: 50,000 meters
     /// * Nearby Search: 50,000 meters
 
-    pub fn new(client: &GoogleMapsClient, query: String, radius: u32) -> Request {
+    #[must_use] pub fn new(client: &GoogleMapsClient, query: String, radius: u32) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:

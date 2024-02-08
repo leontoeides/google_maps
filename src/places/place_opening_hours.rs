@@ -57,7 +57,7 @@ impl std::str::FromStr for PlaceOpeningHours {
 /// return `None`.
 
 impl PlaceOpeningHours {
-    pub fn special_days(&self) -> Option<HashSet<NaiveDate>> {
+    #[must_use] pub fn special_days(&self) -> Option<HashSet<NaiveDate>> {
         self.special_days.as_ref().map(|special_days_vec| {
             special_days_vec
                 .iter()

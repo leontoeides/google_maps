@@ -34,7 +34,7 @@ impl<'de> Deserialize<'de> for GeocoderStatus {
     /// advantage of the `phf`-powered `TryFrom` implementation for this type.
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let string = String::deserialize(deserializer)?;
-        match GeocoderStatus::try_from(string.as_str()) {
+        match Self::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
             Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
@@ -47,11 +47,11 @@ impl std::convert::From<&GeocoderStatus> for String {
     /// Converts a `GeocoderStatus` enum to a `String` that contains a [geocoder
     /// status](https://developers.google.com/maps/documentation/directions/intro#GeocodedWaypoints)
     /// code.
-    fn from(geocoder_status: &GeocoderStatus) -> String {
+    fn from(geocoder_status: &GeocoderStatus) -> Self {
         match geocoder_status {
-            GeocoderStatus::Ok => String::from("OK"),
-            GeocoderStatus::ZeroResults => String::from("ZERO_RESULTS"),
-            GeocoderStatus::UnknownError => String::from("UNKNOWN_ERROR"),
+            GeocoderStatus::Ok => Self::from("OK"),
+            GeocoderStatus::ZeroResults => Self::from("ZERO_RESULTS"),
+            GeocoderStatus::UnknownError => Self::from("UNKNOWN_ERROR"),
         } // match
     } // fn
 } // impl
@@ -101,7 +101,7 @@ impl std::str::FromStr for GeocoderStatus {
 impl std::default::Default for GeocoderStatus {
     /// Returns a reasonable default variant for the `GeocoderStatus` enum type.
     fn default() -> Self {
-        GeocoderStatus::Ok
+        Self::Ok
     } // fn
 } // impl
 
@@ -112,9 +112,9 @@ impl std::fmt::Display for GeocoderStatus {
     /// end user.
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            GeocoderStatus::Ok => write!(f, "OK"),
-            GeocoderStatus::ZeroResults => write!(f, "Zero Results"),
-            GeocoderStatus::UnknownError => write!(f, "Unknown Error"),
+            Self::Ok => write!(f, "OK"),
+            Self::ZeroResults => write!(f, "Zero Results"),
+            Self::UnknownError => write!(f, "Unknown Error"),
         } // match
     } // fn
 } // impl

@@ -67,7 +67,7 @@ impl<'a> NearestRoadsRequest<'a> {
                                         // help:
                                         if let Some(error) = deserialized.error {
                                             let error = RoadsError::GoogleMapsService(
-                                                error.status.to_owned(),
+                                                error.status.clone(),
                                                 Some(error.message),
                                             );
                                             tracing::error!("{}", error);

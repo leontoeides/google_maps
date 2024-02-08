@@ -15,7 +15,7 @@ impl<'a> Request<'a> {
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
 
-    pub fn new(
+    #[must_use] pub fn new(
         client: &GoogleMapsClient,
         origins: Vec<Waypoint>,
         destinations: Vec<Waypoint>,

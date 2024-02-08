@@ -56,7 +56,7 @@ impl<'de> Deserialize<'de> for Status {
     /// advantage of the `phf`-powered `TryFrom` implementation for this type.
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let string = String::deserialize(deserializer)?;
-        match Status::try_from(string.as_str()) {
+        match Self::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
             Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
@@ -69,15 +69,15 @@ impl std::convert::From<&Status> for String {
     /// Converts a `Status` enum to a `String` that contains a
     /// [status](https://developers.google.com/maps/documentation/places/web-service/search-text#PlacesSearchStatus)
     /// code.
-    fn from(status: &Status) -> String {
+    fn from(status: &Status) -> Self {
         match status {
-            Status::InvalidRequest => String::from("INVALID_REQUEST"),
-            Status::Ok => String::from("OK"),
-            Status::OverQueryLimit => String::from("OVER_QUERY_LIMIT"),
-            Status::RequestDenied => String::from("REQUEST_DENIED"),
-            Status::UnknownError => String::from("UNKNOWN_ERROR"),
-            Status::ZeroResults => String::from("ZERO_RESULTS"),
-            Status::NotFound => String::from("NOT_FOUND"),
+            Status::InvalidRequest => Self::from("INVALID_REQUEST"),
+            Status::Ok => Self::from("OK"),
+            Status::OverQueryLimit => Self::from("OVER_QUERY_LIMIT"),
+            Status::RequestDenied => Self::from("REQUEST_DENIED"),
+            Status::UnknownError => Self::from("UNKNOWN_ERROR"),
+            Status::ZeroResults => Self::from("ZERO_RESULTS"),
+            Status::NotFound => Self::from("NOT_FOUND"),
         } // match
     } // fn
 } // impl
@@ -129,7 +129,7 @@ impl std::str::FromStr for Status {
 impl std::default::Default for Status {
     /// Returns a reasonable default variant for the `Status` enum type.
     fn default() -> Self {
-        Status::Ok
+        Self::Ok
     } // fn
 } // impl
 
@@ -140,13 +140,13 @@ impl std::fmt::Display for Status {
     /// user.
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Status::InvalidRequest => write!(f, "Invalid Request"),
-            Status::Ok => write!(f, "OK"),
-            Status::OverQueryLimit => write!(f, "Over Query Limit"),
-            Status::RequestDenied => write!(f, "Request Denied"),
-            Status::UnknownError => write!(f, "Unknown Error"),
-            Status::ZeroResults => write!(f, "Zero Results"),
-            Status::NotFound => write!(f, "Not Found"),
+            Self::InvalidRequest => write!(f, "Invalid Request"),
+            Self::Ok => write!(f, "OK"),
+            Self::OverQueryLimit => write!(f, "Over Query Limit"),
+            Self::RequestDenied => write!(f, "Request Denied"),
+            Self::UnknownError => write!(f, "Unknown Error"),
+            Self::ZeroResults => write!(f, "Zero Results"),
+            Self::NotFound => write!(f, "Not Found"),
         } // match
     } // fn
 } // impl

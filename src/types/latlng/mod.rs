@@ -46,16 +46,16 @@ impl LatLng {
     /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
     /// function will return an error.
 
-    pub fn try_from_dec(latitude: Decimal, longitude: Decimal) -> Result<LatLng, GoogleMapsError> {
+    pub fn try_from_dec(latitude: Decimal, longitude: Decimal) -> Result<Self, GoogleMapsError> {
         if latitude < dec!(-90.0) || latitude > dec!(90.0) {
-            Err(TypeError::InvalidLatitude(latitude, longitude))?
+            Err(TypeError::InvalidLatitude(latitude, longitude))?;
         } // if
 
         if longitude < dec!(-180.0) || longitude > dec!(180.0) {
-            Err(TypeError::InvalidLongitude(latitude, longitude))?
+            Err(TypeError::InvalidLongitude(latitude, longitude))?;
         } // if
 
-        Ok(LatLng {
+        Ok(Self {
             lat: latitude,
             lng: longitude,
         })
@@ -70,7 +70,7 @@ impl LatLng {
     /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
     /// function will return an error.
 
-    pub fn try_from_f32(latitude: f32, longitude: f32) -> Result<LatLng, GoogleMapsError> {
+    pub fn try_from_f32(latitude: f32, longitude: f32) -> Result<Self, GoogleMapsError> {
         let lat: Decimal = Decimal::from_f32(latitude)
             .ok_or_else(|| TypeError::FloatToDecimalConversionError(latitude.to_string()))?;
 
@@ -78,14 +78,14 @@ impl LatLng {
             .ok_or_else(|| TypeError::FloatToDecimalConversionError(longitude.to_string()))?;
 
         if lat < dec!(-90.0) || lat > dec!(90.0) {
-            Err(TypeError::InvalidLatitude(lat, lng))?
+            Err(TypeError::InvalidLatitude(lat, lng))?;
         } // if
 
         if lng < dec!(-180.0) || lng > dec!(180.0) {
-            Err(TypeError::InvalidLongitude(lat, lng))?
+            Err(TypeError::InvalidLongitude(lat, lng))?;
         } // if
 
-        Ok(LatLng { lat, lng })
+        Ok(Self { lat, lng })
     } // fn
 } // impl
 
@@ -97,7 +97,7 @@ impl LatLng {
     /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
     /// function will return an error.
 
-    pub fn try_from_f64(latitude: f64, longitude: f64) -> Result<LatLng, GoogleMapsError> {
+    pub fn try_from_f64(latitude: f64, longitude: f64) -> Result<Self, GoogleMapsError> {
         let lat: Decimal = Decimal::from_f64(latitude)
             .ok_or_else(|| TypeError::FloatToDecimalConversionError(latitude.to_string()))?;
 
@@ -105,14 +105,14 @@ impl LatLng {
             .ok_or_else(|| TypeError::FloatToDecimalConversionError(longitude.to_string()))?;
 
         if lat < dec!(-90.0) || lat > dec!(90.0) {
-            Err(TypeError::InvalidLatitude(lat, lng))?
+            Err(TypeError::InvalidLatitude(lat, lng))?;
         } // if
 
         if lng < dec!(-180.0) || lng > dec!(180.0) {
-            Err(TypeError::InvalidLongitude(lat, lng))?
+            Err(TypeError::InvalidLongitude(lat, lng))?;
         } // if
 
-        Ok(LatLng { lat, lng })
+        Ok(Self { lat, lng })
     } // fn
 } // impl
 
@@ -135,7 +135,7 @@ impl std::str::FromStr for LatLng {
             let lat = lat.map_err(|_| TypeError::InvalidLatLongString(str.to_owned()))?;
             let lon = Decimal::from_str(coordinates[1].trim());
             let lon = lon.map_err(|_| TypeError::InvalidLatLongString(str.to_owned()))?;
-            LatLng::try_from_dec(lat, lon)
+            Self::try_from_dec(lat, lon)
         } // if
     } // fn
 } // impl
@@ -193,7 +193,7 @@ impl std::convert::From<LatLng> for String {
     /// Converts an owned `LatLng` struct to a `String` that contains a
     /// latitude/longitude pair.
     fn from(lat_lng: LatLng) -> Self {
-        String::from(&lat_lng)
+        Self::from(&lat_lng)
     }
 } // impl
 
@@ -212,7 +212,7 @@ impl std::fmt::Display for LatLng {
 impl std::default::Default for LatLng {
     /// Returns a reasonable default value for the `LatLng` struct.
     fn default() -> Self {
-        LatLng {
+        Self {
             lat: dec!(0.0),
             lng: dec!(0.0),
         }
@@ -224,7 +224,7 @@ impl std::default::Default for LatLng {
 impl LatLng {
     /// Formats a `LatLng` struct into a string that is presentable to the end
     /// user.
-    pub fn display(&self) -> String {
+    #[must_use] pub fn display(&self) -> String {
         // Display latitude and longitude as decimal degrees with some extra
         // fixins'.
         format!(
@@ -233,13 +233,13 @@ impl LatLng {
             lat_hem = match self.lat.cmp(&dec!(0.0)) {
                 Ordering::Less => " S".to_string(),
                 Ordering::Greater => " N".to_string(),
-                Ordering::Equal => "".to_string(),
+                Ordering::Equal => String::new(),
             }, // match
             lng = self.lng.abs().normalize(),
             lng_hem = match self.lng.cmp(&dec!(0.0)) {
                 Ordering::Less => " W".to_string(),
                 Ordering::Greater => " E".to_string(),
-                Ordering::Equal => "".to_string(),
+                Ordering::Equal => String::new(),
             }, // match
         ) // write!
     } // fn
@@ -249,47 +249,47 @@ impl LatLng {
 
 impl LatLng {
     /// Returns the north-south latitudinal (or vertical) coordinate.
-    pub fn y(&self) -> &Decimal {
+    #[must_use] pub fn y(&self) -> &Decimal {
         &self.lat
     }
     /// Returns the north-south latitudinal (or vertical) coordinate.
-    pub fn lat(&self) -> &Decimal {
+    #[must_use] pub fn lat(&self) -> &Decimal {
         &self.lat
     }
     /// Returns the north-south latitudinal (or vertical) coordinate.
-    pub fn latitude(&self) -> &Decimal {
+    #[must_use] pub fn latitude(&self) -> &Decimal {
         &self.lat
     }
 
     /// Returns the east-west longitudinal (or horizontal) coordinate.
-    pub fn x(&self) -> &Decimal {
+    #[must_use] pub fn x(&self) -> &Decimal {
         &self.lng
     }
     /// Returns the east-west longitudinal (or horizontal) coordinate.
-    pub fn lng(&self) -> &Decimal {
+    #[must_use] pub fn lng(&self) -> &Decimal {
         &self.lng
     }
     /// Returns the east-west longitudinal (or horizontal) coordinate.
-    pub fn lon(&self) -> &Decimal {
+    #[must_use] pub fn lon(&self) -> &Decimal {
         &self.lng
     }
     /// Returns the east-west longitudinal (or horizontal) coordinate.
-    pub fn long(&self) -> &Decimal {
+    #[must_use] pub fn long(&self) -> &Decimal {
         &self.lng
     }
     /// Returns the east-west longitudinal (or horizontal) coordinate.
-    pub fn longitude(&self) -> &Decimal {
+    #[must_use] pub fn longitude(&self) -> &Decimal {
         &self.lng
     }
 
     /// Returns a tuple containing 1. the latitude (y) coordinate, and then 2.
     /// the longitude (x) coordinate, in that order.
-    pub fn coords(&self) -> (&Decimal, &Decimal) {
+    #[must_use] pub fn coords(&self) -> (&Decimal, &Decimal) {
         (&self.lat, &self.lng)
     }
     /// Returns a tuple containing 1. the latitude (y) coordinate, and then 2.
     /// the longitude (x) coordinate, in that order.
-    pub fn coordinates(&self) -> (&Decimal, &Decimal) {
+    #[must_use] pub fn coordinates(&self) -> (&Decimal, &Decimal) {
         (&self.lat, &self.lng)
     }
 } // impl

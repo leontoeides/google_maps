@@ -49,22 +49,22 @@ pub enum DurationUnit {
 impl std::convert::From<&DurationUnit> for String {
     /// Converts a `DurationUnit` enum to a `String` that contains a unit of
     /// time name.
-    fn from(duration_unit: &DurationUnit) -> String {
+    fn from(duration_unit: &DurationUnit) -> Self {
         match duration_unit {
-            DurationUnit::Centuries => String::from("centuries"),
-            DurationUnit::Days => String::from("days"),
-            DurationUnit::Decades => String::from("decades"),
-            DurationUnit::Hours => String::from("hours"),
-            DurationUnit::Microseconds => String::from("microseconds"),
-            DurationUnit::Millenia => String::from("millenia"),
-            DurationUnit::Milliseconds => String::from("milliseconds"),
-            DurationUnit::Minutes => String::from("minutes"),
-            DurationUnit::Months => String::from("months"),
-            DurationUnit::Nanoseconds => String::from("nanoseconds"),
-            DurationUnit::Seconds => String::from("seconds"),
-            DurationUnit::Weeks => String::from("weeks"),
-            DurationUnit::WorkWeeks => String::from("work weeks"),
-            DurationUnit::Years => String::from("years"),
+            DurationUnit::Centuries => Self::from("centuries"),
+            DurationUnit::Days => Self::from("days"),
+            DurationUnit::Decades => Self::from("decades"),
+            DurationUnit::Hours => Self::from("hours"),
+            DurationUnit::Microseconds => Self::from("microseconds"),
+            DurationUnit::Millenia => Self::from("millenia"),
+            DurationUnit::Milliseconds => Self::from("milliseconds"),
+            DurationUnit::Minutes => Self::from("minutes"),
+            DurationUnit::Months => Self::from("months"),
+            DurationUnit::Nanoseconds => Self::from("nanoseconds"),
+            DurationUnit::Seconds => Self::from("seconds"),
+            DurationUnit::Weeks => Self::from("weeks"),
+            DurationUnit::WorkWeeks => Self::from("work weeks"),
+            DurationUnit::Years => Self::from("years"),
         } // match
     } // fn
 } // impl
@@ -73,7 +73,7 @@ impl std::default::Default for DurationUnit {
     /// Returns a reasonable default variant for the `DurationUnit` enum type.
     /// The second is an SI unit of time.
     fn default() -> Self {
-        DurationUnit::Seconds
+        Self::Seconds
     } // fn
 } // impl
 

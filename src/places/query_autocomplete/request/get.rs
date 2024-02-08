@@ -80,7 +80,7 @@ impl<'a> QueryAutocompleteRequest<'a> {
                                         // help:
                                         } else {
                                             let error = PlacesAutocompleteError::GoogleMapsService(
-                                                deserialized.status.to_owned(),
+                                                deserialized.status.clone(),
                                                 deserialized.error_message,
                                             );
                                             // Check Google API response status

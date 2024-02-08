@@ -81,7 +81,7 @@ impl<'a> DistanceMatrixRequest<'a> {
                                         // help:
                                         } else {
                                             let error = DistanceMatrixError::GoogleMapsService(
-                                                deserialized.status.to_owned(),
+                                                deserialized.status.clone(),
                                                 deserialized.error_message,
                                             );
                                             // Check Google API response status

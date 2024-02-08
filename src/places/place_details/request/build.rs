@@ -28,37 +28,37 @@ impl<'a> Request<'a> {
         // Fields key/value pair:
         if let Some(fields) = &self.fields {
             query.push_str("&fields=");
-            query.push_str(&Field::vec_to_csv(fields))
+            query.push_str(&Field::vec_to_csv(fields));
         }
 
         // Language key/value pair:
         if let Some(language) = &self.language {
             query.push_str("&language=");
-            query.push_str(&String::from(language))
+            query.push_str(&String::from(language));
         }
 
         // Region key/value pair:
         if let Some(region) = &self.region {
             query.push_str("&region=");
-            query.push_str(&String::from(region))
+            query.push_str(&String::from(region));
         }
 
         // `reviews_no_translations` key/value pair:
         if let Some(reviews_no_translations) = &self.reviews_no_translations {
             query.push_str("&reviews_no_translations=");
-            query.push_str(&reviews_no_translations.to_string())
+            query.push_str(&reviews_no_translations.to_string());
         }
 
         // Reviews Sort key/value pair:
         if let Some(reviews_sort) = &self.reviews_sort {
             query.push_str("&reviews_sort=");
-            query.push_str(&String::from(reviews_sort))
+            query.push_str(&String::from(reviews_sort));
         }
 
         // Session Token key/value pair:
         if let Some(sessiontoken) = &self.sessiontoken {
             query.push_str("&sessiontoken=");
-            query.push_str(&String::from(sessiontoken))
+            query.push_str(&String::from(sessiontoken));
         }
 
         // Set query string in Request struct.

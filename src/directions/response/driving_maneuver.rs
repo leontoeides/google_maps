@@ -47,7 +47,7 @@ impl<'de> Deserialize<'de> for DrivingManeuver {
     /// advantage of the `phf`-powered `TryFrom` implementation for this type.
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let string = String::deserialize(deserializer)?;
-        match DrivingManeuver::try_from(string.as_str()) {
+        match Self::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
             Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
@@ -195,29 +195,29 @@ impl std::str::FromStr for DrivingManeuver {
 impl DrivingManeuver {
     /// Formats a `DrivingManeuver` enum into a string that is presentable to
     /// the end user.
-    pub fn display(&self) -> &str {
+    #[must_use] pub fn display(&self) -> &str {
         match self {
-            DrivingManeuver::Ferry => "Ferry",
-            DrivingManeuver::FerryTrain => "Ferry Train",
-            DrivingManeuver::ForkLeft => "Fork Left",
-            DrivingManeuver::ForkRight => "Fork Right",
-            DrivingManeuver::KeepLeft => "Keep Left",
-            DrivingManeuver::KeepRight => "Keep Right",
-            DrivingManeuver::Merge => "Merge",
-            DrivingManeuver::Ramp => "Ramp",
-            DrivingManeuver::RampLeft => "Ramp Left",
-            DrivingManeuver::RampRight => "Ramp Right",
-            DrivingManeuver::RoundaboutLeft => "Roundabout Left",
-            DrivingManeuver::RoundaboutRight => "Roundabout Right",
-            DrivingManeuver::Straight => "Straight",
-            DrivingManeuver::TurnLeft => "Turn Left",
-            DrivingManeuver::TurnRight => "Turn Right",
-            DrivingManeuver::TurnSharpLeft => "Turn Sharp Left",
-            DrivingManeuver::TurnSharpRight => "Turn Sharp Right",
-            DrivingManeuver::TurnSlightLeft => "Turn Slight Left",
-            DrivingManeuver::TurnSlightRight => "Turn Slight Right",
-            DrivingManeuver::UturnLeft => "U-turn Left",
-            DrivingManeuver::UturnRight => "U-turn Right",
+            Self::Ferry => "Ferry",
+            Self::FerryTrain => "Ferry Train",
+            Self::ForkLeft => "Fork Left",
+            Self::ForkRight => "Fork Right",
+            Self::KeepLeft => "Keep Left",
+            Self::KeepRight => "Keep Right",
+            Self::Merge => "Merge",
+            Self::Ramp => "Ramp",
+            Self::RampLeft => "Ramp Left",
+            Self::RampRight => "Ramp Right",
+            Self::RoundaboutLeft => "Roundabout Left",
+            Self::RoundaboutRight => "Roundabout Right",
+            Self::Straight => "Straight",
+            Self::TurnLeft => "Turn Left",
+            Self::TurnRight => "Turn Right",
+            Self::TurnSharpLeft => "Turn Sharp Left",
+            Self::TurnSharpRight => "Turn Sharp Right",
+            Self::TurnSlightLeft => "Turn Slight Left",
+            Self::TurnSlightRight => "Turn Slight Right",
+            Self::UturnLeft => "U-turn Left",
+            Self::UturnRight => "U-turn Right",
         } // match
     } // fn
 } // impl

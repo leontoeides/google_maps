@@ -27,47 +27,47 @@ impl<'a> Request<'a> {
         // Language key/value pair:
         if let Some(language) = &self.language {
             query.push_str("&language=");
-            query.push_str(&String::from(language))
+            query.push_str(&String::from(language));
         }
 
         // Location key/value pair:
         if let Some(location) = &self.location {
             query.push_str("&location=");
-            query.push_str(&String::from(location))
+            query.push_str(&String::from(location));
         }
 
         if let Some(maxprice) = &self.maxprice {
             query.push_str("&maxprice=");
-            query.push_str(&maxprice.to_string())
+            query.push_str(&maxprice.to_string());
         }
 
         if let Some(minprice) = &self.minprice {
             query.push_str("&minprice=");
-            query.push_str(&minprice.to_string())
+            query.push_str(&minprice.to_string());
         }
 
         if let Some(opennow) = &self.opennow {
             if *opennow {
-                query.push_str("&opennow")
+                query.push_str("&opennow");
             }
         }
 
         // Page Token key/value pair:
         if let Some(pagetoken) = &self.pagetoken {
             query.push_str("&pagetoken=");
-            query.push_str(pagetoken)
+            query.push_str(pagetoken);
         }
 
         // Region key/value pair:
         if let Some(region) = &self.region {
             query.push_str("&region=");
-            query.push_str(&String::from(region))
+            query.push_str(&String::from(region));
         }
 
         // Place Type key/value pair:
         if let Some(place_type) = &self.place_type {
             query.push_str("&type=");
-            query.push_str(&String::from(place_type))
+            query.push_str(&String::from(place_type));
         }
 
         // Set query string in Request struct.

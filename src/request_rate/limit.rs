@@ -7,7 +7,7 @@ impl RequestRate {
     ///
     /// ## Description
     ///
-    /// This method performs rate limiting, using the throttler under rate_map
+    /// This method performs rate limiting, using the throttler under `rate_map`
     /// specified by the list of apis, which was calculated using targeted requests/duration
     /// rates during initialization. If the current rate exceeds any of the targeted rate,
     /// this method will put the thread to sleep until it is ready for the next
@@ -18,7 +18,7 @@ impl RequestRate {
     /// * `apis` ‧ The APIs for which to observe the request rate limit.
     pub async fn limit_apis(&self, apis: Vec<&Api>) {
         let mut limit_futures = Vec::new();
-        for (key, val) in self.rate_map.iter() {
+        for (key, val) in &self.rate_map {
             if apis.contains(&key) {
                 limit_futures.push(val.limit());
             }
@@ -32,7 +32,7 @@ impl RequestRate {
                     tracing::debug!(
                         "Waited for {} under rate limiter.",
                         duration_to_string(&duration)
-                    )
+                    );
                 }
             }
             _ => tracing::warn!("Clock went backwards!"),

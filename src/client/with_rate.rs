@@ -115,7 +115,7 @@ impl GoogleMapsClient {
         api: Api,
         requests: u16,
         per_duration: Duration,
-    ) -> &mut GoogleMapsClient {
+    ) -> &mut Self {
         self.rate_limit.with_rate(api, requests, per_duration);
         self
     } // fn

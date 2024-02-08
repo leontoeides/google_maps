@@ -77,7 +77,7 @@ impl<'a> PlaceDetailsRequest<'a> {
                                         // help:
                                         } else {
                                             let error = PlaceDetailsError::GoogleMapsService(
-                                                deserialized.status.to_owned(),
+                                                deserialized.status.clone(),
                                                 None,
                                             );
                                             // Check Google API response status

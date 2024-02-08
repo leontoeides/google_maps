@@ -33,55 +33,55 @@ impl<'a> Request<'a> {
                 .map(|component| format!("country:{}", String::from(component).to_lowercase()))
                 .collect::<Vec<String>>()
                 .join("|");
-            query.push_str(&utf8_percent_encode(&components, NON_ALPHANUMERIC).to_string())
+            query.push_str(&utf8_percent_encode(&components, NON_ALPHANUMERIC).to_string());
         } // if
 
         // Language key/value pair:
         if let Some(language) = &self.language {
             query.push_str("&language=");
-            query.push_str(&String::from(language))
+            query.push_str(&String::from(language));
         }
 
         // Location key/value pair:
         if let Some(location) = &self.location {
             query.push_str("&location=");
-            query.push_str(&String::from(location))
+            query.push_str(&String::from(location));
         }
 
         // Offset key/value pair:
         if let Some(offset) = &self.offset {
             query.push_str("&offset=");
-            query.push_str(&offset.to_string())
+            query.push_str(&offset.to_string());
         }
 
         // Origin key/value pair:
         if let Some(origin) = &self.origin {
             query.push_str("&origin=");
-            query.push_str(&String::from(origin))
+            query.push_str(&String::from(origin));
         }
 
         // Radius key/value pair:
         if let Some(radius) = &self.radius {
             query.push_str("&radius=");
-            query.push_str(&radius.to_string())
+            query.push_str(&radius.to_string());
         }
 
         // Region key/value pair:
         if let Some(region) = &self.region {
             query.push_str("&region=");
-            query.push_str(&String::from(region))
+            query.push_str(&String::from(region));
         }
 
         // Session Token key/value pair:
         if let Some(sessiontoken) = &self.sessiontoken {
             query.push_str("&sessiontoken=");
-            query.push_str(&utf8_percent_encode(sessiontoken, NON_ALPHANUMERIC).to_string())
+            query.push_str(&utf8_percent_encode(sessiontoken, NON_ALPHANUMERIC).to_string());
         }
 
         // Strict Bounds key/value pair:
         if let Some(strictbounds) = &self.strictbounds {
             query.push_str("&strictbounds=");
-            query.push_str(&strictbounds.to_string())
+            query.push_str(&strictbounds.to_string());
         }
 
         // Types key/value pair:

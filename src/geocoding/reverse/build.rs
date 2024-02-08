@@ -25,7 +25,7 @@ impl<'a> ReverseRequest<'a> {
         // Language key/value pair:
         if let Some(language) = &self.language {
             query.push_str("&language=");
-            query.push_str(&String::from(language))
+            query.push_str(&String::from(language));
         } // if
 
         // Location type(s) key/value pair:
@@ -41,7 +41,7 @@ impl<'a> ReverseRequest<'a> {
                     NON_ALPHANUMERIC,
                 )
                 .to_string(),
-            ) // push_str
+            ); // push_str
         } // if
 
         // Result type(s) key/value pair:
@@ -57,7 +57,7 @@ impl<'a> ReverseRequest<'a> {
                     NON_ALPHANUMERIC,
                 )
                 .to_string(),
-            ) // push_str
+            ); // push_str
         } // if
 
         // Set query string in ReverseRequest struct.

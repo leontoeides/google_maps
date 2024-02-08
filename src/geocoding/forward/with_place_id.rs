@@ -5,7 +5,7 @@ impl<'a> ForwardRequest<'a> {
     ///
     /// ## Arguments:
     ///
-    /// * `place_id` - TThe place ID of the place for which you wish to obtain the
+    /// * `place_id` - `TThe` place ID of the place for which you wish to obtain the
     /// human-readable address. The place ID is a unique identifier that can
     /// be used with other Google APIs. For example, you can use the placeID
     /// returned by the [Roads

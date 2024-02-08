@@ -21,9 +21,9 @@ pub struct TargetRate {
 impl std::convert::From<&TargetRate> for String {
     /// Converts a `TargetRate` enum to a `String` that contains a
     /// human-friendly & readable rate.
-    fn from(target_rate: &TargetRate) -> String {
+    fn from(target_rate: &TargetRate) -> Self {
         rate_to_string(
-            &(target_rate.requests as u64),
+            &u64::from(target_rate.requests),
             &target_rate.duration,
             "request",
             "requests",
@@ -34,7 +34,7 @@ impl std::convert::From<&TargetRate> for String {
 impl std::default::Default for TargetRate {
     /// Returns a reasonable default values for the `TargetRate` struct.
     fn default() -> Self {
-        TargetRate {
+        Self {
             requests: 0, // disabled
             duration: Duration::from_secs(1),
         } // struct

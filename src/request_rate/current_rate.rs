@@ -19,9 +19,9 @@ pub struct CurrentRate {
 impl std::convert::From<&CurrentRate> for String {
     /// Converts a `CurrentRate` enum to a `String` that contains a
     /// human-friendly & readable rate.
-    fn from(current_rate: &CurrentRate) -> String {
+    fn from(current_rate: &CurrentRate) -> Self {
         match current_rate.first_request {
-            None => String::from("None"),
+            None => Self::from("None"),
             Some(first_request) => rate_to_string(
                 &current_rate.request_count,
                 &first_request.elapsed(),
@@ -35,7 +35,7 @@ impl std::convert::From<&CurrentRate> for String {
 impl std::default::Default for CurrentRate {
     /// Returns a reasonable default values for the `CurrentRate` struct.
     fn default() -> Self {
-        CurrentRate {
+        Self {
             first_request: None,
             request_count: 0,
         } // struct

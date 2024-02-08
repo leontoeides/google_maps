@@ -43,8 +43,8 @@ impl std::convert::From<&Locations> for String {
         match locations {
             Locations::LatLngs(latlngs) => latlngs
                 .iter()
-                .map(String::from)
-                .collect::<Vec<String>>()
+                .map(Self::from)
+                .collect::<Vec<Self>>()
                 .join("|"),
 
             Locations::Polyline(polyline) => format!("enc:{polyline}"),
@@ -119,6 +119,6 @@ impl std::convert::From<&Locations> for String {
 impl std::default::Default for Locations {
     /// Returns a reasonable default variant for the `Locations` enum type.
     fn default() -> Self {
-        Locations::LatLngs(vec![LatLng::try_from_dec(dec!(0.0), dec!(0.0)).unwrap()])
+        Self::LatLngs(vec![LatLng::try_from_dec(dec!(0.0), dec!(0.0)).unwrap()])
     } // fn
 } // impl

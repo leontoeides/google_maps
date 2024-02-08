@@ -36,7 +36,7 @@ impl<'de> Deserialize<'de> for TransitRoutePreference {
     /// advantage of the `phf`-powered `TryFrom` implementation for this type.
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let string = String::deserialize(deserializer)?;
-        match TransitRoutePreference::try_from(string.as_str()) {
+        match Self::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
             Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
@@ -150,10 +150,10 @@ impl std::str::FromStr for TransitRoutePreference {
 impl TransitRoutePreference {
     /// Formats a `TransitRoutePreference` enum into a string that is
     /// presentable to the end user.
-    pub fn display(&self) -> &str {
+    #[must_use] pub fn display(&self) -> &str {
         match self {
-            TransitRoutePreference::FewerTransfers => "Fewer Transfers",
-            TransitRoutePreference::LessWalking => "Less Walking",
+            Self::FewerTransfers => "Fewer Transfers",
+            Self::LessWalking => "Less Walking",
         } // match
     } // fn
 } // impl

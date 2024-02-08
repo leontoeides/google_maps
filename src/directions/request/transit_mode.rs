@@ -44,7 +44,7 @@ impl<'de> Deserialize<'de> for TransitMode {
     /// advantage of the `phf`-powered `TryFrom` implementation for this type.
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let string = String::deserialize(deserializer)?;
-        match TransitMode::try_from(string.as_str()) {
+        match Self::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
             Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
@@ -155,13 +155,13 @@ impl std::str::FromStr for TransitMode {
 impl TransitMode {
     /// Formats a `TransitMode` enum into a string that is presentable to the
     /// end user.
-    pub fn display(&self) -> &str {
+    #[must_use] pub fn display(&self) -> &str {
         match self {
-            TransitMode::Bus => "Bus",
-            TransitMode::Rail => "Rail",
-            TransitMode::Subway => "Subway",
-            TransitMode::Train => "Train",
-            TransitMode::Tram => "Tram",
+            Self::Bus => "Bus",
+            Self::Rail => "Rail",
+            Self::Subway => "Subway",
+            Self::Train => "Train",
+            Self::Tram => "Tram",
         } // match
     } // fn
 } // impl

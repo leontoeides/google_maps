@@ -51,7 +51,7 @@ impl<'de> Deserialize<'de> for Avoid {
     /// advantage of the `phf`-powered `TryFrom` implementation for this type.
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let string = String::deserialize(deserializer)?;
-        match Avoid::try_from(string.as_str()) {
+        match Self::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
             Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
@@ -156,12 +156,12 @@ impl std::str::FromStr for Avoid {
 impl Avoid {
     /// Formats a `Avoid` enum into a string that is presentable to the end
     /// user.
-    pub fn display(&self) -> &str {
+    #[must_use] pub fn display(&self) -> &str {
         match self {
-            Avoid::Ferries => "Ferries",
-            Avoid::Highways => "Highways",
-            Avoid::Indoor => "Indoor",
-            Avoid::Tolls => "Tolls",
+            Self::Ferries => "Ferries",
+            Self::Highways => "Highways",
+            Self::Indoor => "Indoor",
+            Self::Tolls => "Tolls",
         } // match
     } // fn
 } // impl

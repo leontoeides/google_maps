@@ -65,37 +65,37 @@ impl<'a> Request<'a> {
                     NON_ALPHANUMERIC,
                 )
                 .to_string(),
-            ) // push_str
+            ); // push_str
         } // if
 
         // Departure time key/value pair:
         if let Some(departure_time) = &self.departure_time {
             query.push_str("&departure_time=");
-            query.push_str(&String::from(departure_time))
+            query.push_str(&String::from(departure_time));
         } // if
 
         // Language key/value pair:
         if let Some(language) = &self.language {
             query.push_str("&language=");
-            query.push_str(&String::from(language))
+            query.push_str(&String::from(language));
         } // if
 
         // Travel mode key/value pair:
         if let Some(travel_mode) = &self.travel_mode {
             query.push_str("&mode=");
-            query.push_str(&String::from(travel_mode).to_lowercase())
+            query.push_str(&String::from(travel_mode).to_lowercase());
         } // if
 
         // Region key/value pair:
         if let Some(region) = &self.region {
             query.push_str("&region=");
-            query.push_str(&String::from(region))
+            query.push_str(&String::from(region));
         } // if
 
         // Traffic model key/value pair:
         if let Some(traffic_model) = &self.traffic_model {
             query.push_str("&traffic_model=");
-            query.push_str(&String::from(traffic_model))
+            query.push_str(&String::from(traffic_model));
         } // if
 
         // Transit mode key/value pair:
@@ -111,19 +111,19 @@ impl<'a> Request<'a> {
                     NON_ALPHANUMERIC,
                 )
                 .to_string(),
-            ) // push_str
+            ); // push_str
         } // if
 
         // Transit route preference key/value pair:
         if let Some(transit_route_preference) = &self.transit_route_preference {
             query.push_str("&transit_routing_preference=");
-            query.push_str(&String::from(transit_route_preference))
+            query.push_str(&String::from(transit_route_preference));
         } // if
 
         // Unit system key/value pair:
         if let Some(unit_system) = &self.unit_system {
             query.push_str("&units=");
-            query.push_str(&String::from(unit_system))
+            query.push_str(&String::from(unit_system));
         } // if
 
         // Set query string in Request struct.

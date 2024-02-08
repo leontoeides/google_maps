@@ -35,7 +35,7 @@ impl<'a> Request<'a> {
     /// ).execute();
     /// ```
 
-    pub fn new(client: &GoogleMapsClient, location: LatLng, timestamp: DateTime<Utc>) -> Request {
+    #[must_use] pub fn new(client: &GoogleMapsClient, location: LatLng, timestamp: DateTime<Utc>) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:

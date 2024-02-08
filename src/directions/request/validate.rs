@@ -37,7 +37,7 @@ impl<'a> Request<'a> {
                         travel_mode.to_string(),
                         transit_modes
                             .iter()
-                            .map(|mode| mode.to_string())
+                            .map(std::string::ToString::to_string)
                             .collect::<Vec<String>>()
                             .join("|"),
                     )); // Err
@@ -69,7 +69,7 @@ impl<'a> Request<'a> {
                     waypoints.len(),
                     restrictions
                         .iter()
-                        .map(|avoid| avoid.to_string())
+                        .map(std::string::ToString::to_string)
                         .collect::<Vec<String>>()
                         .join("|"),
                 )); // Err

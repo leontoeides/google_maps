@@ -25,7 +25,7 @@ impl GoogleMapsClient {
     /// This method accepts no arguments. Use the methods of the resulting type. Use the methods of the resulting type.
 
     #[cfg(feature = "enable-reqwest")]
-    pub fn new(key: &str) -> GoogleMapsClient {
+    #[must_use] pub fn new(key: &str) -> Self {
         let reqwest_client = reqwest::Client::builder()
             .user_agent(format!(
                 "RustGoogleMaps/{version}",
@@ -36,7 +36,7 @@ impl GoogleMapsClient {
             .build()
             .unwrap();
 
-        GoogleMapsClient {
+        Self {
             key: key.to_string(),
             rate_limit: RequestRate::default(),
             reqwest_client: reqwest_maybe_middleware::Client::Vanilla(reqwest_client),
@@ -81,7 +81,7 @@ impl GoogleMapsClient {
     /// ```
 
     #[cfg(feature = "directions")]
-    pub fn directions(
+    #[must_use] pub fn directions(
         &self,
         origin: Location,
         destination: Location,
@@ -122,7 +122,7 @@ impl GoogleMapsClient {
     /// ```
 
     #[cfg(feature = "distance_matrix")]
-    pub fn distance_matrix(
+    #[must_use] pub fn distance_matrix(
         &self,
         origins: Vec<Waypoint>,
         destinations: Vec<Waypoint>,
@@ -141,7 +141,7 @@ impl GoogleMapsClient {
     /// This method accepts no arguments. Use the methods of the resulting type.
 
     #[cfg(feature = "elevation")]
-    pub fn elevation(&self) -> crate::elevation::request::Request {
+    #[must_use] pub fn elevation(&self) -> crate::elevation::request::Request {
         crate::elevation::request::Request::new(self)
     } // fn
 
@@ -158,7 +158,7 @@ impl GoogleMapsClient {
     /// This method accepts no arguments. Use the methods of the resulting type.
 
     #[cfg(feature = "geocoding")]
-    pub fn geocoding(&self) -> crate::geocoding::forward::ForwardRequest {
+    #[must_use] pub fn geocoding(&self) -> crate::geocoding::forward::ForwardRequest {
         crate::geocoding::forward::ForwardRequest::new(self)
     } // fn
 
@@ -188,7 +188,7 @@ impl GoogleMapsClient {
     /// ```
 
     #[cfg(feature = "geocoding")]
-    pub fn reverse_geocoding(&self, latlng: LatLng) -> crate::geocoding::reverse::ReverseRequest {
+    #[must_use] pub fn reverse_geocoding(&self, latlng: LatLng) -> crate::geocoding::reverse::ReverseRequest {
         crate::geocoding::reverse::ReverseRequest::new(self, latlng)
     } // fn
 
@@ -224,7 +224,7 @@ impl GoogleMapsClient {
     /// ```
 
     #[cfg(feature = "time_zone")]
-    pub fn time_zone(
+    #[must_use] pub fn time_zone(
         &self,
         location: LatLng,
         timestamp: DateTime<Utc>,
@@ -245,7 +245,7 @@ impl GoogleMapsClient {
     /// * `input` ‧ The text string on which to search.
 
     #[cfg(feature = "autocomplete")]
-    pub fn place_autocomplete(
+    #[must_use] pub fn place_autocomplete(
         &self,
         input: String,
     ) -> crate::places::place_autocomplete::request::Request {
@@ -284,7 +284,7 @@ impl GoogleMapsClient {
     /// ```
 
     #[cfg(feature = "autocomplete")]
-    pub fn query_autocomplete(
+    #[must_use] pub fn query_autocomplete(
         &self,
         input: String,
     ) -> crate::places::query_autocomplete::request::Request {
@@ -340,9 +340,9 @@ impl GoogleMapsClient {
     ///
     /// | "10 High Street, UK" or "123 Main Street, US" | multiple "High Street"s in the UK; multiple "Main Street"s in the US. Query will not return desirable results unless a location restriction is set. |
     /// |---|---|
-    /// | "ChainRestaurant New York" | multiple "ChainRestaurant" locations in New York; no street address or even street name. Query will not return desirable results unless a location restriction is set. |
+    /// | "`ChainRestaurant` New York" | multiple "`ChainRestaurant`" locations in New York; no street address or even street name. Query will not return desirable results unless a location restriction is set. |
     /// | "10 High Street, Escher UK" or "123 Main Street, Pleasanton US" | only one "High Street" in the UK city of Escher; only one "Main Street" in the US city of Pleasanton CA. |
-    /// | "UniqueRestaurantName New York" | only one establishment with this name in New York; no street address needed to differentiate. |
+    /// | "`UniqueRestaurantName` New York" | only one establishment with this name in New York; no street address needed to differentiate. |
     /// | "pizza restaurants in New York" | this query contains its location restriction, and "pizza restaurants" is a well-defined place type. Will yield multiple results, as is expected. |
     ///
     /// The search response will include a list of places. You can send a Place
@@ -374,7 +374,7 @@ impl GoogleMapsClient {
     /// ```
 
     #[cfg(feature = "places")]
-    pub fn text_search(
+    #[must_use] pub fn text_search(
         &self,
         query: String,
         radius: u32,
@@ -430,7 +430,7 @@ impl GoogleMapsClient {
     /// ```
 
     #[cfg(feature = "places")]
-    pub fn nearby_search(
+    #[must_use] pub fn nearby_search(
         &self,
         location: LatLng,
         radius: u32,
@@ -469,7 +469,7 @@ impl GoogleMapsClient {
     /// ```
 
     #[cfg(feature = "places")]
-    pub fn place_details(
+    #[must_use] pub fn place_details(
         &self,
         place_id: String,
     ) -> crate::places::place_details::request::Request {
@@ -518,7 +518,7 @@ impl GoogleMapsClient {
     /// ```
 
     #[cfg(feature = "roads")]
-    pub fn snap_to_roads(
+    #[must_use] pub fn snap_to_roads(
         &self,
         path: Vec<LatLng>,
     ) -> crate::roads::snap_to_roads::request::Request {
@@ -556,7 +556,7 @@ impl GoogleMapsClient {
     /// ```
 
     #[cfg(feature = "roads")]
-    pub fn nearest_roads(
+    #[must_use] pub fn nearest_roads(
         &self,
         points: Vec<LatLng>,
     ) -> crate::roads::snap_to_roads::request::Request {

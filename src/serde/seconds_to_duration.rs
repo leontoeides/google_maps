@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer};
 
 /// This trait converts a quantity of seconds in `String` format into a
 /// `time::Duration` struct. The Google Maps Platform returns duration fields in
-/// seconds and it's handier to be able to use them as a time::Duration structs.
+/// seconds and it's handier to be able to use them as a `time::Duration` structs.
 
 pub fn seconds_to_duration<'de, D>(deserializer: D) -> Result<Duration, D::Error>
 where

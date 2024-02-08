@@ -39,7 +39,7 @@ pub struct RequestRate {
 impl std::default::Default for RequestRate {
     /// Returns default values (empty) for the `RequestRate` struct.
     fn default() -> Self {
-        RequestRate {
+        Self {
             rate_map: HashMap::new(),
         } // struct
     } // fn

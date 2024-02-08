@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 // -----------------------------------------------------------------------------
 //
 /// Indicates the operational status of the place, if it is a business. If no
-/// data exists, business_status is not returned. The allowed values include:
+/// data exists, `business_status` is not returned. The allowed values include:
 /// `OPERATIONAL`, `CLOSED_TEMPORARILY`, and `CLOSED_PERMANENTLY`.
 
 #[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -27,7 +27,7 @@ impl<'de> Deserialize<'de> for BusinessStatus {
     /// advantage of the `phf`-powered `TryFrom` implementation for this type.
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let string = String::deserialize(deserializer)?;
-        match BusinessStatus::try_from(string.as_str()) {
+        match Self::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
             Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
@@ -130,11 +130,11 @@ impl std::str::FromStr for BusinessStatus {
 impl BusinessStatus {
     /// Formats a `BusinessStatus` enum into a string that is presentable to the
     /// end user.
-    pub fn display(&self) -> &str {
+    #[must_use] pub fn display(&self) -> &str {
         match self {
-            BusinessStatus::Operational => "Operational",
-            BusinessStatus::ClosedTemporarily => "Closed Temporarily",
-            BusinessStatus::ClosedPermanently => "Closed Permanently",
+            Self::Operational => "Operational",
+            Self::ClosedTemporarily => "Closed Temporarily",
+            Self::ClosedPermanently => "Closed Permanently",
         } // match
     } // fn
 } // impl

@@ -77,7 +77,7 @@ impl<'a> PlaceAutocompleteRequest<'a> {
                                         // help:
                                         } else {
                                             let error = PlaceAutocompleteError::GoogleMapsService(
-                                                deserialized.status.to_owned(),
+                                                deserialized.status.clone(),
                                                 deserialized.error_message,
                                             );
                                             // Check Google API response status

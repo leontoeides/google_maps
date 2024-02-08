@@ -74,7 +74,7 @@ impl Route {
     /// let summary = route.get_summary();
     /// ```
 
-    pub fn get_summary(&self) -> Option<&String> {
+    #[must_use] pub fn get_summary(&self) -> Option<&String> {
         match &*self.summary {
             "" => None,
             _ => Some(&self.summary),
@@ -89,7 +89,7 @@ impl Route {
     /// let fare_currency = route.get_fare_currency();
     /// ```
 
-    pub fn get_fare_currency(&self) -> Option<String> {
+    #[must_use] pub fn get_fare_currency(&self) -> Option<String> {
         self.fare.as_ref().map(|fare| fare.currency.to_string())
     } // fn
 
@@ -101,7 +101,7 @@ impl Route {
     /// let fare_value = route.get_fare_value();
     /// ```
 
-    pub fn get_fare_value(&self) -> Option<Decimal> {
+    #[must_use] pub fn get_fare_value(&self) -> Option<Decimal> {
         self.fare.as_ref().map(|fare| fare.value)
     } // fn
 
@@ -113,7 +113,7 @@ impl Route {
     /// let fare_text = route.get_fare_text();
     /// ```
 
-    pub fn get_fare_text(&self) -> Option<&String> {
+    #[must_use] pub fn get_fare_text(&self) -> Option<&String> {
         self.fare.as_ref().map(|fare| &fare.text)
     } // fn
 
@@ -125,7 +125,7 @@ impl Route {
     /// let warnings = route.get_warning();
     /// ```
 
-    pub fn get_warnings(&self) -> Option<String> {
+    #[must_use] pub fn get_warnings(&self) -> Option<String> {
         if self.warnings.is_empty() {
             None
         } else {
@@ -134,21 +134,21 @@ impl Route {
     } // fn
 
     /// A helper function for destructuring (or serializing) the
-    /// `waypoint_order` field. If the _waypoint_order_ `Vec` is populated, this
+    /// `waypoint_order` field. If the _`waypoint_order`_ `Vec` is populated, this
     /// function will return the waypoint order as a `String` in CSV format. If
-    /// the _waypoint_order_ Vec is empty, this function will return `None`.
+    /// the _`waypoint_order`_ Vec is empty, this function will return `None`.
     /// ```rust
     /// let waypoint_order = route.get_fare_text();
     /// ```
 
-    pub fn get_waypoint_order(&self) -> Option<String> {
+    #[must_use] pub fn get_waypoint_order(&self) -> Option<String> {
         if self.waypoint_order.is_empty() {
             None
         } else {
             Some(
                 self.waypoint_order
                     .iter()
-                    .map(|integer| integer.to_string())
+                    .map(std::string::ToString::to_string)
                     .collect::<Vec<String>>()
                     .join("|"),
             )

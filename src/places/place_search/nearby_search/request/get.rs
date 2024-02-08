@@ -77,7 +77,7 @@ impl<'a> PlacesTextSearchRequest<'a> {
                                         // help:
                                         } else {
                                             let error = PlacesTextSearchError::GoogleMapsService(
-                                                deserialized.status.to_owned(),
+                                                deserialized.status.clone(),
                                                 deserialized.error_message,
                                             );
                                             // Check Google API response status

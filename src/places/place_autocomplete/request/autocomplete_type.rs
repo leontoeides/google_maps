@@ -57,7 +57,7 @@ impl<'de> Deserialize<'de> for AutocompleteType {
     /// advantage of the `phf`-powered `TryFrom` implementation for this type.
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let string = String::deserialize(deserializer)?;
-        match AutocompleteType::try_from(string.as_str()) {
+        match Self::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
             Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
@@ -175,13 +175,13 @@ impl std::str::FromStr for AutocompleteType {
 impl AutocompleteType {
     /// Formats a `AutocompleteType` enum into a string that is presentable to
     /// the end user.
-    pub fn display(&self) -> &str {
+    #[must_use] pub fn display(&self) -> &str {
         match self {
-            AutocompleteType::Geocode => "Geocode",
-            AutocompleteType::Address => "Address",
-            AutocompleteType::Establishment => "Establishment",
-            AutocompleteType::Regions => "Regions",
-            AutocompleteType::Cities => "Cities",
+            Self::Geocode => "Geocode",
+            Self::Address => "Address",
+            Self::Establishment => "Establishment",
+            Self::Regions => "Regions",
+            Self::Cities => "Cities",
         } // match
     } // fn
 } // impl

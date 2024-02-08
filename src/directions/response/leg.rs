@@ -1,4 +1,4 @@
-//! A single leg consisting of a set of steps in a DirectionsResult. Some fields
+//! A single leg consisting of a set of steps in a `DirectionsResult`. Some fields
 //! in the leg may not be returned for all requests.
 
 use crate::directions::response::{
@@ -10,10 +10,10 @@ use serde::{Deserialize, Serialize};
 
 // -----------------------------------------------------------------------------
 //
-/// A single leg consisting of a set of steps in a DirectionsResult. Some fields
+/// A single leg consisting of a set of steps in a `DirectionsResult`. Some fields
 /// in the leg may not be returned for all requests. Note that though this
 /// result is "JSON-like," it is not strictly JSON, as it directly and
-/// indirectly includes LatLng objects.
+/// indirectly includes `LatLng` objects.
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct Leg {
@@ -66,7 +66,7 @@ impl Leg {
     /// let duration_in_traffic_text = leg.get_duration_in_traffic_text();
     /// ```
 
-    pub fn get_duration_in_traffic_text(&self) -> Option<&String> {
+    #[must_use] pub fn get_duration_in_traffic_text(&self) -> Option<&String> {
         match &self.duration_in_traffic {
             Some(duration) => Some(&duration.text),
             None => None,
@@ -81,7 +81,7 @@ impl Leg {
     /// let duration_in_traffic_value = leg.get_duration_in_traffic_value();
     /// ```
 
-    pub fn get_duration_in_traffic_value(&self) -> Option<i64> {
+    #[must_use] pub fn get_duration_in_traffic_value(&self) -> Option<i64> {
         self.duration_in_traffic
             .as_ref()
             .map(|duration| duration.value.num_seconds())
@@ -95,19 +95,19 @@ impl Leg {
     /// let arrival_time_text = leg.get_arrival_time_text();
     /// ```
 
-    pub fn get_arrival_time_text(&self) -> Option<&String> {
+    #[must_use] pub fn get_arrival_time_text(&self) -> Option<&String> {
         self.arrival_time.as_ref().map(|time| &time.text)
     } // fn
 
     /// A helper function for destructuring (or serializing) the optional
     /// `arrival_time` field. If the `Time` struct is populated, this function
-    /// will return the _time_zone_ field as a `String` type. If the _Time_
+    /// will return the _`time_zone`_ field as a `String` type. If the _Time_
     /// struct is empty, this function will return `None`.
     /// ```rust
     /// let arrival_time_zone = leg.arrival_time_zone();
     /// ```
 
-    pub fn get_arrival_time_value(&self) -> Option<i64> {
+    #[must_use] pub fn get_arrival_time_value(&self) -> Option<i64> {
         self.arrival_time
             .as_ref()
             .map(|time| time.value.timestamp())
@@ -121,7 +121,7 @@ impl Leg {
     /// let arrival_time_zone = leg.arrival_time_zone();
     /// ```
 
-    pub fn get_arrival_time_zone(&self) -> Option<String> {
+    #[must_use] pub fn get_arrival_time_zone(&self) -> Option<String> {
         self.arrival_time
             .as_ref()
             .map(|time| time.time_zone.name().to_string())
@@ -135,19 +135,19 @@ impl Leg {
     /// let departure_time_text = leg.get_departure_time_text();
     /// ```
 
-    pub fn get_departure_time_text(&self) -> Option<&String> {
+    #[must_use] pub fn get_departure_time_text(&self) -> Option<&String> {
         self.departure_time.as_ref().map(|time| &time.text)
     } // fn
 
     /// A helper function for destructuring (or serializing) the optional
     /// `departure_time` field. If the `Time` struct is populated, this function
-    /// will return the _time_zone_ field as a `String` type. If the _Time_
+    /// will return the _`time_zone`_ field as a `String` type. If the _Time_
     /// struct is empty, this function will return `None`.
     /// ```rust
     /// let departure_time_zone = leg.departure_time_zone();
     /// ```
 
-    pub fn get_departure_time_value(&self) -> Option<i64> {
+    #[must_use] pub fn get_departure_time_value(&self) -> Option<i64> {
         self.departure_time
             .as_ref()
             .map(|time| time.value.timestamp())
@@ -161,7 +161,7 @@ impl Leg {
     /// let departure_time_zone = leg.departure_time_zone();
     /// ```
 
-    pub fn get_departure_time_zone(&self) -> Option<String> {
+    #[must_use] pub fn get_departure_time_zone(&self) -> Option<String> {
         self.departure_time
             .as_ref()
             .map(|time| time.time_zone.name().to_string())

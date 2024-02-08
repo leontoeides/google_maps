@@ -18,7 +18,7 @@ impl<'a> Request<'a> {
     /// conflict with the location, radius, and rankby parameters, causing
     /// unexpected results.
     ///
-    /// If this parameter is omitted, places with a business_status of
+    /// If this parameter is omitted, places with a `business_status` of
     /// `CLOSED_TEMPORARILY` or `CLOSED_PERMANENTLY` will not be returned.
 
     pub fn with_keyword(&'a mut self, keyword: String) -> &'a mut Request {

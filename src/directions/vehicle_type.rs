@@ -63,7 +63,7 @@ impl<'de> Deserialize<'de> for VehicleType {
     /// advantage of the `phf`-powered `TryFrom` implementation for this type.
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let string = String::deserialize(deserializer)?;
-        match VehicleType::try_from(string.as_str()) {
+        match Self::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
             Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
@@ -196,26 +196,26 @@ impl std::str::FromStr for VehicleType {
 impl VehicleType {
     /// Formats a `VehicleType` enum into a string that is presentable to the
     /// end user.
-    pub fn display(&self) -> &str {
+    #[must_use] pub fn display(&self) -> &str {
         match self {
-            VehicleType::Bus => "Bus",
-            VehicleType::CableCar => "Cable Car",
-            VehicleType::CommuterTrain => "Commuter Train",
-            VehicleType::Ferry => "Ferry",
-            VehicleType::Funicular => "Funicular",
-            VehicleType::GondolaLift => "Gondola Lift",
-            VehicleType::HeavyRail => "Heavy Rail",
-            VehicleType::HighSpeedTrain => "High Speed Train",
-            VehicleType::IntercityBus => "Intercity Bus",
-            VehicleType::LongDistanceTrain => "Long Distance Train",
-            VehicleType::MetroRail => "Metro Rail",
-            VehicleType::Monorail => "Monorail",
-            VehicleType::Other => "Other",
-            VehicleType::Rail => "Rail",
-            VehicleType::ShareTaxi => "Share Taxi",
-            VehicleType::Subway => "Subway",
-            VehicleType::Tram => "Tram",
-            VehicleType::Trolleybus => "Trolleybus",
+            Self::Bus => "Bus",
+            Self::CableCar => "Cable Car",
+            Self::CommuterTrain => "Commuter Train",
+            Self::Ferry => "Ferry",
+            Self::Funicular => "Funicular",
+            Self::GondolaLift => "Gondola Lift",
+            Self::HeavyRail => "Heavy Rail",
+            Self::HighSpeedTrain => "High Speed Train",
+            Self::IntercityBus => "Intercity Bus",
+            Self::LongDistanceTrain => "Long Distance Train",
+            Self::MetroRail => "Metro Rail",
+            Self::Monorail => "Monorail",
+            Self::Other => "Other",
+            Self::Rail => "Rail",
+            Self::ShareTaxi => "Share Taxi",
+            Self::Subway => "Subway",
+            Self::Tram => "Tram",
+            Self::Trolleybus => "Trolleybus",
         } // match
     } // fn
 } // impl

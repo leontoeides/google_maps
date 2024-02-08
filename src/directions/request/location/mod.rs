@@ -44,14 +44,14 @@ impl std::convert::From<&Location> for String {
     /// Converts a `Location` enum to a `String` that contains a URL-encoded
     /// [location](https://developers.google.com/maps/documentation/directions/intro#required-parameters)
     /// value.
-    fn from(location: &Location) -> String {
+    fn from(location: &Location) -> Self {
         match location {
             Location::Address(address) => {
                 utf8_percent_encode(address, NON_ALPHANUMERIC).to_string()
             }
 
             Location::LatLng(latlng) => {
-                utf8_percent_encode(&String::from(latlng), NON_ALPHANUMERIC).to_string()
+                utf8_percent_encode(&Self::from(latlng), NON_ALPHANUMERIC).to_string()
             }
 
             Location::PlaceId(place_id) => {

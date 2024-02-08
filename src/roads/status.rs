@@ -73,7 +73,7 @@ impl<'de> Deserialize<'de> for Status {
     /// advantage of the `phf`-powered `TryFrom` implementation for this type.
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let string = String::deserialize(deserializer)?;
-        match Status::try_from(string.as_str()) {
+        match Self::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
             Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
@@ -85,12 +85,12 @@ impl<'de> Deserialize<'de> for Status {
 impl std::convert::From<&Status> for String {
     /// Converts a `Status` enum to a `String` that contains a status
     /// code.
-    fn from(status: &Status) -> String {
+    fn from(status: &Status) -> Self {
         match status {
-            Status::InvalidArgument => String::from("INVALID_ARGUMENT"),
-            Status::PermissionDenied => String::from("PERMISSION_DENIED"),
-            Status::NotFound => String::from("NOT_FOUND"),
-            Status::ResourceExhausted => String::from("RESOURCE_EXHAUSTED"),
+            Status::InvalidArgument => Self::from("INVALID_ARGUMENT"),
+            Status::PermissionDenied => Self::from("PERMISSION_DENIED"),
+            Status::NotFound => Self::from("NOT_FOUND"),
+            Status::ResourceExhausted => Self::from("RESOURCE_EXHAUSTED"),
         } // match
     } // fn
 } // impl
@@ -137,7 +137,7 @@ impl std::str::FromStr for Status {
 impl std::default::Default for Status {
     /// Returns a reasonable default variant for the `Status` enum type.
     fn default() -> Self {
-        Status::InvalidArgument
+        Self::InvalidArgument
     } // fn
 } // impl
 
@@ -148,10 +148,10 @@ impl std::fmt::Display for Status {
     /// user.
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Status::InvalidArgument => write!(f, "Invalid Argument"),
-            Status::PermissionDenied => write!(f, "Permission Denied"),
-            Status::NotFound => write!(f, "Not Found"),
-            Status::ResourceExhausted => write!(f, "Resource Exhausted"),
+            Self::InvalidArgument => write!(f, "Invalid Argument"),
+            Self::PermissionDenied => write!(f, "Permission Denied"),
+            Self::NotFound => write!(f, "Not Found"),
+            Self::ResourceExhausted => write!(f, "Resource Exhausted"),
         } // match
     } // fn
 } // impl

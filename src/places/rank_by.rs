@@ -1,4 +1,4 @@
-//! The `"type"` field within the _Places API_ _PlaceOpeningHours_ response
+//! The `"type"` field within the _Places API_ _`PlaceOpeningHours`_ response
 //! object describing the opening hours of a place.
 
 use crate::error::Error as GoogleMapsError;
@@ -34,7 +34,7 @@ impl<'de> Deserialize<'de> for RankBy {
     /// advantage of the `phf`-powered `TryFrom` implementation for this type.
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let string = String::deserialize(deserializer)?;
-        match RankBy::try_from(string.as_str()) {
+        match Self::try_from(string.as_str()) {
             Ok(variant) => Ok(variant),
             Err(error) => Err(serde::de::Error::custom(error.to_string())),
         } // match
@@ -135,10 +135,10 @@ impl std::str::FromStr for RankBy {
 impl RankBy {
     /// Formats a `RankBy` enum into a string that is presentable to the
     /// end user.
-    pub fn display(&self) -> &str {
+    #[must_use] pub fn display(&self) -> &str {
         match self {
-            RankBy::Prominence => "Prominence",
-            RankBy::Distance => "Ditance",
+            Self::Prominence => "Prominence",
+            Self::Distance => "Ditance",
         } // match
     } // fn
 } // impl

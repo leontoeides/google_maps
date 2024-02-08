@@ -1,5 +1,5 @@
 //! **Look in this module for documentation on building your _Geocoding API_
-//! forward query**. In particular, look at the _ForwardRequest_ struct for
+//! forward query**. In particular, look at the _`ForwardRequest`_ struct for
 //! examples of the builder pattern. This module contains the tools (enums,
 //! structs, methods) for building your Google Maps Platform request. Forward
 //! geocoding converts a street address to latitude & longitude coordinates.

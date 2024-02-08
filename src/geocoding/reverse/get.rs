@@ -78,7 +78,7 @@ impl<'a> ReverseGeocodingRequest<'a> {
                                         // help:
                                         } else {
                                             let error = GeocodingError::GoogleMapsService(
-                                                deserialized.status.to_owned(),
+                                                deserialized.status.clone(),
                                                 deserialized.error_message,
                                             );
                                             // Check Google API response status
