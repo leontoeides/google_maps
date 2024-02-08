@@ -1,48 +1,109 @@
-🗺 An unofficial Google Maps Platform client library for the Rust programming
-language. This client currently implements the Directions API, Distance Matrix
-API, Elevation API, Geocoding API, Time Zone API, parts of the Places API, and
-parts of the Roads API.
+# google_maps 
+[![Docs](https://docs.rs/google_maps/badge.svg)](https://docs.rs/google_maps)
+[![Crates.io](https://img.shields.io/crates/v/google_maps.svg?maxAge=2592000)](https://crates.io/crates/google_maps)
 
-![alt text](https://www.arkiteq.ca/crates/google_maps/banner.jpg "Unofficial Google Maps Platform Client for Rust")
+An unofficial Google Maps Platform client library for the Rust programming language. 
 
-# Welcome
+This client currently implements the Directions API, Distance Matrix API, Elevation API, Geocoding API, Time Zone API, and parts of the Places and Roads API.
 
-This crate is expected to work well and have the more important Google Maps
-features implemented. It should work well because
-[serde](https://crates.io/crates/serde) and, by default,
-[reqwest](https://crates.io/crates/reqwest) do most of the heavy lifting!
+<img src="https://www.arkiteq.ca/crates/google_maps/banner.jpg" alt="Unofficial Google Maps Platform Client for Rust" width="400"/>
 
-I created this client library because I needed several Google Maps Platform
-features for a project that I'm working on. So, I've decided to spin my library
-off into a public crate. This is a very small token of gratitude and an attempt
-to give back to the Rust community. I hope it saves someone out there some work.
+# Installation
 
-# Before You Begin
+Configure the dependencies:
 
-* In your project's `Cargo.toml` file, under the `[dependencies]` section:
+```toml
+[dependencies]
+google_maps = "3.4"
+```
 
-	* Add `google_maps = "3.4"`. Check
-		[crates.io](https://crates.io/crates/google_maps) for the latest
-		version number.
+Optionally, add `rust_decimal = "1"` and `rust_decimal_macros = "1"` for access to the `dec!` macro. This macro can be used to define decimal numbers in your program. 
 
-	* Optionally, add `rust_decimal = "1"` and `rust_decimal_macros = "1"`
-		for access to the `dec!` macro. This macro can be used to define
-		decimal numbers in your program. This is useful for efficiently
-		hard-coding latitudes and longitudes into your code for development
-		and testing.
+This is useful for hard-coding latitudes and longitudes into your code for testing.
 
-* The full documentation is available at [docs.rs](https://docs.rs/google_maps/)
+## Feature Flags
 
-# What's new?
+The desired Google Maps APIs can be enabled individually via feature flags.
 
-* Release notes are available on
-[GitHub](https://github.com/leontoeides/google_maps/releases).
+Additionally, usage of rustls for Reqwest is supported.
 
-* The full [change
-log](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md) is
-available on GitHub.
+### Google Maps Client Feature Flags:
 
-## Example Directions API Request
+* autocomplete
+* directions
+* distance_matrix
+* elevation
+* geocoding
+* places
+* roads
+* time_zone
+* enable-reqwest (uses [reqwest](https://crates.io/crates/reqwest) for querying the Google Maps API).
+* geo (support for the [geo](https://crates.io/crates/geo-types) crate's types)
+
+Note: The Places API's autocomplete feature have been put in the `autocomplete` feature flag. The rest of the Places APIs will be put under the `places` feature flag.
+
+### Reqwest Feature Flags
+
+For use with `enable-reqwest` only.
+
+* native-tls
+* rustls
+* gzip
+* brotli
+
+### Default Feature Flags
+
+By default, the Google Maps client includes all implemented Google Maps APIs. Reqwest will secure the connection using the system-native TLS (`native-tls`), and has gzip compression enabled (`gzip`).
+
+```toml
+default = [
+	# Google Maps crate features:
+	"directions",
+	"distance_matrix",
+	"elevation",
+	"geocoding",
+	"time_zone",
+	"autocomplete",
+	"roads",
+	"places",
+
+	# reqwest features:
+	"enable-reqwest",
+	"reqwest/default-tls",
+	"reqwest/gzip",
+	"enable-reqwest-middleware",
+
+	# rust_decimal features:
+	"rust_decimal/serde"
+]
+```
+
+#### Feature flag usage example
+
+This example will only include the Google Maps Directions API. Reqwest will secure the connection using the Rustls library, and has brotli compression enabled.
+
+```toml
+google_maps = {
+	version = "3.0",
+	default-features = false,
+	features = [
+		"directions",
+		"enable-reqwest",
+		"rustls",
+		"brotli"
+	]
+}
+```
+
+# Release Notes
+
+The [full changelog is available here](https://github.com/leontoeides/google_maps/blob/master/CHANGELOG.md).
+
+Releases [are available on GitHub](https://github.com/leontoeides/google_maps/releases).
+
+# Examples
+
+## Directions API
 
 The Directions API is a service that calculates directions between locations.
 You can search for directions for several modes of transportation, including
@@ -70,7 +131,7 @@ let directions = google_maps_client.directions(
 println!("{:#?}", directions);
 ```
 
-## Example Distance Matrix API Request
+## Distance Matrix API
 
 The Distance Matrix API is a service that provides travel distance and time for
 a matrix of origins and destinations, based on the recommended route between
@@ -105,7 +166,7 @@ let distance_matrix = google_maps_client.distance_matrix(
 println!("{:#?}", distance_matrix);
 ```
 
-## Example Elevation API Positional Request
+## Elevation API (Positional)
 
 The Elevation API provides elevation data for all locations on the surface of
 the earth, including depth locations on the ocean floor (which return negative
@@ -137,7 +198,7 @@ if let Some(results) = &elevation.results {
 }
 ```
 
-## Example Geocoding API Request
+## Geocoding API
 
 The Geocoding API is a service that provides geocoding and reverse geocoding of
 addresses. Geocoding is the process of converting addresses (like a street
@@ -167,7 +228,7 @@ for result in location.results {
 }
 ```
 
-## Example Reverse Geocoding API Request
+## Reverse Geocoding API
 
 The Geocoding API is a service that provides geocoding and reverse geocoding of
 addresses. Reverse geocoding is the process of converting geographic coordinates
@@ -205,7 +266,7 @@ for result in location.results {
 }
 ```
 
-## Example Time Zone API Request
+## Time Zone API
 
 The Time Zone API provides time offset data for locations on the surface of the
 earth. You request the time zone information for a specific latitude/longitude
@@ -243,7 +304,7 @@ if let Some(time_zone_id) = time_zone.time_zone_id {
 }
 ```
 
-## [Geolocation API](https://developers.google.com/maps/documentation/geolocation/intro)
+### [Geolocation API](https://developers.google.com/maps/documentation/geolocation/intro)
 
 Google's Geolocation API seems to be offline. While the online documentation
 is still available and the API appears configurable through the Google Cloud
@@ -251,10 +312,9 @@ Platform console, the Geolocation API responds Status code `404 Not Found` with
 an empty body to all requests. This API cannot be implemented until the server
 responds as expected.
 
-## Example Client Settings
+### Controlling Request Settings
 
-The Google Maps client settings can be used to change the request rate and
-automatic retry parameters.
+The Google Maps client settings can be used to change the request rate and automatic retry parameters.
 
 ```rust
 use google_maps::prelude::*;
@@ -268,81 +328,6 @@ let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE")
     .build();
 ```
 
-## Feature Flags
-
-It is possible to change the Reqwest features that are in turn used by the
-Google Maps API client through feature flags. It is also possible to only
-include desired Google Maps APIs by using Cargo.toml feature flags.
-
-#### Google Maps Client feature flags:
-
-* autocomplete
-* directions
-* distance_matrix
-* elevation
-* geocoding
-* places
-* roads
-* time_zone
-* enable-reqwest (uses [reqwest](https://crates.io/crates/reqwest) for querying
-Google Maps API).
-* geo (support for [geo](https://crates.io/crates/geo-types) crate types)
-
-Note: The Places autocomplete APIs have been put in the `autocomplete` feature
-flag. The rest of the Places APIs will be put under the `places` feature flag.
-
-#### Reqwest feature flags (for use with `enable-reqwest` only):
-
-* native-tls
-* rustls
-* gzip
-* brotli
-
-**Feature flag usage example**: This example will only include the Google Maps
-Directions API. Reqwest will secure the connection using the Rustls library, and
-has brotli compression enabled.
-
-```toml
-google_maps = {
-	version = "3.0",
-	default-features = false,
-	features = [
-		"directions",
-		"enable-reqwest",
-		"rustls",
-		"brotli"
-	]
-}
-```
-
-**Default feature flag configuration**: By default, the Google Maps client
-includes all implemented Google Maps APIs. Reqwest will secure the connection
-using the system-native TLS (`native-tls`), and has gzip compression enabled
-(`gzip`).
-
-```toml
-default = [
-	# Google Maps crate features:
-	"directions",
-	"distance_matrix",
-	"elevation",
-	"geocoding",
-	"time_zone",
-	"autocomplete",
-	"roads",
-	"places",
-
-	# reqwest features:
-	"enable-reqwest",
-	"reqwest/default-tls",
-	"reqwest/gzip",
-	"enable-reqwest-middleware",
-
-	# rust_decimal features:
-	"rust_decimal/serde"
-]
-```
-
 # Feedback
 
 I would like for you to be successful with your project! If this crate is not
@@ -351,14 +336,26 @@ or suggestions - please [report them to
 me](https://github.com/leontoeides/google_maps/issues)! I'm not always fast at
 responding but I will respond. Thanks!
 
-# To do
+# Roadmap
 
-1. Track both _requests_ and request _elements_ for rate limiting.
-2. Make a generic get() function for that can be used by all APIs.
-3. Convert explicit query validation to session types wherever reasonable.
-4. [Places API](https://developers.google.com/places/web-service/intro). Only
+- [ ] Track both _requests_ and request _elements_ for rate limiting.
+- [ ] Make a generic get() function for that can be used by all APIs.
+- [ ] Convert explicit query validation to session types wherever reasonable.
+- [ ] [Places API](https://developers.google.com/places/web-service/intro). Only
 partly implemented. If you would like to have any missing pieces implemented,
 please contact me.
-5. [Roads API](https://developers.google.com/maps/documentation/roads/intro).
+- [ ] [Roads API](https://developers.google.com/maps/documentation/roads/intro).
 Only partly implemented. If you would like to have any missing pieces
 implemented, please contact me.
+
+# Author's Note
+
+This crate is expected to work well and have the more important Google Maps
+features implemented. It should work well because
+[serde](https://crates.io/crates/serde) and, by default,
+[reqwest](https://crates.io/crates/reqwest) do most of the heavy lifting!
+
+I created this client library because I needed several Google Maps Platform
+features for a project that I'm working on. So, I've decided to spin my library
+off into a public crate. This is a very small token of gratitude and an attempt
+to give back to the Rust community. I hope it saves someone out there some work.
