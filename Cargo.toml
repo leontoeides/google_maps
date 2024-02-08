@@ -63,7 +63,7 @@ chrono = { version = "0.4", optional = true, default-features = false, features 
 chrono-tz = { version = "0.8", optional = true, features = [ "serde" ] }
 futures = { version = "0.3", optional = true }
 geo-types = { version = "0.7", optional = true, features = [ "serde" ] }
-miette = "6"
+miette = "7"
 percent-encoding = "2.3"
 phf = { version = "0.11", features = [ "macros" ] }
 reqwest = { version = "0.11", optional = true, default-features = false }
