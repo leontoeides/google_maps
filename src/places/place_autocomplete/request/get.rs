@@ -16,7 +16,7 @@ use reqwest::Response;
 impl<'a> PlaceAutocompleteRequest<'a> {
     /// Performs the HTTP get request and returns the response to the caller.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments.
 

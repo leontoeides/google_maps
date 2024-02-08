@@ -6,7 +6,7 @@ use crate::types::LatLng;
 impl<'a> Request<'a> {
     /// Adds the origin parameter to the Place API _Place Autocomplete_ query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `origin` ‧ The origin point from which to calculate straight-line
     /// distance to the destination (returned as `distance_meters`). If this

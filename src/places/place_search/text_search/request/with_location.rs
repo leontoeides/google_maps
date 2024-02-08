@@ -7,7 +7,7 @@ impl<'a> Request<'a> {
     /// Adds the location and radius parameters to the Places API _Text Search_
     /// query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `location` ‧ The point around which to retrieve place information.
     /// This must be specified as `latitude,longitude`.

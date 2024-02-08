@@ -35,7 +35,7 @@ impl<'a> Request<'a> {
     /// Australia to each of South Australia's main wine regions using route
     /// optimization.
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// ```rust
     /// .with_waypoint_optimization(true)

@@ -5,7 +5,7 @@ use crate::places::place_details::request::Request;
 impl<'a> Request<'a> {
     /// Specifies the session token for the Places API _Place Details_ request.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `sessiontoken` ‧ A random string which identifies an autocomplete
     /// [session](https://developers.google.com/maps/documentation/places/web-service/details#session_tokens)

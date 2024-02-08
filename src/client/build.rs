@@ -7,7 +7,7 @@ impl GoogleMapsClient {
     //
     /// Completes the builder pattern into a final structure.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments.
 
@@ -21,7 +21,7 @@ impl GoogleMapsClient {
     //
     /// Completes the builder pattern into a final structure.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments.
 
@@ -39,7 +39,7 @@ impl GoogleMapsClient {
     /// `GoogleMapsClient::build()` is preferred. `finalize` has been kept for
     /// backward compatibility.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments.
 
@@ -56,7 +56,7 @@ impl GoogleMapsClient {
     /// `GoogleMapsClient::build()` is preferred. `finalize` has been kept for
     /// backward compatibility.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments.
 

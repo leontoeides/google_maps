@@ -13,7 +13,7 @@ impl RequestRate {
     /// exceeds any of the targeted rate, this method will put the thread to
     /// sleep until it is ready for the next request.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `apis` ‧ The APIs for which to observe the request rate limit.
     pub async fn limit_apis(&self, apis: Vec<&Api>) {

@@ -6,12 +6,12 @@ use crate::types::Language;
 impl<'a> Request<'a> {
     /// Adds the language parameter to the Time Zone API query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `language` ‧ The language that Google's response should be presented
     /// in.
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// * Set Google's response to the French language:
     /// ```rust

@@ -7,7 +7,7 @@ impl<'a> Request<'a> {
     //
     /// Adds the _sampled path request_ parameters to the Elevation API query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `path` ‧ Defines a path on the earth for which to return elevation
     /// data. This parameter defines a set of two or more ordered
@@ -62,7 +62,7 @@ impl<'a> Request<'a> {
     /// [LineString](https://docs.rs/geo/latest/geo/geometry/struct.LineString.html)
     /// type.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `line_string` ‧ Specifies the sample points along a path for which to
     /// return elevation data. The samples parameter divides the given path into

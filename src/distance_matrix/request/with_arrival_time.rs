@@ -4,18 +4,18 @@ use chrono::NaiveDateTime;
 impl<'a> Request<'a> {
     /// Specifies the desired arrival time.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `arrival_time` ‧ The time the passenger should arrive at their final
     /// destination by.
     ///
-    /// ## Description:
+    /// ## Description
     ///
     /// Specifies the desired time of arrival for _transit_ distances. You can
     /// use either the `.with_departure_time()` or the `.with_arrival_time()`
     /// method, but not both together.
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// * Arriving by January 1, 2019 at 12:00:00 AM:
     /// ```rust

@@ -16,7 +16,7 @@ use reqwest_maybe_middleware::Error;
 impl<'a> DirectionsRequest<'a> {
     /// Performs the HTTP get request and returns the response to the caller.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments.
 

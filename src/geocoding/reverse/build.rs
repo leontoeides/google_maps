@@ -5,7 +5,7 @@ impl<'a> ReverseRequest<'a> {
     /// Builds the query string for the Google Maps Geocoding API based on the
     /// input provided by the client.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments.
 

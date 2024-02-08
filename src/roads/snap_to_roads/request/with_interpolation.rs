@@ -8,7 +8,7 @@ impl<'a> Request<'a> {
     /// Whether to interpolate a path to include all points forming the full
     /// road-geometry.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `interpolate` ‧ When `true`, additional interpolated points will also
     /// be returned, resulting in a path that smoothly follows the geometry of
@@ -16,7 +16,7 @@ impl<'a> Request<'a> {
     /// will most likely contain more points than the original path. Defaults to
     /// `false`.
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// * Turn on interpolation:
     /// ```rust

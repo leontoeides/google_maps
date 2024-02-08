@@ -7,7 +7,7 @@ impl<'a> Request<'a> {
     /// Adds the components parameter to the Place API _Place Autocomplete_
     /// query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `component` ‧ A grouping of places to which you would like to restrict
     /// your results. Currently, you can use components to filter by up to 5
@@ -29,7 +29,7 @@ impl<'a> Request<'a> {
     /// Adds the components parameter to the Place API _Place Autocomplete_
     /// query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `components` ‧ A grouping of places to which you would like to restrict
     /// your results. Currently, you can use components to filter by up to 5

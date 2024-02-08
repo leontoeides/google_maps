@@ -6,7 +6,7 @@ impl<'a> Request<'a> {
     /// Adds the session token parameter to the Place API _Place Autocomplete_
     /// query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `sessiontoken` ‧ A random string which identifies an autocomplete
     /// [session](https://developers.google.com/maps/documentation/places/web-service/details#session_tokens)

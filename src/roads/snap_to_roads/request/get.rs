@@ -15,7 +15,7 @@ use reqwest::Response; // crate::roads::snap_to_roads
 impl<'a> SnapToRoadsRequest<'a> {
     /// Performs the HTTP get request and returns the response to the caller.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments.
 

@@ -6,7 +6,7 @@ use crate::types::Language;
 impl<'a> Request<'a> {
     /// Adds the language parameter to the Places API _Nearby Search_ query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `language` ‧ The language in which to return results.
     ///

@@ -39,7 +39,7 @@ impl<'a> Request<'a> {
     /// clear pedestrian or bicycling paths, so these responses will return
     /// `warnings` in the returned result which you must display to the user.
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// * Set travel mode to transit:
     /// ```rust

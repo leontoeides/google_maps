@@ -6,7 +6,7 @@ use crate::types::PlaceType;
 impl<'a> Request<'a> {
     /// Adds the types parameter to the Places API _Text Search_ query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `type` ‧ Restricts the results to places matching the specified type.
     /// Only one type may be specified. If more than one type is provided, all

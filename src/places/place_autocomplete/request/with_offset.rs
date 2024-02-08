@@ -5,7 +5,7 @@ use crate::places::place_autocomplete::request::Request;
 impl<'a> Request<'a> {
     /// Adds the offset parameter to the Place API _Place Autocomplete_ query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `offset` ‧ The position, in the input term, of the last character that
     /// the service uses to match predictions. For example, if the input is

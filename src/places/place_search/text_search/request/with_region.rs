@@ -6,7 +6,7 @@ use crate::types::Region;
 impl<'a> Request<'a> {
     /// Adds the region parameter to the Places API _Text Search_ query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `region` ‧ The region code, specified as a [ccTLD ("top-level
     /// domain")](https://en.wikipedia.org/wiki/List_of_Internet_top-level_domains#Country_code_top-level_domains)

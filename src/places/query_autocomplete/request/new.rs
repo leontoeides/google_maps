@@ -9,7 +9,7 @@ impl<'a> Request<'a> {
     /// Initializes the builder pattern for a Place API _Query Autocomplete_
     /// query with the required, non-optional parameters.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
     ///

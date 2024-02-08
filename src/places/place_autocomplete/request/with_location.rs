@@ -7,7 +7,7 @@ impl<'a> Request<'a> {
     /// Adds the location and radius parameters to the Place API _Place
     /// Autocomplete_ query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `location` ‧ The point around which to retrieve place information.
     /// Note: When using the Text Search API, the `location` parameter may be
@@ -54,7 +54,7 @@ impl<'a> Request<'a> {
     /// Adds the location and radius parameters to the Place API _Place
     /// Autocomplete_ query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `location` ‧ The point around which to retrieve place information.
     /// Note: When using the Text Search API, the `location` parameter may be

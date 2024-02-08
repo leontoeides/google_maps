@@ -6,7 +6,7 @@ use crate::places::place_autocomplete::request::Request;
 impl<'a> Request<'a> {
     /// Adds the types parameter to the Place API _Place Autocomplete_ query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `types` ‧ You may restrict results from a Place Autocomplete request to
     /// be of a certain type by passing a types parameter. The parameter
@@ -31,7 +31,7 @@ impl<'a> Request<'a> {
 impl<'a> Request<'a> {
     /// Adds the types parameter to the Place API _Place Autocomplete_ query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `types` ‧ You may restrict results from a Place Autocomplete request to
     /// be of a certain type by passing a types parameter. The parameter

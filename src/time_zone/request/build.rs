@@ -4,7 +4,7 @@ impl<'a> Request<'a> {
     /// Builds the query string for the Google Maps Time Zone API based on the
     /// input provided by the client.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments.
 

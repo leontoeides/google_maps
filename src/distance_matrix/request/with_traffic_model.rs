@@ -42,7 +42,7 @@ impl<'a> Request<'a> {
     /// alternatively, _longer_ than `Pessimistic`, due to the way the
     /// `BestGuess` prediction model integrates live traffic information.
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// * Set traffic model to pessimistic:
     /// ```rust

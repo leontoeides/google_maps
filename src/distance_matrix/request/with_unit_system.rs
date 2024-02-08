@@ -34,7 +34,7 @@ impl<'a> Request<'a> {
     /// within `distance` fields. The `distance` fields also contain `values`
     /// which are always expressed in meters.
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// * Force unit system to Metric:
     /// ```rust

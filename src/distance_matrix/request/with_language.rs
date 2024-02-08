@@ -4,12 +4,12 @@ use crate::types::Language;
 impl<'a> Request<'a> {
     /// Specify the language in which to return results.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `language` ‧ The language that Google's response should be presented
     /// in.
     ///
-    /// ## Description:
+    /// ## Description
     ///
     /// * [See the list of supported
     /// languages](https://developers.google.com/maps/faq#languagesupport).
@@ -38,7 +38,7 @@ impl<'a> Request<'a> {
     /// may be valid in one language but not in another. For example, _utca_ and
     /// _tér_ are synonyms for street in Hungarian.
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// * Force language to French:
     /// ```rust

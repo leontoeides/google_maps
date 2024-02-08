@@ -7,7 +7,7 @@ impl<'a> Request<'a> {
     /// Adds the rank-by order parameter to the Places API _Nearby Search_
     /// query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `rankby` ‧ Specifies the order in which results are listed. Possible
     /// values are:

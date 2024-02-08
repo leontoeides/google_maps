@@ -10,7 +10,7 @@ impl RequestRate {
     /// Specifies the request rate for the selected API. _Do not use this method
     /// to set request rate limits, use `ClientSettings.with_rate()` instead_.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `api` ‧ Which Google Maps API are you setting the rate limit for? For
     /// example, `Api::Directions`, `Api::DistanceMatrix`, `Api::Elevation`,

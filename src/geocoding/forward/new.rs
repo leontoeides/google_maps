@@ -8,7 +8,7 @@ impl<'a> ForwardRequest<'a> {
     /// Initializes the builder pattern for a Geolocation API query with the
     /// required, non-optional parameters.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
 

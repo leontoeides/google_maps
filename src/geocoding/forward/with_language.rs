@@ -3,7 +3,7 @@ use crate::{geocoding::forward::ForwardRequest, types::Language};
 impl<'a> ForwardRequest<'a> {
     /// Specifies the language in which to return results.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `language` - The language in which to return results.
     ///
@@ -36,7 +36,7 @@ impl<'a> ForwardRequest<'a> {
     /// may be valid in one language but not in another. For example, _utca_ and
     /// _tér_ are synonyms for street and square respectively in Hungarian.
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// * Set language for result:
     /// ```rust

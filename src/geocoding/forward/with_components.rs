@@ -4,11 +4,11 @@ impl<'a> ForwardRequest<'a> {
     /// Restricts the results from the geocoder to the specified component
     /// type(s).
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `component` - A single component filter of `Component` type.
     ///
-    /// ## Description:
+    /// ## Description
     ///
     /// [Component
     /// Filtering](https://developers.google.com/maps/documentation/geocoding/intro#ComponentFiltering)

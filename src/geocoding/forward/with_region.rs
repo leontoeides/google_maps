@@ -3,7 +3,7 @@ use crate::{geocoding::forward::ForwardRequest, types::Region};
 impl<'a> ForwardRequest<'a> {
     /// Specifies the region bias.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `region` ‧ The region to prefer in search results. This parameter will
     /// only influence, not fully restrict, results from the geocoder.
@@ -28,7 +28,7 @@ impl<'a> ForwardRequest<'a> {
     /// results, because "Toledo" is interpreted as the city in Ohio and not
     /// Spain.
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// * Bias region to Canada:
     /// ```rust

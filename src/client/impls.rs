@@ -42,7 +42,7 @@ impl GoogleMapsClient {
     //
     /// Initialize the settings needed for a Google Cloud Maps API transaction.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `key` ‧ Your application's API key. This key identifies your
     /// application for purposes of quota management. Learn how to [get a
@@ -71,7 +71,7 @@ impl GoogleMapsClient {
     //
     /// Initialize the settings needed for a Google Cloud Maps API transaction.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments. Use the methods of the resulting type.
 
@@ -162,7 +162,7 @@ impl GoogleMapsClient {
     /// surface of the earth, including depth locations on the ocean floor
     /// (which return negative values).
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments. Use the methods of the resulting type.
 
@@ -180,7 +180,7 @@ impl GoogleMapsClient {
     /// latitude and longitude), which you can use to place markers on a map, or
     /// position the map.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments. Use the methods of the resulting type.
 
@@ -196,7 +196,7 @@ impl GoogleMapsClient {
     /// geocoding of addresses. **Reverse geocoding** is the process of
     /// converting geographic coordinates into a human-readable address.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `latlng` ‧ The latitude and longitude values specifying the location
     /// for which you wish to obtain the closest, human-readable address.
@@ -232,7 +232,7 @@ impl GoogleMapsClient {
     /// that time zone, the time offset from UTC, and the daylight savings
     /// offset.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `location` ‧ Latitude & longitude of the desired time zone location.
     ///
@@ -273,7 +273,7 @@ impl GoogleMapsClient {
     /// for text-based geographic searches, by returning places such as
     /// businesses, addresses and points of interest as a user types.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `input` ‧ The text string on which to search.
 
@@ -296,7 +296,7 @@ impl GoogleMapsClient {
     /// service can match on both full words and substrings, applications can
     /// send queries as the user types to provide on-the-fly predictions.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `input` ‧ The text string on which to search.
     ///
@@ -334,7 +334,7 @@ impl GoogleMapsClient {
     /// list of places matching the text string and any location bias that has
     /// been set.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `query` ‧ The text string on which to search, for example:
     /// "restaurant" or "123 Main Street". This must a place name, address, or
@@ -424,7 +424,7 @@ impl GoogleMapsClient {
     /// within a specified area. You can refine your search request by supplying
     /// keywords or specifying the type of place you are searching for.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `location` ‧ The point around which to retrieve place information.
     /// This must be specified as `latitude,longitude`.
@@ -482,7 +482,7 @@ impl GoogleMapsClient {
     /// returns more comprehensive information about the indicated place such as
     /// its complete address, phone number, user rating and reviews.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `place_id` ‧ A textual identifier that uniquely identifies a place,
     /// returned from a
@@ -522,7 +522,7 @@ impl GoogleMapsClient {
     /// Optionally, you can request that the points be interpolated, resulting
     /// in a path that smoothly follows the geometry of the road.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `path` ‧ The path to be snapped. Note: The snapping algorithm works
     /// best for points that are not too far apart. If you observe odd snapping
@@ -573,7 +573,7 @@ impl GoogleMapsClient {
     ///
     /// **If you are working with sequential GPS points, use Nearest Roads.**
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `points` ‧ The points to be snapped. The points parameter accepts a
     /// list of latitude/longitude pairs.

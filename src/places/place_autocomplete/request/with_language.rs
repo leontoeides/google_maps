@@ -6,7 +6,7 @@ use crate::types::Language;
 impl<'a> Request<'a> {
     /// Adds the language parameter to the Place API _Place Autocomplete_ query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `language` ‧ The language in which to return results.
     ///

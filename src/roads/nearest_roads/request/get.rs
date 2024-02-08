@@ -14,7 +14,7 @@ use backoff::ExponentialBackoff; // crate::roads::nearest_roads
 impl<'a> NearestRoadsRequest<'a> {
     /// Performs the HTTP get request and returns the response to the caller.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments.
 

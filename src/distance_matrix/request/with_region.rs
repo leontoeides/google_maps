@@ -25,7 +25,7 @@ impl<'a> Request<'a> {
     /// results, because "Toledo" is interpreted as the city in Ohio and not
     /// Spain.
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// * Bias region to Canada:
     /// ```rust

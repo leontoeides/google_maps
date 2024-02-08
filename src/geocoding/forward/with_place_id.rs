@@ -3,7 +3,7 @@ use crate::geocoding::forward::ForwardRequest;
 impl<'a> ForwardRequest<'a> {
     /// Specifies the place id to geocode.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `place_id` - `TThe` place ID of the place for which you wish to obtain the
     /// human-readable address. The place ID is a unique identifier that can
@@ -14,7 +14,7 @@ impl<'a> ForwardRequest<'a> {
     /// For more information about place IDs, see the place [ID
     /// overview](https://developers.google.com/maps/documentation/places/web-service/place-id)..
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// ```rust
     /// .with_place_id(

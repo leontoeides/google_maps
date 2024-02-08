@@ -80,7 +80,7 @@ impl<'a> Request<'a> {
     /// misinterpretations using place IDs. See
     /// [troubleshooting the results of my route request](https://developers.google.com/maps/documentation/directions/intro).
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// * After departing from the `origin` location, stop for groceries at
     /// Sobeys before finally going to the `destination` location:
@@ -102,7 +102,7 @@ impl<'a> Request<'a> {
         self
     } // fn
 
-    /// ## Example:
+    /// ## Example
     ///
     /// * After departing from the `origin` location; visit the Canadian Museum
     /// of Nature, Rideau Canal National Historic Site, intersection of Bank St

@@ -8,7 +8,7 @@ impl<'a> ForwardRequest<'a> {
     /// values for validity - i.e. it will not Latitudes/Longitudes are valid
     /// and well-formed.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments.
 

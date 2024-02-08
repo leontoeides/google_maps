@@ -3,7 +3,7 @@ use crate::directions::request::{departure_time::DepartureTime, Request};
 impl<'a> Request<'a> {
     /// Specifies the desired departure time.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `departure_time` ‧ The soonest time the passenger intends to depart.
     /// May be "now" or a specified time.

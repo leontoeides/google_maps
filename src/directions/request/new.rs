@@ -10,7 +10,7 @@ impl<'a> Request<'a> {
     //
     /// Initializes the data structure for the builder pattern.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments.
 

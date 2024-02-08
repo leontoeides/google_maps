@@ -5,7 +5,7 @@ use crate::places::place_search::text_search::request::Request;
 impl<'a> Request<'a> {
     /// Adds "open now" filter to the Places API _Text Search_ query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `opennow` ‧ Returns only those places that are open for business at
     /// the time the query is sent. Places that do not specify opening hours in

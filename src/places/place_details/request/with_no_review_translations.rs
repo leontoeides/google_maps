@@ -6,7 +6,7 @@ impl<'a> Request<'a> {
     /// Specifies whether Google should provide translations of user reviews in
     /// the Places API _Place Details_ response.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `no_translations` ‧ Specify `true` to disable translation of reviews;
     /// specify `false` to enable translation of reviews. Reviews are returned

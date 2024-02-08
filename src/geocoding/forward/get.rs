@@ -17,7 +17,7 @@ use crate::request_rate::api::Api;
 impl<'a> FordwardGeocodingRequest<'a> {
     /// Performs the HTTP get request and returns the response to the caller.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments.
 

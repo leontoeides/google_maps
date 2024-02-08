@@ -9,7 +9,7 @@ impl<'a> Request<'a> {
     /// Initializes the builder pattern for a Elevation API query with the
     /// required, non-optional parameters.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
 

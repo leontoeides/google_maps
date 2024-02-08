@@ -6,7 +6,7 @@ use crate::places::place_details::Field;
 impl<'a> Request<'a> {
     /// Adds the requested fields to the Places API _Place Details_ query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `fields` ‧ Use the fields parameter to specify a comma-separated list
     /// of place data types to return. For example:

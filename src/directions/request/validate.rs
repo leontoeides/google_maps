@@ -8,7 +8,7 @@ impl<'a> Request<'a> {
     /// not check parameter values for validity - i.e. it will not ensure
     /// Polylines or Place ID's are valid and well-formed.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments.
 

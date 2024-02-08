@@ -3,7 +3,7 @@ use std::time::Duration;
 
 /// Converts a numerator and denominator into an English expression of a rate.
 ///
-/// ## Arguments:
+/// ## Arguments
 ///
 /// * `numerator` ‧ The numerator of the rate. i.e. _Files_ per second,
 /// _requests_ per minute, etc.
@@ -18,7 +18,7 @@ use std::time::Duration;
 /// * `numerator_plural` ‧ The plural form of the numerator's name as a string
 /// to be displayed to the end-user. For example, `"bytes"` or `"queries"`.
 ///
-/// ## Description:
+/// ## Description
 ///
 /// This function converts a numerator and Duration into an English expression
 /// of a rate. For example, "1 file per month," "5.83 pages a minute," etc. The

@@ -11,7 +11,7 @@ impl<'a> Request<'a> {
     /// Initializes the builder pattern for a Time Zone API query with the
     /// required, non-optional parameters.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
     ///
@@ -20,7 +20,7 @@ impl<'a> Request<'a> {
     /// * `timestamp` ‧ Time is used to determine if Daylight Savings is
     /// applicable.
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// ```rust
     /// use google_maps::prelude::TimeZoneRequest;
@@ -63,7 +63,7 @@ impl<'a> Request<'a> {
     /// the [geo](https://crates.io/crates/geo) crate's
     /// [Coord](https://docs.rs/geo/latest/geo/geometry/struct.Coord.html) type.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
     /// * `coordinate` - `Coord` of the desired time zone location.
@@ -98,7 +98,7 @@ impl<'a> Request<'a> {
     /// the [geo](https://crates.io/crates/geo) crate's
     /// [Point](https://docs.rs/geo/latest/geo/geometry/struct.Point.html) type.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
     /// * `point` - `Point` of the desired time zone location.

@@ -25,7 +25,7 @@ impl<'a> Request<'a> {
     /// * `TransitRoutePreference::FewerTransfers` indicates that the
     /// calculated route should prefer a limited number of transfers.
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// * Set transit route preference to fewer transfers:
     /// ```rust

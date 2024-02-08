@@ -18,7 +18,7 @@ impl<'a> Request<'a> {
     /// long jumps between consecutive points caused by GPS signal loss, or
     /// noise.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
     ///

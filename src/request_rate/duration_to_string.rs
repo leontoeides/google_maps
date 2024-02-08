@@ -3,12 +3,12 @@ use std::time::Duration;
 
 /// Converts a `std::time::Duration` into an English expression of time.
 ///
-/// ## Arguments:
+/// ## Arguments
 ///
 /// * `duration` ‧ The `std::time::Duration` that is to be converted into a
 /// string.
 ///
-/// ## Description:
+/// ## Description
 ///
 /// A `Duration` is a unit of time for the Rust programming language. This
 /// function converts a Duration into an English expression of time. For

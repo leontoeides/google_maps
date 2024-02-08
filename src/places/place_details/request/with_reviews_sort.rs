@@ -7,7 +7,7 @@ impl<'a> Request<'a> {
     /// Specifies the sort order of user reviews in the Places API _Place
     /// Details_ response.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `sort_order` ‧ The sorting method to use when returning reviews. Can
     /// be set to `most_relevant` (default) or newest.

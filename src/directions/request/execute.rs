@@ -10,13 +10,13 @@ impl<'a> DirectionsRequest<'a> {
     //
     /// Executes the query you've built.
     ///
-    /// ## Description:
+    /// ## Description
     ///
     /// My adventures in Rust became messy so I had to make this method. It
     /// wraps the `.validate()?.build()?.get()?` chain needed at the end of the
     /// builder pattern.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments.
 

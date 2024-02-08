@@ -5,7 +5,7 @@ use crate::places::place_search::nearby_search::request::Request;
 impl<'a> Request<'a> {
     /// Adds the minimum price to the Places API _Nearby Search_ query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `minprice` ‧ Restricts results to only those places within the
     /// specified range. Valid values range between 0 (most affordable) to 4

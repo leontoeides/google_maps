@@ -4,7 +4,7 @@ use crate::distance_matrix::request::Request;
 impl<'a> Request<'a> {
     /// Specifies the desired departure time.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `departure_time` ‧ The soonest time the passenger intends to depart.
     /// May be "now" or a specified time.

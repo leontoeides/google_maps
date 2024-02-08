@@ -7,7 +7,7 @@ impl<'a> Request<'a> {
     /// Builds the query string for the Google Maps Places API _Place
     /// Autocomplete_ query based on the input provided by the client.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// This method accepts no arguments.
 

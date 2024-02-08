@@ -5,7 +5,7 @@ use crate::places::place_search::text_search::request::Request;
 impl<'a> Request<'a> {
     /// Adds the maximum price to the Places API _Text Search_ query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `maxprice` ‧ Restricts results to only those places within the
     /// specified range. Valid values range between 0 (most affordable) to 4

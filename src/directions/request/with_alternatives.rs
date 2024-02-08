@@ -4,7 +4,7 @@ impl<'a> Request<'a> {
     /// Specify whether service may provide more than one route alternative in
     /// the response.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `alternatives` ‧ Whether more than one route should be in Google's
     /// response.
@@ -16,7 +16,7 @@ impl<'a> Request<'a> {
     /// alternatives may increase the response time from the server. This is
     /// only available for requests without intermediate waypoints.
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// * Allow more than one route in the response:
     /// ```rust

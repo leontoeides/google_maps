@@ -8,13 +8,13 @@ impl<'a> Request<'a> {
     //
     /// Adds the _positional request_ parameter to the Elevation API query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `location` ‧ Defines the location on the earth from which to
     /// return elevation data. This parameter takes a single `LatLng`
     /// coordinate.
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// ```rust
     /// // Denver, Colorado, the "Mile High City"
@@ -32,7 +32,7 @@ impl<'a> Request<'a> {
     //
     /// Adds a single _positional request_ parameter to the Elevation API query.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `locations` ‧ Defines the location(s) on the earth from which to
     /// return elevation data. This parameter takes either a single location,
@@ -40,7 +40,7 @@ impl<'a> Request<'a> {
     /// encoded polyline. For more information, see [Specifying
     /// Locations](https://developers.google.com/maps/documentation/elevation/intro#Locations).
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// ```rust
     /// .for_positional_requests(ElevationLocations::LatLngs(vec![
@@ -66,7 +66,7 @@ impl<'a> Request<'a> {
     /// the [geo](https://crates.io/crates/geo) crate's
     /// [Coord](https://docs.rs/geo/latest/geo/geometry/struct.Coord.html) type.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `coordinate` ‧ Defines the location on the earth from which to
     /// return elevation data. This parameter takes a single `Coord`.
@@ -90,7 +90,7 @@ impl<'a> Request<'a> {
     /// the [geo](https://crates.io/crates/geo) crate's
     /// [Point](https://docs.rs/geo/latest/geo/geometry/struct.Point.html) type.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `point` ‧ Defines the location on the earth from which to return
     /// elevation data. This parameter takes a single `Point`.

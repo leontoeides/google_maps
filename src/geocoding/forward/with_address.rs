@@ -3,7 +3,7 @@ use crate::geocoding::forward::ForwardRequest;
 impl<'a> ForwardRequest<'a> {
     /// Specifies the street address to geocode.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `address` - The street address that you want to geocode, in the format
     /// used by the national postal service of the country concerned. Additional
@@ -12,7 +12,7 @@ impl<'a> ForwardRequest<'a> {
     /// FAQ](https://developers.google.com/maps/faq#geocoder_queryformat) for
     /// additional guidance.
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// ```rust
     /// .with_address(String::from(

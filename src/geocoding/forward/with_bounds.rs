@@ -6,7 +6,7 @@ use crate::types::Bounds;
 impl<'a> ForwardRequest<'a> {
     /// Specifies a bounding box for biasing results.
     ///
-    /// ## Arguments:
+    /// ## Arguments
     ///
     /// * `bounds` - The bounding box of the viewport within which to bias
     /// geocode results more prominently. This parameter will only influence,
@@ -31,7 +31,7 @@ impl<'a> ForwardRequest<'a> {
     /// the San Fernando Valley of Los Angeles results in this geocode returning
     /// the neighborhood named "Winnetka" in that location.
     ///
-    /// ## Example:
+    /// ## Example
     ///
     /// * Specify bounding box for search area:
     /// ```
