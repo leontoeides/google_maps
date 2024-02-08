@@ -34,7 +34,7 @@ impl RequestRate {
                 );
             }
         } else {
-            tracing::warn!("Clock went backwards!")
+            tracing::warn!("Clock went backwards!");
         }
     }
 } // impl

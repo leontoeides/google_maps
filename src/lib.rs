@@ -367,6 +367,7 @@
     clippy::cast_precision_loss,
     clippy::missing_errors_doc,
     clippy::module_name_repetitions,
+    clippy::multiple_crate_versions,
     clippy::too_many_lines
 )]
 #![doc(html_favicon_url = "https://www.arkiteq.ca/crates/google_maps/icon.png")]
