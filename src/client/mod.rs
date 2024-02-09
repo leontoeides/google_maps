@@ -41,7 +41,6 @@ pub struct GoogleMapsClient {
     /// Your application's API key. This key identifies your application for
     /// purposes of quota management. Learn how to [get a
     /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
-    /// Contains the application's API key and other settings.
     pub key: String,
 
     /// Rate limits for each of the Google Cloud Maps Platform APIs.

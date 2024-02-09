@@ -33,9 +33,11 @@ impl GoogleMapsClient {
     /// `try_new` to instantiate a new `GoogleMapsClient` instead.
 
     #[cfg(feature = "enable-reqwest")]
-    #[deprecated(since="3.4.2", note="use `try_new` instead")]
+    #[deprecated(since = "3.4.2", note = "use `try_new` instead")]
     #[must_use]
-    pub fn new(key: &str) -> Self { Self::try_new(key).unwrap() }
+    pub fn new(key: &str) -> Self {
+        Self::try_new(key).unwrap()
+    }
 
     // -------------------------------------------------------------------------
     //
@@ -88,7 +90,7 @@ impl GoogleMapsClient {
     /// locations. You can search for directions for several modes of
     /// transportation, including transit, driving, walking, or cycling.
     ///
-    /// ## Basic usage:
+    /// ## Basic usage
     ///
     /// ```rust
     /// use google_maps::prelude::*;
@@ -120,7 +122,7 @@ impl GoogleMapsClient {
     /// time for a matrix of origins and destinations, based on the recommended
     /// route between start and end points.
     ///
-    /// ## Basic usage:
+    /// ## Basic usage
     ///
     /// ```rust
     /// use google_maps::prelude::*;
@@ -201,7 +203,7 @@ impl GoogleMapsClient {
     /// * `latlng` ‧ The latitude and longitude values specifying the location
     /// for which you wish to obtain the closest, human-readable address.
     ///
-    /// ## Basic usage:
+    /// ## Basic usage
     ///
     /// ```rust
     /// use google_maps::prelude::*;
@@ -239,7 +241,7 @@ impl GoogleMapsClient {
     /// * `timestamp` ‧ Time is used to determine if Daylight Savings is
     /// applicable.
     ///
-    /// ## Basic usage:
+    /// ## Basic usage
     ///
     /// ```rust
     /// use google_maps::prelude::*;
@@ -300,7 +302,7 @@ impl GoogleMapsClient {
     ///
     /// * `input` ‧ The text string on which to search.
     ///
-    /// ## Basic usage:
+    /// ## Basic usage
     ///
     /// ```rust
     /// use google_maps::prelude::*;
@@ -392,7 +394,7 @@ impl GoogleMapsClient {
     /// don't need, use a [Find Place request](https://developers.google.com/maps/documentation/places/web-service/search#FindPlaceRequests)
     /// instead.
     ///
-    /// ## Basic usage:
+    /// ## Basic usage
     ///
     /// ```rust
     /// use google_maps::prelude::*;
@@ -449,7 +451,7 @@ impl GoogleMapsClient {
     /// * Query Autocomplete: 50,000 meters
     /// * Nearby Search: 50,000 meters
     ///
-    /// ## Basic usage:
+    /// ## Basic usage
     ///
     /// ```rust
     /// use google_maps::prelude::*;
@@ -490,7 +492,7 @@ impl GoogleMapsClient {
     /// For more information about place IDs, see the
     /// [place ID overview](https://developers.google.com/maps/documentation/places/web-service/place-id).
     ///
-    /// ## Basic usage:
+    /// ## Basic usage
     ///
     /// ```rust
     /// use google_maps::prelude::*;
@@ -532,7 +534,7 @@ impl GoogleMapsClient {
     /// also help in handling any isolated, long jumps between consecutive
     /// points caused by GPS signal loss, or noise.
     ///
-    /// ## Basic usage:
+    /// ## Basic usage
     ///
     /// ```rust
     /// use google_maps::prelude::*;
@@ -578,7 +580,7 @@ impl GoogleMapsClient {
     /// * `points` ‧ The points to be snapped. The points parameter accepts a
     /// list of latitude/longitude pairs.
     ///
-    /// ## Basic usage:
+    /// ## Basic usage
     ///
     /// ```rust
     /// use google_maps::prelude::*;
