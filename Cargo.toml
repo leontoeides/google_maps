@@ -17,7 +17,7 @@ doctest = false
 
 [features]
 default = [
-	"autocomplete", # Places API autocomplete-related services, other services are under "places" feature.
+	"autocomplete", # Places API autocomplete-related services, other Places API services are under "places" feature.
 	"directions",
 	"distance_matrix",
 	"elevation",

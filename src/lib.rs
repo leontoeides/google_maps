@@ -1,7 +1,8 @@
 //! # `google_maps`
-//! [![Docs](https://docs.rs/google_maps/badge.svg)](https://docs.rs/google_maps)
-//! [![Crates.io](https://img.shields.io/crates/v/google_maps.svg?maxAge=2592000)](https://crates.io/crates/google_maps)
-//! [![msrv](https://img.shields.io/badge/rustc-1.70.0+-red)](https://blog.rust-lang.org/2023/06/01/Rust-1.70.0.html)
+//! [![docs.rs](https://docs.rs/google_maps/badge.svg)](https://docs.rs/google_maps)
+//! [![crates.io](https://img.shields.io/crates/v/google_maps.svg?maxAge=2592000)](https://crates.io/crates/google_maps)
+//! [![license](https://img.shields.io/badge/license-MIT-blue)](https://github.com/leontoeides/google_maps/blob/master/LICENSE-MIT)
+//! [![msrv](https://img.shields.io/badge/rustc-1.70+-lightgray)](https://blog.rust-lang.org/2023/06/01/Rust-1.70.0.html)
 //!
 //! An unofficial Google Maps Platform client library for the Rust programming
 //! language.
@@ -99,7 +100,7 @@
 //!
 //! ```toml
 //! google_maps = {
-//!     version = "3.0",
+//!     version = "3.4",
 //!     default-features = false,
 //!     features = [
 //!         "directions",
@@ -389,6 +390,7 @@
     clippy::multiple_crate_versions,
     clippy::too_many_lines
 )]
+
 #![doc(html_favicon_url = "https://www.arkiteq.ca/crates/google_maps/icon.png")]
 #![doc(html_logo_url = "https://www.arkiteq.ca/crates/google_maps/logo.png")]
 
