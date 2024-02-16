@@ -1,8 +1,9 @@
 # google_maps
 [![docs.rs](https://docs.rs/google_maps/badge.svg)](https://docs.rs/google_maps)
-[![crates.io](https://img.shields.io/crates/v/google_maps.svg?maxAge=2592000)](https://crates.io/crates/google_maps)
-[![license](https://img.shields.io/badge/license-MIT-blue)](https://github.com/leontoeides/google_maps/blob/master/LICENSE-MIT)
-[![msrv](https://img.shields.io/badge/rustc-1.70+-lightgray)](https://blog.rust-lang.org/2023/06/01/Rust-1.70.0.html)
+![Crates.io Version](https://img.shields.io/crates/v/google_maps)
+![Crates.io MSRV](https://img.shields.io/crates/msrv/google_maps)
+![Crates.io License](https://img.shields.io/crates/l/google_maps)
+![Crates.io Total Downloads](https://img.shields.io/crates/d/:crate)
 
 An unofficial Google Maps Platform client library for the Rust programming language. 
 

@@ -11,6 +11,7 @@ license = "MIT OR Apache-2.0"
 publish = true
 readme = "README.md"
 repository = "https://github.com/leontoeides/google_maps"
+rust-version = "1.70"
 
 [lib]
 doctest = false
