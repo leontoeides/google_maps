@@ -3,7 +3,7 @@
 //! ![Crates.io Version](https://img.shields.io/crates/v/google_maps)
 //! ![Crates.io MSRV](https://img.shields.io/crates/msrv/google_maps)
 //! ![Crates.io License](https://img.shields.io/crates/l/google_maps)
-//! ![Crates.io Total Downloads](https://img.shields.io/crates/d/:crate)
+//! ![Crates.io Total Downloads](https://img.shields.io/crates/d/google_maps)
 //!
 //! An unofficial Google Maps Platform client library for the Rust programming
 //! language.
