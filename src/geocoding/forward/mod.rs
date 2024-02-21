@@ -72,7 +72,7 @@ pub struct ForwardRequest<'a> {
     /// element in the components filter fully restricts the results from the
     /// geocoder. See more information about [component
     /// filtering](https://developers.google.com/maps/documentation/geocoding/intro#ComponentFiltering).
-    components: Option<Vec<Component>>,
+    components: Vec<Component>,
 
     /// The language in which to return results.
     language: Option<Language>,

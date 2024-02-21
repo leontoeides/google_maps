@@ -22,7 +22,7 @@ impl<'a> ForwardRequest<'a> {
             address: None,
             place_id: None,
             bounds: None,
-            components: None,
+            components: Vec::new(),
             language: None,
             region: None,
             // Internal use only:

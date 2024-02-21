@@ -37,7 +37,7 @@ pub struct Response {
     /// contains the available travel modes in the countries of the given set of
     /// waypoints. This field is not returned if one or more of the waypoints
     /// are `via:` waypoints.
-    pub available_travel_modes: Option<Vec<TravelMode>>,
+    pub available_travel_modes: Vec<TravelMode>,
 
     /// When the status code is other than `OK`, there may be an additional
     /// `error_message` field within the Directions response object. This field
@@ -51,7 +51,7 @@ pub struct Response {
     /// Contains an array with details about the geocoding of origin,
     /// destination and waypoints. See [Geocoded
     /// Waypoints](https://developers.google.com/maps/documentation/directions/intro#GeocodedWaypoints).
-    pub geocoded_waypoints: Option<Vec<GeocodedWaypoint>>,
+    pub geocoded_waypoints: Vec<GeocodedWaypoint>,
 
     /// Contains an array of routes from the origin to the destination. See
     /// [Routes](https://developers.google.com/maps/documentation/directions/intro#Routes).

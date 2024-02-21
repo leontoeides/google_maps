@@ -91,7 +91,7 @@ pub struct Request<'a> {
 
     /// Features that routes should avoid. See file `avoid.rs` and method
     /// `with_restrictions()` for more information.
-    restrictions: Option<Vec<Avoid>>,
+    restrictions: Vec<Avoid>,
 
     /// Assumptions to use when calculating time in traffic. See file
     /// `traffic_model.rs` and method `with_traffic_model()` for more
@@ -100,7 +100,7 @@ pub struct Request<'a> {
 
     /// Preferred modes of transit. See file `transit_mode.rs` and method
     /// `with_transit_modes()` for more information.
-    transit_modes: Option<Vec<TransitMode>>,
+    transit_modes: Vec<TransitMode>,
 
     /// Preferences for transit routes. See file `transit_route_preference.rs`
     /// and method `with_transit_route_preference()` for more information.
@@ -120,7 +120,7 @@ pub struct Request<'a> {
 
     /// Pass throughs or stopovers at intermediate locations. See file
     /// `waypoint.rs` and method `with_waypoints()` for more information.
-    waypoints: Option<Vec<Waypoint>>,
+    waypoints: Vec<Waypoint>,
 
     // Internal use only:
     // ------------------

@@ -30,7 +30,7 @@ pub struct Request {
     /// section.
     #[serde(rename = "cellTowers")]
     #[serde(alias = "cellTowers")]
-    pub cell_towers: Option<Vec<CellTower>>,
+    pub cell_towers: Vec<CellTower>,
 
     /// Specifies whether to fall back to IP geolocation if wifi and cell tower
     /// signals are not available. Defaults to `true`. Set `considerIp` to
@@ -61,7 +61,7 @@ pub struct Request {
     /// section.
     #[serde(rename = "wifiAccessPoints")]
     #[serde(alias = "wifiAccessPoints")]
-    pub wifi_access_points: Option<Vec<WiFiAccessPoint>>,
+    pub wifi_access_points: Vec<WiFiAccessPoint>,
 
     // Internal use only:
     // ------------------

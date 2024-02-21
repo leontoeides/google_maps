@@ -17,8 +17,8 @@ impl<'a> Request<'a> {
             // If the travel mode has been set to TravelMode::Transit...
             if *travel_mode == TravelMode::Transit {
                 // ...waypoints cannot be set:
-                if let Some(waypoints) = &self.waypoints {
-                    return Err(Error::EitherWaypointsOrTransitMode(waypoints.len()));
+                if !self.waypoints.is_empty() {
+                    return Err(Error::EitherWaypointsOrTransitMode(self.waypoints.len()));
                 } // if
 
             // If the transit mode is not set to TravelMode::Transit...
@@ -32,10 +32,10 @@ impl<'a> Request<'a> {
                 } // if
 
                 // ...a transit mode cannot be set:
-                if let Some(transit_modes) = &self.transit_modes {
+                if !self.transit_modes.is_empty() {
                     return Err(Error::TransitModeIsForTransitOnly(
                         travel_mode.to_string(),
-                        transit_modes
+                        self.transit_modes
                             .iter()
                             .map(std::string::ToString::to_string)
                             .collect::<Vec<String>>()
@@ -54,20 +54,20 @@ impl<'a> Request<'a> {
         } // if
 
         // If waypoints have been set...
-        if let Some(waypoints) = &self.waypoints {
+        if !self.waypoints.is_empty() {
             // ...alternatives cannot be set to true:
             if let Some(alternatives) = &self.alternatives {
                 if !alternatives {
-                    return Err(Error::EitherAlternativesOrWaypoints(waypoints.len()));
+                    return Err(Error::EitherAlternativesOrWaypoints(self.waypoints.len()));
                     // Err
                 } // if
             } // if
 
             // ...restrictions cannot be set:
-            if let Some(restrictions) = &self.restrictions {
+            if self.restrictions.is_empty() {
                 return Err(Error::EitherRestrictionsOrWaypoints(
-                    waypoints.len(),
-                    restrictions
+                    self.waypoints.len(),
+                    self.restrictions
                         .iter()
                         .map(std::string::ToString::to_string)
                         .collect::<Vec<String>>()
@@ -76,8 +76,8 @@ impl<'a> Request<'a> {
             } // if
 
             // ...ensure that the number of waypoints is equal to or less than 25:
-            if waypoints.len() > 25 {
-                return Err(Error::TooManyWaypoints(waypoints.len()));
+            if self.waypoints.len() > 25 {
+                return Err(Error::TooManyWaypoints(self.waypoints.len()));
             } // if
         } // if
 

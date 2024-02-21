@@ -51,7 +51,7 @@ pub struct ReverseRequest<'a> {
     /// `location_type` acts as a post-search filter: the API fetches all
     /// results for the specified `latlng`, then discards those results that do
     /// not match the specified location type(s).
-    location_types: Option<Vec<LocationType>>,
+    location_types: Vec<LocationType>,
 
     /// A filter of one or more address types. If the parameter contains
     /// multiple address types, the API returns all addresses that match any of
@@ -60,7 +60,7 @@ pub struct ReverseRequest<'a> {
     /// `result_type` acts as a post-search filter: the API fetches all results
     /// or the specified `latlng`, then discards those results that do not match
     /// the specified address type(s).
-    result_types: Option<Vec<PlaceType>>,
+    result_types: Vec<PlaceType>,
 
     // Internal use only:
     // ------------------

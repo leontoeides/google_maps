@@ -19,13 +19,13 @@ pub struct PlaceOpeningHours {
     ///
     /// See [PlaceOpeningHoursPeriod](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceOpeningHoursPeriod)
     /// for more information.
-    pub periods: Option<Vec<PlaceOpeningHoursPeriod>>,
+    pub periods: Vec<PlaceOpeningHoursPeriod>,
 
     /// An array of up to seven entries corresponding to the next seven days.
     ///
     /// See [PlaceSpecialDay](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceSpecialDay)
     /// for more information.
-    pub special_days: Option<Vec<PlaceSpecialDay>>,
+    pub special_days: Vec<PlaceSpecialDay>,
 
     /// A type string used to identify the type of secondary hours (for example,
     /// `DRIVE_THROUGH`, `HAPPY_HOUR`, `DELIVERY`, `TAKEOUT`, `KITCHEN`,
@@ -35,7 +35,7 @@ pub struct PlaceOpeningHours {
 
     /// An array of strings describing in human-readable text the hours of the
     /// place.
-    pub weekday_text: Option<Vec<String>>,
+    pub weekday_text: Vec<String>,
 } // struct PlaceOpeningHours
 
 // -----------------------------------------------------------------------------
@@ -54,16 +54,14 @@ impl std::str::FromStr for PlaceOpeningHours {
 /// A helper function that returns the dates of upcoming special days for a
 /// place. This is meant to be used with the `Place.current_opening_hours`
 /// field. Using this with the `Place.current_opening_hours` will likely just
-/// return `None`.
+/// return an empty `HashSet`.
 
 impl PlaceOpeningHours {
     #[must_use]
-    pub fn special_days(&self) -> Option<HashSet<NaiveDate>> {
-        self.special_days.as_ref().map(|special_days_vec| {
-            special_days_vec
-                .iter()
-                .filter_map(|place_special_day| place_special_day.date)
-                .collect::<HashSet<NaiveDate>>()
-        }) // map
+    pub fn special_days(&self) -> HashSet<NaiveDate> {
+        self.special_days
+            .iter()
+            .filter_map(|place_special_day| place_special_day.date)
+            .collect::<HashSet<NaiveDate>>()
     } // fn
 } // impl

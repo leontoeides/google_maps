@@ -26,10 +26,10 @@ impl<'a> Request<'a> {
                 } // if
 
                 // ...a transit mode cannot be set:
-                if let Some(transit_modes) = &self.transit_modes {
+                if !self.transit_modes.is_empty() {
                     return Err(Error::TransitModeIsForTransitOnly(
                         travel_mode.to_string(),
-                        transit_modes
+                        self.transit_modes
                             .iter()
                             .map(std::string::ToString::to_string)
                             .collect::<Vec<String>>()

@@ -65,7 +65,7 @@ pub struct Request<'a> {
     /// more information on the fields that are unavailable in a Place Search
     /// request, see
     /// [Places API fields support](https://developers.google.com/maps/documentation/places/web-service/place-data-fields#places-api-fields-support).
-    fields: Option<Vec<Field>>,
+    fields: Vec<Field>,
 
     /// The language in which to return results.
     ///

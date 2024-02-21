@@ -51,7 +51,7 @@ pub struct Response {
     /// the response object. This field is only returned for successful
     /// requests. It may not always be returned, and its content is subject to
     /// change.
-    pub info_messages: Option<Vec<String>>,
+    pub info_messages: Vec<String>,
 
     /// Contains a token that can be used to return up to 20 additional results.
     /// A next_page_token will not be returned if there are no additional

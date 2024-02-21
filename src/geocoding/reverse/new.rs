@@ -26,8 +26,8 @@ impl<'a> ReverseRequest<'a> {
             latlng,
             // Optional parameters:
             language: None,
-            location_types: None,
-            result_types: None,
+            location_types: Vec::new(),
+            result_types: Vec::new(),
             // Internal use only:
             query: None,
         } // struct
@@ -60,8 +60,8 @@ impl<'a> ReverseRequest<'a> {
             latlng: LatLng::try_from(coordinate)?,
             // Optional parameters:
             language: None,
-            location_types: None,
-            result_types: None,
+            location_types: Vec::new(),
+            result_types: Vec::new(),
             // Internal use only:
             query: None,
         }) // struct
@@ -94,8 +94,8 @@ impl<'a> ReverseRequest<'a> {
             latlng: LatLng::try_from(point)?,
             // Optional parameters:
             language: None,
-            location_types: None,
-            result_types: None,
+            location_types: Vec::new(),
+            result_types: Vec::new(),
             // Internal use only:
             query: None,
         }) // struct

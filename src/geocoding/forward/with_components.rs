@@ -64,13 +64,8 @@ impl<'a> ForwardRequest<'a> {
 
     pub fn with_component(&'a mut self, component: Component) -> &'a mut ForwardRequest {
         // Add component to ForwardRequest struct.
-        match &mut self.components {
-            // If there are no components in the request struct, initialize:
-            None => self.components = Some(vec![component]),
-            // If there are already components, append to them:
-            Some(components) => components.push(component),
-        } // match
-          // Return modified ForwardRequest struct to caller.
+        self.components = vec![component];
+        // Return modified ForwardRequest struct to caller.
         self
     } // fn
 
@@ -80,27 +75,20 @@ impl<'a> ForwardRequest<'a> {
     /// # Example:
     ///
     /// * Alternatively, multiple component filters may be passed in a single
-    /// method call by passing a Vec. This example restricts results to a street
-    /// in a city:
+    /// method call by passing a slice. This example restricts results to a
+    /// street in a city:
     ///
     /// ```rust
-    /// .with_components(&vec![
+    /// .with_components(&[
     ///     GeocodingComponent::Route(String::from("Downing Street")),
     ///     GeocodingComponent::Locality(String::from("London")),
     /// ])
     /// ```
 
-    pub fn with_components(&'a mut self, components_slice: &[Component]) -> &'a mut ForwardRequest {
+    pub fn with_components(&'a mut self, components: &[Component]) -> &'a mut ForwardRequest {
         // Add components to ForwardRequest struct.
-        match &mut self.components {
-            // If there are no filters in the request struct, initialize field:
-            None => self.components = Some(components_slice.to_vec()),
-            // If there are already filters, append to them:
-            Some(components) => components_slice
-                .iter()
-                .for_each(|component| components.push(component.to_owned())), // iter
-        } // match
-          // Return modified ForwardRequest struct to caller.
+        self.components = components.to_vec();
+        // Return modified ForwardRequest struct to caller.
         self
     } // fn
 } // impl

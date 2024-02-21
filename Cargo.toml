@@ -1,6 +1,6 @@
 [package]
 name = "google_maps"
-version = "3.4.3"
+version = "3.5.0"
 authors = [ "Dylan Bowker <dylan.bowker@arkiteq.ca>" ]
 edition = "2021"
 categories = [ "api-bindings" ]
@@ -11,7 +11,7 @@ license = "MIT OR Apache-2.0"
 publish = true
 readme = "README.md"
 repository = "https://github.com/leontoeides/google_maps"
-rust-version = "1.70"
+rust-version = "1.70.0"
 
 [lib]
 doctest = false
@@ -31,6 +31,9 @@ default = [
 	"reqwest/gzip",
 	"enable-reqwest-middleware",
 	"rust_decimal/serde",
+
+
+	"geo",
 ]
 # Google Maps Client API features:
 autocomplete = []

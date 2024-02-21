@@ -70,7 +70,7 @@ pub struct Prediction {
     /// "beauty_salon" ]`. The array can contain multiple values. Learn more
     /// about [Place types](https://developers.google.com/maps/documentation/places/web-service/supported_types).
     #[serde(alias = "types")]
-    pub types: Option<Vec<PlaceType>>,
+    pub types: Vec<PlaceType>,
 } // struct Prediction
 
 /// ----------------------------------------------------------------------------

@@ -39,7 +39,7 @@ pub struct Response {
     /// the response object. This field is only returned for successful
     /// requests. It may not always be returned, and its content is subject to
     /// change.
-    pub info_messages: Option<Vec<String>>,
+    pub info_messages: Vec<String>,
 } // struct
 
 // -----------------------------------------------------------------------------

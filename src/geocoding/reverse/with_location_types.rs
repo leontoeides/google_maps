@@ -59,16 +59,10 @@ impl<'a> ReverseRequest<'a> {
 
     pub fn with_location_type(
         &'a mut self,
-        location_type_element: LocationType,
+        location_type: LocationType,
     ) -> &'a mut ReverseRequest {
-        // Add location type to ReverseRequest struct.
-        match &mut self.location_types {
-            // If there are no filters in the request struct, initialize field:
-            None => self.location_types = Some(vec![location_type_element]),
-            // If there are already filters, append to them:
-            Some(location_types) => location_types.push(location_type_element),
-        } // match
-          // Return modified ReverseRequest struct to caller.
+        self.location_types = vec![location_type];
+        // Return modified ReverseRequest struct to caller.
         self
     } // fn
 
@@ -89,11 +83,11 @@ impl<'a> ReverseRequest<'a> {
     /// # Example:
     ///
     /// * Alternatively, multiple location type filters may be passed in a
-    /// single method call by passing a Vec. This example restricts results to
+    /// single method call by passing a slice. This example restricts results to
     /// roof-top and range-interpolated:
     ///
     /// ```rust
-    /// .with_location_types(&vec![
+    /// .with_location_types(&[
     ///     LocationType::RoofTop,
     ///     LocationType::RangeInterpolated,
     /// ])
@@ -101,18 +95,11 @@ impl<'a> ReverseRequest<'a> {
 
     pub fn with_location_types(
         &'a mut self,
-        location_type_slice: &[LocationType],
+        location_types: &[LocationType],
     ) -> &'a mut ReverseRequest {
         // Add location types to ReverseRequest struct.
-        match &mut self.location_types {
-            // If there are no filters in the request struct, initialize field:
-            None => self.location_types = Some(location_type_slice.to_vec()),
-            // If there are already filters, append to them:
-            Some(reverse_request_struct) => location_type_slice
-                .iter()
-                .for_each(|location_type| reverse_request_struct.push(location_type.to_owned())), // iter
-        } // match
-          // Return modified ReverseRequest struct to caller.
+        self.location_types = location_types.to_vec();
+        // Return modified ReverseRequest struct to caller.
         self
     } // fn
 } // impl

@@ -60,13 +60,8 @@ impl<'a> Request<'a> {
 
     pub fn with_restriction(&'a mut self, restriction: Avoid) -> &'a mut Request {
         // Add restriction to Request struct.
-        match &mut self.restrictions {
-            // If there are no restrictions in the request struct, initialize:
-            None => self.restrictions = Some(vec![restriction]),
-            // If there are already restrictions, append to them:
-            Some(restrictions) => restrictions.push(restriction),
-        } // match
-          // Return modified Request struct to caller.
+        self.restrictions = vec![restriction];
+        // Return modified Request struct to caller.
         self
     } // fn
 
@@ -75,26 +70,19 @@ impl<'a> Request<'a> {
     /// # Example:
     ///
     /// * Alternatively, multiple restrictions may be passed in a single method
-    /// call by passing a Vec. This example avoids tolls and ferries:
+    /// call by passing a slice. This example avoids tolls and ferries:
     ///
     /// ```rust
-    /// .with_restrictions(vec![
+    /// .with_restrictions(&[
     ///     Avoid::Tolls,
     ///     Avoid::Ferries,
     /// ])
     /// ```
 
-    pub fn with_restrictions(&'a mut self, restrictions_slice: &[Avoid]) -> &'a mut Request {
+    pub fn with_restrictions(&'a mut self, restrictions: &[Avoid]) -> &'a mut Request {
         // Add restrictions to Request struct.
-        match &mut self.restrictions {
-            // If there are no filters in the request struct, initialize field:
-            None => self.restrictions = Some(restrictions_slice.to_vec()),
-            // If there are already filters, append to them:
-            Some(restrictions) => restrictions_slice
-                .iter()
-                .for_each(|restriction| restrictions.push(restriction.to_owned())), // iter
-        } // match
-          // Return modified Request struct to caller.
+        self.restrictions = restrictions.to_vec();
+        // Return modified Request struct to caller.
         self
     } // fn
 } // impl

@@ -27,7 +27,7 @@ impl<'a> Request<'a> {
             client,
             place_id,
             // Optional parameters:
-            fields: None,
+            fields: Vec::new(),
             language: None,
             region: None,
             reviews_no_translations: None,

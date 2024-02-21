@@ -14,10 +14,10 @@ impl<'a> ForwardRequest<'a> {
 
     pub fn validate(&mut self) -> Result<&'a mut ForwardRequest, Error> {
         // If a positional request has been set...
-        if self.address.is_none() && self.place_id.is_none() && self.components.is_none() {
+        if self.address.is_none() && self.place_id.is_none() && self.components.is_empty() {
             return Err(Error::AddressOrComponentsRequired);
         } // if
-          // Indicate that the request passed validation.
+        // Indicate that the request passed validation.
         self.validated = true;
         // Return modified Request struct to caller.
         Ok(self)

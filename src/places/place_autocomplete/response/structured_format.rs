@@ -40,7 +40,7 @@ pub struct StructuredFormat {
     /// See [PlaceAutocompleteMatchedSubstring](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlaceAutocompleteMatchedSubstring)
     /// for more information.
     #[serde(alias = "secondary_text_matched_substrings")]
-    pub secondary_text_matched_substrings: Option<Vec<MatchedSubstring>>,
+    pub secondary_text_matched_substrings: Vec<MatchedSubstring>,
 } // struct StructuredFormat
 
 /// ----------------------------------------------------------------------------

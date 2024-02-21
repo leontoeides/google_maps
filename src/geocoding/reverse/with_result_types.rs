@@ -115,16 +115,11 @@ impl<'a> ReverseRequest<'a> {
 
     pub fn with_result_type(
         &'a mut self,
-        result_type_element: PlaceType,
+        result_type: PlaceType,
     ) -> &'a mut ReverseRequest {
         // Add result type to ReverseRequest struct.
-        match &mut self.result_types {
-            // If there are no filters in the request struct, initialize field:
-            None => self.result_types = Some(vec![result_type_element]),
-            // If there are already filters, append to them:
-            Some(reverse_request_struct) => reverse_request_struct.push(result_type_element),
-        } // match
-          // Return modified ReverseRequest struct to caller.
+        self.result_types = vec![result_type];
+        // Return modified ReverseRequest struct to caller.
         self
     } // fn
 
@@ -144,11 +139,11 @@ impl<'a> ReverseRequest<'a> {
     /// # Example:
     ///
     /// * Alternatively, multiple result type filters may be passed in a single
-    /// method call by passing a Vec. This example restricts results a
+    /// method call by passing a slice. This example restricts results a
     /// neighborhood and a locality:
     ///
     /// ```rust
-    /// .with_components(&vec![
+    /// .with_components(&[
     ///     PlaceType::Neighborhood,
     ///     PlaceType::Locality,
     /// ])
@@ -156,18 +151,11 @@ impl<'a> ReverseRequest<'a> {
 
     pub fn with_result_types(
         &'a mut self,
-        result_type_slice: &[PlaceType],
+        result_types: &[PlaceType],
     ) -> &'a mut ReverseRequest {
         // Add location types to ReverseRequest struct.
-        match &mut self.result_types {
-            // If there are no filters in the request struct, initialize field:
-            None => self.result_types = Some(result_type_slice.to_vec()),
-            // If there are already filters, append to them:
-            Some(reverse_request_struct) => result_type_slice
-                .iter()
-                .for_each(|result_type| reverse_request_struct.push(result_type.to_owned())), // iter
-        } // match
-          // Return modified ReverseRequest struct to caller.
+        self.result_types = result_types.to_vec();
+        // Return modified ReverseRequest struct to caller.
         self
     } // fn
 } // impl

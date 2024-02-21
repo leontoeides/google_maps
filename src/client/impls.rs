@@ -166,7 +166,8 @@ impl GoogleMapsClient {
     ///
     /// ## Arguments
     ///
-    /// This method accepts no arguments. Use the methods of the resulting type.
+    /// This method accepts no arguments, it initiates a builder pattern. Use
+    /// the methods of the resulting type.
 
     #[cfg(feature = "elevation")]
     #[must_use]
@@ -184,7 +185,8 @@ impl GoogleMapsClient {
     ///
     /// ## Arguments
     ///
-    /// This method accepts no arguments. Use the methods of the resulting type.
+    /// This method accepts no arguments, it initiates a builder pattern. Use
+    /// the methods of the resulting type.
 
     #[cfg(feature = "geocoding")]
     #[must_use]

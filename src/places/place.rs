@@ -18,7 +18,7 @@ pub struct Place {
     ///
     /// See [AddressComponent](https://developers.google.com/maps/documentation/places/web-service/search-text#AddressComponent)
     /// for more information.
-    pub address_components: Option<Vec<AddressComponent>>,
+    pub address_components: Vec<AddressComponent>,
 
     /// A representation of the place's address in the
     /// [adr microformat](http://microformats.org/wiki/adr).
@@ -119,7 +119,7 @@ pub struct Place {
     ///
     /// See [PlacePhoto](https://developers.google.com/maps/documentation/places/web-service/search-text#PlacePhoto)
     /// for more information.
-    pub photos: Option<Vec<PlacePhoto>>,
+    pub photos: Vec<PlacePhoto>,
 
     /// A textual identifier that uniquely identifies a place. To retrieve
     /// information about the place, pass this identifier in the `place_id`
@@ -161,7 +161,7 @@ pub struct Place {
     ///
     /// See [PlaceReview](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceReview)
     /// for more information.
-    pub reviews: Option<Vec<PlaceReview>>,
+    pub reviews: Vec<PlaceReview>,
 
     /// Contains an array of entries for the next seven days including
     /// information about secondary hours of a business. Secondary hours are
@@ -203,7 +203,7 @@ pub struct Place {
 
     /// Contains an array of feature types describing the given result. See the
     /// list of [supported types](https://developers.google.com/maps/documentation/places/web-service/supported_types#table2).
-    pub types: Option<Vec<PlaceType>>,
+    pub types: Vec<PlaceType>,
 
     /// Contains the URL of the official Google page for this place. This will
     /// be the Google-owned page that contains the best available information

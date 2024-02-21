@@ -26,9 +26,9 @@ impl<'a> Request<'a> {
         // string:
 
         // Fields key/value pair:
-        if let Some(fields) = &self.fields {
+        if !self.fields.is_empty() {
             query.push_str("&fields=");
-            query.push_str(&Field::vec_to_csv(fields));
+            query.push_str(&Field::vec_to_csv(&self.fields));
         }
 
         // Language key/value pair:

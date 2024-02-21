@@ -92,13 +92,8 @@ impl<'a> Request<'a> {
 
     pub fn with_waypoint(&'a mut self, waypoint: Waypoint) -> &'a mut Request {
         // Add waypoint to Request struct.
-        match &mut self.waypoints {
-            // If there are no waypoints in the request struct, initialize:
-            None => self.waypoints = Some(vec![waypoint]),
-            // If there are already waypoints, append to them:
-            Some(waypoints) => waypoints.push(waypoint),
-        } // match
-          // Return modified Request struct to caller.
+        self.waypoints = vec![waypoint];
+        // Return modified Request struct to caller.
         self
     } // fn
 
@@ -110,7 +105,7 @@ impl<'a> Request<'a> {
     /// finally going to the `destination` location:
     ///
     /// ```rust
-    /// .with_waypoints(vec![
+    /// .with_waypoints(&[
     ///     // Canadian Museum of Nature
     ///     Waypoint::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
     ///     // Rideau Canal National Historic Site
@@ -122,17 +117,10 @@ impl<'a> Request<'a> {
     /// ])
     /// ```
 
-    pub fn with_waypoints(&'a mut self, waypoints_slice: &[Waypoint]) -> &'a mut Request {
+    pub fn with_waypoints(&'a mut self, waypoints: &[Waypoint]) -> &'a mut Request {
         // Add waypoints to Request struct.
-        match &mut self.waypoints {
-            // If there are no waypoints in the request struct, initialize:
-            None => self.waypoints = Some(waypoints_slice.to_vec()),
-            // If there are already waypoints, append to them:
-            Some(waypoints) => waypoints_slice
-                .iter()
-                .for_each(|waypoint| waypoints.push(waypoint.to_owned())), // iter
-        } // match
-          // Return modified Request struct to caller.
+        self.waypoints = waypoints.to_vec();
+        // Return modified Request struct to caller.
         self
     } // fn
 } // impl

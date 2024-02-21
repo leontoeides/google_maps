@@ -29,11 +29,11 @@ impl<'a> ReverseRequest<'a> {
         } // if
 
         // Location type(s) key/value pair:
-        if let Some(location_types) = &self.location_types {
+        if !self.location_types.is_empty() {
             query.push_str("&location_type=");
             query.push_str(
                 &utf8_percent_encode(
-                    &location_types
+                    &self.location_types
                         .iter()
                         .map(String::from)
                         .collect::<Vec<String>>()
@@ -45,11 +45,11 @@ impl<'a> ReverseRequest<'a> {
         } // if
 
         // Result type(s) key/value pair:
-        if let Some(result_types) = &self.result_types {
+        if !self.result_types.is_empty() {
             query.push_str("&result_type=");
             query.push_str(
                 &utf8_percent_encode(
-                    &result_types
+                    &self.result_types
                         .iter()
                         .map(String::from)
                         .collect::<Vec<String>>()

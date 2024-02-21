@@ -49,11 +49,11 @@ impl<'a> ForwardRequest<'a> {
         }
 
         // Components key/value pair:
-        if let Some(components) = &self.components {
+        if !self.components.is_empty() {
             query.push_str("&components=");
             query.push_str(
                 &utf8_percent_encode(
-                    &components
+                    &self.components
                         .iter()
                         .map(String::from)
                         .collect::<Vec<String>>()
