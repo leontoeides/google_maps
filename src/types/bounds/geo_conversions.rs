@@ -19,7 +19,7 @@ impl TryFrom<&Rect> for Bounds {
         let southwest: LatLng = LatLng::try_from_f64(max_coordinate.y, min_coordinate.x)?;
         let northeast: LatLng = LatLng::try_from_f64(min_coordinate.y, max_coordinate.x)?;
 
-        Ok(Bounds {
+        Ok(Self {
             southwest,
             northeast,
         })
@@ -38,7 +38,7 @@ impl TryFrom<&Bounds> for Rect {
         let c1: Coord = Coord::try_from(&bounds.southwest)?;
         let c2: Coord = Coord::try_from(&bounds.northeast)?;
 
-        Ok(Rect::new(c1, c2))
+        Ok(Self::new(c1, c2))
     } // fn
 } // impl
 

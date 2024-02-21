@@ -20,7 +20,7 @@ impl TryFrom<&Coord> for LatLng {
         let lng: Decimal = Decimal::from_f64(coordinate.x)
             .ok_or_else(|| TypeError::FloatToDecimalConversionError(coordinate.x.to_string()))?;
 
-        LatLng::try_from_dec(lat, lng)
+        Self::try_from_dec(lat, lng)
     } // fn
 } // impl
 
@@ -36,14 +36,14 @@ impl TryFrom<&LatLng> for Coord {
         let x: f64 = lat_lng
             .lng
             .to_f64()
-            .ok_or_else(|| TypeError::InvalidLongitude(lat_lng.lat, lat_lng.lng))?;
+            .ok_or(TypeError::InvalidLongitude(lat_lng.lat, lat_lng.lng))?;
 
         let y: f64 = lat_lng
             .lat
             .to_f64()
-            .ok_or_else(|| TypeError::InvalidLatitude(lat_lng.lat, lat_lng.lng))?;
+            .ok_or(TypeError::InvalidLatitude(lat_lng.lat, lat_lng.lng))?;
 
-        Ok(Coord { x, y })
+        Ok(Self { x, y })
     } // fn
 } // impl
 
@@ -62,7 +62,7 @@ impl TryFrom<&Point> for LatLng {
         let lng: Decimal = Decimal::from_f64(point.x())
             .ok_or_else(|| TypeError::FloatToDecimalConversionError(point.x().to_string()))?;
 
-        LatLng::try_from_dec(lat, lng)
+        Self::try_from_dec(lat, lng)
     } // fn
 } // impl
 
@@ -78,13 +78,13 @@ impl TryFrom<&LatLng> for Point {
         let x: f64 = lat_lng
             .lng
             .to_f64()
-            .ok_or_else(|| TypeError::InvalidLongitude(lat_lng.lat, lat_lng.lng))?;
+            .ok_or(TypeError::InvalidLongitude(lat_lng.lat, lat_lng.lng))?;
 
         let y: f64 = lat_lng
             .lat
             .to_f64()
-            .ok_or_else(|| TypeError::InvalidLatitude(lat_lng.lat, lat_lng.lng))?;
+            .ok_or(TypeError::InvalidLatitude(lat_lng.lat, lat_lng.lng))?;
 
-        Ok(Point::new(x, y))
+        Ok(Self::new(x, y))
     } // fn
 } // impl

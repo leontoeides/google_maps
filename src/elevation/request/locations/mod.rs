@@ -91,11 +91,11 @@ impl std::convert::From<&Locations> for String {
         match locations {
             Locations::LatLngs(latlngs) => latlngs
                 .iter()
-                .map(String::from)
-                .collect::<Vec<String>>()
+                .map(Self::from)
+                .collect::<Vec<Self>>()
                 .join("|"),
 
-            Locations::Polyline(polyline) => format!("enc:{}", polyline),
+            Locations::Polyline(polyline) => format!("enc:{polyline}"),
 
             Locations::Line(line) => format!(
                 "{start_lat},{start_lng}|{end_lat},{end_lng}",
@@ -108,7 +108,7 @@ impl std::convert::From<&Locations> for String {
             Locations::LineString(line_string) => line_string
                 .coords()
                 .map(|coordinate| format!("{lat},{lng}", lat = coordinate.y, lng = coordinate.x)) // map
-                .collect::<Vec<String>>()
+                .collect::<Vec<Self>>()
                 .join("|"),
         } // match
     } // fn

@@ -17,7 +17,7 @@ impl TryFrom<&Line> for Locations {
         let lat_lngs: Vec<LatLng> =
             vec![LatLng::try_from(&line.start)?, LatLng::try_from(&line.end)?];
 
-        Ok(Locations::LatLngs(lat_lngs))
+        Ok(Self::LatLngs(lat_lngs))
     } // fn
 } // impl
 
@@ -35,6 +35,6 @@ impl TryFrom<&LineString> for Locations {
             .map(LatLng::try_from)
             .collect::<Result<Vec<LatLng>, _>>()?;
 
-        Ok(Locations::LatLngs(lat_lngs))
+        Ok(Self::LatLngs(lat_lngs))
     } // fn
 } // impl

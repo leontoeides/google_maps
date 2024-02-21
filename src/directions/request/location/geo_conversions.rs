@@ -25,7 +25,7 @@ impl TryFrom<&Coord> for Location {
 
         let lat_lng: LatLng = LatLng::try_from_dec(lat, lng)?;
 
-        Ok(Location::LatLng(lat_lng))
+        Ok(Self::LatLng(lat_lng))
     } // fn
 } // impl
 
@@ -46,6 +46,6 @@ impl TryFrom<&Point> for Location {
 
         let lat_lng: LatLng = LatLng::try_from_dec(lat, lng)?;
 
-        Ok(Location::LatLng(lat_lng))
+        Ok(Self::LatLng(lat_lng))
     } // fn
 } // impl
