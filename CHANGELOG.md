@@ -10,7 +10,7 @@
 	deserialize Google Maps data without any extra options. However, working
 	around an `Option` is extra, unnecessary work.
 
-	`#[serde(default)]` is now used to instantiate an empty `Vec` when there
+	`#[serde(default)]` is now used to return an empty `Vec` when there
 	are no elements, rather than returning a `None`.
 
 * 3.4.2: 2024-02-08: `google_maps::GoogleMapsClient::new` has been deprecated
@@ -21,7 +21,7 @@ in favour of `google_maps::GoogleMapsClient::try_new`
 API (i.e. `.with_rate(&google_maps::Api::All)` instead of
 `.with_rate(google_maps::Api::All)`)
 
-* 3.4.2: 2024-02-07: `README.MD` makeover. Thank you
+* 3.4.2: 2024-02-07: `README.md` makeover. Thank you
 [seanpianka](https://github.com/seanpianka)!
 
 * 3.4.2: 2024-02-07: Applied many `clippy` suggestions.
