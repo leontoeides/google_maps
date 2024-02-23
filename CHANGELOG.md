@@ -3,15 +3,15 @@
 * Release notes are available on
 [GitHub](https://github.com/leontoeides/google_maps/releases).
 
-* 3.4.2: 2024-02-22: ⚠ **Breaking change**: Replaced all instances of
+* 3.5.0: 2024-02-22: ⚠ **Breaking change**: Replaced all instances of
 `Option<Vec<_>>` with a `Vec<_>`.
 
-The `Option<Vec<_>>` was originally employed to get `serde` to deserialize
-Google Maps data without any extra options. However, working around an `Option`
-is extra, unnecessary work.
+	The `Option<Vec<_>>` was originally employed to get `serde` to
+	deserialize Google Maps data without any extra options. However, working
+	around an `Option` is extra, unnecessary work.
 
-`#[serde(default)]` is now used to instantiate an empty `Vec` when there are no
-elements.
+	`#[serde(default)]` is now used to instantiate an empty `Vec` when there
+	are no elements.
 
 * 3.4.2: 2024-02-08: `google_maps::GoogleMapsClient::new` has been deprecated
 in favour of `google_maps::GoogleMapsClient::try_new`
