@@ -25,6 +25,7 @@ pub struct Response {
     /// sample point in the response. If there were multiple `locations` or a
     /// `path` in the query, there will be multiple sample points in the
     /// response.
+    #[serde(default)]
     pub results: Vec<Point>,
 
     /// The status of the response.

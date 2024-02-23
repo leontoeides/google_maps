@@ -17,5 +17,6 @@ pub struct GeocodedWaypoint {
     /// For a list of possible strings, refer to the
     /// [Address Component Types](https://developers.google.com/maps/documentation/javascript/geocoding#GeocodingAddressTypes)
     /// section of the Developer's Guide.
+    #[serde(default)]
     pub types: Vec<PlaceType>,
 } // struct

@@ -37,6 +37,7 @@ pub struct Response {
     /// contains the available travel modes in the countries of the given set of
     /// waypoints. This field is not returned if one or more of the waypoints
     /// are `via:` waypoints.
+    #[serde(default)]
     pub available_travel_modes: Vec<TravelMode>,
 
     /// When the status code is other than `OK`, there may be an additional
@@ -51,6 +52,7 @@ pub struct Response {
     /// Contains an array with details about the geocoding of origin,
     /// destination and waypoints. See [Geocoded
     /// Waypoints](https://developers.google.com/maps/documentation/directions/intro#GeocodedWaypoints).
+    #[serde(default)]
     pub geocoded_waypoints: Vec<GeocodedWaypoint>,
 
     /// Contains an array of routes from the origin to the destination. See
@@ -58,6 +60,7 @@ pub struct Response {
     /// Routes consist of nested
     /// [Legs](https://developers.google.com/maps/documentation/directions/intro#Legs)
     /// and [Steps](https://developers.google.com/maps/documentation/directions/intro#Steps).
+    #[serde(default)]
     pub routes: Vec<Route>,
 
     /// Contains metadata on the request. See [Status

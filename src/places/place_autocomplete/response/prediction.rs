@@ -31,6 +31,7 @@ pub struct Prediction {
     /// See [PlaceAutocompleteMatchedSubstring](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlaceAutocompleteMatchedSubstring)
     /// for more information.
     #[serde(alias = "matched_substrings")]
+    #[serde(default)]
     pub matched_substrings: Vec<MatchedSubstring>,
 
     /// Provides pre-formatted text that can be shown in your autocomplete
@@ -55,6 +56,7 @@ pub struct Prediction {
     /// See [PlaceAutocompleteTerm](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlaceAutocompleteTerm)
     /// for more information.
     #[serde(alias = "terms")]
+    #[serde(default)]
     pub terms: Vec<Term>,
 
     /// A textual identifier that uniquely identifies a place. To retrieve
@@ -70,6 +72,7 @@ pub struct Prediction {
     /// "beauty_salon" ]`. The array can contain multiple values. Learn more
     /// about [Place types](https://developers.google.com/maps/documentation/places/web-service/supported_types).
     #[serde(alias = "types")]
+    #[serde(default)]
     pub types: Vec<PlaceType>,
 } // struct Prediction
 

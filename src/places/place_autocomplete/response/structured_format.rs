@@ -26,6 +26,7 @@ pub struct StructuredFormat {
     /// See [PlaceAutocompleteMatchedSubstring](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlaceAutocompleteMatchedSubstring)
     /// for more information.
     #[serde(alias = "main_text_matched_substrings")]
+    #[serde(default)]
     pub main_text_matched_substrings: Vec<MatchedSubstring>,
 
     /// Contains the secondary text of a prediction, usually the location of the
@@ -40,6 +41,7 @@ pub struct StructuredFormat {
     /// See [PlaceAutocompleteMatchedSubstring](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlaceAutocompleteMatchedSubstring)
     /// for more information.
     #[serde(alias = "secondary_text_matched_substrings")]
+    #[serde(default)]
     pub secondary_text_matched_substrings: Vec<MatchedSubstring>,
 } // struct StructuredFormat
 

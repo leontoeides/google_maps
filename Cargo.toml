@@ -31,9 +31,6 @@ default = [
 	"reqwest/gzip",
 	"enable-reqwest-middleware",
 	"rust_decimal/serde",
-
-
-	"geo",
 ]
 # Google Maps Client API features:
 autocomplete = []

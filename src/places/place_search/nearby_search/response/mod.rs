@@ -19,6 +19,7 @@ use serde::{Deserialize, Serialize};
 pub struct Response {
     /// May contain a set of attributions about this listing which must be
     /// displayed to the user (some listings may not have attribution).
+    #[serde(default)]
     pub html_attributions: Vec<String>,
 
     /// Contains an array of places.
@@ -30,6 +31,7 @@ pub struct Response {
     ///
     /// See [Place](https://developers.google.com/maps/documentation/places/web-service/search-text#Place)
     /// for more information.
+    #[serde(default)]
     pub results: Vec<Place>,
 
     /// Contains the status of the request, and may contain debugging
@@ -51,6 +53,7 @@ pub struct Response {
     /// the response object. This field is only returned for successful
     /// requests. It may not always be returned, and its content is subject to
     /// change.
+    #[serde(default)]
     pub info_messages: Vec<String>,
 
     /// Contains a token that can be used to return up to 20 additional results.

@@ -32,6 +32,7 @@ pub struct Response {
     /// See [PlaceAutocompletePrediction](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlaceAutocompletePrediction)
     /// for more information.
     #[serde(alias = "predictions")]
+    #[serde(default)]
     pub predictions: Vec<Prediction>,
 
     /// Contains the status of the request, and may contain debugging
@@ -56,6 +57,7 @@ pub struct Response {
     /// requests. It may not always be returned, and its content is subject to
     /// change.
     #[serde(alias = "info_messages")]
+    #[serde(default)]
     pub info_messages: Vec<String>,
 } // struct
 

@@ -19,6 +19,7 @@ use serde::{Deserialize, Serialize};
 pub struct Response {
     /// May contain a set of attributions about this listing which must be
     /// displayed to the user (some listings may not have attribution).
+    #[serde(default)]
     pub html_attributions: Vec<String>,
 
     /// Contains the detailed information about the place requested.
@@ -39,6 +40,7 @@ pub struct Response {
     /// the response object. This field is only returned for successful
     /// requests. It may not always be returned, and its content is subject to
     /// change.
+    #[serde(default)]
     pub info_messages: Vec<String>,
 } // struct
 

@@ -19,12 +19,14 @@ pub struct PlaceOpeningHours {
     ///
     /// See [PlaceOpeningHoursPeriod](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceOpeningHoursPeriod)
     /// for more information.
+    #[serde(default)]
     pub periods: Vec<PlaceOpeningHoursPeriod>,
 
     /// An array of up to seven entries corresponding to the next seven days.
     ///
     /// See [PlaceSpecialDay](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceSpecialDay)
     /// for more information.
+    #[serde(default)]
     pub special_days: Vec<PlaceSpecialDay>,
 
     /// A type string used to identify the type of secondary hours (for example,
@@ -35,6 +37,7 @@ pub struct PlaceOpeningHours {
 
     /// An array of strings describing in human-readable text the hours of the
     /// place.
+    #[serde(default)]
     pub weekday_text: Vec<String>,
 } // struct PlaceOpeningHours
 
