@@ -41,6 +41,9 @@ pub enum Waypoint {
     /// You will find an encoded set is useful for a large number of waypoints,
     /// because the URL is significantly shorter. All web services have a URL
     /// limit of 8192 characters.
+    ///
+    /// See also: the Google Encoded Polyline encoding & decoding crate called
+    /// [polyline](https://crates.io/crates/polyline).
     Polyline(String),
 } // enum
 
@@ -91,6 +94,9 @@ pub enum Waypoint {
     /// You will find an encoded set is useful for a large number of waypoints,
     /// because the URL is significantly shorter. All web services have a URL
     /// limit of 8192 characters.
+    ///
+    /// See also: the Google Encoded Polyline encoding & decoding crate called
+    /// [polyline](https://crates.io/crates/polyline).
     Polyline(String),
     /// If you pass coordinates, they are used unchanged to calculate
     /// directions. This variant supports the
@@ -173,6 +179,9 @@ impl Waypoint {
     /// You will find an encoded set is useful for a large number of waypoints,
     /// because the URL is significantly shorter. All web services have a URL
     /// limit of 8192 characters.
+    ///
+    /// See also: the Google Encoded Polyline encoding & decoding crate called
+    /// [polyline](https://crates.io/crates/polyline).
     pub fn from_polyline(polyline: impl Into<String>) -> Self {
         Self::Polyline(polyline.into())
     } // fn

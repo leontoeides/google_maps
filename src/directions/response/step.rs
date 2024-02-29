@@ -48,6 +48,9 @@ pub struct Step {
     /// straight, etc.). This field is used to determine which icon to display.
     pub maneuver: Option<DrivingManeuver>,
     /// Contains a single `points` object that holds an [encoded polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm) representation of the step. This polyline is an approximate (smoothed) path of the step. (Corresponds to `path` in the [Directions.Step interface](https://developers.google.com/maps/documentation/javascript/reference/directions#DirectionsStep).)
+    ///
+    /// See also: the Google Encoded Polyline encoding & decoding crate called
+    /// [polyline](https://crates.io/crates/polyline).
     pub polyline: Polyline,
     /// The starting location of this step.
     pub start_location: LatLng,

@@ -30,6 +30,9 @@ pub enum Locations {
     LatLngs(Vec<LatLng>),
     /// An [encoded
     /// polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm).
+    ///
+    /// See also: the Google Encoded Polyline encoding & decoding crate called
+    /// [polyline](https://crates.io/crates/polyline).
     Polyline(String),
 } // enum
 
@@ -70,6 +73,9 @@ pub enum Locations {
     LatLngs(Vec<LatLng>),
     /// An [encoded
     /// polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm).
+    ///
+    /// See also: the Google Encoded Polyline encoding & decoding crate called
+    /// [polyline](https://crates.io/crates/polyline).
     Polyline(String),
     /// This variant supports the
     /// [geo](https://crates.io/crates/geo) crate's
@@ -120,5 +126,18 @@ impl std::default::Default for Locations {
     /// Returns a reasonable default variant for the `Locations` enum type.
     fn default() -> Self {
         Self::LatLngs(vec![LatLng::try_from_dec(dec!(0.0), dec!(0.0)).unwrap()])
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl Locations {
+    /// An [encoded
+    /// polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm).
+    ///
+    /// See also: the Google Encoded Polyline encoding & decoding crate called
+    /// [polyline](https://crates.io/crates/polyline).
+    pub fn from_polyline(polyline: impl Into<String>) -> Self {
+        Self::Polyline(polyline.into())
     } // fn
 } // impl

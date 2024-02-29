@@ -33,6 +33,9 @@ pub struct Route {
     /// An [encoded polyline representation](https://developers.google.com/maps/documentation/utilities/polylinealgorithm)
     /// of the route. This polyline is an approximate (smoothed) path of the
     /// resulting directions.
+    ///
+    /// See also: the Google Encoded Polyline encoding & decoding crate called
+    /// [polyline](https://crates.io/crates/polyline).
     pub overview_polyline: OverviewPolyline,
     /// Contains a short textual description for the route, suitable for naming
     /// and disambiguating the route from alternatives.

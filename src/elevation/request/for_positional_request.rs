@@ -50,6 +50,9 @@ impl<'a> Request<'a> {
     ///     LatLng::try_from_dec(dec!(36.23998), dec!(-116.83171))?,
     /// ]))
     /// ```
+    ///
+    /// See also: the Google Encoded Polyline encoding & decoding crate called
+    /// [polyline](https://crates.io/crates/polyline).
 
     pub fn for_positional_requests(&'a mut self, locations: Locations) -> &'a mut Request {
         // Set the path in Request struct.
