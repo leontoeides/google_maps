@@ -20,12 +20,15 @@ impl<'a> Request<'a> {
     /// [place ID overview](https://developers.google.com/maps/documentation/places/web-service/place-id).
 
     #[must_use]
-    pub const fn new(client: &GoogleMapsClient, place_id: String) -> Request {
+    pub fn new(
+        client: &GoogleMapsClient,
+        place_id: impl Into<String>,
+    ) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:
             client,
-            place_id,
+            place_id: place_id.into(),
             // Optional parameters:
             fields: Vec::new(),
             language: None,

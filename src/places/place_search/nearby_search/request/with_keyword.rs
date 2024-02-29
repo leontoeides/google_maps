@@ -21,9 +21,12 @@ impl<'a> Request<'a> {
     /// If this parameter is omitted, places with a `business_status` of
     /// `CLOSED_TEMPORARILY` or `CLOSED_PERMANENTLY` will not be returned.
 
-    pub fn with_keyword(&'a mut self, keyword: String) -> &'a mut Request {
+    pub fn with_keyword(
+        &'a mut self,
+        keyword: impl Into<String>,
+    ) -> &'a mut Request {
         // Set maximum price in Request struct.
-        self.keyword = Some(keyword);
+        self.keyword = Some(keyword.into());
         // Return modified Request struct to caller.
         self
     } // fn

@@ -35,7 +35,7 @@ impl GoogleMapsClient {
     #[cfg(feature = "enable-reqwest")]
     #[deprecated(since = "3.4.2", note = "use `try_new` instead")]
     #[must_use]
-    pub fn new(key: &str) -> Self {
+    pub fn new(key: impl Into<String>) -> Self {
         Self::try_new(key).unwrap()
     }
 
@@ -50,7 +50,9 @@ impl GoogleMapsClient {
     /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
 
     #[cfg(feature = "enable-reqwest")]
-    pub fn try_new(key: &str) -> Result<Self, crate::GoogleMapsError> {
+    pub fn try_new(
+        key: impl Into<String>
+    ) -> Result<Self, crate::GoogleMapsError> {
         let reqwest_client = reqwest::Client::builder()
             .user_agent(format!(
                 "RustGoogleMaps/{version}",
@@ -61,7 +63,7 @@ impl GoogleMapsClient {
             .build()?;
 
         Ok(Self {
-            key: key.to_string(),
+            key: key.into(),
             rate_limit: RequestRate::default(),
             reqwest_client: reqwest_maybe_middleware::Client::Vanilla(reqwest_client),
         }) // GoogleMapsClient
@@ -78,9 +80,9 @@ impl GoogleMapsClient {
     /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
 
     #[cfg(not(feature = "enable-reqwest"))]
-    pub fn new(key: &str) -> GoogleMapsClient {
+    pub fn new(key: impl Into<String>) -> GoogleMapsClient {
         GoogleMapsClient {
-            key: key.to_string(),
+            key: key.into(),
         } // GoogleMapsClient
     } // fn
 
@@ -285,7 +287,7 @@ impl GoogleMapsClient {
     #[must_use]
     pub fn place_autocomplete(
         &self,
-        input: String,
+        input: impl Into<String>,
     ) -> crate::places::place_autocomplete::request::Request {
         crate::places::place_autocomplete::request::Request::new(self, input)
     } // fn
@@ -323,9 +325,9 @@ impl GoogleMapsClient {
 
     #[cfg(feature = "autocomplete")]
     #[must_use]
-    pub const fn query_autocomplete(
+    pub fn query_autocomplete(
         &self,
-        input: String,
+        input: impl Into<String>,
     ) -> crate::places::query_autocomplete::request::Request {
         crate::places::query_autocomplete::request::Request::new(self, input)
     } // fn
@@ -414,9 +416,9 @@ impl GoogleMapsClient {
 
     #[cfg(feature = "places")]
     #[must_use]
-    pub const fn text_search(
+    pub fn text_search(
         &self,
-        query: String,
+        query: impl Into<String>,
         radius: u32,
     ) -> crate::places::place_search::text_search::request::Request {
         crate::places::place_search::text_search::request::Request::new(self, query, radius)
@@ -511,9 +513,9 @@ impl GoogleMapsClient {
 
     #[cfg(feature = "places")]
     #[must_use]
-    pub const fn place_details(
+    pub fn place_details(
         &self,
-        place_id: String,
+        place_id: impl Into<String>,
     ) -> crate::places::place_details::request::Request {
         crate::places::place_details::request::Request::new(self, place_id)
     } // fn

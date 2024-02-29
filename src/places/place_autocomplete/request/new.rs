@@ -16,12 +16,15 @@ impl<'a> Request<'a> {
     /// * `input` ‧ The text string on which to search.
 
     #[must_use]
-    pub fn new(client: &GoogleMapsClient, input: String) -> Request {
+    pub fn new(
+        client: &GoogleMapsClient,
+        input: impl Into<String>,
+    ) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:
             client,
-            input,
+            input: input.into(),
             // Optional parameters:
             components: vec![],
             language: None,

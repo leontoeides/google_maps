@@ -138,3 +138,29 @@ impl std::convert::From<&Location> for String {
         } // match
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
+
+impl Location {
+    /// If you pass an address, the Directions service geocodes the string and
+    /// converts it to a latitude/longitude coordinate to calculate directions.
+    /// This coordinate may be different from that returned by the Geocoding
+    /// API, for example a building entrance rather than its center.
+    pub fn from_address(address: impl Into<String>) -> Self {
+        Self::Address(address.into())
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl Location {
+    /// The place ID may only be specified if the request includes an API key or
+    /// a Google Maps Platform Premium Plan client ID. You can retrieve place
+    /// IDs from the Geocoding API and the Places API (including Place
+    /// Autocomplete). For an example using place IDs from Place Autocomplete,
+    /// see [Place Autocomplete and Directions](https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-directions).
+    /// For more about place IDs, see the [Place ID overview](https://developers.google.com/places/place-id).
+    pub fn from_place_id(place_id: impl Into<String>) -> Self {
+        Self::PlaceId(place_id.into())
+    } // fn
+} // impl

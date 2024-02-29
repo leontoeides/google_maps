@@ -45,7 +45,7 @@ Additionally, usage of rustls for Reqwest is supported.
 
 Note: The Places API's autocomplete feature have been put in the `autocomplete` feature flag. The rest of the Places APIs will be put under the `places` feature flag.
 
-### Reqwest Feature Flags
+### reqwest Feature Flags
 
 For use with `enable-reqwest` only.
 
@@ -77,7 +77,7 @@ default = [
 	"enable-reqwest-middleware",
 
 	# rust_decimal features:
-	"rust_decimal/serde"
+	"rust_decimal/serde",
 ]
 ```
 

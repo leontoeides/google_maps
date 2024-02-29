@@ -3,6 +3,8 @@
 * Release notes are available on
 [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+* 3.5.0: 2024-02-28: Improved string-passing ergonomics.
+
 * 3.5.0: 2024-02-22: ⚠ **Breaking change**: Replaced all instances of
 `Option<Vec<_>>` with a `Vec<_>`.
 
@@ -39,8 +41,8 @@ users to pass in a request client with middleware.
 
 * 3.4.0: 2023-11-15: Run `rustfmt`
 
-Thanks for the contributions,
-[ChristianGoldapp](https://github.com/ChristianGoldapp)!
+	Thanks for the contributions,
+	[ChristianGoldapp](https://github.com/ChristianGoldapp)!
 
 * 3.3.2: 2023-08-08: Add support for distance_meters in Places Autocomplete
 response. Thanks for the contribution,

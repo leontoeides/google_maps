@@ -135,3 +135,45 @@ impl std::convert::From<&Waypoint> for String {
         } // match
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
+
+impl Waypoint {
+    /// If you pass an address, the Directions service geocodes the string and
+    /// converts it to latitude & longitude coordinates to calculate directions.
+    /// This coordinate may be different from that returned by the Geocoding
+    /// API, for example a building entrance rather than its center.
+    pub fn from_address(address: impl Into<String>) -> Self {
+        Self::Address(address.into())
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl Waypoint {
+    /// The place ID may only be specified if the request includes an API key or
+    /// a Google Maps Platform Premium Plan client ID. You can retrieve place
+    /// IDs from the Geocoding API and the Places API (including Place
+    /// Autocomplete). For an example using place IDs from Place Autocomplete,
+    /// see [Place Autocomplete and
+    /// Directions](https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-directions).
+    /// For more about place IDs, see the [Place ID
+    /// overview](https://developers.google.com/places/place-id).
+    pub fn from_place_id(place_id: impl Into<String>) -> Self {
+        Self::PlaceId(place_id.into())
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl Waypoint {
+    /// Alternatively, you can supply an encoded set of points using the
+    /// [Encoded Polyline
+    /// Algorithm](https://developers.google.com/maps/documentation/utilities/polylinealgorithm).
+    /// You will find an encoded set is useful for a large number of waypoints,
+    /// because the URL is significantly shorter. All web services have a URL
+    /// limit of 8192 characters.
+    pub fn from_polyline(polyline: impl Into<String>) -> Self {
+        Self::Polyline(polyline.into())
+    } // fn
+} // impl
