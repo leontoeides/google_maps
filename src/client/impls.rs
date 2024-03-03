@@ -5,13 +5,10 @@ use crate::directions::request::location::Location;
 use crate::directions::request::waypoint::Waypoint;
 #[cfg(feature = "enable-reqwest")]
 use crate::request_rate::RequestRate;
-#[cfg(any(feature = "geocoding", feature = "time_zone", feature = "roads"))]
-use crate::types::LatLng;
-use crate::ReqError;
 #[cfg(feature = "time_zone")]
 use chrono::{DateTime, Utc};
+#[cfg(feature = "enable-reqwest")]
 use reqwest::Response;
-use std::time::Duration;
 
 // =============================================================================
 
@@ -58,8 +55,8 @@ impl GoogleMapsClient {
                 "RustGoogleMaps/{version}",
                 version = env!("CARGO_PKG_VERSION")
             ))
-            .connect_timeout(Duration::from_secs(10))
-            .timeout(Duration::from_secs(30))
+            .connect_timeout(std::time::Duration::from_secs(10))
+            .timeout(std::time::Duration::from_secs(30))
             .build()?;
 
         Ok(Self {
@@ -225,7 +222,7 @@ impl GoogleMapsClient {
     #[must_use]
     pub const fn reverse_geocoding(
         &self,
-        latlng: LatLng,
+        latlng: crate::LatLng,
     ) -> crate::geocoding::reverse::ReverseRequest {
         crate::geocoding::reverse::ReverseRequest::new(self, latlng)
     } // fn
@@ -265,7 +262,7 @@ impl GoogleMapsClient {
     #[must_use]
     pub const fn time_zone(
         &self,
-        location: LatLng,
+        location: crate::LatLng,
         timestamp: DateTime<Utc>,
     ) -> crate::time_zone::request::Request {
         crate::time_zone::request::Request::new(self, location, timestamp)
@@ -475,7 +472,7 @@ impl GoogleMapsClient {
     #[must_use]
     pub const fn nearby_search(
         &self,
-        location: LatLng,
+        location: crate::LatLng,
         radius: u32,
     ) -> crate::places::place_search::nearby_search::request::Request {
         crate::places::place_search::nearby_search::request::Request::new(self, location, radius)
@@ -565,9 +562,9 @@ impl GoogleMapsClient {
     #[must_use]
     pub fn snap_to_roads(
         &self,
-        path: Vec<LatLng>,
+        path: &[crate::LatLng],
     ) -> crate::roads::snap_to_roads::request::Request {
-        crate::roads::snap_to_roads::request::Request::new(self, path)
+        crate::roads::snap_to_roads::request::Request::new(self, path.to_vec())
     } // fn
 
     // -------------------------------------------------------------------------
@@ -604,15 +601,16 @@ impl GoogleMapsClient {
     #[must_use]
     pub fn nearest_roads(
         &self,
-        points: Vec<LatLng>,
+        points: &[crate::LatLng],
     ) -> crate::roads::snap_to_roads::request::Request {
-        crate::roads::snap_to_roads::request::Request::new(self, points)
+        crate::roads::snap_to_roads::request::Request::new(self, points.to_vec())
     } // fn
 
-    pub async fn get_request(&self, url: &str) -> Result<Response, ReqError> {
+    #[cfg(feature = "enable-reqwest")]
+    pub async fn get_request(&self, url: &str) -> Result<Response, crate::ReqError> {
         match self.reqwest_client.get(url).build() {
             Ok(request) => self.reqwest_client.execute(request).await,
-            Err(error) => Err(ReqError::from(error)),
+            Err(error) => Err(crate::ReqError::from(error)),
         }
     }
 } // impl

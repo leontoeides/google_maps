@@ -3,7 +3,6 @@
 // -----------------------------------------------------------------------------
 
 use crate::directions::response::status::Status;
-use crate::ReqError;
 use miette::Diagnostic;
 use thiserror::Error;
 
@@ -96,7 +95,7 @@ pub enum Error {
     RequestNotValidated,
     /// The dependency library Reqwest generated an error.
     #[cfg(feature = "enable-reqwest")]
-    Reqwest(ReqError),
+    Reqwest(crate::ReqError),
     /// The dependency library Reqwest generated an error. The error could
     /// not be passed normally so a `String` representation is passed instead.
     #[cfg(feature = "enable-reqwest")]
@@ -297,17 +296,17 @@ impl From<reqwest::Error> for Error {
     /// (`google_maps::directions::error::Error`) by wrapping it inside. This
     /// function is required to use the `?` operator.
     fn from(error: reqwest::Error) -> Self {
-        Self::Reqwest(ReqError::from(error))
+        Self::Reqwest(crate::ReqError::from(error))
     } // fn
 } // impl
 
 #[cfg(feature = "enable-reqwest")]
-impl From<ReqError> for Error {
+impl From<crate::ReqError> for Error {
     /// This trait converts from an Reqwest error type (`reqwest::Error`) into a
     /// Google Maps Directions API error type
     /// (`google_maps::directions::error::Error`) by wrapping it inside. This
     /// function is required to use the `?` operator.
-    fn from(error: ReqError) -> Self {
+    fn from(error: crate::ReqError) -> Self {
         Self::Reqwest(error)
     } // fn
 } // impl
