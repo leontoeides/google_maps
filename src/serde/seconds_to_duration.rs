@@ -18,6 +18,6 @@ where
     // This handy-dandy method converts from the seconds count in `i64` format
     // into a `Duration` struct:
     Duration::try_seconds(seconds).ok_or_else(|| serde::de::Error::custom(
-        format!("could not deserialize seconds: {seconds}"))
+        format!("could not deserialize a duration from seconds: {seconds}"))
     )
 } // fn

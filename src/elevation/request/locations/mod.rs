@@ -12,6 +12,13 @@ use rust_decimal_macros::dec;
 
 // -----------------------------------------------------------------------------
 //
+/// Null Island: this whimsical term refers to the intersection of 0 degrees
+/// latitude and 0 degrees longitude.
+
+const NULL_ISLAND: LatLng = LatLng { lat: dec!(0.0), lng: dec!(0.0) };
+
+// -----------------------------------------------------------------------------
+//
 /// Defines the
 /// [location(s)](https://developers.google.com/maps/documentation/elevation/intro#Locations)
 /// on the earth from which to return elevation data.
@@ -125,7 +132,7 @@ impl std::convert::From<&Locations> for String {
 impl std::default::Default for Locations {
     /// Returns a reasonable default variant for the `Locations` enum type.
     fn default() -> Self {
-        Self::LatLngs(vec![LatLng::try_from_dec(dec!(0.0), dec!(0.0)).unwrap()])
+        Self::LatLngs(vec![NULL_ISLAND])
     } // fn
 } // impl
 
