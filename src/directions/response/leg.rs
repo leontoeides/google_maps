@@ -113,7 +113,7 @@ impl Leg {
     pub fn get_arrival_time_value(&self) -> Option<i64> {
         self.arrival_time
             .as_ref()
-            .map(|time| time.value.timestamp())
+            .map(|time| time.value.and_utc().timestamp())
     } // fn
 
     /// A helper function for destructuring (or serializing) the optional
@@ -156,7 +156,7 @@ impl Leg {
     pub fn get_departure_time_value(&self) -> Option<i64> {
         self.departure_time
             .as_ref()
-            .map(|time| time.value.timestamp())
+            .map(|time| time.value.and_utc().timestamp())
     } // fn
 
     /// A helper function for destructuring (or serializing) the optional

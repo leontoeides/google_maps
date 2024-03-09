@@ -2,9 +2,10 @@
 //! specify when the user would like to depart for traffic modelling and transit
 //! directions.
 
+use chrono::DateTime;
+use chrono::NaiveDateTime;
 use crate::directions::error::Error as DirectionsError;
 use crate::error::Error as GoogleMapsError;
-use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 
 // -----------------------------------------------------------------------------
@@ -55,7 +56,7 @@ impl std::convert::From<&DepartureTime> for String {
     fn from(departure_time: &DepartureTime) -> Self {
         match departure_time {
             DepartureTime::Now => Self::from("now"),
-            DepartureTime::At(departure_time) => departure_time.timestamp().to_string(),
+            DepartureTime::At(departure_time) => departure_time.and_utc().timestamp().to_string(),
         } // match
     } // fn
 } // impl
@@ -84,8 +85,8 @@ impl std::convert::TryFrom<&str> for DepartureTime {
             Ok(Self::Now)
         } else {
             match departure_time.parse::<i64>() {
-                Ok(integer) => match NaiveDateTime::from_timestamp_opt(integer, 0) {
-                    Some(naive_date_time) => Ok(Self::At(naive_date_time)),
+                Ok(integer) => match DateTime::from_timestamp(integer, 0) {
+                    Some(date_time) => Ok(Self::At(date_time.naive_utc())),
                     None => Err(DirectionsError::InvalidDepartureTime(
                         departure_time.to_string(),
                     ))?,

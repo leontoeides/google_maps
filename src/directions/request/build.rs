@@ -38,7 +38,7 @@ impl<'a> Request<'a> {
         // Arrival time key/value pair:
         if let Some(arrival_time) = &self.arrival_time {
             query.push_str("&arrival_time=");
-            query.push_str(&arrival_time.timestamp().to_string());
+            query.push_str(&arrival_time.and_utc().timestamp().to_string());
         } // if
 
         // Avoid key/value pair:

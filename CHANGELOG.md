@@ -3,6 +3,8 @@
 * Release notes are available on
 [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+* 3.5.0: 2024-03-03: Fixes for certain feature gate combinations.
+
 * 3.5.0: 2024-02-28: Improved string-passing ergonomics.
 
 * 3.5.0: 2024-02-22: ⚠ **Breaking change**: Replaced all instances of
