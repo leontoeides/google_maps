@@ -35,7 +35,7 @@ pub enum TrafficModel {
     /// the closer the `departure_time` is to now.
     #[default]
     BestGuess = 0,
-    /// Indicates that the returned duration_in_traffic should be shorter than
+    /// Indicates that the returned `duration_in_traffic` should be shorter than
     /// the actual travel time on most days, though occasional days with
     /// particularly good traffic conditions may be faster than this value.
     Optimistic = 1,

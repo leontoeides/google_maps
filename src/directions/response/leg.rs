@@ -39,7 +39,7 @@ pub struct Leg {
     /// The Directions Service calculates directions between locations by using
     /// the nearest transportation option (usually a road) at the start and end
     /// locations. `end_location` indicates the actual geocoded destination,
-    /// which may be different than the end_location of the last step if, for
+    /// which may be different than the `end_location` of the last step if, for
     /// example, the road is not near the destination of this leg.
     pub end_location: LatLng,
     /// The address of the origin of this leg.

@@ -57,9 +57,9 @@ pub struct Response {
     pub info_messages: Vec<String>,
 
     /// Contains a token that can be used to return up to 20 additional results.
-    /// A next_page_token will not be returned if there are no additional
+    /// A `next_page_token` will not be returned if there are no additional
     /// results to display. The maximum number of results that can be returned
-    /// is 60. There is a short delay between when a next_page_token is issued,
+    /// is 60. There is a short delay between when a `next_page_token` is issued,
     /// and when it will become valid.
     pub next_page_token: Option<String>,
 } // struct

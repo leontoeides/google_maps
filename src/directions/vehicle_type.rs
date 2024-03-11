@@ -17,7 +17,7 @@ pub enum VehicleType {
     #[default]
     Bus = 0,
     /// A vehicle that operates on a cable, usually on the ground. Aerial cable
-    /// cars may be of the type VehicleType::Gondola.
+    /// cars may be of the type `VehicleType::Gondola`.
     CableCar = 1,
     /// Commuter rail.
     CommuterTrain = 2,

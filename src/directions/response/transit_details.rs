@@ -35,7 +35,7 @@ pub struct TransitDetails {
     /// Contains the number of stops in this step, counting the arrival stop,
     /// but not the departure stop. For example, if your directions involve
     /// leaving from Stop A, passing through stops B and C, and arriving at stop
-    /// D, num_stops will return 3.
+    /// D, `num_stops` will return 3.
     pub num_stops: u8,
     /// Contains the text that appears in schedules and sign boards to identify
     /// a transit trip to passengers. The text should uniquely identify a trip

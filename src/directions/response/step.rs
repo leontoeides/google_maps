@@ -55,12 +55,12 @@ pub struct Step {
     /// The starting location of this step.
     pub start_location: LatLng,
     /// Contains detailed directions for walking or driving steps in transit
-    /// directions. Substeps are only available when travel_mode is set to
+    /// directions. Substeps are only available when `travel_mode` is set to
     /// "transit". The inner steps array is of the same type as steps.
     #[serde(default)]
     pub steps: Vec<Step>,
     /// Transit-specific details about this step. This property will be
-    /// undefined unless the travel mode of this step is TravelMode::Transit.
+    /// undefined unless the travel mode of this step is `TravelMode::Transit`.
     pub transit_details: Option<TransitDetails>,
     /// The mode of travel used in this step.
     pub travel_mode: TravelMode,

@@ -39,7 +39,7 @@ pub struct PlaceReview {
     pub language: Option<Language>,
 
     /// An IETF language code indicating the original language of the review. If
-    /// the review has been translated, then original_language != language. This
+    /// the review has been translated, then `original_language` != language. This
     /// field contains the main language tag only, and not the secondary tag
     /// indicating country or region. For example, all the English reviews are
     /// tagged as 'en', and not 'en-AU' or 'en-UK' and so on. This field is

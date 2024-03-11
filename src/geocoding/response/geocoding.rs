@@ -50,7 +50,7 @@ pub struct Geocoding {
     pub partial_match: Option<bool>,
 
     /// A unique identifier that can be used with other Google APIs. For
-    /// example, you can use the place_id in a [Places
+    /// example, you can use the `place_id` in a [Places
     /// API](https://developers.google.com/places/web-service/details) request
     /// to get details of a local business, such as phone number, opening hours,
     /// user reviews, and more. See the [place ID

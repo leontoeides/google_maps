@@ -46,13 +46,13 @@ pub struct Response {
     pub status: Status,
 
     /// A string containing the ID of the time zone, such as
-    /// "America/Los_Angeles" or "Australia/Sydney". These IDs are defined by
+    /// `America/Los_Angeles` or `Australia/Sydney`. These IDs are defined by
     /// Unicode [Common Locale Data Repository (CLDR)
     /// project](http://cldr.unicode.org/), and currently available in file
     /// [timezone.xml](http://unicode.org/repos/cldr/trunk/common/bcp47/timezone.xml).
     /// When a timezone has several IDs, the canonical one is returned. In
     /// timezone.xml, this is the first alias of each timezone. For example,
-    /// "Asia/Calcutta" is returned, not "Asia/Kolkata".
+    /// `Asia/Calcutta` is returned, not `Asia/Kolkata`.
     #[serde(alias = "timeZoneId")]
     pub time_zone_id: Option<Tz>,
 

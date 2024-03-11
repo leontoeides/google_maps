@@ -6,7 +6,6 @@ use crate::error::Error as GoogleMapsError;
 use crate::types::Error as TypeError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
-use std::convert::TryFrom;
 
 // -----------------------------------------------------------------------------
 

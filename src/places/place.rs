@@ -96,7 +96,7 @@ pub struct Place {
 
     /// Contains the place's phone number in international format. International
     /// format includes the country code, and is prefixed with the plus, +,
-    /// sign. For example, the international_phone_number for Google's Sydney,
+    /// sign. For example, the `international_phone_number` for Google's Sydney,
     /// Australia office is `+61 2 9374 4000`.
     pub international_phone_number: Option<String>,
 

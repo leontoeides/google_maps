@@ -14,7 +14,7 @@ use thiserror::Error;
 #[derive(Debug, Diagnostic, Error)]
 #[diagnostic(code(google_maps::elevation::error), url(docsrs))]
 pub enum Error {
-    /// A sampled_path_request() method cannot be used when postional_request()
+    /// A `sampled_path_request()` method cannot be used when `postional_request()`
     /// has been set.
     EitherPositionalOrSampledPath,
     /// Google Maps Elevation API server generated an error. See the `Status`
