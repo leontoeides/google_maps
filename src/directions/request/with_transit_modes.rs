@@ -47,7 +47,7 @@ impl<'a> Request<'a> {
     /// ])
     /// ```
 
-    pub fn with_transit_mode(&'a mut self, transit_mode: TransitMode) -> &'a mut Request {
+    pub fn with_transit_mode(&'a mut self, transit_mode: TransitMode) -> &'a mut Self {
         // Add restiction to Request struct.
         self.transit_modes = vec![transit_mode];
         // Return modified Request struct to caller.
@@ -72,7 +72,7 @@ impl<'a> Request<'a> {
     pub fn with_transit_modes(
         &'a mut self,
         transit_modes: &[TransitMode],
-    ) -> &'a mut Request {
+    ) -> &'a mut Self {
         // Add transit_modes to Request struct.
         self.transit_modes = transit_modes.to_vec();
         // Return modified Request struct to caller.

@@ -1,6 +1,6 @@
 //! Common types used across several Google Maps API interfaces.
 
-#[cfg(any(feature = "geocoding", feature = "places", feature = "geocoding"))]
+#[cfg(any(feature = "geocoding", feature = "places"))]
 pub(super) mod address_component;
 #[cfg(any(
     feature = "directions",
@@ -16,7 +16,7 @@ pub(super) mod bounds;
 ))]
 pub(super) mod country;
 pub(super) mod error;
-#[cfg(any(feature = "geocoding", feature = "places", feature = "geocoding"))]
+#[cfg(any(feature = "geocoding", feature = "places"))]
 pub(super) mod geometry;
 #[cfg(any(
     feature = "autocomplete",
@@ -38,7 +38,7 @@ pub(super) mod language;
     feature = "time_zone"
 ))]
 pub(super) mod latlng;
-#[cfg(any(feature = "geocoding", feature = "places", feature = "geocoding"))]
+#[cfg(any(feature = "geocoding", feature = "places"))]
 pub(super) mod location_type;
 #[cfg(any(
     feature = "autocomplete",
@@ -59,7 +59,7 @@ pub(super) mod region;
 
 // -----------------------------------------------------------------------------
 
-#[cfg(any(feature = "geocoding", feature = "places", feature = "geocoding"))]
+#[cfg(any(feature = "geocoding", feature = "places"))]
 pub use crate::types::address_component::AddressComponent;
 #[cfg(any(
     feature = "directions",
@@ -75,7 +75,7 @@ pub use crate::types::bounds::Bounds;
 ))]
 pub use crate::types::country::Country;
 pub use crate::types::error::Error;
-#[cfg(any(feature = "geocoding", feature = "places", feature = "geocoding"))]
+#[cfg(any(feature = "geocoding", feature = "places"))]
 pub use crate::types::geometry::Geometry;
 #[cfg(any(
     feature = "autocomplete",
@@ -97,7 +97,7 @@ pub use crate::types::language::Language;
     feature = "time_zone"
 ))]
 pub use crate::types::latlng::LatLng;
-#[cfg(any(feature = "geocoding", feature = "places", feature = "geocoding"))]
+#[cfg(any(feature = "geocoding", feature = "places"))]
 pub use crate::types::location_type::LocationType;
 #[cfg(any(
     feature = "autocomplete",

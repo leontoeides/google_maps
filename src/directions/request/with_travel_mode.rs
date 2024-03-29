@@ -45,7 +45,7 @@ impl<'a> Request<'a> {
     /// .with_travel_mode(TravelMode::Transit)
     /// ```
 
-    pub fn with_travel_mode(&'a mut self, travel_mode: TravelMode) -> &'a mut Request {
+    pub fn with_travel_mode(&'a mut self, travel_mode: TravelMode) -> &'a mut Self {
         self.travel_mode = Some(travel_mode);
         self
     } // fn

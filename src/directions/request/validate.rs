@@ -12,7 +12,7 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub fn validate(&'a mut self) -> Result<&'a mut Request, Error> {
+    pub fn validate(&'a mut self) -> Result<&'a mut Self, Error> {
         if let Some(travel_mode) = &self.travel_mode {
             // If the travel mode has been set to TravelMode::Transit...
             if *travel_mode == TravelMode::Transit {

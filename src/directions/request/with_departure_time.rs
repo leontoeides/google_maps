@@ -56,7 +56,7 @@ impl<'a> Request<'a> {
     /// ))
     /// ```
 
-    pub fn with_departure_time(&'a mut self, departure_time: DepartureTime) -> &'a mut Request {
+    pub fn with_departure_time(&'a mut self, departure_time: DepartureTime) -> &'a mut Self {
         self.departure_time = Some(departure_time);
         self
     } // fn

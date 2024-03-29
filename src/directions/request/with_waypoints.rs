@@ -90,7 +90,7 @@ impl<'a> Request<'a> {
     /// .with_waypoint(Waypoint::PlaceId(String::from("ChIJi5fWgmcSzkwRePJ_I9-xCRg")))
     /// ```
 
-    pub fn with_waypoint(&'a mut self, waypoint: Waypoint) -> &'a mut Request {
+    pub fn with_waypoint(&'a mut self, waypoint: Waypoint) -> &'a mut Self {
         // Add waypoint to Request struct.
         self.waypoints = vec![waypoint];
         // Return modified Request struct to caller.
@@ -117,7 +117,7 @@ impl<'a> Request<'a> {
     /// ])
     /// ```
 
-    pub fn with_waypoints(&'a mut self, waypoints: &[Waypoint]) -> &'a mut Request {
+    pub fn with_waypoints(&'a mut self, waypoints: &[Waypoint]) -> &'a mut Self {
         // Add waypoints to Request struct.
         self.waypoints = waypoints.to_vec();
         // Return modified Request struct to caller.

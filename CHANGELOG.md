@@ -3,6 +3,11 @@
 * Release notes are available on
 [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+* 3.5.0: 2024-03-10: Addressed deprecated functions in the new `chrono` version
+`0.3.5`.
+
+* 3.5.0: 2024-03-10: The ol' `cargo clippy --fix`
+
 * 3.5.0: 2024-03-03: Fixes for certain feature gate combinations.
 
 * 3.5.0: 2024-02-28: Improved string-passing ergonomics.

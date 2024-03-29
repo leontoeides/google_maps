@@ -427,7 +427,7 @@ pub use crate::{
     error::Error as GoogleMapsError, error::Error, types::error::Error as TypeError,
 }; // crate
 
-#[cfg(any(feature = "geocoding", feature = "places", feature = "geocoding"))]
+#[cfg(any(feature = "geocoding", feature = "places"))]
 pub use crate::types::address_component::AddressComponent;
 #[cfg(any(
     feature = "directions",
@@ -442,7 +442,7 @@ pub use crate::types::bounds::Bounds;
     feature = "geocoding"
 ))]
 pub use crate::types::country::Country;
-#[cfg(any(feature = "geocoding", feature = "places", feature = "geocoding"))]
+#[cfg(any(feature = "geocoding", feature = "places"))]
 pub use crate::types::geometry::Geometry;
 #[cfg(any(
     feature = "autocomplete",
@@ -464,7 +464,7 @@ pub use crate::types::language::Language;
     feature = "time_zone"
 ))]
 pub use crate::types::latlng::LatLng;
-#[cfg(any(feature = "geocoding", feature = "places", feature = "geocoding"))]
+#[cfg(any(feature = "geocoding", feature = "places"))]
 pub use crate::types::location_type::LocationType;
 #[cfg(any(
     feature = "autocomplete",

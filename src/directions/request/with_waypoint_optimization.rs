@@ -44,7 +44,7 @@ impl<'a> Request<'a> {
     pub fn with_waypoint_optimization(
         &'a mut self,
         waypoint_optimization: bool,
-    ) -> &'a mut Request {
+    ) -> &'a mut Self {
         self.waypoint_optimization = waypoint_optimization;
         self
     } // fn

@@ -57,7 +57,7 @@ impl<'a> Request<'a> {
     /// .with_restriction(Avoid::Ferries)
     /// ```
 
-    pub fn with_restriction(&'a mut self, restriction: Avoid) -> &'a mut Request {
+    pub fn with_restriction(&'a mut self, restriction: Avoid) -> &'a mut Self {
         // Add restriction to Request struct.
         self.restrictions = vec![restriction];
         // Return modified Request struct to caller.
@@ -78,7 +78,7 @@ impl<'a> Request<'a> {
     /// ])
     /// ```
 
-    pub fn with_restrictions(&'a mut self, restrictions: &[Avoid]) -> &'a mut Request {
+    pub fn with_restrictions(&'a mut self, restrictions: &[Avoid]) -> &'a mut Self {
         // Add restrictions to Request struct.
         self.restrictions = restrictions.to_vec();
         // Return modified Request struct to caller.

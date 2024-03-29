@@ -44,7 +44,7 @@ impl<'a> Request<'a> {
     /// .with_language(Language::French)
     /// ```
 
-    pub fn with_language(&'a mut self, language: Language) -> &'a mut Request {
+    pub fn with_language(&'a mut self, language: Language) -> &'a mut Self {
         self.language = Some(language);
         self
     } // fn

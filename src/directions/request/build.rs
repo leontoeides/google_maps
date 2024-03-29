@@ -13,7 +13,7 @@ impl<'a> Request<'a> {
     ///
     /// This method accepts no arguments.
 
-    pub fn build(&'a mut self) -> Result<&'a mut Request, Error> {
+    pub fn build(&'a mut self) -> Result<&'a mut Self, Error> {
         // Ensure request has been validated before building the query string:
         if !self.validated {
             return Err(Error::RequestNotValidated);

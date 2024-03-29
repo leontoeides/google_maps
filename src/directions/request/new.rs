@@ -19,7 +19,7 @@ impl<'a> Request<'a> {
         client: &'a GoogleMapsClient,
         origin: Location,
         destination: Location,
-    ) -> Request<'a> {
+    ) -> Self {
         Request {
             // Required parameters:
             client,
