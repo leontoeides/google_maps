@@ -15,7 +15,7 @@ impl<'a> Request<'a> {
     pub fn with_pagetoken(
         &'a mut self,
         pagetoken: impl Into<String>,
-    ) -> &'a mut Request {
+    ) -> &'a mut Self {
         // Set page token in Request struct.
         self.pagetoken = Some(pagetoken.into());
         // Return modified Request struct to caller.

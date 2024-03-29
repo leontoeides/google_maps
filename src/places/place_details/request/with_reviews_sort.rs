@@ -22,7 +22,7 @@ impl<'a> Request<'a> {
     /// Google recommends that you display how the reviews are being sorted to
     /// the end user.
 
-    pub fn with_reviews_sort(&'a mut self, sort_order: SortOrder) -> &'a mut Request {
+    pub fn with_reviews_sort(&'a mut self, sort_order: SortOrder) -> &'a mut Self {
         // Set sort order setting in Request struct.
         self.reviews_sort = Some(sort_order);
         // Return modified Request struct to caller.

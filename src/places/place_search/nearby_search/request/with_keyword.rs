@@ -24,7 +24,7 @@ impl<'a> Request<'a> {
     pub fn with_keyword(
         &'a mut self,
         keyword: impl Into<String>,
-    ) -> &'a mut Request {
+    ) -> &'a mut Self {
         // Set maximum price in Request struct.
         self.keyword = Some(keyword.into());
         // Return modified Request struct to caller.

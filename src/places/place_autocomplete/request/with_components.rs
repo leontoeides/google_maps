@@ -15,7 +15,7 @@ impl<'a> Request<'a> {
     ///
     /// * Multiple components may be stacked together.
 
-    pub fn with_component(&'a mut self, component: Country) -> &'a mut Request {
+    pub fn with_component(&'a mut self, component: Country) -> &'a mut Self {
         // Set components in Request struct.
         self.components.extend(vec![component]);
         // Return modified Request struct to caller.
@@ -37,7 +37,7 @@ impl<'a> Request<'a> {
     ///
     /// * Multiple components may be stacked together.
 
-    pub fn with_components(&'a mut self, components: Vec<Country>) -> &'a mut Request {
+    pub fn with_components(&'a mut self, components: Vec<Country>) -> &'a mut Self {
         // Set components in Request struct.
         self.components.extend(components);
         // Return modified Request struct to caller.

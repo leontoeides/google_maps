@@ -15,7 +15,7 @@ impl<'a> Request<'a> {
     /// "uk" (.co.uk) while its ISO 3166-1 code is "gb" (technically for the
     /// entity of "The United Kingdom of Great Britain and Northern Ireland").
 
-    pub fn with_region(&'a mut self, region: Region) -> &'a mut Request {
+    pub fn with_region(&'a mut self, region: Region) -> &'a mut Self {
         // Set region in Request struct.
         self.region = Some(region);
         // Return modified Request struct to caller.

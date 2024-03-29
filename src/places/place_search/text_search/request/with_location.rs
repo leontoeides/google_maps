@@ -17,7 +17,7 @@ impl<'a> Request<'a> {
     /// query may also influence the weight given to the `location` and
     /// `radius`.
 
-    pub fn with_location(&'a mut self, location: LatLng) -> &'a mut Request {
+    pub fn with_location(&'a mut self, location: LatLng) -> &'a mut Self {
         // Set location in Request struct.
         self.location = Some(location);
         // Return modified Request struct to caller.

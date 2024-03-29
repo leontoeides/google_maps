@@ -41,7 +41,7 @@ impl<'a> ForwardRequest<'a> {
     /// })
     /// ```
 
-    pub fn with_bounds(&'a mut self, bounds: Bounds) -> &'a mut ForwardRequest {
+    pub fn with_bounds(&'a mut self, bounds: Bounds) -> &'a mut Self {
         // Set bounds in ForwardRequest struct.
         self.bounds = Some(bounds);
         // Return modified ForwardRequest struct to caller.

@@ -12,7 +12,7 @@ impl<'a> Request<'a> {
     /// distance to the destination (returned as `distance_meters`). If this
     /// value is omitted, straight-line distance will not be returned.
 
-    pub fn with_origin(&'a mut self, origin: LatLng) -> &'a mut Request {
+    pub fn with_origin(&'a mut self, origin: LatLng) -> &'a mut Self {
         // Set origin in Request struct.
         self.origin = Some(origin);
         // Return modified Request struct to caller.

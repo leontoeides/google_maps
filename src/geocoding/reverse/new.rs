@@ -18,7 +18,7 @@ impl<'a> ReverseRequest<'a> {
     /// for which you wish to obtain the closest, human-readable address.
 
     #[must_use]
-    pub const fn new(client: &'a GoogleMapsClient, latlng: LatLng) -> ReverseRequest<'a> {
+    pub const fn new(client: &'a GoogleMapsClient, latlng: LatLng) -> Self {
         // Instantiate struct and return it to caller:
         ReverseRequest {
             // Required parameters:

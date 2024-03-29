@@ -23,7 +23,7 @@ impl<'a> Request<'a> {
     /// .with_interpolation(true)
     /// ```
 
-    pub fn with_interpolation(&'a mut self, interpolate: bool) -> &'a mut Request {
+    pub fn with_interpolation(&'a mut self, interpolate: bool) -> &'a mut Self {
         // Set language in Request struct.
         self.interpolate = Some(interpolate);
 

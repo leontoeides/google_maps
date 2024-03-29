@@ -38,7 +38,7 @@ impl<'a> Request<'a> {
         &'a mut self,
         location: LatLng,
         radius: u32,
-    ) -> &'a mut Request {
+    ) -> &'a mut Self {
         // Set location in Request struct.
         self.location = Some(location);
         // Set radius in Request struct.

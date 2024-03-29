@@ -35,7 +35,7 @@ impl<'a> Request<'a> {
     /// will be returned, and you will be billed accordingly. This applies only
     /// to Place Details requests.
 
-    pub fn with_fields(&'a mut self, fields: &[Field]) -> &'a mut Request {
+    pub fn with_fields(&'a mut self, fields: &[Field]) -> &'a mut Self {
         // Set fields in Request struct.
         self.fields = fields.to_vec();
         // Return modified Request struct to caller.

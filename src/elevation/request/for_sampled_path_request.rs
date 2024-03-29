@@ -44,7 +44,7 @@ impl<'a> Request<'a> {
     /// )
     /// ```
 
-    pub fn for_sampled_path_request(&'a mut self, path: Locations, samples: u8) -> &'a mut Request {
+    pub fn for_sampled_path_request(&'a mut self, path: Locations, samples: u8) -> &'a mut Self {
         // Set the path in Request struct.
         self.path = Some(path);
         // Set the sample number in Request struct.

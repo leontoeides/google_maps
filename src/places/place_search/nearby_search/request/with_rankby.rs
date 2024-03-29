@@ -24,7 +24,7 @@ impl<'a> Request<'a> {
     /// specified, one or more of `keyword`, `name`, or `type` is required and
     /// radius is disallowed.
 
-    pub fn with_rankby(&'a mut self, rankby: RankBy) -> &'a mut Request {
+    pub fn with_rankby(&'a mut self, rankby: RankBy) -> &'a mut Self {
         // Set rannk by order in Request struct.
         self.rankby = Some(rankby);
         // Return modified Request struct to caller.

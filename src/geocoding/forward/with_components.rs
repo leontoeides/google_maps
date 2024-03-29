@@ -62,7 +62,7 @@ impl<'a> ForwardRequest<'a> {
     /// .with_component(GeocodingComponent::Locality(String::from("London")))
     /// ```
 
-    pub fn with_component(&'a mut self, component: Component) -> &'a mut ForwardRequest {
+    pub fn with_component(&'a mut self, component: Component) -> &'a mut Self {
         // Add component to ForwardRequest struct.
         self.components = vec![component];
         // Return modified ForwardRequest struct to caller.
@@ -85,7 +85,7 @@ impl<'a> ForwardRequest<'a> {
     /// ])
     /// ```
 
-    pub fn with_components(&'a mut self, components: &[Component]) -> &'a mut ForwardRequest {
+    pub fn with_components(&'a mut self, components: &[Component]) -> &'a mut Self {
         // Add components to ForwardRequest struct.
         self.components = components.to_vec();
         // Return modified ForwardRequest struct to caller.

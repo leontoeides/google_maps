@@ -40,7 +40,7 @@ impl<'a> Request<'a> {
     pub fn with_sessiontoken(
         &'a mut self,
         sessiontoken: impl Into<String>,
-    ) -> &'a mut Request {
+    ) -> &'a mut Self {
         // Set session token in Request struct.
         self.sessiontoken = Some(sessiontoken.into());
         // Return modified Request struct to caller.

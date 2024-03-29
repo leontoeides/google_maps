@@ -12,7 +12,7 @@ impl<'a> Request<'a> {
     /// the Google Places database will not be returned if you include this
     /// parameter in your query.
 
-    pub fn is_open_now(&'a mut self, opennow: bool) -> &'a mut Request {
+    pub fn is_open_now(&'a mut self, opennow: bool) -> &'a mut Self {
         // Set "open now" filter in Request struct.
         self.opennow = Some(opennow);
         // Return modified Request struct to caller.
