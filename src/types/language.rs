@@ -59,6 +59,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[repr(u16)]
+#[non_exhaustive]
 pub enum Language {
     Afrikaans = 0,
     Albanian = 1,

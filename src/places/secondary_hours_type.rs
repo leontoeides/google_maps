@@ -15,6 +15,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[derive(Clone, Debug, Eq, Default, Hash, Ord, PartialEq, PartialOrd)]
 #[repr(u8)]
+#[non_exhaustive]
 pub enum SecondaryHoursType {
     #[default]
     DriveThrough = 0,

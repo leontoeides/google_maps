@@ -18,6 +18,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 /// for more information.
 #[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[repr(u8)]
+#[non_exhaustive]
 pub enum PlaceType {
     // [Table 1: Place types](https://developers.google.com/places/web-service/supported_types#table1)
     // The types that are supported for place searches, and can be returned with Place details results, and as part of autocomplete place predictions.

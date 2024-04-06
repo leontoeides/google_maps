@@ -77,6 +77,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[repr(u16)]
+#[non_exhaustive]
 pub enum Region {
     AlandIslands = 0,
     Afghanistan = 1,

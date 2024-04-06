@@ -16,6 +16,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[repr(u16)]
+#[non_exhaustive]
 pub enum TransitCurrency {
     UnitedArabEmiratesDirham = 0,
     AfghanAfghani = 1,
