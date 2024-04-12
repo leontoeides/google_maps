@@ -43,7 +43,7 @@ pub struct Step {
     /// The ending location of this step.
     pub end_location: LatLng,
     /// Instructions for this step.
-    pub html_instructions: String,
+    pub html_instructions: Option<String>,
     /// Contains the action to take for the current step (turn left, merge,
     /// straight, etc.). This field is used to determine which icon to display.
     pub maneuver: Option<DrivingManeuver>,
