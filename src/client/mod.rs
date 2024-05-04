@@ -49,6 +49,11 @@ pub struct GoogleMapsClient {
 
     /// Allows you to optionally provide your own pre-configured reqwest client
     /// that will be used by the Google Maps client.
-    #[cfg(feature = "enable-reqwest")]
+    #[cfg(all(feature = "enable-reqwest", feature = "enable-reqwest-middleware"))]
     pub reqwest_client: crate::reqwest_maybe_middleware::Client,
+
+    /// Allows you to optionally provide your own pre-configured reqwest client
+    /// that will be used by the Google Maps client.
+    #[cfg(all(feature = "enable-reqwest", not(feature = "enable-reqwest-middleware")))]
+    pub reqwest_client: reqwest::Client,
 } // struct

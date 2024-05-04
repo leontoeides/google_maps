@@ -290,17 +290,6 @@ impl std::fmt::Display for Error {
 // -----------------------------------------------------------------------------
 
 #[cfg(feature = "enable-reqwest")]
-impl From<reqwest::Error> for Error {
-    /// This trait converts from an Reqwest error type (`reqwest::Error`) into a
-    /// Google Maps Directions API error type
-    /// (`google_maps::directions::error::Error`) by wrapping it inside. This
-    /// function is required to use the `?` operator.
-    fn from(error: reqwest::Error) -> Self {
-        Self::Reqwest(crate::ReqError::from(error))
-    } // fn
-} // impl
-
-#[cfg(feature = "enable-reqwest")]
 impl From<crate::ReqError> for Error {
     /// This trait converts from an Reqwest error type (`reqwest::Error`) into a
     /// Google Maps Directions API error type

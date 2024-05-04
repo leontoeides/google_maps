@@ -46,7 +46,7 @@ impl GoogleMapsClient {
     /// application for purposes of quota management. Learn how to [get a
     /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
 
-    #[cfg(feature = "enable-reqwest")]
+    #[cfg(all(feature = "enable-reqwest", feature = "enable-reqwest-middleware"))]
     pub fn try_new(
         key: impl Into<String>
     ) -> Result<Self, crate::GoogleMapsError> {
@@ -63,6 +63,26 @@ impl GoogleMapsClient {
             key: key.into(),
             rate_limit: RequestRate::default(),
             reqwest_client: crate::reqwest_maybe_middleware::Client::Vanilla(reqwest_client),
+        }) // GoogleMapsClient
+    } // fn
+
+    #[cfg(all(feature = "enable-reqwest", not(feature = "enable-reqwest-middleware")))]
+    pub fn try_new(
+        key: impl Into<String>
+    ) -> Result<Self, crate::GoogleMapsError> {
+        let reqwest_client = reqwest::Client::builder()
+            .user_agent(format!(
+                "RustGoogleMaps/{version}",
+                version = env!("CARGO_PKG_VERSION")
+            ))
+            .connect_timeout(std::time::Duration::from_secs(10))
+            .timeout(std::time::Duration::from_secs(30))
+            .build()?;
+
+        Ok(Self {
+            key: key.into(),
+            rate_limit: RequestRate::default(),
+            reqwest_client,
         }) // GoogleMapsClient
     } // fn
 
