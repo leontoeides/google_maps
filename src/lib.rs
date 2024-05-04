@@ -20,7 +20,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! google_maps = "3.4"
+//! google_maps = "3.5"
 //! ```
 //!
 //! Optionally, add `rust_decimal = "1"` and `rust_decimal_macros = "1"` for
@@ -101,7 +101,7 @@
 //!
 //! ```toml
 //! google_maps = {
-//!     version = "3.4",
+//!     version = "3.5",
 //!     default-features = false,
 //!     features = [
 //!         "directions",
