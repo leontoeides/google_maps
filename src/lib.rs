@@ -86,7 +86,6 @@
 //!     "enable-reqwest",
 //!     "reqwest/default-tls",
 //!     "reqwest/gzip",
-//!     "enable-reqwest-middleware",
 //!
 //!     # rust_decimal features:
 //!     "rust_decimal/serde"
