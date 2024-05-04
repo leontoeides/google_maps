@@ -17,7 +17,7 @@ Configure the dependencies:
 
 ```toml
 [dependencies]
-google_maps = "3.4"
+google_maps = "3.5"
 ```
 
 Optionally, add `rust_decimal = "1"` and `rust_decimal_macros = "1"` for access to the `dec!` macro. This macro can be used to define decimal numbers in your program. 
