@@ -137,9 +137,9 @@
 //!
 //! let directions = google_maps_client.directions(
 //!     // Origin: Canadian Museum of Nature
-//!     Location::Address(String::from("240 McLeod St, Ottawa, ON K2P 2R1")),
+//!     Location::from_address("240 McLeod St, Ottawa, ON K2P 2R1"),
 //!     // Destination: Canada Science and Technology Museum
-//!     Location::LatLng(LatLng::try_from_f64(45.403_509, -75.618_904)?),
+//!     Location::try_from_f32(45.403_509, -75.618_904)?,
 //! )
 //! .with_travel_mode(TravelMode::Driving)
 //! .execute()
@@ -167,16 +167,16 @@
 //!     // Origins
 //!     vec![
 //!         // Microsoft
-//!         Waypoint::Address(String::from("One Microsoft Way, Redmond, WA 98052, United States")),
+//!         Waypoint::from_address("One Microsoft Way, Redmond, WA 98052, United States"),
 //!         // Cloudflare
-//!         Waypoint::Address(String::from("101 Townsend St, San Francisco, CA 94107, United States")),
+//!         Waypoint::from_address("101 Townsend St, San Francisco, CA 94107, United States"),
 //!     ],
 //!     // Destinations
 //!     vec![
 //!         // Google
-//!         Waypoint::PlaceId(String::from("ChIJj61dQgK6j4AR4GeTYWZsKWw")),
+//!         Waypoint::from_place_id("ChIJj61dQgK6j4AR4GeTYWZsKWw"),
 //!         // Mozilla
-//!         Waypoint::LatLng(LatLng::try_from_dec(dec!(37.387_316), dec!(-122.060_008))?),
+//!         Waypoint::try_from_f32(37.387_316, -122.060_008)?,
 //!     ],
 //! ).execute().await?;
 //!
