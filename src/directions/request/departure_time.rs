@@ -2,10 +2,10 @@
 //! specify when the user would like to depart for traffic modelling and transit
 //! directions.
 
-use chrono::DateTime;
-use chrono::NaiveDateTime;
 use crate::directions::error::Error as DirectionsError;
 use crate::error::Error as GoogleMapsError;
+use chrono::DateTime;
+use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 
 // -----------------------------------------------------------------------------

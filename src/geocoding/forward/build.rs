@@ -53,7 +53,8 @@ impl<'a> ForwardRequest<'a> {
             query.push_str("&components=");
             query.push_str(
                 &utf8_percent_encode(
-                    &self.components
+                    &self
+                        .components
                         .iter()
                         .map(String::from)
                         .collect::<Vec<String>>()

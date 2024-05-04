@@ -26,7 +26,8 @@ impl GoogleMapsClient {
     /// This method accepts no arguments.
 
     #[cfg(not(feature = "enable-reqwest"))]
-    #[must_use] pub fn build(&self) -> Self {
+    #[must_use]
+    pub fn build(&self) -> Self {
         Self {
             key: self.key.clone(),
         } // GoogleMapsClient
@@ -63,7 +64,8 @@ impl GoogleMapsClient {
 
     #[cfg(not(feature = "enable-reqwest"))]
     #[deprecated(since = "3.4.3", note = "use `build` instead")]
-    #[must_use] pub fn finalize(&self) -> Self {
+    #[must_use]
+    pub fn finalize(&self) -> Self {
         self.build()
     } // fn
 } // impl

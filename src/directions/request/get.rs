@@ -1,6 +1,3 @@
-use backoff::Error::{Permanent, Transient};
-use backoff::ExponentialBackoff;
-use backoff::future::retry;
 use crate::directions::{
     error::Error as DirectionsError, request::Request as DirectionsRequest,
     response::status::Status as DirectionsStatus, response::Response as DirectionsResponse,
@@ -8,6 +5,9 @@ use crate::directions::{
 }; // use crate::directions
 use crate::error::Error as GoogleMapsError;
 use crate::request_rate::api::Api;
+use backoff::future::retry;
+use backoff::Error::{Permanent, Transient};
+use backoff::ExponentialBackoff;
 
 // -----------------------------------------------------------------------------
 

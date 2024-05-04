@@ -1,6 +1,3 @@
-use backoff::Error::{Permanent, Transient};
-use backoff::ExponentialBackoff;
-use backoff::future::retry;
 use crate::error::Error as GoogleMapsError;
 use crate::geocoding::{
     error::Error as GeocodingError, forward::ForwardRequest as FordwardGeocodingRequest,
@@ -8,6 +5,9 @@ use crate::geocoding::{
     OUTPUT_FORMAT, SERVICE_URL,
 };
 use crate::request_rate::api::Api;
+use backoff::future::retry;
+use backoff::Error::{Permanent, Transient};
+use backoff::ExponentialBackoff;
 
 // -----------------------------------------------------------------------------
 

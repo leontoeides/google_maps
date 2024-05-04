@@ -1,6 +1,3 @@
-use backoff::Error::{Permanent, Transient};
-use backoff::ExponentialBackoff;
-use backoff::future::retry;
 use crate::elevation::{
     error::Error as ElevationError, request::Request as ElevationRequest,
     response::status::Status as ElevationStatus, response::Response as ElevationResponse,
@@ -8,6 +5,9 @@ use crate::elevation::{
 };
 use crate::error::Error as GoogleMapsError;
 use crate::request_rate::api::Api;
+use backoff::future::retry;
+use backoff::Error::{Permanent, Transient};
+use backoff::ExponentialBackoff;
 
 // -----------------------------------------------------------------------------
 

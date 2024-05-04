@@ -33,7 +33,8 @@ impl<'a> ReverseRequest<'a> {
             query.push_str("&location_type=");
             query.push_str(
                 &utf8_percent_encode(
-                    &self.location_types
+                    &self
+                        .location_types
                         .iter()
                         .map(String::from)
                         .collect::<Vec<String>>()
@@ -49,7 +50,8 @@ impl<'a> ReverseRequest<'a> {
             query.push_str("&result_type=");
             query.push_str(
                 &utf8_percent_encode(
-                    &self.result_types
+                    &self
+                        .result_types
                         .iter()
                         .map(String::from)
                         .collect::<Vec<String>>()

@@ -57,7 +57,8 @@ impl<'a> Request<'a> {
             query.push_str("&avoid=");
             query.push_str(
                 &utf8_percent_encode(
-                    &self.restrictions
+                    &self
+                        .restrictions
                         .iter()
                         .map(String::from)
                         .collect::<Vec<String>>()
@@ -103,7 +104,8 @@ impl<'a> Request<'a> {
             query.push_str("&transit_mode=");
             query.push_str(
                 &utf8_percent_encode(
-                    &self.transit_modes
+                    &self
+                        .transit_modes
                         .iter()
                         .map(String::from)
                         .collect::<Vec<String>>()

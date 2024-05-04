@@ -57,10 +57,7 @@ impl<'a> ReverseRequest<'a> {
     /// .with_location_type(LocationType::RangeInterpolated)
     /// ```
 
-    pub fn with_location_type(
-        &'a mut self,
-        location_type: LocationType,
-    ) -> &'a mut Self {
+    pub fn with_location_type(&'a mut self, location_type: LocationType) -> &'a mut Self {
         self.location_types = vec![location_type];
         // Return modified ReverseRequest struct to caller.
         self
@@ -93,10 +90,7 @@ impl<'a> ReverseRequest<'a> {
     /// ])
     /// ```
 
-    pub fn with_location_types(
-        &'a mut self,
-        location_types: &[LocationType],
-    ) -> &'a mut Self {
+    pub fn with_location_types(&'a mut self, location_types: &[LocationType]) -> &'a mut Self {
         // Add location types to ReverseRequest struct.
         self.location_types = location_types.to_vec();
         // Return modified ReverseRequest struct to caller.

@@ -36,10 +36,7 @@ impl<'a> Request<'a> {
     /// same token for more than one session will result in each request being
     /// billed individually.
 
-    pub fn with_sessiontoken(
-        &'a mut self,
-        sessiontoken: impl Into<String>,
-    ) -> &'a mut Self {
+    pub fn with_sessiontoken(&'a mut self, sessiontoken: impl Into<String>) -> &'a mut Self {
         // Set session token in Request struct.
         self.sessiontoken = Some(sessiontoken.into());
         // Return modified Request struct to caller.

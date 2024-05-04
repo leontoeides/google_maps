@@ -1,6 +1,3 @@
-use backoff::Error::{Permanent, Transient};
-use backoff::ExponentialBackoff;
-use backoff::future::retry;
 use crate::error::Error as GoogleMapsError;
 use crate::places::place_search::nearby_search::{
     request::Request as PlacesTextSearchRequest, response::Response as PlacesTextSearchResponse,
@@ -8,6 +5,9 @@ use crate::places::place_search::nearby_search::{
 };
 use crate::places::status::Status as PlacesStatus;
 use crate::request_rate::api::Api;
+use backoff::future::retry;
+use backoff::Error::{Permanent, Transient};
+use backoff::ExponentialBackoff;
 
 // -----------------------------------------------------------------------------
 

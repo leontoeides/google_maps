@@ -41,11 +41,7 @@ impl<'a> Request<'a> {
     /// * Nearby Search: 50,000 meters
 
     #[must_use]
-    pub fn new(
-        client: &GoogleMapsClient,
-        query: impl Into<String>,
-        radius: u32,
-    ) -> Request {
+    pub fn new(client: &GoogleMapsClient, query: impl Into<String>, radius: u32) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:

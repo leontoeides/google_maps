@@ -1,12 +1,12 @@
-use backoff::Error::{Permanent, Transient};
-use backoff::ExponentialBackoff;
-use backoff::future::retry;
 use crate::error::Error as GoogleMapsError;
 use crate::request_rate::api::Api;
 use crate::roads::error::Error as RoadsError;
 use crate::roads::snap_to_roads::{
     request::Request as SnapToRoadsRequest, response::Response as SnapToRoadsResponse, SERVICE_URL,
 };
+use backoff::future::retry;
+use backoff::Error::{Permanent, Transient};
+use backoff::ExponentialBackoff;
 
 // -----------------------------------------------------------------------------
 

@@ -17,7 +17,7 @@ impl<'a> ForwardRequest<'a> {
         if self.address.is_none() && self.place_id.is_none() && self.components.is_empty() {
             return Err(Error::AddressOrComponentsRequired);
         } // if
-        // Indicate that the request passed validation.
+          // Indicate that the request passed validation.
         self.validated = true;
         // Return modified Request struct to caller.
         Ok(self)

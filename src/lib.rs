@@ -391,7 +391,6 @@
     clippy::multiple_crate_versions,
     clippy::too_many_lines
 )]
-
 #![doc(html_favicon_url = "https://www.arkiteq.ca/crates/google_maps/icon.png")]
 #![doc(html_logo_url = "https://www.arkiteq.ca/crates/google_maps/logo.png")]
 
@@ -415,12 +414,12 @@ pub mod elevation;
 #[cfg(feature = "geocoding")]
 pub mod geocoding;
 pub mod places;
+#[cfg(feature = "enable-reqwest-middleware")]
+pub mod reqwest_maybe_middleware;
 #[cfg(feature = "roads")]
 pub mod roads;
 #[cfg(feature = "time_zone")]
 pub mod time_zone;
-#[cfg(feature = "enable-reqwest-middleware")]
-pub mod reqwest_maybe_middleware;
 
 // Re-exports. Not great for organization but needed for backward compatibility.
 

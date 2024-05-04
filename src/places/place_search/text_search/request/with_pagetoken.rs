@@ -12,10 +12,7 @@ impl<'a> Request<'a> {
     /// parameters used previously — all parameters other than pagetoken will be
     /// ignored.
 
-    pub fn with_pagetoken(
-        &'a mut self,
-        pagetoken: impl Into<String>,
-    ) -> &'a mut Self {
+    pub fn with_pagetoken(&'a mut self, pagetoken: impl Into<String>) -> &'a mut Self {
         // Set page token in Request struct.
         self.pagetoken = Some(pagetoken.into());
         // Return modified Request struct to caller.

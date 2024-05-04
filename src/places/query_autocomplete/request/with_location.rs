@@ -34,11 +34,7 @@ impl<'a> Request<'a> {
     /// * Query Autocomplete: 50,000 meters
     /// * Text Search: 50,000 meters
 
-    pub fn with_location_and_radius(
-        &'a mut self,
-        location: LatLng,
-        radius: u32,
-    ) -> &'a mut Self {
+    pub fn with_location_and_radius(&'a mut self, location: LatLng, radius: u32) -> &'a mut Self {
         // Set location in Request struct.
         self.location = Some(location);
         // Set radius in Request struct.

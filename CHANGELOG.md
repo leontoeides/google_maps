@@ -3,8 +3,16 @@
 * Release notes are available on
 [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+* 3.5.0: 2024-05-03: Improved ergonomics surrounding `Location` and `Waypoint`
+types. New functions: `from_address`, `from_place_id`, `try_from_f32` and
+`try_from_f64`.
+
+* 3.5.0: 2024-05-03: `reqwest-maybe-middleware` was forked and integrated into
+`google_maps` for now, until the crate can be updated. maybe-middleware has also
+been properly feature-gated.
+
 * 3.5.0: 2024-03-10: Addressed deprecated functions in the new `chrono` version
-`0.3.5`.
+`0.4.37`.
 
 * 3.5.0: 2024-03-10: The ol' `cargo clippy --fix`
 

@@ -113,10 +113,7 @@ impl<'a> ReverseRequest<'a> {
     /// .with_result_type(PlaceType::Locality)
     /// ```
 
-    pub fn with_result_type(
-        &'a mut self,
-        result_type: PlaceType,
-    ) -> &'a mut Self {
+    pub fn with_result_type(&'a mut self, result_type: PlaceType) -> &'a mut Self {
         // Add result type to ReverseRequest struct.
         self.result_types = vec![result_type];
         // Return modified ReverseRequest struct to caller.
@@ -149,10 +146,7 @@ impl<'a> ReverseRequest<'a> {
     /// ])
     /// ```
 
-    pub fn with_result_types(
-        &'a mut self,
-        result_types: &[PlaceType],
-    ) -> &'a mut Self {
+    pub fn with_result_types(&'a mut self, result_types: &[PlaceType]) -> &'a mut Self {
         // Add location types to ReverseRequest struct.
         self.result_types = result_types.to_vec();
         // Return modified ReverseRequest struct to caller.

@@ -1,6 +1,3 @@
-use backoff::Error::{Permanent, Transient};
-use backoff::ExponentialBackoff;
-use backoff::future::retry;
 use crate::distance_matrix::{
     error::Error as DistanceMatrixError, request::Request as DistanceMatrixRequest,
     response::status::Status as DistanceMatrixStatus, response::Response as DistanceMatrixResponse,
@@ -8,6 +5,9 @@ use crate::distance_matrix::{
 }; // use crate::distance_matrix
 use crate::error::Error as GoogleMapsError;
 use crate::request_rate::api::Api;
+use backoff::future::retry;
+use backoff::Error::{Permanent, Transient};
+use backoff::ExponentialBackoff;
 
 // -----------------------------------------------------------------------------
 

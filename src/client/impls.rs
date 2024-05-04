@@ -47,9 +47,7 @@ impl GoogleMapsClient {
     /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
 
     #[cfg(all(feature = "enable-reqwest", feature = "enable-reqwest-middleware"))]
-    pub fn try_new(
-        key: impl Into<String>
-    ) -> Result<Self, crate::GoogleMapsError> {
+    pub fn try_new(key: impl Into<String>) -> Result<Self, crate::GoogleMapsError> {
         let reqwest_client = reqwest::Client::builder()
             .user_agent(format!(
                 "RustGoogleMaps/{version}",
@@ -67,9 +65,7 @@ impl GoogleMapsClient {
     } // fn
 
     #[cfg(all(feature = "enable-reqwest", not(feature = "enable-reqwest-middleware")))]
-    pub fn try_new(
-        key: impl Into<String>
-    ) -> Result<Self, crate::GoogleMapsError> {
+    pub fn try_new(key: impl Into<String>) -> Result<Self, crate::GoogleMapsError> {
         let reqwest_client = reqwest::Client::builder()
             .user_agent(format!(
                 "RustGoogleMaps/{version}",
@@ -98,9 +94,7 @@ impl GoogleMapsClient {
 
     #[cfg(not(feature = "enable-reqwest"))]
     pub fn new(key: impl Into<String>) -> Self {
-        Self {
-            key: key.into(),
-        } // GoogleMapsClient
+        Self { key: key.into() } // GoogleMapsClient
     } // fn
 
     // -------------------------------------------------------------------------

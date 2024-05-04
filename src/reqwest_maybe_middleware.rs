@@ -174,9 +174,7 @@ impl RequestBuilder {
         match self {
             Self::Vanilla(c) => Self::Vanilla(c.basic_auth(username, password)),
             #[cfg(feature = "enable-reqwest-middleware")]
-            Self::Middleware(c) => {
-                Self::Middleware(c.basic_auth(username, password))
-            }
+            Self::Middleware(c) => Self::Middleware(c.basic_auth(username, password)),
         }
     }
 
@@ -254,9 +252,7 @@ impl RequestBuilder {
     #[cfg(feature = "enable-reqwest-middleware")]
     pub fn with_extension<T: Clone + Send + Sync + 'static>(self, extension: T) -> Self {
         match self {
-            Self::Middleware(c) => {
-                Self::Middleware(c.with_extension(extension))
-            }
+            Self::Middleware(c) => Self::Middleware(c.with_extension(extension)),
             c @ Self::Vanilla(_) => c,
         }
     }

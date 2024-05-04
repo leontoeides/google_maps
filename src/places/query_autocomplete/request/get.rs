@@ -1,6 +1,3 @@
-use backoff::Error::{Permanent, Transient};
-use backoff::ExponentialBackoff;
-use backoff::future::retry;
 use crate::error::Error as GoogleMapsError;
 use crate::places::place_autocomplete::{
     error::Error as PlacesAutocompleteError, response::status::Status as PlacesAutocompleteStatus,
@@ -10,6 +7,9 @@ use crate::places::query_autocomplete::{
     request::Request as QueryAutocompleteRequest, OUTPUT_FORMAT, SERVICE_URL,
 };
 use crate::request_rate::api::Api;
+use backoff::future::retry;
+use backoff::Error::{Permanent, Transient};
+use backoff::ExponentialBackoff;
 
 // -----------------------------------------------------------------------------
 

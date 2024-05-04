@@ -51,7 +51,10 @@ impl GoogleMapsClient {
     } // fn
 
     #[cfg(all(feature = "enable-reqwest", feature = "enable-reqwest-middleware"))]
-    pub fn with_reqwest(&mut self, reqwest_client: crate::reqwest_maybe_middleware::Client) -> &mut Self {
+    pub fn with_reqwest(
+        &mut self,
+        reqwest_client: crate::reqwest_maybe_middleware::Client,
+    ) -> &mut Self {
         self.reqwest_client = reqwest_client;
         self
     } // fn

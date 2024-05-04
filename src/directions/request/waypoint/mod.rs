@@ -7,8 +7,8 @@ mod geo_conversions;
 
 // -----------------------------------------------------------------------------
 
-use crate::GoogleMapsError;
 use crate::types::LatLng;
+use crate::GoogleMapsError;
 use rust_decimal::Decimal;
 
 // -----------------------------------------------------------------------------
@@ -196,10 +196,7 @@ impl Waypoint {
     /// converts them into a `Waypoint` structure. If either the latitude
     /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
     /// function will return an error.
-    pub fn try_from_dec(
-        latitude: Decimal,
-        longitude: Decimal,
-    ) -> Result<Self, GoogleMapsError> {
+    pub fn try_from_dec(latitude: Decimal, longitude: Decimal) -> Result<Self, GoogleMapsError> {
         let latlng = LatLng::try_from_dec(latitude, longitude)?;
         Ok(Self::LatLng(latlng))
     } // fn
@@ -212,10 +209,7 @@ impl Waypoint {
     /// converts them into a `Waypoint` structure. If either the latitude
     /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
     /// function will return an error.
-    pub fn try_from_f32(
-        latitude: f32,
-        longitude: f32,
-    ) -> Result<Self, GoogleMapsError> {
+    pub fn try_from_f32(latitude: f32, longitude: f32) -> Result<Self, GoogleMapsError> {
         let latlng = LatLng::try_from_f32(latitude, longitude)?;
         Ok(Self::LatLng(latlng))
     } // fn
@@ -228,10 +222,7 @@ impl Waypoint {
     /// converts them into a `Waypoint` structure. If either the latitude
     /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
     /// function will return an error.
-    pub fn try_from_f64(
-        latitude: f64,
-        longitude: f64,
-    ) -> Result<Self, GoogleMapsError> {
+    pub fn try_from_f64(latitude: f64, longitude: f64) -> Result<Self, GoogleMapsError> {
         let latlng = LatLng::try_from_f64(latitude, longitude)?;
         Ok(Self::LatLng(latlng))
     } // fn
