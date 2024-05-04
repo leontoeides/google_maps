@@ -1,14 +1,12 @@
+use backoff::Error::{Permanent, Transient};
+use backoff::ExponentialBackoff;
+use backoff::future::retry;
 use crate::error::Error as GoogleMapsError;
 use crate::request_rate::api::Api;
 use crate::roads::error::Error as RoadsError;
 use crate::roads::snap_to_roads::{
     request::Request as SnapToRoadsRequest, response::Response as SnapToRoadsResponse, SERVICE_URL,
 };
-use crate::ReqError;
-use backoff::future::retry;
-use backoff::Error::{Permanent, Transient};
-use backoff::ExponentialBackoff;
-use reqwest::Response; // crate::roads::snap_to_roads
 
 // -----------------------------------------------------------------------------
 
@@ -47,7 +45,7 @@ impl<'a> SnapToRoadsRequest<'a> {
         let response = retry(ExponentialBackoff::default(), || async {
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
-            let response: Result<Response, ReqError> = self.client.get_request(&url).await;
+            let response = self.client.get_request(&url).await;
 
             // Check response from the HTTP client:
             match response {

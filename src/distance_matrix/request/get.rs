@@ -1,3 +1,6 @@
+use backoff::Error::{Permanent, Transient};
+use backoff::ExponentialBackoff;
+use backoff::future::retry;
 use crate::distance_matrix::{
     error::Error as DistanceMatrixError, request::Request as DistanceMatrixRequest,
     response::status::Status as DistanceMatrixStatus, response::Response as DistanceMatrixResponse,
@@ -5,11 +8,6 @@ use crate::distance_matrix::{
 }; // use crate::distance_matrix
 use crate::error::Error as GoogleMapsError;
 use crate::request_rate::api::Api;
-use backoff::future::retry;
-use backoff::Error::{Permanent, Transient};
-use backoff::ExponentialBackoff;
-use reqwest::Response;
-use reqwest_maybe_middleware::Error;
 
 // -----------------------------------------------------------------------------
 
@@ -48,11 +46,7 @@ impl<'a> DistanceMatrixRequest<'a> {
         let response = retry(ExponentialBackoff::default(), || async {
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
-            let response: Result<Response, Error> =
-                match self.client.reqwest_client.get(&*url).build() {
-                    Ok(request) => self.client.reqwest_client.execute(request).await,
-                    Err(error) => Err(Error::from(error)),
-                }; // match
+            let response = self.client.get_request(&url).await;
 
             // Check response from the HTTP client:
             match response {

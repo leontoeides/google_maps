@@ -62,7 +62,7 @@ impl GoogleMapsClient {
         Ok(Self {
             key: key.into(),
             rate_limit: RequestRate::default(),
-            reqwest_client: reqwest_maybe_middleware::Client::Vanilla(reqwest_client),
+            reqwest_client: crate::reqwest_maybe_middleware::Client::Vanilla(reqwest_client),
         }) // GoogleMapsClient
     } // fn
 
@@ -77,8 +77,8 @@ impl GoogleMapsClient {
     /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
 
     #[cfg(not(feature = "enable-reqwest"))]
-    pub fn new(key: impl Into<String>) -> GoogleMapsClient {
-        GoogleMapsClient {
+    pub fn new(key: impl Into<String>) -> Self {
+        Self {
             key: key.into(),
         } // GoogleMapsClient
     } // fn

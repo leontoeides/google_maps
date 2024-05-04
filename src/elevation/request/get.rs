@@ -1,15 +1,13 @@
+use backoff::Error::{Permanent, Transient};
+use backoff::ExponentialBackoff;
+use backoff::future::retry;
 use crate::elevation::{
     error::Error as ElevationError, request::Request as ElevationRequest,
     response::status::Status as ElevationStatus, response::Response as ElevationResponse,
     OUTPUT_FORMAT, SERVICE_URL,
-}; // use crate
+};
 use crate::error::Error as GoogleMapsError;
 use crate::request_rate::api::Api;
-use crate::ReqError;
-use backoff::future::retry;
-use backoff::Error::{Permanent, Transient};
-use backoff::ExponentialBackoff;
-use reqwest::Response;
 
 // -----------------------------------------------------------------------------
 
@@ -48,7 +46,7 @@ impl<'a> ElevationRequest<'a> {
         let response = retry(ExponentialBackoff::default(), || async {
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
-            let response: Result<Response, ReqError> = self.client.get_request(&url).await;
+            let response = self.client.get_request(&url).await;
 
             // Check response from the HTTP client:
             match response {

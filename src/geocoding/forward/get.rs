@@ -1,15 +1,12 @@
+use backoff::Error::{Permanent, Transient};
+use backoff::ExponentialBackoff;
+use backoff::future::retry;
 use crate::error::Error as GoogleMapsError;
 use crate::geocoding::{
     error::Error as GeocodingError, forward::ForwardRequest as FordwardGeocodingRequest,
     response::status::Status as GeocodingStatus, response::Response as GeocodingResponse,
     OUTPUT_FORMAT, SERVICE_URL,
 };
-use crate::ReqError;
-use backoff::future::retry;
-use backoff::Error::{Permanent, Transient};
-use backoff::ExponentialBackoff;
-use reqwest::Response;
-// use crate::geocoding
 use crate::request_rate::api::Api;
 
 // -----------------------------------------------------------------------------
@@ -49,7 +46,7 @@ impl<'a> FordwardGeocodingRequest<'a> {
         let response = retry(ExponentialBackoff::default(), || async {
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
-            let response: Result<Response, ReqError> = self.client.get_request(&url).await;
+            let response = self.client.get_request(&url).await;
 
             // Check response from the HTTP client:
             match response {

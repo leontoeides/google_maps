@@ -18,7 +18,9 @@ doctest = false
 
 [features]
 default = [
-	"autocomplete", # Places API autocomplete-related services, other Places API services are under "places" feature.
+	# `autocomplete` covers the Places API autocomplete-related services,
+	# all other Places API services are under "places" feature.
+	"autocomplete",
 	"directions",
 	"distance_matrix",
 	"elevation",
@@ -26,11 +28,16 @@ default = [
 	"places",
 	"roads",
 	"time_zone",
+
+	"rust_decimal/serde",
+
 	"enable-reqwest",
 	"reqwest/default-tls",
 	"reqwest/gzip",
+
+	# Currently, `enable-reqwest-middleware` _must_ be enabled if
+	# `enable-reqwest` is enabled.
 	"enable-reqwest-middleware",
-	"rust_decimal/serde",
 ]
 # Google Maps Client API features:
 autocomplete = []
@@ -44,7 +51,7 @@ roads = []
 time_zone = [ "chrono", "chrono-tz" ]
 # Reqwest features:
 enable-reqwest = [ "reqwest", "backoff", "futures", "stream_throttle" ]
-enable-reqwest-middleware = [ "reqwest-maybe-middleware/middleware", "reqwest-middleware" ]
+enable-reqwest-middleware = [ "reqwest-middleware", "http", "anyhow" ] # "reqwest-maybe-middleware/middleware"
 brotli = [ "reqwest/brotli" ]
 gzip = [ "reqwest/gzip" ]
 native-tls = [ "reqwest/default-tls" ]
@@ -61,15 +68,14 @@ decimal-serde-with-arbitrary-precision = [ "rust_decimal/serde-with-arbitrary-pr
 [dependencies]
 backoff = { version = "0.4", optional = true, features = [ "futures", "tokio" ] }
 chrono = { version = "0.4", optional = true, default-features = false, features = [ "clock", "serde", "std" ] }
-chrono-tz = { version = "0.8", optional = true, features = [ "serde" ] }
+chrono-tz = { version = "0.9", optional = true, features = [ "serde" ] }
 futures = { version = "0.3", optional = true }
 geo-types = { version = "0.7", optional = true, features = [ "serde" ] }
 miette = "7.2"
 percent-encoding = "2.3"
 phf = { version = "0.11", features = [ "macros" ] }
-reqwest = { version = "0.11", optional = true, default-features = false }
-reqwest-middleware = { version = "0.2", optional = true }
-reqwest-maybe-middleware = "0.2"
+reqwest = { version = "0.12", optional = true, default-features = false, features = ["json", "multipart"] }
+reqwest-middleware = { version = "0.3", optional = true }
 rust_decimal = { version = "1", features = [ "serde" ] }
 rust_decimal_macros = "1"
 serde = { version = "1.0", features = [ "derive" ] }
@@ -79,5 +85,19 @@ thiserror = "1.0"
 tokio = { version = "1", optional = true, features = [ "time" ] }
 tracing = { version = "0.1", features = [ "log" ] }
 
+# Author is not updating the `reqwest-maybe-middleware` right now. This crate
+# has been forked and integrated. Hopefully this is temporary.
+# reqwest-maybe-middleware = "0.3"
+# Dependencies for our integrated `reqwest-maybe-middleware`:
+http = { version = "1", optional = true }
+anyhow = { version = "1.0", optional = true }
+
 [badges]
 maintenance = { status = "passively-maintained" }
+
+# [dependencies.reqwest-maybe-middleware]
+# path = "../reqwest-maybe-middleware"
+
+# [dependencies.reqwest-middleware]
+# optional = true
+# path = "../reqwest-middleware/reqwest-middleware"

@@ -419,6 +419,8 @@ pub mod places;
 pub mod roads;
 #[cfg(feature = "time_zone")]
 pub mod time_zone;
+#[cfg(feature = "enable-reqwest-middleware")]
+pub mod reqwest_maybe_middleware;
 
 // Re-exports. Not great for organization but needed for backward compatibility.
 

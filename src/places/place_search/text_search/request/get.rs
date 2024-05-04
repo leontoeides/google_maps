@@ -1,3 +1,6 @@
+use backoff::Error::{Permanent, Transient};
+use backoff::ExponentialBackoff;
+use backoff::future::retry;
 use crate::error::Error as GoogleMapsError;
 use crate::places::place_search::text_search::{
     request::Request as PlacesTextSearchRequest, response::Response as PlacesTextSearchResponse,
@@ -5,11 +8,6 @@ use crate::places::place_search::text_search::{
 };
 use crate::places::status::Status as PlacesStatus;
 use crate::request_rate::api::Api;
-use crate::ReqError;
-use backoff::future::retry;
-use backoff::Error::{Permanent, Transient};
-use backoff::ExponentialBackoff;
-use reqwest::Response; // crate::places::place_search::text_search
 
 // -----------------------------------------------------------------------------
 
@@ -48,7 +46,7 @@ impl<'a> PlacesTextSearchRequest<'a> {
         let response = retry(ExponentialBackoff::default(), || async {
             // Query the Google Cloud Maps Platform using using an HTTP get
             // request, and return result to caller:
-            let response: Result<Response, ReqError> = self.client.get_request(&url).await;
+            let response = self.client.get_request(&url).await;
 
             // Check response from the HTTP client:
             match response {
