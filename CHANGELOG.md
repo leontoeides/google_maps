@@ -9,7 +9,7 @@ types. New functions: `from_address`, `from_place_id`, `try_from_f32` and
 
 * 3.5.0: 2024-05-03: `reqwest-maybe-middleware` was forked and integrated into
 `google_maps` for now, until the crate can be updated. maybe-middleware has also
-been properly feature-gated.
+been properly feature-gated and is turned-off by default.
 
 * 3.5.0: 2024-03-10: Addressed deprecated functions in the new `chrono` version
 `0.4.37`.
