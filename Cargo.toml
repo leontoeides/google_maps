@@ -1,6 +1,6 @@
 [package]
 name = "google_maps"
-version = "3.5.0"
+version = "3.5.1"
 authors = [ "Dylan Bowker <dylan.bowker@arkiteq.ca>" ]
 edition = "2021"
 categories = [ "api-bindings" ]
@@ -21,6 +21,7 @@ default = [
 	# `autocomplete` covers the Places API autocomplete-related services.
 	# All other Places API services are under "places" feature.
 	"autocomplete",
+
 	"directions",
 	"distance_matrix",
 	"elevation",
@@ -70,7 +71,7 @@ geo-types = { version = "0.7", optional = true, features = [ "serde" ] }
 miette = "7.2"
 percent-encoding = "2.3"
 phf = { version = "0.11", features = [ "macros" ] }
-reqwest = { version = "0.12", optional = true, default-features = false, features = ["json", "multipart"] }
+reqwest = { version = "0.12", optional = true, default-features = false, features = [ "json", "multipart" ] }
 reqwest-middleware = { version = "0.3", optional = true }
 rust_decimal = { version = "1", features = [ "serde" ] }
 rust_decimal_macros = "1"
@@ -82,8 +83,8 @@ tokio = { version = "1", optional = true, features = [ "time" ] }
 tracing = { version = "0.1", features = [ "log" ] }
 
 # The author of `reqwest-maybe-middleware` is not currently merging PR requests
-# or updating the crate. This crate has been forked and integrated. Hopefully
-# this is temporary.
+# or updating the crate. This crate has been forked and integrated into
+# `google_maps`. Hopefully this is temporary.
 # reqwest-maybe-middleware = "0.3"
 # Dependencies for our integrated `reqwest-maybe-middleware`:
 http = { version = "1", optional = true }

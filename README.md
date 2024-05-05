@@ -41,6 +41,7 @@ Additionally, usage of rustls for Reqwest is supported.
 * `roads`
 * `time_zone`
 * `enable-reqwest` (uses [reqwest](https://crates.io/crates/reqwest) for querying the Google Maps API).
+* `enable-reqwest-middleware` (uses [reqwest-middleware](https://crates.io/crates/reqwest-middleware) for querying the Google Maps API).
 * `geo` (support for the [geo](https://crates.io/crates/geo-types) crate's types)
 
 Note: The Places API's autocomplete feature have been put in the `autocomplete` feature flag. The rest of the Places APIs will be put under the `places` feature flag.

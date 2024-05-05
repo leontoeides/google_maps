@@ -22,47 +22,6 @@ impl GoogleMapsClient {
     /// * `key` ‧ Your application's API key. This key identifies your
     /// application for purposes of quota management. Learn how to [get a
     /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
-    ///
-    /// ## Panics
-    ///
-    /// * This function will panic if the `reqwest` client builder chain fails.
-    /// Realistically this shouldn't happen. However you may want to use
-    /// `try_new` to instantiate a new `GoogleMapsClient` instead.
-
-    #[cfg(feature = "enable-reqwest")]
-    #[deprecated(since = "3.4.2", note = "use `try_new` instead")]
-    #[must_use]
-    pub fn new(key: impl Into<String>) -> Self {
-        Self::try_new(key).unwrap()
-    }
-
-    // -------------------------------------------------------------------------
-    //
-    /// Initialize the settings needed for a Google Cloud Maps API transaction.
-    ///
-    /// ## Arguments
-    ///
-    /// * `key` ‧ Your application's API key. This key identifies your
-    /// application for purposes of quota management. Learn how to [get a
-    /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
-
-    #[cfg(all(feature = "enable-reqwest", feature = "enable-reqwest-middleware"))]
-    pub fn try_new(key: impl Into<String>) -> Result<Self, crate::GoogleMapsError> {
-        let reqwest_client = reqwest::Client::builder()
-            .user_agent(format!(
-                "RustGoogleMaps/{version}",
-                version = env!("CARGO_PKG_VERSION")
-            ))
-            .connect_timeout(std::time::Duration::from_secs(10))
-            .timeout(std::time::Duration::from_secs(30))
-            .build()?;
-
-        Ok(Self {
-            key: key.into(),
-            rate_limit: RequestRate::default(),
-            reqwest_client: crate::reqwest_maybe_middleware::Client::Vanilla(reqwest_client),
-        }) // GoogleMapsClient
-    } // fn
 
     #[cfg(all(feature = "enable-reqwest", not(feature = "enable-reqwest-middleware")))]
     pub fn try_new(key: impl Into<String>) -> Result<Self, crate::GoogleMapsError> {
@@ -92,9 +51,60 @@ impl GoogleMapsClient {
     /// application for purposes of quota management. Learn how to [get a
     /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
 
+    #[cfg(all(feature = "enable-reqwest", feature = "enable-reqwest-middleware"))]
+    pub fn try_new(key: impl Into<String>) -> Result<Self, crate::GoogleMapsError> {
+        let reqwest_client = reqwest::Client::builder()
+            .user_agent(format!(
+                "RustGoogleMaps/{version}",
+                version = env!("CARGO_PKG_VERSION")
+            ))
+            .connect_timeout(std::time::Duration::from_secs(10))
+            .timeout(std::time::Duration::from_secs(30))
+            .build()?;
+
+        Ok(Self {
+            key: key.into(),
+            rate_limit: RequestRate::default(),
+            reqwest_client: crate::reqwest_maybe_middleware::Client::Vanilla(reqwest_client),
+        }) // GoogleMapsClient
+    } // fn
+
+    // -------------------------------------------------------------------------
+    //
+    /// Initialize the settings needed for a Google Cloud Maps API transaction.
+    ///
+    /// ## Arguments
+    ///
+    /// * `key` ‧ Your application's API key. This key identifies your
+    /// application for purposes of quota management. Learn how to [get a
+    /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
+    ///
+    /// ## Panics
+    ///
+    /// * This function will panic if the `reqwest` client builder chain fails.
+    /// Realistically this shouldn't happen. However you may want to use
+    /// `try_new` to instantiate a new `GoogleMapsClient` instead.
+
+    #[cfg(feature = "enable-reqwest")]
+    #[deprecated(since = "3.4.2", note = "use `try_new` instead")]
+    #[must_use]
+    pub fn new(key: impl Into<String>) -> Self {
+        Self::try_new(key).unwrap()
+    }
+
+    // -------------------------------------------------------------------------
+    //
+    /// Initialize the settings needed for a Google Cloud Maps API transaction.
+    ///
+    /// ## Arguments
+    ///
+    /// * `key` ‧ Your application's API key. This key identifies your
+    /// application for purposes of quota management. Learn how to [get a
+    /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
+
     #[cfg(not(feature = "enable-reqwest"))]
     pub fn new(key: impl Into<String>) -> Self {
-        Self { key: key.into() } // GoogleMapsClient
+        Self { key: key.into() }
     } // fn
 
     // -------------------------------------------------------------------------
