@@ -44,11 +44,10 @@ Additionally, usage of rustls for Reqwest is supported.
 * `enable-reqwest-middleware` (uses [reqwest-middleware](https://crates.io/crates/reqwest-middleware) for querying the Google Maps API).
 * `geo` (support for the [geo](https://crates.io/crates/geo-types) crate's types)
 
-Note: the `autocomplete` feature covers the Places API autocomplete-related
-services:
-[Place Autocomplete requests](https://developers.google.com/maps/documentation/places/web-service/autocomplete#place_autocomplete_requests)
-and [Query Autocomplete requests](https://developers.google.com/maps/documentation/places/web-service/query#query_autocomplete_requests).
-All other Places API services covered by the `places` feature.
+Note: the `autocomplete` feature covers the Places API autocomplete-related services:
+[Place Autocomplete requests](https://docs.rs/google_maps/latest/google_maps/prelude/struct.ClientSettings.html#method.place_autocomplete)
+and [Query Autocomplete requests](https://docs.rs/google_maps/latest/google_maps/prelude/struct.ClientSettings.html#method.query_autocomplete).
+All other Places API services are covered by the `places` feature.
 
 ### reqwest Feature Flags
 
