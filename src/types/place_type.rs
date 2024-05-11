@@ -3,7 +3,6 @@
 //! "country" (as in a nation) or it could be a "shopping mall."
 
 use crate::error::Error as GoogleMapsError;
-use crate::types::error::Error as TypeError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -220,6 +219,14 @@ pub enum PlaceType {
     Regions = 140,
     Cities = 141,
     Landmark = 142,
+    /// If the place type is not recognized by
+    /// [serde](https://crates.io/crates/serde) when reading data from
+    /// Google it will be assigned to this `Other` variant.
+    ///
+    /// As new types are added to Google Maps, they must also be added to this
+    /// crate. However, in the meantime, the `Other` catch-all variant allows
+    /// `serde` to read data from Google without producing an error until the
+    /// new variant added to this `enum`.
     Other = 143,
 } // enum
 
@@ -588,7 +595,7 @@ impl std::convert::TryFrom<&str> for PlaceType {
         Ok(PLACE_TYPES_BY_CODE
             .get(place_type_code)
             .copied()
-            .ok_or_else(|| TypeError::InvalidPlaceTypeCode(place_type_code.to_string()))?)
+            .unwrap_or(Self::Other))
     } // fn
 } // impl
 
@@ -604,7 +611,7 @@ impl std::str::FromStr for PlaceType {
         Ok(PLACE_TYPES_BY_CODE
             .get(place_type_code)
             .copied()
-            .ok_or_else(|| TypeError::InvalidPlaceTypeCode(place_type_code.to_string()))?)
+            .unwrap_or(Self::Other))
     } // fn
 } // impl
 

@@ -2,7 +2,6 @@
 //! object describing the opening hours of a place.
 
 use crate::error::Error as GoogleMapsError;
-use crate::places::error::Error as PlacesError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -29,6 +28,15 @@ pub enum SecondaryHoursType {
     Brunch = 8,
     Pickup = 9,
     SeniorHours = 10,
+    /// If the hours type is not recognized by
+    /// [serde](https://crates.io/crates/serde) when reading data from
+    /// Google it will be assigned to this `Other` variant.
+    ///
+    /// As new types are added to Google Maps, they must also be added to this
+    /// crate. However, in the meantime, the `Other` catch-all variant allows
+    /// `serde` to read data from Google without producing an error until the
+    /// new variant added to this `enum`.
+    Other(String) = 11,
 } // struct
 
 // -----------------------------------------------------------------------------
@@ -59,11 +67,11 @@ impl Serialize for SecondaryHoursType {
 
 // -----------------------------------------------------------------------------
 
-impl std::convert::From<&SecondaryHoursType> for &str {
+impl<'a> std::convert::From<&'a SecondaryHoursType> for &'a str {
     /// Converts a `SecondaryHoursType` enum to a `String` that contains a
     /// [secondary hours type](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceOpeningHours-type)
     /// code.
-    fn from(hours_type: &SecondaryHoursType) -> Self {
+    fn from(hours_type: &'a SecondaryHoursType) -> Self {
         match hours_type {
             SecondaryHoursType::DriveThrough => "DRIVE_THROUGH",
             SecondaryHoursType::HappyHour => "HAPPY_HOUR",
@@ -76,6 +84,7 @@ impl std::convert::From<&SecondaryHoursType> for &str {
             SecondaryHoursType::Brunch => "BRUNCH",
             SecondaryHoursType::Pickup => "PICKUP",
             SecondaryHoursType::SeniorHours => "SENIOR_HOURS",
+            SecondaryHoursType::Other(string) => string,
         } // match
     } // fn
 } // impl
@@ -131,7 +140,7 @@ impl std::convert::TryFrom<&str> for SecondaryHoursType {
         Ok(STATUSES_BY_CODE
             .get(hours_type)
             .cloned()
-            .ok_or_else(|| PlacesError::InvalidSecondaryHoursType(hours_type.to_string()))?)
+            .unwrap_or_else(|| Self::Other(hours_type.to_string())))
     } // fn
 } // impl
 
@@ -148,7 +157,7 @@ impl std::str::FromStr for SecondaryHoursType {
         Ok(STATUSES_BY_CODE
             .get(hours_type)
             .cloned()
-            .ok_or_else(|| PlacesError::InvalidSecondaryHoursType(hours_type.to_string()))?)
+            .unwrap_or_else(|| Self::Other(hours_type.to_string())))
     } // fn
 } // impl
 
@@ -158,7 +167,7 @@ impl SecondaryHoursType {
     /// Formats a `SecondaryHoursType` enum into a string that is presentable to the
     /// end user.
     #[must_use]
-    pub const fn display(&self) -> &str {
+    pub fn display(&self) -> &str {
         match self {
             Self::DriveThrough => "Drive Through",
             Self::HappyHour => "Happy Hour",
@@ -171,6 +180,7 @@ impl SecondaryHoursType {
             Self::Brunch => "Brunch",
             Self::Pickup => "Pickup",
             Self::SeniorHours => "Senior Hours",
+            Self::Other(string) => string,
         } // match
     } // fn
 } // impl

@@ -3,7 +3,6 @@
 //! of languages, it is a list of languages that Google Maps supports._
 
 use crate::error::Error as GoogleMapsError;
-use crate::types::error::Error as TypeError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -146,6 +145,15 @@ pub enum Language {
     Uzbek = 81,
     Vietnamese = 82,
     Zulu = 83,
+    /// If the language is not recognized by
+    /// [serde](https://crates.io/crates/serde) when reading data from
+    /// Google it will be assigned to this `Other` variant.
+    ///
+    /// As new types are added to Google Maps, they must also be added to this
+    /// crate. However, in the meantime, the `Other` catch-all variant allows
+    /// `serde` to read data from Google without producing an error until the
+    /// new variant added to this `enum`.
+    Other = 84,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -265,6 +273,7 @@ impl std::convert::From<&Language> for &str {
             Language::Uzbek => "uz",
             Language::Vietnamese => "vi",
             Language::Zulu => "zu",
+            Language::Other => "xx",
         } // match
     } // fn
 } // impl
@@ -376,6 +385,7 @@ static LANGUAGES_BY_CODE: phf::Map<&'static str, Language> = phf_map! {
     "uz" => Language::Uzbek,
     "vi" => Language::Vietnamese,
     "zu" => Language::Zulu,
+    "xx" => Language::Other,
 };
 
 // -----------------------------------------------------------------------------
@@ -389,7 +399,7 @@ impl std::convert::TryFrom<&str> for Language {
         Ok(LANGUAGES_BY_CODE
             .get(language_code)
             .copied()
-            .ok_or_else(|| TypeError::InvalidLanguageCode(language_code.to_string()))?)
+            .unwrap_or(Self::Other))
     } // fn
 } // impl
 
@@ -404,7 +414,7 @@ impl std::str::FromStr for Language {
         Ok(LANGUAGES_BY_CODE
             .get(language_code)
             .copied()
-            .ok_or_else(|| TypeError::InvalidLanguageCode(language_code.to_string()))?)
+            .unwrap_or(Self::Other))
     } // fn
 } // impl
 
@@ -500,6 +510,7 @@ impl Language {
             Self::Uzbek => "Uzbek",
             Self::Vietnamese => "Vietnamese",
             Self::Zulu => "Zulu",
+            Self::Other => "Other",
         } // match
     } // fn
 } // impl

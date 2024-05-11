@@ -2,7 +2,6 @@
 //! specify a currency. Included for use with the transit fares returned by
 //! Google Maps Directions API.
 
-use crate::directions::error::Error as DirectionsError;
 use crate::error::Error as GoogleMapsError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
@@ -198,6 +197,15 @@ pub enum TransitCurrency {
     SouthAfricanRand = 176,
     ZambianKwacha = 177,
     ZimbabweanDollar = 178,
+    /// If the transit currency is not recognized by
+    /// [serde](https://crates.io/crates/serde) when reading data from
+    /// Google it will be assigned to this `Other` variant.
+    ///
+    /// As new types are added to Google Maps, they must also be added to this
+    /// crate. However, in the meantime, the `Other` catch-all variant allows
+    /// `serde` to read data from Google without producing an error until the
+    /// new variant added to this `enum`.
+    Other(String) = 179,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -228,10 +236,10 @@ impl Serialize for TransitCurrency {
 
 // -----------------------------------------------------------------------------
 
-impl std::convert::From<&TransitCurrency> for &str {
+impl<'a> std::convert::From<&'a TransitCurrency> for &'a str {
     /// Converts a `TransitCurrency` enum to a `String` that contains an [ISO
     /// 4217 currency code](https://en.wikipedia.org/wiki/ISO_4217).
-    fn from(currency: &TransitCurrency) -> Self {
+    fn from(currency: &'a TransitCurrency) -> Self {
         match currency {
             TransitCurrency::UnitedArabEmiratesDirham => "AED",
             TransitCurrency::AfghanAfghani => "AFN",
@@ -412,6 +420,7 @@ impl std::convert::From<&TransitCurrency> for &str {
             TransitCurrency::SouthAfricanRand => "ZAR",
             TransitCurrency::ZambianKwacha => "ZMW",
             TransitCurrency::ZimbabweanDollar => "ZWL",
+            TransitCurrency::Other(string) => string,
         } // match
     } // fn
 } // impl
@@ -632,7 +641,7 @@ impl std::convert::TryFrom<&str> for TransitCurrency {
         Ok(TRANSIT_CURRENCIES_BY_CODE
             .get(currency_code)
             .cloned()
-            .ok_or_else(|| DirectionsError::InvalidCurrencyCode(currency_code.to_string()))?)
+            .unwrap_or_else(|| Self::Other(currency_code.to_string())))
     } // fn
 } // impl
 
@@ -648,7 +657,7 @@ impl std::str::FromStr for TransitCurrency {
         Ok(TRANSIT_CURRENCIES_BY_CODE
             .get(currency_code)
             .cloned()
-            .ok_or_else(|| DirectionsError::InvalidCurrencyCode(currency_code.to_string()))?)
+            .unwrap_or_else(|| Self::Other(currency_code.to_string())))
     } // fn
 } // impl
 
@@ -658,7 +667,7 @@ impl TransitCurrency {
     /// Formats a `TransitCurrency` enum into a string that is presentable to
     /// the end user.
     #[must_use]
-    pub const fn display(&self) -> &str {
+    pub fn display(&self) -> &str {
         match self {
             Self::UnitedArabEmiratesDirham => "United Arab Emirates dirham",
             Self::AfghanAfghani => "Afghan afghani",
@@ -839,6 +848,7 @@ impl TransitCurrency {
             Self::SouthAfricanRand => "South African rand",
             Self::ZambianKwacha => "Zambian kwacha",
             Self::ZimbabweanDollar => "Zimbabwean dollar",
+            Self::Other(string) => string,
         } // match
     } // fn
 } // impl

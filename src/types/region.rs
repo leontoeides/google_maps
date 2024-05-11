@@ -5,7 +5,6 @@
 //! supports._
 
 use crate::error::Error as GoogleMapsError;
-use crate::types::error::Error as TypeError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -336,6 +335,15 @@ pub enum Region {
     Yemen = 253,
     Zambia = 254,
     Zimbabwe = 255,
+    /// If the country is not recognized by
+    /// [serde](https://crates.io/crates/serde) when reading data from
+    /// Google it will be assigned to this `Other` variant.
+    ///
+    /// As new types are added to Google Maps, they must also be added to this
+    /// crate. However, in the meantime, the `Other` catch-all variant allows
+    /// `serde` to read data from Google without producing an error until the
+    /// new variant added to this `enum`.
+    Other = 256,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -627,6 +635,7 @@ impl std::convert::From<&Region> for &str {
             Region::Yemen => "ye",
             Region::Zambia => "zm",
             Region::Zimbabwe => "zw",
+            Region::Other => "xx",
         } // match
     } // fn
 } // impl
@@ -910,6 +919,7 @@ static REGIONS_BY_CODE: phf::Map<&'static str, Region> = phf_map! {
     "zm" => Region::Zambia,
     "zw" => Region::Zimbabwe,
     "ax" => Region::AlandIslands,
+    "xx" => Region::Other,
 };
 
 // -----------------------------------------------------------------------------
@@ -923,7 +933,7 @@ impl std::convert::TryFrom<&str> for Region {
         Ok(REGIONS_BY_CODE
             .get(region_code)
             .copied()
-            .ok_or_else(|| TypeError::InvalidRegionCode(region_code.to_string()))?)
+            .unwrap_or(Self::Other))
     } // fn
 } // impl
 
@@ -938,7 +948,7 @@ impl std::str::FromStr for Region {
         Ok(REGIONS_BY_CODE
             .get(region_code)
             .copied()
-            .ok_or_else(|| TypeError::InvalidRegionCode(region_code.to_string()))?)
+            .unwrap_or(Self::Other))
     } // fn
 } // impl
 
@@ -1208,6 +1218,7 @@ impl Region {
             Self::Zambia => "Zambia",
             Self::Zimbabwe => "Zimbabwe",
             Self::AlandIslands => "Åland Islands",
+            Self::Other => "Other",
         } // match
     } // fn
 } // impl

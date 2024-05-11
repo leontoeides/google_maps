@@ -3,7 +3,6 @@
 //! codes](https://en.wikipedia.org/wiki/ISO_3166-1).
 
 use crate::error::Error as GoogleMapsError;
-use crate::types::Error as TypeError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -79,7 +78,7 @@ pub enum Country {
     CocosKeelingIslands = 48,
     Colombia = 49,
     Comoros = 50,
-    CongoBrazzaville = 51,
+    CongoBraXXaville = 51,
     CongoKinshasa = 52,
     CookIslands = 53,
     CostaRica = 54,
@@ -278,6 +277,15 @@ pub enum Country {
     Yemen = 246,
     Zambia = 247,
     Zimbabwe = 248,
+    /// If the country is not recognized by
+    /// [serde](https://crates.io/crates/serde) when reading data from
+    /// Google it will be assigned to this `Other` variant.
+    ///
+    /// As new types are added to Google Maps, they must also be added to this
+    /// crate. However, in the meantime, the `Other` catch-all variant allows
+    /// `serde` to read data from Google withot producing an error until the
+    /// new variant added to this `enum`.
+    Other = 249,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -365,7 +373,7 @@ impl std::convert::From<&Country> for &str {
             Country::CocosKeelingIslands => "CC",
             Country::Colombia => "CO",
             Country::Comoros => "KM",
-            Country::CongoBrazzaville => "CG",
+            Country::CongoBraXXaville => "CG",
             Country::CongoKinshasa => "CD",
             Country::CookIslands => "CK",
             Country::CostaRica => "CR",
@@ -563,6 +571,7 @@ impl std::convert::From<&Country> for &str {
             Country::Yemen => "YE",
             Country::Zambia => "ZM",
             Country::Zimbabwe => "ZW",
+            Country::Other => "XX",
         } // match
     } // fn
 } // impl
@@ -643,7 +652,7 @@ static COUNTRIES_BY_CODE: phf::Map<&'static str, Country> = phf_map! {
     "CC" => Country::CocosKeelingIslands,
     "CO" => Country::Colombia,
     "KM" => Country::Comoros,
-    "CG" => Country::CongoBrazzaville,
+    "CG" => Country::CongoBraXXaville,
     "CD" => Country::CongoKinshasa,
     "CK" => Country::CookIslands,
     "CR" => Country::CostaRica,
@@ -841,6 +850,7 @@ static COUNTRIES_BY_CODE: phf::Map<&'static str, Country> = phf_map! {
     "YE" => Country::Yemen,
     "ZM" => Country::Zambia,
     "ZW" => Country::Zimbabwe,
+    "XX" => Country::Other,
 };
 
 // -----------------------------------------------------------------------------
@@ -856,7 +866,7 @@ impl std::convert::TryFrom<&str> for Country {
         Ok(COUNTRIES_BY_CODE
             .get(country_code)
             .copied()
-            .ok_or_else(|| TypeError::InvalidCountryCode(country_code.to_string()))?)
+            .unwrap_or(Self::Other))
     } // fn
 } // impl
 
@@ -873,7 +883,7 @@ impl std::str::FromStr for Country {
         Ok(COUNTRIES_BY_CODE
             .get(country_code)
             .copied()
-            .ok_or_else(|| TypeError::InvalidCountryCode(country_code.to_string()))?)
+            .unwrap_or(Self::Other))
     } // fn
 } // impl
 
@@ -936,7 +946,7 @@ impl Country {
             Self::CocosKeelingIslands => "Cocos (Keeling) Islands",
             Self::Colombia => "Colombia",
             Self::Comoros => "Comoros",
-            Self::CongoBrazzaville => "Congo",
+            Self::CongoBraXXaville => "Congo",
             Self::CongoKinshasa => "Democratic Republic of the Congo",
             Self::CookIslands => "Cook Islands",
             Self::CostaRica => "Costa Rica",
@@ -1136,6 +1146,7 @@ impl Country {
             Self::Yemen => "Yemen",
             Self::Zambia => "Zambia",
             Self::Zimbabwe => "Zimbabwe",
+            Self::Other => "Other",
         } // match
     } // fn
 } // impl

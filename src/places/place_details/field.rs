@@ -3,7 +3,6 @@
 //! status, price level, wheelchair accessible, and so on.
 
 use crate::error::Error as GoogleMapsError;
-use crate::places::error::Error as PlacesError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -76,6 +75,15 @@ pub enum Field {
     ServesWine = 37,
     Takeout = 38,
     UserRatingsTotal = 39,
+    /// If the field is not recognized by
+    /// [serde](https://crates.io/crates/serde) when reading data from
+    /// Google it will be assigned to this `Other` variant.
+    ///
+    /// As new types are added to Google Maps, they must also be added to this
+    /// crate. However, in the meantime, the `Other` catch-all variant allows
+    /// `serde` to read data from Google without producing an error until the
+    /// new variant added to this `enum`.
+    Other(String) = 40,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -106,11 +114,11 @@ impl Serialize for Field {
 
 // -----------------------------------------------------------------------------
 
-impl std::convert::From<&Field> for &str {
+impl<'a> std::convert::From<&'a Field> for &'a str {
     /// Converts a `Field` enum to a `String` that contains a
     /// [field](https://developers.google.com/maps/documentation/places/web-service/details#fields)
     /// code.
-    fn from(field: &Field) -> Self {
+    fn from(field: &'a Field) -> Self {
         match field {
             // Basic
             Field::AddressComponent => "address_component",
@@ -154,6 +162,7 @@ impl std::convert::From<&Field> for &str {
             Field::ServesWine => "serves_wine",
             Field::Takeout => "takeout",
             Field::UserRatingsTotal => "user_ratings_total",
+            Field::Other(string) => string,
         } // match
     } // fn
 } // impl
@@ -239,7 +248,7 @@ impl std::convert::TryFrom<&str> for Field {
         Ok(FIELD_TYPES_BY_CODE
             .get(field_code)
             .cloned()
-            .ok_or_else(|| PlacesError::InvalidFieldCode(field_code.to_string()))?)
+            .unwrap_or_else(|| Self::Other(field_code.to_string())))
     } // fn
 } // impl
 
@@ -255,7 +264,7 @@ impl std::str::FromStr for Field {
         Ok(FIELD_TYPES_BY_CODE
             .get(field_code)
             .cloned()
-            .ok_or_else(|| PlacesError::InvalidFieldCode(field_code.to_string()))?)
+            .unwrap_or_else(|| Self::Other(field_code.to_string())))
     } // fn
 } // impl
 
@@ -265,7 +274,7 @@ impl Field {
     /// Formats a `Field` enum into a string that is presentable to the end
     /// user.
     #[must_use]
-    pub const fn display(&self) -> &str {
+    pub fn display(&self) -> &str {
         match self {
             Self::AddressComponent => "Address Component",
             Self::AdrAddress => "adr Address",
@@ -308,6 +317,7 @@ impl Field {
             Self::ServesWine => "Serves Wine",
             Self::Takeout => "Takeout",
             Self::UserRatingsTotal => "User Ratings Total",
+            Self::Other(string) => string,
         } // match
     } // fn
 } // impl
