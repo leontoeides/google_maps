@@ -35,9 +35,12 @@ impl<'a> Request<'a> {
     /// will be returned, and you will be billed accordingly. This applies only
     /// to Place Details requests.
 
-    pub fn with_fields(&'a mut self, fields: &[Field]) -> &'a mut Self {
+    pub fn with_fields(
+        &'a mut self,
+        fields: impl IntoIterator<Item = Field>,
+    ) -> &'a mut Self {
         // Set fields in Request struct.
-        self.fields = fields.to_vec();
+        self.fields = fields.into_iter().map(Into::into).collect();
         // Return modified Request struct to caller.
         self
     } // fn

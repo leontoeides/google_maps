@@ -37,9 +37,12 @@ impl<'a> Request<'a> {
     ///
     /// * Multiple components may be stacked together.
 
-    pub fn with_components(&'a mut self, components: Vec<Country>) -> &'a mut Self {
+    pub fn with_components(
+        &'a mut self,
+        components: impl IntoIterator<Item = Country>,
+    ) -> &'a mut Self {
         // Set components in Request struct.
-        self.components.extend(components);
+        self.components.extend(components.into_iter().map(Into::<Country>::into));
         // Return modified Request struct to caller.
         self
     } // fn

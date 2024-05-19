@@ -1,4 +1,5 @@
 use crate::client::GoogleMapsClient;
+use crate::types::LatLng;
 #[cfg(feature = "directions")]
 use crate::directions::request::location::Location;
 #[cfg(feature = "distance_matrix")]
@@ -131,11 +132,13 @@ impl GoogleMapsClient {
 
     #[cfg(feature = "directions")]
     #[must_use]
-    pub const fn directions(
+    pub fn directions(
         &self,
-        origin: Location,
-        destination: Location,
+        origin: impl Into<Location>,
+        destination: impl Into<Location>,
     ) -> crate::directions::request::Request {
+        let origin: Location = origin.into();
+        let destination: Location = destination.into();
         crate::directions::request::Request::new(self, origin, destination)
     } // fn
 
@@ -170,14 +173,25 @@ impl GoogleMapsClient {
     ///     ],
     /// )
     /// ```
+    ///
+    /// # Generics
+    ///
+    /// This method uses generics to improve ergonomics. The `C` generic is
+    /// intended to represent any collection that can be iterated over, and the
+    /// `W` generic is for any type that can be converted to a `Waypoint` type.
 
     #[cfg(feature = "distance_matrix")]
     #[must_use]
-    pub fn distance_matrix(
+    pub fn distance_matrix<C, W>(
         &self,
-        origins: Vec<Waypoint>,
-        destinations: Vec<Waypoint>,
-    ) -> crate::distance_matrix::request::Request {
+        origins: C,
+        destinations: C,
+    ) -> crate::distance_matrix::request::Request
+    where
+        C: IntoIterator<Item = W>,
+        W: Into<Waypoint> {
+        let origins: Vec<Waypoint> = origins.into_iter().map(Into::into).collect();
+        let destinations: Vec<Waypoint> = destinations.into_iter().map(Into::into).collect();
         crate::distance_matrix::request::Request::new(self, origins, destinations)
     } // fn
 
@@ -190,7 +204,7 @@ impl GoogleMapsClient {
     /// ## Arguments
     ///
     /// This method accepts no arguments, it initiates a builder pattern. Use
-    /// the methods of the resulting type.
+    /// the methods of the resulting type to set the parameters.
 
     #[cfg(feature = "elevation")]
     #[must_use]
@@ -209,7 +223,7 @@ impl GoogleMapsClient {
     /// ## Arguments
     ///
     /// This method accepts no arguments, it initiates a builder pattern. Use
-    /// the methods of the resulting type.
+    /// the methods of the resulting type to set the parameters.
 
     #[cfg(feature = "geocoding")]
     #[must_use]
@@ -244,11 +258,12 @@ impl GoogleMapsClient {
 
     #[cfg(feature = "geocoding")]
     #[must_use]
-    pub const fn reverse_geocoding(
+    pub fn reverse_geocoding(
         &self,
-        latlng: crate::LatLng,
+        location: impl Into<LatLng>,
     ) -> crate::geocoding::reverse::ReverseRequest {
-        crate::geocoding::reverse::ReverseRequest::new(self, latlng)
+        let location: LatLng = location.into();
+        crate::geocoding::reverse::ReverseRequest::new(self, location)
     } // fn
 
     // -------------------------------------------------------------------------
@@ -284,11 +299,13 @@ impl GoogleMapsClient {
 
     #[cfg(feature = "time_zone")]
     #[must_use]
-    pub const fn time_zone(
+    pub fn time_zone(
         &self,
-        location: crate::LatLng,
-        timestamp: DateTime<Utc>,
+        location: impl Into<LatLng>,
+        timestamp: impl Into<DateTime<Utc>>,
     ) -> crate::time_zone::request::Request {
+        let location: LatLng = location.into();
+        let timestamp: DateTime<Utc> = timestamp.into();
         crate::time_zone::request::Request::new(self, location, timestamp)
     } // fn
 
@@ -494,11 +511,13 @@ impl GoogleMapsClient {
 
     #[cfg(feature = "places")]
     #[must_use]
-    pub const fn nearby_search(
+    pub fn nearby_search(
         &self,
-        location: crate::LatLng,
-        radius: u32,
+        location: impl Into<LatLng>,
+        radius: impl Into<u32>,
     ) -> crate::places::place_search::nearby_search::request::Request {
+        let location: LatLng = location.into();
+        let radius: u32 = radius.into();
         crate::places::place_search::nearby_search::request::Request::new(self, location, radius)
     } // fn
 
@@ -581,14 +600,25 @@ impl GoogleMapsClient {
     /// .execute()
     /// .await?;
     /// ```
+    ///
+    /// # Generics
+    ///
+    /// This method uses generics to improve ergonomics. The `C` generic is
+    /// intended to represent any collection that can be iterated over, and the
+    /// `L` generic is for any type that can be converted to `LatLng`
+    /// coordinates.
 
     #[cfg(feature = "roads")]
     #[must_use]
-    pub fn snap_to_roads(
+    pub fn snap_to_roads<C, L>(
         &self,
-        path: &[crate::LatLng],
-    ) -> crate::roads::snap_to_roads::request::Request {
-        crate::roads::snap_to_roads::request::Request::new(self, path.to_vec())
+        path: C,
+    ) -> crate::roads::snap_to_roads::request::Request
+    where
+        C: IntoIterator<Item = L>,
+        L: Into<LatLng> {
+        let path: Vec<LatLng> = path.into_iter().map(Into::into).collect();
+        crate::roads::snap_to_roads::request::Request::new(self, path)
     } // fn
 
     // -------------------------------------------------------------------------
@@ -620,14 +650,25 @@ impl GoogleMapsClient {
     ///     LatLng::try_from_dec(dec!(60.170877), dec!(24.942796))?,
     /// ]).execute().await?;
     /// ```
+    ///
+    /// # Generics
+    ///
+    /// This method uses generics to improve ergonomics. The `C` generic is
+    /// intended to represent any collection that can be iterated over, and the
+    /// `L` generic is for any type that can be converted to `LatLng`
+    /// coordinates.
 
     #[cfg(feature = "roads")]
     #[must_use]
-    pub fn nearest_roads(
+    pub fn nearest_roads<C, L>(
         &self,
-        points: &[crate::LatLng],
-    ) -> crate::roads::snap_to_roads::request::Request {
-        crate::roads::snap_to_roads::request::Request::new(self, points.to_vec())
+        points: C,
+    ) -> crate::roads::snap_to_roads::request::Request
+    where
+        C: IntoIterator<Item = L>,
+        L: Into<LatLng> {
+        let points: Vec<LatLng> = points.into_iter().map(Into::into).collect();
+        crate::roads::snap_to_roads::request::Request::new(self, points)
     } // fn
 
     #[cfg(feature = "enable-reqwest")]

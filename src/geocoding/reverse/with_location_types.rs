@@ -90,9 +90,12 @@ impl<'a> ReverseRequest<'a> {
     /// ])
     /// ```
 
-    pub fn with_location_types(&'a mut self, location_types: &[LocationType]) -> &'a mut Self {
+    pub fn with_location_types(
+        &'a mut self,
+        location_types: impl IntoIterator<Item = LocationType>,
+    ) -> &'a mut Self {
         // Add location types to ReverseRequest struct.
-        self.location_types = location_types.to_vec();
+        self.location_types = location_types.into_iter().map(Into::into).collect();
         // Return modified ReverseRequest struct to caller.
         self
     } // fn

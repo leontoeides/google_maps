@@ -22,7 +22,11 @@ impl<'a> Request<'a> {
     /// .with_arrival_time(NaiveDate::from_ymd(2019, 1, 1).and_hms(0, 00, 0))
     /// ```
 
-    pub fn with_arrival_time(&'a mut self, arrival_time: NaiveDateTime) -> &'a mut Self {
+    pub fn with_arrival_time(
+        &'a mut self,
+        arrival_time: impl Into<NaiveDateTime>,
+    ) -> &'a mut Self {
+        let arrival_time: NaiveDateTime = arrival_time.into();
         self.arrival_time = Some(arrival_time);
         self
     } // fn

@@ -44,7 +44,13 @@ impl<'a> Request<'a> {
     /// )
     /// ```
 
-    pub fn for_sampled_path_request(&'a mut self, path: Locations, samples: u8) -> &'a mut Self {
+    pub fn for_sampled_path_request(
+        &'a mut self,
+        path: impl Into<Locations>,
+        samples: impl Into<u8>,
+    ) -> &'a mut Self {
+        let path: Locations = path.into();
+        let samples: u8 = samples.into();
         // Set the path in Request struct.
         self.path = Some(path);
         // Set the sample number in Request struct.
@@ -69,6 +75,11 @@ impl<'a> Request<'a> {
     /// an ordered set of equidistant points along the path.
 
     #[cfg(feature = "geo")]
+    #[deprecated(since = "3.5.1", note =
+        "you may now use geo types directly with the google_maps crate. \
+        the geo-specific methods are no longer necessary. \
+        it's suggested to use the `for_sampled_path_request` method instead"
+    )]
     pub fn for_line_string_request(
         &'a mut self,
         line_string: geo_types::LineString,

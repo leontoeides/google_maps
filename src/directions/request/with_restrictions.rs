@@ -78,9 +78,12 @@ impl<'a> Request<'a> {
     /// ])
     /// ```
 
-    pub fn with_restrictions(&'a mut self, restrictions: &[Avoid]) -> &'a mut Self {
+    pub fn with_restrictions(
+        &'a mut self,
+        restrictions: impl IntoIterator<Item = Avoid>,
+    ) -> &'a mut Self {
         // Add restrictions to Request struct.
-        self.restrictions = restrictions.to_vec();
+        self.restrictions = restrictions.into_iter().map(Into::into).collect();
         // Return modified Request struct to caller.
         self
     } // fn

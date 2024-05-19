@@ -90,7 +90,11 @@ impl<'a> Request<'a> {
     /// .with_waypoint(Waypoint::PlaceId(String::from("ChIJi5fWgmcSzkwRePJ_I9-xCRg")))
     /// ```
 
-    pub fn with_waypoint(&'a mut self, waypoint: Waypoint) -> &'a mut Self {
+    pub fn with_waypoint(
+        &'a mut self,
+        waypoint: impl Into<Waypoint>,
+    ) -> &'a mut Self {
+        let waypoint: Waypoint = waypoint.into();
         // Add waypoint to Request struct.
         self.waypoints = vec![waypoint];
         // Return modified Request struct to caller.
@@ -116,10 +120,22 @@ impl<'a> Request<'a> {
     ///     Waypoint::PlaceId(String::from("ChIJyeH59bkFzkwRnPg4zYevwQk")),
     /// ])
     /// ```
+    ///
+    /// # Generics
+    ///
+    /// This method uses generics to improve ergonomics. The `C` generic is
+    /// intended to represent any collection that can be iterated over, and the
+    /// `W` generic is for any type that can be converted to a `Waypoint` type.
 
-    pub fn with_waypoints(&'a mut self, waypoints: &[Waypoint]) -> &'a mut Self {
+    pub fn with_waypoints<C, W>(
+        &'a mut self,
+        waypoints: C,
+    ) -> &'a mut Self
+    where
+        C: IntoIterator<Item = W>,
+        W: Into<Waypoint> {
         // Add waypoints to Request struct.
-        self.waypoints = waypoints.to_vec();
+        self.waypoints = waypoints.into_iter().map(Into::into).collect();
         // Return modified Request struct to caller.
         self
     } // fn

@@ -3,6 +3,16 @@
 * Release notes are available on
 [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+* 3.5.1: 2024-05-19: Improved `GoogleMapsClient` interface ergonomics. The
+client methods called now use `impl Into<Type>` or generics extensively. This
+means that the client will take care of many type conversions needed to build
+your Google Maps requests.
+
+* 3.5.1: 2024-05-11: Added an `Other` variant to most enums. The will
+future-proof the crate for when Google Maps adds additional variants.
+Previously, [serde](https://crates.io/crates/serde) would return an error when
+encountering unknown variants.
+
 * 3.5.0: 2024-05-03: Improved ergonomics surrounding `Location` and `Waypoint`
 types. New functions: `from_address`, `from_place_id`, `try_from_f32` and
 `try_from_f64`.

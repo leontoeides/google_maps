@@ -21,7 +21,11 @@ impl<'a> Request<'a> {
     /// .for_positional_request(LatLng::try_from_dec(dec!(39.7391536), dec!(-104.9847034))?)
     /// ```
 
-    pub fn for_positional_request(&'a mut self, location: LatLng) -> &'a mut Self {
+    pub fn for_positional_request(
+        &'a mut self,
+        location: impl Into<LatLng>,
+    ) -> &'a mut Self {
+        let location: LatLng = location.into();
         // Set the path in Request struct.
         self.locations = Some(Locations::LatLngs(vec![location]));
         // Return modified Request struct to caller.
@@ -54,7 +58,11 @@ impl<'a> Request<'a> {
     /// See also: the Google Encoded Polyline encoding & decoding crate called
     /// [polyline](https://crates.io/crates/polyline).
 
-    pub fn for_positional_requests(&'a mut self, locations: Locations) -> &'a mut Self {
+    pub fn for_positional_requests(
+        &'a mut self,
+        locations: impl Into<Locations>,
+    ) -> &'a mut Self {
+        let locations: Locations = locations.into();
         // Set the path in Request struct.
         self.locations = Some(locations);
         // Return modified Request struct to caller.
@@ -75,6 +83,11 @@ impl<'a> Request<'a> {
     /// return elevation data. This parameter takes a single `Coord`.
 
     #[cfg(feature = "geo")]
+    #[deprecated(since = "3.5.1", note =
+        "you may now use geo types directly with the google_maps crate. \
+        the geo-specific methods are no longer necessary. \
+        it's suggested to use the `for_positional_request` method instead"
+    )]
     pub fn for_coordinate_request(
         &'a mut self,
         coordinate: &geo_types::Coord,
@@ -99,6 +112,11 @@ impl<'a> Request<'a> {
     /// elevation data. This parameter takes a single `Point`.
 
     #[cfg(feature = "geo")]
+    #[deprecated(since = "3.5.1", note =
+        "you may now use geo types directly with the google_maps crate. \
+        the geo-specific methods are no longer necessary. \
+        it's suggested to use the `for_positional_request` method instead"
+    )]
     pub fn try_point_request(
         &'a mut self,
         point: &geo_types::Point,

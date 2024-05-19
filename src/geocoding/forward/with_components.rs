@@ -85,9 +85,12 @@ impl<'a> ForwardRequest<'a> {
     /// ])
     /// ```
 
-    pub fn with_components(&'a mut self, components: &[Component]) -> &'a mut Self {
+    pub fn with_components(
+        &'a mut self,
+        components: impl IntoIterator<Item = Component>,
+    ) -> &'a mut Self {
         // Add components to ForwardRequest struct.
-        self.components = components.to_vec();
+        self.components = components.into_iter().map(Into::into).collect();
         // Return modified ForwardRequest struct to caller.
         self
     } // fn
