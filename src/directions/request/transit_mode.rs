@@ -104,6 +104,16 @@ impl std::convert::From<&TransitMode> for String {
 
 // -----------------------------------------------------------------------------
 
+impl std::convert::From<&Self> for TransitMode {
+    /// Converts a borrowed `&TransitMode` enum into an owned `TransitMode` enum
+    /// by cloning it.
+    fn from(transit_mode: &Self) -> Self {
+        transit_mode.clone()
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 static TRANSIT_MODES_BY_CODE: phf::Map<&'static str, TransitMode> = phf_map! {
     "bus" => TransitMode::Bus,
     "rail" => TransitMode::Rail,

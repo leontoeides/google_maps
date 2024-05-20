@@ -41,6 +41,16 @@ pub enum Location {
 
 // -----------------------------------------------------------------------------
 
+impl std::convert::From<&Self> for Location {
+    /// Converts a borrowed `&Locations` enum into an owned `Location` enum by
+    /// cloning it.
+    fn from(location: &Self) -> Self {
+        location.clone()
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 #[cfg(not(feature = "geo"))]
 impl std::convert::From<&Location> for String {
     /// Converts a `Location` enum to a `String` that contains a URL-encoded

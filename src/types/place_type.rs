@@ -258,6 +258,16 @@ impl Serialize for PlaceType {
 
 // -----------------------------------------------------------------------------
 
+impl std::convert::From<&Self> for PlaceType {
+    /// Converts a borrowed `&PlaceType` enum into an owned `PlaceType` enum
+    /// by copying it.
+    fn from(place_type: &Self) -> Self {
+        *place_type
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&PlaceType> for &str {
     /// Converts a `PlaceType` enum to a `String` that contains a [place
     /// type](https://developers.google.com/places/web-service/supported_types)

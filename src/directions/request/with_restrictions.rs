@@ -77,11 +77,21 @@ impl<'a> Request<'a> {
     ///     Avoid::Ferries,
     /// ])
     /// ```
+    ///
+    /// # Generics
+    ///
+    /// This method uses generics to improve ergonomics. The `C` generic is
+    /// intended to represent any collection that can be iterated over, and the
+    /// `A` generic is for any type that can be converted to the `Avoid`
+    /// type.
 
-    pub fn with_restrictions(
+    pub fn with_restrictions<C, A>(
         &'a mut self,
-        restrictions: impl IntoIterator<Item = Avoid>,
-    ) -> &'a mut Self {
+        restrictions: C,
+    ) -> &'a mut Self
+    where
+        C: IntoIterator<Item = A>,
+        A: Into<Avoid> {
         // Add restrictions to Request struct.
         self.restrictions = restrictions.into_iter().map(Into::into).collect();
         // Return modified Request struct to caller.

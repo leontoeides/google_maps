@@ -89,11 +89,21 @@ impl<'a> ReverseRequest<'a> {
     ///     LocationType::RangeInterpolated,
     /// ])
     /// ```
+    ///
+    /// # Generics
+    ///
+    /// This method uses generics to improve ergonomics. The `C` generic is
+    /// intended to represent any collection that can be iterated over, and the
+    /// `L` generic is for any type that can be converted to the `LocationType`
+    /// type.
 
-    pub fn with_location_types(
+    pub fn with_location_types<C, L>(
         &'a mut self,
-        location_types: impl IntoIterator<Item = LocationType>,
-    ) -> &'a mut Self {
+        location_types: C,
+    ) -> &'a mut Self
+    where
+        C: IntoIterator<Item = L>,
+        L: Into<LocationType> {
         // Add location types to ReverseRequest struct.
         self.location_types = location_types.into_iter().map(Into::into).collect();
         // Return modified ReverseRequest struct to caller.

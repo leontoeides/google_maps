@@ -67,6 +67,16 @@ impl std::convert::From<&Waypoint> for String {
 } // impl
 
 // -----------------------------------------------------------------------------
+
+impl std::convert::From<&Self> for Waypoint {
+    /// Converts a borrowed `&Waypoint` enum into an owned `Waypoint` enum by
+    /// cloning it.
+    fn from(waypoint: &Self) -> Self {
+        waypoint.clone()
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
 //
 /// Used to specify pass throughs or stopovers at intermediate locations.
 

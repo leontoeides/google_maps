@@ -99,6 +99,16 @@ impl std::fmt::Display for Avoid {
 
 // -----------------------------------------------------------------------------
 
+impl std::convert::From<&Self> for Avoid {
+    /// Converts a borrowed `&Avoid` enum into an owned `Avoid` enum by cloning
+    /// it.
+    fn from(avoid: &Self) -> Self {
+        avoid.clone()
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&Avoid> for String {
     /// Converts an `Avoid` enum to a `String` that contains a
     /// [restrictions](https://developers.google.com/maps/documentation/directions/intro#Restrictions)

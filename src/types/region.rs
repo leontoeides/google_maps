@@ -374,6 +374,16 @@ impl Serialize for Region {
 
 // -----------------------------------------------------------------------------
 
+impl std::convert::From<&Self> for Region {
+    /// Converts a borrowed `&Region` enum into an owned `Region` enum by
+    /// copying it.
+    fn from(region: &Self) -> Self {
+        *region
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&Region> for &str {
     /// Converts a `Region` enum to a `String` that contains a
     /// [region](https://developers.google.com/maps/coverage) code.

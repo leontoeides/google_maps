@@ -180,6 +180,16 @@ impl std::fmt::Display for Field {
 
 // -----------------------------------------------------------------------------
 
+impl std::convert::From<&Self> for Field {
+    /// Converts a borrowed `&Field` enum into an owned `Field` enum by cloning
+    /// it.
+    fn from(field: &Self) -> Self {
+        field.clone()
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&Field> for String {
     /// Converts a `Field` enum to a `String` that contains a
     /// [field](https://developers.google.com/maps/documentation/places/web-service/details#fields)

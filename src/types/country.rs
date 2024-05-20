@@ -316,6 +316,16 @@ impl Serialize for Country {
 
 // -----------------------------------------------------------------------------
 
+impl std::convert::From<&Self> for Country {
+    /// Converts a borrowed `&Country` enum into an owned `Country` enum by
+    /// copying it.
+    fn from(country: &Self) -> Self {
+        *country
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&Country> for &str {
     /// Converts a `Country` enum to a `String` that contains a [ISO 3166-1
     /// Alpha-2](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)

@@ -70,11 +70,21 @@ impl<'a> Request<'a> {
     ///     TransitMode::Subway,
     /// ])
     /// ```
+    ///
+    /// # Generics
+    ///
+    /// This method uses generics to improve ergonomics. The `C` generic is
+    /// intended to represent any collection that can be iterated over, and the
+    /// `T` generic is for any type that can be converted to the `TransitMode`
+    /// type.
 
-    pub fn with_transit_modes(
+    pub fn with_transit_modes<C, T>(
         &'a mut self,
-        transit_modes: impl IntoIterator<Item = TransitMode>,
-    ) -> &'a mut Self {
+        transit_modes: C,
+    ) -> &'a mut Self
+    where
+        C: IntoIterator<Item = T>,
+        T: Into<TransitMode> {
         // Add transit_modes to Request struct.
         self.transit_modes = transit_modes.into_iter().map(Into::into).collect();
         // Return modified Request struct to caller.

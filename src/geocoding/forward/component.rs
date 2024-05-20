@@ -39,6 +39,18 @@ pub enum Component {
     Route(String),
 } // enum
 
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<&Self> for Component {
+    /// Converts a borrowed `&Component` enum into an owned `Component` enum by
+    /// cloning it.
+    fn from(component: &Self) -> Self {
+        component.clone()
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&Component> for String {
     /// Converts a `Component` struct to a `String` that contains a
     /// component:value pair for filtering results.
@@ -54,6 +66,8 @@ impl std::convert::From<&Component> for String {
         } // match
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
 
 impl std::default::Default for Component {
     /// Returns a reasonable default variant for the `Component` enum type.

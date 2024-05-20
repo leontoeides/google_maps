@@ -84,11 +84,21 @@ impl<'a> ForwardRequest<'a> {
     ///     GeocodingComponent::Locality(String::from("London")),
     /// ])
     /// ```
+    ///
+    /// # Generics
+    ///
+    /// This method uses generics to improve ergonomics. The `C` generic is
+    /// intended to represent any collection that can be iterated over, and the
+    /// `O` generic is for any type that can be converted to the `Component`
+    /// type.
 
-    pub fn with_components(
+    pub fn with_components<C, O>(
         &'a mut self,
-        components: impl IntoIterator<Item = Component>,
-    ) -> &'a mut Self {
+        components: C,
+    ) -> &'a mut Self
+    where
+        C: IntoIterator<Item = O>,
+        O: Into<Component> {
         // Add components to ForwardRequest struct.
         self.components = components.into_iter().map(Into::into).collect();
         // Return modified ForwardRequest struct to caller.

@@ -42,11 +42,21 @@ impl<'a> Request<'a> {
     /// effect as specifying no types.
     ///
     /// * Multiple result type filters may be stacked together.
+    ///
+    /// # Generics
+    ///
+    /// This method uses generics to improve ergonomics. The `C` generic is
+    /// intended to represent any collection that can be iterated over, and the
+    /// `A` generic is for any type that can be converted to the
+    /// `AutocompleteType` type.
 
-    pub fn with_types(
+    pub fn with_types<C, A>(
         &'a mut self,
-        types: impl IntoIterator<Item = AutocompleteType>
-    ) -> &'a mut Self {
+        types: C,
+    ) -> &'a mut Self
+    where
+        C: IntoIterator<Item = A>,
+        A: Into<AutocompleteType> {
         // Set types in Request struct.
         self.types.extend(types.into_iter().map(Into::into));
         // Return modified Request struct to caller.

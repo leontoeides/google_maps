@@ -184,6 +184,16 @@ impl Serialize for Language {
 
 // -----------------------------------------------------------------------------
 
+impl std::convert::From<&Self> for Language {
+    /// Converts a borrowed `&Language` enum into an owned `Language` enum by
+    /// copying it.
+    fn from(language: &Self) -> Self {
+        *language
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&Language> for &str {
     /// Converts a `Language` enum to a `String` that contains a
     /// [language](https://developers.google.com/maps/faq#languagesupport) code.

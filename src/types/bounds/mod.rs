@@ -43,6 +43,16 @@ impl std::fmt::Display for Bounds {
 
 // -----------------------------------------------------------------------------
 
+impl std::convert::From<&Self> for Bounds {
+    /// Converts a borrowed `&Bounds` enum into an owned `Bounds` enum by
+    /// copying it.
+    fn from(bounds: &Self) -> Self {
+        *bounds
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&Bounds> for String {
     /// Converts a `Bounds` struct to a `String` that contains two
     /// latitude & longitude pairs that represent a bounding box.

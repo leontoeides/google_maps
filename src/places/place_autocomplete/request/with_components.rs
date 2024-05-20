@@ -36,11 +36,21 @@ impl<'a> Request<'a> {
     /// countries.
     ///
     /// * Multiple components may be stacked together.
+    ///
+    /// # Generics
+    ///
+    /// This method uses generics to improve ergonomics. The `C` generic is
+    /// intended to represent any collection that can be iterated over, and the
+    /// `O` generic is for any type that can be converted to the `Country`
+    /// type.
 
-    pub fn with_components(
+    pub fn with_components<C, O>(
         &'a mut self,
-        components: impl IntoIterator<Item = Country>,
-    ) -> &'a mut Self {
+        components: C,
+    ) -> &'a mut Self
+    where
+        C: IntoIterator<Item = O>,
+        O: Into<Country> {
         // Set components in Request struct.
         self.components.extend(components.into_iter().map(Into::<Country>::into));
         // Return modified Request struct to caller.

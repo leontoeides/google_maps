@@ -57,6 +57,16 @@ impl Serialize for LocationType {
 
 // -----------------------------------------------------------------------------
 
+impl std::convert::From<&Self> for LocationType {
+    /// Converts a borrowed `&LocationType` enum into an owned `LocationType`
+    /// enum by copying it.
+    fn from(location_type: &Self) -> Self {
+        *location_type
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&LocationType> for &str {
     /// Converts a `LocationType` enum to a `String` that contains a [location
     /// type](https://developers.google.com/maps/documentation/geocoding/intro#Results) code.

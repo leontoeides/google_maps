@@ -175,6 +175,16 @@ impl TryFrom<String> for LatLng {
 
 // -----------------------------------------------------------------------------
 
+impl std::convert::From<&Self> for LatLng {
+    /// Converts a borrowed `&LatLng` enum into an owned `LatLng` enum by
+    /// copying it.
+    fn from(lat_lng: &Self) -> Self {
+        *lat_lng
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&LatLng> for String {
     /// Converts a borrowed `&LatLng` struct to a `String` that contains a
     /// latitude/longitude pair.

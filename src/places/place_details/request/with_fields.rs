@@ -34,11 +34,20 @@ impl<'a> Request<'a> {
     /// if you omit the `fields` parameter from a request, ALL possible fields
     /// will be returned, and you will be billed accordingly. This applies only
     /// to Place Details requests.
+    ///
+    /// # Generics
+    ///
+    /// This method uses generics to improve ergonomics. The `C` generic is
+    /// intended to represent any collection that can be iterated over, and the
+    /// `F` generic is for any type that can be converted to the `Field` type.
 
-    pub fn with_fields(
+    pub fn with_fields<C, F>(
         &'a mut self,
-        fields: impl IntoIterator<Item = Field>,
-    ) -> &'a mut Self {
+        fields: C,
+    ) -> &'a mut Self
+    where
+        C: IntoIterator<Item = F>,
+        F: Into<Field> {
         // Set fields in Request struct.
         self.fields = fields.into_iter().map(Into::into).collect();
         // Return modified Request struct to caller.

@@ -3,10 +3,10 @@
 * Release notes are available on
 [GitHub](https://github.com/leontoeides/google_maps/releases).
 
-* 3.5.1: 2024-05-19: Improved `GoogleMapsClient` interface ergonomics. The
-client methods called now use `impl Into<Type>` or generics extensively. This
-means that the client will take care of many type conversions needed to build
-your Google Maps requests.
+* 3.5.1: 2024-05-19: Improved `GoogleMapsClient` interface ergonomics. Client
+methods now use `impl Into<Type>` and generics extensively. This means that this
+client will take care of many type conversions needed to build your Google Maps
+requests.
 
 * 3.5.1: 2024-05-11: Added an `Other` variant to most enums. The will
 future-proof the crate for when Google Maps adds additional variants.

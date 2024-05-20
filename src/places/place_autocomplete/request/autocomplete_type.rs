@@ -78,6 +78,16 @@ impl Serialize for AutocompleteType {
 
 // -----------------------------------------------------------------------------
 
+impl std::convert::From<&Self> for AutocompleteType {
+    /// Converts a borrowed `&AutocompleteType` enum into an owned
+    /// `AutocompleteType` enum by cloning it.
+    fn from(autocomplete_type: &Self) -> Self {
+        autocomplete_type.clone()
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&AutocompleteType> for &str {
     /// Converts a `AutocompleteType` enum to a `String` that contains a
     /// [autocomplete
