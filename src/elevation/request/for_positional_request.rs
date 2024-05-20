@@ -91,7 +91,7 @@ impl<'a> Request<'a> {
     pub fn for_coordinate_request(
         &'a mut self,
         coordinate: &geo_types::Coord,
-    ) -> Result<&'a mut Request, crate::error::Error> {
+    ) -> Result<&'a mut Self, crate::error::Error> {
         // Set the path in Request struct.
         self.locations = Some(Locations::LatLngs(vec![LatLng::try_from(coordinate)?]));
         // Return modified Request struct to caller.
@@ -120,7 +120,7 @@ impl<'a> Request<'a> {
     pub fn try_point_request(
         &'a mut self,
         point: &geo_types::Point,
-    ) -> Result<&'a mut Request, crate::error::Error> {
+    ) -> Result<&'a mut Self, crate::error::Error> {
         // Set the path in Request struct.
         self.locations = Some(Locations::LatLngs(vec![LatLng::try_from(point)?]));
         // Return modified Request struct to caller.

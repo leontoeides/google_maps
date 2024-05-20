@@ -83,7 +83,7 @@ impl<'a> Request<'a> {
     pub fn for_line_string_request(
         &'a mut self,
         line_string: geo_types::LineString,
-    ) -> Result<&'a mut Request, crate::error::Error> {
+    ) -> Result<&'a mut Self, crate::error::Error> {
         // Set the path in Request struct.
         self.locations = Some(Locations::LineString(line_string));
         // Return modified Request struct to caller.

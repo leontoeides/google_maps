@@ -21,7 +21,6 @@ default = [
 	# `autocomplete` covers the Places API autocomplete-related services.
 	# All other Places API services are under "places" feature.
 	"autocomplete",
-
 	"directions",
 	"distance_matrix",
 	"elevation",
@@ -41,11 +40,12 @@ autocomplete = []
 directions = [ "chrono", "chrono-tz" ]
 distance_matrix = [ "chrono", "chrono-tz" ]
 elevation = []
-geo = [ "geo-types" ]
 geocoding = []
 places = [ "chrono", "chrono-tz" ]
 roads = []
 time_zone = [ "chrono", "chrono-tz" ]
+# Geo ecosystem features:
+geo = [ "geo-types" ]
 # Reqwest features:
 enable-reqwest = [ "reqwest", "backoff", "futures", "stream_throttle" ]
 enable-reqwest-middleware = [ "reqwest-middleware", "http", "anyhow" ] # "reqwest-maybe-middleware/middleware"

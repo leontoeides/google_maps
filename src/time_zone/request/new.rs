@@ -75,7 +75,7 @@ impl<'a> Request<'a> {
         client: &'a GoogleMapsClient,
         coordinate: &'b geo_types::Coord,
         timestamp: DateTime<Utc>,
-    ) -> Result<Request<'a>, crate::error::Error> {
+    ) -> Result<Self, crate::error::Error> {
         // Instantiate struct and return it to caller:
         Ok(Request {
             // Required parameters:
@@ -110,7 +110,7 @@ impl<'a> Request<'a> {
         client: &'a GoogleMapsClient,
         point: &'b geo_types::Point,
         timestamp: DateTime<Utc>,
-    ) -> Result<Request<'a>, crate::error::Error> {
+    ) -> Result<Self, crate::error::Error> {
         // Instantiate struct and return it to caller:
         Ok(Request {
             // Required parameters:

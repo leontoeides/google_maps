@@ -52,7 +52,7 @@ impl<'a> ReverseRequest<'a> {
     pub fn try_new_coordinate(
         client: &'a GoogleMapsClient,
         coordinate: &geo_types::Coord,
-    ) -> Result<ReverseRequest<'a>, crate::error::Error> {
+    ) -> Result<Self, crate::error::Error> {
         // Instantiate struct and return it to caller:
         Ok(ReverseRequest {
             // Required parameters:
@@ -86,7 +86,7 @@ impl<'a> ReverseRequest<'a> {
     pub fn try_new_point(
         client: &'a GoogleMapsClient,
         point: &geo_types::Point,
-    ) -> Result<ReverseRequest<'a>, crate::error::Error> {
+    ) -> Result<Self, crate::error::Error> {
         // Instantiate struct and return it to caller:
         Ok(ReverseRequest {
             // Required parameters:
