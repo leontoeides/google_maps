@@ -1,5 +1,6 @@
 //! An object describing the opening hours of a place.
 
+use chrono::Duration;
 use crate::places::PlaceOpeningHoursPeriodDetail;
 use serde::{Deserialize, Serialize};
 
@@ -25,6 +26,26 @@ pub struct PlaceOpeningHoursPeriod {
     /// for more information.
     pub close: Option<PlaceOpeningHoursPeriodDetail>,
 } // struct PlaceOpeningHoursPeriod
+
+// -----------------------------------------------------------------------------
+//
+/// Returns the `chrono::Duration` of the `PlaceOpeningHoursPeriod`.
+///
+/// The `Duration` indicates how long the time is of the period.
+///
+/// If the `close` day and time object is missing from the
+/// `PlaceOpeningHoursPeriod` then this method will return a `None`.
+
+impl PlaceOpeningHoursPeriod {
+    #[must_use] pub fn duration(&self) -> Option<Duration> {
+        self.close.as_ref().map(|close| {
+            let days: u32 = close.day.days_since(self.open.day);
+            let mut duration = Duration::days(i64::from(days));
+            duration += close.time - self.open.time;
+            duration
+        })
+    } // fn
+} // impl
 
 // -----------------------------------------------------------------------------
 

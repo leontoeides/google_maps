@@ -3,6 +3,9 @@
 * Release notes are available on
 [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+* 3.5.1: 2024-05-20: Added `duration` method to the `PlaceOpeningHoursPeriod`
+type which will measure the length of the opening hours period.
+
 * 3.5.1: 2024-05-19: Improved `GoogleMapsClient` interface ergonomics. Client
 methods now use `impl Into<Type>` and generics extensively. This means that this
 client will take care of many type conversions needed to build your Google Maps
