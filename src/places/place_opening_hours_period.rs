@@ -29,12 +29,10 @@ pub struct PlaceOpeningHoursPeriod {
 
 // -----------------------------------------------------------------------------
 //
-/// Returns the `chrono::Duration` of the `PlaceOpeningHoursPeriod`.
+/// Returns the a `chrono::Duration` that describes how long the
+/// `PlaceOpeningHoursPeriod` period is.
 ///
-/// The `Duration` indicates how long the time is of the period.
-///
-/// If the `close` day and time object is missing from the
-/// `PlaceOpeningHoursPeriod` then this method will return a `None`.
+/// If the `close` field is empty then this method will return a `None`.
 
 impl PlaceOpeningHoursPeriod {
     #[must_use] pub fn duration(&self) -> Option<Duration> {
