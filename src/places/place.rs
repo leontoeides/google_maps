@@ -161,7 +161,7 @@ pub struct Place {
     ///
     /// See [PlaceReview](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceReview)
     /// for more information.
-    pub reviews: Vec<PlaceReview>,
+    pub reviews: Option<Vec<PlaceReview>>,
 
     /// Contains an array of entries for the next seven days including
     /// information about secondary hours of a business. Secondary hours are
