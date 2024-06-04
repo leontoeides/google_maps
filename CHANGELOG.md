@@ -6,7 +6,8 @@
 * 3.5.1: 2024-06-04: Fixed some `Vec` fields by ensuring that the serde
 `default` field attribute is applied to all `Vec` fields in response structs.
 Thanks to [chunhui2001](https://github.com/chunhui2001) for the pull request and
-to [PrinceOfBorgo](https://github.com/PrinceOfBorgo) for the issue.
+to [PrinceOfBorgo](https://github.com/PrinceOfBorgo) for
+[issue #27](https://github.com/leontoeides/google_maps/issues/27).
 
 * 3.5.1: 2024-05-20: Added `duration` method to the `PlaceOpeningHoursPeriod`
 type which will measure the length of the opening hours period.
