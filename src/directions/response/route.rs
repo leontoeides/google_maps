@@ -29,6 +29,7 @@ pub struct Route {
     /// waypoint or destination specified. So a route with no stopover waypoints
     /// will contain one `Leg` and a route with one stopover waypoint will
     /// contain two.
+    #[serde(default)]
     pub legs: Vec<Leg>,
     /// An [encoded polyline representation](https://developers.google.com/maps/documentation/utilities/polylinealgorithm)
     /// of the route. This polyline is an approximate (smoothed) path of the
@@ -42,6 +43,7 @@ pub struct Route {
     pub summary: String,
     /// Contains an array of warnings to be displayed when showing these
     /// directions. You must handle and display these warnings yourself.
+    #[serde(default)]
     pub warnings: Vec<String>,
     /// If `optimizeWaypoints` was set to `true`, this field will contain the
     /// re-ordered permutation of the input waypoints. For example, if the input
@@ -63,6 +65,7 @@ pub struct Route {
     /// If any of the input waypoints has `stopover` set to `false`, this field
     /// will be empty, since route optimization is not available for such
     /// queries.
+    #[serde(default)]
     pub waypoint_order: Vec<u8>,
 } // struct
 

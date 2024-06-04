@@ -43,5 +43,6 @@ pub struct AddressComponent {
     /// An array indicating the type of the address component. See the list of
     /// [supported
     /// types](https://developers.google.com/places/web-service/supported_types).
+    #[serde(default)]
     pub types: Vec<PlaceType>,
 } // struct

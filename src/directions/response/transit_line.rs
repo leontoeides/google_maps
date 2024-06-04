@@ -17,6 +17,7 @@ pub struct TransitLine {
     pub color: Option<String>,
     /// An array containing a single `TransitAgency` object. The `TransitAgency`
     /// object provides information about the operator of the line
+    #[serde(default)]
     pub agencies: Vec<TransitAgency>,
     /// Contains the URL for this transit line as provided by the transit
     /// agency.

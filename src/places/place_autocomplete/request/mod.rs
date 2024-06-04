@@ -56,6 +56,7 @@ pub struct Request<'a> {
     /// can find code information at [Wikipedia: List of ISO 3166 country
     /// codes](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) or
     /// the [ISO Online Browsing Platform](https://www.iso.org/obp/ui/#search).
+    #[serde(default)]
     components: Vec<Country>,
 
     /// The language in which to return results.
@@ -179,6 +180,7 @@ pub struct Request<'a> {
     /// type is allowed. The exception is that you can safely mix the geocode
     /// and establishment types, but note that this will have the same effect as
     /// specifying no types.
+    #[serde(default)]
     types: Vec<AutocompleteType>,
 
     // Internal use only:

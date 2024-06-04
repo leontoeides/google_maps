@@ -13,5 +13,6 @@ use serde::{Deserialize, Serialize};
 pub struct Row {
     /// Each row array contains one or more `element` entries, which in turn
     /// contain the information about a single origin-destination pairing.
+    #[serde(default)]
     pub elements: Vec<Element>,
 } // struct

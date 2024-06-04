@@ -52,6 +52,7 @@ pub struct Leg {
     pub start_location: LatLng,
     /// An array of `Steps`, each of which contains information about the
     /// individual steps in this leg.
+    #[serde(default)]
     pub steps: Vec<Step>,
 } // struct
 

@@ -24,6 +24,7 @@ pub struct Response {
     /// [SnappedPoint](https://developers.google.com/maps/documentation/roads/snap#SnappedPoint)
     /// for more information.
     #[serde(alias = "snappedPoints")]
+    #[serde(default)]
     pub snapped_points: Vec<SnappedPoint>,
 
     /// A string containing a user-visible warning.

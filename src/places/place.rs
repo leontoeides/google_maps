@@ -18,6 +18,7 @@ pub struct Place {
     ///
     /// See [AddressComponent](https://developers.google.com/maps/documentation/places/web-service/search-text#AddressComponent)
     /// for more information.
+    #[serde(default)]
     pub address_components: Vec<AddressComponent>,
 
     /// A representation of the place's address in the
@@ -119,6 +120,7 @@ pub struct Place {
     ///
     /// See [PlacePhoto](https://developers.google.com/maps/documentation/places/web-service/search-text#PlacePhoto)
     /// for more information.
+    #[serde(default)]
     pub photos: Vec<PlacePhoto>,
 
     /// A textual identifier that uniquely identifies a place. To retrieve
@@ -150,17 +152,18 @@ pub struct Place {
     /// control sorting.
     ///
     /// * For `most_relevant` (default), reviews are sorted by relevance; the
-    /// service will bias the results to return reviews originally written in
-    /// the preferred language.
+    ///   service will bias the results to return reviews originally written in
+    ///   the preferred language.
     ///
     /// * For `newest`, reviews are sorted in chronological order; the preferred
-    /// language does not affect the sort order.
+    ///   language does not affect the sort order.
     ///
     /// Google recommends indicating to users whether results are ordered by
     /// `most_relevant` or `newest`.
     ///
     /// See [PlaceReview](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceReview)
     /// for more information.
+    #[serde(default)]
     pub reviews: Vec<PlaceReview>,
 
     /// Contains an array of entries for the next seven days including
@@ -203,6 +206,7 @@ pub struct Place {
 
     /// Contains an array of feature types describing the given result. See the
     /// list of [supported types](https://developers.google.com/maps/documentation/places/web-service/supported_types#table2).
+    #[serde(default)]
     pub types: Vec<PlaceType>,
 
     /// Contains the URL of the official Google page for this place. This will

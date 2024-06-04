@@ -19,6 +19,7 @@ use serde::{Deserialize, Serialize};
 pub struct Response {
     /// Contains an array of addresses as returned by the API from your original
     /// request. As with `origin_addresses`, these are localized if appropriate.
+    #[serde(default)]
     pub destination_addresses: Vec<String>,
 
     /// When the status code is other than `OK`, there may be an additional
@@ -35,10 +36,12 @@ pub struct Response {
     /// [geocoder](https://developers.google.com/maps/documentation/geocoding/)
     /// and localized according to the `language` parameter passed with the
     /// request.
+    #[serde(default)]
     pub origin_addresses: Vec<String>,
 
     /// Contains an array of elements, which in turn each contain a `status`,
     /// `duration`, and `distance` element.
+    #[serde(default)]
     pub rows: Vec<Row>,
 
     /// Contains metadata on the request.

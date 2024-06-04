@@ -137,9 +137,7 @@ impl GoogleMapsClient {
         origin: impl Into<Location>,
         destination: impl Into<Location>,
     ) -> crate::directions::request::Request {
-        let origin: Location = origin.into();
-        let destination: Location = destination.into();
-        crate::directions::request::Request::new(self, origin, destination)
+        crate::directions::request::Request::new(self, origin.into(), destination.into())
     } // fn
 
     // -------------------------------------------------------------------------
@@ -262,8 +260,7 @@ impl GoogleMapsClient {
         &self,
         location: impl Into<LatLng>,
     ) -> crate::geocoding::reverse::ReverseRequest {
-        let location: LatLng = location.into();
-        crate::geocoding::reverse::ReverseRequest::new(self, location)
+        crate::geocoding::reverse::ReverseRequest::new(self, location.into())
     } // fn
 
     // -------------------------------------------------------------------------
@@ -304,9 +301,7 @@ impl GoogleMapsClient {
         location: impl Into<LatLng>,
         timestamp: impl Into<DateTime<Utc>>,
     ) -> crate::time_zone::request::Request {
-        let location: LatLng = location.into();
-        let timestamp: DateTime<Utc> = timestamp.into();
-        crate::time_zone::request::Request::new(self, location, timestamp)
+        crate::time_zone::request::Request::new(self, location.into(), timestamp.into())
     } // fn
 
     // -------------------------------------------------------------------------
@@ -457,9 +452,9 @@ impl GoogleMapsClient {
     pub fn text_search(
         &self,
         query: impl Into<String>,
-        radius: u32,
+        radius: impl Into<u32>,
     ) -> crate::places::place_search::text_search::request::Request {
-        crate::places::place_search::text_search::request::Request::new(self, query, radius)
+        crate::places::place_search::text_search::request::Request::new(self, query, radius.into())
     } // fn
 
     // -------------------------------------------------------------------------
@@ -516,9 +511,11 @@ impl GoogleMapsClient {
         location: impl Into<LatLng>,
         radius: impl Into<u32>,
     ) -> crate::places::place_search::nearby_search::request::Request {
-        let location: LatLng = location.into();
-        let radius: u32 = radius.into();
-        crate::places::place_search::nearby_search::request::Request::new(self, location, radius)
+        crate::places::place_search::nearby_search::request::Request::new(
+            self,
+            location.into(),
+            radius.into()
+        )
     } // fn
 
     // -------------------------------------------------------------------------
@@ -557,7 +554,10 @@ impl GoogleMapsClient {
         &self,
         place_id: impl Into<String>,
     ) -> crate::places::place_details::request::Request {
-        crate::places::place_details::request::Request::new(self, place_id)
+        crate::places::place_details::request::Request::new(
+            self,
+            place_id.into()
+        )
     } // fn
 
     // -------------------------------------------------------------------------

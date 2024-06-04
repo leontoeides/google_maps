@@ -20,6 +20,7 @@ pub struct PlacePhoto {
     /// The height of the photo.
     pub height: u16,
     /// The HTML attributions for the photo.
+    #[serde(default)]
     pub html_attributions: Vec<String>,
     /// A string used to identify the photo when you perform a Photo request.
     pub photo_reference: String,

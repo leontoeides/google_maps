@@ -11,6 +11,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Geocoding {
     /// Array containing the separate components applicable to this address.
+    #[serde(default)]
     pub address_components: Vec<AddressComponent>,
 
     /// A string containing the human-readable address of this location.
@@ -70,6 +71,7 @@ pub struct Geocoding {
     /// result. For example, a geocode of "Chicago" returns "locality" which
     /// indicates that "Chicago" is a city, and also returns "political" which
     /// indicates it is a political entity.
+    #[serde(default)]
     pub types: Vec<PlaceType>,
 } // struct
 
