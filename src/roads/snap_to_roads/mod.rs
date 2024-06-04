@@ -7,9 +7,10 @@
 //! # [Required parameters](https://developers.google.com/maps/documentation/roads/snap#required-parameters)
 //!
 //! * `path` - The path to be snapped. The path parameter accepts a list of
-//! latitude/longitude pairs. Latitude and longitude values should be separated
-//! by commas. Coordinates should be separated by the pipe character: "|". For
-//! example: `path=60.170880,24.942795|60.170879,24.942796|60.170877,24.942796`.
+//!   latitude/longitude pairs. Latitude and longitude values should be
+//!   separated by commas. Coordinates should be separated by the pipe
+//!   character: "|". For example:
+//!   `path=60.170880,24.942795|60.170879,24.942796|60.170877,24.942796`.
 //!
 //! Note: The snapping algorithm works best for points that are not too far
 //! apart. If you observe odd snapping behavior, try creating paths that have
@@ -21,11 +22,11 @@
 //! # [Optional parameters](https://developers.google.com/maps/documentation/roads/snap#optional-parameters)
 //!
 //! * `interpolate` - Whether to interpolate a path to include all points
-//! forming the full road-geometry. When `true`, additional interpolated points
-//! will also be returned, resulting in a path that smoothly follows the
-//! geometry of the road, even around corners and through tunnels. Interpolated
-//! paths will most likely contain more points than the original path. Defaults
-//! to `false`.
+//!   forming the full road-geometry. When `true`, additional interpolated
+//!   points will also be returned, resulting in a path that smoothly follows
+//!   the geometry of the road, even around corners and through tunnels.
+//!   Interpolated paths will most likely contain more points than the original
+//!   path. Defaults to `false`.
 
 pub mod request;
 pub mod response;

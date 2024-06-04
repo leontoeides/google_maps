@@ -6,8 +6,8 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `traffic_model` ‧ Which traffic model the directions service should
-    /// use when calculating the route and duration in traffic - _best guess_,
-    /// _optimistic_, or _pessimistic_?
+    ///   use when calculating the route and duration in traffic - _best guess_,
+    ///   _optimistic_, or _pessimistic_?
     ///
     /// ## Description
     ///
@@ -20,20 +20,20 @@ impl<'a> Request<'a> {
     /// Premium Plan client ID. The available values for this parameter are:
     ///
     /// * `TrafficModel::BestGuess` (default) indicates that the returned
-    /// `duration_in_traffic` should be the best estimate of travel time given
-    /// what is known about both historical traffic conditions and live traffic.
-    /// Live traffic becomes more important the closer the `departure_time` is to
-    /// now.
+    ///   `duration_in_traffic` should be the best estimate of travel time given
+    ///   what is known about both historical traffic conditions and live
+    ///   traffic. Live traffic becomes more important the closer the
+    ///   `departure_time` is to now.
     ///
     /// * `TrafficModel::Pessimistic` indicates that the returned
-    /// `duration_in_traffic` should be longer than the actual travel time on
-    /// most days, though occasional days with particularly bad traffic
-    /// conditions may exceed this value.
+    ///   `duration_in_traffic` should be longer than the actual travel time on
+    ///   most days, though occasional days with particularly bad traffic
+    ///   conditions may exceed this value.
     ///
     /// * `TrafficModel::Optimistic` indicates that the returned
-    /// `duration_in_traffic` should be shorter than the actual travel time on
-    /// most days, though occasional days with particularly good traffic
-    /// conditions may be faster than this value.
+    ///   `duration_in_traffic` should be shorter than the actual travel time on
+    ///   most days, though occasional days with particularly good traffic
+    ///   conditions may be faster than this value.
     ///
     /// The default value of `BestGuess` will give the most useful predictions
     /// for the vast majority of use cases. It is possible the `BestGuess`

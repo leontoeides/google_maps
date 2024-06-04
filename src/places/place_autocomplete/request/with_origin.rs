@@ -9,8 +9,8 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `origin` ‧ The origin point from which to calculate straight-line
-    /// distance to the destination (returned as `distance_meters`). If this
-    /// value is omitted, straight-line distance will not be returned.
+    ///   distance to the destination (returned as `distance_meters`). If this
+    ///   value is omitted, straight-line distance will not be returned.
 
     pub fn with_origin(
         &'a mut self,

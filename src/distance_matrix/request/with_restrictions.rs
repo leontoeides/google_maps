@@ -7,8 +7,8 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `restrictions` ‧ A Vec containing a list of features that should be
-    /// avoided when possible when calculating the route, such as _ferries_,
-    /// _highways_, _indoor_ steps, and/or _tolls_.
+    ///   avoided when possible when calculating the route, such as _ferries_,
+    ///   _highways_, _indoor_ steps, and/or _tolls_.
     ///
     /// ## Description
     ///
@@ -16,18 +16,18 @@ impl<'a> Request<'a> {
     /// features. This parameter supports the following arguments:
     ///
     /// * `Avoid::Tolls` indicates that the calculated route should avoid toll
-    /// roads/bridges.
+    ///   roads/bridges.
     ///
     /// * `Avoid::Highways` indicates that the calculated route should avoid
-    /// highways.
+    ///   highways.
     ///
     /// * `Avoid::Ferries` indicates that the calculated route should avoid
-    /// ferries.
+    ///   ferries.
     ///
     /// * `Avoid::Indoor` indicates that the calculated route should avoid
-    /// indoor steps for walking and transit directions. Only requests that
-    /// include an API key or a Google Maps Platform Premium Plan client ID will
-    /// receive indoor steps by default.
+    ///   indoor steps for walking and transit directions. Only requests that
+    ///   include an API key or a Google Maps Platform Premium Plan client ID
+    ///   will receive indoor steps by default.
     ///
     /// [Route Restrictions](https://developers.google.com/maps/documentation/directions/intro#Restrictions)
     ///
@@ -51,7 +51,7 @@ impl<'a> Request<'a> {
     /// ```
     ///
     /// * Multiple restrictions may be stacked together. This example avoids
-    /// tolls and ferries:
+    ///   tolls and ferries:
     ///
     /// ```rust
     /// .with_restriction(Avoid::Tolls)
@@ -70,7 +70,7 @@ impl<'a> Request<'a> {
     /// # Example:
     ///
     /// * Alternatively, multiple restrictions may be passed in a single method
-    /// call by passing a slice. This example avoids tolls and ferries:
+    ///   call by passing a slice. This example avoids tolls and ferries:
     ///
     /// ```rust
     /// .with_restrictions(&[

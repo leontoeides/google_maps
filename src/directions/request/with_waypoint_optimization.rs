@@ -6,7 +6,7 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `waypoint_optimization` ‧ Specifies whether the waypoints should be
-    /// rearranged into the most time-efficient order or not.
+    ///   rearranged into the most time-efficient order or not.
     ///
     /// ## Description
     ///

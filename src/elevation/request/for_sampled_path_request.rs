@@ -10,14 +10,14 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `path` ‧ Defines a path on the earth for which to return elevation
-    /// data. This parameter defines a set of two or more ordered
-    /// latitude/longitude pairs defining a path along the surface of the earth.
-    /// For more information, see [Specifying
-    /// Paths](https://developers.google.com/maps/documentation/elevation/intro#Paths).
+    ///   data. This parameter defines a set of two or more ordered
+    ///   latitude/longitude pairs defining a path along the surface of the
+    ///   earth. For more information, see [Specifying
+    ///   Paths](https://developers.google.com/maps/documentation/elevation/intro#Paths).
     ///
     /// * `samples` ‧ Specifies the number of sample points along a path for
-    /// which to return elevation data. The samples parameter divides the given
-    /// path into an ordered set of equidistant points along the path.
+    ///   which to return elevation data. The samples parameter divides the
+    ///   given path into an ordered set of equidistant points along the path.
     ///
     /// ## Examples:
     ///
@@ -71,8 +71,8 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `line_string` ‧ Specifies the sample points along a path for which to
-    /// return elevation data. The samples parameter divides the given path into
-    /// an ordered set of equidistant points along the path.
+    ///   return elevation data. The samples parameter divides the given path
+    ///   into an ordered set of equidistant points along the path.
 
     #[cfg(feature = "geo")]
     #[deprecated(since = "3.5.1", note =

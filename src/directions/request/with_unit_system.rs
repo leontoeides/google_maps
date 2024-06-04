@@ -6,7 +6,7 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `unit_system` ‧ The measurement system the directions service should
-    /// supply in the response, _imperial_ or _metric_?
+    ///   supply in the response, _imperial_ or _metric_?
     ///
     /// ## Description
     ///
@@ -24,10 +24,10 @@ impl<'a> Request<'a> {
     /// following values:
     ///
     /// * `UnitSystem::Metric` specifies usage of the metric system. Textual
-    /// distances are returned using kilometers and meters.
+    ///   distances are returned using kilometers and meters.
     ///
     /// * `UnitSystem::Imperial` specifies usage of the Imperial (English) system.
-    /// Textual distances are returned using miles and feet.
+    ///   Textual distances are returned using miles and feet.
     ///
     /// *Note*: this unit system setting only affects the `text` displayed
     /// within `distance` fields. The `distance` fields also contain `values`

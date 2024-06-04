@@ -4,8 +4,8 @@
 //! # [Query Autocomplete requests](https://developers.google.com/maps/documentation/places/web-service/query#query_autocomplete_requests)
 //!
 //! * The Query Autocomplete service is part of the Places API and shares an
-//! [API key](https://developers.google.com/maps/documentation/places/web-service/get-api-key)
-//! and quotas with the [Places API](https://developers.google.com/maps/documentation/places/web-service/overview).
+//!   [API key](https://developers.google.com/maps/documentation/places/web-service/get-api-key)
+//!   and quotas with the [Places API](https://developers.google.com/maps/documentation/places/web-service/overview).
 //!
 //! The Query Autocomplete service allows you to add on-the-fly geographic
 //! query predictions to your application. Instead of searching for a specific

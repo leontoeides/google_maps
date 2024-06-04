@@ -61,9 +61,9 @@ pub struct Request<'a> {
     ///     * with `keyword` or `name`: 50,000 meters
     ///     * without `keyword` or `name`
     ///         * Up to 50,000 meters, adjusted dynamically based on area
-    ///         density, independent of `rankby` parameter.
+    ///           density, independent of `rankby` parameter.
     ///         * When using `rankby=distance`, the radius parameter will not be
-    ///         accepted, and will result in an `INVALID_REQUEST`.
+    ///           accepted, and will result in an `INVALID_REQUEST`.
     /// * Query Autocomplete: 50,000 meters
     /// * Text Search: 50,000 meters
     radius: u32,
@@ -73,35 +73,35 @@ pub struct Request<'a> {
     /// The language in which to return results.
     ///
     /// * See the list of supported languages. Google often updates the
-    /// supported languages, so this list may not be exhaustive.
+    ///   supported languages, so this list may not be exhaustive.
     ///
     /// * If `language` is not supplied, the API attempts to use the preferred
-    /// language as specified in the `Accept-Language` header.
+    ///   language as specified in the `Accept-Language` header.
     ///
     /// * The API does its best to provide a street address that is readable for
-    /// both the user and locals. To achieve that goal, it returns street
-    /// addresses in the local language, transliterated to a script readable by
-    /// the user if necessary, observing the preferred language. All other
-    /// addresses are returned in the preferred language. Address components are
-    /// all returned in the same language, which is chosen from the first
-    /// component.
+    ///   both the user and locals. To achieve that goal, it returns street
+    ///   addresses in the local language, transliterated to a script readable
+    ///   by the user if necessary, observing the preferred language. All other
+    ///   addresses are returned in the preferred language. Address components
+    ///   are all returned in the same language, which is chosen from the first
+    ///   component.
     ///
     /// * If a name is not available in the preferred language, the API uses the
-    /// closest match.
+    ///   closest match.
     ///
     /// * The preferred language has a small influence on the set of results
-    /// that the API chooses to return, and the order in which they are
-    /// returned. The geocoder interprets abbreviations differently depending on
-    /// language, such as the abbreviations for street types, or synonyms that
-    /// may be valid in one language but not in another. For example, _utca_ and
-    /// _tér_ are synonyms for street in Hungarian.
+    ///   that the API chooses to return, and the order in which they are
+    ///   returned. The geocoder interprets abbreviations differently depending
+    ///   on language, such as the abbreviations for street types, or synonyms
+    ///   that may be valid in one language but not in another. For example,
+    ///   _utca_ and _tér_ are synonyms for street in Hungarian.
     language: Option<Language>,
 
     /// The point around which to retrieve place information.
     ///
     /// * When using the Text Search API, the 'location' parameter may be
-    /// overriden if the 'query' contains an explicit location such as
-    /// 'Market in Barcelona'.
+    ///   overriden if the 'query' contains an explicit location such as
+    ///   'Market in Barcelona'.
     location: Option<LatLng>,
 
     /// Restricts results to only those places within the specified range. Valid
@@ -145,8 +145,8 @@ pub struct Request<'a> {
     /// See the list of [supported types](https://developers.google.com/maps/documentation/places/web-service/supported_types).
     ///
     /// * Note: Adding both `keyword` and `type` with the same value
-    /// (`keyword=cafe&type=cafe` or `keyword=parking&type=parking`) can yield
-    /// `ZERO_RESULTS`.
+    ///   (`keyword=cafe&type=cafe` or `keyword=parking&type=parking`) can yield
+    ///   `ZERO_RESULTS`.
     place_type: Option<PlaceType>,
 
     // Internal use only:

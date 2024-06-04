@@ -10,7 +10,7 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `location` ‧ The point around which to retrieve place information.
-    /// This must be specified as `latitude,longitude`.
+    ///   This must be specified as `latitude,longitude`.
     ///
     /// The `location` parameter may be overriden if the `query` contains an
     /// explicit location such as `Market in Barcelona`. Using quotes around the

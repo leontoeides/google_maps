@@ -9,7 +9,7 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `language` ‧ The language that Google's response should be presented
-    /// in.
+    ///   in.
     ///
     /// ## Example
     ///

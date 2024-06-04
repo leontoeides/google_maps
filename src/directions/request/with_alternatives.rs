@@ -7,7 +7,7 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `alternatives` ‧ Whether more than one route should be in Google's
-    /// response.
+    ///   response.
     ///
     /// ## Description
     ///

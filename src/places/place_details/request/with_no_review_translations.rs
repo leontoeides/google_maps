@@ -9,8 +9,8 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `no_translations` ‧ Specify `true` to disable translation of reviews;
-    /// specify `false` to enable translation of reviews. Reviews are returned
-    /// in their original language.
+    ///   specify `false` to enable translation of reviews. Reviews are returned
+    ///   in their original language.
     ///
     /// If omitted, or passed with no value, translation of reviews is enabled.
     /// If the `language` parameter was specified in the request, use the

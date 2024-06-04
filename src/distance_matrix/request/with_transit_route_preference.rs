@@ -7,8 +7,8 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `transit_route_preference` ‧ The preference of the transit rider;
-    /// should the directions service try to reduce the amount of _walking_ to
-    /// reach the destination, or reduce the number of bus _transfers_?
+    ///   should the directions service try to reduce the amount of _walking_ to
+    ///   reach the destination, or reduce the number of bus _transfers_?
     ///
     /// ## Description
     ///
@@ -20,10 +20,10 @@ impl<'a> Request<'a> {
     /// arguments:
     ///
     /// * `TransitRoutePreference::LessWalking` indicates that the calculated
-    /// route should prefer limited amounts of walking.
+    ///   route should prefer limited amounts of walking.
     ///
     /// * `TransitRoutePreference::FewerTransfers` indicates that the
-    /// calculated route should prefer a limited number of transfers.
+    ///   calculated route should prefer a limited number of transfers.
     ///
     /// ## Example
     ///

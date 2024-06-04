@@ -21,8 +21,8 @@ impl GoogleMapsClient {
     /// ## Arguments
     ///
     /// * `key` ‧ Your application's API key. This key identifies your
-    /// application for purposes of quota management. Learn how to [get a
-    /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
+    ///   application for purposes of quota management. Learn how to [get a
+    ///   key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
 
     #[cfg(all(feature = "enable-reqwest", not(feature = "enable-reqwest-middleware")))]
     pub fn try_new(key: impl Into<String>) -> Result<Self, crate::GoogleMapsError> {
@@ -77,14 +77,14 @@ impl GoogleMapsClient {
     /// ## Arguments
     ///
     /// * `key` ‧ Your application's API key. This key identifies your
-    /// application for purposes of quota management. Learn how to [get a
-    /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
+    ///   application for purposes of quota management. Learn how to [get a
+    ///   key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
     ///
     /// ## Panics
     ///
     /// * This function will panic if the `reqwest` client builder chain fails.
-    /// Realistically this shouldn't happen. However you may want to use
-    /// `try_new` to instantiate a new `GoogleMapsClient` instead.
+    ///   Realistically this shouldn't happen. However you may want to use
+    ///   `try_new` to instantiate a new `GoogleMapsClient` instead.
 
     #[cfg(feature = "enable-reqwest")]
     #[deprecated(since = "3.4.2", note = "use `try_new` instead")]
@@ -238,7 +238,7 @@ impl GoogleMapsClient {
     /// ## Arguments
     ///
     /// * `latlng` ‧ The latitude and longitude values specifying the location
-    /// for which you wish to obtain the closest, human-readable address.
+    ///   for which you wish to obtain the closest, human-readable address.
     ///
     /// ## Basic usage
     ///
@@ -276,7 +276,7 @@ impl GoogleMapsClient {
     /// * `location` ‧ Latitude & longitude of the desired time zone location.
     ///
     /// * `timestamp` ‧ Time is used to determine if Daylight Savings is
-    /// applicable.
+    ///   applicable.
     ///
     /// ## Basic usage
     ///
@@ -376,17 +376,17 @@ impl GoogleMapsClient {
     /// ## Arguments
     ///
     /// * `query` ‧ The text string on which to search, for example:
-    /// "restaurant" or "123 Main Street". This must a place name, address, or
-    /// category of establishments. Any other types of input can generate errors
-    /// and are not guaranteed to return valid results. The Google Places
-    /// service will return candidate matches based on this string and order the
-    /// results based on their perceived relevance.
+    ///   "restaurant" or "123 Main Street". This must a place name, address, or
+    ///   category of establishments. Any other types of input can generate
+    ///   errors and are not guaranteed to return valid results. The Google
+    ///   Places service will return candidate matches based on this string and
+    ///   order the results based on their perceived relevance.
     ///
     /// * `radius` ‧ Defines the distance (in meters) within which to return
-    /// place results. You may bias results to a specified circle by passing a
-    /// `location` and a `radius` parameter. Doing so instructs the Places
-    /// service to prefer showing results within that circle; results outside of
-    /// the defined area may still be displayed.
+    ///   place results. You may bias results to a specified circle by passing a
+    ///   `location` and a `radius` parameter. Doing so instructs the Places
+    ///   service to prefer showing results within that circle; results outside
+    ///   of the defined area may still be displayed.
     ///
     /// The radius will automatically be clamped to a maximum value depending on
     /// the type of search and other parameters.
@@ -396,9 +396,9 @@ impl GoogleMapsClient {
     ///     * with `keyword` or `name`: 50,000 meters
     ///     * without `keyword` or `name`
     ///         * Up to 50,000 meters, adjusted dynamically based on area
-    ///         density, independent of `rankby` parameter.
+    ///           density, independent of `rankby` parameter.
     ///         * When using `rankby=distance`, the radius parameter will not be
-    ///         accepted, and will result in an `INVALID_REQUEST`.
+    ///           accepted, and will result in an `INVALID_REQUEST`.
     /// * Query Autocomplete: 50,000 meters
     /// * Nearby Search: 50,000 meters
     ///
@@ -423,13 +423,15 @@ impl GoogleMapsClient {
     /// Details request for more information about any of the places in the
     /// response.
     ///
-    /// * Nearby Search and Text Search return all of the available data fields for
-    /// the selected place (a [subset of the supported fields](https://developers.google.com/maps/documentation/places/web-service/place-data-fields#places-api-fields-support)),
-    /// and you will be [billed accordingly](https://developers.google.com/maps/billing/understanding-cost-of-use#nearby-search)
-    /// There is no way to constrain Nearby Search or Text Search to only return
-    /// specific fields. To keep from requesting (and paying for) data that you
-    /// don't need, use a [Find Place request](https://developers.google.com/maps/documentation/places/web-service/search#FindPlaceRequests)
-    /// instead.
+    /// * Nearby Search and Text Search return all of the available data fields
+    ///   for the selected place (a [subset of the supported
+    ///   fields](https://developers.google.com/maps/documentation/places/web-service/place-data-fields#places-api-fields-support)),
+    ///   and you will be [billed accordingly](https://developers.google.com/maps/billing/understanding-cost-of-use#nearby-search)
+    ///   There is no way to constrain Nearby Search or Text Search to only
+    ///   return specific fields. To keep from requesting (and paying for) data
+    ///   that you don't need, use a [Find Place
+    ///   request](https://developers.google.com/maps/documentation/places/web-service/search#FindPlaceRequests)
+    ///   instead.
     ///
     /// ## Basic usage
     ///
@@ -466,13 +468,13 @@ impl GoogleMapsClient {
     /// ## Arguments
     ///
     /// * `location` ‧ The point around which to retrieve place information.
-    /// This must be specified as `latitude,longitude`.
+    ///   This must be specified as `latitude,longitude`.
     ///
     /// * `radius` ‧ Defines the distance (in meters) within which to return
-    /// place results. You may bias results to a specified circle by passing a
-    /// `location` and a `radius` parameter. Doing so instructs the Places
-    /// service to prefer showing results within that circle; results outside of
-    /// the defined area may still be displayed.
+    ///   place results. You may bias results to a specified circle by passing a
+    ///   `location` and a `radius` parameter. Doing so instructs the Places
+    ///   service to prefer showing results within that circle; results outside
+    ///   of the defined area may still be displayed.
     ///
     /// The radius will automatically be clamped to a maximum value depending on
     /// the type of search and other parameters.
@@ -482,9 +484,9 @@ impl GoogleMapsClient {
     ///     * with `keyword` or `name`: 50,000 meters
     ///     * without `keyword` or `name`
     ///         * Up to 50,000 meters, adjusted dynamically based on area
-    ///         density, independent of `rankby` parameter.
+    ///           density, independent of `rankby` parameter.
     ///         * When using `rankby=distance`, the radius parameter will not be
-    ///         accepted, and will result in an `INVALID_REQUEST`.
+    ///           accepted, and will result in an `INVALID_REQUEST`.
     /// * Query Autocomplete: 50,000 meters
     /// * Nearby Search: 50,000 meters
     ///
@@ -528,10 +530,10 @@ impl GoogleMapsClient {
     /// ## Arguments
     ///
     /// * `place_id` ‧ A textual identifier that uniquely identifies a place,
-    /// returned from a
-    /// [Place Search](https://developers.google.com/maps/documentation/places/web-service/search).
-    /// For more information about place IDs, see the
-    /// [place ID overview](https://developers.google.com/maps/documentation/places/web-service/place-id).
+    ///   returned from a
+    ///   [Place Search](https://developers.google.com/maps/documentation/places/web-service/search).
+    ///   For more information about place IDs, see the
+    ///   [place ID overview](https://developers.google.com/maps/documentation/places/web-service/place-id).
     ///
     /// ## Basic usage
     ///
@@ -571,12 +573,12 @@ impl GoogleMapsClient {
     /// ## Arguments
     ///
     /// * `path` ‧ The path to be snapped. Note: The snapping algorithm works
-    /// best for points that are not too far apart. If you observe odd snapping
-    /// behavior, try creating paths that have points closer together. To ensure
-    /// the best snap-to-road quality, you should aim to provide paths on which
-    /// consecutive pairs of points are within 300m of each other. This will
-    /// also help in handling any isolated, long jumps between consecutive
-    /// points caused by GPS signal loss, or noise.
+    ///   best for points that are not too far apart. If you observe odd
+    ///   snapping behavior, try creating paths that have points closer
+    ///   together. To ensure the best snap-to-road quality, you should aim to
+    ///   provide paths on which consecutive pairs of points are within 300m of
+    ///   each other. This will also help in handling any isolated, long jumps
+    ///   between consecutive points caused by GPS signal loss, or noise.
     ///
     /// ## Basic usage
     ///
@@ -633,7 +635,7 @@ impl GoogleMapsClient {
     /// ## Arguments
     ///
     /// * `points` ‧ The points to be snapped. The points parameter accepts a
-    /// list of latitude/longitude pairs.
+    ///   list of latitude/longitude pairs.
     ///
     /// ## Basic usage
     ///

@@ -23,9 +23,9 @@ pub enum Status {
     /// * You have exceeded the QPS limits.
     /// * Billing has not been enabled on your account.
     /// * The monthly $200 credit, or a self-imposed usage cap, has been
-    /// exceeded.
+    ///   exceeded.
     /// * The provided method of payment is no longer valid (for example, a
-    /// credit card has expired).
+    ///   credit card has expired).
     ///
     /// See the [Maps FAQ](https://developers.google.com/maps/faq#over-limit-key-error)
     /// for more information about how to resolve this error.

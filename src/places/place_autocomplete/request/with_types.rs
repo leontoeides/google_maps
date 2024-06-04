@@ -9,12 +9,12 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `types` ‧ You may restrict results from a Place Autocomplete request to
-    /// be of a certain type by passing a types parameter. The parameter
-    /// specifies a type or a type collection, as listed in the supported types
-    /// below. If nothing is specified, all types are returned. In general only
-    /// a single type is allowed. The exception is that you can safely mix the
-    /// geocode and establishment types, but note that this will have the same
-    /// effect as specifying no types.
+    ///   be of a certain type by passing a types parameter. The parameter
+    ///   specifies a type or a type collection, as listed in the supported
+    ///   types below. If nothing is specified, all types are returned. In
+    ///   general only a single type is allowed. The exception is that you can
+    ///   safely mix the geocode and establishment types, but note that this
+    ///   will have the same effect as specifying no types.
     ///
     /// * Multiple result type filters may be stacked together.
 
@@ -34,12 +34,12 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `types` ‧ You may restrict results from a Place Autocomplete request to
-    /// be of a certain type by passing a types parameter. The parameter
-    /// specifies a type or a type collection, as listed in the supported types
-    /// below. If nothing is specified, all types are returned. In general only
-    /// a single type is allowed. The exception is that you can safely mix the
-    /// geocode and establishment types, but note that this will have the same
-    /// effect as specifying no types.
+    ///   be of a certain type by passing a types parameter. The parameter
+    ///   specifies a type or a type collection, as listed in the supported
+    ///   types below. If nothing is specified, all types are returned. In
+    ///   general only a single type is allowed. The exception is that you can
+    ///   safely mix the geocode and establishment types, but note that this
+    ///   will have the same effect as specifying no types.
     ///
     /// * Multiple result type filters may be stacked together.
     ///

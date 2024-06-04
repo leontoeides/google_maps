@@ -10,8 +10,8 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `component` ‧ A grouping of places to which you would like to restrict
-    /// your results. Currently, you can use components to filter by up to 5
-    /// countries.
+    ///   your results. Currently, you can use components to filter by up to 5
+    ///   countries.
     ///
     /// * Multiple components may be stacked together.
 
@@ -32,8 +32,8 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `components` ‧ A grouping of places to which you would like to restrict
-    /// your results. Currently, you can use components to filter by up to 5
-    /// countries.
+    ///   your results. Currently, you can use components to filter by up to 5
+    ///   countries.
     ///
     /// * Multiple components may be stacked together.
     ///

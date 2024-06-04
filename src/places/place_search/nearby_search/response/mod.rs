@@ -25,9 +25,9 @@ pub struct Response {
     /// Contains an array of places.
     ///
     /// * Place Search requests return a subset of the fields that are returned
-    /// by Place Details requests. If the field you want is not returned by
-    /// Place Search, you can use Place Search to get a `place_id`, then use
-    /// that Place ID to make a Place Details request.
+    ///   by Place Details requests. If the field you want is not returned by
+    ///   Place Search, you can use Place Search to get a `place_id`, then use
+    ///   that Place ID to make a Place Details request.
     ///
     /// See [Place](https://developers.google.com/maps/documentation/places/web-service/search-text#Place)
     /// for more information.

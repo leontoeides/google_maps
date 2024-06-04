@@ -21,12 +21,13 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 /// with every call, regardless of whether the field has been requested.
 ///
 /// * Caution: Place Search requests and Place Details requests do not return
-/// the same fields. Place Search requests return a subset of the fields that
-/// are returned by Place Details requests. If the field you want is not
-/// returned by Place Search, you can use Place Search to get a `place_id`, then
-/// use that Place ID to make a Place Details request. For more information on
-/// the fields that are unavailable in a Place Search request, see
-/// [Places API fields support](https://developers.google.com/maps/documentation/places/web-service/place-data-fields#places-api-fields-support).
+///   the same fields. Place Search requests return a subset of the fields that
+///   are returned by Place Details requests. If the field you want is not
+///   returned by Place Search, you can use Place Search to get a `place_id`,
+///    then use that Place ID to make a Place Details request. For more
+///   information on the fields that are unavailable in a Place Search request,
+///   see [Places API fields
+///   support](https://developers.google.com/maps/documentation/places/web-service/place-data-fields#places-api-fields-support).
 
 #[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[repr(u8)]

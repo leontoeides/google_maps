@@ -18,7 +18,7 @@ impl<'a> Request<'a> {
     /// * `location` ‧ Latitude & longitude of the desired time zone location.
     ///
     /// * `timestamp` ‧ Time is used to determine if Daylight Savings is
-    /// applicable.
+    ///   applicable.
     ///
     /// ## Example
     ///

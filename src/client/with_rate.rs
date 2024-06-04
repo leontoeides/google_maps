@@ -11,17 +11,17 @@ impl GoogleMapsClient {
     /// ## Arguments
     ///
     /// * `api` ‧ Which Google Maps API are you setting the rate limit for? For
-    /// example, `Api::Directions`, `Api::DistanceMatrix`, `Api::Elevation`,
-    /// `Api::Geocoding`, `Api::TimeZone`, and so on. The `Api::All` rate limit
-    /// is applied to all Google Maps API requests _in addition_ to the per-API
-    /// rate limits.
+    ///   example, `Api::Directions`, `Api::DistanceMatrix`, `Api::Elevation`,
+    ///   `Api::Geocoding`, `Api::TimeZone`, and so on. The `Api::All` rate
+    ///   limit is applied to all Google Maps API requests _in addition_ to the
+    ///   per-API rate limits.
     ///
     /// * `requests` ‧ The number of requests the client library is attempting
-    /// to target. For example, _2 requests_ per 1 hour.
+    ///   to target. For example, _2 requests_ per 1 hour.
     ///
     /// * `duration` ‧ The duration for the targeted request rate. For example,
-    /// 1 request _per 1 minute_. This can be defined using the
-    /// `std::time::Duration` methods.
+    ///   1 request _per 1 minute_. This can be defined using the
+    ///   `std::time::Duration` methods.
     ///
     /// ## Examples:
     ///
@@ -51,25 +51,25 @@ impl GoogleMapsClient {
     /// ```
     ///
     /// * [Directions](https://developers.google.com/maps/billing/gmp-billing#directions)
-    /// API. You are billed for this SKU when your request does not use live
-    /// traffic information, arrival or departure times, < 10 waypoints, and no
-    /// waypoint optimization, $0.005 USD per request.
+    ///   API. You are billed for this SKU when your request does not use live
+    ///   traffic information, arrival or departure times, < 10 waypoints, and
+    ///   no waypoint optimization, $0.005 USD per request.
     /// ```rust
     /// with_rate(Api::Directions, (GOOGLE_CREDIT / 0.005) as u16, Duration::from_secs(SECONDS_PER_MONTH))
     /// ```
     ///
     /// * [Directions Advanced](https://developers.google.com/maps/billing/gmp-billing#directions-advanced)
-    /// API. You are billed for this SKU when your request requires live
-    /// traffic information, > 10 waypoints, and/or waypoint optimization, $0.01
-    /// per request.
+    ///   API. You are billed for this SKU when your request requires live
+    ///   traffic information, > 10 waypoints, and/or waypoint optimization, $0.01
+    ///   per request.
     /// ```rust
     /// with_rate(Api::Directions, (GOOGLE_CREDIT / 0.01) as u16, Duration::from_secs(SECONDS_PER_MONTH))
     /// ```
     ///
     /// * [Distance Matrix](https://developers.google.com/maps/billing/gmp-billing#distance-matrix)
-    /// API. You are billed for this SKU when your requests _do not_ require
-    /// live traffic information, $0.005 per _element_. **The below rate assumes
-    /// an average of 10 elements per request.**
+    ///   API. You are billed for this SKU when your requests _do not_ require
+    ///   live traffic information, $0.005 per _element_. **The below rate
+    ///   assumes an average of 10 elements per request.**
     /// ```rust
     /// with_rate(
     ///     Api::DistanceMatrix,
@@ -79,10 +79,10 @@ impl GoogleMapsClient {
     /// ```
     ///
     /// * [Distance Matrix
-    /// Advanced](https://developers.google.com/maps/billing/gmp-billing#distance-matrix-advanced)
-    /// API. You are billed for this SKU when your requests require live traffic
-    /// information, $0.01 USD per _element_. **The below rate assumes an average
-    /// of 10 elements per request.**
+    ///   Advanced](https://developers.google.com/maps/billing/gmp-billing#distance-matrix-advanced)
+    ///   API. You are billed for this SKU when your requests require live
+    ///   traffic information, $0.01 USD per _element_. **The below rate assumes
+    ///   an average of 10 elements per request.**
     /// ```rust
     /// with_rate(
     ///     Api::DistanceMatrix,
@@ -92,20 +92,20 @@ impl GoogleMapsClient {
     /// ```
     ///
     /// * [Elevation](https://developers.google.com/maps/billing/gmp-billing#elevation)
-    /// API. $0.005 USD per request.
+    ///   API. $0.005 USD per request.
     /// ```rust
     /// with_rate(Api::Elevation, (GOOGLE_CREDIT / 0.005) as u16, Duration::from_secs(SECONDS_PER_MONTH))
     /// ```
     ///
     /// * [Geocoding](https://developers.google.com/maps/billing/gmp-billing#geolocation)
-    /// API. $0.005 USD per request.
+    ///   API. $0.005 USD per request.
     /// ```rust
     /// with_rate(Api::Geocoding, (GOOGLE_CREDIT / 0.005) as u16, Duration::from_secs(SECONDS_PER_MONTH))
     /// ```
     ///
     /// * [Time
-    /// Zone](https://developers.google.com/maps/billing/gmp-billing#time-zone)
-    /// API. $0.005 USD per request.
+    ///   Zone](https://developers.google.com/maps/billing/gmp-billing#time-zone)
+    ///   API. $0.005 USD per request.
     /// ```rust
     /// with_rate(Api::TimeZone, (GOOGLE_CREDIT / 0.005) as u16, Duration::from_secs(SECONDS_PER_MONTH))
     /// ```

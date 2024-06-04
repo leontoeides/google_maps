@@ -15,7 +15,7 @@ impl<'a> ReverseRequest<'a> {
     /// * `client` ‧ Your application's Google Maps API client struct.
     ///
     /// * `latlng` ‧ The latitude and longitude values specifying the location
-    /// for which you wish to obtain the closest, human-readable address.
+    ///   for which you wish to obtain the closest, human-readable address.
 
     #[must_use]
     pub const fn new(client: &'a GoogleMapsClient, latlng: LatLng) -> Self {

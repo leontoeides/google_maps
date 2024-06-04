@@ -6,8 +6,8 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `travel_mode` ‧ The mode of transportation that directions should be
-    /// calculated for. For example, _transit_ directions or car _driving_
-    /// directions.
+    ///   calculated for. For example, _transit_ directions or car _driving_
+    ///   directions.
     ///
     /// ## Description
     ///
@@ -18,21 +18,22 @@ impl<'a> Request<'a> {
     /// following travel modes are supported:
     ///
     /// * `TravelMode::Driving` (default) indicates standard driving directions
-    /// using the road network.
+    ///   using the road network.
     ///
     /// * `TravelMode::Walking` requests walking directions via pedestrian paths
-    /// & sidewalks (where available).
+    ///   & sidewalks (where available).
     ///
     /// * `TravelMode::Bicycling` requests bicycling directions via bicycle
-    /// paths & preferred streets (where available).
+    ///   paths & preferred streets (where available).
     ///
     /// * `TravelMode::Transit` requests directions via public transit routes
-    /// (where available). If you set the travel mode to `TravelMode::Transit`,
-    /// you can optionally use either `with_departure_time()` or
-    /// `with_arrival_time()` methods. If neither time is specified, the
-    /// departure time defaults to now (that is, the departure time defaults to
-    /// the current time). You can also optionally use `with_transit_mode()`
-    /// and/or `with_transit_route_preference()` methods.
+    ///   (where available). If you set the travel mode to
+    ///   `TravelMode::Transit`, you can optionally use either
+    ///   `with_departure_time()` or `with_arrival_time()` methods. If neither
+    ///   time is specified, the departure time defaults to now (that is, the
+    ///   departure time defaults to the current time). You can also optionally
+    ///   use `with_transit_mode()` and/or `with_transit_route_preference()`
+    ///   methods.
     ///
     /// _Note_: Both walking and bicycling directions may sometimes not include
     /// clear pedestrian or bicycling paths, so these directions will return

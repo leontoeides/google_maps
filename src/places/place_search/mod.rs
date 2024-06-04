@@ -8,13 +8,15 @@
 //! ## Note: Server-side and client-side libraries
 //!
 //! * The Places API is also available with the [Java Client, Python Client, Go
-//! Client and Node.js Client for Google Maps Services](https://developers.google.com/maps/documentation/places/web-service/client-library).
-//! The Places API and the client libraries are for use in server applications.
+//!   Client and Node.js Client for Google Maps
+//!   Services](https://developers.google.com/maps/documentation/places/web-service/client-library).
+//!   The Places API and the client libraries are for use in server
+//!   applications.
 //!
 //! * If you're building a client-side application, take a look at the [Places
-//! SDK for Android](https://developers.google.com/maps/documentation/places/android-sdk),
-//! the [Places SDK for iOS](https://developers.google.com/maps/documentation/places/ios-sdk),
-//! and the [Places Library, Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/places).
+//!   SDK for Android](https://developers.google.com/maps/documentation/places/android-sdk),
+//!   the [Places SDK for iOS](https://developers.google.com/maps/documentation/places/ios-sdk),
+//!   and the [Places Library, Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/places).
 //!
 //! # [Compare search types](https://developers.google.com/maps/documentation/places/web-service/search#compare-search-types)
 //!

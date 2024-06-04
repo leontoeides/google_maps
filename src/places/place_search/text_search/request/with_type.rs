@@ -9,8 +9,8 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `type` ‧ Restricts the results to places matching the specified type.
-    /// Only one type may be specified. If more than one type is provided, all
-    /// types following the first entry are ignored.
+    ///   Only one type may be specified. If more than one type is provided, all
+    ///   types following the first entry are ignored.
     ///
     /// `type=hospital|pharmacy|doctor` becomes `type=hospital`
     /// `type=hospital,pharmacy,doctor` is ignored entirely

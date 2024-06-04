@@ -8,7 +8,7 @@
 //! # [Required parameters](https://developers.google.com/maps/documentation/roads/nearest#required-parameters)
 //!
 //! * `points` - The path to be snapped. The path parameter accepts a list of
-//! latitude/longitude pairs.
+//!   latitude/longitude pairs.
 //!
 //! Note: The snapping algorithm works best for points that are not too far
 //! apart. If you observe odd snapping behavior, try creating paths that have

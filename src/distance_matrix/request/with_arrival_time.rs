@@ -7,7 +7,7 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `arrival_time` ‧ The time the passenger should arrive at their final
-    /// destination by.
+    ///   destination by.
     ///
     /// ## Description
     ///

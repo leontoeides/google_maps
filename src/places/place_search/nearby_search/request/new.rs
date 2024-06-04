@@ -15,13 +15,13 @@ impl<'a> Request<'a> {
     /// * `client` ‧ Your application's Google Maps API client struct.
     ///
     /// * `location` ‧ The point around which to retrieve place information.
-    /// This must be specified as `latitude,longitude`.
+    ///   This must be specified as `latitude,longitude`.
     ///
     /// * `radius` ‧ Defines the distance (in meters) within which to return
-    /// place results. You may bias results to a specified circle by passing a
-    /// `location` and a `radius` parameter. Doing so instructs the Places
-    /// service to prefer showing results within that circle; results outside of
-    /// the defined area may still be displayed.
+    ///   place results. You may bias results to a specified circle by passing a
+    ///   `location` and a `radius` parameter. Doing so instructs the Places
+    ///   service to prefer showing results within that circle; results outside
+    ///   of the defined area may still be displayed.
     ///
     /// The radius will automatically be clamped to a maximum value depending on
     /// the type of search and other parameters.
@@ -31,9 +31,9 @@ impl<'a> Request<'a> {
     ///     * with `keyword` or `name`: 50,000 meters
     ///     * without `keyword` or `name`
     ///         * Up to 50,000 meters, adjusted dynamically based on area
-    ///         density, independent of `rankby` parameter.
+    ///           density, independent of `rankby` parameter.
     ///         * When using `rankby=distance`, the radius parameter will not be
-    ///         accepted, and will result in an `INVALID_REQUEST`.
+    ///           accepted, and will result in an `INVALID_REQUEST`.
     /// * Query Autocomplete: 50,000 meters
     /// * Nearby Search: 50,000 meters
 

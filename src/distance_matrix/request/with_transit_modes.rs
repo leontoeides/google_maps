@@ -7,8 +7,8 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `transit_modes` ‧ The preference of the transit rider; what mode of
-    /// transit should the directions service prioritize? _Bus_, _Subway_,
-    /// _Train_, _Tram_, or _Rail_?
+    ///   transit should the directions service prioritize? _Bus_, _Subway_,
+    ///   _Train_, _Tram_, or _Rail_?
     ///
     /// ## Description
     ///
@@ -18,20 +18,20 @@ impl<'a> Request<'a> {
     /// The parameter supports the following arguments:
     ///
     /// * `TransitMode::Bus` indicates that the calculated route should prefer
-    /// travel by bus.
+    ///   travel by bus.
     ///
     /// * `TransitMode::Subway` indicates that the calculated route should
-    /// prefer travel by subway.
+    ///   prefer travel by subway.
     ///
     /// * `TransitMode::Train` indicates that the calculated route should prefer
-    /// travel by train.
+    ///   travel by train.
     ///
     /// * `TransitMode::Tram` indicates that the calculated route should prefer
-    /// travel by tram and light rail.
+    ///   travel by tram and light rail.
     ///
     /// * `TransitMode::Rail` indicates that the calculated route should prefer
-    /// travel by train, tram, light rail, and subway. This is equivalent to
-    /// `TransitMode::Train|Tram|Subway`.
+    ///   travel by train, tram, light rail, and subway. This is equivalent to
+    ///   `TransitMode::Train|Tram|Subway`.
     ///
     /// ## Examples:
     ///
@@ -42,7 +42,7 @@ impl<'a> Request<'a> {
     /// ```
     ///
     /// * Multiple modes may be stacked together. This example sets preferred
-    /// transit modes to bus and subway:
+    ///   transit modes to bus and subway:
     ///
     /// ```rust
     /// .with_transit_mode(TransitMode::Bus)
@@ -61,8 +61,8 @@ impl<'a> Request<'a> {
     /// # Example:
     ///
     /// * Alternatively, multiple transit modes may be passed in a single method
-    /// call by passing a slice. This example sets preferred transit modes to bus
-    /// and subway:
+    ///   call by passing a slice. This example sets preferred transit modes to
+    ///   bus and subway:
     ///
     /// ```rust
     /// .with_transit_modes(&[

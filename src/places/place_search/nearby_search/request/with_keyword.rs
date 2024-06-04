@@ -8,11 +8,11 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `keyword` ‧ The text string on which to search, for example:
-    /// "restaurant" or "123 Main Street". This must be a place name, address,
-    /// or category of establishments. Any other types of input can generate
-    /// errors and are not guaranteed to return valid results. The Google Places
-    /// service will return candidate matches based on this string and order the
-    /// results based on their perceived relevance.
+    ///   "restaurant" or "123 Main Street". This must be a place name, address,
+    ///   or category of establishments. Any other types of input can generate
+    ///   errors and are not guaranteed to return valid results. The Google
+    ///   Places service will return candidate matches based on this string and
+    ///   order the results based on their perceived relevance.
     ///
     /// Explicitly including location information using this parameter may
     /// conflict with the location, radius, and rankby parameters, causing

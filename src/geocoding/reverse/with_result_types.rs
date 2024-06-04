@@ -22,63 +22,63 @@ impl<'a> ReverseRequest<'a> {
     /// * `PlaceType::Route` indicates a named route (such as "US 101").
     ///
     /// * `PlaceType::Intersection` indicates a major intersection, usually of
-    /// two major roads.
+    ///   two major roads.
     ///
     /// * `PlaceType::Political` indicates a political entity. Usually, this
-    /// type indicates a polygon of some civil administration.
+    ///   type indicates a polygon of some civil administration.
     ///
     /// * `PlaceType::Country` indicates the national political entity, and is
-    /// typically the highest order type returned by the Geocoder.
+    ///   typically the highest order type returned by the Geocoder.
     ///
     /// * `PlaceType::AdministrativeAreaLevel1` indicates a first-order civil
-    /// entity below the country level. Within the United States, these
-    /// administrative levels are states. Not all nations exhibit these
-    /// administrative levels. In most cases,
-    /// `PlaceType::AdministrativeAreaLevel1` short names will closely match ISO
-    /// 3166-2 subdivisions and other widely circulated lists; however this is
-    /// not guaranteed as our geocoding results are based on a variety of
-    /// signals and location data.
+    ///   entity below the country level. Within the United States, these
+    ///   administrative levels are states. Not all nations exhibit these
+    ///   administrative levels. In most cases,
+    ///   `PlaceType::AdministrativeAreaLevel1` short names will closely match
+    ///   ISO 3166-2 subdivisions and other widely circulated lists; however
+    ///   this is not guaranteed as our geocoding results are based on a variety
+    ///   OF signals and location data.
     ///
     /// * `PlaceType::AdministrativeAreaLevel2` indicates a second-order civil
-    /// entity below the country level. Within the United States, these
-    /// administrative levels are counties. Not all nations exhibit these
-    /// administrative levels.
+    ///   entity below the country level. Within the United States, these
+    ///   administrative levels are counties. Not all nations exhibit these
+    ///   administrative levels.
     ///
     /// * `PlaceType::AdministrativeAreaLevel3` indicates a third-order civil
-    /// entity below the country level. This type indicates a minor civil
-    /// division. Not all nations exhibit these administrative levels.
+    ///   entity below the country level. This type indicates a minor civil
+    ///   division. Not all nations exhibit these administrative levels.
     ///
     /// * `PlaceType::AdministrativeAreaLevel4` indicates a fourth-order civil
-    /// entity below the country level. This type indicates a minor civil
-    /// division. Not all nations exhibit these administrative levels.
+    ///   entity below the country level. This type indicates a minor civil
+    ///   division. Not all nations exhibit these administrative levels.
     ///
     /// * `PlaceType::AdministrativeAreaLevel5` indicates a fifth-order civil
-    /// entity below the country level. This type indicates a minor civil
-    /// division. Not all nations exhibit these administrative levels.
+    ///   entity below the country level. This type indicates a minor civil
+    ///   division. Not all nations exhibit these administrative levels.
     ///
     /// * `PlaceType::ColloquialArea` indicates a commonly-used alternative name
-    /// for the entity.
+    ///   for the entity.
     ///
     /// * `PlaceType::Locality` indicates an incorporated city or town political
-    /// entity.
+    ///   entity.
     ///
     /// * `PlaceType::Sublocality` indicates a first-order civil entity below a
-    /// locality. For some locations may receive one of the additional types:
-    /// `PlaceType::SublocalityLevel1` to `PlaceType::SublocalityLevel5`. Each
-    /// sublocality level is a civil entity. Larger numbers indicate a smaller
-    /// geographic area.
+    ///   locality. For some locations may receive one of the additional types:
+    ///   `PlaceType::SublocalityLevel1` to `PlaceType::SublocalityLevel5`. Each
+    ///   sublocality level is a civil entity. Larger numbers indicate a smaller
+    ///   geographic area.
     ///
     /// * `PlaceType::Neighborhood` indicates a named neighborhood.
     ///
     /// * `PlaceType::Premise` indicates a named location, usually a building or
-    /// collection of buildings with a common name.
+    ///   collection of buildings with a common name.
     ///
     /// * `PlaceType::Subpremise` indicates a first-order entity below a named
-    /// location, usually a singular building within a collection of buildings
-    /// with a common name.
+    ///   location, usually a singular building within a collection of buildings
+    ///   with a common name.
     ///
     /// * `PlaceType::PostalCode` indicates a postal code as used to address
-    /// postal mail within the country.
+    ///   postal mail within the country.
     ///
     /// * `PlaceType::NaturalFeature` indicates a prominent natural feature.
     ///
@@ -87,9 +87,9 @@ impl<'a> ReverseRequest<'a> {
     /// * `PlaceType::Park` indicates a named park.
     ///
     /// * `PlaceType::PointOfInterest` indicates a named point of interest.
-    /// Typically, these "POI"s are prominent local entities that don't easily
-    /// fit in another category, such as "Empire State Building" or "Eiffel
-    /// Tower".
+    ///   Typically, these "POI"s are prominent local entities that don't easily
+    ///   fit in another category, such as "Empire State Building" or "Eiffel
+    ///   Tower".
     ///
     /// If both `result_type` and `location_type` filters are present then the
     /// API returns only those results that match both the `result_type` and the
@@ -99,14 +99,14 @@ impl<'a> ReverseRequest<'a> {
     /// # Examples:
     ///
     /// * A single result type filter. This example restricts results to the
-    /// neighbourhood:
+    ///   neighbourhood:
     ///
     /// ```rust
     /// .with_result_type(PlaceType::Neighborhood)
     /// ```
     ///
     /// * Multiple component filters may be stacked together. This example
-    /// restricts results to a neighborhood and a locality:
+    ///   restricts results to a neighborhood and a locality:
     ///
     /// ```rust
     /// .with_result_type(PlaceType::Neighborhood)
@@ -136,8 +136,8 @@ impl<'a> ReverseRequest<'a> {
     /// # Example:
     ///
     /// * Alternatively, multiple result type filters may be passed in a single
-    /// method call by passing a slice. This example restricts results a
-    /// neighborhood and a locality:
+    ///   method call by passing a slice. This example restricts results a
+    ///   neighborhood and a locality:
     ///
     /// ```rust
     /// .with_components(&[

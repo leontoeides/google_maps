@@ -6,7 +6,7 @@ use std::time::Duration;
 /// ## Arguments
 ///
 /// * `duration` ‧ The `std::time::Duration` that is to be converted into a
-/// string.
+///   string.
 ///
 /// ## Description
 ///

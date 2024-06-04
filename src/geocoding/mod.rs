@@ -15,16 +15,16 @@
 //! # [Get Started](https://developers.google.com/maps/documentation/geocoding/start)
 //!
 //! * **New Users**: Before you can start using the Google Maps Platform APIs
-//! and SDKs, you must sign up and create a billing account. To learn more, see
-//! [Get Started with Google Maps
-//! Platform](https://developers.google.com/maps/gmp-get-started).
+//!   and SDKs, you must sign up and create a billing account. To learn more,
+//!   see [Get Started with Google Maps
+//!   Platform](https://developers.google.com/maps/gmp-get-started).
 //!
 //! * This service is also available as part of the client-side [Google Maps
-//! JavaScript
-//! API](https://developers.google.com/maps/documentation/javascript/geocoding),
-//! or for server-side use with the [Java Client, Python Client, Go Client and
-//! Node.js Client for Google Maps
-//! Services](https://developers.google.com/maps/documentation/geocoding/client-library).
+//!   JavaScript
+//!   API](https://developers.google.com/maps/documentation/javascript/geocoding),
+//!   or for server-side use with the [Java Client, Python Client, Go Client and
+//!   Node.js Client for Google Maps
+//!   Services](https://developers.google.com/maps/documentation/geocoding/client-library).
 //!
 //! [Start coding with our client libraries](https://developers.google.com/maps/documentation/geocoding/start#client-library)
 //!

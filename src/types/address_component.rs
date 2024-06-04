@@ -10,19 +10,19 @@ use serde::{Deserialize, Serialize};
 /// Note the following facts about the `address_components` array:
 ///
 /// * The array of address components may contain more components than the
-/// `formatted_address`.
+///   `formatted_address`.
 ///
 /// * The array does not necessarily include all the political entities that
-/// contain an address, apart from those included in the `formatted_address`. To
-/// retrieve all the political entities that contain a specific address, you
-/// should use reverse geocoding, passing the latitude/longitude of the address
-/// as a parameter to the request.
+///   contain an address, apart from those included in the `formatted_address`.
+///   To retrieve all the political entities that contain a specific address,
+///   you should use reverse geocoding, passing the latitude/longitude of the
+///   address as a parameter to the request.
 ///
 /// * The format of the response is not guaranteed to remain the same between
-/// requests. In particular, the number of `address_components` varies based on
-/// the address requested and can change over time for the same address. A
-/// component can change position in the array. The type of the component can
-/// change. A particular component may be missing in a later response.
+///   requests. In particular, the number of `address_components` varies based
+///   on the address requested and can change over time for the same address. A
+///   component can change position in the array. The type of the component can
+///   change. A particular component may be missing in a later response.
 ///
 /// To handle the array of components, you should parse the response and select
 /// appropriate values via expressions. See the guide to [parsing a

@@ -11,8 +11,8 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `location` ‧ Defines the location on the earth from which to
-    /// return elevation data. This parameter takes a single `LatLng`
-    /// coordinate.
+    ///   return elevation data. This parameter takes a single `LatLng`
+    ///   coordinate.
     ///
     /// ## Example
     ///
@@ -39,10 +39,10 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `locations` ‧ Defines the location(s) on the earth from which to
-    /// return elevation data. This parameter takes either a single location,
-    /// as a latitude/longitude pair, multiple latitude/longitude pairs, or an
-    /// encoded polyline. For more information, see [Specifying
-    /// Locations](https://developers.google.com/maps/documentation/elevation/intro#Locations).
+    ///   return elevation data. This parameter takes either a single location,
+    ///   as a latitude/longitude pair, multiple latitude/longitude pairs, or an
+    ///   encoded polyline. For more information, see [Specifying
+    ///   Locations](https://developers.google.com/maps/documentation/elevation/intro#Locations).
     ///
     /// ## Example
     ///

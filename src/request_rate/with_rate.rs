@@ -13,28 +13,28 @@ impl RequestRate {
     /// ## Arguments
     ///
     /// * `api` ‧ Which Google Maps API are you setting the rate limit for? For
-    /// example, `Api::Directions`, `Api::DistanceMatrix`, `Api::Elevation`,
-    /// `Api::Geocoding`, `Api::TimeZone`, and so on. The `Api::All` rate limit
-    /// is applied to all Google Maps API requests _in addition_ to the per-API
-    /// rate limits.
+    ///   example, `Api::Directions`, `Api::DistanceMatrix`, `Api::Elevation`,
+    ///   `Api::Geocoding`, `Api::TimeZone`, and so on. The `Api::All` rate limit
+    ///   is applied to all Google Maps API requests _in addition_ to the per-API
+    ///   rate limits.
     ///
     /// * `requests` ‧ The number of requests the client library is attempting
-    /// to target. For example, _2 requests_ per 1 hour.
+    ///   to target. For example, _2 requests_ per 1 hour.
     ///
     /// * `duration` ‧ The duration for the targeted request rate. For example,
-    /// 1 request _per 1 minute_. This can be defined using the
-    /// `std::time::Duration` methods.
+    ///   1 request _per 1 minute_. This can be defined using the
+    ///   `std::time::Duration` methods.
     ///
     /// ## Examples:
     ///
     /// * Sets the rate limit for all Google Maps API requests to _2 request per
-    /// minute_:
+    ///   minute_:
     /// ```rust
     /// with_rate(Api::All, 2, Duration::from_secs(60)) // 1 minute
     /// ```
     ///
     /// * Sets the rate limit for Google Maps Elevation API requests to _1
-    /// requests per second_:
+    ///   requests per second_:
     /// ```rust
     /// with_rate(Api::All, 1, Duration::from_secs(1)) // 1 second
     /// ```

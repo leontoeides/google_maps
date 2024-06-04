@@ -6,7 +6,7 @@ impl<'a> ForwardRequest<'a> {
     /// ## Arguments
     ///
     /// * `region` ‧ The region to prefer in search results. This parameter will
-    /// only influence, not fully restrict, results from the geocoder.
+    ///   only influence, not fully restrict, results from the geocoder.
     ///
     /// ## Description
     ///

@@ -9,8 +9,8 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `sessiontoken` ‧ A random string which identifies an autocomplete
-    /// [session](https://developers.google.com/maps/documentation/places/web-service/details#session_tokens)
-    /// for billing purposes.
+    ///   [session](https://developers.google.com/maps/documentation/places/web-service/details#session_tokens)
+    ///   for billing purposes.
     ///
     /// The session begins when the user starts typing a query, and concludes
     /// when they select a place and a call to Place Details is made. Each
@@ -27,15 +27,15 @@ impl<'a> Request<'a> {
     /// * Use session tokens for all autocomplete sessions.
     ///
     /// * Generate a fresh token for each session. Using a version 4 UUID is
-    /// recommended.
+    ///   recommended.
     ///
     /// * Ensure that the API key(s) used for all Place Autocomplete and Place
-    /// Details requests within a session belong to the same Cloud Console
-    /// project.
+    ///   Details requests within a session belong to the same Cloud Console
+    ///   project.
     ///
     /// * Be sure to pass a unique session token for each new session. Using the
-    /// same token for more than one session will result in each request being
-    /// billed individually.
+    ///   same token for more than one session will result in each request being
+    ///   billed individually.
 
     pub fn with_sessiontoken(
         &'a mut self,

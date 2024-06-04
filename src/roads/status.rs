@@ -13,21 +13,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub enum Status {
     /// 1. Your API key is not valid or was not included in the request. Please
-    /// ensure that you've included the entire key, and that you've enabled the
-    /// API for this key.
+    ///    ensure that you've included the entire key, and that you've enabled
+    ///    the API for this key.
     ///
-    /// 2. Your request contained invalid arguments. The most likely causes of this
-    /// error are:
+    /// 2. Your request contained invalid arguments. The most likely causes of
+    ///    this error are:
     ///
     /// * A problem with your path parameter.
     /// * Please ensure you have at least 1, and fewer than 100 points. Each
-    /// point should be a pair of numbers separated by a comma, such as:
-    /// `48.409114,-123.369158`. Points should be separated by a pipe: '|'.
+    ///   point should be a pair of numbers separated by a comma, such as:
+    ///   `48.409114,-123.369158`. Points should be separated by a pipe: '|'.
     /// * Your request included an invalid `placeId`.
     /// * Your request included both `placeId`s and a `path`. Only one of these
-    /// parameters may be specified for each request.
-    /// This error will not be returned if a `placeId` is passed for a road
-    /// which no longer exists, or for a place which is not a road.
+    ///   parameters may be specified for each request.
+    ///   This error will not be returned if a `placeId` is passed for a road
+    ///   which no longer exists, or for a place which is not a road.
     #[serde(alias = "INVALID_ARGUMENT")]
     InvalidArgument,
 
@@ -37,7 +37,7 @@ pub enum Status {
     /// * Billing has not been enabled on your account.
     /// * A self-imposed usage cap has been exceeded.
     /// * The provided method of payment is no longer valid (for example, a
-    /// credit card has expired).
+    ///   credit card has expired).
     ///
     /// In order to use Google Maps Platform products, billing must be enabled
     /// on your account, and all requests must include a valid API key. To fix
@@ -45,9 +45,9 @@ pub enum Status {
     ///
     /// * [Get an API key](https://developers.google.com/maps/documentation/roads/errors?hl=en#new-key)
     /// * [Enable billing](https://console.cloud.google.com/project/_/billing/enable)
-    /// on your account.
+    ///   on your account.
     /// * [Adjust your usage cap](https://developers.google.com/maps/documentation/roads/errors?hl=en#usage-cap)
-    /// to increase your daily limit (if applicable).
+    ///   to increase your daily limit (if applicable).
     #[serde(alias = "PERMISSION_DENIED")]
     PermissionDenied,
 

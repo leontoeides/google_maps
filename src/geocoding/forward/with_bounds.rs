@@ -9,8 +9,8 @@ impl<'a> ForwardRequest<'a> {
     /// ## Arguments
     ///
     /// * `bounds` - The bounding box of the viewport within which to bias
-    /// geocode results more prominently. This parameter will only influence,
-    /// not fully restrict, results from the geocoder.
+    ///   geocode results more prominently. This parameter will only influence,
+    ///   not fully restrict, results from the geocoder.
     ///
     /// ## Description
     ///

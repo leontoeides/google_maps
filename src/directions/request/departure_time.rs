@@ -18,17 +18,17 @@ use serde::{Deserialize, Serialize};
 /// second).
 ///
 /// * For requests where the travel mode is transit: You can optionally specify
-/// one of `departure_time` or `arrival_time`. If neither time is specified, the
-/// `departure_time` defaults to now (that is, the departure time defaults to
-/// the current time).
+///   one of `departure_time` or `arrival_time`. If neither time is specified,
+///   the `departure_time` defaults to now (that is, the departure time defaults
+///   to the current time).
 ///
 /// * For requests where the travel mode is driving: You can specify the
-/// `departure_time` to receive a route and trip duration (response field:
-/// `duration_in_traffic`) that take traffic conditions into account. This
-/// option is only available if the request contains a valid API key, or a valid
-/// Google Maps Platform Premium Plan client ID and signature. The
-/// `departure_time` must be set to the current time or some time in the future.
-/// It cannot be in the past.
+///   `departure_time` to receive a route and trip duration (response field:
+///   `duration_in_traffic`) that take traffic conditions into account. This
+///   option is only available if the request contains a valid API key, or a
+///   valid Google Maps Platform Premium Plan client ID and signature. The
+///   `departure_time` must be set to the current time or some time in the
+///   future. It cannot be in the past.
 ///
 /// **Note**: If departure time is not specified, choice of route and duration
 /// are based on road network and average time-independent traffic conditions.

@@ -32,7 +32,7 @@ pub enum Status {
     /// * Billing has not been enabled on your account.
     /// * A self-imposed usage cap has been exceeded.
     /// * The provided method of payment is no longer valid (for example, a
-    /// credit card has expired).
+    ///   credit card has expired).
     ///
     /// See the [Maps
     /// FAQ](https://developers.google.com/maps/faq#over-limit-key-error) to

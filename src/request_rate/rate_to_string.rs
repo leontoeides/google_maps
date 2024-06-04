@@ -6,17 +6,17 @@ use std::time::Duration;
 /// ## Arguments
 ///
 /// * `numerator` ‧ The numerator of the rate. i.e. _Files_ per second,
-/// _requests_ per minute, etc.
+///   _requests_ per minute, etc.
 ///
 /// * `duration` ‧ The denominator of the rate. i.e. Bytes per _second_,
-/// pages per _hour_, etc.
+///   pages per _hour_, etc.
 ///
 /// * `numerator_singular` ‧ The singular form of the numerator's name as a
-/// string to be displayed to the end-user. For example, `"request"` or
-/// `"file"`.
+///   string to be displayed to the end-user. For example, `"request"` or
+///   `"file"`.
 ///
 /// * `numerator_plural` ‧ The plural form of the numerator's name as a string
-/// to be displayed to the end-user. For example, `"bytes"` or `"queries"`.
+///   to be displayed to the end-user. For example, `"bytes"` or `"queries"`.
 ///
 /// ## Description
 ///
