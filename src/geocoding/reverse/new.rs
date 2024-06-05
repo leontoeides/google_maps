@@ -46,7 +46,7 @@ impl<'a> ReverseRequest<'a> {
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
     /// * `coordinate` ‧ The `Coord` specifying the location for which you
-    /// wish to obtain the closest, human-readable address.
+    ///   wish to obtain the closest, human-readable address.
 
     #[cfg(feature = "geo")]
     pub fn try_new_coordinate(
@@ -80,7 +80,7 @@ impl<'a> ReverseRequest<'a> {
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
     /// * `point` ‧ The `Point` specifying the location for which you wish to
-    /// obtain the closest, human-readable address.
+    ///   obtain the closest, human-readable address.
 
     #[cfg(feature = "geo")]
     pub fn try_new_point(

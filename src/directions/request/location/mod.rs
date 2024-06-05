@@ -3,7 +3,7 @@
 //! latitude/longitude pair, or Google Place ID.
 
 #[cfg(feature = "geo")]
-mod geo_conversions;
+mod geo;
 
 // -----------------------------------------------------------------------------
 

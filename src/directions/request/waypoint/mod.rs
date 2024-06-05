@@ -3,7 +3,7 @@
 //! a latitude & longitude pair, a Google Place ID, or as an Encoded Polyline.
 
 #[cfg(feature = "geo")]
-mod geo_conversions;
+mod geo;
 
 // -----------------------------------------------------------------------------
 

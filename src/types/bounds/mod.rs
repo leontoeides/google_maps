@@ -3,7 +3,7 @@
 //! latitude & longitude pairs.
 
 #[cfg(feature = "geo")]
-mod geo_conversions;
+mod geo;
 
 // -----------------------------------------------------------------------------
 

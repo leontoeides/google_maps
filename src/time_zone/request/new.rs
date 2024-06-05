@@ -68,7 +68,7 @@ impl<'a> Request<'a> {
     /// * `client` ‧ Your application's Google Maps API client struct.
     /// * `coordinate` - `Coord` of the desired time zone location.
     /// * `timestamp` - Time is used to determine if Daylight Savings is
-    /// applicable.
+    ///   applicable.
 
     #[cfg(feature = "geo")]
     pub fn try_new_coordinate<'b>(
@@ -103,7 +103,7 @@ impl<'a> Request<'a> {
     /// * `client` ‧ Your application's Google Maps API client struct.
     /// * `point` - `Point` of the desired time zone location.
     /// * `timestamp` - Time is used to determine if Daylight Savings is
-    /// applicable.
+    ///   applicable.
 
     #[cfg(feature = "geo")]
     pub fn try_new_point<'b>(

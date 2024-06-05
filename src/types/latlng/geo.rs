@@ -11,7 +11,7 @@ impl TryFrom<&Coord> for LatLng {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
     type Error = GoogleMapsError;
 
-    /// Attempts to convert a `geo_types::geometry::Coord` struct to a
+    /// Attempts to convert a borrowed `&geo_types::geometry::Coord` struct to a
     /// `google_maps::LatLng` struct.
     fn try_from(coordinate: &Coord) -> Result<Self, Self::Error> {
         let lat: Decimal = Decimal::from_f64(coordinate.y)
@@ -26,11 +26,24 @@ impl TryFrom<&Coord> for LatLng {
 
 // -----------------------------------------------------------------------------
 
+impl TryFrom<Coord> for LatLng {
+    // Error definitions are contained in the `google_maps\src\error.rs` module.
+    type Error = GoogleMapsError;
+
+    /// Attempts to convert an owned `geo_types::geometry::Coord` struct into a
+    /// `google_maps::LatLng` struct.
+    fn try_from(coordinate: Coord) -> Result<Self, Self::Error> {
+        (&coordinate).try_into()
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl TryFrom<&LatLng> for Coord {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
     type Error = GoogleMapsError;
 
-    /// Attempts to convert a `google_maps::LatLng` struct to a
+    /// Attempts to convert a borrowed `&google_maps::LatLng` struct to a
     /// `geo_types::geometry::Coord` struct.
     fn try_from(lat_lng: &LatLng) -> Result<Self, Self::Error> {
         let x: f64 = lat_lng
@@ -49,11 +62,24 @@ impl TryFrom<&LatLng> for Coord {
 
 // -----------------------------------------------------------------------------
 
+impl TryFrom<LatLng> for Coord {
+    // Error definitions are contained in the `google_maps\src\error.rs` module.
+    type Error = GoogleMapsError;
+
+    /// Attempts to convert an owned `google_maps::LatLng` struct into a
+    /// `geo_types::geometry::Coord` struct.
+    fn try_from(lat_lng: LatLng) -> Result<Self, Self::Error> {
+        (&lat_lng).try_into()
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl TryFrom<&Point> for LatLng {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
     type Error = GoogleMapsError;
 
-    /// Attempts to convert a `geo_types::geometry::Point` struct to a
+    /// Attempts to convert a borrowed `&geo_types::geometry::Point` struct to a
     /// `google_maps::LatLng` struct.
     fn try_from(point: &Point) -> Result<Self, Self::Error> {
         let lat: Decimal = Decimal::from_f64(point.y())
@@ -68,11 +94,24 @@ impl TryFrom<&Point> for LatLng {
 
 // -----------------------------------------------------------------------------
 
+impl TryFrom<Point> for LatLng {
+    // Error definitions are contained in the `google_maps\src\error.rs` module.
+    type Error = GoogleMapsError;
+
+    /// Attempts to convert an owned `geo_types::geometry::Point` struct into a
+    /// `google_maps::LatLng` struct.
+    fn try_from(point: Point) -> Result<Self, Self::Error> {
+        (&point).try_into()
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl TryFrom<&LatLng> for Point {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
     type Error = GoogleMapsError;
 
-    /// Attempts to convert a `google_maps::LatLng` struct to a
+    /// Attempts to convert a borrowed `&google_maps::LatLng` struct to a
     /// `geo_types::geometry::Point` struct.
     fn try_from(lat_lng: &LatLng) -> Result<Self, Self::Error> {
         let x: f64 = lat_lng
@@ -86,5 +125,18 @@ impl TryFrom<&LatLng> for Point {
             .ok_or(TypeError::InvalidLatitude(lat_lng.lat, lat_lng.lng))?;
 
         Ok(Self::new(x, y))
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl TryFrom<LatLng> for Point {
+    // Error definitions are contained in the `google_maps\src\error.rs` module.
+    type Error = GoogleMapsError;
+
+    /// Attempts to convert an owned `google_maps::LatLng` struct into a
+    /// `geo_types::geometry::Point` struct.
+    fn try_from(lat_lng: LatLng) -> Result<Self, Self::Error> {
+        (&lat_lng).try_into()
     } // fn
 } // impl

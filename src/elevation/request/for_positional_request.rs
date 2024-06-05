@@ -80,7 +80,7 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `coordinate` ‧ Defines the location on the earth from which to
-    /// return elevation data. This parameter takes a single `Coord`.
+    ///   return elevation data. This parameter takes a single `Coord`.
 
     #[cfg(feature = "geo")]
     #[deprecated(since = "3.5.1", note =
@@ -109,7 +109,7 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// * `point` ‧ Defines the location on the earth from which to return
-    /// elevation data. This parameter takes a single `Point`.
+    ///   elevation data. This parameter takes a single `Point`.
 
     #[cfg(feature = "geo")]
     #[deprecated(since = "3.5.1", note =
