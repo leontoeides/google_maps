@@ -5,9 +5,7 @@ use crate::directions::response::{
     overview_polyline::OverviewPolyline,
     transit_fare::TransitFare
 };
-use crate::error::Error;
 use crate::types::Bounds;
-use geo_types::geometry::LineString;
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 
@@ -186,7 +184,7 @@ impl Route {
     fn decode_polyline(
         &self,
         precision: u32,
-    ) -> Result<LineString<f64>, Error> {
+    ) -> Result<geo_types::geometry::LineString<f64>, crate::error::Error> {
         self.overview_polyline.decode(precision)
     } // fn
 } // impl
@@ -196,7 +194,7 @@ impl Route {
 #[cfg(all(feature = "polyline", feature = "geo"))]
 impl TryFrom<&Route> for geo_types::geometry::LineString<f64> {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Error = Error;
+    type Error = crate::error::Error;
 
     /// Attempts to convert a borrowed `&Route` struct to a
     /// `geo_types::geometry::LineString<f64>` struct.
@@ -220,7 +218,7 @@ impl TryFrom<&Route> for geo_types::geometry::LineString<f64> {
 #[cfg(all(feature = "polyline", feature = "geo"))]
 impl TryFrom<Route> for geo_types::geometry::LineString<f64> {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Error = Error;
+    type Error = crate::error::Error;
 
     /// Attempts to convert an owned `Route` struct into a
     /// `geo_types::geometry::LineString<f64>` struct.

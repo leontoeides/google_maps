@@ -9,9 +9,7 @@ use crate::directions::response::{
     transit_details::TransitDetails
 };
 use crate::directions::travel_mode::TravelMode;
-use crate::error::Error;
 use crate::types::LatLng;
-use geo_types::geometry::LineString;
 use serde::{Deserialize, Serialize};
 
 // -----------------------------------------------------------------------------
@@ -101,7 +99,7 @@ impl Step {
     fn decode_polyline(
         &self,
         precision: u32,
-    ) -> Result<LineString<f64>, Error> {
+    ) -> Result<geo_types::geometry::LineString<f64>, crate::error::Error> {
         self.polyline.decode(precision)
     } // fn
 } // impl
@@ -111,7 +109,7 @@ impl Step {
 #[cfg(all(feature = "polyline", feature = "geo"))]
 impl TryFrom<&Step> for geo_types::geometry::LineString<f64> {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Error = Error;
+    type Error = crate::error::Error;
 
     /// Attempts to convert a borrowed `&Step` struct to a
     /// `geo_types::geometry::LineString<f64>` struct.
@@ -135,7 +133,7 @@ impl TryFrom<&Step> for geo_types::geometry::LineString<f64> {
 #[cfg(all(feature = "polyline", feature = "geo"))]
 impl TryFrom<Step> for geo_types::geometry::LineString<f64> {
     // Error definitions are contained in the `google_maps\src\error.rs` module.
-    type Error = Error;
+    type Error = crate::error::Error;
 
     /// Attempts to convert an owned `Step` struct into a
     /// `geo_types::geometry::LineString<f64>` struct.
