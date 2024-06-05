@@ -72,9 +72,17 @@ pub enum Error {
     #[diagnostic(code(google_maps::time_zone))]
     TimeZone(#[from] crate::time_zone::error::Error),
 
-    /// Error originating from the `reqwest` crate.
+    /// Error originating from the [reqwest](https://crates.io/crates/reqwest)
+    /// crate.
     #[cfg(feature = "enable-reqwest")]
     #[error(transparent)]
     #[diagnostic(code(google_maps::reqwest))]
     Reqwest(#[from] reqwest::Error),
+
+    /// Error originating from the [polyline](https://crates.io/crates/polyline)
+    /// crate.
+    #[cfg(feature = "polyline")]
+    #[error(transparent)]
+    #[diagnostic(code(google_maps::polyline))]
+    Polyline(#[from] polyline::errors::PolylineError),
 } // enum Error

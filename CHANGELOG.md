@@ -3,14 +3,23 @@
 * Release notes are available on
 [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+* 3.5.2: 2024-06-05: New, optional `polyline` feature. This allows for easy
+conversion of `google_maps` types (such as the `Route` and the `Step`) to a
+[geo](https://crates.io/crates/geo) `LineString`. Both the `polyline` and `geo`
+features must also be enabled for this to work.
+
+* 3.5.2: 2024-06-05: Improved support for rust's
+[geo](https://crates.io/crates/geo) ecosystem with more type conversion traits.
+
 * 3.5.1: 2024-06-04: Fixed some `Vec` fields by ensuring that the serde
 `default` field attribute is applied to all `Vec` fields in response structs.
 Thanks to [chunhui2001](https://github.com/chunhui2001) for the pull request and
 to [PrinceOfBorgo](https://github.com/PrinceOfBorgo) for
 [issue #27](https://github.com/leontoeides/google_maps/issues/27).
 
-* 3.5.1: 2024-05-20: Added `duration` method to the `PlaceOpeningHoursPeriod`
-type which will measure the length of the opening hours period.
+* 3.5.1: 2024-05-20: Added `duration` helper method to the
+`PlaceOpeningHoursPeriod` type which will measure the length of the opening
+hours period.
 
 * 3.5.1: 2024-05-19: Improved `GoogleMapsClient` interface ergonomics. Client
 methods now use `impl Into<Type>` and generics extensively. This means that this

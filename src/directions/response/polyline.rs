@@ -1,8 +1,12 @@
 //! An [encoded polyline representation](https://developers.google.com/maps/documentation/utilities/polylinealgorithm)
 //! of the route.
 
+use crate::error::Error;
+use geo_types::geometry::LineString;
 use serde::{Deserialize, Serialize};
 
+// -----------------------------------------------------------------------------
+//
 /// An [encoded polyline representation](https://developers.google.com/maps/documentation/utilities/polylinealgorithm)
 /// of the route.
 ///
@@ -13,3 +17,70 @@ use serde::{Deserialize, Serialize};
 pub struct Polyline {
     pub points: String,
 } // struct
+
+// -----------------------------------------------------------------------------
+
+#[cfg(all(feature = "polyline", feature = "geo"))]
+impl Polyline {
+    /// Attempts to convert a borrowed `&Polyline` struct to a
+    /// `geo_types::geometry::LineString<f64>` struct.
+    ///
+    /// # Errors
+    ///
+    /// * Returns an error if the polyline is invalid or if the decoded
+    ///   coordinates are out of bounds.
+    pub fn decode(
+        &self,
+        precision: u32,
+    ) -> Result<LineString<f64>, Error> {
+        Ok(polyline::decode_polyline(&self.points, precision)?)
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+#[cfg(all(feature = "polyline", feature = "geo"))]
+impl TryFrom<&Polyline> for geo_types::geometry::LineString<f64> {
+    // Error definitions are contained in the `google_maps\src\error.rs` module.
+    type Error = Error;
+
+    /// Attempts to convert a borrowed `&Polyline` struct to a
+    /// `geo_types::geometry::LineString<f64>` struct.
+    ///
+    /// # Notes
+    ///
+    /// * Uses a hard-coded precision of `5`. For control over the precision,
+    ///   use the `decode` method on the `Polyline` struct.
+    ///
+    /// # Errors
+    ///
+    /// * Returns an error if the polyline is invalid or if the decoded
+    ///   coordinates are out of bounds.
+    fn try_from(polyline: &Polyline) -> Result<Self, Self::Error> {
+        polyline.decode(5)
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+#[cfg(all(feature = "polyline", feature = "geo"))]
+impl TryFrom<Polyline> for geo_types::geometry::LineString<f64> {
+    // Error definitions are contained in the `google_maps\src\error.rs` module.
+    type Error = Error;
+
+    /// Attempts to convert an owned `Polyline` struct into a
+    /// `geo_types::geometry::LineString<f64>` struct.
+    ///
+    /// # Notes
+    ///
+    /// * Uses a hard-coded precision of `5`. For control over the precision,
+    ///   use the `decode` method on the `Polyline` struct.
+    ///
+    /// # Errors
+    ///
+    /// * Returns an error if the polyline is invalid or if the decoded
+    ///   coordinates are out of bounds.
+    fn try_from(polyline: Polyline) -> Result<Self, Self::Error> {
+        polyline.decode(5)
+    } // fn
+} // impl

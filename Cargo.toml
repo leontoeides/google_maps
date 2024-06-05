@@ -73,6 +73,7 @@ geo-types = { version = "0.7", optional = true, features = [ "serde" ] }
 miette = "7.2"
 percent-encoding = "2.3"
 phf = { version = "0.11", features = [ "macros" ] }
+polyline = { version = "0.11", optional = true }
 reqwest = { version = "0.12", optional = true, default-features = false, features = [ "json", "multipart" ] }
 reqwest-middleware = { version = "0.3", optional = true }
 rust_decimal = { version = "1.35", features = [ "serde" ] }
