@@ -1,7 +1,7 @@
 # Change Log
 
 * Release notes are available on
-[GitHub](https://github.com/leontoeides/google_maps/releases).
+  [GitHub](https://github.com/leontoeides/google_maps/releases).
 
 # 3.5.2
 
@@ -9,10 +9,11 @@
   conversion of `google_maps` types (such as the `Route` and the `Step`) to a
   [geo](https://crates.io/crates/geo)
   [LineString](https://docs.rs/geo-types/0.7.13/geo_types/geometry/struct.LineString.html).
-  Both the `polyline` and `geo` features must also be enabled for this to work.
+  Both the `polyline` and `geo` features must be enabled for these traits and
+  methods to be available.
 
 * 3.5.2: 2024-06-05: Improved support for rust's
-  [geo](https://crates.io/crates/geo) ecosystem with more type conversion
+  [geo](https://crates.io/crates/geo) eco-system with more type conversion
   traits.
 
 # 3.5.1
@@ -29,8 +30,8 @@
 
 * 3.5.1: 2024-05-19: Improved `GoogleMapsClient` interface ergonomics. Client
   methods now use `impl Into<Type>` and generics extensively. This means that
-  this client will take care of many type conversions needed to build your
-  Google Maps requests.
+  rust will automatically take care of many type conversions needed to build
+  your Google Maps requests.
 
 * 3.5.1: 2024-05-11: Added an `Other` variant to most enums. The will
   future-proof the crate for when Google Maps adds additional variants.

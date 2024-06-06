@@ -1,5 +1,4 @@
 //! # `google_maps`
-//! [![docs.rs](https://docs.rs/google_maps/badge.svg)](https://docs.rs/google_maps)
 //! ![Crates.io Version](https://img.shields.io/crates/v/google_maps)
 //! ![Crates.io MSRV](https://img.shields.io/crates/msrv/google_maps)
 //! ![Crates.io License](https://img.shields.io/crates/l/google_maps)
@@ -38,21 +37,22 @@
 //!
 //! ### Google Maps Client Feature Flags:
 //!
-//! * `autocomplete`
-//! * `directions`
-//! * `distance_matrix`
-//! * `elevation`
-//! * `geocoding`
-//! * `places`
-//! * `roads`
-//! * `time_zone`
-//! * `enable-reqwest` (uses [reqwest](https://crates.io/crates/reqwest) for
-//!     querying the Google Maps API).
-//! * * `enable-reqwest-middleware` (uses
-//!     [reqwest-middleware](https://crates.io/crates/reqwest-middleware) for
-//!     querying the Google Maps API).
-//! * `geo` (support for the [geo](https://crates.io/crates/geo-types) crate's
-//!     types)
+//! * `autocomplete` ‧ includes Google Maps Places autocomplete API
+//! * `directions` ‧ includes Google Maps Directions API
+//! * `distance_matrix` ‧ includes Google Maps Distance Matrix API
+//! * `elevation` ‧ includes Google Maps Elevation API
+//! * `geocoding` ‧ includes Google Maps Geocoding API
+//! * `places` ‧ includes Google Maps Places API
+//! * `roads` ‧ includes Google Maps Roads API
+//! * `time_zone` ‧ includes Google Maps Time Zone API
+//! * `enable-reqwest` ‧ uses [reqwest](https://crates.io/crates/reqwest) for
+//!   querying the Google Maps API
+//! * `enable-reqwest-middleware` ‧ uses [reqwest-middleware](https://crates.io/crates/reqwest-middleware)
+//!   for querying the Google Maps API
+//! * `geo` ‧ support for the rust [geo](https://crates.io/crates/geo-types)
+//!   ecosystem
+//! * `polyline` ‧ allows easy type conversions from a `Route` or `Step` to a geo
+//!   [LineString](https://docs.rs/geo-types/0.7.13/geo_types/geometry/struct.LineString.html)
 //!
 //! Note: the `autocomplete` feature covers the Places API autocomplete-related
 //! services:
