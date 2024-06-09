@@ -19,7 +19,7 @@ impl<'a> Request<'a> {
     pub fn new(
         client: &GoogleMapsClient,
         origins: Vec<Waypoint>,
-        destinations: Vec<Waypoint>,
+        destinations: Vec<Waypoint>
     ) -> Request {
         Request {
             // Required parameters:

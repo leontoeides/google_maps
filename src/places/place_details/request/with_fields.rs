@@ -43,7 +43,7 @@ impl<'a> Request<'a> {
 
     pub fn with_fields<C, F>(
         &'a mut self,
-        fields: C,
+        fields: C
     ) -> &'a mut Self
     where
         C: IntoIterator<Item = F>,

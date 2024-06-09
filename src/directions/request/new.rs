@@ -18,7 +18,7 @@ impl<'a> Request<'a> {
     pub const fn new(
         client: &'a GoogleMapsClient,
         origin: Location,
-        destination: Location,
+        destination: Location
     ) -> Self {
         Request {
             // Required parameters:

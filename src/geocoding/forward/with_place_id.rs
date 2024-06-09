@@ -22,9 +22,12 @@ impl<'a> ForwardRequest<'a> {
     /// )
     /// ```
 
-    pub fn with_place_id(&'a mut self, place_id: &str) -> &'a mut Self {
+    pub fn with_place_id(
+        &'a mut self,
+        place_id: impl Into<String>
+    ) -> &'a mut Self {
         // Set address in ForwardRequest struct.
-        self.place_id = Some(place_id.to_string());
+        self.place_id = Some(place_id.into());
         // Return modified ForwardRequest struct to caller.
         self
     } // fn

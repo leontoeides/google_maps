@@ -24,10 +24,9 @@ impl<'a> Request<'a> {
 
     pub fn with_arrival_time(
         &'a mut self,
-        arrival_time: impl Into<NaiveDateTime>,
+        arrival_time: impl Into<NaiveDateTime>
     ) -> &'a mut Self {
-        let arrival_time: NaiveDateTime = arrival_time.into();
-        self.arrival_time = Some(arrival_time);
+        self.arrival_time = Some(arrival_time.into());
         self
     } // fn
 } // impl

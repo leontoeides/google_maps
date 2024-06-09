@@ -43,7 +43,7 @@ impl<'a> ForwardRequest<'a> {
 
     pub fn with_bounds(
         &'a mut self,
-        bounds: impl Into<Bounds>,
+        bounds: impl Into<Bounds>
     ) -> &'a mut Self {
         // Set bounds in ForwardRequest struct.
         self.bounds = Some(bounds.into());

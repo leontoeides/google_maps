@@ -35,9 +35,12 @@ impl<'a> Request<'a> {
     ///       For example, _utca_ and _tér_ are synonyms for street in
     ///       Hungarian.
 
-    pub fn with_language(&'a mut self, language: Language) -> &'a mut Self {
+    pub fn with_language(
+        &'a mut self,
+        language: impl Into<Language>
+    ) -> &'a mut Self {
         // Set language in Request struct.
-        self.language = Some(language);
+        self.language = Some(language.into());
         // Return modified Request struct to caller.
         self
     } // fn

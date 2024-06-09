@@ -47,9 +47,12 @@ impl<'a> Request<'a> {
     /// ])
     /// ```
 
-    pub fn with_transit_mode(&'a mut self, transit_mode: TransitMode) -> &'a mut Self {
+    pub fn with_transit_mode(
+        &'a mut self,
+        transit_mode: impl Into<TransitMode>
+    ) -> &'a mut Self {
         // Add restiction to Request struct.
-        self.transit_modes = vec![transit_mode];
+        self.transit_modes = vec![transit_mode.into()];
         // Return modified Request struct to caller.
         self
     } // fn
@@ -78,7 +81,7 @@ impl<'a> Request<'a> {
 
     pub fn with_transit_modes<C, T>(
         &'a mut self,
-        transit_modes: C,
+        transit_modes: C
     ) -> &'a mut Self
     where
         C: IntoIterator<Item = T>,

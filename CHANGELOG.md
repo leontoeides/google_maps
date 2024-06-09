@@ -3,62 +3,67 @@
 * Release notes are available on
   [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+# 3.5.3
+
+* 2024-06-09: Increased flexibility of interface by using more `impl Into<Type>`
+  parameters.
+
+* 2024-06-09: Clean-up of `tracing` messages, instrumentation and log levels.
+
 # 3.5.2
 
-* 3.5.2: 2024-06-05: New, optional `polyline` feature. This allows for easy
-  conversion of `google_maps` types (such as the `Route` and the `Step`) to a
+* 2024-06-05: New, optional `polyline` feature. This allows for easy conversion
+  of `google_maps` types (such as the `Route` and the `Step`) to a
   [geo](https://crates.io/crates/geo)
   [LineString](https://docs.rs/geo-types/0.7.13/geo_types/geometry/struct.LineString.html).
   Both the `polyline` and `geo` features must be enabled for these traits and
   methods to be available.
 
-* 3.5.2: 2024-06-05: Improved support for rust's
-  [geo](https://crates.io/crates/geo) eco-system with more type conversion
-  traits.
+* 2024-06-05: Improved support for rust's [geo](https://crates.io/crates/geo)
+  eco-system with more type conversion traits.
 
 # 3.5.1
 
-* 3.5.1: 2024-06-04: Fixed some `Vec` fields by ensuring that the serde
-  `default` field attribute is applied to all `Vec` fields in response structs.
-  Thanks to [chunhui2001](https://github.com/chunhui2001) for the pull request
+* 2024-06-04: Fixed some `Vec` fields by ensuring that the serde `default` field
+  attribute is applied to all `Vec` fields in response structs. Thanks to
+  [chunhui2001](https://github.com/chunhui2001) for the pull request
   and to [PrinceOfBorgo](https://github.com/PrinceOfBorgo) for
   [issue #27](https://github.com/leontoeides/google_maps/issues/27).
 
-* 3.5.1: 2024-05-20: Added `duration` helper method to the
-  `PlaceOpeningHoursPeriod` type which will measure the length of the opening
-  hours period.
+* 2024-05-20: Added `duration` helper method to the `PlaceOpeningHoursPeriod`
+  type which will measure the length of the opening hours period.
 
-* 3.5.1: 2024-05-19: Improved `GoogleMapsClient` interface ergonomics. Client
-  methods now use `impl Into<Type>` and generics extensively. This means that
-  rust will automatically take care of many type conversions needed to build
-  your Google Maps requests.
+* 2024-05-19: Improved `GoogleMapsClient` interface ergonomics. Client methods
+  now use `impl Into<Type>` and generics extensively. This means that rust will
+  automatically take care of many type conversions needed to build your Google
+  Maps requests.
 
-* 3.5.1: 2024-05-11: Added an `Other` variant to most enums. The will
-  future-proof the crate for when Google Maps adds additional variants.
-  Previously, [serde](https://crates.io/crates/serde) would return an error when
+* 2024-05-11: Added an `Other` variant to most enums. The will future-proof the
+  crate for when Google Maps adds additional variants. Previously,
+  [serde](https://crates.io/crates/serde) would return an error when
   encountering unknown variants.
 
 # 3.5.0
 
-* 3.5.0: 2024-05-03: Improved ergonomics surrounding `Location` and `Waypoint`
-  types. New functions: `from_address`, `from_place_id`, `try_from_f32` and
+* 2024-05-03: Improved ergonomics surrounding `Location` and `Waypoint` types.
+  New functions: `from_address`, `from_place_id`, `try_from_f32` and
   `try_from_f64`.
 
-* 3.5.0: 2024-05-03: `reqwest-maybe-middleware` was forked and integrated into
+* 2024-05-03: `reqwest-maybe-middleware` was forked and integrated into
   `google_maps` for now, until the crate can be updated. maybe-middleware has
   also been properly feature-gated and is turned-off by default.
 
-* 3.5.0: 2024-03-10: Addressed deprecated functions in the new `chrono` version
+* 2024-03-10: Addressed deprecated functions in the new `chrono` version
   `0.4.37`.
 
-* 3.5.0: 2024-03-10: The ol' `cargo clippy --fix`
+* 2024-03-10: The ol' `cargo clippy --fix`
 
-* 3.5.0: 2024-03-03: Fixes for certain feature gate combinations.
+* 2024-03-03: Fixes for certain feature gate combinations.
 
-* 3.5.0: 2024-02-28: Improved string-passing ergonomics.
+* 2024-02-28: Improved string-passing ergonomics.
 
-* 3.5.0: 2024-02-22: ⚠ **Breaking change**: Replaced all instances of
-  `Option<Vec<_>>` with a `Vec<_>`.
+* 2024-02-22: ⚠ **Breaking change**: Replaced all instances of `Option<Vec<_>>`
+  with a `Vec<_>`.
 
 	The `Option<Vec<_>>` was originally employed to get `serde` to
 	deserialize Google Maps data without any extra options. However, working

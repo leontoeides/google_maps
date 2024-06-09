@@ -47,7 +47,7 @@ impl<'a> Request<'a> {
     pub fn for_sampled_path_request(
         &'a mut self,
         path: impl Into<Locations>,
-        samples: impl Into<u8>,
+        samples: impl Into<u8>
     ) -> &'a mut Self {
         let path: Locations = path.into();
         let samples: u8 = samples.into();
@@ -82,7 +82,7 @@ impl<'a> Request<'a> {
     )]
     pub fn for_line_string_request(
         &'a mut self,
-        line_string: geo_types::LineString,
+        line_string: geo_types::LineString
     ) -> Result<&'a mut Self, crate::error::Error> {
         // Set the path in Request struct.
         self.locations = Some(Locations::LineString(line_string));

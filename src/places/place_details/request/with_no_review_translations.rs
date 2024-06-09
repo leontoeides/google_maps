@@ -18,9 +18,12 @@ impl<'a> Request<'a> {
     /// `language` is omitted, the API attempts to use the `Accept-Language`
     /// header as the preferred language.
 
-    pub fn with_no_review_translations(&'a mut self, no_translations: bool) -> &'a mut Self {
+    pub fn with_no_review_translations(
+        &'a mut self,
+        no_translations: impl Into<bool>
+    ) -> &'a mut Self {
         // Set translations setting in Request struct.
-        self.reviews_no_translations = Some(no_translations);
+        self.reviews_no_translations = Some(no_translations.into());
         // Return modified Request struct to caller.
         self
     } // fn

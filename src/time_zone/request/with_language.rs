@@ -18,9 +18,12 @@ impl<'a> Request<'a> {
     /// .with_language(Language::French)
     /// ```
 
-    pub fn with_language(&'a mut self, language: Language) -> &'a mut Self {
+    pub fn with_language(
+        &'a mut self,
+        language: impl Into<Language>
+    ) -> &'a mut Self {
         // Set language in Request struct.
-        self.language = Some(language);
+        self.language = Some(language.into());
         // Return modified Request struct to caller.
         self
     } // fn

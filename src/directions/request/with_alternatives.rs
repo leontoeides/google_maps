@@ -23,8 +23,11 @@ impl<'a> Request<'a> {
     /// .with_alternatives(true)
     /// ```
 
-    pub fn with_alternatives(&'a mut self, alternatives: bool) -> &'a mut Self {
-        self.alternatives = Some(alternatives);
+    pub fn with_alternatives(
+        &'a mut self,
+        alternatives: impl Into<bool>
+    ) -> &'a mut Self {
+        self.alternatives = Some(alternatives.into());
         self
     } // fn
 } // impl

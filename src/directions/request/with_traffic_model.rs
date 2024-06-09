@@ -48,8 +48,11 @@ impl<'a> Request<'a> {
     /// .with_traffic_model(TrafficModel::Pessimistic)
     /// ```
 
-    pub fn with_traffic_model(&'a mut self, traffic_model: TrafficModel) -> &'a mut Self {
-        self.traffic_model = Some(traffic_model);
+    pub fn with_traffic_model(
+        &'a mut self,
+        traffic_model: impl Into<TrafficModel>
+    ) -> &'a mut Self {
+        self.traffic_model = Some(traffic_model.into());
         self
     } // fn
 } // impl

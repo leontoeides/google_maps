@@ -17,9 +17,12 @@ impl<'a> Request<'a> {
     ///   term. The offset should generally be set to the position of the text
     ///   caret.
 
-    pub fn with_offset(&'a mut self, offset: u8) -> &'a mut Self {
+    pub fn with_offset(
+        &'a mut self,
+        offset: impl Into<u8>
+    ) -> &'a mut Self {
         // Set offset in Request struct.
-        self.offset = Some(offset);
+        self.offset = Some(offset.into());
         // Return modified Request struct to caller.
         self
     } // fn

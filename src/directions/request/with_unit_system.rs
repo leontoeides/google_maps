@@ -40,8 +40,11 @@ impl<'a> Request<'a> {
     /// .with_unit_system(UnitSystem::Metric)
     /// ```
 
-    pub fn with_unit_system(&'a mut self, unit_system: UnitSystem) -> &mut Self {
-        self.unit_system = Some(unit_system);
+    pub fn with_unit_system(
+        &'a mut self,
+        unit_system: impl Into<UnitSystem>
+    ) -> &mut Self {
+        self.unit_system = Some(unit_system.into());
         self
     } // fn
 } // impl

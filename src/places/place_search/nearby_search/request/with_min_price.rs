@@ -12,9 +12,12 @@ impl<'a> Request<'a> {
     ///   (most expensive), inclusive. The exact amount indicated by a specific
     ///   value will vary from region to region.
 
-    pub fn with_min_price(&'a mut self, minprice: u8) -> &'a mut Self {
+    pub fn with_min_price(
+        &'a mut self,
+        minprice: impl Into<u8>
+    ) -> &'a mut Self {
         // Set minimum price in Request struct.
-        self.minprice = Some(minprice);
+        self.minprice = Some(minprice.into());
         // Return modified Request struct to caller.
         self
     } // fn

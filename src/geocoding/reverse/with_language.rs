@@ -44,9 +44,12 @@ impl<'a> ReverseRequest<'a> {
     /// .with_language(Language::French)
     /// ```
 
-    pub fn with_language(&'a mut self, language: Language) -> &'a mut Self {
+    pub fn with_language(
+        &'a mut self,
+        language: impl Into<Language>
+    ) -> &'a mut Self {
         // Set language in ReverseRequest struct.
-        self.language = Some(language);
+        self.language = Some(language.into());
         // Return modified ReverseRequest struct to caller.
         self
     } // fn

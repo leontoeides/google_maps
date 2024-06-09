@@ -15,9 +15,12 @@ impl<'a> Request<'a> {
     ///
     /// * Multiple components may be stacked together.
 
-    pub fn with_component(&'a mut self, component: Country) -> &'a mut Self {
+    pub fn with_component(
+        &'a mut self,
+        component: impl Into<Country>
+    ) -> &'a mut Self {
         // Set components in Request struct.
-        self.components.extend(vec![component]);
+        self.components.extend(vec![component.into()]);
         // Return modified Request struct to caller.
         self
     } // fn
@@ -46,7 +49,7 @@ impl<'a> Request<'a> {
 
     pub fn with_components<C, O>(
         &'a mut self,
-        components: C,
+        components: C
     ) -> &'a mut Self
     where
         C: IntoIterator<Item = O>,

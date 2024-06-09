@@ -113,7 +113,7 @@ impl Client {
     pub async fn execute_with_extensions(
         &self,
         req: Request,
-        ext: &mut http::Extensions,
+        ext: &mut http::Extensions
     ) -> Result<Response, Error> {
         match self {
             Self::Vanilla(c) => c.execute(req).await.map_err(Into::into),

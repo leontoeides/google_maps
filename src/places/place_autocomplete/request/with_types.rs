@@ -18,9 +18,11 @@ impl<'a> Request<'a> {
     ///
     /// * Multiple result type filters may be stacked together.
 
-    pub fn with_type(&'a mut self, autocomplete_type: AutocompleteType) -> &'a mut Self {
+    pub fn with_type(
+        &'a mut self,
+        autocomplete_type: impl Into<AutocompleteType>) -> &'a mut Self {
         // Set types in Request struct.
-        self.types.extend(vec![autocomplete_type]);
+        self.types.extend(vec![autocomplete_type.into()]);
         // Return modified Request struct to caller.
         self
     } // fn
@@ -52,7 +54,7 @@ impl<'a> Request<'a> {
 
     pub fn with_types<C, A>(
         &'a mut self,
-        types: C,
+        types: C
     ) -> &'a mut Self
     where
         C: IntoIterator<Item = A>,

@@ -34,9 +34,9 @@ impl<'a> Request<'a> {
 
     pub fn with_transit_route_preference(
         &'a mut self,
-        transit_route_preference: TransitRoutePreference,
+        transit_route_preference: impl Into<TransitRoutePreference>
     ) -> &'a mut Self {
-        self.transit_route_preference = Some(transit_route_preference);
+        self.transit_route_preference = Some(transit_route_preference.into());
         self
     } // fn
 } // impl

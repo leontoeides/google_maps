@@ -19,10 +19,10 @@ impl<'a> Request<'a> {
 
     pub fn with_offset(
         &'a mut self,
-        offset: u8,
+        offset: impl Into<u8>
     ) -> &'a mut Self {
         // Set offset in Request struct.
-        self.offset = Some(offset);
+        self.offset = Some(offset.into());
         // Return modified Request struct to caller.
         self
     } // fn

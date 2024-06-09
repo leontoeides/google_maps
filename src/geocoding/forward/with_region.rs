@@ -35,9 +35,12 @@ impl<'a> ForwardRequest<'a> {
     /// .with_region(Region::Canada)
     /// ```
 
-    pub fn with_region(&'a mut self, region: Region) -> &'a mut Self {
+    pub fn with_region(
+        &'a mut self,
+        region: impl Into<Region>
+    ) -> &'a mut Self {
         // Set region in ForwardRequest struct.
-        self.region = Some(region);
+        self.region = Some(region.into());
         // Return modified ForwardRequest struct to caller.
         self
     } // fn

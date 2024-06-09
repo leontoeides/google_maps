@@ -51,7 +51,7 @@ impl<'a> ReverseRequest<'a> {
     #[cfg(feature = "geo")]
     pub fn try_new_coordinate(
         client: &'a GoogleMapsClient,
-        coordinate: &geo_types::Coord,
+        coordinate: &geo_types::Coord
     ) -> Result<Self, crate::error::Error> {
         // Instantiate struct and return it to caller:
         Ok(ReverseRequest {
@@ -85,7 +85,7 @@ impl<'a> ReverseRequest<'a> {
     #[cfg(feature = "geo")]
     pub fn try_new_point(
         client: &'a GoogleMapsClient,
-        point: &geo_types::Point,
+        point: &geo_types::Point
     ) -> Result<Self, crate::error::Error> {
         // Instantiate struct and return it to caller:
         Ok(ReverseRequest {

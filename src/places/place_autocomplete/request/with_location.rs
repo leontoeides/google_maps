@@ -37,12 +37,12 @@ impl<'a> Request<'a> {
     pub fn with_location_and_radius(
         &'a mut self,
         location: impl Into<LatLng>,
-        radius: u32
+        radius: impl Into<u32>
     ) -> &'a mut Self {
         // Set location in Request struct.
         self.location = Some(location.into());
         // Set radius in Request struct.
-        self.radius = Some(radius);
+        self.radius = Some(radius.into());
         // Return modified Request struct to caller.
         self
     } // fn
@@ -77,12 +77,12 @@ impl<'a> Request<'a> {
     pub fn with_strict_location_and_radius(
         &'a mut self,
         location: impl Into<LatLng>,
-        radius: u32,
+        radius: impl Into<u32>
     ) -> &'a mut Self {
         // Set location in Request struct.
         self.location = Some(location.into());
         // Set radius in Request struct.
-        self.radius = Some(radius);
+        self.radius = Some(radius.into());
         // Set strictbounds in Request struct:
         self.strictbounds = Some(true);
         // Return modified Request struct to caller.

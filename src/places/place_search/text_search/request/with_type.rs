@@ -21,9 +21,12 @@ impl<'a> Request<'a> {
     /// (`keyword=cafe&type=cafe` or `keyword=parking&type=parking`) can yield
     /// `ZERO_RESULTS`.
 
-    pub fn with_type(&'a mut self, place_type: PlaceType) -> &'a mut Self {
+    pub fn with_type(
+        &'a mut self,
+        place_type: impl Into<PlaceType>
+    ) -> &'a mut Self {
         // Set location in Request struct.
-        self.place_type = Some(place_type);
+        self.place_type = Some(place_type.into());
         // Return modified Request struct to caller.
         self
     } // fn

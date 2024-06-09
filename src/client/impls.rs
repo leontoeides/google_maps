@@ -135,7 +135,7 @@ impl GoogleMapsClient {
     pub fn directions(
         &self,
         origin: impl Into<Location>,
-        destination: impl Into<Location>,
+        destination: impl Into<Location>
     ) -> crate::directions::request::Request {
         crate::directions::request::Request::new(self, origin.into(), destination.into())
     } // fn
@@ -183,7 +183,7 @@ impl GoogleMapsClient {
     pub fn distance_matrix<C, W>(
         &self,
         origins: C,
-        destinations: C,
+        destinations: C
     ) -> crate::distance_matrix::request::Request
     where
         C: IntoIterator<Item = W>,
@@ -258,7 +258,7 @@ impl GoogleMapsClient {
     #[must_use]
     pub fn reverse_geocoding(
         &self,
-        location: impl Into<LatLng>,
+        location: impl Into<LatLng>
     ) -> crate::geocoding::reverse::ReverseRequest {
         crate::geocoding::reverse::ReverseRequest::new(self, location.into())
     } // fn
@@ -299,7 +299,7 @@ impl GoogleMapsClient {
     pub fn time_zone(
         &self,
         location: impl Into<LatLng>,
-        timestamp: impl Into<DateTime<Utc>>,
+        timestamp: impl Into<DateTime<Utc>>
     ) -> crate::time_zone::request::Request {
         crate::time_zone::request::Request::new(self, location.into(), timestamp.into())
     } // fn
@@ -320,7 +320,7 @@ impl GoogleMapsClient {
     #[must_use]
     pub fn place_autocomplete(
         &self,
-        input: impl Into<String>,
+        input: impl Into<String>
     ) -> crate::places::place_autocomplete::request::Request {
         crate::places::place_autocomplete::request::Request::new(self, input)
     } // fn
@@ -360,7 +360,7 @@ impl GoogleMapsClient {
     #[must_use]
     pub fn query_autocomplete(
         &self,
-        input: impl Into<String>,
+        input: impl Into<String>
     ) -> crate::places::query_autocomplete::request::Request {
         crate::places::query_autocomplete::request::Request::new(self, input)
     } // fn
@@ -454,7 +454,7 @@ impl GoogleMapsClient {
     pub fn text_search(
         &self,
         query: impl Into<String>,
-        radius: impl Into<u32>,
+        radius: impl Into<u32>
     ) -> crate::places::place_search::text_search::request::Request {
         crate::places::place_search::text_search::request::Request::new(self, query, radius.into())
     } // fn
@@ -511,7 +511,7 @@ impl GoogleMapsClient {
     pub fn nearby_search(
         &self,
         location: impl Into<LatLng>,
-        radius: impl Into<u32>,
+        radius: impl Into<u32>
     ) -> crate::places::place_search::nearby_search::request::Request {
         crate::places::place_search::nearby_search::request::Request::new(
             self,
@@ -554,7 +554,7 @@ impl GoogleMapsClient {
     #[must_use]
     pub fn place_details(
         &self,
-        place_id: impl Into<String>,
+        place_id: impl Into<String>
     ) -> crate::places::place_details::request::Request {
         crate::places::place_details::request::Request::new(
             self,
@@ -614,7 +614,7 @@ impl GoogleMapsClient {
     #[must_use]
     pub fn snap_to_roads<C, L>(
         &self,
-        path: C,
+        path: C
     ) -> crate::roads::snap_to_roads::request::Request
     where
         C: IntoIterator<Item = L>,
@@ -664,7 +664,7 @@ impl GoogleMapsClient {
     #[must_use]
     pub fn nearest_roads<C, L>(
         &self,
-        points: C,
+        points: C
     ) -> crate::roads::snap_to_roads::request::Request
     where
         C: IntoIterator<Item = L>,

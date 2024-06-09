@@ -32,8 +32,11 @@ impl<'a> Request<'a> {
     /// .with_region(Region::Canada)
     /// ```
 
-    pub fn with_region(&'a mut self, region: Region) -> &'a mut Self {
-        self.region = Some(region);
+    pub fn with_region(
+        &'a mut self,
+        region: impl Into<Region>
+    ) -> &'a mut Self {
+        self.region = Some(region.into());
         self
     } // fn
 } // impl

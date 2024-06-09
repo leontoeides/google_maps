@@ -37,7 +37,7 @@ impl<'a> Request<'a> {
     pub fn with_location_and_radius(
         &'a mut self,
         location: impl Into<LatLng>,
-        radius: u32,
+        radius: u32
     ) -> &'a mut Self {
         // Set location in Request struct.
         self.location = Some(location.into());

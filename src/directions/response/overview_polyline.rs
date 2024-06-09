@@ -29,7 +29,7 @@ impl OverviewPolyline {
     ///   coordinates are out of bounds.
     pub fn decode(
         &self,
-        precision: u32,
+        precision: u32
     ) -> Result<geo_types::geometry::LineString<f64>, crate::error::Error> {
         Ok(polyline::decode_polyline(&self.points, precision)?)
     } // fn

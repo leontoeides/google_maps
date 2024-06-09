@@ -16,9 +16,12 @@ impl<'a> Request<'a> {
     ///   (technically for the entity of "The United Kingdom of Great Britain
     ///   and Northern Ireland").
 
-    pub fn with_region(&'a mut self, region: Region) -> &'a mut Self {
+    pub fn with_region(
+        &'a mut self,
+        region: impl Into<Region>
+    ) -> &'a mut Self {
         // Set region in Request struct.
-        self.region = Some(region);
+        self.region = Some(region.into());
         // Return modified Request struct to caller.
         self
     } // fn

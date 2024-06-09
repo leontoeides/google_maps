@@ -14,7 +14,7 @@ impl<'a> Request<'a> {
 
     pub fn with_origin(
         &'a mut self,
-        origin: impl Into<LatLng>,
+        origin: impl Into<LatLng>
     ) -> &'a mut Self {
         // Set origin in Request struct.
         self.origin = Some(origin.into());

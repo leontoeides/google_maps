@@ -23,7 +23,7 @@ impl<'a> Request<'a> {
 
     pub fn for_positional_request(
         &'a mut self,
-        location: impl Into<LatLng>,
+        location: impl Into<LatLng>
     ) -> &'a mut Self {
         let location: LatLng = location.into();
         // Set the path in Request struct.
@@ -60,7 +60,7 @@ impl<'a> Request<'a> {
 
     pub fn for_positional_requests(
         &'a mut self,
-        locations: impl Into<Locations>,
+        locations: impl Into<Locations>
     ) -> &'a mut Self {
         let locations: Locations = locations.into();
         // Set the path in Request struct.
@@ -90,7 +90,7 @@ impl<'a> Request<'a> {
     )]
     pub fn for_coordinate_request(
         &'a mut self,
-        coordinate: &geo_types::Coord,
+        coordinate: &geo_types::Coord
     ) -> Result<&'a mut Self, crate::error::Error> {
         // Set the path in Request struct.
         self.locations = Some(Locations::LatLngs(vec![LatLng::try_from(coordinate)?]));
@@ -119,7 +119,7 @@ impl<'a> Request<'a> {
     )]
     pub fn try_point_request(
         &'a mut self,
-        point: &geo_types::Point,
+        point: &geo_types::Point
     ) -> Result<&'a mut Self, crate::error::Error> {
         // Set the path in Request struct.
         self.locations = Some(Locations::LatLngs(vec![LatLng::try_from(point)?]));

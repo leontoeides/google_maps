@@ -98,7 +98,7 @@ impl Step {
     ///   coordinates are out of bounds.
     fn decode_polyline(
         &self,
-        precision: u32,
+        precision: u32
     ) -> Result<geo_types::geometry::LineString<f64>, crate::error::Error> {
         self.polyline.decode(precision)
     } // fn

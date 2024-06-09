@@ -57,9 +57,12 @@ impl<'a> Request<'a> {
     /// .with_restriction(Avoid::Ferries)
     /// ```
 
-    pub fn with_restriction(&'a mut self, restriction: Avoid) -> &'a mut Self {
+    pub fn with_restriction(
+        &'a mut self,
+        restriction: impl Into<Avoid>
+    ) -> &'a mut Self {
         // Add restriction to Request struct.
-        self.restrictions = vec![restriction];
+        self.restrictions = vec![restriction.into()];
         // Return modified Request struct to caller.
         self
     } // fn
@@ -87,7 +90,7 @@ impl<'a> Request<'a> {
 
     pub fn with_restrictions<C, A>(
         &'a mut self,
-        restrictions: C,
+        restrictions: C
     ) -> &'a mut Self
     where
         C: IntoIterator<Item = A>,

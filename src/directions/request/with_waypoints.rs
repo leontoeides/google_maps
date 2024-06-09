@@ -95,7 +95,7 @@ impl<'a> Request<'a> {
 
     pub fn with_waypoint(
         &'a mut self,
-        waypoint: impl Into<Waypoint>,
+        waypoint: impl Into<Waypoint>
     ) -> &'a mut Self {
         let waypoint: Waypoint = waypoint.into();
         // Add waypoint to Request struct.
@@ -132,7 +132,7 @@ impl<'a> Request<'a> {
 
     pub fn with_waypoints<C, W>(
         &'a mut self,
-        waypoints: C,
+        waypoints: C
     ) -> &'a mut Self
     where
         C: IntoIterator<Item = W>,
