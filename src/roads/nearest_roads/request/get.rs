@@ -18,7 +18,7 @@ impl<'a> NearestRoadsRequest<'a> {
     ///
     /// This method accepts no arguments.
 
-    #[tracing::instrument(level = "debug", skip(self))]
+    #[tracing::instrument(level = "info", skip(self))]
     pub async fn get(&mut self) -> Result<NearestRoadsResponse, GoogleMapsError> {
         // Build the URL stem for the HTTP get request:
         let mut url = format!("{SERVICE_URL}/?");
@@ -37,7 +37,8 @@ impl<'a> NearestRoadsRequest<'a> {
             .await;
 
         // Emit debug message so client can monitor activity:
-        tracing::debug!("making HTTP GET request to Google Maps Roads API: `{url}`");
+        tracing::info!("making HTTP GET request to Google Maps Roads API");
+        tracing::debug!("{url}");
 
         // Retries the get request until successful, an error ineligible for
         // retries is returned, or we have reached the maximum retries. Note:
