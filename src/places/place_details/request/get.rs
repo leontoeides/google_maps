@@ -31,7 +31,7 @@ impl<'a> PlaceDetailsRequest<'a> {
         } // match
 
         // Observe any rate limiting before executing request:
-        tracing::info!("making HTTP GET request to Google Maps Places Details API");
+        tracing::info!("making HTTP GET request to Google Maps Place Details API");
 
         self.client
             .rate_limit

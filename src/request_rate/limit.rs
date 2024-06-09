@@ -28,7 +28,7 @@ impl RequestRate {
         let wait_time = SystemTime::now().duration_since(start);
         if let Ok(duration) = wait_time {
             if duration.as_millis() > 10 {
-                tracing::debug!(
+                tracing::trace!(
                     "waited for {} under rate limiter",
                     duration_to_string(&duration)
                 );
