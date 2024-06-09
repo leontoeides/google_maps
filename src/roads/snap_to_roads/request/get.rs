@@ -30,13 +30,13 @@ impl<'a> SnapToRoadsRequest<'a> {
         } // match
 
         // Observe any rate limiting before executing request:
+        tracing::info!("making HTTP GET request to Google Maps Roads API");
+
         self.client
             .rate_limit
             .limit_apis(vec![&Api::All, &Api::Roads])
             .await;
 
-        // Emit debug message so client can monitor activity:
-        tracing::info!("making HTTP GET request to Google Maps Roads API");
         tracing::debug!("{url}");
 
         // Retries the get request until successful, an error ineligible for

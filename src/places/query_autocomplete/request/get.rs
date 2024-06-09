@@ -33,13 +33,13 @@ impl<'a> QueryAutocompleteRequest<'a> {
         } // match
 
         // Observe any rate limiting before executing request:
+        tracing::info!("making HTTP GET request to Google Maps Query Autocomplete API");
+
         self.client
             .rate_limit
             .limit_apis(vec![&Api::All, &Api::Places])
             .await;
 
-        // Emit debug message so client can monitor activity:
-        tracing::info!("making HTTP GET request to Google Maps Query Autocomplete API");
         tracing::debug!("{url}");
 
         // Retries the get request until successful, an error ineligible for
