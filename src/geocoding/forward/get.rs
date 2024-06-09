@@ -18,7 +18,7 @@ impl<'a> FordwardGeocodingRequest<'a> {
     ///
     /// This method accepts no arguments.
 
-    #[tracing::instrument(level = "debug", name = "google_maps.forward_geocoding", skip(self))]
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn get(&mut self) -> Result<GeocodingResponse, GoogleMapsError> {
         // Build the URL stem for the HTTP get request:
         let mut url = format!("{SERVICE_URL}/{OUTPUT_FORMAT}?");
@@ -37,7 +37,7 @@ impl<'a> FordwardGeocodingRequest<'a> {
             .await;
 
         // Emit debug message so client can monitor activity:
-        tracing::debug!("Making HTTP GET request to Google Maps Geocoding API: `{url}`");
+        tracing::debug!("making HTTP GET request to Google Maps Geocoding API: `{url}`");
 
         // Retries the get request until successful, an error ineligible for
         // retries is returned, or we have reached the maximum retries. Note:

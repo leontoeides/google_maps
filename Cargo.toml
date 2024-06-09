@@ -46,7 +46,7 @@ roads = []
 time_zone = [ "chrono", "chrono-tz" ]
 # Geo ecosystem features:
 geo = [ "geo-types" ]
-polyline = []
+polyline = [ "dep:polyline" ]
 # Reqwest features:
 enable-reqwest = [ "reqwest", "backoff", "futures", "stream_throttle" ]
 enable-reqwest-middleware = [ "reqwest-middleware", "http", "anyhow" ] # "reqwest-maybe-middleware/middleware"
