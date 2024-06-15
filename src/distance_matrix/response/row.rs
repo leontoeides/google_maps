@@ -14,5 +14,6 @@ pub struct Row {
     /// Each row array contains one or more `element` entries, which in turn
     /// contain the information about a single origin-destination pairing.
     #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub elements: Vec<Element>,
 } // struct

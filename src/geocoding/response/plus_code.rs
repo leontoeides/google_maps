@@ -20,5 +20,6 @@ pub struct PlusCode {
 
     /// A 6 character or longer local code with an explicit location (`CWC8+R9,
     /// Mountain View, CA, USA`).
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub compound_code: Option<String>,
 } // struct

@@ -11,6 +11,7 @@ pub struct TransitVehicle {
     pub icon: String,
     /// Contains the URL for the icon associated with this vehicle type, based
     /// on the local transport signage.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub local_icon: Option<String>,
     /// Contains the name of the vehicle on this line. eg. "Subway."
     pub name: String,

@@ -19,6 +19,7 @@ pub struct Response {
     ///
     /// **Note**: This field is not guaranteed to be always present, and its
     /// content is subject to change.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub error_message: Option<String>,
 
     /// If there was only one `location` in the query, there will only be one
@@ -26,6 +27,7 @@ pub struct Response {
     /// `path` in the query, there will be multiple sample points in the
     /// response.
     #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub results: Vec<Point>,
 
     /// The status of the response.

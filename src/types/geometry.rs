@@ -19,6 +19,7 @@ pub struct Geometry {
     pub location: LatLng,
 
     /// Stores additional data about the specified location.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub location_type: Option<LocationType>,
 
     /// Contains the recommended viewport for displaying the returned result,
@@ -33,6 +34,7 @@ pub struct Geometry {
     /// islands](https://en.wikipedia.org/wiki/Farallon_Islands), which are
     /// technically part of the city, but probably should not be returned in the
     /// viewport.)
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub bounds: Option<Bounds>,
 } // struct
 

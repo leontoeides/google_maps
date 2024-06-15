@@ -20,12 +20,14 @@ pub struct Response {
     /// May contain a set of attributions about this listing which must be
     /// displayed to the user (some listings may not have attribution).
     #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub html_attributions: Vec<String>,
 
     /// Contains the detailed information about the place requested.
     ///
     /// See [Place](https://developers.google.com/maps/documentation/places/web-service/details#Place)
     /// for more information.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub result: Option<Place>,
 
     /// Contains the status of the request, and may contain debugging
@@ -41,6 +43,7 @@ pub struct Response {
     /// requests. It may not always be returned, and its content is subject to
     /// change.
     #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub info_messages: Vec<String>,
 } // struct
 

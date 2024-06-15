@@ -13,8 +13,11 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Response {
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub location: Option<LatLng>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub accuracy: Option<f64>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub error: Option<ErrorObject>,
 } // struct
 

@@ -27,6 +27,7 @@ pub struct Response {
     /// the time zone is not in Daylight Savings Time during the specified
     /// `time`.
     #[serde(alias = "dstOffset")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub dst_offset: Option<i16>,
 
     /// More detailed information about the reasons behind the given status
@@ -35,11 +36,13 @@ pub struct Response {
     /// **Note**: This field is not guaranteed to be always present, and its
     /// content is subject to change.
     #[serde(alias = "errorMessage")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub error_message: Option<String>,
 
     /// The offset from UTC (in seconds) for the given location. This does not
     /// take into effect daylight savings.
     #[serde(alias = "rawOffset")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub raw_offset: Option<i16>,
 
     /// The status of the response.
@@ -54,12 +57,14 @@ pub struct Response {
     /// timezone.xml, this is the first alias of each timezone. For example,
     /// `Asia/Calcutta` is returned, not `Asia/Kolkata`.
     #[serde(alias = "timeZoneId")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub time_zone_id: Option<Tz>,
 
     /// A string containing the long form name of the time zone. This field will
     /// be localized if the language parameter is set. eg. "Pacific Daylight
     /// Time" or "Australian Eastern Daylight Time"
     #[serde(alias = "timeZoneName")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub time_zone_name: Option<String>,
 } // struct
 

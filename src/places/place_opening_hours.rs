@@ -12,6 +12,7 @@ use std::collections::HashSet;
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct PlaceOpeningHours {
     /// A boolean value indicating if the place is open at the current time.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub open_now: Option<bool>,
 
     /// An array of opening periods covering seven days, starting from Sunday,
@@ -20,6 +21,7 @@ pub struct PlaceOpeningHours {
     /// See [PlaceOpeningHoursPeriod](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceOpeningHoursPeriod)
     /// for more information.
     #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub periods: Vec<PlaceOpeningHoursPeriod>,
 
     /// An array of up to seven entries corresponding to the next seven days.
@@ -27,17 +29,20 @@ pub struct PlaceOpeningHours {
     /// See [PlaceSpecialDay](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceSpecialDay)
     /// for more information.
     #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub special_days: Vec<PlaceSpecialDay>,
 
     /// A type string used to identify the type of secondary hours (for example,
     /// `DRIVE_THROUGH`, `HAPPY_HOUR`, `DELIVERY`, `TAKEOUT`, `KITCHEN`,
     /// `BREAKFAST`, `LUNCH`, `DINNER`, `BRUNCH`, `PICKUP`, `SENIOR_HOURS`). Set
     /// for `secondary_opening_hours` only.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub secondary_hours_type: Option<SecondaryHoursType>,
 
     /// An array of strings describing in human-readable text the hours of the
     /// place.
     #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub weekday_text: Vec<String>,
 } // struct PlaceOpeningHours
 

@@ -17,5 +17,6 @@ pub struct Point {
     /// (larger `resolution` values) when multiple points are passed. To obtain
     /// the most accurate elevation value for a point, it should be queried
     /// independently.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub resolution: Option<f64>,
 } // struct

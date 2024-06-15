@@ -58,7 +58,7 @@ pub struct ForwardRequest<'a> {
     /// API](https://developers.google.com/maps/documentation/roads/snap) to
     /// get the address for a snapped point.
     /// For more information about place IDs, see the place [ID
-    /// overview](https://developers.google.com/maps/documentation/places/web-service/place-id)..
+    /// overview](https://developers.google.com/maps/documentation/places/web-service/place-id).
     place_id: Option<String>,
 
     /// The bounding box of the viewport within which to bias geocode results

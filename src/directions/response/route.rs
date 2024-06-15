@@ -25,6 +25,7 @@ pub struct Route {
     /// If present, contains the total fare (that is, the total ticket costs) on
     /// this route. This property is only returned for transit requests and only
     /// for routes where fare information is available for all transit legs.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub fare: Option<TransitFare>,
     /// An array of `Legs`, each of which contains information about the steps
     /// of which it is composed. There will be one leg for each stopover
@@ -32,6 +33,7 @@ pub struct Route {
     /// will contain one `Leg` and a route with one stopover waypoint will
     /// contain two.
     #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub legs: Vec<Leg>,
     /// An [encoded polyline representation](https://developers.google.com/maps/documentation/utilities/polylinealgorithm)
     /// of the route. This polyline is an approximate (smoothed) path of the
@@ -46,6 +48,7 @@ pub struct Route {
     /// Contains an array of warnings to be displayed when showing these
     /// directions. You must handle and display these warnings yourself.
     #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub warnings: Vec<String>,
     /// If `optimizeWaypoints` was set to `true`, this field will contain the
     /// re-ordered permutation of the input waypoints. For example, if the input
@@ -68,6 +71,7 @@ pub struct Route {
     /// will be empty, since route optimization is not available for such
     /// queries.
     #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub waypoint_order: Vec<u8>,
 } // struct
 

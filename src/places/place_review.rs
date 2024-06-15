@@ -29,6 +29,7 @@ pub struct PlaceReview {
     pub time: DateTime<Utc>,
 
     /// The URL to the user's Google Maps Local Guides profile, if available.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub author_url: Option<String>,
 
     /// An IETF language code indicating the language of the returned review.
@@ -36,6 +37,7 @@ pub struct PlaceReview {
     /// tag indicating country or region. For example, all the English reviews
     /// are tagged as 'en', and not 'en-AU' or 'en-UK' and so on. This field is
     /// empty if there is only a rating with no review text.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub language: Option<Language>,
 
     /// An IETF language code indicating the original language of the review. If
@@ -44,15 +46,18 @@ pub struct PlaceReview {
     /// indicating country or region. For example, all the English reviews are
     /// tagged as 'en', and not 'en-AU' or 'en-UK' and so on. This field is
     /// empty if there is only a rating with no review text.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub original_language: Option<Language>,
 
     /// The URL to the user's profile photo, if available.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub profile_photo_url: Option<String>,
 
     /// The user's review. When reviewing a location with Google Places, text
     /// reviews are considered optional. Therefore, this field may be empty.
     /// Note that this field may include simple HTML markup. For example, the
     /// entity reference `&amp;` may represent an ampersand character.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub text: Option<String>,
 
     /// A boolean value indicating if the review was translated from the
@@ -60,6 +65,7 @@ pub struct PlaceReview {
     /// corresponding to a value of true, Google recommends that you indicate
     /// this to your users. For example, you can add the following string,
     /// “Translated by Google”, to the review.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub translated: Option<bool>,
 } // struct PlaceReview
 

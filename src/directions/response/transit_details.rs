@@ -29,6 +29,7 @@ pub struct TransitDetails {
     /// Specifies the expected number of seconds between departures from the
     /// same stop at this time. For example, with a headway value of 600, you
     /// would expect a ten minute wait if you should miss your bus.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub headway: Option<u16>,
     /// Contains information about the transit line used in this step.
     pub line: TransitLine,
@@ -42,5 +43,6 @@ pub struct TransitDetails {
     /// within a service day. For example, "538" is the `trip_short_name` of the
     /// Amtrak train that leaves San Jose, CA at 15:10 on weekdays to
     /// Sacramento, CA.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub trip_short_name: Option<String>,
 } // struct

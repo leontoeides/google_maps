@@ -1,6 +1,6 @@
 [package]
 name = "google_maps"
-version = "3.5.3"
+version = "3.5.4"
 authors = [ "Dylan Bowker <dylan.bowker@arkiteq.ca>" ]
 edition = "2021"
 categories = [ "api-bindings" ]

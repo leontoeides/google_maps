@@ -3,6 +3,11 @@
 * Release notes are available on
   [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+# 3.5.4
+
+* 2024-06-15: This crate now instructs `serde` to not serialize empty fields.
+  This may potentially save a bit of disk space and bandwidth.
+
 # 3.5.3
 
 * 2024-06-09: Increased flexibility of interface by using more `impl Into<Type>`

@@ -43,8 +43,7 @@ Additionally, usage of rustls for Reqwest is supported.
   querying the Google Maps API
 * `enable-reqwest-middleware` ‧ uses [reqwest-middleware](https://crates.io/crates/reqwest-middleware)
   for querying the Google Maps API
-* `geo` ‧ support for the rust [geo](https://crates.io/crates/geo-types)
-  ecosystem
+* `geo` ‧ support for the rust [geo](https://crates.io/crates/geo) ecosystem
 * `polyline` ‧ allows easy type conversions from a `Route` or `Step` to a geo
   [LineString](https://docs.rs/geo-types/0.7.13/geo_types/geometry/struct.LineString.html)
 
