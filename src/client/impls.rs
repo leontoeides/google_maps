@@ -31,8 +31,9 @@ impl GoogleMapsClient {
                 "RustGoogleMaps/{version}",
                 version = env!("CARGO_PKG_VERSION")
             ))
-            .connect_timeout(std::time::Duration::from_secs(10))
+            .connect_timeout(std::time::Duration::from_secs(30))
             .timeout(std::time::Duration::from_secs(30))
+            .read_timeout(std::time::Duration::from_secs(30))
             .build()?;
 
         Ok(Self {
@@ -59,8 +60,9 @@ impl GoogleMapsClient {
                 "RustGoogleMaps/{version}",
                 version = env!("CARGO_PKG_VERSION")
             ))
-            .connect_timeout(std::time::Duration::from_secs(10))
+            .connect_timeout(std::time::Duration::from_secs(30))
             .timeout(std::time::Duration::from_secs(30))
+            .read_timeout(std::time::Duration::from_secs(30))
             .build()?;
 
         Ok(Self {
