@@ -237,3 +237,21 @@ impl Waypoint {
         Ok(Self::LatLng(latlng))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
+
+impl From<LatLng> for Waypoint {
+    /// Converts an owned `LatLng` coordinates type into a `Waypoint` type.
+     fn from(latlng: LatLng) -> Self {
+        Self::LatLng(latlng)
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl From<&LatLng> for Waypoint {
+    /// Converts a borrowed `&LatLng` coordinates type into a `Waypoint` type.
+     fn from(latlng: &LatLng) -> Self {
+        Self::LatLng(*latlng)
+    } // fn
+} // impl

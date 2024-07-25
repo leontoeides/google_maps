@@ -215,3 +215,21 @@ impl Location {
         Ok(Self::LatLng(latlng))
     } // fn
 } // impl
+
+// -----------------------------------------------------------------------------
+
+impl From<LatLng> for Location {
+    /// Converts an owned `LatLng` coordinates type into a `Location` type.
+     fn from(latlng: LatLng) -> Self {
+        Self::LatLng(latlng)
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl From<&LatLng> for Location {
+    /// Converts a borrowed `&LatLng` coordinates type into a `Location` type.
+     fn from(latlng: &LatLng) -> Self {
+        Self::LatLng(*latlng)
+    } // fn
+} // impl

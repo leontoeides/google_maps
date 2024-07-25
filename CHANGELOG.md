@@ -3,10 +3,12 @@
 * Release notes are available on
   [GitHub](https://github.com/leontoeides/google_maps/releases).
 
-# 3.5.4
+# 3.5.5
 
-* 2024-06-15: This crate now instructs `serde` to not serialize empty fields.
-  This may potentially save a bit of disk space and bandwidth.
+* 2024-07-25: Added additional conversion traits between `Location` & `Waypoint`
+  and `LatLng` for improved ergonomics.
+
+# 3.5.4
 
 * 2024-07-25: Added support for getting `LatLng` structs from tuples
   `(43.68, 7.32)`
@@ -14,6 +16,12 @@
 * 2024-07-25: Applied `clippy` suggestions
 
 * 2024-07-25: Dependency bumps
+
+* 2024-07-19: Adjusts `reqwest` client's default timeouts for more reliable
+  operation.
+
+* 2024-06-15: This crate now instructs `serde` to not serialize empty fields.
+  This may potentially save a bit of disk space and bandwidth.
 
 # 3.5.3
 
