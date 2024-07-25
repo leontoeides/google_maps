@@ -23,7 +23,7 @@ impl<'a> Request<'a> {
     ///   between consecutive points caused by GPS signal loss, or noise.
 
     #[must_use]
-    pub fn new(client: &GoogleMapsClient, path: Vec<LatLng>) -> Request {
+    pub const fn new(client: &GoogleMapsClient, path: Vec<LatLng>) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:

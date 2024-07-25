@@ -26,7 +26,7 @@ impl<'a> Request<'a> {
     ///   list of latitude/longitude pairs.
 
     #[must_use]
-    pub fn new(client: &GoogleMapsClient, points: Vec<LatLng>) -> Request {
+    pub const fn new(client: &GoogleMapsClient, points: Vec<LatLng>) -> Request {
         // Instantiate struct and return it to caller:
         Request {
             // Required parameters:
