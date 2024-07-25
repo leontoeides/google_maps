@@ -31,6 +31,10 @@ pub enum Error {
     /// that is invalid.
     InvalidLatLongString(String),
 
+    /// API client library attempted to convert a latitude/longitude pair tuple
+    /// that is invalid.
+    InvalidLatLongTuple,
+
     /// API client library attempted to convert a latitude/longitude pair that
     /// contained an invalid floating-point value.
     FloatToDecimalConversionError(String),
@@ -83,6 +87,13 @@ impl std::fmt::Display for Error {
                 f,
                 "`{value}` is an invalid latitude & longitude coordinate string. \
                 The string must consist of two comma-separated coordinates \
+                where the latitude is specified first \
+                and the longitude is specified second."
+            ),
+            Self::InvalidLatLongTuple => write!(
+                f,
+                "Invalid latitude & longitude tuple coordinates. \
+                The tuple must consist of coordinates \
                 where the latitude is specified first \
                 and the longitude is specified second."
             ),

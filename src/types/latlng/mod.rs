@@ -175,6 +175,20 @@ impl TryFrom<String> for LatLng {
 
 // -----------------------------------------------------------------------------
 
+impl<V: TryInto<Decimal>> TryFrom<(V, V)> for LatLng {
+    type Error = GoogleMapsError;
+    /// Attempts to get a `LatLng` struct from a `(lat, lng)` tuple that
+    /// contains a `0` latitude and a `1` longitude (in that order).
+    fn try_from(coordinates: (V, V)) -> Result<Self, Self::Error> {
+        Self::try_from_dec(
+            coordinates.0.try_into().map_err(|_| TypeError::InvalidLatLongTuple)?,
+            coordinates.1.try_into().map_err(|_| TypeError::InvalidLatLongTuple)?
+        )
+    }
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::convert::From<&Self> for LatLng {
     /// Converts a borrowed `&LatLng` enum into an owned `LatLng` enum by
     /// copying it.
