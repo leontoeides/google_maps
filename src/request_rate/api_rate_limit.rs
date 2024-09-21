@@ -12,10 +12,7 @@ impl ApiRate {
     ///
 
     pub async fn limit(&self) {
-        match &self.throttle_pool {
-            Some(wait_pool) => wait_pool.queue().await,
-            None => (),
-        }
+        if let Some(wait_pool) = &self.throttle_pool { wait_pool.queue().await }
         /*
         match self.current_rate.first_request {
             // If this is the first request to the API, initialize the
