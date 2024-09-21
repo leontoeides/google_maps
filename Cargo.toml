@@ -1,6 +1,6 @@
 [package]
 name = "google_maps"
-version = "3.5.5"
+version = "3.6.0"
 authors = [ "Dylan Bowker <dylan.bowker@arkiteq.ca>" ]
 edition = "2021"
 categories = [ "api-bindings" ]
@@ -68,7 +68,7 @@ decimal-serde-with-arbitrary-precision = [ "rust_decimal/serde-with-arbitrary-pr
 [dependencies]
 backoff = { version = "0.4", optional = true, features = [ "futures", "tokio" ] }
 chrono = { version = "0.4", optional = true, default-features = false, features = [ "clock", "serde", "std" ] }
-chrono-tz = { version = "0.9", optional = true, features = [ "serde" ] }
+chrono-tz = { version = "0.10", optional = true, features = [ "serde" ] }
 futures = { version = "0.3", optional = true }
 geo-types = { version = "0.7", optional = true, features = [ "serde" ] }
 miette = "7.2"
@@ -77,13 +77,13 @@ phf = { version = "0.11", features = [ "macros" ] }
 polyline = { version = "0.11", optional = true }
 reqwest = { version = "0.12", optional = true, default-features = false, features = [ "json", "multipart" ] }
 reqwest-middleware = { version = "0.3", optional = true }
-rust_decimal = { version = "1.35", features = [ "serde" ] }
-rust_decimal_macros = "1.35"
+rust_decimal = { version = "1.36", features = [ "serde" ] }
+rust_decimal_macros = "1.36"
 serde = { version = "1.0", features = [ "derive" ] }
 serde_json = "1.0"
 stream_throttle = { version = "0.5", optional = true }
 thiserror = "1.0"
-tokio = { version = "1.39", optional = true, features = [ "time" ] }
+tokio = { version = "1.40", optional = true, features = [ "time" ] }
 tracing = { version = "0.1", features = [ "log" ] }
 
 # The author of `reqwest-maybe-middleware` is not currently merging PR requests

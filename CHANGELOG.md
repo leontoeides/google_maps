@@ -3,14 +3,18 @@
 * Release notes are available on
   [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+# 3.6.0
+
+* 2024-09-21: Dependencies bump.
+
 # 3.5.5
 
-* 2024-07-25: Added additional conversion traits between `Location` & `Waypoint`
-  and `LatLng` for improved ergonomics.
+* 2024-07-25: Added additional conversion traits from `LatLng` type to
+  `Location` and `Waypoint` types for improved ergonomics.
 
 # 3.5.4
 
-* 2024-07-25: Added support for getting `LatLng` structs from tuples
+* 2024-07-25: Added support for getting `LatLng` structs from tuples, i.e.
   `(43.68, 7.32)`
 
 * 2024-07-25: Applied `clippy` suggestions
