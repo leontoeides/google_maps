@@ -207,13 +207,12 @@ impl RequestBuilder {
     }
 
     #[cfg(all(feature = "reqwest-multipart", feature = "reqwest-middleware-multipart"))]
-    #[allow(clippy::use_self)]
     pub fn multipart(self, multipart: Form) -> Self {
         match self {
             #[cfg(feature = "reqwest-multipart")]
-            RequestBuilder::Vanilla(c) => RequestBuilder::Vanilla(c.multipart(multipart)),
+            Self::Vanilla(c) => Self::Vanilla(c.multipart(multipart)),
             #[cfg(feature = "reqwest-middleware-multipart")]
-            RequestBuilder::Middleware(c) => RequestBuilder::Middleware(c.multipart(multipart)),
+            Self::Middleware(c) => Self::Middleware(c.multipart(multipart)),
         }
     }
 
@@ -234,13 +233,12 @@ impl RequestBuilder {
     }
 
     #[cfg(all(feature = "reqwest-json", feature = "reqwest-middleware-json"))]
-    #[allow(clippy::use_self)]
     pub fn json<T: Serialize + ?Sized>(self, json: &T) -> Self {
         match self {
             #[cfg(feature = "reqwest-json")]
-            RequestBuilder::Vanilla(c) => RequestBuilder::Vanilla(c.json(json)),
+            Self::Vanilla(c) => Self::Vanilla(c.json(json)),
             #[cfg(feature = "reqwest-middleware-json")]
-            RequestBuilder::Middleware(c) => RequestBuilder::Middleware(c.json(json)),
+            Self::Middleware(c) => Self::Middleware(c.json(json)),
         }
     }
 

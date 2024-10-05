@@ -75,11 +75,11 @@ reqwest-socks = ["reqwest/socks"]
 reqwest-hickory-dns = ["reqwest/hickory-dns"]
 # Reqwest middleware features:
 reqwest-middleware = ["dep:reqwest-middleware", "http", "anyhow"] # "reqwest-maybe-middleware/middleware"
-reqwest-middleware-multipart = ["reqwest-middleware/multipart", "reqwest/multipart"]
-reqwest-middleware-json = ["reqwest-middleware/json", "reqwest/json"]
-reqwest-middleware-charset = ["reqwest-middleware/charset", "reqwest/charset"]
-reqwest-middleware-http2 = ["reqwest-middleware/http2", "reqwest/http2"]
-reqwest-middleware-rustls-tls = ["reqwest-middleware/rustls-tls", "reqwest/rustls-tls"]
+reqwest-middleware-multipart = ["reqwest-middleware/multipart", "reqwest-multipart"]
+reqwest-middleware-json = ["reqwest-middleware/json", "reqwest-json"]
+reqwest-middleware-charset = ["reqwest-middleware/charset", "reqwest-charset"]
+reqwest-middleware-http2 = ["reqwest-middleware/http2", "reqwest-http2"]
+reqwest-middleware-rustls-tls = ["reqwest-middleware/rustls-tls", "reqwest-rustls-tls"]
 # Rust Decimal features:
 decimal-serde = ["rust_decimal/serde"]
 decimal-serde-float = ["rust_decimal/serde-float"]
