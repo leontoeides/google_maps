@@ -74,7 +74,7 @@ pub enum Error {
 
     /// Error originating from the [reqwest](https://crates.io/crates/reqwest)
     /// crate.
-    #[cfg(feature = "enable-reqwest")]
+    #[cfg(feature = "reqwest")]
     #[error(transparent)]
     #[diagnostic(code(google_maps::reqwest))]
     Reqwest(#[from] reqwest::Error),

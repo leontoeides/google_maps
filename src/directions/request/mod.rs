@@ -6,9 +6,9 @@
 pub mod avoid;
 mod build;
 pub mod departure_time;
-#[cfg(feature = "enable-reqwest")]
+#[cfg(feature = "reqwest")]
 mod execute;
-#[cfg(feature = "enable-reqwest")]
+#[cfg(feature = "reqwest")]
 mod get;
 pub mod location;
 mod new;

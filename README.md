@@ -39,9 +39,9 @@ Additionally, usage of rustls for Reqwest is supported.
 * `places` ‧ includes Google Maps Places API
 * `roads` ‧ includes Google Maps Roads API
 * `time_zone` ‧ includes Google Maps Time Zone API
-* `enable-reqwest` ‧ uses [reqwest](https://crates.io/crates/reqwest) for
+* `reqwest` ‧ uses [reqwest](https://crates.io/crates/reqwest) for
   querying the Google Maps API
-* `enable-reqwest-middleware` ‧ uses [reqwest-middleware](https://crates.io/crates/reqwest-middleware)
+* `reqwest-middleware` ‧ uses [reqwest-middleware](https://crates.io/crates/reqwest-middleware)
   for querying the Google Maps API
 * `geo` ‧ support for the rust [geo](https://crates.io/crates/geo) ecosystem
 * `polyline` ‧ allows easy type conversions from a `Route` or `Step` to a geo
@@ -54,7 +54,7 @@ All other Places API services are covered by the `places` feature.
 
 ### reqwest Feature Flags
 
-For use with `enable-reqwest` only.
+For use with `reqwest` only.
 
 * `native-tls`
 * `rustls`
@@ -78,7 +78,7 @@ default = [
 	"places",
 
 	# reqwest features:
-	"enable-reqwest",
+	"reqwest",
 	"reqwest/default-tls",
 	"reqwest/gzip",
 

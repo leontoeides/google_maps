@@ -6,14 +6,14 @@
 
 mod build;
 mod impls;
-#[cfg(feature = "enable-reqwest")]
+#[cfg(feature = "reqwest")]
 mod with_rate;
-#[cfg(feature = "enable-reqwest")]
+#[cfg(feature = "reqwest")]
 mod with_reqwest_client;
 
 // -----------------------------------------------------------------------------
 
-#[cfg(feature = "enable-reqwest")]
+#[cfg(feature = "reqwest")]
 use crate::request_rate::RequestRate;
 
 // -----------------------------------------------------------------------------
@@ -44,16 +44,16 @@ pub struct GoogleMapsClient {
     pub key: String,
 
     /// Rate limits for each of the Google Cloud Maps Platform APIs.
-    #[cfg(feature = "enable-reqwest")]
+    #[cfg(feature = "reqwest")]
     pub rate_limit: RequestRate,
 
     /// Allows you to optionally provide your own pre-configured reqwest client
     /// that will be used by the Google Maps client.
-    #[cfg(all(feature = "enable-reqwest", feature = "enable-reqwest-middleware"))]
+    #[cfg(all(feature = "reqwest", feature = "reqwest-middleware"))]
     pub reqwest_client: crate::reqwest_maybe_middleware::Client,
 
     /// Allows you to optionally provide your own pre-configured reqwest client
     /// that will be used by the Google Maps client.
-    #[cfg(all(feature = "enable-reqwest", not(feature = "enable-reqwest-middleware")))]
+    #[cfg(all(feature = "reqwest", not(feature = "reqwest-middleware")))]
     pub reqwest_client: reqwest::Client,
 } // struct

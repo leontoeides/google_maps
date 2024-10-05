@@ -4,11 +4,11 @@ use crate::types::LatLng;
 use crate::directions::request::location::Location;
 #[cfg(feature = "distance_matrix")]
 use crate::directions::request::waypoint::Waypoint;
-#[cfg(feature = "enable-reqwest")]
+#[cfg(feature = "reqwest")]
 use crate::request_rate::RequestRate;
 #[cfg(feature = "time_zone")]
 use chrono::{DateTime, Utc};
-#[cfg(feature = "enable-reqwest")]
+#[cfg(feature = "reqwest")]
 use reqwest::Response;
 
 // =============================================================================
@@ -24,7 +24,7 @@ impl GoogleMapsClient {
     ///   application for purposes of quota management. Learn how to [get a
     ///   key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
 
-    #[cfg(all(feature = "enable-reqwest", not(feature = "enable-reqwest-middleware")))]
+    #[cfg(all(feature = "reqwest", not(feature = "reqwest-middleware")))]
     pub fn try_new(key: impl Into<String>) -> Result<Self, crate::GoogleMapsError> {
         let reqwest_client = reqwest::Client::builder()
             .user_agent(format!(
@@ -53,7 +53,7 @@ impl GoogleMapsClient {
     /// application for purposes of quota management. Learn how to [get a
     /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
 
-    #[cfg(all(feature = "enable-reqwest", feature = "enable-reqwest-middleware"))]
+    #[cfg(all(feature = "reqwest", feature = "reqwest-middleware"))]
     pub fn try_new(key: impl Into<String>) -> Result<Self, crate::GoogleMapsError> {
         let reqwest_client = reqwest::Client::builder()
             .user_agent(format!(
@@ -88,7 +88,7 @@ impl GoogleMapsClient {
     ///   Realistically this shouldn't happen. However you may want to use
     ///   `try_new` to instantiate a new `GoogleMapsClient` instead.
 
-    #[cfg(feature = "enable-reqwest")]
+    #[cfg(feature = "reqwest")]
     #[deprecated(since = "3.4.2", note = "use `try_new` instead")]
     #[must_use]
     pub fn new(key: impl Into<String>) -> Self {
@@ -105,7 +105,7 @@ impl GoogleMapsClient {
     /// application for purposes of quota management. Learn how to [get a
     /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
 
-    #[cfg(not(feature = "enable-reqwest"))]
+    #[cfg(not(feature = "reqwest"))]
     pub fn new(key: impl Into<String>) -> Self {
         Self { key: key.into() }
     } // fn
@@ -675,7 +675,7 @@ impl GoogleMapsClient {
         crate::roads::snap_to_roads::request::Request::new(self, points)
     } // fn
 
-    #[cfg(feature = "enable-reqwest")]
+    #[cfg(feature = "reqwest")]
     pub async fn get_request(&self, url: &str) -> Result<Response, crate::ReqError> {
         match self.reqwest_client.get(url).build() {
             Ok(request) => self.reqwest_client.execute(request).await,

@@ -87,7 +87,7 @@ pub use crate::types::region::Region;
 
 // -----------------------------------------------------------------------------
 
-#[cfg(feature = "enable-reqwest")]
+#[cfg(feature = "reqwest")]
 pub use crate::request_rate::api::Api;
 
 // -----------------------------------------------------------------------------

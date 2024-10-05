@@ -7,16 +7,16 @@ use std::convert::TryFrom;
 use std::fmt::Display;
 use thiserror::Error;
 
-#[cfg(feature = "enable-reqwest-middleware")]
+#[cfg(feature = "reqwest-middleware")]
 pub use anyhow::Error as MiddlewareError;
-#[cfg(feature = "enable-reqwest-middleware")]
+#[cfg(feature = "reqwest-middleware")]
 pub use reqwest_middleware::ClientWithMiddleware as MiddlewareClient;
 
 /// Wrapper over `reqwest::Client` or `reqwest_middleware::ClientWithMiddleware`
 #[derive(Clone, Debug)]
 pub enum Client {
     Vanilla(VanillaClient),
-    #[cfg(feature = "enable-reqwest-middleware")]
+    #[cfg(feature = "reqwest-middleware")]
     Middleware(MiddlewareClient),
 }
 
@@ -26,7 +26,7 @@ impl From<VanillaClient> for Client {
     }
 }
 
-#[cfg(feature = "enable-reqwest-middleware")]
+#[cfg(feature = "reqwest-middleware")]
 impl From<MiddlewareClient> for Client {
     fn from(value: MiddlewareClient) -> Self {
         Self::Middleware(value)
@@ -36,7 +36,7 @@ impl From<MiddlewareClient> for Client {
 #[derive(Error, Debug)]
 pub enum Error {
     /// There was an error running some middleware
-    #[cfg(feature = "enable-reqwest-middleware")]
+    #[cfg(feature = "reqwest-middleware")]
     #[error("Middleware error: {0}")]
     Middleware(#[from] anyhow::Error),
     /// Error from the underlying reqwest client
@@ -44,7 +44,7 @@ pub enum Error {
     Reqwest(#[from] reqwest::Error),
 }
 
-#[cfg(feature = "enable-reqwest-middleware")]
+#[cfg(feature = "reqwest-middleware")]
 impl From<reqwest_middleware::Error> for Error {
     fn from(value: reqwest_middleware::Error) -> Self {
         match value {
@@ -89,7 +89,7 @@ impl Client {
     pub fn request<U: IntoUrl>(&self, method: Method, url: U) -> RequestBuilder {
         match self {
             Self::Vanilla(c) => RequestBuilder::Vanilla(c.request(method, url)),
-            #[cfg(feature = "enable-reqwest-middleware")]
+            #[cfg(feature = "reqwest-middleware")]
             Self::Middleware(c) => RequestBuilder::Middleware(c.request(method, url)),
         }
     }
@@ -98,7 +98,7 @@ impl Client {
     pub async fn execute(&self, req: Request) -> Result<Response, Error> {
         match self {
             Self::Vanilla(c) => c.execute(req).await.map_err(Into::into),
-            #[cfg(feature = "enable-reqwest-middleware")]
+            #[cfg(feature = "reqwest-middleware")]
             Self::Middleware(c) => {
                 let mut ext = http::Extensions::new();
                 c.execute_with_extensions(req, &mut ext)
@@ -109,7 +109,7 @@ impl Client {
     }
 
     /// Executes a request with initial [`Extensions`] if a `MiddlewareClient`.
-    #[cfg(feature = "enable-reqwest-middleware")]
+    #[cfg(feature = "reqwest-middleware")]
     pub async fn execute_with_extensions(
         &self,
         req: Request,
@@ -130,7 +130,7 @@ impl Client {
 #[derive(Debug)]
 pub enum RequestBuilder {
     Vanilla(reqwest::RequestBuilder),
-    #[cfg(feature = "enable-reqwest-middleware")]
+    #[cfg(feature = "reqwest-middleware")]
     Middleware(reqwest_middleware::RequestBuilder),
 }
 
@@ -144,7 +144,7 @@ impl RequestBuilder {
     {
         match self {
             Self::Vanilla(c) => Self::Vanilla(c.header(key, value)),
-            #[cfg(feature = "enable-reqwest-middleware")]
+            #[cfg(feature = "reqwest-middleware")]
             Self::Middleware(c) => Self::Middleware(c.header(key, value)),
         }
     }
@@ -152,7 +152,7 @@ impl RequestBuilder {
     pub fn headers(self, headers: HeaderMap) -> Self {
         match self {
             Self::Vanilla(c) => Self::Vanilla(c.headers(headers)),
-            #[cfg(feature = "enable-reqwest-middleware")]
+            #[cfg(feature = "reqwest-middleware")]
             Self::Middleware(c) => Self::Middleware(c.headers(headers)),
         }
     }
@@ -161,7 +161,7 @@ impl RequestBuilder {
     pub fn version(self, version: reqwest::Version) -> Self {
         match self {
             Self::Vanilla(c) => Self::Vanilla(c.version(version)),
-            #[cfg(feature = "enable-reqwest-middleware")]
+            #[cfg(feature = "reqwest-middleware")]
             Self::Middleware(c) => Self::Middleware(c.version(version)),
         }
     }
@@ -173,7 +173,7 @@ impl RequestBuilder {
     {
         match self {
             Self::Vanilla(c) => Self::Vanilla(c.basic_auth(username, password)),
-            #[cfg(feature = "enable-reqwest-middleware")]
+            #[cfg(feature = "reqwest-middleware")]
             Self::Middleware(c) => Self::Middleware(c.basic_auth(username, password)),
         }
     }
@@ -184,7 +184,7 @@ impl RequestBuilder {
     {
         match self {
             Self::Vanilla(c) => Self::Vanilla(c.bearer_auth(token)),
-            #[cfg(feature = "enable-reqwest-middleware")]
+            #[cfg(feature = "reqwest-middleware")]
             Self::Middleware(c) => Self::Middleware(c.bearer_auth(token)),
         }
     }
@@ -192,7 +192,7 @@ impl RequestBuilder {
     pub fn body<T: Into<Body>>(self, body: T) -> Self {
         match self {
             Self::Vanilla(c) => Self::Vanilla(c.body(body)),
-            #[cfg(feature = "enable-reqwest-middleware")]
+            #[cfg(feature = "reqwest-middleware")]
             Self::Middleware(c) => Self::Middleware(c.body(body)),
         }
     }
@@ -201,7 +201,7 @@ impl RequestBuilder {
     pub fn timeout(self, timeout: std::time::Duration) -> Self {
         match self {
             Self::Vanilla(c) => Self::Vanilla(c.timeout(timeout)),
-            #[cfg(feature = "enable-reqwest-middleware")]
+            #[cfg(feature = "reqwest-middleware")]
             Self::Middleware(c) => Self::Middleware(c.timeout(timeout)),
         }
     }
@@ -210,7 +210,7 @@ impl RequestBuilder {
     pub fn multipart(self, multipart: Form) -> Self {
         match self {
             RequestBuilder::Vanilla(c) => RequestBuilder::Vanilla(c.multipart(multipart)),
-            #[cfg(feature = "enable-reqwest-middleware")]
+            #[cfg(feature = "reqwest-middleware")]
             RequestBuilder::Middleware(c) => RequestBuilder::Middleware(c.multipart(multipart)),
         }
     }
@@ -218,7 +218,7 @@ impl RequestBuilder {
     pub fn query<T: Serialize + ?Sized>(self, query: &T) -> Self {
         match self {
             Self::Vanilla(c) => Self::Vanilla(c.query(query)),
-            #[cfg(feature = "enable-reqwest-middleware")]
+            #[cfg(feature = "reqwest-middleware")]
             Self::Middleware(c) => Self::Middleware(c.query(query)),
         }
     }
@@ -226,7 +226,7 @@ impl RequestBuilder {
     pub fn form<T: Serialize + ?Sized>(self, form: &T) -> Self {
         match self {
             Self::Vanilla(c) => Self::Vanilla(c.form(form)),
-            #[cfg(feature = "enable-reqwest-middleware")]
+            #[cfg(feature = "reqwest-middleware")]
             Self::Middleware(c) => Self::Middleware(c.form(form)),
         }
     }
@@ -235,7 +235,7 @@ impl RequestBuilder {
     pub fn json<T: Serialize + ?Sized>(self, json: &T) -> Self {
         match self {
             RequestBuilder::Vanilla(c) => RequestBuilder::Vanilla(c.json(json)),
-            #[cfg(feature = "enable-reqwest-middleware")]
+            #[cfg(feature = "reqwest-middleware")]
             RequestBuilder::Middleware(c) => RequestBuilder::Middleware(c.json(json)),
         }
     }
@@ -243,13 +243,13 @@ impl RequestBuilder {
     pub fn build(self) -> reqwest::Result<Request> {
         match self {
             Self::Vanilla(c) => c.build(),
-            #[cfg(feature = "enable-reqwest-middleware")]
+            #[cfg(feature = "reqwest-middleware")]
             Self::Middleware(c) => c.build(),
         }
     }
 
     /// Inserts the extension into this request builder (if middleware)
-    #[cfg(feature = "enable-reqwest-middleware")]
+    #[cfg(feature = "reqwest-middleware")]
     pub fn with_extension<T: Clone + Send + Sync + 'static>(self, extension: T) -> Self {
         match self {
             Self::Middleware(c) => Self::Middleware(c.with_extension(extension)),
@@ -262,7 +262,7 @@ impl RequestBuilder {
     /// # Panics
     ///
     /// This will panic if used on a `Vanilla` client.
-    #[cfg(feature = "enable-reqwest-middleware")]
+    #[cfg(feature = "reqwest-middleware")]
     pub fn extensions(&mut self) -> &mut http::Extensions {
         match self {
             Self::Vanilla(_) => panic!("attempted to get extensions of vanilla client"),
@@ -273,7 +273,7 @@ impl RequestBuilder {
     pub async fn send(self) -> Result<Response, Error> {
         match self {
             Self::Vanilla(c) => c.send().await.map_err(Into::into),
-            #[cfg(feature = "enable-reqwest-middleware")]
+            #[cfg(feature = "reqwest-middleware")]
             Self::Middleware(c) => c.send().await.map_err(Into::into),
         }
     }
@@ -288,7 +288,7 @@ impl RequestBuilder {
     pub fn try_clone(&self) -> Option<Self> {
         match self {
             Self::Vanilla(c) => Some(Self::Vanilla(c.try_clone()?)),
-            #[cfg(feature = "enable-reqwest-middleware")]
+            #[cfg(feature = "reqwest-middleware")]
             Self::Middleware(c) => Some(Self::Middleware(c.try_clone()?)),
         }
     }

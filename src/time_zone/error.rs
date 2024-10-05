@@ -26,11 +26,11 @@ pub enum Error {
     /// Google Maps Time Zone API server.
     QueryNotBuilt,
     /// The dependency library Reqwest generated an error.
-    #[cfg(feature = "enable-reqwest")]
+    #[cfg(feature = "reqwest")]
     Reqwest(crate::ReqError),
     /// The dependency library Reqwest generated an error. The error could
     /// not be passed normally so a `String` representation is passed instead.
-    #[cfg(feature = "enable-reqwest")]
+    #[cfg(feature = "reqwest")]
     ReqwestMessage(String),
     /// The dependency library Serde JSON generated an error.
     SerdeJson(serde_json::error::Error),
@@ -83,9 +83,9 @@ impl std::fmt::Display for Error {
             Self::QueryNotBuilt => write!(f, "Google Maps Time Zone API client library: \
                 The query string must be built before the request may be sent to the Google Cloud Maps Platform. \
                 Ensure the build() method is called before run()."),
-            #[cfg(feature = "enable-reqwest")]
+            #[cfg(feature = "reqwest")]
             Self::Reqwest(error) => write!(f, "Google Maps Time Zone API client in the Reqwest library: {error}"),
-            #[cfg(feature = "enable-reqwest")]
+            #[cfg(feature = "reqwest")]
             Self::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {error}"),
             Self::SerdeJson(error) => write!(f, "Google Maps Time Zone API client in the Serde JSON library: {error}"),
         } // match
@@ -94,7 +94,7 @@ impl std::fmt::Display for Error {
 
 // -----------------------------------------------------------------------------
 
-#[cfg(feature = "enable-reqwest")]
+#[cfg(feature = "reqwest")]
 impl From<reqwest::Error> for Error {
     /// This trait converts from an Reqwest error type (`reqwest::Error`) into a
     /// Google Maps Time Zone API error type

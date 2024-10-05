@@ -45,9 +45,9 @@
 //! * `places` ‧ includes Google Maps Places API
 //! * `roads` ‧ includes Google Maps Roads API
 //! * `time_zone` ‧ includes Google Maps Time Zone API
-//! * `enable-reqwest` ‧ uses [reqwest](https://crates.io/crates/reqwest) for
-//!   querying the Google Maps API
-//! * `enable-reqwest-middleware` ‧ uses [reqwest-middleware](https://crates.io/crates/reqwest-middleware)
+//! * `reqwest` ‧ uses [reqwest](https://crates.io/crates/reqwest) for querying
+//!   the Google Maps API
+//! * `reqwest-middleware` ‧ uses [reqwest-middleware](https://crates.io/crates/reqwest-middleware)
 //!   for querying the Google Maps API
 //! * `geo` ‧ support for the rust [geo](https://crates.io/crates/geo) ecosystem
 //! * `polyline` ‧ allows easy type conversions from a `Route` or `Step` to a geo
@@ -61,7 +61,7 @@
 //!
 //! ### Reqwest Feature Flags
 //!
-//! For use with `enable-reqwest` only.
+//! For use with `reqwest` only.
 //!
 //! * `native-tls`
 //! * `rustls`
@@ -87,7 +87,7 @@
 //!     "places",
 //!
 //!     # reqwest features:
-//!     "enable-reqwest",
+//!     "reqwest",
 //!     "reqwest/default-tls",
 //!     "reqwest/gzip",
 //!
@@ -108,7 +108,7 @@
 //!     default-features = false,
 //!     features = [
 //!         "directions",
-//!         "enable-reqwest",
+//!         "reqwest",
 //!         "rustls",
 //!         "brotli"
 //!     ]
@@ -419,7 +419,7 @@ pub mod elevation;
 #[cfg(feature = "geocoding")]
 pub mod geocoding;
 pub mod places;
-#[cfg(feature = "enable-reqwest-middleware")]
+#[cfg(feature = "reqwest-middleware")]
 pub mod reqwest_maybe_middleware;
 #[cfg(feature = "roads")]
 pub mod roads;
@@ -491,14 +491,14 @@ pub use crate::types::region::Region;
 
 // Optional dependencies:
 
-#[cfg(feature = "enable-reqwest")]
+#[cfg(feature = "reqwest")]
 mod request_rate;
 
-#[cfg(feature = "enable-reqwest")]
+#[cfg(feature = "reqwest")]
 pub use crate::request_rate::api::Api;
 
-#[cfg(all(feature = "enable-reqwest", feature = "enable-reqwest-middleware"))]
+#[cfg(all(feature = "reqwest", feature = "reqwest-middleware"))]
 type ReqError = reqwest_maybe_middleware::Error;
 
-#[cfg(all(feature = "enable-reqwest", not(feature = "enable-reqwest-middleware")))]
+#[cfg(all(feature = "reqwest", not(feature = "reqwest-middleware")))]
 type ReqError = reqwest::Error;

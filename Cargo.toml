@@ -31,7 +31,7 @@ default = [
 
 	"rust_decimal/serde",
 
-	"enable-reqwest",
+	"reqwest",
 	"reqwest/default-tls",
 	"reqwest/gzip",
 ]
@@ -48,8 +48,8 @@ time_zone = [ "chrono", "chrono-tz" ]
 geo = [ "geo-types" ]
 polyline = [ "dep:polyline" ]
 # Reqwest features:
-enable-reqwest = [ "reqwest", "backoff", "futures", "stream_throttle" ]
-enable-reqwest-middleware = [ "reqwest-middleware", "http", "anyhow" ] # "reqwest-maybe-middleware/middleware"
+reqwest = [ "dep:reqwest", "backoff", "futures", "stream_throttle" ]
+reqwest-middleware = [ "dep:reqwest-middleware", "http", "anyhow" ] # "reqwest-maybe-middleware/middleware"
 brotli = [ "reqwest/brotli" ]
 deflate = [ "reqwest/deflate" ]
 gzip = [ "reqwest/gzip" ]

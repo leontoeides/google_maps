@@ -6,9 +6,9 @@
 // -----------------------------------------------------------------------------
 
 mod build;
-#[cfg(feature = "enable-reqwest")]
+#[cfg(feature = "reqwest")]
 mod execute;
-#[cfg(feature = "enable-reqwest")]
+#[cfg(feature = "reqwest")]
 mod get;
 mod new;
 mod query_url;
