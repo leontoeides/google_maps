@@ -39,7 +39,7 @@ pub enum Error {
     ReqwestMessage(String),
 
     /// The dependency library Serde JSON generated an error.
-    SerdeJson(serde_json::error::Error),
+    SimdJson(simd_json::Error),
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -93,7 +93,7 @@ impl std::fmt::Display for Error {
             Self::Reqwest(error) => write!(f, "Google Maps Roads API client in the Reqwest library: {error}"),
             #[cfg(feature = "reqwest")]
             Self::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {error}"),
-            Self::SerdeJson(error) => write!(f, "Google Maps Roads API client in the Serde JSON library: {error}"),
+            Self::SimdJson(error) => write!(f, "Google Maps Roads API client in the Serde JSON library: {error}"),
         } // match
     } // fn
 } // impl
@@ -113,12 +113,12 @@ impl From<reqwest::Error> for Error {
 
 // -----------------------------------------------------------------------------
 
-impl From<serde_json::error::Error> for Error {
-    /// This trait converts from an Serde JSON (`serde_json::error::Error`)
+impl From<simd_json::Error> for Error {
+    /// This trait converts from an Serde JSON (`simd_json::Error`)
     /// error type into a Google Maps Roads API error type
     /// (`google_maps::time_zone::error::Error`) by wrapping it inside. This
     /// function is required to use the `?` operator.
-    fn from(error: serde_json::error::Error) -> Self {
-        Self::SerdeJson(error)
+    fn from(error: simd_json::Error) -> Self {
+        Self::SimdJson(error)
     } // fn
 } // impl

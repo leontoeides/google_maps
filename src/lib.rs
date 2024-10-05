@@ -375,8 +375,9 @@
 //!
 //! This crate is expected to work well and have the more important Google Maps
 //! features implemented. It should work well because
-//! [serde](https://crates.io/crates/serde) and, by default,
-//! [reqwest](https://crates.io/crates/reqwest) do most of the heavy lifting!
+//! [serde](https://crates.io/crates/serde), [simd-json](https://crates.io/crates/simd-json)
+//! and, by default, [reqwest](https://crates.io/crates/reqwest) do most of the
+//! heavy lifting!
 //!
 //! I created this client library because I needed several Google Maps Platform
 //! features for a project that I'm working on. So, I've decided to spin my
@@ -392,6 +393,7 @@
     clippy::missing_errors_doc,
     clippy::module_name_repetitions,
     clippy::multiple_crate_versions,
+    clippy::negative_feature_names, // suppress clippy warning re: `simd_json` crate
     clippy::too_long_first_doc_paragraph,
     clippy::too_many_lines
 )]

@@ -101,7 +101,7 @@ pub enum Error {
     #[cfg(feature = "reqwest")]
     ReqwestMessage(String),
     /// The dependency library Serde JSON generated an error.
-    SerdeJson(serde_json::error::Error),
+    SimdJson(simd_json::Error),
     /// Too many waypoints specified.
     TooManyWaypoints(usize),
     /// Transit mode may only be specified in Transit travel mode.
@@ -265,7 +265,7 @@ impl std::fmt::Display for Error {
             Self::Reqwest(error) => write!(f, "Google Maps Directions API client in the Reqwest library: {error}"),
             #[cfg(feature = "reqwest")]
             Self::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {error}"),
-            Self::SerdeJson(error) => write!(f, "Google Maps Directions API client in the Serde JSON library: {error}"),
+            Self::SimdJson(error) => write!(f, "Google Maps Directions API client in the Serde JSON library: {error}"),
             Self::TooManyWaypoints(waypoint_count) => write!(f,
                 "Google Maps Directions API client: \
                 The maximum allowed number of waypoints is 25 plus the origin and destination. \
@@ -302,12 +302,12 @@ impl From<crate::ReqError> for Error {
 
 // -----------------------------------------------------------------------------
 
-impl From<serde_json::error::Error> for Error {
-    /// This trait converts from an Serde JSON (`serde_json::error::Error`)
+impl From<simd_json::Error> for Error {
+    /// This trait converts from an Serde JSON (`simd_json::Error`)
     /// error type into a Google Maps Directions API error type
     /// (`google_maps::directions::error::Error`) by wrapping it inside. This
     /// function is required to use the `?` operator.
-    fn from(error: serde_json::error::Error) -> Self {
-        Self::SerdeJson(error)
+    fn from(error: simd_json::Error) -> Self {
+        Self::SimdJson(error)
     } // fn
 } // impl

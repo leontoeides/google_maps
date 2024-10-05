@@ -56,10 +56,10 @@ impl<'a> SnapToRoadsRequest<'a> {
                     if response.status().is_success() {
                         // If the HTTP GET request was successful, get the
                         // response text:
-                        let text = &response.text().await;
-                        match text {
-                            Ok(text) => {
-                                match serde_json::from_str::<SnapToRoadsResponse>(text) {
+                        let bytes = response.text().await.map(String::into_bytes);
+                        match bytes {
+                            Ok(mut bytes) => {
+                                match simd_json::serde::from_slice::<SnapToRoadsResponse>(&mut bytes) {
                                     Ok(deserialized) => {
                                         // Google API returned an error. This
                                         // indicates an issue with the request.
@@ -85,7 +85,7 @@ impl<'a> SnapToRoadsRequest<'a> {
                                     } // Ok(deserialized)
                                     Err(error) => {
                                         tracing::error!("JSON parsing error: {}", error);
-                                        Err(Permanent(RoadsError::SerdeJson(error)))
+                                        Err(Permanent(RoadsError::SimdJson(error)))
                                     } // Err
                                 } // match
                             } // Ok(text)

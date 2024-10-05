@@ -112,7 +112,7 @@ impl<'a> Request<'a> {
     ///   elevation data. This parameter takes a single `Point`.
 
     #[cfg(feature = "geo")]
-    #[deprecated(since = "3.7.1", note =
+    #[deprecated(since = "3.5.1", note =
         "you may now use geo types directly with the google_maps crate. \
         the geo-specific methods are no longer necessary. \
         it's suggested to use the `for_positional_request` method instead"

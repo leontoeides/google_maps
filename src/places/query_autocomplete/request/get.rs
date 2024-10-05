@@ -59,10 +59,10 @@ impl<'a> QueryAutocompleteRequest<'a> {
                     if response.status().is_success() {
                         // If the HTTP GET request was successful, get the
                         // response text:
-                        let text = &response.text().await;
-                        match text {
-                            Ok(text) => {
-                                match serde_json::from_str::<PlacesAutocompleteResponse>(text) {
+                        let bytes = response.text().await.map(String::into_bytes);
+                        match bytes {
+                            Ok(mut bytes) => {
+                                match simd_json::serde::from_slice::<PlacesAutocompleteResponse>(&mut bytes) {
                                     Ok(deserialized) => {
                                         // If the response JSON was successfully
                                         // parsed, check the Google API status
@@ -104,7 +104,7 @@ impl<'a> QueryAutocompleteRequest<'a> {
                                     } // Ok(deserialized)
                                     Err(error) => {
                                         tracing::error!("JSON parsing error: {}", error);
-                                        Err(Permanent(PlacesAutocompleteError::SerdeJson(error)))
+                                        Err(Permanent(PlacesAutocompleteError::SimdJson(error)))
                                     } // Err
                                 } // match
                             } // Ok(text)

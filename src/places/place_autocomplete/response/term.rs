@@ -30,10 +30,11 @@ pub struct Term {
 /// ----------------------------------------------------------------------------
 
 impl std::str::FromStr for Term {
-    type Err = serde_json::error::Error;
+    type Err = simd_json::Error;
     /// Parse a Google Maps Places API _Place Autocomplete_ JSON `Term` response
     /// into a usable `Term` struct.
-    fn from_str(s: &str) -> Result<Self, serde_json::error::Error> {
-        serde_json::from_str(s)
+    fn from_str(s: &str) -> Result<Self, simd_json::Error> {
+        let mut bytes = s.to_string().into_bytes();
+        simd_json::serde::from_slice(&mut bytes)
     } // fn from_str
 } // impl FromStr
