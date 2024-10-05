@@ -43,7 +43,7 @@ impl<'a> Request<'a> {
     pub fn with_unit_system(
         &'a mut self,
         unit_system: impl Into<UnitSystem>
-    ) -> &mut Self {
+    ) -> &'a mut Self {
         self.unit_system = Some(unit_system.into());
         self
     } // fn
