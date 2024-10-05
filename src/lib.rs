@@ -19,7 +19,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! google_maps = "3.5"
+//! google_maps = "3.6"
 //! ```
 //!
 //! Optionally, add `rust_decimal = "1"` and `rust_decimal_macros = "1"` for
@@ -104,7 +104,7 @@
 //!
 //! ```toml
 //! google_maps = {
-//!     version = "3.5",
+//!     version = "3.6",
 //!     default-features = false,
 //!     features = [
 //!         "directions",
@@ -389,9 +389,11 @@
 #![warn(clippy::all, clippy::pedantic, clippy::nursery, clippy::cargo)]
 #![allow(
     clippy::cast_precision_loss,
+    clippy::empty_line_after_doc_comments,
     clippy::missing_errors_doc,
     clippy::module_name_repetitions,
     clippy::multiple_crate_versions,
+    clippy::too_long_first_doc_paragraph,
     clippy::too_many_lines
 )]
 #![doc(html_favicon_url = "https://www.arkiteq.ca/crates/google_maps/icon.png")]

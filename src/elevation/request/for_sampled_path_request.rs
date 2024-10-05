@@ -75,7 +75,7 @@ impl<'a> Request<'a> {
     ///   into an ordered set of equidistant points along the path.
 
     #[cfg(feature = "geo")]
-    #[deprecated(since = "3.5.1", note =
+    #[deprecated(since = "3.6.1", note =
         "you may now use geo types directly with the google_maps crate. \
         the geo-specific methods are no longer necessary. \
         it's suggested to use the `for_sampled_path_request` method instead"

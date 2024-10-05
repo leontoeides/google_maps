@@ -500,7 +500,7 @@ impl GoogleMapsClient {
     ///
     /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
     ///
-    /// let search_results = google_maps_client.nearby_search(LatLng::try_from_dec(dec!(53.540_989), dec!(-113.493_768))?, 1_000)
+    /// let search_results = google_maps_client.nearby_search(LatLng::try_from_dec(dec!(53.640_989), dec!(-113.493_768))?, 1_000)
     ///     .with_type(PlaceType::Restaurant)
     ///     .execute()
     ///     .await?;
