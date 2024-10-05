@@ -63,10 +63,10 @@
 //!
 //! For use with `reqwest` only.
 //!
-//! * `native-tls`
-//! * `rustls`
-//! * `gzip`
-//! * `brotli`
+//! * `reqwest-native-tls` ‧ Enables TLS functionality provided by `native-tls`.
+//! * `reqwest-rustls` ‧ Enables TLS functionality provided by `rustls`. Equivalent to `rustls-tls-webpki-roots`.
+//! * `reqwest-gzip` ‧ Provides response body gzip decompression.
+//! * `reqwest-brotli` ‧ Provides response body brotli decompression.
 //!
 //! ### Default Feature Flags
 //!
@@ -76,7 +76,7 @@
 //!
 //! ```toml
 //! default = [
-//!     # Google Maps crate features:
+//!     # google_maps features:
 //!     "directions",
 //!     "distance_matrix",
 //!     "elevation",
@@ -109,8 +109,8 @@
 //!     features = [
 //!         "directions",
 //!         "reqwest",
-//!         "rustls",
-//!         "brotli"
+//!         "reqwest-rustls",
+//!         "reqwest-brotli"
 //!     ]
 //! }
 //! ```

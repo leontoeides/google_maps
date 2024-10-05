@@ -49,13 +49,14 @@ geo = [ "geo-types" ]
 polyline = [ "dep:polyline" ]
 # Reqwest features:
 reqwest = [ "dep:reqwest", "backoff", "futures", "stream_throttle" ]
+reqwest-brotli = [ "reqwest/brotli" ]
+reqwest-deflate = [ "reqwest/deflate" ]
+reqwest-gzip = [ "reqwest/gzip" ]
+reqwest-zstd = [ "reqwest/zstd" ]
+reqwest-native-tls = [ "reqwest/default-tls" ]
+reqwest-rustls = [ "reqwest/rustls-tls" ]
+# Reqwest middleware features:
 reqwest-middleware = [ "dep:reqwest-middleware", "http", "anyhow" ] # "reqwest-maybe-middleware/middleware"
-brotli = [ "reqwest/brotli" ]
-deflate = [ "reqwest/deflate" ]
-gzip = [ "reqwest/gzip" ]
-zstd = [ "reqwest/zstd" ]
-native-tls = [ "reqwest/default-tls" ]
-rustls = [ "reqwest/rustls-tls" ]
 # Rust Decimal features:
 decimal-serde = [ "rust_decimal/serde" ]
 decimal-serde-float = [ "rust_decimal/serde-float" ]

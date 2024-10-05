@@ -16,7 +16,7 @@ Configure the dependencies:
 
 ```toml
 [dependencies]
-google_maps = "3.5"
+google_maps = "3.7"
 ```
 
 Optionally, add `rust_decimal = "1"` and `rust_decimal_macros = "1"` for access to the `dec!` macro. This macro can be used to define decimal numbers in your program. 
@@ -56,10 +56,10 @@ All other Places API services are covered by the `places` feature.
 
 For use with `reqwest` only.
 
-* `native-tls`
-* `rustls`
-* `gzip`
-* `brotli`
+* `reqwest-native-tls` ‧ Enables TLS functionality provided by `native-tls`.
+* `reqwest-rustls` ‧ Enables TLS functionality provided by `rustls`. Equivalent to `rustls-tls-webpki-roots`.
+* `reqwest-gzip` ‧ Provides response body gzip decompression.
+* `reqwest-brotli` ‧ Provides response body brotli decompression.
 
 ### Default Feature Flags
 
@@ -67,7 +67,7 @@ By default, the Google Maps client includes all implemented Google Maps APIs. Re
 
 ```toml
 default = [
-	# Google Maps crate features:
+	# google_maps features:
 	"directions",
 	"distance_matrix",
 	"elevation",
@@ -93,13 +93,13 @@ This example will only include the Google Maps Directions API. Reqwest will secu
 
 ```toml
 google_maps = {
-	version = "3.5",
+	version = "3.7",
 	default-features = false,
 	features = [
 		"directions",
-		"enable-reqwest",
-		"rustls",
-		"brotli"
+		"reqwest",
+		"reqwest-rustls",
+		"reqwest-brotli"
 	]
 }
 ```
