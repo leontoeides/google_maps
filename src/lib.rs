@@ -92,6 +92,9 @@
 //!
 //!     # rust_decimal features:
 //!     "rust_decimal/serde",
+//!
+//!     # simd-json features:
+//!     "simd-json-known-key",
 //! ]
 //! ```
 //!
