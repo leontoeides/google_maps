@@ -5,7 +5,9 @@ use chrono::{DateTime, Utc};
 
 // =============================================================================
 
-impl Request<'_> {
+// Explict lifetime required for `geo` feature
+#[allow(clippy::needless_lifetimes)]
+impl<'r> Request<'r> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Time Zone API query with the
@@ -71,9 +73,9 @@ impl Request<'_> {
     ///   applicable.
 
     #[cfg(feature = "geo")]
-    pub fn try_new_coordinate<'b>(
-        client: &'a GoogleMapsClient,
-        coordinate: &'b geo_types::Coord,
+    pub fn try_new_coordinate<'g>(
+        client: &'r GoogleMapsClient,
+        coordinate: &'g geo_types::Coord,
         timestamp: DateTime<Utc>
     ) -> Result<Self, crate::error::Error> {
         // Instantiate struct and return it to caller:
@@ -106,9 +108,9 @@ impl Request<'_> {
     ///   applicable.
 
     #[cfg(feature = "geo")]
-    pub fn try_new_point<'b>(
-        client: &'a GoogleMapsClient,
-        point: &'b geo_types::Point,
+    pub fn try_new_point<'g>(
+        client: &'r GoogleMapsClient,
+        point: &'g geo_types::Point,
         timestamp: DateTime<Utc>
     ) -> Result<Self, crate::error::Error> {
         // Instantiate struct and return it to caller:

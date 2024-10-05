@@ -1,6 +1,6 @@
 use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
-#[cfg(feature = "multipart")]
-use reqwest::multipart::Form;
+// #[cfg(feature = "multipart")]
+// use reqwest::multipart::Form;
 use reqwest::{Body, Client as VanillaClient, IntoUrl, Method, Request, Response};
 use serde::Serialize;
 use std::convert::TryFrom;
@@ -206,14 +206,14 @@ impl RequestBuilder {
         }
     }
 
-    #[cfg(feature = "multipart")]
-    pub fn multipart(self, multipart: Form) -> Self {
+    // #[cfg(feature = "multipart")]
+    /* pub fn multipart(self, multipart: Form) -> Self {
         match self {
             RequestBuilder::Vanilla(c) => RequestBuilder::Vanilla(c.multipart(multipart)),
             #[cfg(feature = "reqwest-middleware")]
             RequestBuilder::Middleware(c) => RequestBuilder::Middleware(c.multipart(multipart)),
         }
-    }
+    } */
 
     pub fn query<T: Serialize + ?Sized>(self, query: &T) -> Self {
         match self {
@@ -231,14 +231,14 @@ impl RequestBuilder {
         }
     }
 
-    #[cfg(feature = "json")]
-    pub fn json<T: Serialize + ?Sized>(self, json: &T) -> Self {
+    // #[cfg(feature = "json")]
+    /* pub fn json<T: Serialize + ?Sized>(self, json: &T) -> Self {
         match self {
             RequestBuilder::Vanilla(c) => RequestBuilder::Vanilla(c.json(json)),
             #[cfg(feature = "reqwest-middleware")]
             RequestBuilder::Middleware(c) => RequestBuilder::Middleware(c.json(json)),
         }
-    }
+    } */
 
     pub fn build(self) -> reqwest::Result<Request> {
         match self {
