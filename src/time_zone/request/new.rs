@@ -5,7 +5,7 @@ use chrono::{DateTime, Utc};
 
 // =============================================================================
 
-impl<'a> Request<'a> {
+impl Request<'_> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Time Zone API query with the

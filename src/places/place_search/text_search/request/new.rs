@@ -3,7 +3,7 @@ use crate::places::place_search::text_search::request::Request;
 
 // =============================================================================
 
-impl<'a> Request<'a> {
+impl Request<'_> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Places API _Text Search_ query

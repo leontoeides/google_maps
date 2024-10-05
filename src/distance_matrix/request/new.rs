@@ -5,7 +5,7 @@ use crate::{
 
 // =============================================================================
 
-impl<'a> Request<'a> {
+impl Request<'_> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Distance Matrix API query with the

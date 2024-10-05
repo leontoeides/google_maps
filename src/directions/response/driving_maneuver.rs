@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 // -----------------------------------------------------------------------------
 
 /// The action to take for the current step (turn left, merge, straight, etc.).
+///
 /// This field is used to determine which icon to display. Values in this
 /// [list](https://developers.google.com/maps/documentation/directions/intro#Steps)
 /// are subject to change.

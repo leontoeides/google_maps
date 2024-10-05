@@ -4,7 +4,7 @@ use crate::types::LatLng;
 
 // =============================================================================
 
-impl<'a> Request<'a> {
+impl Request<'_> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Nearest Roads query with the

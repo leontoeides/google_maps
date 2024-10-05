@@ -4,7 +4,7 @@ use crate::LatLng;
 
 // =============================================================================
 
-impl<'a> Request<'a> {
+impl Request<'_> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Places API _Nearby Search_ query

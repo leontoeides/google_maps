@@ -3,7 +3,7 @@ use crate::places::place_details::request::Request;
 
 // =============================================================================
 
-impl<'a> Request<'a> {
+impl Request<'_> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Places API _Place Details_ query

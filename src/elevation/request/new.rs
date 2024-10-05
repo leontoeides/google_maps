@@ -3,7 +3,7 @@ use crate::elevation::request::Request;
 
 // =============================================================================
 
-impl<'a> Request<'a> {
+impl Request<'_> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Elevation API query with the

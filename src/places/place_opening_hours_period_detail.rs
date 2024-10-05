@@ -44,7 +44,7 @@ where
 
 struct WeekdayVisitor;
 
-impl<'de> Visitor<'de> for WeekdayVisitor {
+impl Visitor<'_> for WeekdayVisitor {
     type Value = Weekday;
 
     fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -84,7 +84,7 @@ where
 
 struct NaiveTimeVisitor;
 
-impl<'de> Visitor<'de> for NaiveTimeVisitor {
+impl Visitor<'_> for NaiveTimeVisitor {
     type Value = NaiveTime;
 
     fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {

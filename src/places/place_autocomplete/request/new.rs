@@ -3,7 +3,7 @@ use crate::places::place_autocomplete::request::Request;
 
 // =============================================================================
 
-impl<'a> Request<'a> {
+impl Request<'_> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Place API Place Autocomplete query

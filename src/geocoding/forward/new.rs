@@ -2,7 +2,7 @@ use crate::{client::GoogleMapsClient, geocoding::forward::ForwardRequest};
 
 // =============================================================================
 
-impl<'a> ForwardRequest<'a> {
+impl ForwardRequest<'_> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Geolocation API query with the
