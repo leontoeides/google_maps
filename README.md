@@ -57,9 +57,7 @@ All other Places API services are covered by the `places` feature.
 For use with `reqwest` only.
 
 * `reqwest-native-tls` ‧ Enables TLS functionality provided by `native-tls`.
-* `reqwest-rustls` ‧ Enables TLS functionality provided by `rustls`. Equivalent to `rustls-tls-webpki-roots`.
-* `reqwest-gzip` ‧ Provides response body gzip decompression.
-* `reqwest-brotli` ‧ Provides response body brotli decompression.
+* `reqwest-rustls` ‧ Enables TLS functionality provided by `rustls`.
 
 ### Default Feature Flags
 
