@@ -3,6 +3,21 @@
 * Release notes are available on
   [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+# 3.7.0
+
+* 2024-10-05: If your crate directly references the `enable-reqwest` feature in
+  this crate, it has been renamed to `reqwest` as of version 3.7.0.
+
+* 2024-10-05: Many features have been added, some features have been renamed.
+  Please see the
+  [Cargo.toml](https://github.com/leontoeides/google_maps/blob/master/Cargo.toml)
+  for a complete list of available features. The default features have changed a
+  bit (for example, `reqwest/http2` had been accidentally left out but is now
+  enabled).No negative effect is expected.
+
+* 2024-10-05: Moved crate from using [serde_json](https://crates.io/crates/serde_json)
+  for JSON parsing over to [simd-json](https://crates.io/crates/simd-json).
+
 # 3.6.0
 
 * 2024-09-21: Dependencies bump.
