@@ -77,8 +77,9 @@ default = [
 
 	# reqwest features:
 	"reqwest",
-	"reqwest/default-tls",
-	"reqwest/gzip",
+	"reqwest-default-tls",
+	"reqwest-http2",
+	"reqwest-brotli",
 
 	# rust_decimal features:
 	"rust_decimal/serde",

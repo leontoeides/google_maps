@@ -1,6 +1,6 @@
 use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
-// #[cfg(feature = "multipart")]
-// use reqwest::multipart::Form;
+#[cfg(all(feature = "reqwest-multipart", feature = "reqwest-middleware-multipart"))]
+use reqwest::multipart::Form;
 use reqwest::{Body, Client as VanillaClient, IntoUrl, Method, Request, Response};
 use serde::Serialize;
 use std::convert::TryFrom;
@@ -206,14 +206,16 @@ impl RequestBuilder {
         }
     }
 
-    // #[cfg(feature = "multipart")]
-    /* pub fn multipart(self, multipart: Form) -> Self {
+    #[cfg(all(feature = "reqwest-multipart", feature = "reqwest-middleware-multipart"))]
+    #[allow(clippy::use_self)]
+    pub fn multipart(self, multipart: Form) -> Self {
         match self {
+            #[cfg(feature = "reqwest-multipart")]
             RequestBuilder::Vanilla(c) => RequestBuilder::Vanilla(c.multipart(multipart)),
-            #[cfg(feature = "reqwest-middleware")]
+            #[cfg(feature = "reqwest-middleware-multipart")]
             RequestBuilder::Middleware(c) => RequestBuilder::Middleware(c.multipart(multipart)),
         }
-    } */
+    }
 
     pub fn query<T: Serialize + ?Sized>(self, query: &T) -> Self {
         match self {
@@ -231,14 +233,16 @@ impl RequestBuilder {
         }
     }
 
-    // #[cfg(feature = "json")]
-    /* pub fn json<T: Serialize + ?Sized>(self, json: &T) -> Self {
+    #[cfg(all(feature = "reqwest-json", feature = "reqwest-middleware-json"))]
+    #[allow(clippy::use_self)]
+    pub fn json<T: Serialize + ?Sized>(self, json: &T) -> Self {
         match self {
+            #[cfg(feature = "reqwest-json")]
             RequestBuilder::Vanilla(c) => RequestBuilder::Vanilla(c.json(json)),
-            #[cfg(feature = "reqwest-middleware")]
+            #[cfg(feature = "reqwest-middleware-json")]
             RequestBuilder::Middleware(c) => RequestBuilder::Middleware(c.json(json)),
         }
-    } */
+    }
 
     pub fn build(self) -> reqwest::Result<Request> {
         match self {
