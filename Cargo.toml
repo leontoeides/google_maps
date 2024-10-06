@@ -51,7 +51,7 @@ time_zone = ["chrono", "chrono-tz"]
 geo = ["geo-types"]
 polyline = ["dep:polyline"]
 # reqwest features:
-reqwest = ["dep:reqwest", "backoff", "futures", "stream_throttle"]
+reqwest = ["dep:reqwest", "dep:backoff", "dep:futures", "dep:stream_throttle"]
 reqwest-http2 = ["reqwest/http2"]
 reqwest-default-tls = ["reqwest/default-tls"]
 reqwest-native-tls = ["reqwest/native-tls"]
@@ -74,7 +74,7 @@ reqwest-stream = ["reqwest/stream"]
 reqwest-socks = ["reqwest/socks"]
 reqwest-hickory-dns = ["reqwest/hickory-dns"]
 # reqwest-middleware features:
-reqwest-middleware = ["dep:reqwest-middleware", "http", "anyhow"] # "reqwest-maybe-middleware/middleware"
+reqwest-middleware = ["dep:reqwest-middleware", "dep:http", "dep:anyhow"] # "reqwest-maybe-middleware/middleware"
 reqwest-middleware-multipart = ["reqwest-middleware/multipart", "reqwest-multipart"]
 reqwest-middleware-json = ["reqwest-middleware/json", "reqwest-json"]
 reqwest-middleware-charset = ["reqwest-middleware/charset", "reqwest-charset"]
