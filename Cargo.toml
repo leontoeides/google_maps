@@ -18,27 +18,32 @@ doctest = false
 
 [features]
 default = [
-	# `autocomplete` covers the Places API autocomplete-related services.
-	# All other Places API services are under "places" feature.
+	# google_maps default features:
 	"directions",
 	"distance_matrix",
 	"elevation",
 	"geocoding",
 	"time_zone",
+	# `autocomplete` covers the Places API autocomplete-related services.
+	# All other Places API services are under `places` feature.
 	"autocomplete",
 	"roads",
 	"places",
 
+	# reqwest default features:
 	"reqwest",
 	"reqwest-default-tls",
 	"reqwest-http2",
 	"reqwest-brotli",
 
-	"rust_decimal/serde",
+	# rust_decimal default features:
+	"decimal-serde",
 
+	# simd-json default features:
+	"simd-json-beef",
 	"simd-json-known-key",
 ]
-# google_maps Client API features:
+# google_maps features:
 autocomplete = []
 directions = ["chrono", "chrono-tz"]
 distance_matrix = ["chrono", "chrono-tz"]
@@ -47,11 +52,12 @@ geocoding = []
 places = ["chrono", "chrono-tz"]
 roads = []
 time_zone = ["chrono", "chrono-tz"]
-# geo ecosystem features:
+# geo features:
 geo = ["geo-types"]
 polyline = ["dep:polyline"]
 # reqwest features:
 reqwest = ["dep:reqwest", "dep:backoff", "dep:futures", "dep:stream_throttle"]
+enable-reqwest = ["reqwest"]
 reqwest-http2 = ["reqwest/http2"]
 reqwest-default-tls = ["reqwest/default-tls"]
 reqwest-native-tls = ["reqwest/native-tls"]
@@ -75,6 +81,7 @@ reqwest-socks = ["reqwest/socks"]
 reqwest-hickory-dns = ["reqwest/hickory-dns"]
 # reqwest-middleware features:
 reqwest-middleware = ["dep:reqwest-middleware", "dep:http", "dep:anyhow"] # "reqwest-maybe-middleware/middleware"
+enable-reqwest-middleware = ["reqwest-middleware"]
 reqwest-middleware-multipart = ["reqwest-middleware/multipart", "reqwest-multipart"]
 reqwest-middleware-json = ["reqwest-middleware/json", "reqwest-json"]
 reqwest-middleware-charset = ["reqwest-middleware/charset", "reqwest-charset"]
@@ -92,6 +99,7 @@ decimal-serde-with-arbitrary-precision = ["rust_decimal/serde-with-arbitrary-pre
 simd-json-arraybackend = ["simd-json/arraybackend"]
 simd-json-value-no-dup-keys = ["simd-json/value-no-dup-keys"]
 simd-json-128bit = ["simd-json/128bit"]
+simd-json-beef = ["simd-json/beef"]
 simd-json-known-key = ["simd-json/known-key"]
 simd-json-swar-number-parsing = ["simd-json/swar-number-parsing"]
 simd-json-approx-number-parsing = ["simd-json/approx-number-parsing"]

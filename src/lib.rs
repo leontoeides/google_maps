@@ -74,26 +74,29 @@
 //!
 //! ```toml
 //! default = [
-//!     # google_maps features:
+//!     # google_maps default features:
 //!     "directions",
 //!     "distance_matrix",
 //!     "elevation",
 //!     "geocoding",
 //!     "time_zone",
+//!     # `autocomplete` covers the Places API autocomplete-related services.
+//!     # All other Places API services are under `places` feature.
 //!     "autocomplete",
 //!     "roads",
 //!     "places",
 //!
-//!     # reqwest features:
+//!     # reqwest default features:
 //!     "reqwest",
 //!     "reqwest-default-tls",
 //!     "reqwest-http2",
 //!     "reqwest-brotli",
 //!
-//!     # rust_decimal features:
-//!     "rust_decimal/serde",
+//!     # rust_decimal default features:
+//!     "decimal-serde",
 //!
-//!     # simd-json features:
+//!     # simd-json default features:
+//!     "simd-json-beef",
 //!     "simd-json-known-key",
 //! ]
 //! ```
@@ -392,12 +395,12 @@
 #![warn(clippy::all, clippy::pedantic, clippy::nursery, clippy::cargo)]
 #![allow(
     clippy::cast_precision_loss,
-    clippy::empty_line_after_doc_comments,
+    clippy::empty_line_after_doc_comments, // bah!
     clippy::missing_errors_doc,
     clippy::module_name_repetitions,
     clippy::multiple_crate_versions,
     clippy::negative_feature_names, // suppress clippy warning re: `simd_json` crate
-    clippy::too_long_first_doc_paragraph,
+    clippy::too_long_first_doc_paragraph, // bah!
     clippy::too_many_lines
 )]
 #![doc(html_favicon_url = "https://www.arkiteq.ca/crates/google_maps/icon.png")]

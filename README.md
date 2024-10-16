@@ -65,26 +65,29 @@ By default, the Google Maps client includes all implemented Google Maps APIs. Re
 
 ```toml
 default = [
-	# google_maps features:
+	# google_maps default features:
 	"directions",
 	"distance_matrix",
 	"elevation",
 	"geocoding",
 	"time_zone",
+	# `autocomplete` covers the Places API autocomplete-related services.
+	# All other Places API services are under `places` feature.
 	"autocomplete",
 	"roads",
 	"places",
 
-	# reqwest features:
+	# reqwest default features:
 	"reqwest",
 	"reqwest-default-tls",
 	"reqwest-http2",
 	"reqwest-brotli",
 
-	# rust_decimal features:
-	"rust_decimal/serde",
+	# rust_decimal default features:
+	"decimal-serde",
 
-	# simd-json features:
+	# simd-json default features:
+	"simd-json-beef",
 	"simd-json-known-key",
 ]
 ```

@@ -57,7 +57,8 @@ impl<'a> DirectionsRequest<'a> {
                     if response.status().is_success() {
                         // If the HTTP GET request was successful, get the
                         // response text:
-                        let bytes = response.text().await.map(String::into_bytes);
+                        let text = response.text().await;
+                        let bytes = text.map(String::into_bytes);
                         match bytes {
                             Ok(mut bytes) => {
                                 match simd_json::serde::from_slice::<DirectionsResponse>(&mut bytes) {
@@ -112,9 +113,9 @@ impl<'a> DirectionsRequest<'a> {
                                 )))
                             } // Err
                         } // match
-                          // We got a response from the server but it was not OK.
-                          // Only HTTP "500 Server Errors", and HTTP "429 Too Many
-                          // Requests" are eligible for retries.
+                    // We got a response from the server but it was not OK.
+                    // Only HTTP "500 Server Errors", and HTTP "429 Too Many
+                    // Requests" are eligible for retries.
                     } else if response.status().is_server_error() || response.status() == 429 {
                         tracing::warn!("HTTP client returned: {}", response.status());
                         Err(Transient {
