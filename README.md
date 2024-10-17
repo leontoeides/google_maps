@@ -8,7 +8,7 @@ An unofficial Google Maps Platform client library for the Rust programming langu
 
 This client currently implements the Directions API, Distance Matrix API, Elevation API, Geocoding API, Time Zone API, and parts of the Places and Roads API.
 
-<img src="https://www.arkiteq.ca/crates/google_maps/banner.jpg" alt="Unofficial Google Maps Platform Client for Rust" width="400"/>
+<img src="https://www.arkiteq.io/crates/google_maps/banner.jpg" alt="Unofficial Google Maps Platform Client for Rust" width="400"/>
 
 # Installation
 

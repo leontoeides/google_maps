@@ -11,7 +11,7 @@
 //! Elevation API, Geocoding API, Time Zone API, and parts of the Places and
 //! Roads API.
 //!
-//! <img src="https://www.arkiteq.ca/crates/google_maps/banner.jpg" alt="Unofficial Google Maps Platform Client for Rust" width="400"/>
+//! <img src="https://www.arkiteq.io/crates/google_maps/banner.jpg" alt="Unofficial Google Maps Platform Client for Rust" width="400"/>
 //!
 //! # Installation
 //!
@@ -403,8 +403,8 @@
     clippy::too_long_first_doc_paragraph, // bah!
     clippy::too_many_lines
 )]
-#![doc(html_favicon_url = "https://www.arkiteq.ca/crates/google_maps/icon.png")]
-#![doc(html_logo_url = "https://www.arkiteq.ca/crates/google_maps/logo.png")]
+#![doc(html_favicon_url = "https://www.arkiteq.io/crates/google_maps/icon.png")]
+#![doc(html_logo_url = "https://www.arkiteq.io/crates/google_maps/logo.png")]
 
 // Common / global modules:
 
