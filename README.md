@@ -12,7 +12,7 @@ This client currently implements the Directions API, Distance Matrix API, Elevat
 
 # Installation
 
-Configure the dependencies:
+Configure the dependencies in your project's `Cargo.toml` file:
 
 ```toml
 [dependencies]
@@ -328,7 +328,8 @@ responds as expected.
 
 ### Controlling Request Settings
 
-The Google Maps client settings can be used to change the request rate and automatic retry parameters.
+The Google Maps client settings can be used to change the request rate and
+automatic retry parameters.
 
 ```rust
 use google_maps::prelude::*;
@@ -341,6 +342,12 @@ let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE")
     // to make Google Maps Platform requests.
     .build();
 ```
+
+# Crate Status
+
+This crate is maintained but frequent updates are not expected. This crate
+currently implements all of the Google Maps features that most users would need.
+Most updates will be for occasional dependency bumps.
 
 # Feedback
 
