@@ -12,6 +12,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 /// resulting from the geocoding operation.
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[serde(rename_all(serialize = "SCREAMING_SNAKE_CASE", deserialize = "SCREAMING_SNAKE_CASE"))]
 pub enum GeocoderStatus {
     /// Indicates that no errors occurred; the address was successfully parsed
     /// and at least one geocode was returned.
