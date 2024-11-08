@@ -6,7 +6,7 @@ use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize};
 
 // -----------------------------------------------------------------------------
-
+//
 /// Indicates the [status
 /// code](https://developers.google.com/maps/documentation/directions/intro#GeocodedWaypoints)
 /// resulting from the geocoding operation.
@@ -16,15 +16,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum GeocoderStatus {
     /// Indicates that no errors occurred; the address was successfully parsed
     /// and at least one geocode was returned.
-    #[serde(alias = "OK")]
+    #[serde(alias = "Ok")]
     Ok,
+
     /// Indicates that the geocode was successful but returned no results. This
     /// may occur if the geocoder was passed a non-existent `address`.
-    #[serde(alias = "ZERO_RESULTS")]
+    #[serde(alias = "ZeroResults")]
     ZeroResults,
+
     /// Indicates that the request could not be processed due to a server error.
     /// The request may succeed if you try again.
-    #[serde(alias = "UNKNOWN_ERROR")]
+    #[serde(alias = "UnknownError")]
     UnknownError,
 } // struct
 
