@@ -7,20 +7,23 @@ use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize};
 
 // -----------------------------------------------------------------------------
-
+//
 /// Indicates the status of the response.
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[serde(rename_all(serialize = "SCREAMING_SNAKE_CASE", deserialize = "SCREAMING_SNAKE_CASE"))]
 pub enum Status {
     /// Generally indicates one of the following:
     /// * The query (`address`, `components` or `latlng`) is missing.
     /// * An invalid `result_type` or `location_type` was given.
-    #[serde(alias = "INVALID_REQUEST")]
+    #[serde(alias = "InvalidRequest")]
     InvalidRequest,
+
     /// Indicates that no errors occurred; the address was successfully parsed
     /// and at least one geocode was returned.
-    #[serde(alias = "OK")]
+    #[serde(alias = "Ok")]
     Ok,
+
     /// Indicates any of the following:
     /// * The API key is missing or invalid.
     /// * Billing has not been enabled on your account.
@@ -31,23 +34,27 @@ pub enum Status {
     /// See the [Maps
     /// FAQ](https://developers.google.com/maps/faq#over-limit-key-error) to
     /// learn how to fix this.
-    #[serde(alias = "OVER_DAILY_LIMIT")]
+    #[serde(alias = "OverDailyLimit")]
     OverDailyLimit,
+
     /// Indicates the requestor has exceeded quota.
-    #[serde(alias = "OVER_QUERY_LIMIT")]
+    #[serde(alias = "OverQueryLimit")]
     OverQueryLimit,
+
     /// Indicates that the API did not complete the request. Confirm that the
     /// request was sent over HTTPS instead of HTTP.
-    #[serde(alias = "REQUEST_DENIED")]
+    #[serde(alias = "RequestDenied")]
     RequestDenied,
+
     /// Indicates that the request could not be processed due to a server error.
     /// The request may succeed if you try again.
-    #[serde(alias = "UNKNOWN_ERROR")]
+    #[serde(alias = "UnknownError")]
     UnknownError,
+
     /// Indicates that the geocode was successful but returned no results. This
     /// may occur if the geocoder was passed a non-existent `address`. This may
     /// also occur if the geocoder was passed a `latlng` in a remote location.
-    #[serde(alias = "ZERO_RESULTS")]
+    #[serde(alias = "ZeroResults")]
     ZeroResults,
 } // enum
 

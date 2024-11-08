@@ -1,6 +1,6 @@
 [package]
 name = "google_maps"
-version = "3.7.1"
+version = "3.7.2"
 authors = ["Dylan Bowker <dylan.bowker@arkiteq.io>"]
 edition = "2021"
 categories = ["api-bindings"]
@@ -125,7 +125,7 @@ rust_decimal_macros = "1"
 serde = { version = "1.0", features = ["derive"] }
 simd-json = "0.14"
 stream_throttle = { version = "0.5", optional = true }
-thiserror = "1.0"
+thiserror = "2.0"
 tokio = { version = "1", optional = true, features = ["time"] }
 tracing = { version = "0.1", features = ["log"] }
 

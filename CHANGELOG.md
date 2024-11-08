@@ -3,6 +3,11 @@
 * Release notes are available on
   [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+# 3.7.2
+
+* 2024-11-07: Corrected issue with `Status` enums not round-tripping through
+  de-serialisation and re-serialisation.
+
 # 3.7.1
 
 * 2024-10-15: Small tweaks to the features. Put back `enable-reqwest`.

@@ -7,22 +7,25 @@ use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize};
 
 // -----------------------------------------------------------------------------
-
+//
 /// Indicates the status of the response.
-
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[serde(rename_all(serialize = "SCREAMING_SNAKE_CASE", deserialize = "SCREAMING_SNAKE_CASE"))]
 pub enum Status {
     /// Indicates that the request was successful.
-    #[serde(alias = "OK")]
+    #[serde(alias = "Ok")]
     Ok,
+
     /// Indicates that the search was successful but returned no results. This
     /// may occur if the search was passed a `latlng` in a remote location.
-    #[serde(alias = "ZERO_RESULTS")]
+    #[serde(alias = "ZeroResults")]
     ZeroResults,
+
     /// Indicates the API request was malformed, generally due to missing
     /// required query parameter (`location` or `radius`).
-    #[serde(alias = "INVALID_REQUEST")]
+    #[serde(alias = "InvalidRequest")]
     InvalidRequest,
+
     /// Indicates any of the following:
     /// * You have exceeded the QPS limits.
     /// * Billing has not been enabled on your account.
@@ -33,19 +36,22 @@ pub enum Status {
     ///
     /// See the [Maps FAQ](https://developers.google.com/maps/faq#over-limit-key-error)
     /// for more information about how to resolve this error.
-    #[serde(alias = "OVER_QUERY_LIMIT")]
+    #[serde(alias = "OverQueryLimit")]
     OverQueryLimit,
+
     /// Indicates that your request was denied, generally because:
     /// * The request is missing an API key.
     /// * The `key` parameter is invalid.
-    #[serde(alias = "REQUEST_DENIED")]
+    #[serde(alias = "RequestDenied")]
     RequestDenied,
+
     /// Indicates an unknown error.
-    #[serde(alias = "UNKNOWN_ERROR")]
+    #[serde(alias = "UnknownError")]
     UnknownError,
+
     /// Indicates that that the referenced location, `place_id`, was not found
     /// in the Places database.
-    #[serde(alias = "NOT_FOUND")]
+    #[serde(alias = "NotFound")]
     NotFound,
 } // struct
 

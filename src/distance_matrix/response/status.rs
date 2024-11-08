@@ -6,27 +6,30 @@ use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize};
 
 // -----------------------------------------------------------------------------
-
+//
 /// The `status` fields within the response object contain the status of the
 /// request, and may contain useful debugging information. The Distance Matrix
 /// API returns a top-level status field, with information about the request in
 /// general, as well as a status field for each element field, with information
 /// about that particular origin-destination pairing.
-
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[serde(rename_all(serialize = "SCREAMING_SNAKE_CASE", deserialize = "SCREAMING_SNAKE_CASE"))]
 pub enum Status {
     /// Indicates that the provided request was invalid. Common causes of this
     /// status include an invalid parameter or parameter value.
-    #[serde(alias = "INVALID_REQUEST")]
+    #[serde(alias = "InvalidRequest")]
     InvalidRequest,
+
     /// Indicates that the product of origins and destinations exceeds the
     /// per-query
     /// [limit](https://developers.google.com/maps/documentation/distance-matrix/usage-and-billing).
-    #[serde(alias = "MAX_ELEMENTS_EXCEEDED")]
+    #[serde(alias = "MaxElementsExceeded")]
     MaxElementsExceeded,
+
     /// Indicates the response contains a valid `result`.
-    #[serde(alias = "OK")]
+    #[serde(alias = "Ok")]
     Ok,
+
     /// Indicates any of the following:
     /// * The API key is missing or invalid.
     /// * Billing has not been enabled on your account.
@@ -37,19 +40,22 @@ pub enum Status {
     /// See the [Maps
     /// FAQ](https://developers.google.com/maps/faq#over-limit-key-error) to
     /// learn how to fix this.
-    #[serde(alias = "OVER_DAILY_LIMIT")]
+    #[serde(alias = "OverDailyLimit")]
     OverDailyLimit,
+
     /// Indicates the service has received too many requests from your
     /// application within the allowed time period.
-    #[serde(alias = "OVER_QUERY_LIMIT")]
+    #[serde(alias = "OverQueryLimit")]
     OverQueryLimit,
+
     /// Indicates that the service denied use of the Distance Matrix service by
     /// your application.
-    #[serde(alias = "REQUEST_DENIED")]
+    #[serde(alias = "RequestDenied")]
     RequestDenied,
+
     /// Indicates a Distance Matrix request could not be processed due to a
     /// server error. The request may succeed if you try again.
-    #[serde(alias = "UNKNOWN_ERROR")]
+    #[serde(alias = "UnknownError")]
     UnknownError,
 } // enum
 

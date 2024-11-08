@@ -6,17 +6,19 @@ use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize};
 
 // -----------------------------------------------------------------------------
-
+//
 /// Indicates the status of the response.
-
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[serde(rename_all(serialize = "SCREAMING_SNAKE_CASE", deserialize = "SCREAMING_SNAKE_CASE"))]
 pub enum Status {
     /// Indicates that the request was malformed.
-    #[serde(alias = "INVALID_REQUEST")]
+    #[serde(alias = "InvalidRequest")]
     InvalidRequest,
+
     /// Indicates that the request was successful.
-    #[serde(alias = "OK")]
+    #[serde(alias = "Ok")]
     Ok,
+
     /// Indicates any of the following:
     /// * The API key is missing or invalid.
     /// * Billing has not been enabled on your account.
@@ -27,16 +29,19 @@ pub enum Status {
     /// See the [Maps
     /// FAQ](https://developers.google.com/maps/faq#over-limit-key-error) to
     /// learn how to fix this.
-    #[serde(alias = "OVER_DAILY_LIMIT")]
+    #[serde(alias = "OverDailyLimit")]
     OverDailyLimit,
+
     /// Indicates the requestor has exceeded quota.
-    #[serde(alias = "OVER_QUERY_LIMIT")]
+    #[serde(alias = "OverQueryLimit")]
     OverQueryLimit,
+
     /// Indicates that the API did not complete the request.
-    #[serde(alias = "REQUEST_DENIED")]
+    #[serde(alias = "RequestDenied")]
     RequestDenied,
+
     /// Indicates an unknown error.
-    #[serde(alias = "UNKNOWN_ERROR")]
+    #[serde(alias = "UnknownError")]
     UnknownError,
 } // enum
 

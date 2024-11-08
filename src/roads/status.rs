@@ -7,10 +7,10 @@ use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize};
 
 // -----------------------------------------------------------------------------
-
+//
 /// Indicates the status of the response.
-
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[serde(rename_all(serialize = "SCREAMING_SNAKE_CASE", deserialize = "SCREAMING_SNAKE_CASE"))]
 pub enum Status {
     /// 1. Your API key is not valid or was not included in the request. Please
     ///    ensure that you've included the entire key, and that you've enabled
@@ -28,7 +28,7 @@ pub enum Status {
     ///   parameters may be specified for each request.
     ///   This error will not be returned if a `placeId` is passed for a road
     ///   which no longer exists, or for a place which is not a road.
-    #[serde(alias = "INVALID_ARGUMENT")]
+    #[serde(alias = "InvalidArgument")]
     InvalidArgument,
 
     /// The request was denied for one or more of the following reasons:
@@ -48,12 +48,12 @@ pub enum Status {
     ///   on your account.
     /// * [Adjust your usage cap](https://developers.google.com/maps/documentation/roads/errors?hl=en#usage-cap)
     ///   to increase your daily limit (if applicable).
-    #[serde(alias = "PERMISSION_DENIED")]
+    #[serde(alias = "PermissionDenied")]
     PermissionDenied,
 
     /// Ensure that you are sending requests to `https://roads.googleapis.com/`
     /// and not `http://roads.googleapis.com/`.
-    #[serde(alias = "NOT_FOUND")]
+    #[serde(alias = "NotFound")]
     NotFound,
 
     /// You have exceeded the request limit that you configured in the Google
@@ -62,7 +62,7 @@ pub enum Status {
     /// limit should be configured to prevent a single or small group of users
     /// from exhausting your daily quota, while still allowing reasonable access
     /// to all users. See Capping API Usage to configure these limits.
-    #[serde(alias = "RESOURCE_EXHAUSTED")]
+    #[serde(alias = "ResourceExhausted")]
     ResourceExhausted,
 } // struct
 
