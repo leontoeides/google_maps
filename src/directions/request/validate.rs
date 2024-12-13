@@ -64,7 +64,7 @@ impl<'a> Request<'a> {
             } // if
 
             // ...restrictions cannot be set:
-            if self.restrictions.is_empty() {
+            if !self.restrictions.is_empty() {
                 return Err(Error::EitherRestrictionsOrWaypoints(
                     self.waypoints.len(),
                     self.restrictions
