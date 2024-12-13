@@ -3,6 +3,13 @@
 * Release notes are available on
   [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+# 3.7.4
+
+* 2024-12-12: Merged [PR](https://github.com/leontoeides/google_maps/pull/33)
+  to correct validations for directions requests. Thank you
+  [ARBaart](https://github.com/ARBaart) and congrats on your first single
+  character PR!
+
 # 3.7.3
 
 * 2024-11-07: Merged a patch for an enum to allow for round-tripping. Thank you
