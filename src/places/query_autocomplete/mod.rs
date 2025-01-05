@@ -19,17 +19,17 @@ pub mod request;
 
 // -----------------------------------------------------------------------------
 
-const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/place/autocomplete";
-const OUTPUT_FORMAT: &str = "json"; // json or xml
-
-// -----------------------------------------------------------------------------
+pub use crate::places::error::Error;
 
 pub use crate::places::place_autocomplete::{
-    error::Error,
     response::{
-        matched_substring::MatchedSubstring, prediction::Prediction, status::Status,
-        structured_format::StructuredFormat, term::Term, Response,
-    }, // response
-}; // place_autocomplete
+        matched_substring::MatchedSubstring,
+        prediction::Prediction,
+        Response,
+        status::Status,
+        structured_format::StructuredFormat,
+        term::Term,
+    },
+};
 
-pub use crate::places::query_autocomplete::request::Request; // place_autocomplete
+pub use crate::places::query_autocomplete::request::Request;

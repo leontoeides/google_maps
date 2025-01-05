@@ -4,34 +4,36 @@
 //! for building your Google Maps Platform request.
 
 mod build;
-#[cfg(feature = "reqwest")]
-mod execute;
+mod end_point;
 mod for_positional_request;
 mod for_sampled_path_request;
-#[cfg(feature = "reqwest")]
-mod get;
 pub mod locations;
 mod new;
-mod query_url;
-mod validate;
+mod query_string;
+mod validatable;
+
+#[cfg(feature = "reqwest")]
+mod execute;
+
+#[cfg(feature = "reqwest")]
+mod get;
 
 // -----------------------------------------------------------------------------
 
-use crate::{client::GoogleMapsClient, elevation::request::locations::Locations};
+use crate::elevation::Locations;
 
 // -----------------------------------------------------------------------------
 //
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Elevation API_ query**. The methods implemented for this struct are what's
 /// used to build your request.
-
 #[derive(Debug)]
 pub struct Request<'a> {
     // Required parameters:
     // --------------------
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client: &'a GoogleMapsClient,
+    client: &'a crate::client::Client,
 
     // Positional Requests:
     // --------------------
@@ -54,12 +56,4 @@ pub struct Request<'a> {
     /// elevation data. The samples parameter divides the given path into an
     /// ordered set of equidistant points along the path.
     samples: Option<u8>,
-
-    // Internal use only:
-    // ------------------
-    /// Query string that is to be submitted to the Google Cloud Maps Platform.
-    query: Option<String>,
-
-    /// Has the request been validated?
-    validated: bool,
 } // struct

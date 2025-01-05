@@ -1,71 +1,32 @@
-use crate::geocoding::reverse::ReverseRequest;
-use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
-
-impl<'a> ReverseRequest<'a> {
-    /// Builds the query string for the Google Maps Geocoding API based on the
-    /// input provided by the client.
+impl<'r> crate::geocoding::reverse::ReverseRequest<'r> {
+    /// Builds the URL [query string](https://en.wikipedia.org/wiki/Query_string)
+    /// for the HTTP [GET](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET)
+    /// request.
     ///
     /// ## Arguments
     ///
     /// This method accepts no arguments.
-
-    pub fn build(&mut self) -> &'a mut ReverseRequest {
-        // This section builds the "required parameters" portion of the query
-        // string:
-
-        let mut query = format!(
-            "key={}&latlng={}",
-            self.client.key,
-            String::from(&self.latlng),
-        ); // format!
-
-        // This section builds the "optional parameters" portion of the query
-        // string:
-
-        // Language key/value pair:
-        if let Some(language) = &self.language {
-            query.push_str("&language=");
-            query.push_str(&String::from(language));
-        } // if
-
-        // Location type(s) key/value pair:
-        if !self.location_types.is_empty() {
-            query.push_str("&location_type=");
-            query.push_str(
-                &utf8_percent_encode(
-                    &self
-                        .location_types
-                        .iter()
-                        .map(String::from)
-                        .collect::<Vec<String>>()
-                        .join("|"),
-                    NON_ALPHANUMERIC,
-                )
-                .to_string(),
-            ); // push_str
-        } // if
-
-        // Result type(s) key/value pair:
-        if !self.result_types.is_empty() {
-            query.push_str("&result_type=");
-            query.push_str(
-                &utf8_percent_encode(
-                    &self
-                        .result_types
-                        .iter()
-                        .map(String::from)
-                        .collect::<Vec<String>>()
-                        .join("|"),
-                    NON_ALPHANUMERIC,
-                )
-                .to_string(),
-            ); // push_str
-        } // if
-
-        // Set query string in ReverseRequest struct.
-        self.query = Some(query);
-
-        // Return modified ReverseRequest struct to caller.
-        self
+    ///
+    /// ## Notes
+    ///
+    /// * The query string is the part of the URL after the `?` question mark.
+    ///   For example, in the URL `https://example.com/over/there?name=ferret`
+    ///   the query string is `name=ferret`
+    ///
+    /// * The `build` method has been removed. It would store the generated
+    ///   query string inside of the request structure.
+    ///
+    ///   This way, the same query string would only have to be generated once
+    ///   and could be used for any subsequent retries. This increased
+    ///   implementation complexity but had very performance little benefit. It
+    ///   has been removed.
+    ///
+    ///   If you want to generate a query string (without the preceding URL),
+    ///   try the `query_string` method.
+    #[deprecated(note = "try using the `query_string` method instead", since = "3.8.0")]
+    pub fn build(
+        &'r mut self
+    ) -> Result<&'r mut Self, crate::geocoding::Error> {
+        Ok(self)
     } // fn
 } // impl

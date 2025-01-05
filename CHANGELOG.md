@@ -3,6 +3,29 @@
 * Release notes are available on
   [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+# 3.8.0
+
+* Important note: This release some changes that are theoretically breaking
+  changes for users that are tapping into the more internal functions and
+  destructuring `structs`. However, I don't believe most crate end-users will
+  notice a difference.
+
+* 2025-01-04: Implemented a generic `get` method that covers all of the Google
+  Maps APIs and handles the requests, responses, and errors.
+
+* 2025-01-01: Updated several dependencies.
+
+* 2024-12-29: Switched from the currently unmaintained
+  [backoff](https://crates.io/crates/backoff) crate to
+  [Xuanwo](https://github.com/Xuanwo)'s [backon](https://crates.io/crates/backon)
+  crate for an exponential back-off retry implementation.
+
+  Thank you to [Dan Groshev](https://github.com/si14) for
+  [reporting](https://github.com/leontoeides/google_maps/issues/34) this issue!
+
+  `backon` is not a drop-in replacement for `backoff`. During the transition,
+  some much needed internal clean-up was done.
+
 # 3.7.4
 
 * 2024-12-12: Merged [PR](https://github.com/leontoeides/google_maps/pull/33)

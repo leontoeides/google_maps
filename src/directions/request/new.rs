@@ -1,11 +1,8 @@
-use crate::{
-    client::GoogleMapsClient,
-    directions::request::{location::Location, Request},
-}; // use crate
+use crate::directions::request::location::Location;
 
 // =============================================================================
 
-impl<'a> Request<'a> {
+impl<'a> crate::directions::request::Request<'a> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the data structure for the builder pattern.
@@ -13,14 +10,13 @@ impl<'a> Request<'a> {
     /// ## Arguments
     ///
     /// This method accepts no arguments.
-
     #[must_use]
     pub const fn new(
-        client: &'a GoogleMapsClient,
+        client: &'a crate::client::Client,
         origin: Location,
         destination: Location
     ) -> Self {
-        Request {
+        Self {
             // Required parameters:
             client,
             destination,
@@ -39,9 +35,6 @@ impl<'a> Request<'a> {
             unit_system: None,
             waypoint_optimization: false,
             waypoints: Vec::new(),
-            // Internal use only:
-            query: None,
-            validated: false,
         } // struct
     } // fn
 } // impl

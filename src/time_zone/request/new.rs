@@ -1,13 +1,9 @@
-use crate::client::GoogleMapsClient;
-use crate::time_zone::request::Request;
 use crate::types::LatLng;
 use chrono::{DateTime, Utc};
 
 // =============================================================================
 
-// Explict lifetime required for `geo` feature
-#[allow(clippy::needless_lifetimes)]
-impl<'r> Request<'r> {
+impl<'r> crate::time_zone::request::Request<'r> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Time Zone API query with the
@@ -36,23 +32,20 @@ impl<'r> Request<'r> {
     ///     NaiveDate::from_ymd(2022, 2, 15).and_hms(18, 00, 0)
     /// ).execute();
     /// ```
-
     #[must_use]
     pub const fn new(
-        client: &GoogleMapsClient,
+        client: &'r crate::Client,
         location: LatLng,
         timestamp: DateTime<Utc>
-    ) -> Request {
+    ) -> Self {
         // Instantiate struct and return it to caller:
-        Request {
+        Self {
             // Required parameters:
             client,
             location,
             timestamp,
             // Optional parameters:
             language: None,
-            // Internal use only:
-            query: None,
         } // struct
     } // fn
 
@@ -71,23 +64,20 @@ impl<'r> Request<'r> {
     /// * `coordinate` - `Coord` of the desired time zone location.
     /// * `timestamp` - Time is used to determine if Daylight Savings is
     ///   applicable.
-
     #[cfg(feature = "geo")]
     pub fn try_new_coordinate<'g>(
-        client: &'r GoogleMapsClient,
+        client: &'r crate::Client,
         coordinate: &'g geo_types::Coord,
         timestamp: DateTime<Utc>
     ) -> Result<Self, crate::error::Error> {
         // Instantiate struct and return it to caller:
-        Ok(Request {
+        Ok(Self {
             // Required parameters:
             client,
             location: LatLng::try_from(coordinate)?,
             timestamp,
             // Optional parameters:
             language: None,
-            // Internal use only:
-            query: None,
         }) // struct
     } // fn
 
@@ -106,23 +96,20 @@ impl<'r> Request<'r> {
     /// * `point` - `Point` of the desired time zone location.
     /// * `timestamp` - Time is used to determine if Daylight Savings is
     ///   applicable.
-
     #[cfg(feature = "geo")]
     pub fn try_new_point<'g>(
-        client: &'r GoogleMapsClient,
+        client: &'r crate::Client,
         point: &'g geo_types::Point,
         timestamp: DateTime<Utc>
     ) -> Result<Self, crate::error::Error> {
         // Instantiate struct and return it to caller:
-        Ok(Request {
+        Ok(Self {
             // Required parameters:
             client,
             location: LatLng::try_from(point)?,
             timestamp,
             // Optional parameters:
             language: None,
-            // Internal use only:
-            query: None,
         }) // struct
     } // fn
 } // impl

@@ -1,10 +1,6 @@
-use crate::client::GoogleMapsClient;
-use crate::roads::nearest_roads::request::Request;
-use crate::types::LatLng;
-
 // =============================================================================
 
-impl Request<'_> {
+impl<'r> crate::roads::nearest_roads::request::Request<'r> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Nearest Roads query with the
@@ -24,16 +20,16 @@ impl Request<'_> {
     ///
     /// * `points` ‧ The points to be snapped. The points parameter accepts a
     ///   list of latitude/longitude pairs.
-
     #[must_use]
-    pub const fn new(client: &GoogleMapsClient, points: Vec<LatLng>) -> Request {
+    pub const fn new(
+        client: &'r crate::client::Client,
+        points: Vec<crate::types::LatLng>
+    ) -> Self {
         // Instantiate struct and return it to caller:
-        Request {
+        Self {
             // Required parameters:
             client,
             points,
-            // Internal use only:
-            query: None,
         } // struct
     } // fn
 } // impl

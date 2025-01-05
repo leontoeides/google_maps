@@ -1,124 +1,137 @@
 //! Roads API error types and error messages.
 
 // -----------------------------------------------------------------------------
-
-use crate::roads::status::Status;
-use miette::Diagnostic;
-use thiserror::Error;
-
-// -----------------------------------------------------------------------------
 //
-/// Errors that may be produced by the Google Maps Roads API client.
-
-#[derive(Debug, Diagnostic, Error)]
-#[diagnostic(code(google_maps::roads::error), url(docsrs))]
+/// An error produced by a Google Maps Roads API request.
+#[derive(Clone, Debug, thiserror::Error, miette::Diagnostic)]
 pub enum Error {
-    /// Google Maps Roads API server generated an error. See the `Status`
-    /// enum for more information.
-    GoogleMapsService(Status, Option<String>),
+    // -------------------------------------------------------------------------
+    // Client-side errors:
+    // -------------------------------------------------------------------------
 
-    /// The HTTP request was unsuccessful.
-    HttpUnsuccessful(String),
+    // Parsing errors:
 
-    /// API client library attempted to parse a string that contained an invalid
-    /// status code. See `google_maps\src\time_zone\response\status.rs` for more
-    /// information.
+    /// Invalid status code.
+    ///
+    /// Valid codes are `INVALID_ARGUMENT`, `PERMISSION_DENIED`, `NOT_FOUND` and
+    /// `RESOURCE_EXHAUSTED`
+    #[error("invalid status: `{0}`")]
+    #[diagnostic(
+        code(google_maps::roads::parse::invalid_status_code),
+        url("https://developers.google.com/maps/documentation/roads/errors#errors"),
+        help("valid codes are `INVALID_ARGUMENT`, `PERMISSION_DENIED`, \
+            `NOT_FOUND` and `RESOURCE_EXHAUSTED`")
+    )]
     InvalidStatusCode(String),
 
-    /// The query string must be built before the request may be sent to the
-    /// Google Maps Roads API server.
-    QueryNotBuilt,
+    // -------------------------------------------------------------------------
+    // Server-side errors (statuses):
+    // -------------------------------------------------------------------------
 
-    /// The dependency library Reqwest generated an error.
-    #[cfg(feature = "reqwest")]
-    Reqwest(crate::ReqError),
+    /// Invalid argument.
+    ///
+    /// 1. Your API key is not valid or was not included in the request. Please
+    ///    ensure that you've included the entire key, and that you've enabled
+    ///    the API for this key.
+    ///
+    /// 2. Your request contained invalid arguments. The most likely causes of
+    ///    this error are:
+    ///
+    ///     * A problem with your path parameter.
+    ///
+    ///     * Please ensure you have at least 1, and fewer than 100 points. Each
+    ///       point should be a pair of numbers separated by a comma, such as:
+    ///       `48.409114,-123.369158`. Points should be separated by a pipe:
+    ///       `|`.
+    ///
+    ///     * Your request included an invalid `placeId`.
+    ///
+    ///     * Your request included both `placeId`s and a `path`. Only one of
+    ///       these parameters may be specified for each request. This error
+    ///       will not be returned if a `placeId` is passed for a road which no
+    ///       longer exists, or for a place which is not a road.
+    #[error("invalid argument: {0}")]
+    #[diagnostic(
+        code(google_maps::roads::status::invalid_argument),
+        url("https://developers.google.com/maps/documentation/roads/errors#errors"),
+        help("your API key is not valid or was not included in the request or \
+            your request contained invalid arguments")
+    )]
+    InvalidArgument(String),
 
-    /// The dependency library Reqwest generated an error. The error could
-    /// not be passed normally so a `String` representation is passed instead.
-    #[cfg(feature = "reqwest")]
-    ReqwestMessage(String),
+    /// Permission denied indicates that the request was denied for one or more
+    /// of the following reasons:
+    ///
+    /// * The API key is missing or invalid.
+    ///
+    /// * Billing has not been enabled on your account.
+    ///
+    /// * A self-imposed usage cap has been exceeded.
+    ///
+    /// * The provided method of payment is no longer valid (for example, a
+    ///   credit card has expired).
+    ///
+    /// In order to use Google Maps Platform products, billing must be enabled
+    /// on your account, and all requests must include a valid API key. To fix
+    /// this, take the following steps:
+    ///
+    /// * [Get an API key](https://developers.google.com/maps/documentation/roads/errors?hl=en#new-key)
+    ///
+    /// * [Enable billing](https://console.cloud.google.com/project/_/billing/enable)
+    ///   on your account.
+    ///
+    /// * [Adjust your usage cap](https://developers.google.com/maps/documentation/roads/errors?hl=en#usage-cap)
+    ///   to increase your daily limit (if applicable).
+    #[error("permission denied: {0}")]
+    #[diagnostic(
+        code(google_maps::roads::status::permission_denied),
+        url("https://developers.google.com/maps/documentation/roads/errors#errors"),
+        help("either the API key is missing or invalid, billing has not been \
+            enabled on your account, a self-imposed usage cap has been \
+            exceeded, or the provided method of payment is no longer valid \
+            (for example, a credit card has expired)")
+    )]
+    PermissionDenied(String),
 
-    /// The dependency library Serde JSON generated an error.
-    SimdJson(simd_json::Error),
-} // enum
+    /// Not found. Ensure that you are sending requests to
+    /// `https://roads.googleapis.com/` and not `http://roads.googleapis.com/`.
+    #[error("not found: {0}")]
+    #[diagnostic(
+        code(google_maps::roads::status::not_found),
+        url("https://developers.google.com/maps/documentation/roads/errors#errors"),
+        help("ensure that you are sending requests to \
+            `https://roads.googleapis.com/` and not \
+            `http://roads.googleapis.com/`")
+    )]
+    NotFound(String),
+
+    /// Resource exhaused. You have exceeded the request limit that you
+    /// configured in the Google Cloud Platform Console. This limit is typically
+    /// set as requests per day, requests per 100 seconds, and requests per 100
+    /// seconds per user. This limit should be configured to prevent a single or
+    /// small group of users from exhausting your daily quota, while still
+    /// allowing reasonable access to all users. See Capping API Usage to
+    /// configure these limits.
+    #[error("resource exhausted: {0}")]
+    #[diagnostic(
+        code(google_maps::roads::status::permission_denied),
+        url("https://cloud.google.com/apis/docs/capping-api-usage"),
+        help("you have exceeded the request limit that you configured in the \
+            Google Cloud Platform Console")
+    )]
+    ResourceExhausted(String),
+} // enum Error
 
 // -----------------------------------------------------------------------------
 
-impl std::fmt::Display for Error {
-    /// This trait converts the error code into a format that may be presented
-    /// to the user.
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match self {
-            Self::GoogleMapsService(status, error_message) => match error_message {
-                // If the Google Maps Roads API server generated an error
-                // message, return that:
-                Some(error_message) => write!(f, "Google Maps Roads API service: {error_message}"),
-                // If the Google Maps Roads API server did not generate an
-                // error message, return a generic message derived from the
-                // response status:
-                None => match status {
-                    Status::InvalidArgument => write!(f, "Google Maps Roads API service: \
-                        Invalid argument. \
-                        1. Your API key is not valid or was not included in the request. \
-                        or, 2. Your request contained invalid arguments."),
-                    Status::PermissionDenied => write!(f, "Google Maps Roads API service: \
-                        Permission Denied. \
-                        1. API key missing or invalid. \
-                        2. Billing not enabled. \
-                        3. Self-imposed usage cap exceeded. \
-                        or, 4. Method of payment no longer valid."),
-                    Status::NotFound => write!(f, "Google Maps Roads API service: \
-                        Not found. \
-                        Ensure that you are sending requests \
-                        to `https://roads.googleapis.com/` and not \
-                        `http://roads.googleapis.com/`."),
-                    Status::ResourceExhausted => write!(f, "Google Maps Roads API service: \
-                        Not found. \
-                        You have exceeded the request limit that you configured \
-                        in the Google Cloud Platform Console."),
-                } // match
-            }, // match
-            Self::HttpUnsuccessful(status) => write!(f,
-                "Google Maps Roads API client: \
-                Could not successfully query the Google Cloud Platform service. \
-                The service last responded with a `{status}` status."),
-            Self::InvalidStatusCode(status_code) => write!(f, "Google Maps Roads API client: \
-                `{status_code}` is not a valid status code. \
-                Valid codes are `INVALID_ARGUMENT`, `PERMISSION_DENIED`, \
-                `NOT_FOUND`, and `RESOURCE_EXHAUSTED`."),
-            Self::QueryNotBuilt => write!(f, "Google Maps Roads API client library: \
-                The query string must be built before the request may be sent to the Google Cloud Maps Platform. \
-                Ensure the build() method is called before run()."),
-            #[cfg(feature = "reqwest")]
-            Self::Reqwest(error) => write!(f, "Google Maps Roads API client in the Reqwest library: {error}"),
-            #[cfg(feature = "reqwest")]
-            Self::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {error}"),
-            Self::SimdJson(error) => write!(f, "Google Maps Roads API client in the Serde JSON library: {error}"),
-        } // match
-    } // fn
-} // impl
+use crate::ClassifiedError;
 
-// -----------------------------------------------------------------------------
-
-#[cfg(feature = "reqwest")]
-impl From<reqwest::Error> for Error {
-    /// This trait converts from an Reqwest error type (`reqwest::Error`) into a
-    /// Google Maps Roads API error type
-    /// (`google_maps::time_zone::error::Error`) by wrapping it inside. This
-    /// function is required to use the `?` operator.
-    fn from(error: reqwest::Error) -> Self {
-        Self::Reqwest(crate::ReqError::from(error))
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl From<simd_json::Error> for Error {
-    /// This trait converts from an Serde JSON (`simd_json::Error`)
-    /// error type into a Google Maps Roads API error type
-    /// (`google_maps::time_zone::error::Error`) by wrapping it inside. This
-    /// function is required to use the `?` operator.
-    fn from(error: simd_json::Error) -> Self {
-        Self::SimdJson(error)
+impl crate::traits::ClassifiableError<'_, Self> for Error {
+    /// Classifies an API error as a `Transient` error or `Permanent` error.
+    ///
+    /// This classification will, in turn, be used to decide whether the HTTP
+    /// request should be retried or not.
+    fn classify(&self) -> ClassifiedError<'_, Self> {
+        ClassifiedError::Permanent(self)
     } // fn
 } // impl

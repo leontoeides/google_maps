@@ -4,13 +4,11 @@
 //! structs, methods) for building your Google Maps Platform request.
 
 mod build;
-#[cfg(feature = "reqwest")]
-mod execute;
-#[cfg(feature = "reqwest")]
-mod get;
+mod end_point;
 mod is_open_now;
 mod new;
-mod query_url;
+mod query_string;
+mod validatable;
 mod with_keyword;
 mod with_language;
 mod with_max_price;
@@ -19,29 +17,28 @@ mod with_pagetoken;
 mod with_rankby;
 mod with_type;
 
+#[cfg(feature = "reqwest")]
+mod execute;
+
+#[cfg(feature = "reqwest")]
+mod get;
+
 // -----------------------------------------------------------------------------
-
-use crate::places::RankBy;
-use crate::LatLng;
-use crate::{client::GoogleMapsClient, types::Language, types::PlaceType};
-
-// -----------------------------------------------------------------------------
-
+//
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Nearby Search_ query**. The methods implemented for this struct are
 /// what's used to build your request.
-
 #[derive(Debug)]
 pub struct Request<'a> {
     // Required parameters:
     // --------------------
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client: &'a GoogleMapsClient,
+    client: &'a crate::client::Client,
 
     /// The point around which to retrieve place information. This must be
     /// specified as `latitude,longitude`.
-    location: LatLng,
+    location: crate::types::LatLng,
 
     /// Defines the distance (in meters) within which to return place results.
     /// You may bias results to a specified circle by passing a `location` and a
@@ -106,7 +103,7 @@ pub struct Request<'a> {
     ///   on language, such as the abbreviations for street types, or synonyms
     ///   that may be valid in one language but not in another. For example,
     ///   _utca_ and _tér_ are synonyms for street in Hungarian.
-    language: Option<Language>,
+    language: Option<crate::types::Language>,
 
     /// Restricts results to only those places within the specified range. Valid
     /// values range between 0 (most affordable) to 4 (most expensive),
@@ -144,7 +141,7 @@ pub struct Request<'a> {
     ///   their distance from the specified location. When `distance` is
     ///   specified, one or more of `keyword`, `name`, or `type` is required and
     ///   radius is disallowed.
-    rankby: Option<RankBy>,
+    rankby: Option<crate::places::RankBy>,
 
     /// Restricts the results to places matching the specified type. Only one
     /// type may be specified. If more than one type is provided, all types
@@ -158,10 +155,5 @@ pub struct Request<'a> {
     /// * Note: Adding both `keyword` and `type` with the same value
     ///   (`keyword=cafe&type=cafe` or `keyword=parking&type=parking`) can yield
     ///   `ZERO_RESULTS`.
-    place_type: Option<PlaceType>,
-
-    // Internal use only:
-    // ------------------
-    /// Query string that is to be submitted to the Google Cloud Maps Platform.
-    query: Option<String>,
+    place_type: Option<crate::types::PlaceType>,
 } // struct

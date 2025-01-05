@@ -1,8 +1,6 @@
-use crate::client::GoogleMapsClient;
-
 // =============================================================================
 
-impl GoogleMapsClient {
+impl crate::client::Client {
     // -------------------------------------------------------------------------
     //
     /// Passes a user configured reqwest client for the Google Maps client to
@@ -24,7 +22,7 @@ impl GoogleMapsClient {
     ///     .user_agent("My Cool App v1.0")
     ///     .build()?;
     ///
-    /// let mut google_maps_client = GoogleMapsClient::new("YOUR_API_KEY_HERE")
+    /// let mut google_maps_client = google_maps::Client::try_new("YOUR_API_KEY_HERE")
     ///     .with_reqwest_client(reqwest_client)
     ///     .build();
     /// ```

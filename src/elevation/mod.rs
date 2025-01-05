@@ -79,13 +79,30 @@ pub mod response;
 
 // -----------------------------------------------------------------------------
 
-const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/elevation";
-const OUTPUT_FORMAT: &str = "json"; // json or xml
-
-// -----------------------------------------------------------------------------
-
 pub use crate::elevation::{
-    error::Error as ElevationError,
-    request::{locations::Locations as ElevationLocations, Request as ElevationRequest}, // request
-    response::{point::Point, status::Status as ElevationStatus, Response as ElevationResponse}, // response
-}; // crate::elevation
+    error::Error,
+    request::{
+        locations::Locations,
+        Request
+    },
+    response::{
+        point::Point,
+        Response,
+        status::Status
+    },
+};
+
+#[deprecated(note = "use `google_maps::elevation::Error` instead", since = "3.8.0")]
+pub use crate::elevation::error::Error as ElevationError;
+
+#[deprecated(note = "use `google_maps::elevation::Request` instead", since = "3.8.0")]
+pub use crate::elevation::request::Request as ElevationRequest;
+
+#[deprecated(note = "use `google_maps::elevation::Locations` instead", since = "3.8.0")]
+pub use crate::elevation::request::locations::Locations as ElevationLocations;
+
+#[deprecated(note = "use `google_maps::elevation::Response` instead", since = "3.8.0")]
+pub use crate::elevation::response::Response as ElevationResponse;
+
+#[deprecated(note = "use `google_maps::elevation::Status` instead", since = "3.8.0")]
+pub use crate::elevation::response::status::Status as ElevationStatus;

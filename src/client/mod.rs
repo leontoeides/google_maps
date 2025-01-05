@@ -6,8 +6,13 @@
 
 mod build;
 mod impls;
+
+#[cfg(feature = "reqwest")]
+mod get;
+
 #[cfg(feature = "reqwest")]
 mod with_rate;
+
 #[cfg(feature = "reqwest")]
 mod with_reqwest_client;
 
@@ -29,7 +34,7 @@ use crate::request_rate::RequestRate;
 /// How to use this structure's methods in a builder pattern:
 ///
 /// ```rust
-/// let mut my_settings = GoogleMapsClient::new(YOUR_GOOGLE_API_KEY_HERE)
+/// let mut my_settings = google_maps::Client::try_new(YOUR_GOOGLE_API_KEY_HERE)
 ///     .with_max_delay(std::time::Duration::from_secs(32))
 ///     .with_max_retries(10)
 ///     .with_rate(&Api::All, 1, std::time::Duration::from_secs(2))
@@ -37,7 +42,7 @@ use crate::request_rate::RequestRate;
 /// ```
 
 #[derive(Clone, Debug)]
-pub struct GoogleMapsClient {
+pub struct Client {
     /// Your application's API key. This key identifies your application for
     /// purposes of quota management. Learn how to [get a
     /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).

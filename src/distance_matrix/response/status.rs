@@ -26,6 +26,11 @@ pub enum Status {
     #[serde(alias = "MaxElementsExceeded")]
     MaxElementsExceeded,
 
+    /// Indicates that the number of origins or destinations exceeds the
+    /// per-query [limit](https://developers.google.com/maps/documentation/distance-matrix/usage-and-billing).
+    #[serde(alias = "MaxDimensionsExceeded")]
+    MaxDimensionsExceeded,
+
     /// Indicates the response contains a valid `result`.
     #[serde(alias = "Ok")]
     Ok,
@@ -82,6 +87,7 @@ impl std::convert::From<&Status> for String {
     fn from(status: &Status) -> Self {
         match status {
             Status::InvalidRequest => Self::from("INVALID_REQUEST"),
+            Status::MaxDimensionsExceeded => Self::from("MAX_DIMENSIONS_EXCEEDED"),
             Status::MaxElementsExceeded => Self::from("MAX_ELEMENTS_EXCEEDED"),
             Status::Ok => Self::from("OK"),
             Status::OverDailyLimit => Self::from("OVER_DAILY_LIMIT"),
@@ -96,6 +102,7 @@ impl std::convert::From<&Status> for String {
 
 static STATUSES_BY_CODE: phf::Map<&'static str, Status> = phf_map! {
     "INVALID_REQUEST" => Status::InvalidRequest,
+    "MAX_DIMENSIONS_EXCEEDED" => Status::MaxDimensionsExceeded,
     "MAX_ELEMENTS_EXCEEDED" => Status::MaxElementsExceeded,
     "OK" => Status::Ok,
     "OVER_DAILY_LIMIT" => Status::OverDailyLimit,
@@ -151,6 +158,7 @@ impl std::fmt::Display for Status {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::InvalidRequest => write!(f, "Invalid Request"),
+            Self::MaxDimensionsExceeded => write!(f, "Maximum Dimensions Exceeded"),
             Self::MaxElementsExceeded => write!(f, "Maximum Elements Exceeded"),
             Self::Ok => write!(f, "OK"),
             Self::OverDailyLimit => write!(f, "Over Daily Limit"),

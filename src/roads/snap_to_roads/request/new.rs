@@ -1,10 +1,6 @@
-use crate::client::GoogleMapsClient;
-use crate::roads::snap_to_roads::request::Request;
-use crate::types::LatLng;
-
 // =============================================================================
 
-impl Request<'_> {
+impl<'r> crate::roads::snap_to_roads::request::Request<'r> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Snap To Roads query with the
@@ -21,18 +17,18 @@ impl Request<'_> {
     ///   provide paths on which consecutive pairs of points are within 300m of
     ///   each other. This will also help in handling any isolated, long jumps
     ///   between consecutive points caused by GPS signal loss, or noise.
-
     #[must_use]
-    pub const fn new(client: &GoogleMapsClient, path: Vec<LatLng>) -> Request {
+    pub const fn new(
+        client: &'r crate::client::Client,
+        path: Vec<crate::types::LatLng>
+    ) -> Self {
         // Instantiate struct and return it to caller:
-        Request {
+        Self {
             // Required parameters:
             client,
             path,
             // Optional parameters:
             interpolate: None,
-            // Internal use only:
-            query: None,
         } // struct
     } // fn
 } // impl

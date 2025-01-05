@@ -22,9 +22,13 @@ pub mod response;
 
 // -----------------------------------------------------------------------------
 
-const SERVICE_URL: &str = "https://roads.googleapis.com/v1/nearestRoads";
+pub use crate::roads::nearest_roads::{
+    request::Request,
+    response::Response
+};
 
-// -----------------------------------------------------------------------------
-
+#[deprecated(note = "use `crate::roads::nearest_roads::Request` instead", since = "3.8.0")]
 pub use crate::roads::nearest_roads::request::Request as NearestRoadsRequest;
+
+#[deprecated(note = "use `crate::roads::nearest_roads::Response` instead", since = "3.8.0")]
 pub use crate::roads::nearest_roads::response::Response as NearestRoadsResponse;

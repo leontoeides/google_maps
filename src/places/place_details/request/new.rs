@@ -1,9 +1,6 @@
-use crate::client::GoogleMapsClient;
-use crate::places::place_details::request::Request;
-
 // =============================================================================
 
-impl Request<'_> {
+impl<'r> crate::places::place_details::request::Request<'r> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Places API _Place Details_ query
@@ -18,11 +15,13 @@ impl Request<'_> {
     ///   [Place Search](https://developers.google.com/maps/documentation/places/web-service/search).
     ///   For more information about place IDs, see the
     ///   [place ID overview](https://developers.google.com/maps/documentation/places/web-service/place-id).
-
     #[must_use]
-    pub fn new(client: &GoogleMapsClient, place_id: impl Into<String>) -> Request {
+    pub fn new(
+        client: &'r crate::client::Client,
+        place_id: impl Into<String>
+    ) -> Self {
         // Instantiate struct and return it to caller:
-        Request {
+        Self {
             // Required parameters:
             client,
             place_id: place_id.into(),
@@ -33,8 +32,6 @@ impl Request<'_> {
             reviews_no_translations: None,
             reviews_sort: None,
             sessiontoken: None,
-            // Internal use only:
-            query: None,
         } // struct
     } // fn
 } // impl

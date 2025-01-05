@@ -1,75 +1,30 @@
-use crate::places::place_search::nearby_search::request::Request;
-use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
-
-// -----------------------------------------------------------------------------
-
-impl<'a> Request<'a> {
-    /// Builds the query string for the Google Maps Places API _Nearby Search_
-    /// query based on the input provided by the client.
+impl<'r> crate::places::place_search::nearby_search::Request<'r> {
+    /// Builds the URL [query string](https://en.wikipedia.org/wiki/Query_string)
+    /// for the HTTP [GET](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET)
+    /// request.
     ///
     /// ## Arguments
     ///
     /// This method accepts no arguments.
-
-    pub fn build(&mut self) -> &'a mut Request {
-        // This section builds the "required parameters" portion of the query
-        // string:
-
-        let mut query = format!(
-            "key={}&location={}&radius={}",
-            self.client.key,
-            String::from(&self.location),
-            self.radius,
-        );
-
-        // This section builds the "optional parameters" portion of the query
-        // string:
-
-        if let Some(keyword) = &self.keyword {
-            query.push_str("&keyword={}");
-            query.push_str(&utf8_percent_encode(keyword, NON_ALPHANUMERIC).to_string());
-        }
-
-        if let Some(language) = &self.language {
-            query.push_str("&language=");
-            query.push_str(&String::from(language));
-        }
-
-        if let Some(maxprice) = &self.maxprice {
-            query.push_str("&maxprice=");
-            query.push_str(&maxprice.to_string());
-        }
-
-        if let Some(minprice) = &self.minprice {
-            query.push_str("&minprice=");
-            query.push_str(&minprice.to_string());
-        }
-
-        if let Some(opennow) = &self.opennow {
-            if *opennow {
-                query.push_str("&opennow");
-            }
-        }
-
-        if let Some(pagetoken) = &self.pagetoken {
-            query.push_str("&pagetoken=");
-            query.push_str(pagetoken);
-        }
-
-        if let Some(rankby) = &self.rankby {
-            query.push_str("&rankby=");
-            query.push_str(&String::from(rankby));
-        }
-
-        if let Some(place_type) = &self.place_type {
-            query.push_str("&type=");
-            query.push_str(&String::from(place_type));
-        }
-
-        // Set query string in Request struct.
-        self.query = Some(query);
-
-        // Return modified Request struct to caller.
+    ///
+    /// ## Notes
+    ///
+    /// * The query string is the part of the URL after the `?` question mark.
+    ///   For example, in the URL `https://example.com/over/there?name=ferret`
+    ///   the query string is `name=ferret`
+    ///
+    /// * The `build` method has been removed. It would store the generated
+    ///   query string inside of the request structure.
+    ///
+    ///   This way, the same query string would only have to be generated once
+    ///   and could be used for any subsequent retries. This increased
+    ///   implementation complexity but had very performance little benefit. It
+    ///   has been removed.
+    ///
+    ///   If you want to generate a query string (without the preceding URL),
+    ///   try the `query_string` method.
+    #[deprecated(note = "try using the `query_string` method instead", since = "3.8.0")]
+    pub fn build(&'r mut self) -> &'r mut Self {
         self
     } // fn
 } // impl

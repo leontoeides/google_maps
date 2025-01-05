@@ -81,31 +81,51 @@ pub mod response;
 
 // -----------------------------------------------------------------------------
 
-pub const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/distancematrix";
-pub const OUTPUT_FORMAT: &str = "json"; // json or xml
-
-// -----------------------------------------------------------------------------
-
 pub use crate::directions::{
     request::{
-        avoid::Avoid, departure_time::DepartureTime, location::Location,
-        traffic_model::TrafficModel, transit_mode::TransitMode,
-        transit_route_preference::TransitRoutePreference, unit_system::UnitSystem,
-        waypoint::Waypoint,
-    }, // request
+        avoid::Avoid,
+        departure_time::DepartureTime,
+        location::Location,
+        traffic_model::TrafficModel,
+        transit_mode::TransitMode,
+        transit_route_preference::TransitRoutePreference,
+        unit_system::UnitSystem,
+        waypoint::Waypoint
+    },
     response::{
-        directions_distance::DirectionsDistance, directions_duration::DirectionsDuration,
-        driving_maneuver::DrivingManeuver, leg::Leg, overview_polyline::OverviewPolyline,
-        polyline::Polyline, route::Route, step::Step, transit_agency::TransitAgency,
-        transit_currency::TransitCurrency, transit_details::TransitDetails,
-        transit_fare::TransitFare, transit_line::TransitLine, transit_stop::TransitStop,
-        transit_time::TransitTime, transit_vehicle::TransitVehicle,
-    }, // response
+        directions_distance::DirectionsDistance,
+        directions_duration::DirectionsDuration,
+        driving_maneuver::DrivingManeuver,
+        leg::Leg,
+        overview_polyline::OverviewPolyline,
+        polyline::Polyline,
+        route::Route,
+        step::Step,
+        transit_agency::TransitAgency,
+        transit_currency::TransitCurrency,
+        transit_details::TransitDetails,
+        transit_fare::TransitFare,
+        transit_line::TransitLine,
+        transit_stop::TransitStop,
+        transit_time::TransitTime,
+        transit_vehicle::TransitVehicle,
+    },
     travel_mode::TravelMode,
-    vehicle_type::VehicleType,
-}; // crate::directions
+    vehicle_type::VehicleType
+};
 
 pub use crate::distance_matrix::{
-    request::Request as DistanceMatrixRequest, response::status::Status as DistanceMatrixStatus,
-    response::Response as DistanceMatrixResponse,
-}; // crate::distance_matrix
+    error::Error,
+    request::Request,
+    response::Response,
+    response::status::Status
+};
+
+#[deprecated(note = "use `google_maps::distance_matrix::Request` instead", since = "3.8.0")]
+pub use crate::distance_matrix::request::Request as DistanceMatrixRequest;
+
+#[deprecated(note = "use `google_maps::distance_matrix::Response` instead", since = "3.8.0")]
+pub use crate::distance_matrix::response::Response as DistanceMatrixResponse;
+
+#[deprecated(note = "use `google_maps::distance_matrix::Status` instead", since = "3.8.0")]
+pub use crate::distance_matrix::response::status::Status as DistanceMatrixStatus;

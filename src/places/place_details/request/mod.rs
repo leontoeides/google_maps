@@ -4,12 +4,10 @@
 //! structs, methods) for building your Google Maps Platform request.
 
 mod build;
-#[cfg(feature = "reqwest")]
-mod execute;
-#[cfg(feature = "reqwest")]
-mod get;
+mod end_point;
 mod new;
-mod query_url;
+mod query_string;
+mod validatable;
 mod with_fields;
 mod with_language;
 mod with_no_review_translations;
@@ -17,24 +15,24 @@ mod with_region;
 mod with_reviews_sort;
 mod with_sessiontoken;
 
+#[cfg(feature = "reqwest")]
+mod execute;
+
+#[cfg(feature = "reqwest")]
+mod get;
+
 // -----------------------------------------------------------------------------
-
-use crate::places::place_details::{Field, SortOrder};
-use crate::{client::GoogleMapsClient, types::Language, types::Region};
-
-// -----------------------------------------------------------------------------
-
+//
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Place Autocomplete_ query**. The methods implemented for this struct are
 /// what's used to build your request.
-
 #[derive(Debug)]
 pub struct Request<'a> {
     // Required parameters:
     // --------------------
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client: &'a GoogleMapsClient,
+    client: &'a crate::client::Client,
 
     /// A textual identifier that uniquely identifies a place, returned from a
     /// [Place Search](https://developers.google.com/maps/documentation/places/web-service/search).
@@ -65,7 +63,7 @@ pub struct Request<'a> {
     ///   For more information on the fields that are unavailable in a Place
     ///   Search request, see
     ///   [Places API fields support](https://developers.google.com/maps/documentation/places/web-service/place-data-fields#places-api-fields-support).
-    fields: Vec<Field>,
+    fields: Vec<crate::places::place_details::Field>,
 
     /// The language in which to return results.
     ///
@@ -92,7 +90,7 @@ pub struct Request<'a> {
     ///   on language, such as the abbreviations for street types, or synonyms
     ///   that may be valid in one language but not in another. For example,
     ///   _utca_ and _tér_ are synonyms for street in Hungarian.
-    language: Option<Language>,
+    language: Option<crate::types::Language>,
 
     /// The region code, specified as a [ccTLD ("top-level
     /// domain")](https://en.wikipedia.org/wiki/List_of_Internet_top-level_domains#Country_code_top-level_domains)
@@ -100,7 +98,7 @@ pub struct Request<'a> {
     /// with some notable exceptions. For example, the United Kingdom's ccTLD is
     /// "uk" (.co.uk) while its ISO 3166-1 code is "gb" (technically for the
     /// entity of "The United Kingdom of Great Britain and Northern Ireland").
-    region: Option<Region>,
+    region: Option<crate::types::Region>,
 
     /// Specify `reviews_no_translations=true` to disable translation of
     /// reviews; specify `reviews_no_translations=false` to enable translation
@@ -125,7 +123,7 @@ pub struct Request<'a> {
     ///
     /// Google recommends that you display how the reviews are being sorted to
     /// the end user.
-    reviews_sort: Option<SortOrder>,
+    reviews_sort: Option<crate::places::place_details::SortOrder>,
 
     /// A random string which identifies an autocomplete
     /// [session](https://developers.google.com/maps/documentation/places/web-service/details#session_tokens)
@@ -156,9 +154,4 @@ pub struct Request<'a> {
     ///   same token for more than one session will result in each request being
     ///   billed individually.
     sessiontoken: Option<String>,
-
-    // Internal use only:
-    // ------------------
-    /// Query string that is to be submitted to the Google Cloud Maps Platform.
-    query: Option<String>,
 } // struct

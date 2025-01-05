@@ -1,132 +1,162 @@
 //! Elevation API error types and error messages.
 
 // -----------------------------------------------------------------------------
-
-use crate::elevation::response::status::Status;
-use miette::Diagnostic;
-use thiserror::Error;
-
-// -----------------------------------------------------------------------------
 //
-/// Errors that may be produced by the Google Maps Elevation API client.
-
-#[derive(Debug, Diagnostic, Error)]
-#[diagnostic(code(google_maps::elevation::error), url(docsrs))]
+/// An error produced by a Google Maps Elevation API request.
+#[derive(Clone, Debug, thiserror::Error, miette::Diagnostic)]
 pub enum Error {
-    /// A `sampled_path_request()` method cannot be used when `postional_request()`
+    // -------------------------------------------------------------------------
+    // Client-side errors:
+    // -------------------------------------------------------------------------
+
+    // Validation errors:
+
+    /// A `sampled_path_request` method cannot be used when `postional_request`
     /// has been set.
+    #[error("a `for_sampled_path_request` method cannot be used when \
+        `for_postional_request` has been set")]
+    #[diagnostic(
+        code(google_maps::elevation::validate::either_positional_or_sampled_path),
+        url(docsrs),
+        help("try again with only a positional request or only a sampled path \
+            request")
+    )]
     EitherPositionalOrSampledPath,
-    /// Google Maps Elevation API server generated an error. See the `Status`
-    /// enum for more information.
-    GoogleMapsService(Status, Option<String>),
-    /// The HTTP request was unsuccessful.
-    HttpUnsuccessful(String),
-    /// API client library attempted to parse a string that contained an invalid
-    /// status code. See `google_maps\src\elevation\response\status.rs` for
-    /// more information.
+
+    // Parsing errors:
+
+    /// Invalid status code.
+    ///
+    /// Valid codes are `OK`, `DATA_NOT_AVAILABLE`, `INVALID_REQUEST`,
+    /// `OVER_DAILY_LIMIT`, `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, and
+    /// `UNKNOWN_ERROR`.
+    #[error("invalid status: `{0}`")]
+    #[diagnostic(
+        code(google_maps::elevation::parse::invalid_status_code),
+        url("https://developers.google.com/maps/documentation/elevation/requests-elevation#ElevationStatus"),
+        help("valid codes are `OK`, `DATA_NOT_AVAILABLE`, `INVALID_REQUEST`, \
+            `OVER_DAILY_LIMIT`, `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, and \
+            `UNKNOWN_ERROR`")
+    )]
     InvalidStatusCode(String),
-    /// The query string must be built before the request may be sent to the
-    /// Google Maps Elevation API server.
-    QueryNotBuilt,
-    /// The request must be validated before a query string may be built.
-    RequestNotValidated,
-    /// The dependency library Reqwest generated an error.
-    #[cfg(feature = "reqwest")]
-    Reqwest(crate::ReqError),
-    /// The dependency library Reqwest generated an error. The error could
-    /// not be passed normally so a `String` representation is passed instead.
-    #[cfg(feature = "reqwest")]
-    ReqwestMessage(String),
-    /// The dependency library Serde JSON generated an error.
-    SimdJson(simd_json::Error),
-} // enum
+
+    // -------------------------------------------------------------------------
+    // Server-side errors (statuses):
+    // -------------------------------------------------------------------------
+
+    /// Data not available.
+    ///
+    /// No available data for the input locations.
+    #[error("data not available")]
+    #[diagnostic(
+        code(google_maps::elevation::status::data_not_available),
+        url("https://developers.google.com/maps/documentation/elevation/requests-elevation#ElevationStatus"),
+        help("indicates that there's no available data for the input location")
+    )]
+    DataNotAvailable,
+
+    /// Invalid request.
+    ///
+    /// The API request was malformed
+    #[error("invalid request")]
+    #[diagnostic(
+        code(google_maps::elevation::status::invalid_request),
+        url("https://developers.google.com/maps/documentation/elevation/requests-elevation#ElevationStatus"),
+        help("indicates the API request was malformed")
+    )]
+    InvalidRequest,
+
+    /// Over daily limit indicates that the request was denied for one or more
+    /// of the following reasons:
+    ///
+    /// * The API key is missing or invalid.
+    ///
+    /// * Billing has not been enabled on your account.
+    ///
+    /// * A self-imposed usage cap has been exceeded.
+    ///
+    /// * The provided method of payment is no longer valid (for example, a
+    ///   credit card has expired).
+    ///
+    /// In order to use Google Maps Platform products, billing must be enabled
+    /// on your account, and all requests must include a valid API key. To fix
+    /// this, take the following steps:
+    ///
+    /// * [Get an API key](https://developers.google.com/maps/documentation/roads/errors?hl=en#new-key)
+    ///
+    /// * [Enable billing](https://console.cloud.google.com/project/_/billing/enable)
+    ///   on your account.
+    ///
+    /// * [Adjust your usage cap](https://developers.google.com/maps/documentation/roads/errors?hl=en#usage-cap)
+    ///   to increase your daily limit (if applicable).
+    #[error("over daily limit")]
+    #[diagnostic(
+        code(google_maps::elevation::status::over_daily_limit),
+        url("https://developers.google.com/maps/faq#over-limit-key-error"),
+        help("either the API key is missing or invalid, billing has not been \
+            enabled on your account, a self-imposed usage cap has been \
+            exceeded, or the provided method of payment is no longer valid \
+            (for example, a credit card has expired)")
+    )]
+    OverDailyLimit,
+
+    /// Overy query limit indicates any of the following:
+    ///
+    /// * You have exceeded the QPS limits.
+    ///
+    /// * Billing has not been enabled on your account.
+    ///
+    /// * The monthly $200 credit, or a self-imposed usage cap, has been
+    ///   exceeded.
+    ///
+    /// * The provided method of payment is no longer valid (for example, a
+    ///   credit card has expired).
+    ///
+    /// See the [Maps FAQ](https://developers.google.com/maps/faq#over-limit-key-error)
+    /// for more information about how to resolve this error.
+    #[error("over query limit")]
+    #[diagnostic(
+        code(google_maps::elevation::status::over_query_limit),
+        url("https://developers.google.com/maps/faq#over-limit-key-error"),
+        help("either you have exceeded the QPS limits, billing has not been \
+            enabled on your account, a self-imposed usage cap has been \
+            exceeded or the provided method of payment is no longer valid")
+    )]
+    OverQueryLimit,
+
+    /// Request denied by the server.
+    #[error("request denied")]
+    #[diagnostic(
+        code(google_maps::elevation::status::request_denied),
+        url("https://developers.google.com/maps/documentation/elevation/requests-elevation#ElevationStatus"),
+        help("indicates that your request was denied")
+    )]
+    RequestDenied,
+
+    /// Unknown error from the server.
+    #[error("unknown error")]
+    #[diagnostic(
+        code(google_maps::elevation::status::unknown_error),
+        url("https://developers.google.com/maps/documentation/elevation/requests-elevation#ElevationStatus"),
+        help("indicates that the request could not be processed due to a \
+            server error. The request may succeed if you try again")
+    )]
+    UnknownError,
+} // enum Error
 
 // -----------------------------------------------------------------------------
 
-impl std::fmt::Display for Error {
-    /// This trait converts the error code into a format that may be presented
-    /// to the user.
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+use crate::ClassifiedError;
+
+impl crate::traits::ClassifiableError<'_, Self> for Error {
+    /// Classifies an API error as a `Transient` error or `Permanent` error.
+    ///
+    /// This classification will, in turn, be used to decide whether the HTTP
+    /// request should be retried or not.
+    fn classify(&self) -> ClassifiedError<'_, Self> {
         match self {
-            Self::EitherPositionalOrSampledPath => write!(f,
-                "Google Maps Elevation API client: \
-                A for_sampled_path_request() method cannot be used when for_postional_request() has been set. \
-                Try again with only a positional request or only a sampled path request."),
-            Self::GoogleMapsService(status, error_message) => match error_message {
-                // If the Google Maps Elevation API server generated an error
-                // message, return that:
-                Some(error_message) => write!(f, "Google Maps Elevation API service: {error_message}"),
-                // If the Google Maps Elevation API server did not generate an
-                // error message, return a generic message derived from the
-                // response status:
-                None => match status {
-                    Status::InvalidRequest => write!(f, "Google Maps Elevation API service: \
-                        Invalid request. \
-                        The request was malformed."),
-                    Status::Ok => write!(f, "Google Maps Elevation service: \
-                        Ok. \
-                        The request was successful."),
-                    Status::OverDailyLimit => write!(f, "Google Maps Elevation API service: \
-                        Over daily limit. \
-                        Usage cap has been exceeded, API key is invalid, billing has not been enabled, or method of payment is no longer valid."),
-                    Status::OverQueryLimit => write!(f, "Google Maps Elevation API service: \
-                        Over query limit. \
-                        Requestor has exceeded quota."),
-                    Status::RequestDenied => write!(f, "Google Maps Elevation API service: \
-                        Request denied \
-                        Service did not complete the request."),
-                    Status::UnknownError => write!(f, "Google Maps Elevation API service: \
-                        Unknown error."),
-                } // match
-            }, // match
-            Self::HttpUnsuccessful(status) => write!(f,
-                "Google Maps Elevation API client: \
-                Could not successfully query the Google Cloud Platform service. \
-                The service last responded with a `{status}` status."),
-            Self::InvalidStatusCode(status_code) => write!(f,
-                "Google Maps Elevation API client: \
-                `{status_code}` is not a valid status code. \
-                Valid codes are `INVALID_REQUEST`, `OK`, `OVER_DAILY_LIMIT`, \
-                `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, and `UNKNOWN_ERROR`."
-                ),
-            Self::RequestNotValidated => write!(f,
-                "Google Maps Elevation API client: \
-                The request must be validated before a query string may be built. \
-                Ensure the validate() method is called before build()."),
-            #[cfg(feature = "reqwest")]
-            Self::Reqwest(error) => write!(f, "Google Maps Elevation API client in the Reqwest library: {error}"),
-            #[cfg(feature = "reqwest")]
-            Self::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {error}"),
-            Self::SimdJson(error) => write!(f, "Google Maps Elevation API client in the Serde JSON library: {error}"),
-            Self::QueryNotBuilt => write!(f,
-                "Google Maps Elevation API client: \
-                The query string must be built before the request may be sent to the Google Cloud Maps Platform. \
-                Ensure the build() method is called before run()."),
+            Self::UnknownError => ClassifiedError::Transient(self),
+            _ => ClassifiedError::Permanent(self),
         } // match
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-#[cfg(feature = "reqwest")]
-impl From<reqwest::Error> for Error {
-    /// This trait converts from an Reqwest error type (`reqwest::Error`) into a
-    /// Google Maps Elevation API error type
-    /// (`google_maps::elevation::error::Error`) by wrapping it inside. This
-    /// function is required to use the `?` operator.
-    fn from(error: reqwest::Error) -> Self {
-        Self::Reqwest(crate::ReqError::from(error))
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl From<simd_json::Error> for Error {
-    /// This trait converts from an Serde JSON (`simd_json::Error`)
-    /// error type into a Google Maps Elevation API error type
-    /// (`google_maps::elevation::error::Error`) by wrapping it inside. This
-    /// function is required to use the `?` operator.
-    fn from(error: simd_json::Error) -> Self {
-        Self::SimdJson(error)
     } // fn
 } // impl

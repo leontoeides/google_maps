@@ -1,5 +1,7 @@
-use crate::places::place_autocomplete::request::AutocompleteType;
-use crate::places::place_autocomplete::request::Request;
+use crate::places::place_autocomplete::request::{
+    autocomplete_type::AutocompleteType,
+    Request
+};
 
 // -----------------------------------------------------------------------------
 
@@ -17,7 +19,6 @@ impl<'a> Request<'a> {
     ///   will have the same effect as specifying no types.
     ///
     /// * Multiple result type filters may be stacked together.
-
     pub fn with_type(
         &'a mut self,
         autocomplete_type: impl Into<AutocompleteType>) -> &'a mut Self {
@@ -51,7 +52,6 @@ impl<'a> Request<'a> {
     /// intended to represent any collection that can be iterated over, and the
     /// `A` generic is for any type that can be converted to the
     /// `AutocompleteType` type.
-
     pub fn with_types<C, A>(
         &'a mut self,
         types: C

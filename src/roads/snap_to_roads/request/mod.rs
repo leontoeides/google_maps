@@ -6,39 +6,37 @@
 // -----------------------------------------------------------------------------
 
 mod build;
-#[cfg(feature = "reqwest")]
-mod execute;
-#[cfg(feature = "reqwest")]
-mod get;
+mod end_point;
 mod new;
-mod query_url;
+mod query_string;
+mod validatable;
 mod with_interpolation;
 
-// -----------------------------------------------------------------------------
+#[cfg(feature = "reqwest")]
+mod execute;
 
-use crate::client::GoogleMapsClient;
-use crate::types::LatLng;
+#[cfg(feature = "reqwest")]
+mod get;
 
 // -----------------------------------------------------------------------------
 //
 /// **Look at this `Request` struct for documentation on how to build your _Snap
 /// To Roads_ query**. The methods implemented for this struct are what's used
 /// to build your request.
-
 #[derive(Debug)]
-pub struct Request<'a> {
+pub struct Request<'r> {
     // Required parameters:
     // --------------------
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client: &'a GoogleMapsClient,
+    client: &'r crate::client::Client,
 
     /// The path to be snapped. The path parameter accepts a list of
     /// latitude/longitude pairs. Latitude and longitude values should be
     /// separated by commas. Coordinates should be separated by the pipe
     /// character: "|". For example:
     /// `path=60.170880,24.942795|60.170879,24.942796|60.170877,24.942796`.
-    path: Vec<LatLng>,
+    path: Vec<crate::types::LatLng>,
 
     // Optional parameters:
     // --------------------
@@ -49,9 +47,4 @@ pub struct Request<'a> {
     /// most likely contain more points than the original path. Defaults to
     /// `false`.
     interpolate: Option<bool>,
-
-    // Internal use only:
-    // ------------------
-    /// Query string that is to be submitted to the Google Cloud Maps Platform.
-    query: Option<String>,
 } // struct

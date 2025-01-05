@@ -1,9 +1,6 @@
-use crate::client::GoogleMapsClient;
-use crate::places::place_search::text_search::request::Request;
-
 // =============================================================================
 
-impl Request<'_> {
+impl<'r> crate::places::place_search::text_search::request::Request<'r> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Places API _Text Search_ query
@@ -39,11 +36,14 @@ impl Request<'_> {
     ///           accepted, and will result in an `INVALID_REQUEST`.
     /// * Query Autocomplete: 50,000 meters
     /// * Nearby Search: 50,000 meters
-
     #[must_use]
-    pub fn new(client: &GoogleMapsClient, query: impl Into<String>, radius: u32) -> Request {
+    pub fn new(
+        client: &'r crate::client::Client,
+        query: impl Into<String>,
+        radius: u32
+    ) -> Self {
         // Instantiate struct and return it to caller:
-        Request {
+        Self {
             // Required parameters:
             client,
             input: query.into(),
@@ -57,8 +57,6 @@ impl Request<'_> {
             pagetoken: None,
             region: None,
             place_type: None,
-            // Internal use only:
-            query: None,
         } // struct
     } // fn
 } // impl

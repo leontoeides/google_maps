@@ -6,18 +6,15 @@
 pub mod avoid;
 mod build;
 pub mod departure_time;
-#[cfg(feature = "reqwest")]
-mod execute;
-#[cfg(feature = "reqwest")]
-mod get;
+mod end_point;
 pub mod location;
 mod new;
-mod query_url;
+mod query_string;
 pub mod traffic_model;
 pub mod transit_mode;
 pub mod transit_route_preference;
 pub mod unit_system;
-mod validate;
+mod validatable;
 pub mod waypoint;
 mod with_alternatives;
 mod with_arrival_time;
@@ -33,17 +30,24 @@ mod with_unit_system;
 mod with_waypoint_optimization;
 mod with_waypoints;
 
+#[cfg(feature = "reqwest")]
+mod execute;
+
+#[cfg(feature = "reqwest")]
+mod get;
+
 // -----------------------------------------------------------------------------
 
-use crate::client::GoogleMapsClient;
 use crate::directions::request::{
-    avoid::Avoid, departure_time::DepartureTime, location::Location, traffic_model::TrafficModel,
-    transit_mode::TransitMode, transit_route_preference::TransitRoutePreference,
-    unit_system::UnitSystem, waypoint::Waypoint,
-}; // crate::directions::request
-use crate::directions::travel_mode::TravelMode;
-use crate::types::{Language, Region};
-use chrono::NaiveDateTime;
+    avoid::Avoid,
+    departure_time::DepartureTime,
+    location::Location,
+    traffic_model::TrafficModel,
+    transit_mode::TransitMode,
+    transit_route_preference::TransitRoutePreference,
+    unit_system::UnitSystem,
+    waypoint::Waypoint,
+};
 
 // -----------------------------------------------------------------------------
 //
@@ -52,12 +56,12 @@ use chrono::NaiveDateTime;
 /// used to build your request.
 
 #[derive(Debug)]
-pub struct Request<'a> {
+pub struct Request<'r> {
     // Required parameters:
     // --------------------
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client: &'a GoogleMapsClient,
+    client: &'r crate::client::Client,
 
     /// The address, latitude/longitude, or place ID to which you wish to
     /// calculate directions.
@@ -75,7 +79,7 @@ pub struct Request<'a> {
 
     /// Desired arrival time. See method `with_arrival_time()` for more
     /// information.
-    arrival_time: Option<NaiveDateTime>,
+    arrival_time: Option<chrono::NaiveDateTime>,
 
     /// Desired departure time. See files `departure_time.rs` and method
     /// `with_departure_time()` for more information.
@@ -83,11 +87,11 @@ pub struct Request<'a> {
 
     /// Language in which to return results. See file `language.rs` and method
     /// `with_language()` for more information.
-    language: Option<Language>,
+    language: Option<crate::types::Language>,
 
     /// Region bias. See file `region.rs` and method `with_region()` for more
     /// information.
-    region: Option<Region>,
+    region: Option<crate::types::Region>,
 
     /// Features that routes should avoid. See file `avoid.rs` and method
     /// `with_restrictions()` for more information.
@@ -108,7 +112,7 @@ pub struct Request<'a> {
 
     /// Mode of transportation. See file `travel_mode.rs` and method
     /// `with_travel_mode()` for more information.
-    travel_mode: Option<TravelMode>,
+    travel_mode: Option<crate::directions::travel_mode::TravelMode>,
 
     /// Unit system to use when displaying results. See file `unit_system.rs`
     /// and method `with_unit_system()` for more information.
@@ -121,13 +125,4 @@ pub struct Request<'a> {
     /// Pass throughs or stopovers at intermediate locations. See file
     /// `waypoint.rs` and method `with_waypoints()` for more information.
     waypoints: Vec<Waypoint>,
-
-    // Internal use only:
-    // ------------------
-    /// The URL-encoded query string that is passed to the Google Maps
-    /// Directions API through cURL.
-    query: Option<String>,
-
-    /// Has the request been validated?
-    validated: bool,
 } // struct

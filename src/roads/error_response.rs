@@ -1,5 +1,5 @@
 //! In the case of an error, a standard format error response body will be
-//! returned and the HTTP status code will be set to an error statu
+//! returned and the HTTP status code will be set to an error status.
 
 // -----------------------------------------------------------------------------
 
@@ -13,7 +13,6 @@ use serde::{Deserialize, Serialize};
 ///
 /// The response contains an object with a single error object with the
 /// following keys:
-
 #[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd, Deserialize, Serialize)]
 pub struct ErrorResponse {
     /// This is the same as the

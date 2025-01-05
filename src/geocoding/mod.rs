@@ -87,19 +87,41 @@ pub mod reverse;
 
 // -----------------------------------------------------------------------------
 
-const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/geocode";
-const OUTPUT_FORMAT: &str = "json"; // json or xml
-
-// -----------------------------------------------------------------------------
-
 pub use crate::geocoding::{
-    error::Error as GeocodingError,
-    forward::{component::Component as GeocodingComponent, ForwardRequest as GeocodingRequest}, // forward
+    error::Error,
+    forward::{
+        component::Component,
+        ForwardRequest
+    },
     response::{
-        geocoding::Geocoding, plus_code::PlusCode, status::Status as GeocodingStatus,
-        Response as GeocodingResponse,
+        geocoding::Geocoding,
+        plus_code::PlusCode,
+        status::Status,
+        Response,
     }, // response
-    reverse::ReverseRequest as GeocodingReverseRequest,
+    reverse::ReverseRequest,
 }; // geocoding
 
-pub use crate::types::{AddressComponent, Geometry, LocationType};
+pub use crate::types::{
+    AddressComponent,
+    Geometry,
+    LocationType
+};
+
+#[deprecated(note = "use `google_maps::geocoding::Error` instead", since = "3.8.0")]
+pub use crate::geocoding::error::Error as GeocodingError;
+
+#[deprecated(note = "use `google_maps::geocoding::Component` instead", since = "3.8.0")]
+pub use crate::geocoding::forward::component::Component as GeocodingComponent;
+
+#[deprecated(note = "use `google_maps::geocoding::ForwardRequest` instead", since = "3.8.0")]
+pub use crate::geocoding::forward::ForwardRequest as GeocodingRequest;
+
+#[deprecated(note = "use `google_maps::geocoding::Status` instead", since = "3.8.0")]
+pub use crate::geocoding::response::status::Status as GeocodingStatus;
+
+#[deprecated(note = "use `google_maps::geocoding::Response` instead", since = "3.8.0")]
+pub use crate::geocoding::response::Response as GeocodingResponse;
+
+#[deprecated(note = "use `google_maps::geocoding::ReverseRequest` instead", since = "3.8.0")]
+pub use crate::geocoding::reverse::ReverseRequest as GeocodingReverseRequest;

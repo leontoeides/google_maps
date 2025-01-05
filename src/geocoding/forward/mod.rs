@@ -6,13 +6,10 @@
 
 mod build;
 pub mod component;
-#[cfg(feature = "reqwest")]
-mod execute;
-#[cfg(feature = "reqwest")]
-mod get;
+mod end_point;
 mod new;
-mod query_url;
-mod validate;
+mod query_string;
+mod validatable;
 mod with_address;
 mod with_bounds;
 mod with_components;
@@ -20,26 +17,25 @@ mod with_language;
 mod with_place_id;
 mod with_region;
 
+#[cfg(feature = "reqwest")]
+mod execute;
+
+#[cfg(feature = "reqwest")]
+mod get;
+
 // -----------------------------------------------------------------------------
-
-use crate::client::GoogleMapsClient;
-use crate::geocoding::forward::component::Component;
-use crate::types::{Bounds, Language, Region};
-
-// -----------------------------------------------------------------------------
-
+//
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Geocoding API_ query**. The methods implemented for this struct are what's
 /// used to build your request. Forward geocoding looks up a longitude &
 /// latitude coordinates from a street address.
-
 #[derive(Debug)]
-pub struct ForwardRequest<'a> {
+pub struct ForwardRequest<'r> {
     // Required parameters:
     // --------------------
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client: &'a GoogleMapsClient,
+    client: &'r crate::client::Client,
 
     // Optional parameters:
     // --------------------
@@ -65,30 +61,22 @@ pub struct ForwardRequest<'a> {
     /// more prominently. This parameter will only influence, not fully
     /// restrict, results from the geocoder. (For more information see [Viewport
     /// Biasing](https://developers.google.com/maps/documentation/geocoding/intro#Viewports).)
-    bounds: Option<Bounds>,
+    bounds: Option<crate::types::Bounds>,
 
     /// A components filter with elements. The components filter is also
     /// accepted as an optional parameter if an `address` is provided. Each
     /// element in the components filter fully restricts the results from the
     /// geocoder. See more information about [component
     /// filtering](https://developers.google.com/maps/documentation/geocoding/intro#ComponentFiltering).
-    components: Vec<Component>,
+    components: Vec<crate::geocoding::forward::component::Component>,
 
     /// The language in which to return results.
-    language: Option<Language>,
+    language: Option<crate::types::Language>,
 
     /// The region code, specified as a ccTLD ("top-level domain") two-character
     /// value. This parameter will only influence, not fully restrict, results
     /// from the geocoder. (For more information see [Region
     /// Biasing](https://developers.google.com/maps/documentation/geocoding/intro#RegionCodes)
     /// below.)
-    region: Option<Region>,
-
-    // Internal use only:
-    // ------------------
-    /// Query string that is to be submitted to the Google Cloud Maps Platform.
-    query: Option<String>,
-
-    /// Has the request been validated?
-    validated: bool,
+    region: Option<crate::types::Region>,
 } // struct

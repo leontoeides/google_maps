@@ -1,8 +1,6 @@
-use crate::client::GoogleMapsClient;
-
 // =============================================================================
 
-impl GoogleMapsClient {
+impl crate::client::Client {
     // -------------------------------------------------------------------------
     //
     /// Completes the builder pattern into a final structure.

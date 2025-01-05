@@ -1,9 +1,9 @@
-use crate::{client::GoogleMapsClient, request_rate::api::Api};
+use crate::request_rate::api::Api;
 use std::time::Duration;
 
 // =============================================================================
 
-impl GoogleMapsClient {
+impl crate::client::Client {
     // -------------------------------------------------------------------------
     //
     /// Sets the rate limit for the specified API.

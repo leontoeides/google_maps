@@ -35,11 +35,12 @@ pub mod response;
 
 // -----------------------------------------------------------------------------
 
-const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/place/textsearch";
-const OUTPUT_FORMAT: &str = "json"; // json or xml
+pub use crate::places::{
+    error::Error,
+    status::Status
+};
 
-// -----------------------------------------------------------------------------
-
-pub use crate::places::{error::Error, status::Status}; // place_search
-
-pub use crate::places::place_search::text_search::{request::Request, response::Response}; // text_search
+pub use crate::places::place_search::text_search::{
+    request::Request,
+    response::Response
+};

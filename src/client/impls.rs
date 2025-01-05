@@ -1,19 +1,26 @@
-use crate::client::GoogleMapsClient;
+#[cfg(any(
+    feature = "geocoding",
+    feature = "places",
+    feature = "roads",
+    feature = "time_zone"
+))]
 use crate::types::LatLng;
+
 #[cfg(feature = "directions")]
 use crate::directions::request::location::Location;
-#[cfg(feature = "distance_matrix")]
-use crate::directions::request::waypoint::Waypoint;
+
 #[cfg(feature = "reqwest")]
 use crate::request_rate::RequestRate;
+
+#[cfg(feature = "distance_matrix")]
+use crate::directions::request::waypoint::Waypoint;
+
 #[cfg(feature = "time_zone")]
 use chrono::{DateTime, Utc};
-#[cfg(feature = "reqwest")]
-use reqwest::Response;
 
 // =============================================================================
 
-impl GoogleMapsClient {
+impl crate::client::Client {
     // -------------------------------------------------------------------------
     //
     /// Initialize the settings needed for a Google Cloud Maps API transaction.
@@ -23,7 +30,6 @@ impl GoogleMapsClient {
     /// * `key` ‧ Your application's API key. This key identifies your
     ///   application for purposes of quota management. Learn how to [get a
     ///   key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
-
     #[cfg(all(feature = "reqwest", not(feature = "reqwest-middleware")))]
     pub fn try_new(key: impl Into<String>) -> Result<Self, crate::GoogleMapsError> {
         let reqwest_client = reqwest::Client::builder()
@@ -52,7 +58,6 @@ impl GoogleMapsClient {
     /// * `key` ‧ Your application's API key. This key identifies your
     /// application for purposes of quota management. Learn how to [get a
     /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
-
     #[cfg(all(feature = "reqwest", feature = "reqwest-middleware"))]
     pub fn try_new(key: impl Into<String>) -> Result<Self, crate::GoogleMapsError> {
         let reqwest_client = reqwest::Client::builder()
@@ -87,7 +92,6 @@ impl GoogleMapsClient {
     /// * This function will panic if the `reqwest` client builder chain fails.
     ///   Realistically this shouldn't happen. However you may want to use
     ///   `try_new` to instantiate a new `GoogleMapsClient` instead.
-
     #[cfg(feature = "reqwest")]
     #[deprecated(since = "3.4.2", note = "use `try_new` instead")]
     #[must_use]
@@ -102,9 +106,8 @@ impl GoogleMapsClient {
     /// ## Arguments
     ///
     /// * `key` ‧ Your application's API key. This key identifies your
-    /// application for purposes of quota management. Learn how to [get a
-    /// key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
-
+    ///   application for purposes of quota management. Learn how to [get a
+    ///   key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
     #[cfg(not(feature = "reqwest"))]
     pub fn new(key: impl Into<String>) -> Self {
         Self { key: key.into() }
@@ -122,7 +125,7 @@ impl GoogleMapsClient {
     /// use google_maps::prelude::*;
     /// use rust_decimal_macros::dec;
     ///
-    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+    /// let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE");
     ///
     /// let directions = google_maps_client.directions(
     ///     // Origin: Canadian Museum of Nature
@@ -131,7 +134,6 @@ impl GoogleMapsClient {
     ///     Location::try_from_f32(45.403_509, -75.618_904)?,
     /// )
     /// ```
-
     #[cfg(feature = "directions")]
     #[must_use]
     pub fn directions(
@@ -154,7 +156,7 @@ impl GoogleMapsClient {
     /// use google_maps::prelude::*;
     /// use rust_decimal_macros::dec;
     ///
-    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+    /// let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE");
     ///
     /// let distances = google_maps_client.distance_matrix(
     ///     // Origins
@@ -179,7 +181,6 @@ impl GoogleMapsClient {
     /// This method uses generics to improve ergonomics. The `C` generic is
     /// intended to represent any collection that can be iterated over, and the
     /// `W` generic is for any type that can be converted to a `Waypoint` type.
-
     #[cfg(feature = "distance_matrix")]
     #[must_use]
     pub fn distance_matrix<C, W>(
@@ -205,7 +206,6 @@ impl GoogleMapsClient {
     ///
     /// This method accepts no arguments, it initiates a builder pattern. Use
     /// the methods of the resulting type to set the parameters.
-
     #[cfg(feature = "elevation")]
     #[must_use]
     pub const fn elevation(&self) -> crate::elevation::request::Request {
@@ -224,7 +224,6 @@ impl GoogleMapsClient {
     ///
     /// This method accepts no arguments, it initiates a builder pattern. Use
     /// the methods of the resulting type to set the parameters.
-
     #[cfg(feature = "geocoding")]
     #[must_use]
     pub const fn geocoding(&self) -> crate::geocoding::forward::ForwardRequest {
@@ -248,14 +247,13 @@ impl GoogleMapsClient {
     /// use google_maps::prelude::*;
     /// use rust_decimal_macros::dec;
     ///
-    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+    /// let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE");
     ///
     /// let address = google_maps_client.reverse_geocoding(
     ///     // 10 Downing St, Westminster, London
     ///     LatLng::try_from_dec(dec!(51.503_364), dec!(-0.127_625))?,
     /// )
     /// ```
-
     #[cfg(feature = "geocoding")]
     #[must_use]
     pub fn reverse_geocoding(
@@ -286,16 +284,19 @@ impl GoogleMapsClient {
     /// use google_maps::prelude::*;
     /// use rust_decimal_macros::dec;
     ///
-    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+    /// let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE");
     ///
     /// let time_zone = google_maps_client.time_zone(
     ///      // St. Vitus Cathedral in Prague, Czechia
     ///      LatLng::try_from_dec(dec!(50.090_903), dec!(14.400_512))?,
     ///      // Tuesday February 23, 2020 @ 6:00:00 pm
-    ///      NaiveDate::from_ymd(2020, 2, 23).and_hms(18, 00, 0)
+    ///      NaiveDate::from_ymd_opt(2020, 2, 23)
+    ///         .unwrap()
+    ///         .and_hms_opt(18, 00, 0)
+    ///         .unwrap()
+    ///         .and_utc()
     /// )
     /// ```
-
     #[cfg(feature = "time_zone")]
     #[must_use]
     pub fn time_zone(
@@ -317,7 +318,6 @@ impl GoogleMapsClient {
     /// ## Arguments
     ///
     /// * `input` ‧ The text string on which to search.
-
     #[cfg(feature = "autocomplete")]
     #[must_use]
     pub fn place_autocomplete(
@@ -347,7 +347,7 @@ impl GoogleMapsClient {
     /// use google_maps::prelude::*;
     /// use rust_decimal_macros::dec;
     ///
-    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+    /// let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE");
     ///
     /// let predictions = google_maps_client.place_autocomplete("51".to_string())
     ///     .with_location_and_radius(LatLng::try_from_dec(dec!(54), dec!(-114))?, 1_000)
@@ -357,7 +357,6 @@ impl GoogleMapsClient {
     ///
     /// println!("{:#?}", predictions);
     /// ```
-
     #[cfg(feature = "autocomplete")]
     #[must_use]
     pub fn query_autocomplete(
@@ -441,7 +440,7 @@ impl GoogleMapsClient {
     /// use google_maps::prelude::*;
     /// use rust_decimal_macros::dec;
     ///
-    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+    /// let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE");
     ///
     /// let search_results = google_maps_client.text_search("123 Main Street".to_string(), 50_000)
     ///     .with_type(PlaceType::Restaurant)
@@ -450,7 +449,6 @@ impl GoogleMapsClient {
     ///
     /// println!("{:#?}", search_results);
     /// ```
-
     #[cfg(feature = "places")]
     #[must_use]
     pub fn text_search(
@@ -498,7 +496,7 @@ impl GoogleMapsClient {
     /// use google_maps::prelude::*;
     /// use rust_decimal_macros::dec;
     ///
-    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+    /// let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE");
     ///
     /// let search_results = google_maps_client.nearby_search(LatLng::try_from_dec(dec!(53.740_989), dec!(-113.493_768))?, 1_000)
     ///     .with_type(PlaceType::Restaurant)
@@ -507,7 +505,6 @@ impl GoogleMapsClient {
     ///
     /// println!("{:#?}", search_results);
     /// ```
-
     #[cfg(feature = "places")]
     #[must_use]
     pub fn nearby_search(
@@ -543,7 +540,7 @@ impl GoogleMapsClient {
     /// use google_maps::prelude::*;
     /// use rust_decimal_macros::dec;
     ///
-    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+    /// let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE");
     ///
     /// let details = google_maps_client.place_details("ChIJIyEbn74koFMR4xlRm4Ftp6M".to_string())
     ///     .execute()
@@ -551,7 +548,6 @@ impl GoogleMapsClient {
     ///
     /// println!("{:#?}", details);
     /// ```
-
     #[cfg(feature = "places")]
     #[must_use]
     pub fn place_details(
@@ -588,7 +584,7 @@ impl GoogleMapsClient {
     /// use google_maps::prelude::*;
     /// use rust_decimal_macros::dec;
     ///
-    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+    /// let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE");
     ///
     /// let snapped_points = google_maps_client.snap_to_roads(vec![
     ///     LatLng::try_from_dec(dec!(-35.27801), dec!(149.12958))?,
@@ -611,7 +607,6 @@ impl GoogleMapsClient {
     /// intended to represent any collection that can be iterated over, and the
     /// `L` generic is for any type that can be converted to `LatLng`
     /// coordinates.
-
     #[cfg(feature = "roads")]
     #[must_use]
     pub fn snap_to_roads<C, L>(
@@ -645,7 +640,7 @@ impl GoogleMapsClient {
     /// use google_maps::prelude::*;
     /// use rust_decimal_macros::dec;
     ///
-    /// let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+    /// let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE");
     ///
     /// let snapped_points = google_maps_client.nearest_roads(vec![
     ///     LatLng::try_from_dec(dec!(-35.27801), dec!(149.12958))?,
@@ -661,7 +656,6 @@ impl GoogleMapsClient {
     /// intended to represent any collection that can be iterated over, and the
     /// `L` generic is for any type that can be converted to `LatLng`
     /// coordinates.
-
     #[cfg(feature = "roads")]
     #[must_use]
     pub fn nearest_roads<C, L>(
@@ -674,12 +668,4 @@ impl GoogleMapsClient {
         let points: Vec<LatLng> = points.into_iter().map(Into::into).collect();
         crate::roads::snap_to_roads::request::Request::new(self, points)
     } // fn
-
-    #[cfg(feature = "reqwest")]
-    pub async fn get_request(&self, url: &str) -> Result<Response, crate::ReqError> {
-        match self.reqwest_client.get(url).build() {
-            Ok(request) => self.reqwest_client.execute(request).await,
-            Err(error) => Err(crate::ReqError::from(error)),
-        }
-    }
 } // impl

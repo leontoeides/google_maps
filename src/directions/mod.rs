@@ -89,27 +89,47 @@ pub mod vehicle_type;
 
 // -----------------------------------------------------------------------------
 
-const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/directions";
-const OUTPUT_FORMAT: &str = "json"; // json or xml
-
-// -----------------------------------------------------------------------------
-
 pub use crate::directions::{
+    error::Error,
     request::{
-        avoid::Avoid, departure_time::DepartureTime, location::Location,
-        traffic_model::TrafficModel, transit_mode::TransitMode,
-        transit_route_preference::TransitRoutePreference, unit_system::UnitSystem,
-        waypoint::Waypoint, Request as DirectionsRequest,
-    }, // crate::directions::request
+        avoid::Avoid,
+        departure_time::DepartureTime,
+        location::Location,
+        Request,
+        traffic_model::TrafficModel,
+        transit_mode::TransitMode,
+        transit_route_preference::TransitRoutePreference,
+        unit_system::UnitSystem,
+        waypoint::Waypoint
+    },
     response::{
-        directions_distance::DirectionsDistance, directions_duration::DirectionsDuration,
-        driving_maneuver::DrivingManeuver, leg::Leg, overview_polyline::OverviewPolyline,
-        polyline::Polyline, route::Route, status::Status as DirectionsStatus, step::Step,
-        transit_agency::TransitAgency, transit_currency::TransitCurrency,
-        transit_details::TransitDetails, transit_fare::TransitFare, transit_line::TransitLine,
-        transit_stop::TransitStop, transit_time::TransitTime, transit_vehicle::TransitVehicle,
-        Response as DirectionsResponse,
-    }, // crate::directions::response
+        directions_distance::DirectionsDistance,
+        directions_duration::DirectionsDuration,
+        driving_maneuver::DrivingManeuver,
+        leg::Leg,
+        overview_polyline::OverviewPolyline,
+        polyline::Polyline, route::Route,
+        Response,
+        status::Status,
+        step::Step,
+        transit_agency::TransitAgency,
+        transit_currency::TransitCurrency,
+        transit_details::TransitDetails,
+        transit_fare::TransitFare,
+        transit_line::TransitLine,
+        transit_stop::TransitStop,
+        transit_time::TransitTime,
+        transit_vehicle::TransitVehicle
+    },
     travel_mode::TravelMode,
-    vehicle_type::VehicleType,
-}; // use
+    vehicle_type::VehicleType
+};
+
+#[deprecated(note = "use `google_maps::directions::Request` instead", since = "3.8.0")]
+pub use crate::directions::request::Request as DirectionsRequest;
+
+#[deprecated(note = "use `google_maps::directions::Response` instead", since = "3.8.0")]
+pub use crate::directions::response::Response as DirectionsResponse;
+
+#[deprecated(note = "use `google_maps::directions::Status` instead", since = "3.8.0")]
+pub use crate::directions::response::status::Status as DirectionsStatus;

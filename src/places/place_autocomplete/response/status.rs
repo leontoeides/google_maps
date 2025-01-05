@@ -2,7 +2,7 @@
 //! object contains the status of the request, and may contain debugging
 //! information to help your request is not working.
 
-use crate::places::place_autocomplete::error::Error;
+use crate::places::Error;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize};
 
@@ -96,7 +96,7 @@ static STATUSES_BY_CODE: phf::Map<&'static str, Status> = phf_map! {
 impl std::convert::TryFrom<&str> for Status {
     // Error definitions are contained in the
     // `google_maps\src\places\place_autocomplete\error.rs` module.
-    type Error = crate::places::place_autocomplete::error::Error;
+    type Error = crate::places::Error;
     /// Gets a `Status` enum from a `String` that contains a valid
     /// [status](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlacesAutocompleteStatus)
     /// code.
@@ -111,7 +111,7 @@ impl std::convert::TryFrom<&str> for Status {
 impl std::str::FromStr for Status {
     // Error definitions are contained in the
     // `google_maps\src\places\place_autocomplete\error.rs` module.
-    type Err = crate::places::place_autocomplete::error::Error;
+    type Err = crate::places::Error;
     /// Gets a `Status` enum from a `String` that contains a valid
     /// [status](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlacesAutocompleteStatus)
     /// code.

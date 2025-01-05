@@ -22,14 +22,23 @@ pub mod transit_stop;
 pub mod transit_time;
 pub mod transit_vehicle;
 
+// -----------------------------------------------------------------------------
+
 use crate::directions::{
-    response::{geocoded_waypoint::GeocodedWaypoint, route::Route, status::Status}, // response
+    Error,
+    response::{
+        geocoded_waypoint::GeocodedWaypoint,
+        route::Route,
+        status::Status
+    },
     travel_mode::TravelMode,
-}; // crate::directions
+};
+
 use serde::{Deserialize, Serialize};
 
+// -----------------------------------------------------------------------------
+//
 /// Directions responses contain the following root elements.
-
 #[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
 pub struct Response {
     /// Contains an array of available travel modes. This field is returned when
@@ -72,12 +81,59 @@ pub struct Response {
     pub status: Status,
 } // struct
 
+// -----------------------------------------------------------------------------
+
+impl std::convert::TryFrom<String> for Response {
+    type Error = simd_json::Error;
+    /// Convert a Google Maps API [JSON](https://en.wikipedia.org/wiki/JSON)
+    /// `String` response into a `Response` struct.
+    fn try_from(s: String) -> Result<Self, Self::Error> {
+        simd_json::serde::from_slice(&mut s.into_bytes())
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::str::FromStr for Response {
     type Err = simd_json::Error;
-    /// Parse a Google Maps Directions API JSON `String` response into a
-    /// usable `Response` struct.
-    fn from_str(s: &str) -> Result<Self, simd_json::Error> {
+    /// Converts a Google Maps API [JSON](https://en.wikipedia.org/wiki/JSON)
+    /// `&str` response into a `Response` struct.
+    ///
+    /// # Notes
+    ///
+    /// * It's recommended to use the implemented `TryFrom` trait instead.
+    ///
+    /// * The [simd_json](https://crates.io/crates/simd-json)'s `from_str`
+    ///   function implementation is unsafe and it's `from_slice` function
+    ///   requires a mutable reference. Therefore this trait clones the `&str`
+    ///   into a `String` to give `from_slice` mutable access to the string.
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut bytes = s.to_string().into_bytes();
         simd_json::serde::from_slice(&mut bytes)
-    }
-}
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<Response> for Result<Response, crate::directions::Error> {
+    /// Converts a Google Maps API `Response` into a `Result<Response, Error>`
+    /// by examining the `status` field inside of the response.
+    ///
+    /// If the status indicates a success, then an `Ok(response)` will be
+    /// returned. If the status indicates an error, then an `Err(error)` will be
+    /// returned.
+    fn from(response: Response) -> Self {
+        match response.status {
+            Status::Ok => Ok(response),
+            Status::InvalidRequest => Err(Error::InvalidRequest),
+            Status::MaxRouteLengthExceeded => Err(Error::MaxRouteLengthExceeded),
+            Status::MaxWaypointsExceeded => Err(Error::MaxWaypointsExceeded),
+            Status::NotFound => Err(Error::NotFound),
+            Status::OverDailyLimit => Err(Error::OverDailyLimit),
+            Status::OverQueryLimit => Err(Error::OverQueryLimit),
+            Status::RequestDenied => Err(Error::RequestDenied),
+            Status::UnknownError => Err(Error::UnknownError),
+            Status::ZeroResults => Err(Error::ZeroResults),
+        } // match
+    } // fn
+} // impl

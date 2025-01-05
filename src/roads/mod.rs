@@ -64,14 +64,27 @@ pub mod status;
 // -----------------------------------------------------------------------------
 
 pub use crate::roads::{
-    error::Error as RoadsError, error_response::ErrorResponse as RoadsErrorResponse,
-    snapped_point::SnappedPoint, status::Status as RoadsStatus,
-}; // crate::roads
+    error::Error,
+    error_response::ErrorResponse,
+    snapped_point::SnappedPoint,
+    status::Status
+};
 
 pub use crate::roads::snap_to_roads::{
-    request::Request as SnapToRoadsRequest, response::Response as SnapToRoadsResponse,
-}; // crate::roads::snap_to_roads
+    request::Request as SnapToRoadsRequest,
+    response::Response as SnapToRoadsResponse
+};
 
 pub use crate::roads::nearest_roads::{
-    request::Request as NearestRoadsRequest, response::Response as NearestRoadsResponse,
-}; // crate::roads::nearest_roads
+    request::Request as NearestRoadsRequest,
+    response::Response as NearestRoadsResponse
+};
+
+#[deprecated(note = "use `crate::roads::Error` instead", since = "3.8.0")]
+pub use crate::roads::error::Error as RoadsError;
+
+#[deprecated(note = "use `crate::roads::ErrorResponse` instead", since = "3.8.0")]
+pub use crate::roads::error_response::ErrorResponse as RoadsErrorResponse;
+
+#[deprecated(note = "use `crate::roads::ErrorResponse` instead", since = "3.8.0")]
+pub use crate::roads::status::Status as RoadsStatus;

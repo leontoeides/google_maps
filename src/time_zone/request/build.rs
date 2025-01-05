@@ -1,37 +1,32 @@
-use crate::time_zone::request::Request;
-
-impl<'a> Request<'a> {
-    /// Builds the query string for the Google Maps Time Zone API based on the
-    /// input provided by the client.
+impl<'r> crate::time_zone::Request<'r> {
+    /// Builds the URL [query string](https://en.wikipedia.org/wiki/Query_string)
+    /// for the HTTP [GET](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET)
+    /// request.
     ///
     /// ## Arguments
     ///
     /// This method accepts no arguments.
-
-    pub fn build(&mut self) -> &'a mut Request {
-        // This section builds the "required parameters" portion of the query
-        // string:
-
-        let mut query = format!(
-            "key={}&location={}&timestamp={}",
-            self.client.key,
-            String::from(&self.location),
-            self.timestamp.timestamp(),
-        );
-
-        // This section builds the "optional parameters" portion of the query
-        // string:
-
-        // Language key/value pair:
-        if let Some(language) = &self.language {
-            query.push_str("&language=");
-            query.push_str(&String::from(language));
-        }
-
-        // Set query string in Request struct.
-        self.query = Some(query);
-
-        // Return modified Request struct to caller.
-        self
+    ///
+    /// ## Notes
+    ///
+    /// * The query string is the part of the URL after the `?` question mark.
+    ///   For example, in the URL `https://example.com/over/there?name=ferret`
+    ///   the query string is `name=ferret`
+    ///
+    /// * The `build` method has been removed. It would store the generated
+    ///   query string inside of the request structure.
+    ///
+    ///   This way, the same query string would only have to be generated once
+    ///   and could be used for any subsequent retries. This increased
+    ///   implementation complexity but had very performance little benefit. It
+    ///   has been removed.
+    ///
+    ///   If you want to generate a query string (without the preceding URL),
+    ///   try the `query_string` method.
+    #[deprecated(note = "try using the `query_string` method instead", since = "3.8.0")]
+    pub fn build(
+        &'r mut self
+    ) -> Result<&'r mut Self, crate::Error> {
+        Ok(self)
     } // fn
 } // impl

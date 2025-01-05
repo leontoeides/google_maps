@@ -70,13 +70,23 @@ pub mod response;
 
 // -----------------------------------------------------------------------------
 
-const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/timezone";
-const OUTPUT_FORMAT: &str = "json"; // json or xml
-
-// -----------------------------------------------------------------------------
-
 pub use crate::time_zone::{
-    error::Error as TimeZoneError,
-    request::Request as TimeZoneRequest,
-    response::{status::Status as TimeZoneStatus, Response as TimeZoneResponse}, // reponse
-}; // crate::time_zone
+    error::Error,
+    request::Request,
+    response::{
+        Response,
+        status::Status,
+    },
+};
+
+#[deprecated(note = "use `crate::time_zone::Error` instead", since = "3.8.0")]
+pub use crate::time_zone::error::Error as TimeZoneError;
+
+#[deprecated(note = "use `crate::time_zone::Request` instead", since = "3.8.0")]
+pub use crate::time_zone::request::Request as TimeZoneRequest;
+
+#[deprecated(note = "use `crate::time_zone::Response` instead", since = "3.8.0")]
+pub use crate::time_zone::response::Response as TimeZoneResponse;
+
+#[deprecated(note = "use `crate::time_zone::Status` instead", since = "3.8.0")]
+pub use crate::time_zone::response::status::Status as TimeZoneStatus;

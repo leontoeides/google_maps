@@ -33,9 +33,13 @@ pub mod response;
 
 // -----------------------------------------------------------------------------
 
-const SERVICE_URL: &str = "https://roads.googleapis.com/v1/snapToRoads";
+pub use crate::roads::snap_to_roads::{
+    request::Request,
+    response::Response
+};
 
-// -----------------------------------------------------------------------------
-
+#[deprecated(note = "use `crate::roads::snap_to_roads::Request` instead", since = "3.8.0")]
 pub use crate::roads::snap_to_roads::request::Request as SnapToRoadsRequest;
+
+#[deprecated(note = "use `crate::roads::snap_to_roads::Response` instead", since = "3.8.0")]
 pub use crate::roads::snap_to_roads::response::Response as SnapToRoadsResponse;

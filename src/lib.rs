@@ -139,7 +139,7 @@
 //! ```rust
 //! use google_maps::prelude::*;
 //!
-//! let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+//! let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
 //!
@@ -167,7 +167,7 @@
 //! ```rust
 //! use google_maps::prelude::*;
 //!
-//! let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+//! let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
 //!
@@ -202,7 +202,7 @@
 //! ```rust
 //! use google_maps::prelude::*;
 //!
-//! let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+//! let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
 //!
@@ -235,7 +235,7 @@
 //! ```rust
 //! use google_maps::prelude::*;
 //!
-//! let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+//! let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
 //!
@@ -264,7 +264,7 @@
 //! ```rust
 //! use google_maps::prelude::*;
 //!
-//! let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+//! let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
 //!
@@ -303,7 +303,7 @@
 //! ```rust
 //! use google_maps::prelude::*;
 //!
-//! let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+//! let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE");
 //!
 //! // Example request:
 //!
@@ -347,7 +347,7 @@
 //! ```rust
 //! use google_maps::prelude::*;
 //!
-//! let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE")
+//! let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE")
 //!     // For all Google Maps Platform APIs, the client will limit 2 sucessful
 //!     // requests for every 10 seconds:
 //!     .with_rate(&Api::All, 2, std::time::Duration::from_secs(10))
@@ -367,7 +367,6 @@
 //! # Roadmap
 //!
 //! - [ ] Track both _requests_ and request _elements_ for rate limiting.
-//! - [ ] Make a generic `get()` function for that can be used by all APIs.
 //! - [ ] Convert explicit query validation to session types wherever
 //!     reasonable.
 //! - [ ] [Places API](https://developers.google.com/places/web-service/intro).
@@ -409,39 +408,67 @@
 // Common / global modules:
 
 mod client;
+mod serde;
+
 pub mod error;
 pub mod prelude;
-mod serde;
 pub mod types;
+
+pub mod traits;
 
 // Optional Google Maps API modules. Their inclusion can be changed with
 // feature flags:
 
 #[cfg(any(feature = "directions", feature = "distance_matrix"))]
 pub mod directions;
+
 #[cfg(feature = "distance_matrix")]
 pub mod distance_matrix;
+
 #[cfg(feature = "elevation")]
 pub mod elevation;
+
 #[cfg(feature = "geocoding")]
 pub mod geocoding;
+
+#[cfg(any(feature = "autocomplete", feature = "places"))]
 pub mod places;
+
 #[cfg(feature = "reqwest-middleware")]
 pub mod reqwest_maybe_middleware;
+
 #[cfg(feature = "roads")]
 pub mod roads;
+
 #[cfg(feature = "time_zone")]
 pub mod time_zone;
 
-// Re-exports. Not great for organization but needed for backward compatibility.
+// -----------------------------------------------------------------------------
+//
+// Re-exports for the main event
 
 pub use crate::{
-    client::GoogleMapsClient as ClientSettings, client::GoogleMapsClient,
-    error::Error as GoogleMapsError, error::Error, types::error::Error as TypeError,
-}; // crate
+    client::Client,
+    error::Error,
+    types::error::Error as TypeError,
+};
+
+#[deprecated(note = "use `google_maps::Client` instead", since = "3.8.0")]
+pub use crate::client::Client as ClientSettings;
+
+#[deprecated(note = "use `google_maps::Client` instead", since = "3.8.0")]
+pub use crate::client::Client as GoogleMapsClient;
+
+#[deprecated(note = "use `google_maps::Error` instead", since = "3.8.0")]
+pub use crate::error::Error as GoogleMapsError;
+
+// -----------------------------------------------------------------------------
+//
+// Re-exports for common shared types
 
 #[cfg(any(feature = "geocoding", feature = "places"))]
 pub use crate::types::address_component::AddressComponent;
+
 #[cfg(any(
     feature = "directions",
     feature = "distance_matrix",
@@ -449,14 +476,19 @@ pub use crate::types::address_component::AddressComponent;
     feature = "places"
 ))]
 pub use crate::types::bounds::Bounds;
+
+pub use crate::types::classified_error::ClassifiedError;
+
 #[cfg(any(
     feature = "autocomplete",
     feature = "directions",
     feature = "geocoding"
 ))]
 pub use crate::types::country::Country;
+
 #[cfg(any(feature = "geocoding", feature = "places"))]
 pub use crate::types::geometry::Geometry;
+
 #[cfg(any(
     feature = "autocomplete",
     feature = "directions",
@@ -466,6 +498,7 @@ pub use crate::types::geometry::Geometry;
     feature = "time_zone"
 ))]
 pub use crate::types::language::Language;
+
 #[cfg(any(
     feature = "autocomplete",
     feature = "directions",
@@ -477,8 +510,10 @@ pub use crate::types::language::Language;
     feature = "time_zone"
 ))]
 pub use crate::types::latlng::LatLng;
+
 #[cfg(any(feature = "geocoding", feature = "places"))]
 pub use crate::types::location_type::LocationType;
+
 #[cfg(any(
     feature = "autocomplete",
     feature = "directions",
@@ -487,6 +522,7 @@ pub use crate::types::location_type::LocationType;
     feature = "places"
 ))]
 pub use crate::types::place_type::PlaceType;
+
 #[cfg(any(
     feature = "autocomplete",
     feature = "directions",
@@ -496,7 +532,9 @@ pub use crate::types::place_type::PlaceType;
 ))]
 pub use crate::types::region::Region;
 
-// Optional dependencies:
+// -----------------------------------------------------------------------------
+//
+// Re-exports for optional dependencies
 
 #[cfg(feature = "reqwest")]
 mod request_rate;

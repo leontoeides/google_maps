@@ -11,13 +11,14 @@ pub mod sort_order;
 
 // -----------------------------------------------------------------------------
 
-const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/place/details";
-const OUTPUT_FORMAT: &str = "json"; // json or xml
-
-// -----------------------------------------------------------------------------
-
-pub use crate::places::{error::Error, status::Status}; // place_search
+pub use crate::places::{
+    error::Error,
+    status::Status
+};
 
 pub use crate::places::place_details::{
-    field::Field, request::Request, response::Response, sort_order::SortOrder,
-}; // place_details
+    field::Field,
+    request::Request,
+    response::Response,
+    sort_order::SortOrder,
+};

@@ -1,313 +1,435 @@
 //! Directions API error types and error messages.
 
 // -----------------------------------------------------------------------------
-
-use crate::directions::response::status::Status;
-use miette::Diagnostic;
-use thiserror::Error;
-
-// -----------------------------------------------------------------------------
 //
-/// Errors that may be produced by the Google Maps Directions API client.
-
-#[derive(Debug, Diagnostic, Error)]
-#[diagnostic(code(google_maps::directions::error), url(docsrs))]
+/// An error produced by a Google Maps Directions API request.
+#[derive(Clone, Debug, thiserror::Error, miette::Diagnostic)]
 pub enum Error {
+    // -------------------------------------------------------------------------
+    // Client-side errors:
+    // -------------------------------------------------------------------------
+
+    // Validation errors:
+
     /// An arrival time may only be specified in Transit travel mode.
+    #[error("`with_arrival_time` method may only be used when \
+        `with_travel_mode` is set to `TravelMode::Transit`. The travel mode has
+        been set to `{0}` and the arrival time has been set to `{1}`")]
+    #[diagnostic(
+        code(google_maps::directions::validate::arrival_time_is_for_transit_only),
+        url(docsrs),
+        help("try again either with a travel mode of `TravelMode::Transit` or \
+            no arrival time")
+    )]
     ArrivalTimeIsForTransitOnly(String, String),
+
     /// Alternatives may not be requested when waypoints are specified.
+    #[error("`with_alternatives` method cannot be set to `true` if \
+        `with_waypoints` has been set. {0} waypoints have been set")]
+    #[diagnostic(
+        code(google_maps::directions::validate::arrival_time_is_for_transit_only),
+        url(docsrs),
+        help("try again either with no waypoints or no alternatives")
+    )]
     EitherAlternativesOrWaypoints(usize),
-    /// An departure time may not be specified when an arrival time is
-    /// specified.
+
+    /// Either departure time or arrival time may be specified, but not both.
+    #[error("`with_departure_time` method cannot be used when \
+        `with_arrival_time` has been set. The arrival time has been set to \
+        `{0}` and the departure time has been set to `{1}`")]
+    #[diagnostic(
+        code(google_maps::directions::validate::either_departure_time_or_arrival_time),
+        url(docsrs),
+        help("try again either with no arrival time or no departure time")
+    )]
     EitherDepartureTimeOrArrivalTime(String, String),
+
     /// Restrictions may not be specified when waypoints are specified.
+    #[error("`with_restrictions` method cannot be used when `with_waypoints` \
+        has been set. {0} waypoints have been set and the \
+        restrictions are set to `{1}`")]
+    #[diagnostic(
+        code(google_maps::directions::validate::either_restrictions_or_waypoints),
+        url(docsrs),
+        help("try again either with no waypoints or no restrictions")
+    )]
     EitherRestrictionsOrWaypoints(usize, String),
-    /// Waypoints may not be specified in Transit travel mode.
+
+    /// Waypoints may not be specified in `Transit` travel mode.
+    #[error("`with_waypoints` method cannot be used when `with_travel_mode` \
+        is set to `TravelMode::Transit` but {0} waypoints have been set")]
+    #[diagnostic(
+        code(google_maps::directions::validate::either_waypoints_or_transit_mode),
+        url(docsrs),
+        help("try again either with a different travel mode or no waypoints")
+    )]
     EitherWaypointsOrTransitMode(usize),
-    /// Google Maps Directions API service generated an error. See the `Status`
-    /// enum for more information.
-    GoogleMapsService(Status, Option<String>),
-    /// The HTTP request was unsuccessful.
-    HttpUnsuccessful(String),
-    /// API client library attempted to parse a string that contained an invalid
-    /// avoid/restrictions code. See
-    /// `google_maps\src\directions\request\avoid.rs` for more information.
-    InvalidAvoidCode(String),
-    /// API client library attempted to parse a string that contained an invalid
-    /// currency code. See
-    /// `google_maps\src\directions\response\currency.rs` for more information.
-    InvalidCurrencyCode(String),
-    /// API client library attempted to parse a string that contained an invalid
-    /// geocoder status code. See
-    /// `google_maps\src\directions\response\geocoder_status.rs` for more
-    /// information.
-    InvalidGeocoderStatusCode(String),
-    /// API client library attempted to parse a string that contained an invalid
-    /// maneuver type code. See
-    /// `google_maps\src\directions\response\maneuver_type.rs` for more
-    /// information.
-    InvalidDrivingManeuverCode(String),
-    /// API client library attempted to parse a string that contained an invalid
-    /// status code. See `google_maps\src\directions\response\status.rs` for
-    /// more information.
-    InvalidStatusCode(String),
-    /// API client library attempted to parse a string that contained an invalid
-    /// time zone name. See
-    /// `google_maps\src\directions\response\time_zone.rs` for more information.
-    InvalidTimeZoneName(String),
-    /// API client library attempted to parse a string that contained an invalid
-    /// traffic model code. See
-    /// `google_maps\src\directions\request\traffic_model.rs` for more
-    /// information.
-    InvalidTrafficModelCode(String),
-    /// API client library attempted to parse a string that contained an invalid
-    /// transit mode code. See
-    /// `google_maps\src\directions\request\transit_mode.rs` for more
-    /// information.
-    InvalidTransitModeCode(String),
-    /// API client library attempted to parse a string that contained an invalid
-    /// transit routing preference code. See
-    /// `google_maps\src\directions\request\transit_route_preference.rs` for
-    /// more information.
-    InvalidTransitRoutePreferenceCode(String),
-    /// API client library attempted to parse a string that contained an invalid
-    /// travel mode code. See `google_maps\src\directions\travel_mode.rs` for
-    /// more information.
-    InvalidTravelModeCode(String),
-    /// API client library attempted to parse a string that contained an invalid
-    /// unit system code. See
-    /// `google_maps\src\directions\request\unit_system.rs` for more
-    /// information.
-    InvalidUnitSystemCode(String),
-    /// API client library attempted to parse a string that contained an invalid
-    /// vehicle type code. See `google_maps\src\directions\vehicle_type.rs` for
-    /// more information.
-    InvalidVehicleTypeCode(String),
-    /// API client library attempted to parse a string that contained an invalid
-    /// departure time. See
-    /// `google_maps\src\directions\request\departure_time.rs` for more
-    /// information.
-    InvalidDepartureTime(String),
-    /// The query string must be built before the request may be sent to the
-    /// Google Maps Directions API service.
-    QueryNotBuilt,
-    /// The request must be validated before a query string may be built.
-    RequestNotValidated,
-    /// The dependency library Reqwest generated an error.
-    #[cfg(feature = "reqwest")]
-    Reqwest(crate::ReqError),
-    /// The dependency library Reqwest generated an error. The error could
-    /// not be passed normally so a `String` representation is passed instead.
-    #[cfg(feature = "reqwest")]
-    ReqwestMessage(String),
-    /// The dependency library Serde JSON generated an error.
-    SimdJson(simd_json::Error),
-    /// Too many waypoints specified.
+
+    /// Too many waypoints.
+    ///
+    /// Reduce the number of waypoints. The maximum allowed is 25 plus the
+    /// origin and destination.
+    #[error("too many waypoints: {0}")]
+    #[diagnostic(
+        code(google_maps::directions::validate::too_many_waypoints),
+        url(docsrs),
+        help("the maximum allowed is 25 plus the origin and destination")
+    )]
     TooManyWaypoints(usize),
+
     /// Transit mode may only be specified in Transit travel mode.
+    #[error("`with_transit_modes` method may only be used when \
+        `with_travel_mode` is set to `TravelMode::Transit`. The travel mode \
+        has been set to `{0}` and the transit modes have been set to `{1}`")]
+    #[diagnostic(
+        code(google_maps::directions::validate::transit_mode_is_for_transit_only),
+        url(docsrs),
+        help("try again either with a travel mode of `TravelMode::Transit` or no transit modes")
+    )]
     TransitModeIsForTransitOnly(String, String),
+
     /// Transit routing preference may only be specified in Transit travel mode.
+    #[error("`with_transit_route_preference` method may only be used when \
+        `with_travel_mode` is set to `TravelMode::Transit`. The travel mode \
+        has been set to `{0}` and the transit route preference has been set to \
+        `{1}`")]
+    #[diagnostic(
+        code(google_maps::directions::validate::transit_mode_is_for_transit_only),
+        url(docsrs),
+        help("try again either with a travel mode of `TravelMode::Transit` or no transit route preference")
+    )]
     TransitRoutePreferenceIsForTransitOnly(String, String),
-} // enum
+
+    // Parse errors:
+
+    /// Invalid avoid code.
+    ///
+    /// Valid codes are `ferries`, `highways`, `indoor`, and `tolls`.
+    #[error("invalid avoid code: `{0}`")]
+    #[diagnostic(
+        code(google_maps::directions::parse::invalid_avoid_code),
+        url("https://developers.google.com/maps/documentation/directions/get-directions#avoid"),
+        help("valid codes are `ferries`, `highways`, `indoor`, and `tolls`")
+    )]
+    InvalidAvoidCode(String),
+
+    /// Invalid currency.
+    ///
+    /// See ISO 4217 for supported currencies.
+    #[error("invalid currency code: `{0}`")]
+    #[diagnostic(
+        code(google_maps::directions::parse::invalid_currency_code),
+        url("https://en.wikipedia.org/wiki/ISO_4217"),
+        help("see ISO 4217 for supported currencies")
+    )]
+    InvalidCurrencyCode(String),
+
+    /// Invalid driving maneuver.
+    ///
+    /// Valid codes are `ferry`, `ferry-train`, `fork-left`, `fork-right`, \
+    /// `keep-left`, `keep-right`, `merge`, `ramp-left`, `ramp-right`, \
+    /// `roundabout-left`, `roundabout-right`, `straight`, `turn-left`, \
+    /// `turn-right`, `turn-sharp-left`, `turn-sharp-right`, \
+    /// `turn-slight-left`, `turn-slight-right`, `uturn-left`, and
+    /// `uturn-right`.
+    #[error("invalid driving maneuver: `{0}`")]
+    #[diagnostic(
+        code(google_maps::directions::parse::invalid_driving_maneuver_code),
+        url("https://developers.google.com/maps/documentation/directions/get-directions#DirectionsStep-maneuver"),
+        help("valid codes are `ferry`, `ferry-train`, `fork-left`, \
+            `fork-right`, `keep-left`, `keep-right`, `merge`, `ramp-left`, \
+            `ramp-right`, `roundabout-left`, `roundabout-right`, `straight`, \
+            `turn-left`, `turn-right`, `turn-sharp-left`, `turn-sharp-right`, \
+            `turn-slight-left`, `turn-slight-right`, `uturn-left`, and \
+            `uturn-right`")
+    )]
+    InvalidDrivingManeuverCode(String),
+
+    /// Invalid geocoder status.
+    ///
+    /// Valid codes are `OK` and `ZERO_RESULTS`.
+    #[error("invalid geocoder status: `{0}`")]
+    #[diagnostic(
+        code(google_maps::directions::parse::invalid_geocoder_status_code),
+        url("https://developers.google.com/maps/documentation/directions/get-directions#DirectionsGeocodedWaypoint-geocoder_status"),
+        help("valid codes are `OK` and `ZERO_RESULTS`")
+    )]
+    InvalidGeocoderStatusCode(String),
+
+    /// Invalid time zone.
+    ///
+    /// Ensure the provided name is valid according to the IANA Time Zone
+    /// Database.
+    #[error("invalid time zone: `{0}`")]
+    #[diagnostic(
+        code(google_maps::directions::parse::invalid_time_zone_name),
+        url("https://www.iana.org/time-zones"),
+        help("ensure the provided name is valid according to the IANA Time \
+            Zone Database")
+    )]
+    InvalidTimeZoneName(String),
+
+    /// Invalid traffic model.
+    ///
+    /// Valid codes are `best_guess`, `optimistic`, and `pessimistic`.
+    #[error("invalid traffic model: `{0}`")]
+    #[diagnostic(
+        code(google_maps::directions::parse::invalid_traffic_model_code),
+        url("https://developers.google.com/maps/documentation/directions/get-directions#traffic_model"),
+        help("valid codes are `best_guess`, `optimistic`, and `pessimistic`")
+    )]
+    InvalidTrafficModelCode(String),
+
+    /// Invalid transit mode.
+    ///
+    /// Valid codes are `bus`, `rail`, `subway`, `train`, and `tram`.
+    #[error("invalid transit mode: `{0}`")]
+    #[diagnostic(
+        code(google_maps::directions::parse::invalid_traffic_model_code),
+        url("https://developers.google.com/maps/documentation/directions/get-directions#transit_mode"),
+        help("valid codes are `bus`, `rail`, `subway`, `train`, and `tram`")
+    )]
+    InvalidTransitModeCode(String),
+
+    /// Invalid transit route preference.
+    ///
+    /// Valid codes are `fewer_transfers` and `less_walking`.
+    #[error("invalid transit route preference: `{0}`")]
+    #[diagnostic(
+        code(google_maps::directions::parse::invalid_transit_route_preference_code),
+        url("https://developers.google.com/maps/documentation/directions/get-directions#transit_routing_preference"),
+        help("valid codes are `fewer_transfers` and `less_walking`")
+    )]
+    InvalidTransitRoutePreferenceCode(String),
+
+    /// Invalid travel mode.
+    ///
+    /// Valid codes are `bicycling`, `driving`, `transit`, and `walking`.
+    #[error("invalid travel mode: `{0}`")]
+    #[diagnostic(
+        code(google_maps::directions::parse::invalid_travel_mode_code),
+        url("https://developers.google.com/maps/documentation/directions/get-directions#TravelModes"),
+        help("valid codes are `bicycling`, `driving`, `transit`, and `walking`")
+    )]
+    InvalidTravelModeCode(String),
+
+    /// Invalid unit system.
+    ///
+    /// Valid codes are `imperial`, and `metric`.
+    #[error("invalid travel mode: `{0}`")]
+    #[diagnostic(
+        code(google_maps::directions::parse::invalid_unit_system_code),
+        url("https://developers.google.com/maps/documentation/directions/get-directions#units"),
+        help("valid codes are `imperial`, and `metric`")
+    )]
+    InvalidUnitSystemCode(String),
+
+    /// Invalid vehicle type.
+    ///
+    /// Valid codes are `BUS`, `CABLE_CAR`, `COMMUTER_TRAIN`, `FERRY`,
+    /// `FUNICULAR`, `GONDOLA_LIFT`, `HEAVY_RAIL`, `HIGH_SPEED_TRAIN`,
+    /// `INTERCITY_BUS`, `LONG_DISTANCE_TRAIN`, `METRO_RAIL`, `MONORAIL`,
+    /// `OTHER`, `RAIL`, `SHARE_TAXI`, `SUBWAY`, `TRAM`, and `TROLLEYBUS`.
+    #[error("invalid vehicle type: `{0}`")]
+    #[diagnostic(
+        code(google_maps::directions::parse::invalid_vehicle_type_code),
+        url("https://developers.google.com/maps/documentation/directions/get-directions#DirectionsTransitVehicle-type"),
+        help("valid codes are `BUS`, `CABLE_CAR`, `COMMUTER_TRAIN`, `FERRY`, \
+            `FUNICULAR`, `GONDOLA_LIFT`, `HEAVY_RAIL`, `HIGH_SPEED_TRAIN`, \
+            `INTERCITY_BUS`, `LONG_DISTANCE_TRAIN`, `METRO_RAIL`, `MONORAIL`, \
+            `OTHER`, `RAIL`, `SHARE_TAXI`, `SUBWAY`, `TRAM`, and `TROLLEYBUS`")
+    )]
+    InvalidVehicleTypeCode(String),
+
+    /// Invalid departure time.
+    ///
+    /// Valid departure times are `now`, or a UNIX timestamp.
+    #[error("invalid departure time: `{0}`")]
+    #[diagnostic(
+        code(google_maps::directions::parse::invalid_departure_time),
+        url("https://developers.google.com/maps/documentation/directions/get-directions#departure_time"),
+        help("valid departure times are `now`, or a UNIX timestamp")
+    )]
+    InvalidDepartureTime(String),
+
+    /// Invalid status code.
+    ///
+    /// Valid codes are `INVALID_REQUEST`, `MAX_ROUTE_LENGTH_EXCEEDED`,
+    /// `MAX_WAYPOINTS_EXCEEDED`, `NOT_FOUND`, `OK`, `OVER_DAILY_LIMIT`,
+    /// `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, `UNKNOWN_ERROR`, and
+    /// `ZERO_RESULTS`.
+    #[error("invalid status: `{0}`")]
+    #[diagnostic(
+        code(google_maps::directions::parse::invalid_status_code),
+        url("https://developers.google.com/maps/documentation/directions/get-directions#DirectionsStatus"),
+        help("valid codes are `INVALID_REQUEST`, `MAX_ROUTE_LENGTH_EXCEEDED` \
+            `MAX_WAYPOINTS_EXCEEDED`, `NOT_FOUND`, `OK`, `OVER_DAILY_LIMIT`, \
+            `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, `UNKNOWN_ERROR`, and \
+            `ZERO_RESULTS`")
+    )]
+    InvalidStatusCode(String),
+
+    // -------------------------------------------------------------------------
+    // Server-side errors (statuses):
+    // -------------------------------------------------------------------------
+
+    /// Not found.
+    ///
+    /// An origin, destination, or waypoint could not be geocoded.
+    #[error("not found")]
+    #[diagnostic(
+        code(google_maps::directions::status::not_found),
+        url("https://developers.google.com/maps/documentation/directions/get-directions#DirectionsStatus"),
+        help("indicates at least one of the locations specified in the \
+            request's origin, destination, or waypoints could not be geocoded")
+    )]
+    NotFound,
+
+    /// Zero results.
+    ///
+    /// No route could be found with the given parameters.
+    #[error("zero results")]
+    #[diagnostic(
+        code(google_maps::directions::status::zero_results),
+        url("https://developers.google.com/maps/documentation/directions/get-directions#DirectionsStatus"),
+        help("indicates no route could be found between the origin and destination")
+    )]
+    ZeroResults,
+
+    /// Maximum waypoints exceeded.
+    ///
+    /// The maximum allowed number of waypoints is 25, plus the origin and
+    /// destination.
+    #[error("maximum waypoints exceeded")]
+    #[diagnostic(
+        code(google_maps::directions::status::max_waypoints_exceeded),
+        url("https://developers.google.com/maps/documentation/directions/get-directions#DirectionsStatus"),
+        help("indicates that too many waypoints were provided in the request. \
+            For applications using the Directions API as a web service, or the \
+            directions service in the Maps JavaScript API, the maximum allowed \
+            number of waypoints is 25, plus the origin and destination")
+    )]
+    MaxWaypointsExceeded,
+
+    /// Maximum route length exceeded.
+    ///
+    /// Try reducing the number of waypoints, turns, or instructions.
+    #[error("maximum route length exceeded")]
+    #[diagnostic(
+        code(google_maps::directions::status::max_route_length_exceeded),
+        url("https://developers.google.com/maps/documentation/directions/get-directions#DirectionsStatus"),
+        help("indicates the requested route is too long and cannot be \
+            processed. This error occurs when more complex directions are \
+            returned. Try reducing the number of waypoints, turns, or \
+            instructions")
+    )]
+    MaxRouteLengthExceeded,
+
+    /// Invalid request.
+    ///
+    /// This may indicate that the query (`address`, `components`, or `latlng`)
+    /// is missing, an invalid result type, or an invalid location type.
+    #[error("invalid request")]
+    #[diagnostic(
+        code(google_maps::directions::status::invalid_request),
+        url("https://developers.google.com/maps/documentation/directions/get-directions#DirectionsStatus"),
+        help("indicates that the provided request was invalid. Common causes \
+            of this status include an invalid parameter or parameter value")
+    )]
+    InvalidRequest,
+
+    /// Over daily limit indicates that the request was denied for one or more
+    /// of the following reasons:
+    ///
+    /// * The API key is missing or invalid.
+    ///
+    /// * Billing has not been enabled on your account.
+    ///
+    /// * A self-imposed usage cap has been exceeded.
+    ///
+    /// * The provided method of payment is no longer valid (for example, a
+    ///   credit card has expired).
+    ///
+    /// In order to use Google Maps Platform products, billing must be enabled
+    /// on your account, and all requests must include a valid API key. To fix
+    /// this, take the following steps:
+    ///
+    /// * [Get an API key](https://developers.google.com/maps/documentation/roads/errors?hl=en#new-key)
+    ///
+    /// * [Enable billing](https://console.cloud.google.com/project/_/billing/enable)
+    ///   on your account.
+    ///
+    /// * [Adjust your usage cap](https://developers.google.com/maps/documentation/roads/errors?hl=en#usage-cap)
+    ///   to increase your daily limit (if applicable).
+    #[error("over daily limit")]
+    #[diagnostic(
+        code(google_maps::directions::status::over_daily_limit),
+        url("https://developers.google.com/maps/faq#over-limit-key-error"),
+        help("either the API key is missing or invalid, billing has not been \
+            enabled on your account, a self-imposed usage cap has been \
+            exceeded, or the provided method of payment is no longer valid \
+            (for example, a credit card has expired)")
+    )]
+    OverDailyLimit,
+
+    /// Overy query limit indicates any of the following:
+    ///
+    /// * You have exceeded the QPS limits.
+    ///
+    /// * Billing has not been enabled on your account.
+    ///
+    /// * The monthly $200 credit, or a self-imposed usage cap, has been
+    ///   exceeded.
+    ///
+    /// * The provided method of payment is no longer valid (for example, a
+    ///   credit card has expired).
+    ///
+    /// See the [Maps FAQ](https://developers.google.com/maps/faq#over-limit-key-error)
+    /// for more information about how to resolve this error.
+    #[error("over query limit")]
+    #[diagnostic(
+        code(google_maps::directions::status::over_query_limit),
+        url("https://developers.google.com/maps/faq#over-limit-key-error"),
+        help("either you have exceeded the QPS limits, billing has not been \
+            enabled on your account, a self-imposed usage cap has been \
+            exceeded or the provided method of payment is no longer valid")
+    )]
+    OverQueryLimit,
+
+    /// Request denied by the server.
+    #[error("request denied")]
+    #[diagnostic(
+        code(google_maps::directions::status::request_denied),
+        url("https://developers.google.com/maps/documentation/directions/get-directions#DirectionsStatus"),
+        help("indicates that the service denied use of the directions service \
+            by your application")
+    )]
+    RequestDenied,
+
+    /// Unknown error from the server.
+    #[error("unknown error")]
+    #[diagnostic(
+        code(google_maps::directions::status::unknown_error),
+        url("https://developers.google.com/maps/documentation/directions/get-directions#DirectionsStatus"),
+        help("indicates a directions request could not be processed due to a \
+            server error. The request may succeed if you try again")
+    )]
+    UnknownError,
+} // enum Error
 
 // -----------------------------------------------------------------------------
 
-impl std::fmt::Display for Error {
-    /// This trait converts the error code into a format that may be presented
-    /// to the user.
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+use crate::ClassifiedError;
+
+impl crate::traits::ClassifiableError<'_, Self> for Error {
+    /// Classifies an API error as a `Transient` error or `Permanent` error.
+    ///
+    /// This classification will, in turn, be used to decide whether the HTTP
+    /// request should be retried or not.
+    fn classify(&self) -> ClassifiedError<'_, Self> {
         match self {
-            Self::ArrivalTimeIsForTransitOnly(travel_mode, arrival_time) => write!(f,
-                "Google Maps Directions API client: \
-                The with_arrival_time() method may only be used when with_travel_mode() is set to `TravelMode::Transit`. \
-                The travel mode is set to `{travel_mode}` and the arrival time is set to `{arrival_time}`. \
-                Try again either with a travel mode of `TravelMode::Transit` or no arrival time."),
-            Self::EitherAlternativesOrWaypoints(waypoint_count) => write!(f,
-                "Google Maps Directions API client: \
-                The with_alternatives() method cannot be set to `true` if with_waypoints() has been set. \
-                {waypoint_count} waypoint(s) are set. \
-                Try again either with no waypoints or no alternatives."),
-            Self::EitherDepartureTimeOrArrivalTime(arrival_time, departure_time) => write!(f,
-                "Google Maps Directions API client: \
-                The with_departure_time() method cannot be used when with_arrival_time() has been set. \
-                The arrival time is set to `{arrival_time}` and the departure time is set to `{departure_time}`. \
-                Try again either with no arrival time or no departure time."),
-            Self::EitherRestrictionsOrWaypoints(waypoint_count, restrictions) => write!(f,
-                "Google Maps Directions API client: \
-                The with_restrictions() method cannot be used when with_waypoints() has been set. \
-                {waypoint_count} waypoint(s) are set and the restriction(s) are set to `{restrictions}`. \
-                Try again either with no waypoints or no restrictions."),
-            Self::EitherWaypointsOrTransitMode(waypoint_count) => write!(f,
-                "Google Maps Directions API client: \
-                The with_waypoints() method cannot be used when with_travel_mode() is set to `TravelMode::Transit`. \
-                {waypoint_count} waypoint(s) are set. \
-                Try again either with a different travel mode or no waypoints."),
-            Self::GoogleMapsService(status, error_message) => match error_message {
-                // If the Google Maps Directions API service generated an error
-                // message, return that:
-                Some(error_message) => write!(f, "Google Maps Directions API service: {error_message}"),
-                // If the Google Maps Directions API service did not generate an
-                // error message, return a generic message derived from the
-                // response status:
-                None => match status {
-                    Status::InvalidRequest => write!(f, "Google Maps Directions API service: \
-                        Invalid request. \
-                        This may indicate that the query (address, components, or latlng) is missing, an invalid result type, or an invalid location type."),
-                    Status::MaxRouteLengthExceeded => write!(f, "Google Maps Directions API service: \
-                        Maximum route length exceeded. \
-                        Try reducing the number of waypoints, turns, or instructions."),
-                    Status::MaxWaypointsExceeded => write!(f, "Google Maps Directions API service: \
-                        Maximum waypoints exceeded. \
-                        The maximum allowed number of waypoints is 25, plus the origin and destination."),
-                    Status::NotFound => write!(f, "Google Maps Directions API service: \
-                        Not found. \
-                        An origin, destination, or waypoint could not be geocoded."),
-                    Status::Ok => write!(f, "Google Maps Directions server: \
-                        Ok. \
-                        The request was successful."),
-                    Status::OverDailyLimit => write!(f, "Google Maps Directions API service: \
-                        Over daily limit. \
-                        Usage cap has been exceeded, API key is invalid, billing has not been enabled, or method of payment is no longer valid."),
-                    Status::OverQueryLimit => write!(f, "Google Maps Directions API service: \
-                        Over query limit. \
-                        Requestor has exceeded quota."),
-                    Status::RequestDenied => write!(f, "Google Maps Directions API service: \
-                        Request denied. \
-                        Service did not complete the request."),
-                    Status::UnknownError => write!(f, "Google Maps Directions API service: \
-                        Unknown error."),
-                    Status::ZeroResults => write!(f, "Google Maps Directions API service: \
-                        Zero results. \
-                        This may occur if the geocoder was passed a non-existent address."),
-                } // match
-            }, // match
-            Self::HttpUnsuccessful(status) => write!(f,
-                "Google Maps Directions API client: \
-                Could not successfully query the Google Cloud Platform service. \
-                The service last responded with a `{status}` status."),
-            Self::InvalidAvoidCode(avoid_code) => write!(f,
-                "Google Maps Directions API client: \
-                `{avoid_code}` is not a valid restrictions code. \
-                Valid codes are `ferries`, `highways`, `indoor`, and `tolls`."),
-             Self::InvalidCurrencyCode(currency_code) => write!(f,
-                "Google Maps Directions API client: \
-                `{currency_code}` is not a recognized currency code. \
-                For a list of supported currencies see \
-                https://en.wikipedia.org/wiki/ISO_4217"),
-            Self::InvalidGeocoderStatusCode(geocoder_status_code) => write!(f,
-                "Google Maps Directions API client: \
-                `{geocoder_status_code}` is not a valid geocoder status code. \
-                Valid codes are `OK`, and `ZERO_RESULTS`."),
-            Self::InvalidDrivingManeuverCode(maneuver_type_code) => write!(f,
-                "Google Maps Directions API client: \
-                `{maneuver_type_code}` is not a valid maneuver type code. \
-                Valid codes are `ferry`, `ferry-train`, `fork-left`, \
-                `fork-right`, `keep-left`, `keep-right`, `merge`, `ramp-left`, \
-                `ramp-right`, `roundabout-left`, `roundabout-right`, \
-                `straight`, `turn-left`, `turn-right`, `turn-sharp-left`, \
-                `turn-sharp-right`, `turn-slight-left`, `turn-slight-right`, \
-                `uturn-left`, and `uturn-right`."),
-            Self::InvalidStatusCode(status_code) => write!(f,
-                "Google Maps Directions API client: \
-                `{status_code}` is not a valid status code. \
-                Valid codes are `INVALID_REQUEST`, `MAX_ROUTE_LENGTH_EXCEEDED` \
-                `MAX_WAYPOINTS_EXCEEDED`, `NOT_FOUND`, `OK`, \
-                `OVER_DAILY_LIMIT`, `OVER_QUERY_LIMIT`, `REQUEST_DENIED`, \
-                `UNKNOWN_ERROR`, and `ZERO_RESULTS`."),
-            Self::InvalidTimeZoneName(time_zone_name) => write!(f,
-                "Google Maps Directions API client: \
-                `{time_zone_name}` is not a recognized time zone name. \
-                For a list of supported time zones see \
-                https://www.iana.org/time-zones"),
-            Self::InvalidTrafficModelCode(traffic_model_code) => write!(f,
-                "Google Maps Directions API client: \
-                `{traffic_model_code}` is not a valid traffic model code. \
-                Valid codes are `best_guess`, `optimistic`, and `pessimistic`."),
-            Self::InvalidTransitModeCode(transit_mode_code) => write!(f,
-                "Google Maps Directions API client: \
-                `{transit_mode_code}` is not a valid transit mode code. Valid codes are `bus`,
-                `rail`, `subway`, `train`, and `tram`."),
-            Self::InvalidTransitRoutePreferenceCode(transit_route_preference_code) =>
-                write!(f, "Google Maps Directions API client: \
-                `{transit_route_preference_code}` is not a valid transit route preference code. \
-                Valid codes are `fewer_transfers` and `less_walking`."),
-            Self::InvalidTravelModeCode(travel_mode_code) => write!(f,
-                "Google Maps Directions API client: \
-                `{travel_mode_code}` is not a valid travel mode code. \
-                Valid codes are `bicycling`, `driving`, `transit`, and \
-                `walking`."),
-            Self::InvalidUnitSystemCode(unit_system_code) => write!(f,
-                "Google Maps Directions API client: \
-                `{unit_system_code}` is not a valid unit system code. \
-                Valid codes are `imperial`, and `metric`."),
-            Self::InvalidVehicleTypeCode(vehicle_type_code) => write!(f,
-                "Google Maps Directions API client: \
-                `{vehicle_type_code}` is not a valid vehicle type code. \
-                Valid codes are `BUS`, `CABLE_CAR`, `COMMUTER_TRAIN`,  \
-                `FERRY`, `FUNICULAR`, `GONDOLA_LIFT`, `HEAVY_RAIL`, \
-                `HIGH_SPEED_TRAIN`, `INTERCITY_BUS`, `LONG_DISTANCE_TRAIN`, \
-                `METRO_RAIL`, `MONORAIL`, `OTHER`, `RAIL`, `SHARE_TAXI`, \
-                `SUBWAY`, `TRAM`, and `TROLLEYBUS`."),
-            Self::InvalidDepartureTime(invalid_departure_time_string) => write!(f,
-                "Google Maps Directions API client: \
-                `{invalid_departure_time_string}` is not a valid departure time. \
-                Valid departure times are `now`, or a UNIX timestamp."
-            ),
-            Self::QueryNotBuilt => write!(f,
-                "Google Maps Directions API client: \
-                The query string must be built before the request may be sent to the Google Cloud Maps Platform. \
-                Ensure the build() method is called before run()."),
-            Self::RequestNotValidated => write!(f,
-                "Google Maps Directions API client: \
-                The request must be validated before a query string may be built. \
-                Ensure the validate() method is called before build()."),
-            #[cfg(feature = "reqwest")]
-            Self::Reqwest(error) => write!(f, "Google Maps Directions API client in the Reqwest library: {error}"),
-            #[cfg(feature = "reqwest")]
-            Self::ReqwestMessage(error) => write!(f, "Google Maps Geocoding API client in the Reqwest library: {error}"),
-            Self::SimdJson(error) => write!(f, "Google Maps Directions API client in the Serde JSON library: {error}"),
-            Self::TooManyWaypoints(waypoint_count) => write!(f,
-                "Google Maps Directions API client: \
-                The maximum allowed number of waypoints is 25 plus the origin and destination. \
-                {} waypoints are set. \
-                Try again with {} fewer waypoint(s).",
-                waypoint_count,
-                waypoint_count - 25),
-            Self::TransitModeIsForTransitOnly(travel_mode, transit_modes) => write!(f,
-                "Google Maps Directions API client: \
-                The with_transit_modes() method may only be used when with_travel_mode() is set to `TravelMode::Transit`. \
-                The travel mode is set to `{travel_mode}` and the transit mode(s) are set to `{transit_modes}`. \
-                Try again either with a travel mode of `TravelMode::Transit` or no transit modes."),
-            Self::TransitRoutePreferenceIsForTransitOnly(travel_mode, transit_route_preference) => write!(f,
-                "Google Maps Directions API client: \
-                The with_transit_route_preference() method may only be used when with_travel_mode() is set to `TravelMode::Transit`. \
-                The travel mode is set to `{travel_mode}` and the transit route preference is set to `{transit_route_preference}`. \
-                Try again either with a travel mode of `TravelMode::Transit` or no transit route preference."),
+            Self::UnknownError => ClassifiedError::Transient(self),
+            _ => ClassifiedError::Permanent(self),
         } // match
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-#[cfg(feature = "reqwest")]
-impl From<crate::ReqError> for Error {
-    /// This trait converts from an Reqwest error type (`reqwest::Error`) into a
-    /// Google Maps Directions API error type
-    /// (`google_maps::directions::error::Error`) by wrapping it inside. This
-    /// function is required to use the `?` operator.
-    fn from(error: crate::ReqError) -> Self {
-        Self::Reqwest(error)
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl From<simd_json::Error> for Error {
-    /// This trait converts from an Serde JSON (`simd_json::Error`)
-    /// error type into a Google Maps Directions API error type
-    /// (`google_maps::directions::error::Error`) by wrapping it inside. This
-    /// function is required to use the `?` operator.
-    fn from(error: simd_json::Error) -> Self {
-        Self::SimdJson(error)
     } // fn
 } // impl

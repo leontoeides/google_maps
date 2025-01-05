@@ -73,28 +73,36 @@
 
 #[cfg(feature = "autocomplete")]
 pub mod place_autocomplete;
+
 #[cfg(feature = "autocomplete")]
 pub mod query_autocomplete;
 
 #[cfg(feature = "autocomplete")]
 pub use crate::places::place_autocomplete::{
-    error::Error as AutocompleteError,
-    request::{autocomplete_type::AutocompleteType, Request as PlaceAutocompleteRequest}, // request
+    request::{
+        autocomplete_type::AutocompleteType,
+        Request as PlaceAutocompleteRequest,
+        Request as QueryAutocompleteRequest,
+    },
     response::{
-        matched_substring::MatchedSubstring, prediction::Prediction,
-        status::Status as AutocompleteStatus, structured_format::StructuredFormat, term::Term,
+        matched_substring::MatchedSubstring,
+        prediction::Prediction,
         Response as AutocompleteResponse,
-    }, // response
-}; // crate::places::place_autocomplete
+        status::Status as AutocompleteStatus,
+        structured_format::StructuredFormat,
+        term::Term,
+    },
+};
 
 #[cfg(feature = "autocomplete")]
-pub use crate::places::place_autocomplete::request::Request as QueryAutocompleteRequest; // crate::places::place_autocomplete
+#[deprecated(note = "use `crate::places::Error` instead", since = "3.8.0")]
+pub use crate::places::Error as AutocompleteError;
 
 // -----------------------------------------------------------------------------
 
 #[cfg(feature = "places")]
 pub mod business_status;
-#[cfg(feature = "places")]
+#[cfg(any(feature = "places", feature = "autocomplete"))]
 pub mod error;
 #[cfg(feature = "places")]
 pub mod place;
@@ -123,12 +131,21 @@ pub mod secondary_hours_type;
 #[cfg(feature = "places")]
 pub mod status;
 
+#[cfg(any(feature = "places", feature = "autocomplete"))]
+pub use crate::places::error::Error;
+
 #[cfg(feature = "places")]
 pub use crate::places::{
-    business_status::BusinessStatus, error::Error, place::Place,
-    place_editorial_summary::PlaceEditorialSummary, place_opening_hours::PlaceOpeningHours,
+    business_status::BusinessStatus,
+    place::Place,
+    place_editorial_summary::PlaceEditorialSummary,
+    place_opening_hours::PlaceOpeningHours,
     place_opening_hours_period::PlaceOpeningHoursPeriod,
-    place_opening_hours_period_detail::PlaceOpeningHoursPeriodDetail, place_photo::PlacePhoto,
-    place_review::PlaceReview, place_special_day::PlaceSpecialDay, rank_by::RankBy,
-    secondary_hours_type::SecondaryHoursType, status::Status,
-}; // crate::places
+    place_opening_hours_period_detail::PlaceOpeningHoursPeriodDetail,
+    place_photo::PlacePhoto,
+    place_review::PlaceReview,
+    place_special_day::PlaceSpecialDay,
+    rank_by::RankBy,
+    secondary_hours_type::SecondaryHoursType,
+    status::Status
+};

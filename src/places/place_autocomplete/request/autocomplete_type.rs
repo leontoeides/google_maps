@@ -4,7 +4,7 @@
 // -----------------------------------------------------------------------------
 
 use crate::error::Error as GoogleMapsError;
-use crate::places::place_autocomplete::error::Error as PlaceAutocompleteError;
+use crate::places::Error as PlaceAutocompleteError;
 use phf::phf_map;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 

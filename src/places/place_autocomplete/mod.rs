@@ -37,22 +37,22 @@
 //! request](https://developers.google.com/maps/documentation/places/web-service/details#PlaceDetailsRequests)
 //! for more information about any of the places which are returned.
 
-pub mod error;
 pub mod request;
 pub mod response;
 
 // -----------------------------------------------------------------------------
 
-const SERVICE_URL: &str = "https://maps.googleapis.com/maps/api/place/autocomplete";
-const OUTPUT_FORMAT: &str = "json"; // json or xml
-
-// -----------------------------------------------------------------------------
-
 pub use crate::places::place_autocomplete::{
-    error::Error,
-    request::{autocomplete_type::AutocompleteType, Request}, // request
+    request::{
+        autocomplete_type::AutocompleteType,
+        Request
+    },
     response::{
-        matched_substring::MatchedSubstring, prediction::Prediction, status::Status,
-        structured_format::StructuredFormat, term::Term, Response,
-    }, // response
-}; // place_autocomplete
+        matched_substring::MatchedSubstring,
+        prediction::Prediction,
+        Response,
+        status::Status,
+        structured_format::StructuredFormat,
+        term::Term,
+    },
+};

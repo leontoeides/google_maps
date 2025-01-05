@@ -1,11 +1,8 @@
-use crate::{
-    client::GoogleMapsClient, directions::request::waypoint::Waypoint,
-    distance_matrix::request::Request,
-}; // use
+use crate::directions::request::waypoint::Waypoint;
 
 // =============================================================================
 
-impl Request<'_> {
+impl<'a> crate::distance_matrix::request::Request<'a> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Distance Matrix API query with the
@@ -14,14 +11,13 @@ impl Request<'_> {
     /// ## Arguments
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
-
     #[must_use]
     pub const fn new(
-        client: &GoogleMapsClient,
+        client: &'a crate::client::Client,
         origins: Vec<Waypoint>,
         destinations: Vec<Waypoint>
-    ) -> Request {
-        Request {
+    ) -> Self {
+        Self {
             // Required parameters:
             client,
             destinations,
@@ -37,9 +33,6 @@ impl Request<'_> {
             transit_route_preference: None,
             travel_mode: None,
             unit_system: None,
-            // Internal use only:
-            query: None,
-            validated: false,
         } // struct
     } // fn
 } // impl

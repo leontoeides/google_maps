@@ -1,9 +1,6 @@
-use crate::client::GoogleMapsClient;
-use crate::elevation::request::Request;
-
 // =============================================================================
 
-impl Request<'_> {
+impl<'r> crate::elevation::request::Request<'r> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Elevation API query with the
@@ -12,11 +9,12 @@ impl Request<'_> {
     /// ## Arguments
     ///
     /// * `client` ‧ Your application's Google Maps API client struct.
-
     #[must_use]
-    pub const fn new(client: &GoogleMapsClient) -> Request {
+    pub const fn new(
+        client: &'r crate::client::Client
+    ) -> Self {
         // Instantiate struct and return it to caller:
-        Request {
+        Self {
             // Required parameters:
             client,
             // Positional requests:
@@ -24,9 +22,6 @@ impl Request<'_> {
             // Sampled path requests:
             path: None,
             samples: None,
-            // Internal use only:
-            query: None,
-            validated: false,
         } // struct
     } // fn
 } // impl

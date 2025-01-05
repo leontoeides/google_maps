@@ -4,33 +4,33 @@
 //! for building your Google Maps Platform request.
 
 mod build;
-#[cfg(feature = "reqwest")]
-mod execute;
-#[cfg(feature = "reqwest")]
-mod get;
+mod end_point;
 mod new;
-mod query_url;
+mod query_string;
+mod validatable;
 mod with_language;
 
-use crate::{client::GoogleMapsClient, types::Language, types::LatLng};
-use chrono::{DateTime, Utc};
+#[cfg(feature = "reqwest")]
+mod execute;
+
+#[cfg(feature = "reqwest")]
+mod get;
 
 // -----------------------------------------------------------------------------
 //
 /// **Look at this `Request` struct for documentation on how to build your _Time
 /// Zone API_ query**. The methods implemented for this struct are what's used
 /// to build your request.
-
 #[derive(Debug)]
 pub struct Request<'a> {
     // Required parameters:
     // --------------------
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client: &'a GoogleMapsClient,
+    client: &'a crate::client::Client,
 
     /// The location to look up.
-    location: LatLng,
+    location: crate::types::LatLng,
 
     /// Specifies the desired time. The Time Zone API uses the `time` to
     /// determine whether or not Daylight Savings should be applied, based on
@@ -38,7 +38,7 @@ pub struct Request<'a> {
     /// historical time zones into account. That is, if you specify a past
     /// `time`, the API does not take into account the possibility that the
     /// `location` was previously in a different time zone.
-    timestamp: DateTime<Utc>,
+    timestamp: chrono::DateTime<chrono::Utc>,
 
     // Optional parameters:
     // --------------------
@@ -46,10 +46,5 @@ pub struct Request<'a> {
     /// [list of supported domain languages](https://developers.google.com/maps/faq#languagesupport).
     /// Note that we often update supported languages so this list may not be
     /// exhaustive. Defaults to `Language::English`.
-    language: Option<Language>,
-
-    // Internal use only:
-    // ------------------
-    /// Query string that is to be submitted to the Google Cloud Maps Platform.
-    query: Option<String>,
+    language: Option<crate::types::Language>,
 } // struct

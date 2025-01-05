@@ -6,41 +6,34 @@
 // -----------------------------------------------------------------------------
 
 mod build;
+mod end_point;
+mod new;
+mod query_string;
+mod validatable;
+
 #[cfg(feature = "reqwest")]
 mod execute;
+
 #[cfg(feature = "reqwest")]
 mod get;
-mod new;
-mod query_url;
-
-// -----------------------------------------------------------------------------
-
-use crate::client::GoogleMapsClient;
-use crate::types::LatLng;
 
 // -----------------------------------------------------------------------------
 //
 /// **Look at this `Request` struct for documentation on how to build your _Snap
 /// To Roads_ query**. The methods implemented for this struct are what's used
 /// to build your request.
-
 #[derive(Debug)]
-pub struct Request<'a> {
+pub struct Request<'r> {
     // Required parameters:
     // --------------------
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client: &'a GoogleMapsClient,
+    client: &'r crate::client::Client,
 
     /// The points to be snapped. The points parameter accepts a list of
     /// latitude/longitude pairs. Latitude and longitude values should be
     /// separated by commas. Coordinates should be separated by the pipe
     /// character: "|". For example:
     /// `points=60.170880,24.942795|60.170879,24.942796|60.170877,24.942796`.
-    points: Vec<LatLng>,
-
-    // Internal use only:
-    // ------------------
-    /// Query string that is to be submitted to the Google Cloud Maps Platform.
-    query: Option<String>,
+    points: Vec<crate::types::LatLng>,
 } // struct

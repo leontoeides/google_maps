@@ -1,151 +1,24 @@
-use crate::error::Error as GoogleMapsError;
-use crate::places::place_autocomplete::{
-    error::Error as PlaceAutocompleteError, request::Request as PlaceAutocompleteRequest,
-    response::status::Status as PlaceAutocompleteStatus,
-    response::Response as PlaceAutocompleteResponse, OUTPUT_FORMAT, SERVICE_URL,
-}; // crate::places::place_autocomplete
-use crate::request_rate::api::Api;
-use backoff::future::retry;
-use backoff::Error::{Permanent, Transient};
-use backoff::ExponentialBackoff;
-
-// -----------------------------------------------------------------------------
-
-impl<'a> PlaceAutocompleteRequest<'a> {
-    /// Performs the HTTP get request and returns the response to the caller.
+impl crate::places::place_autocomplete::Request<'_> {
+    /// Performs the HTTP get request and returns the response.
     ///
     /// ## Arguments
     ///
     /// This method accepts no arguments.
-
-    #[tracing::instrument(level = "info", skip(self))]
-    pub async fn get(&mut self) -> Result<PlaceAutocompleteResponse, GoogleMapsError> {
-        // Build the URL stem for the HTTP get request:
-        let mut url = format!("{SERVICE_URL}/{OUTPUT_FORMAT}?");
-
-        match &self.query {
-            // If query string built, append it to the URL stem.
-            Some(query) => url.push_str(query.as_ref()),
-            // If query string not built, return an error.
-            None => return Err(PlaceAutocompleteError::QueryNotBuilt)?,
-        } // match
-
-        // Observe any rate limiting before executing request:
-        tracing::info!("making HTTP GET request to Google Maps Place Autocomplete API");
-
-        self.client
-            .rate_limit
-            .limit_apis(vec![&Api::All, &Api::Places])
-            .await;
-
-        tracing::debug!("{url}");
-
-        // Retries the get request until successful, an error ineligible for
-        // retries is returned, or we have reached the maximum retries. Note:
-        // errors wrapped in `Transient()` will retried by the `backoff` crate
-        // while errors wrapped in `Permanent()` will exit the retry loop.
-        let response = retry(ExponentialBackoff::default(), || async {
-            // Query the Google Cloud Maps Platform using using an HTTP get
-            // request, and return result to caller:
-            let response = self.client.get_request(&url).await;
-
-            // Check response from the HTTP client:
-            match response {
-                Ok(response) => {
-                    // HTTP client was successful getting a response from the
-                    // server. Check the HTTP status code:
-                    if response.status().is_success() {
-                        // If the HTTP GET request was successful, get the
-                        // response text:
-                        let bytes = response.text().await.map(String::into_bytes);
-                        match bytes {
-                            Ok(mut bytes) => {
-                                match simd_json::serde::from_slice::<PlaceAutocompleteResponse>(&mut bytes) {
-                                    Ok(deserialized) => {
-                                        // If the response JSON was successfully
-                                        // parsed, check the Google API status
-                                        // before returning it to the caller:
-                                        if deserialized.status == PlaceAutocompleteStatus::Ok {
-                                            // If Google's response was "Ok"
-                                            // return the struct deserialized
-                                            // from JSON:
-                                            Ok(deserialized)
-                                        // Google API returned an error. This
-                                        // indicates an issue with the request.
-                                        // In most cases, retrying will not
-                                        // help:
-                                        } else {
-                                            let error = PlaceAutocompleteError::GoogleMapsService(
-                                                deserialized.status.clone(),
-                                                deserialized.error_message,
-                                            );
-                                            // Check Google API response status
-                                            // for error type:
-                                            if deserialized.status
-                                                == PlaceAutocompleteStatus::UnknownError
-                                            {
-                                                // Only Google's "Unknown Error"
-                                                // is eligible for retries:
-                                                tracing::warn!("{}", error);
-                                                Err(Transient {
-                                                    err: error,
-                                                    retry_after: None,
-                                                })
-                                            } else {
-                                                // Not an "Unknown Error." The
-                                                // error is permanent, do not
-                                                // retry:
-                                                tracing::error!("{}", error);
-                                                Err(Permanent(error))
-                                            } // if
-                                        } // if
-                                    } // Ok(deserialized)
-                                    Err(error) => {
-                                        tracing::error!("JSON parsing error: {}", error);
-                                        Err(Permanent(PlaceAutocompleteError::SimdJson(error)))
-                                    } // Err
-                                } // match
-                            } // Ok(text)
-                            Err(error) => {
-                                tracing::error!("HTTP client returned: {}", error);
-                                Err(Permanent(PlaceAutocompleteError::ReqwestMessage(
-                                    error.to_string(),
-                                )))
-                            } // Err
-                        } // match
-                          // We got a response from the server but it was not OK.
-                          // Only HTTP "500 Server Errors", and HTTP "429 Too Many
-                          // Requests" are eligible for retries.
-                    } else if response.status().is_server_error() || response.status() == 429 {
-                        tracing::warn!("HTTP client returned: {}", response.status());
-                        Err(Transient {
-                            err: PlaceAutocompleteError::HttpUnsuccessful(
-                                response.status().to_string(),
-                            ),
-                            retry_after: None,
-                        })
-                    // Not a 500 Server Error or "429 Too Many Requests" error.
-                    // The error is permanent, do not retry:
-                    } else {
-                        tracing::error!("HTTP client returned: {}", response.status());
-                        Err(Permanent(PlaceAutocompleteError::HttpUnsuccessful(
-                            response.status().to_string(),
-                        )))
-                    } // if
-                } // case
-                // HTTP client did not get a response from the server. Retry:
-                Err(error) => {
-                    tracing::warn!("HTTP client returned: {}", error);
-                    Err(Transient {
-                        err: PlaceAutocompleteError::Reqwest(error),
-                        retry_after: None,
-                    })
-                } // case
-            } // match
-        })
-        .await?;
-
-        // Return response to caller:
-        Ok(response)
+    ///
+    /// ## Notes
+    ///
+    /// * The `get` method for this request has been moved to a `get` method
+    ///   that's been generically implemented for all APIs and services,
+    ///   implemented on the `google_maps::Client` struct.
+    ///
+    ///   Try using `execute` method for a somewhat similar result. The main
+    ///   difference is that the execute method will validate the request and
+    ///   build the URL string, whereas the previous `get` implementation
+    ///   (that's been deprecated) would blindly submit the request, if any.
+    #[deprecated(note = "try using `execute` instead", since = "3.8.0")]
+    pub async fn get(
+        self
+    ) -> Result<crate::places::place_autocomplete::Response, crate::Error> {
+        self.client.get(self).await
     } // fn
 } // impl

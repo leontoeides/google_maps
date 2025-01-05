@@ -1,9 +1,6 @@
-use crate::client::GoogleMapsClient;
-use crate::places::place_autocomplete::request::Request;
-
 // =============================================================================
 
-impl Request<'_> {
+impl<'r> crate::places::place_autocomplete::request::Request<'r> {
     // -------------------------------------------------------------------------
     //
     /// Initializes the builder pattern for a Place API Place Autocomplete query
@@ -14,11 +11,13 @@ impl Request<'_> {
     /// * `client` ‧ Your application's Google Maps API client struct.
     ///
     /// * `input` ‧ The text string on which to search.
-
     #[must_use]
-    pub fn new(client: &GoogleMapsClient, input: impl Into<String>) -> Request {
+    pub fn new(
+        client: &'r crate::client::Client,
+        input: impl Into<String>
+    ) -> Self {
         // Instantiate struct and return it to caller:
-        Request {
+        Self {
             // Required parameters:
             client,
             input: input.into(),
@@ -33,8 +32,6 @@ impl Request<'_> {
             sessiontoken: None,
             strictbounds: None,
             types: vec![],
-            // Internal use only:
-            query: None,
         } // struct
     } // fn
 } // impl

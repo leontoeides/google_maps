@@ -1,54 +1,32 @@
-use crate::elevation::{error::Error, request::Request}; // crate::elevation
-
-impl<'a> Request<'a> {
-    /// Builds the query string for the Google Maps Elevation API based on the
-    /// input provided by the client.
+impl<'r> crate::elevation::Request<'r> {
+    /// Builds the URL [query string](https://en.wikipedia.org/wiki/Query_string)
+    /// for the HTTP [GET](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET)
+    /// request.
     ///
     /// ## Arguments
     ///
     /// This method accepts no arguments.
-
-    pub fn build(&mut self) -> Result<&'a mut Request, Error> {
-        // Ensure request has been validated before building the query string:
-
-        if !self.validated {
-            return Err(Error::RequestNotValidated);
-        }
-
-        // This section builds the "required parameters" portion of the query
-        // string:
-
-        let mut query = String::from("key=");
-        query.push_str(&self.client.key);
-
-        // This section builds the "positional request" portion of the query
-        // string:
-
-        // Locations key/value pair:
-        if let Some(locations) = &self.locations {
-            query.push_str("&locations=");
-            query.push_str(&String::from(locations));
-        } // if
-
-        // This section builds the "sampled path request" portion of the query
-        // string:
-
-        // Path key/value pair:
-        if let Some(path) = &self.path {
-            query.push_str("&path=");
-            query.push_str(&String::from(path));
-        } // if
-
-        // Samples key/value pair:
-        if let Some(samples) = &self.samples {
-            query.push_str("&samples=");
-            query.push_str(&samples.to_string());
-        } // if
-
-        // Set query string in Request struct.
-        self.query = Some(query);
-
-        // Return modified Request struct to caller.
+    ///
+    /// ## Notes
+    ///
+    /// * The query string is the part of the URL after the `?` question mark.
+    ///   For example, in the URL `https://example.com/over/there?name=ferret`
+    ///   the query string is `name=ferret`
+    ///
+    /// * The `build` method has been removed. It would store the generated
+    ///   query string inside of the request structure.
+    ///
+    ///   This way, the same query string would only have to be generated once
+    ///   and could be used for any subsequent retries. This increased
+    ///   implementation complexity but had very performance little benefit. It
+    ///   has been removed.
+    ///
+    ///   If you want to generate a query string (without the preceding URL),
+    ///   try the `query_string` method.
+    #[deprecated(note = "try using the `query_string` method instead", since = "3.8.0")]
+    pub fn build(
+        &'r mut self
+    ) -> Result<&'r mut Self, crate::elevation::Error> {
         Ok(self)
     } // fn
 } // impl

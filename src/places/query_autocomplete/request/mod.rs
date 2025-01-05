@@ -4,33 +4,32 @@
 //! structs, methods) for building your Google Maps Platform request.
 
 mod build;
-#[cfg(feature = "reqwest")]
-mod execute;
-#[cfg(feature = "reqwest")]
-mod get;
+mod end_point;
 mod new;
-mod query_url;
+mod query_string;
+mod validatable;
 mod with_language;
 mod with_location;
 mod with_offset;
 
-// -----------------------------------------------------------------------------
+#[cfg(feature = "reqwest")]
+mod execute;
 
-use crate::{client::GoogleMapsClient, types::Language, types::LatLng};
+#[cfg(feature = "reqwest")]
+mod get;
 
 // -----------------------------------------------------------------------------
 //
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Query Autocomplete_ query**. The methods implemented for this struct are
 /// what's used to build your request.
-
 #[derive(Debug)]
 pub struct Request<'a> {
     // Required parameters:
     // --------------------
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client: &'a GoogleMapsClient,
+    client: &'a crate::client::Client,
 
     /// The text string on which to search. The Query Autocomplete service will
     /// return candidate matches based on this string and order results based on
@@ -64,14 +63,14 @@ pub struct Request<'a> {
     ///   on language, such as the abbreviations for street types, or synonyms
     ///   that may be valid in one language but not in another. For example,
     ///   _utca_ and _tér_ are synonyms for street in Hungarian.
-    language: Option<Language>,
+    language: Option<crate::types::Language>,
 
     /// The point around which to retrieve place information.
     ///
     /// * When using the Text Search API, the 'location' parameter may be
     ///   overriden if the 'query' contains an explicit location such as
     ///   'Market in Barcelona'.
-    location: Option<LatLng>,
+    location: Option<crate::types::LatLng>,
 
     /// The position, in the input term, of the last character that the service
     /// uses to match predictions. For example, if the input is `Google` and the
@@ -103,9 +102,4 @@ pub struct Request<'a> {
     /// * Query Autocomplete: 50,000 meters
     /// * Text Search: 50,000 meters
     radius: Option<u32>,
-
-    // Internal use only:
-    // ------------------
-    /// Query string that is to be submitted to the Google Cloud Maps Platform.
-    query: Option<String>,
 } // struct

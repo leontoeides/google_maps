@@ -1,49 +1,30 @@
-use crate::roads::snap_to_roads::request::Request;
-use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
-
-// =============================================================================
-
-impl<'a> Request<'a> {
-    // -------------------------------------------------------------------------
-    //
-    /// Builds the query string for the Google Maps Snap to Roads request based
-    /// on the input provided by the client.
+impl<'r> crate::roads::snap_to_roads::Request<'r> {
+    /// Builds the URL [query string](https://en.wikipedia.org/wiki/Query_string)
+    /// for the HTTP [GET](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET)
+    /// request.
     ///
     /// ## Arguments
     ///
     /// This method accepts no arguments.
-
-    pub fn build(&mut self) -> &'a mut Request {
-        // This section builds the "required parameters" portion of the query
-        // string:
-
-        // Convert `Vec<LatLng>` to `String`:
-        let path: String = self
-            .path
-            .iter()
-            .map(String::from)
-            .collect::<Vec<String>>()
-            .join("|");
-
-        // URL encode path `String`:
-        let path: String = utf8_percent_encode(&path, NON_ALPHANUMERIC).to_string();
-
-        // Build "required parameters" portion of the query string:
-        let mut query = format!("key={key}&path={path}", key = self.client.key,);
-
-        // This section builds the "optional parameters" portion of the query
-        // string:
-
-        // Language key/value pair:
-        if let Some(interpolate) = &self.interpolate {
-            query.push_str("&interpolate=");
-            query.push_str(&interpolate.to_string());
-        }
-
-        // Set query string in Request struct.
-        self.query = Some(query);
-
-        // Return modified Request struct to caller.
+    ///
+    /// ## Notes
+    ///
+    /// * The query string is the part of the URL after the `?` question mark.
+    ///   For example, in the URL `https://example.com/over/there?name=ferret`
+    ///   the query string is `name=ferret`
+    ///
+    /// * The `build` method has been removed. It would store the generated
+    ///   query string inside of the request structure.
+    ///
+    ///   This way, the same query string would only have to be generated once
+    ///   and could be used for any subsequent retries. This increased
+    ///   implementation complexity but had very performance little benefit. It
+    ///   has been removed.
+    ///
+    ///   If you want to generate a query string (without the preceding URL),
+    ///   try the `query_string` method.
+    #[deprecated(note = "try using thee `query_string` method instead", since = "3.8.0")]
+    pub fn build(&'r mut self) -> &'r mut Self {
         self
     } // fn
 } // impl

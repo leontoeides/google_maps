@@ -4,10 +4,14 @@
 
 // -----------------------------------------------------------------------------
 
-use crate::roads::error_response::ErrorResponse;
-use crate::roads::snapped_point::SnappedPoint;
-use serde::{Deserialize, Serialize};
+use crate::roads::{
+    Error,
+    error_response::ErrorResponse,
+    snapped_point::SnappedPoint,
+    Status,
+};
 
+use serde::{Deserialize, Serialize};
 // -----------------------------------------------------------------------------
 //
 /// The response from the Google Maps _Nearest Roads_ request will be stored in
@@ -41,12 +45,54 @@ pub struct Response {
 
 // -----------------------------------------------------------------------------
 
+impl std::convert::TryFrom<String> for Response {
+    type Error = simd_json::Error;
+    /// Convert a Google Maps API [JSON](https://en.wikipedia.org/wiki/JSON)
+    /// `String` response into a `Response` struct.
+    fn try_from(s: String) -> Result<Self, Self::Error> {
+        simd_json::serde::from_slice(&mut s.into_bytes())
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
 impl std::str::FromStr for Response {
     type Err = simd_json::Error;
-    /// Parse a Google Maps _Nearest Roads_ JSON `String` response into a
-    /// usable `Response` struct.
-    fn from_str(s: &str) -> Result<Self, simd_json::Error> {
+    /// Converts a Google Maps API [JSON](https://en.wikipedia.org/wiki/JSON)
+    /// `&str` response into a `Response` struct.
+    ///
+    /// # Notes
+    ///
+    /// * It's recommended to use the implemented `TryFrom` trait instead.
+    ///
+    /// * The [simd_json](https://crates.io/crates/simd-json)'s `from_str`
+    ///   function implementation is unsafe and it's `from_slice` function
+    ///   requires a mutable reference. Therefore this trait clones the `&str`
+    ///   into a `String` to give `from_slice` mutable access to the string.
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut bytes = s.to_string().into_bytes();
         simd_json::serde::from_slice(&mut bytes)
+    } // fn
+} // impl
+
+// -----------------------------------------------------------------------------
+
+impl std::convert::From<Response> for Result<Response, Error> {
+    /// Converts a Google Maps API `Response` into a `Result<Response, Error>`
+    /// by examining the `status` field inside of the response.
+    ///
+    /// If the status indicates a success, then an `Ok(response)` will be
+    /// returned. If the status indicates an error, then an `Err(error)` will be
+    /// returned.
+    fn from(response: Response) -> Self {
+        match response.error {
+            None => Ok(response),
+            Some(error_response) => match error_response.status {
+                Status::InvalidArgument => Err(Error::InvalidArgument(error_response.message)),
+                Status::PermissionDenied => Err(Error::PermissionDenied(error_response.message)),
+                Status::NotFound => Err(Error::NotFound(error_response.message)),
+                Status::ResourceExhausted => Err(Error::ResourceExhausted(error_response.message)),
+            }, // match
+        } // match
     } // fn
 } // impl

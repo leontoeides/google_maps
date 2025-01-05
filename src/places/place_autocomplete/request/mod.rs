@@ -5,12 +5,10 @@
 
 pub mod autocomplete_type;
 mod build;
-#[cfg(feature = "reqwest")]
-mod execute;
-#[cfg(feature = "reqwest")]
-mod get;
+mod end_point;
 mod new;
-mod query_url;
+mod query_string;
+mod validatable;
 mod with_components;
 mod with_language;
 mod with_location;
@@ -20,25 +18,24 @@ mod with_region;
 mod with_sessiontoken;
 mod with_types;
 
+#[cfg(feature = "reqwest")]
+mod execute;
+
+#[cfg(feature = "reqwest")]
+mod get;
+
 // -----------------------------------------------------------------------------
-
-use crate::client::GoogleMapsClient;
-use crate::places::place_autocomplete::request::autocomplete_type::AutocompleteType;
-use crate::types::{Country, Language, LatLng, Region};
-
-// -----------------------------------------------------------------------------
-
+//
 /// **Look at this `Request` struct for documentation on how to build your
 /// _Place Autocomplete_ query**. The methods implemented for this struct are
 /// what's used to build your request.
-
 #[derive(Debug)]
-pub struct Request<'a> {
+pub struct Request<'r> {
     // Required parameters:
     // --------------------
     /// This structure contains the application's API key and other
     /// user-definable settings such as "maximum retries."
-    client: &'a GoogleMapsClient,
+    client: &'r crate::client::Client,
 
     /// The text string on which to search. The Place Autocomplete service will
     /// return candidate matches based on this string and order results based on
@@ -58,7 +55,7 @@ pub struct Request<'a> {
     ///   codes](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
     ///   or the
     ///   [ISO Online Browsing Platform](https://www.iso.org/obp/ui/#search).
-    components: Vec<Country>,
+    components: Vec<crate::types::Country>,
 
     /// The language in which to return results.
     ///
@@ -85,14 +82,14 @@ pub struct Request<'a> {
     ///   on language, such as the abbreviations for street types, or synonyms
     ///   that may be valid in one language but not in another. For example,
     ///   _utca_ and _tér_ are synonyms for street in Hungarian.
-    language: Option<Language>,
+    language: Option<crate::types::Language>,
 
     /// The point around which to retrieve place information.
     ///
     /// * When using the Text Search API, the 'location' parameter may be
     ///   overriden if the 'query' contains an explicit location such as
     ///   'Market in Barcelona'.
-    location: Option<LatLng>,
+    location: Option<crate::types::LatLng>,
 
     /// The position, in the input term, of the last character that the service
     /// uses to match predictions. For example, if the input is `Google` and the
@@ -107,7 +104,7 @@ pub struct Request<'a> {
     /// The origin point from which to calculate straight-line distance to the
     /// destination (returned as `distance_meters`). If this value is omitted,
     /// straight-line distance will not be returned.
-    origin: Option<LatLng>,
+    origin: Option<crate::types::LatLng>,
 
     /// Defines the distance (in meters) within which to return place results.
     /// You may bias results to a specified circle by passing a location and a
@@ -136,7 +133,7 @@ pub struct Request<'a> {
     /// with some notable exceptions. For example, the United Kingdom's ccTLD is
     /// "uk" (.co.uk) while its ISO 3166-1 code is "gb" (technically for the
     /// entity of "The United Kingdom of Great Britain and Northern Ireland").
-    region: Option<Region>,
+    region: Option<crate::types::Region>,
 
     /// A random string which identifies an autocomplete
     /// [session](https://developers.google.com/maps/documentation/places/web-service/details#session_tokens)
@@ -181,10 +178,5 @@ pub struct Request<'a> {
     /// type is allowed. The exception is that you can safely mix the geocode
     /// and establishment types, but note that this will have the same effect as
     /// specifying no types.
-    types: Vec<AutocompleteType>,
-
-    // Internal use only:
-    // ------------------
-    /// Query string that is to be submitted to the Google Cloud Maps Platform.
-    query: Option<String>,
+    types: Vec<crate::places::place_autocomplete::request::autocomplete_type::AutocompleteType>,
 } // struct
