@@ -53,7 +53,6 @@ impl crate::directions::Request<'_> {
     ///     NaiveDate::from_ymd(2030, 1, 1).and_hms(12, 30, 0)
     /// ))
     /// ```
-
     #[must_use] pub fn with_departure_time(
         mut self,
         departure_time: impl Into<crate::directions::DepartureTime>

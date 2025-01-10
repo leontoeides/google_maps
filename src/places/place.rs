@@ -284,7 +284,7 @@ pub struct Place {
     pub wheelchair_accessible_entrance: Option<bool>,
 } // struct Place
 
-/// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 impl std::str::FromStr for Place {
     type Err = simd_json::Error;

@@ -34,7 +34,6 @@ pub struct PlaceOpeningHoursPeriod {
 /// `PlaceOpeningHoursPeriod` period is.
 ///
 /// If the `close` field is empty then this method will return a `None`.
-
 impl PlaceOpeningHoursPeriod {
     #[must_use] pub fn duration(&self) -> Option<Duration> {
         self.close.as_ref().map(|close| {

@@ -1,7 +1,7 @@
 //! Provides some `LatLng` conversion `TryFrom` traits for the
 //! [geo](https://crates.io/crates/geo) crate.
 
-use crate::{error::Error as GoogleMapsError, types::Error as TypeError, LatLng};
+use crate::{error::Error as GoogleMapsError, types::Error as TypeError, types::LatLng};
 use geo_types::geometry::{Coord, Point};
 use rust_decimal::{prelude::FromPrimitive, prelude::ToPrimitive, Decimal};
 

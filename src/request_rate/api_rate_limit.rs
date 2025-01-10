@@ -9,8 +9,6 @@ impl ApiRate {
     /// If the current rate exceeds the targeted rate,
     /// this method will put the thread to sleep until it is ready for the next
     /// request.
-    ///
-
     pub async fn limit(&self) {
         if let Some(wait_pool) = &self.throttle_pool { wait_pool.queue().await }
         /*

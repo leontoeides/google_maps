@@ -47,7 +47,7 @@ pub struct StructuredFormat {
     pub secondary_text_matched_substrings: Vec<MatchedSubstring>,
 } // struct StructuredFormat
 
-/// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 impl std::str::FromStr for StructuredFormat {
     type Err = simd_json::Error;

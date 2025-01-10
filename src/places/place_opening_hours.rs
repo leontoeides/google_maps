@@ -64,7 +64,6 @@ impl std::str::FromStr for PlaceOpeningHours {
 /// place. This is meant to be used with the `Place.current_opening_hours`
 /// field. Using this with the `Place.current_opening_hours` will likely just
 /// return an empty `HashSet`.
-
 impl PlaceOpeningHours {
     #[must_use]
     pub fn special_days(&self) -> HashSet<NaiveDate> {

@@ -6,7 +6,6 @@ use serde::{Deserialize, Serialize};
 //
 /// “The total length of the fields in this input must not exceed 280
 /// characters.”
-
 pub const MAX_CHARS: usize = 280;
 
 // -----------------------------------------------------------------------------

@@ -14,7 +14,6 @@ use rust_decimal::Decimal;
 // -----------------------------------------------------------------------------
 //
 /// Used to specify pass throughs or stopovers at intermediate locations.
-
 #[cfg(not(feature = "geo"))]
 #[derive(
     Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize,
@@ -79,7 +78,6 @@ impl std::convert::From<&Self> for Waypoint {
 // -----------------------------------------------------------------------------
 //
 /// Used to specify pass throughs or stopovers at intermediate locations.
-
 #[cfg(feature = "geo")]
 #[derive(Clone, Debug, PartialEq)]
 pub enum Waypoint {

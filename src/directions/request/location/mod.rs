@@ -16,7 +16,6 @@ use rust_decimal::Decimal;
 //
 /// Used to specify the address, latitude/longitude, or place ID for the origin
 /// and destination.
-
 #[cfg(not(feature = "geo"))]
 #[derive(
     Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize,
@@ -77,7 +76,6 @@ impl std::convert::From<&Location> for String {
 //
 /// Used to specify the address, latitude/longitude, or place ID for the origin
 /// and destination.
-
 #[cfg(feature = "geo")]
 #[derive(Clone, Debug, PartialEq)]
 pub enum Location {

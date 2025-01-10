@@ -83,7 +83,6 @@ impl Step {
     /// ```rust
     /// let maneuver = step.get_maneuver();
     /// ```
-
     pub fn get_maneuver(&self) -> Option<String> {
         self.maneuver.as_ref().map(String::from)
     } // fn

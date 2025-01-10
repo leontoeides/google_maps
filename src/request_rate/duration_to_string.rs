@@ -14,7 +14,6 @@ use std::time::Duration;
 /// function converts a Duration into an English expression of time. For
 /// example, "1 month," "5.83 minutes," or "948 milliseconds." The unit of time
 /// (i.e. milliseconds or seconds) is automatically selected by this function.
-
 pub fn duration_to_string(duration: &Duration) -> String {
     const SECONDS_IN_A_SECOND: f64 = 1.0;
     const SECONDS_IN_A_MINUTE: f64 = 60.0;

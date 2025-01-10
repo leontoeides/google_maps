@@ -14,7 +14,6 @@ use rust_decimal_macros::dec;
 //
 /// Null Island: this whimsical term refers to the intersection of 0 degrees
 /// latitude and 0 degrees longitude.
-
 const NULL_ISLAND: LatLng = LatLng {
     lat: dec!(0.0),
     lng: dec!(0.0),
@@ -28,7 +27,6 @@ const NULL_ISLAND: LatLng = LatLng {
 ///
 /// This parameter takes either a single location as a latitude/longitude
 /// pair, multiple latitude/longitude pairs, or an encoded polyline.
-
 #[cfg(not(feature = "geo"))]
 #[derive(
     Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize,
@@ -73,7 +71,6 @@ impl std::convert::From<&Locations> for String {
 ///
 /// This parameter takes either a single location as a latitude/longitude
 /// pair, multiple latitude/longitude pairs, or an encoded polyline.
-
 #[cfg(feature = "geo")]
 #[derive(Clone, Debug, PartialEq)]
 pub enum Locations {

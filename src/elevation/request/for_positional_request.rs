@@ -79,8 +79,8 @@ impl crate::elevation::Request<'_> {
         the geo-specific methods are no longer necessary. \
         it's suggested to use the `for_positional_request` method instead"
     )]
-    #[must_use] pub fn for_coordinate_request(
-        self,
+    pub fn for_coordinate_request(
+        mut self,
         coordinate: &geo_types::Coord
     ) -> Result<Self, crate::error::Error> {
         // Set the path in Request struct.
@@ -105,8 +105,8 @@ impl crate::elevation::Request<'_> {
         the geo-specific methods are no longer necessary. \
         it's suggested to use the `for_positional_request` method instead"
     )]
-    #[must_use] pub fn try_point_request(
-        self,
+    pub fn try_point_request(
+        mut self,
         point: &geo_types::Point
     ) -> Result<Self, crate::error::Error> {
         // Set the path in Request struct.

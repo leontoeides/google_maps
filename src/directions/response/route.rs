@@ -85,7 +85,6 @@ impl Route {
     /// ```rust
     /// let summary = route.get_summary();
     /// ```
-
     #[must_use]
     pub fn get_summary(&self) -> Option<&String> {
         match &*self.summary {
@@ -101,7 +100,6 @@ impl Route {
     /// ```rust
     /// let fare_currency = route.get_fare_currency();
     /// ```
-
     #[must_use]
     pub fn get_fare_currency(&self) -> Option<String> {
         self.fare.as_ref().map(|fare| fare.currency.to_string())
@@ -114,7 +112,6 @@ impl Route {
     /// ```rust
     /// let fare_value = route.get_fare_value();
     /// ```
-
     #[must_use]
     pub fn get_fare_value(&self) -> Option<Decimal> {
         self.fare.as_ref().map(|fare| fare.value)
@@ -127,7 +124,6 @@ impl Route {
     /// ```rust
     /// let fare_text = route.get_fare_text();
     /// ```
-
     #[must_use]
     pub fn get_fare_text(&self) -> Option<&String> {
         self.fare.as_ref().map(|fare| &fare.text)
@@ -140,7 +136,6 @@ impl Route {
     /// ```rust
     /// let warnings = route.get_warning();
     /// ```
-
     #[must_use]
     pub fn get_warnings(&self) -> Option<String> {
         if self.warnings.is_empty() {
@@ -157,7 +152,6 @@ impl Route {
     /// ```rust
     /// let waypoint_order = route.get_fare_text();
     /// ```
-
     #[must_use]
     pub fn get_waypoint_order(&self) -> Option<String> {
         if self.waypoint_order.is_empty() {

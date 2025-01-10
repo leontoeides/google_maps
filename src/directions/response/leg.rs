@@ -70,7 +70,6 @@ impl Leg {
     /// ```rust
     /// let duration_in_traffic_text = leg.get_duration_in_traffic_text();
     /// ```
-
     #[must_use]
     pub fn get_duration_in_traffic_text(&self) -> Option<&String> {
         self.duration_in_traffic
@@ -85,7 +84,6 @@ impl Leg {
     /// ```rust
     /// let duration_in_traffic_value = leg.get_duration_in_traffic_value();
     /// ```
-
     #[must_use]
     pub fn get_duration_in_traffic_value(&self) -> Option<i64> {
         self.duration_in_traffic
@@ -100,7 +98,6 @@ impl Leg {
     /// ```rust
     /// let arrival_time_text = leg.get_arrival_time_text();
     /// ```
-
     #[must_use]
     pub fn get_arrival_time_text(&self) -> Option<&String> {
         self.arrival_time.as_ref().map(|time| &time.text)
@@ -113,7 +110,6 @@ impl Leg {
     /// ```rust
     /// let arrival_time_zone = leg.arrival_time_zone();
     /// ```
-
     #[must_use]
     pub fn get_arrival_time_value(&self) -> Option<i64> {
         self.arrival_time
@@ -128,7 +124,6 @@ impl Leg {
     /// ```rust
     /// let arrival_time_zone = leg.arrival_time_zone();
     /// ```
-
     #[must_use]
     pub fn get_arrival_time_zone(&self) -> Option<String> {
         self.arrival_time
@@ -143,7 +138,6 @@ impl Leg {
     /// ```rust
     /// let departure_time_text = leg.get_departure_time_text();
     /// ```
-
     #[must_use]
     pub fn get_departure_time_text(&self) -> Option<&String> {
         self.departure_time.as_ref().map(|time| &time.text)
@@ -156,7 +150,6 @@ impl Leg {
     /// ```rust
     /// let departure_time_zone = leg.departure_time_zone();
     /// ```
-
     #[must_use]
     pub fn get_departure_time_value(&self) -> Option<i64> {
         self.departure_time
@@ -171,7 +164,6 @@ impl Leg {
     /// ```rust
     /// let departure_time_zone = leg.departure_time_zone();
     /// ```
-
     #[must_use]
     pub fn get_departure_time_zone(&self) -> Option<String> {
         self.departure_time

@@ -74,7 +74,7 @@ impl crate::elevation::Request<'_> {
         the geo-specific methods are no longer necessary. \
         it's suggested to use the `for_sampled_path_request` method instead"
     )]
-    #[must_use] pub fn for_line_string_request(
+    pub fn for_line_string_request(
         mut self,
         line_string: geo_types::LineString
     ) -> Result<Self, crate::error::Error> {

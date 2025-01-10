@@ -36,6 +36,7 @@ pub(super) mod geometry;
 pub(super) mod language;
 
 #[cfg(any(
+    feature = "address_validation",
     feature = "autocomplete",
     feature = "directions",
     feature = "distance_matrix",
@@ -104,6 +105,7 @@ pub use crate::types::geometry::Geometry;
 pub use crate::types::language::Language;
 
 #[cfg(any(
+    feature = "address_validation",
     feature = "autocomplete",
     feature = "directions",
     feature = "distance_matrix",

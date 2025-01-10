@@ -253,7 +253,7 @@ impl ClassifiableError<'_, Self> for Error {
                 }, // Http
 
             #[cfg(feature = "polyline")]
-            Self::Polyline(polyline_error) => ClassifiedError::Permanent(self),
+            Self::Polyline(_polyline_error) => ClassifiedError::Permanent(self),
         } // match
     } // fn
 } // impl

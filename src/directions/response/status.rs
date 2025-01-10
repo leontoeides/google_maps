@@ -52,7 +52,6 @@ pub enum Status {
     /// See the [Maps
     /// FAQ](https://developers.google.com/maps/faq#over-limit-key-error) to
     /// learn how to fix this.
-
     #[serde(alias = "OverDailyLimit")]
     OverDailyLimit,
 

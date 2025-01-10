@@ -1,4 +1,4 @@
-use crate::LatLng;
+use crate::types::LatLng;
 use getset::{CopyGetters, Getters, MutGetters, Setters};
 use serde::{Deserialize, Serialize};
 

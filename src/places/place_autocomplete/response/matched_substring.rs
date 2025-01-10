@@ -21,7 +21,7 @@ pub struct MatchedSubstring {
     pub offset: usize,
 } // struct MatchedSubstring
 
-/// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 impl std::str::FromStr for MatchedSubstring {
     type Err = simd_json::Error;

@@ -81,7 +81,7 @@ pub struct Prediction {
     pub types: Vec<PlaceType>,
 } // struct Prediction
 
-/// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 impl std::str::FromStr for Prediction {
     type Err = simd_json::Error;

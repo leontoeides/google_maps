@@ -24,7 +24,6 @@ use std::time::Duration;
 /// of a rate. For example, "1 file per month," "5.83 pages a minute," etc. The
 /// unit of time (i.e. milliseconds or seconds) is automatically selected by
 /// this function.
-
 pub fn rate_to_string(
     numerator: u64,
     duration: &Duration,
