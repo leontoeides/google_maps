@@ -6,9 +6,45 @@
 # 3.8.0
 
 * Important note: This release some changes that are theoretically breaking
-  changes for users that are tapping into the more internal functions and
-  destructuring `structs`. However, I don't believe most crate end-users will
-  notice a difference.
+  changes. This would apply to users who are tapping into the more internal
+  functions and destructuring `structs`. However, I don't believe most crate
+  end-users will notice a difference.
+
+* 2024-01-10: Implemented Google Maps [Address Validation
+  API](https://developers.google.com/maps/documentation/address-validation).
+  Basic example:
+
+  ```rust
+  use google_maps::prelude::*;
+
+  let google_maps_client = google_maps::Client::try_new("YOUR_API_KEY_HERE")?;
+
+  let postal_address = PostalAddress::builder()
+      .region_code(&Country::UnitedStates)
+      .address_lines(vec![
+          "1600 Amphitheatre Pkwy",
+          "Mountain View, CA, 94043"
+      ])
+      .build();
+
+  let response = google_maps_client
+      .validate_address()
+      .address(postal_address)
+      .build()
+      .execute()
+      .await?;
+
+  google_maps_client
+      .provide_validation_feedback()
+      .conclusion(ValidationConclusion::Unused)
+      .response_id(response.response_id())
+      .build()
+      .execute()
+      .await?;
+
+  // Dump entire response:
+  println!("{response:#?}");
+  ```
 
 * 2025-01-04: Implemented a generic `get` method that covers all of the Google
   Maps APIs and handles the requests, responses, and errors.

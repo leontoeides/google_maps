@@ -699,7 +699,7 @@ impl crate::client::Client {
     ///     ])
     ///     .build();
     ///
-    /// let response = google_maps_client
+    /// let address_validation_response = google_maps_client
     ///     .validate_address()
     ///     .address(postal_address)
     ///     .build()
@@ -736,7 +736,7 @@ impl crate::client::Client {
     /// google_maps_client
     ///     .provide_validation_feedback()
     ///     .conclusion(ValidationConclusion::Unused)
-    ///     .response_id("06b8fc87-841a-4f86-bbcd-f494ceaf7ff2")
+    ///     .response_id(address_validation_response.response_id())
     ///     .build()
     ///     .execute()
     ///     .await?;
