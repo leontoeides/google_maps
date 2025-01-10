@@ -39,14 +39,6 @@
       .execute()
       .await?;
 
-  google_maps_client
-      .provide_validation_feedback()
-      .conclusion(ValidationConclusion::Unused)
-      .response_id(response.response_id())
-      .build()
-      .execute()
-      .await?;
-
   // Dump entire response:
   println!("{response:#?}");
   ```
