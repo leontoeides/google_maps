@@ -156,6 +156,12 @@
 //!     .execute()
 //!     .await?;
 //!
+//! // Dump entire response:
+//! println!("{address_validation_response:#?}");
+//!
+//! // Optional feedback step. Let Google know which address was used for the
+//! // your query:
+//!
 //! google_maps_client
 //!     .provide_validation_feedback()
 //!     .conclusion(ValidationConclusion::Unused)
@@ -163,9 +169,6 @@
 //!     .build()
 //!     .execute()
 //!     .await?;
-//!
-//! // Dump entire response:
-//! println!("{address_validation_response:#?}");
 //! ```
 //!
 //! ## Directions API
