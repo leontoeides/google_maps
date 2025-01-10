@@ -3,6 +3,11 @@
 * Release notes are available on
   [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+# 3.8.1
+
+* 2024-01-10: A debug `println!` was accidentally left in the `Client`
+  `get_request` method. This has been removed.
+
 # 3.8.0
 
 * Important note: This release some changes that are theoretically breaking

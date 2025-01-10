@@ -37,6 +37,7 @@
 //!
 //! ### Google Maps Client Feature Flags:
 //!
+//! * `address_validation` ‧ includes Google Maps Address Validation API
 //! * `autocomplete` ‧ includes Google Maps Places autocomplete API
 //! * `directions` ‧ includes Google Maps Directions API
 //! * `distance_matrix` ‧ includes Google Maps Distance Matrix API

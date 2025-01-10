@@ -394,7 +394,6 @@ responding but I will respond. Thanks!
 # Roadmap
 
 - [ ] Track both _requests_ and request _elements_ for rate limiting.
-- [ ] Make a generic `get()` function for that can be used by all APIs.
 - [ ] Convert explicit query validation to session types wherever reasonable.
 - [ ] [Places API](https://developers.google.com/places/web-service/intro). Only
 partly implemented. If you would like to have any missing pieces implemented,

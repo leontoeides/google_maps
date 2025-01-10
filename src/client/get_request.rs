@@ -68,10 +68,8 @@ impl crate::Client {
                 // using the URL and query string:
                 Ok(request) => match self.reqwest_client.execute(request).await {
                     Ok(response) => if response.status().is_success() {
-                        let text = response.text().await?;
-                        println!("{text:#?}");
-                        let mut bytes = text.into_bytes();
-                            match simd_json::serde::from_slice::<RSP>(&mut bytes) {
+                        match response.text().await.map(String::into_bytes) {
+                            Ok(mut bytes) => match simd_json::serde::from_slice::<RSP>(&mut bytes) {
                                 Ok(deserialized) => {
                                     let result: Result<RSP, ERR> = deserialized.into();
                                     if let Err(error) = &result {
@@ -83,7 +81,12 @@ impl crate::Client {
                                     tracing::error!("JSON deserialization error: {error}");
                                     Err(Error::from(error))
                                 },
-                            }
+                            }, // Ok
+                            Err(error) => {
+                                tracing::error!("HTTP request error: {error}");
+                                Err(Error::from(error))
+                            },
+                        } // match
                     } else {
                         tracing::error!(
                             "Google Maps API HTTP request was not successful: {status}",
