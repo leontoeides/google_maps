@@ -1,9 +1,8 @@
-use crate::places::place_autocomplete::request::Request;
-use crate::Country;
+use crate::types::Country;
 
 // -----------------------------------------------------------------------------
 
-impl<'a> Request<'a> {
+impl crate::places::place_autocomplete::Request<'_> {
     /// Adds the components parameter to the Place API _Place Autocomplete_
     /// query.
     ///
@@ -14,21 +13,16 @@ impl<'a> Request<'a> {
     ///   countries.
     ///
     /// * Multiple components may be stacked together.
-
-    pub fn with_component(
-        &'a mut self,
+    #[must_use] pub fn with_component(
+        mut self,
         component: impl Into<Country>
-    ) -> &'a mut Self {
+    ) -> Self {
         // Set components in Request struct.
         self.components.extend(vec![component.into()]);
         // Return modified Request struct to caller.
         self
     } // fn
-} // impl
 
-// -----------------------------------------------------------------------------
-
-impl<'a> Request<'a> {
     /// Adds the components parameter to the Place API _Place Autocomplete_
     /// query.
     ///
@@ -46,11 +40,10 @@ impl<'a> Request<'a> {
     /// intended to represent any collection that can be iterated over, and the
     /// `O` generic is for any type that can be converted to the `Country`
     /// type.
-
-    pub fn with_components<C, O>(
-        &'a mut self,
+    #[must_use] pub fn with_components<C, O>(
+        mut self,
         components: C
-    ) -> &'a mut Self
+    ) -> Self
     where
         C: IntoIterator<Item = O>,
         O: Into<Country> {

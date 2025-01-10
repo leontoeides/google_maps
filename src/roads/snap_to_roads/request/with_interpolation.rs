@@ -1,10 +1,4 @@
-use crate::roads::snap_to_roads::request::Request;
-
-// =============================================================================
-
-impl<'a> Request<'a> {
-    // -------------------------------------------------------------------------
-    //
+impl crate::roads::snap_to_roads::Request<'_> {
     /// Whether to interpolate a path to include all points forming the full
     /// road-geometry.
     ///
@@ -22,11 +16,10 @@ impl<'a> Request<'a> {
     /// ```rust
     /// .with_interpolation(true)
     /// ```
-
-    pub fn with_interpolation(
-        &'a mut self,
+    #[must_use] pub fn with_interpolation(
+        mut self,
         interpolate: impl Into<bool>
-    ) -> &'a mut Self {
+    ) -> Self {
         // Set language in Request struct.
         self.interpolate = Some(interpolate.into());
         // Return modified Request struct to caller.

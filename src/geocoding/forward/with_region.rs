@@ -1,6 +1,4 @@
-use crate::{geocoding::forward::ForwardRequest, types::Region};
-
-impl<'a> ForwardRequest<'a> {
+impl crate::geocoding::ForwardRequest<'_> {
     /// Specifies the region bias.
     ///
     /// ## Arguments
@@ -34,11 +32,10 @@ impl<'a> ForwardRequest<'a> {
     /// ```rust
     /// .with_region(Region::Canada)
     /// ```
-
-    pub fn with_region(
-        &'a mut self,
-        region: impl Into<Region>
-    ) -> &'a mut Self {
+    #[must_use] pub fn with_region(
+        mut self,
+        region: impl Into<crate::types::Region>
+    ) -> Self {
         // Set region in ForwardRequest struct.
         self.region = Some(region.into());
         // Return modified ForwardRequest struct to caller.

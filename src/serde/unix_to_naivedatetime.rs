@@ -10,7 +10,6 @@ use serde::{Deserialize, Deserializer};
 /// `00:00:00 UTC on 1 January 1970`, minus leap seconds. The Google Maps
 /// Platform returns some fields in the Unix Timestamp format and it's handier
 /// to be able to use them as a NaiveDateTime.
-
 pub fn unix_to_naivedatetime<'de, D>(deserializer: D) -> Result<NaiveDateTime, D::Error>
 where
     D: Deserializer<'de>,

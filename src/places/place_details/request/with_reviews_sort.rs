@@ -1,9 +1,4 @@
-use crate::places::place_details::request::Request;
-use crate::places::place_details::SortOrder;
-
-// -----------------------------------------------------------------------------
-
-impl<'a> Request<'a> {
+impl crate::places::place_details::Request<'_> {
     /// Specifies the sort order of user reviews in the Places API _Place
     /// Details_ response.
     ///
@@ -21,11 +16,10 @@ impl<'a> Request<'a> {
     ///
     /// Google recommends that you display how the reviews are being sorted to
     /// the end user.
-
-    pub fn with_reviews_sort(
-        &'a mut self,
-        sort_order: impl Into<SortOrder>
-    ) -> &'a mut Self {
+    #[must_use] pub fn with_reviews_sort(
+        mut self,
+        sort_order: impl Into<crate::places::place_details::SortOrder>
+    ) -> Self {
         // Set sort order setting in Request struct.
         self.reviews_sort = Some(sort_order.into());
         // Return modified Request struct to caller.

@@ -1,9 +1,4 @@
-use crate::places::place_details::request::Request;
-use crate::places::place_details::Field;
-
-// -----------------------------------------------------------------------------
-
-impl<'a> Request<'a> {
+impl crate::places::place_details::Request<'_> {
     /// Sets the requested fields to the Places API _Place Details_ query.
     ///
     /// ## Arguments
@@ -40,14 +35,13 @@ impl<'a> Request<'a> {
     /// This method uses generics to improve ergonomics. The `C` generic is
     /// intended to represent any collection that can be iterated over, and the
     /// `F` generic is for any type that can be converted to the `Field` type.
-
-    pub fn with_fields<C, F>(
-        &'a mut self,
+    #[must_use] pub fn with_fields<C, F>(
+        mut self,
         fields: C
-    ) -> &'a mut Self
+    ) -> Self
     where
         C: IntoIterator<Item = F>,
-        F: Into<Field> {
+        F: Into<crate::places::place_details::Field> {
         // Set fields in Request struct.
         self.fields = fields.into_iter().map(Into::into).collect();
         // Return modified Request struct to caller.

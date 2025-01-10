@@ -19,6 +19,6 @@ impl crate::places::place_autocomplete::Request<'_> {
     pub async fn get(
         self
     ) -> Result<crate::places::place_autocomplete::Response, crate::Error> {
-        self.client.get(self).await
+        self.client.get_request(self).await
     } // fn
 } // impl

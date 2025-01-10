@@ -1,6 +1,8 @@
-use crate::{geocoding::reverse::ReverseRequest, types::PlaceType};
+use crate::types::PlaceType;
 
-impl<'a> ReverseRequest<'a> {
+// -----------------------------------------------------------------------------
+
+impl crate::geocoding::ReverseRequest<'_> {
     /// Restricts the results from the geocoder to the specified result type(s).
     ///
     /// # Arguments:
@@ -112,13 +114,12 @@ impl<'a> ReverseRequest<'a> {
     /// .with_result_type(PlaceType::Neighborhood)
     /// .with_result_type(PlaceType::Locality)
     /// ```
-
-    pub fn with_result_type(
-        &'a mut self,
+    #[must_use] pub fn with_result_type(
+        mut self,
         result_type: impl Into<PlaceType>
-    ) -> &'a mut Self {
+    ) -> Self {
         // Add result type to ReverseRequest struct.
-        self.result_types = vec![result_type.into()];
+        self.result_types.push(result_type.into());
         // Return modified ReverseRequest struct to caller.
         self
     } // fn
@@ -155,16 +156,15 @@ impl<'a> ReverseRequest<'a> {
     /// intended to represent any collection that can be iterated over, and the
     /// `P` generic is for any type that can be converted to the `PlaceType`
     /// type.
-
-    pub fn with_result_types<C, P>(
-        &'a mut self,
+    #[must_use] pub fn with_result_types<C, P>(
+        mut self,
         result_types: C
-    ) -> &'a mut Self
+    ) -> Self
     where
         C: IntoIterator<Item = P>,
         P: Into<PlaceType> {
         // Add location types to ReverseRequest struct.
-        self.result_types = result_types.into_iter().map(Into::into).collect();
+        self.result_types.extend(result_types.into_iter().map(Into::into));
         // Return modified ReverseRequest struct to caller.
         self
     } // fn

@@ -19,6 +19,6 @@ impl crate::geocoding::ForwardRequest<'_> {
     pub async fn get(
         self
     ) -> Result<crate::geocoding::Response, crate::Error> {
-        self.client.get(self).await
+        self.client.get_request(self).await
     } // fn
 } // impl

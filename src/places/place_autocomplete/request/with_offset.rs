@@ -1,8 +1,4 @@
-use crate::places::place_autocomplete::request::Request;
-
-// -----------------------------------------------------------------------------
-
-impl<'a> Request<'a> {
+impl crate::places::place_autocomplete::Request<'_> {
     /// Adds the offset parameter to the Place API _Place Autocomplete_ query.
     ///
     /// ## Arguments
@@ -16,11 +12,10 @@ impl<'a> Request<'a> {
     ///   `Goo abc`. If no offset is supplied, the service will use the whole
     ///   term. The offset should generally be set to the position of the text
     ///   caret.
-
-    pub fn with_offset(
-        &'a mut self,
+    #[must_use] pub fn with_offset(
+        mut self,
         offset: impl Into<u8>
-    ) -> &'a mut Self {
+    ) -> Self {
         // Set offset in Request struct.
         self.offset = Some(offset.into());
         // Return modified Request struct to caller.

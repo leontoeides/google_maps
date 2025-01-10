@@ -8,7 +8,10 @@ mod build;
 mod impls;
 
 #[cfg(feature = "reqwest")]
-mod get;
+mod get_request;
+
+#[cfg(feature = "reqwest")]
+mod post_request;
 
 #[cfg(feature = "reqwest")]
 mod with_rate;

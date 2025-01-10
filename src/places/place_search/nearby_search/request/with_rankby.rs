@@ -1,9 +1,4 @@
-use crate::places::place_search::nearby_search::request::Request;
-use crate::places::RankBy;
-
-// -----------------------------------------------------------------------------
-
-impl<'a> Request<'a> {
+impl crate::places::place_search::nearby_search::Request<'_> {
     /// Adds the rank-by order parameter to the Places API _Nearby Search_
     /// query.
     ///
@@ -23,11 +18,10 @@ impl<'a> Request<'a> {
     ///   their distance from the specified location. When `distance` is
     ///   specified, one or more of `keyword`, `name`, or `type` is required and
     ///   radius is disallowed.
-
-    pub fn with_rankby(
-        &'a mut self,
-        rankby: impl Into<RankBy>
-    ) -> &'a mut Self {
+    #[must_use] pub fn with_rankby(
+        mut self,
+        rankby: impl Into<crate::places::RankBy>
+    ) -> Self {
         // Set rannk by order in Request struct.
         self.rankby = Some(rankby.into());
         // Return modified Request struct to caller.

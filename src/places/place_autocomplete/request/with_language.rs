@@ -1,9 +1,4 @@
-use crate::places::place_autocomplete::request::Request;
-use crate::types::Language;
-
-// -----------------------------------------------------------------------------
-
-impl<'a> Request<'a> {
+impl crate::places::place_autocomplete::Request<'_> {
     /// Adds the language parameter to the Place API _Place Autocomplete_ query.
     ///
     /// ## Arguments
@@ -33,11 +28,10 @@ impl<'a> Request<'a> {
     ///       depending on language, such as the abbreviations for street types,
     ///       or synonyms that may be valid in one language but not in another.
     ///       For example, _utca_ and _tér_ are synonyms for street in Hungarian.
-
-    pub fn with_language(
-        &'a mut self,
-        language: impl Into<Language>
-    ) -> &'a mut Self {
+    #[must_use] pub fn with_language(
+        mut self,
+        language: impl Into<crate::types::Language>
+    ) -> Self {
         // Set language in Request struct.
         self.language = Some(language.into());
         // Return modified Request struct to caller.

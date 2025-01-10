@@ -1,10 +1,8 @@
-use crate::elevation::request::{locations::Locations, Request};
+use crate::elevation::Locations;
 
-// =============================================================================
+// -----------------------------------------------------------------------------
 
-impl<'a> Request<'a> {
-    // -------------------------------------------------------------------------
-    //
+impl crate::elevation::Request<'_> {
     /// Adds the _sampled path request_ parameters to the Elevation API query.
     ///
     /// ## Arguments
@@ -43,12 +41,11 @@ impl<'a> Request<'a> {
     ///     4
     /// )
     /// ```
-
-    pub fn for_sampled_path_request(
-        &'a mut self,
+    #[must_use] pub fn for_sampled_path_request(
+        mut self,
         path: impl Into<Locations>,
         samples: impl Into<u8>
-    ) -> &'a mut Self {
+    ) -> Self {
         let path: Locations = path.into();
         let samples: u8 = samples.into();
         // Set the path in Request struct.
@@ -59,8 +56,6 @@ impl<'a> Request<'a> {
         self
     } // fn
 
-    // -------------------------------------------------------------------------
-    //
     /// Adds the _positional request_ parameter to the Elevation API query.
     ///
     /// This function is the same as `for_sampled_path_request` but it supports
@@ -73,17 +68,16 @@ impl<'a> Request<'a> {
     /// * `line_string` ‧ Specifies the sample points along a path for which to
     ///   return elevation data. The samples parameter divides the given path
     ///   into an ordered set of equidistant points along the path.
-
     #[cfg(feature = "geo")]
     #[deprecated(since = "3.5.1", note =
         "you may now use geo types directly with the google_maps crate. \
         the geo-specific methods are no longer necessary. \
         it's suggested to use the `for_sampled_path_request` method instead"
     )]
-    pub fn for_line_string_request(
-        &'a mut self,
+    #[must_use] pub fn for_line_string_request(
+        mut self,
         line_string: geo_types::LineString
-    ) -> Result<&'a mut Self, crate::error::Error> {
+    ) -> Result<Self, crate::error::Error> {
         // Set the path in Request struct.
         self.locations = Some(Locations::LineString(line_string));
         // Return modified Request struct to caller.

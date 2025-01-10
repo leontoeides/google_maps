@@ -1,8 +1,4 @@
-use crate::places::place_search::nearby_search::request::Request;
-
-// -----------------------------------------------------------------------------
-
-impl<'a> Request<'a> {
+impl crate::places::place_search::nearby_search::Request<'_> {
     /// Adds the searched text string to the Places API _Nearby Search_ query.
     ///
     /// ## Arguments
@@ -20,11 +16,10 @@ impl<'a> Request<'a> {
     ///
     /// If this parameter is omitted, places with a `business_status` of
     /// `CLOSED_TEMPORARILY` or `CLOSED_PERMANENTLY` will not be returned.
-
-    pub fn with_keyword(
-        &'a mut self,
+    #[must_use] pub fn with_keyword(
+        mut self,
         keyword: impl Into<String>
-    ) -> &'a mut Self {
+    ) -> Self {
         // Set maximum price in Request struct.
         self.keyword = Some(keyword.into());
         // Return modified Request struct to caller.

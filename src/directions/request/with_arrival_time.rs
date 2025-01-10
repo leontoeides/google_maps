@@ -1,7 +1,4 @@
-use crate::directions::request::Request;
-use chrono::NaiveDateTime;
-
-impl<'a> Request<'a> {
+impl crate::directions::Request<'_> {
     /// Specifies the desired arrival time.
     ///
     /// ## Arguments
@@ -21,11 +18,10 @@ impl<'a> Request<'a> {
     /// ```
     /// .with_arrival_time(NaiveDate::from_ymd(2019, 1, 1).and_hms(0, 00, 0))
     /// ```
-
-    pub fn with_arrival_time(
-        &'a mut self,
-        arrival_time: impl Into<NaiveDateTime>
-    ) -> &'a mut Self {
+    #[must_use] pub fn with_arrival_time(
+        mut self,
+        arrival_time: impl Into<chrono::NaiveDateTime>
+    ) -> Self {
         self.arrival_time = Some(arrival_time.into());
         self
     } // fn

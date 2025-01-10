@@ -1,6 +1,4 @@
-use crate::{geocoding::reverse::ReverseRequest, types::Language};
-
-impl<'a> ReverseRequest<'a> {
+impl crate::geocoding::ReverseRequest<'_> {
     /// Specifies the language in which to return results.
     ///
     /// # Arguments:
@@ -43,11 +41,10 @@ impl<'a> ReverseRequest<'a> {
     /// ```
     /// .with_language(Language::French)
     /// ```
-
-    pub fn with_language(
-        &'a mut self,
-        language: impl Into<Language>
-    ) -> &'a mut Self {
+    #[must_use] pub fn with_language(
+        mut self,
+        language: impl Into<crate::types::Language>
+    ) -> Self {
         // Set language in ReverseRequest struct.
         self.language = Some(language.into());
         // Return modified ReverseRequest struct to caller.

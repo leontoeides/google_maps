@@ -41,6 +41,6 @@ impl crate::time_zone::Request<'_> {
     pub async fn execute(
         self
     ) -> Result<crate::time_zone::Response, crate::Error> {
-        self.client.get(self).await
+        self.client.get_request(self).await
     } // fn
 } // impl

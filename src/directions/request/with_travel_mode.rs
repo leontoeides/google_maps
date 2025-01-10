@@ -1,6 +1,4 @@
-use crate::directions::{request::Request, travel_mode::TravelMode};
-
-impl<'a> Request<'a> {
+impl crate::directions::Request<'_> {
     /// Specify the mode of transportation.
     ///
     /// ## Arguments
@@ -45,11 +43,10 @@ impl<'a> Request<'a> {
     /// ```rust
     /// .with_travel_mode(TravelMode::Transit)
     /// ```
-
-    pub fn with_travel_mode(
-        &'a mut self,
-        travel_mode: impl Into<TravelMode>
-    ) -> &'a mut Self {
+    #[must_use] pub fn with_travel_mode(
+        mut self,
+        travel_mode: impl Into<crate::directions::TravelMode>
+    ) -> Self {
         self.travel_mode = Some(travel_mode.into());
         self
     } // fn

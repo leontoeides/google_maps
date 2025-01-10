@@ -140,8 +140,8 @@ impl crate::client::Client {
         &self,
         origin: impl Into<Location>,
         destination: impl Into<Location>
-    ) -> crate::directions::request::Request {
-        crate::directions::request::Request::new(self, origin.into(), destination.into())
+    ) -> crate::directions::Request {
+        crate::directions::Request::new(self, origin.into(), destination.into())
     } // fn
 
     // -------------------------------------------------------------------------
@@ -187,13 +187,13 @@ impl crate::client::Client {
         &self,
         origins: C,
         destinations: C
-    ) -> crate::distance_matrix::request::Request
+    ) -> crate::distance_matrix::Request
     where
         C: IntoIterator<Item = W>,
         W: Into<Waypoint> {
         let origins: Vec<Waypoint> = origins.into_iter().map(Into::into).collect();
         let destinations: Vec<Waypoint> = destinations.into_iter().map(Into::into).collect();
-        crate::distance_matrix::request::Request::new(self, origins, destinations)
+        crate::distance_matrix::Request::new(self, origins, destinations)
     } // fn
 
     // -------------------------------------------------------------------------
@@ -208,8 +208,8 @@ impl crate::client::Client {
     /// the methods of the resulting type to set the parameters.
     #[cfg(feature = "elevation")]
     #[must_use]
-    pub const fn elevation(&self) -> crate::elevation::request::Request {
-        crate::elevation::request::Request::new(self)
+    pub const fn elevation(&self) -> crate::elevation::Request {
+        crate::elevation::Request::new(self)
     } // fn
 
     // -------------------------------------------------------------------------
@@ -303,8 +303,8 @@ impl crate::client::Client {
         &self,
         location: impl Into<LatLng>,
         timestamp: impl Into<DateTime<Utc>>
-    ) -> crate::time_zone::request::Request {
-        crate::time_zone::request::Request::new(self, location.into(), timestamp.into())
+    ) -> crate::time_zone::Request {
+        crate::time_zone::Request::new(self, location.into(), timestamp.into())
     } // fn
 
     // -------------------------------------------------------------------------
@@ -323,8 +323,8 @@ impl crate::client::Client {
     pub fn place_autocomplete(
         &self,
         input: impl Into<String>
-    ) -> crate::places::place_autocomplete::request::Request {
-        crate::places::place_autocomplete::request::Request::new(self, input)
+    ) -> crate::places::place_autocomplete::Request {
+        crate::places::place_autocomplete::Request::new(self, input)
     } // fn
 
     // -------------------------------------------------------------------------
@@ -362,8 +362,8 @@ impl crate::client::Client {
     pub fn query_autocomplete(
         &self,
         input: impl Into<String>
-    ) -> crate::places::query_autocomplete::request::Request {
-        crate::places::query_autocomplete::request::Request::new(self, input)
+    ) -> crate::places::query_autocomplete::Request {
+        crate::places::query_autocomplete::Request::new(self, input)
     } // fn
 
     // -------------------------------------------------------------------------
@@ -455,8 +455,8 @@ impl crate::client::Client {
         &self,
         query: impl Into<String>,
         radius: impl Into<u32>
-    ) -> crate::places::place_search::text_search::request::Request {
-        crate::places::place_search::text_search::request::Request::new(self, query, radius.into())
+    ) -> crate::places::place_search::text_search::Request {
+        crate::places::place_search::text_search::Request::new(self, query, radius.into())
     } // fn
 
     // -------------------------------------------------------------------------
@@ -511,8 +511,8 @@ impl crate::client::Client {
         &self,
         location: impl Into<LatLng>,
         radius: impl Into<u32>
-    ) -> crate::places::place_search::nearby_search::request::Request {
-        crate::places::place_search::nearby_search::request::Request::new(
+    ) -> crate::places::place_search::nearby_search::Request {
+        crate::places::place_search::nearby_search::Request::new(
             self,
             location.into(),
             radius.into()
@@ -553,8 +553,8 @@ impl crate::client::Client {
     pub fn place_details(
         &self,
         place_id: impl Into<String>
-    ) -> crate::places::place_details::request::Request {
-        crate::places::place_details::request::Request::new(
+    ) -> crate::places::place_details::Request {
+        crate::places::place_details::Request::new(
             self,
             place_id.into()
         )
@@ -612,12 +612,12 @@ impl crate::client::Client {
     pub fn snap_to_roads<C, L>(
         &self,
         path: C
-    ) -> crate::roads::snap_to_roads::request::Request
+    ) -> crate::roads::snap_to_roads::Request
     where
         C: IntoIterator<Item = L>,
         L: Into<LatLng> {
         let path: Vec<LatLng> = path.into_iter().map(Into::into).collect();
-        crate::roads::snap_to_roads::request::Request::new(self, path)
+        crate::roads::snap_to_roads::Request::new(self, path)
     } // fn
 
     // -------------------------------------------------------------------------
@@ -661,11 +661,94 @@ impl crate::client::Client {
     pub fn nearest_roads<C, L>(
         &self,
         points: C
-    ) -> crate::roads::snap_to_roads::request::Request
+    ) -> crate::roads::nearest_roads::Request
     where
         C: IntoIterator<Item = L>,
         L: Into<LatLng> {
         let points: Vec<LatLng> = points.into_iter().map(Into::into).collect();
-        crate::roads::snap_to_roads::request::Request::new(self, points)
+        crate::roads::nearest_roads::Request::new(self, points)
+    } // fn
+
+    // -------------------------------------------------------------------------
+    //
+    /// The Address Validation API **Address Validation** service validates an
+    /// address and its components, standardize the address for mailing, and
+    /// determine the best known geocode for it.
+    ///
+    /// ## Address Validation API coverage details
+    ///
+    /// The Google Maps Platform team is constantly working to improve
+    /// international coverage for our API services. The following list shows
+    /// the latest coverage details, on a country-by-country basis, for the
+    /// Address Validation API. Data quality can vary by country.
+    ///
+    /// <https://developers.google.com/maps/documentation/address-validation/coverage>
+    ///
+    /// ## Basic usage
+    ///
+    /// ```rust
+    /// use google_maps::prelude::*;
+    ///
+    /// let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE");
+    ///
+    /// let postal_address = PostalAddress::builder()
+    ///     .region_code("US")
+    ///     .address_lines(vec![
+    ///         "1600 Amphitheatre Pkwy",
+    ///         "Mountain View, CA, 94043"
+    ///     ])
+    ///     .build();
+    ///
+    /// let response = google_maps_client
+    ///     .validate_address()
+    ///     .address(postal_address)
+    ///     .build()
+    ///     .execute()
+    ///     .await?;
+    /// ```
+    #[cfg(feature = "address_validation")]
+    pub fn validate_address(
+        &self,
+    ) -> crate::address_validation::validate_address::request::RequestBuilder<
+        '_,
+        crate::address_validation::validate_address::request::SetClient
+    > {
+        crate::address_validation::validate_address::Request::builder()
+            .client(self)
+    } // fn
+
+    // -------------------------------------------------------------------------
+    //
+    /// The Address Validation API **Provide Validation Feedback** service
+    /// feedback about the outcome of the sequence of validation attempts. This
+    /// should be the last call made after a sequence of validation calls for
+    /// the same address, and should be called once the transaction is
+    /// concluded. This should only be sent once for the sequence of
+    /// `validate_address` requests needed to validate an address fully.
+    ///
+    /// ## Basic usage
+    ///
+    /// ```rust
+    /// use google_maps::prelude::*;
+    ///
+    /// let google_maps_client = Client::try_new("YOUR_GOOGLE_API_KEY_HERE");
+    ///
+    /// google_maps_client
+    ///     .provide_validation_feedback()
+    ///     .conclusion(ValidationConclusion::Unused)
+    ///     .response_id("06b8fc87-841a-4f86-bbcd-f494ceaf7ff2")
+    ///     .build()
+    ///     .execute()
+    ///     .await?;
+    /// ```
+    #[cfg(feature = "address_validation")]
+    pub fn provide_validation_feedback(
+        &self,
+    ) -> crate::address_validation::provide_validation_feedback::request::RequestBuilder<
+        '_,
+        crate::address_validation::provide_validation_feedback::request::SetClient
+    > {
+        crate::address_validation::provide_validation_feedback::Request::builder()
+            .client(self)
     } // fn
 } // impl

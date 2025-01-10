@@ -8,7 +8,6 @@ impl crate::client::Client {
     /// ## Arguments
     ///
     /// This method accepts no arguments.
-
     #[cfg(feature = "reqwest")]
     #[must_use]
     pub fn build(&self) -> Self {
@@ -41,7 +40,6 @@ impl crate::client::Client {
     /// ## Arguments
     ///
     /// This method accepts no arguments.
-
     #[cfg(feature = "reqwest")]
     #[deprecated(since = "3.4.3", note = "use `build` instead")]
     #[must_use]

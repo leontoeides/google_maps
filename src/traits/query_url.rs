@@ -62,13 +62,23 @@ where
 
         // If the request passes validation, build the full URL that will be
         // used as the query:
-        let query_url: String = format!(
-            "{service_url}/{output_format}?{query_string}",
-            service_url = T::service_url(),
-            output_format = T::output_format(),
-            query_string = self.query_string()
-        );
-
-        Ok(query_url)
+        #[allow(clippy::option_if_let_else)] // map_or_else is illegible
+        if let Some(output_format) = T::output_format() {
+            // An output format (i.e. `JSON` or `XML`) was defined for the
+            // end-point. Render it in the query URL:
+            Ok(format!(
+                "{service_url}/{output_format}?{query_string}",
+                service_url = T::service_url(),
+                query_string = self.query_string()
+            ))
+        } else {
+            // No output format was defined for the end-point. Don't render it
+            // in the query URL:
+            Ok(format!(
+                "{service_url}?{query_string}",
+                service_url = T::service_url(),
+                query_string = self.query_string()
+            ))
+        } // if
     } // fn
 } // impl

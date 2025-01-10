@@ -1,11 +1,8 @@
-use crate::places::place_autocomplete::request::{
-    autocomplete_type::AutocompleteType,
-    Request
-};
+use crate::places::place_autocomplete::AutocompleteType;
 
 // -----------------------------------------------------------------------------
 
-impl<'a> Request<'a> {
+impl crate::places::place_autocomplete::Request<'_> {
     /// Adds the types parameter to the Place API _Place Autocomplete_ query.
     ///
     /// ## Arguments
@@ -19,19 +16,16 @@ impl<'a> Request<'a> {
     ///   will have the same effect as specifying no types.
     ///
     /// * Multiple result type filters may be stacked together.
-    pub fn with_type(
-        &'a mut self,
-        autocomplete_type: impl Into<AutocompleteType>) -> &'a mut Self {
+    #[must_use] pub fn with_type(
+        mut self,
+        autocomplete_type: impl Into<AutocompleteType>
+    ) -> Self {
         // Set types in Request struct.
-        self.types.extend(vec![autocomplete_type.into()]);
+        self.types.push(autocomplete_type.into());
         // Return modified Request struct to caller.
         self
     } // fn
-} // impl
 
-// -----------------------------------------------------------------------------
-
-impl<'a> Request<'a> {
     /// Adds the types parameter to the Place API _Place Autocomplete_ query.
     ///
     /// ## Arguments
@@ -52,10 +46,10 @@ impl<'a> Request<'a> {
     /// intended to represent any collection that can be iterated over, and the
     /// `A` generic is for any type that can be converted to the
     /// `AutocompleteType` type.
-    pub fn with_types<C, A>(
-        &'a mut self,
+    #[must_use] pub fn with_types<C, A>(
+        mut self,
         types: C
-    ) -> &'a mut Self
+    ) -> Self
     where
         C: IntoIterator<Item = A>,
         A: Into<AutocompleteType> {

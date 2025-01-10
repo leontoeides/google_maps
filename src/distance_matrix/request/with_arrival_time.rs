@@ -1,7 +1,8 @@
-use crate::distance_matrix::request::Request;
 use chrono::NaiveDateTime;
 
-impl<'a> Request<'a> {
+// -----------------------------------------------------------------------------
+
+impl crate::distance_matrix::Request<'_> {
     /// Specifies the desired arrival time.
     ///
     /// ## Arguments
@@ -21,11 +22,10 @@ impl<'a> Request<'a> {
     /// ```rust
     /// .with_arrival_time(NaiveDate::from_ymd(2019, 1, 1).and_hms(0, 00, 0))
     /// ```
-
-    pub fn with_arrival_time(
-        &'a mut self,
+    #[must_use] pub fn with_arrival_time(
+        mut self,
         arrival_time: impl Into<NaiveDateTime>
-    ) -> &'a mut Self {
+    ) -> Self {
         let arrival_time: NaiveDateTime = arrival_time.into();
         self.arrival_time = Some(arrival_time);
         self

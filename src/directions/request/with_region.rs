@@ -1,6 +1,4 @@
-use crate::{directions::request::Request, types::Region};
-
-impl<'a> Request<'a> {
+impl crate::directions::Request<'_> {
     /// Specifies the region bias. There is a London in Canada and there is a
     /// London in England. By biasing the region, you help the directions
     /// service choose the London you intended.
@@ -30,11 +28,10 @@ impl<'a> Request<'a> {
     /// ```rust
     /// .with_region(Region::Canada)
     /// ```
-
-    pub fn with_region(
-        &'a mut self,
-        region: impl Into<Region>
-    ) -> &'a mut Self {
+    #[must_use] pub fn with_region(
+        mut self,
+        region: impl Into<crate::types::Region>
+    ) -> Self {
         self.region = Some(region.into());
         self
     } // fn

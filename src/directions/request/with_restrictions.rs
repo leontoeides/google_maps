@@ -1,6 +1,8 @@
-use crate::directions::request::{avoid::Avoid, Request};
+use crate::directions::Avoid;
 
-impl<'a> Request<'a> {
+// -----------------------------------------------------------------------------
+
+impl crate::directions::Request<'_> {
     /// Specify a feature that routes should avoid.
     ///
     /// ## Arguments
@@ -56,13 +58,12 @@ impl<'a> Request<'a> {
     /// .with_restriction(Avoid::Tolls)
     /// .with_restriction(Avoid::Ferries)
     /// ```
-
-    pub fn with_restriction(
-        &'a mut self,
+    #[must_use] pub fn with_restriction(
+        mut self,
         restriction: impl Into<Avoid>
-    ) -> &'a mut Self {
+    ) -> Self {
         // Add restriction to Request struct.
-        self.restrictions = vec![restriction.into()];
+        self.restrictions.push(restriction.into());
         // Return modified Request struct to caller.
         self
     } // fn
@@ -87,16 +88,15 @@ impl<'a> Request<'a> {
     /// intended to represent any collection that can be iterated over, and the
     /// `A` generic is for any type that can be converted to the `Avoid`
     /// type.
-
-    pub fn with_restrictions<C, A>(
-        &'a mut self,
+    #[must_use] pub fn with_restrictions<C, A>(
+        mut self,
         restrictions: C
-    ) -> &'a mut Self
+    ) -> Self
     where
         C: IntoIterator<Item = A>,
         A: Into<Avoid> {
         // Add restrictions to Request struct.
-        self.restrictions = restrictions.into_iter().map(Into::into).collect();
+        self.restrictions.extend(restrictions.into_iter().map(Into::into));
         // Return modified Request struct to caller.
         self
     } // fn

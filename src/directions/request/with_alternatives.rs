@@ -1,6 +1,4 @@
-use crate::directions::request::Request;
-
-impl<'a> Request<'a> {
+impl crate::directions::Request<'_> {
     /// Specify whether service may provide more than one route alternative in
     /// the response.
     ///
@@ -22,11 +20,10 @@ impl<'a> Request<'a> {
     /// ```rust
     /// .with_alternatives(true)
     /// ```
-
-    pub fn with_alternatives(
-        &'a mut self,
+    #[must_use] pub fn with_alternatives(
+        mut self,
         alternatives: impl Into<bool>
-    ) -> &'a mut Self {
+    ) -> Self {
         self.alternatives = Some(alternatives.into());
         self
     } // fn

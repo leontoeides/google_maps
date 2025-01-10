@@ -109,7 +109,6 @@ impl crate::client::Client {
     /// ```rust
     /// with_rate(Api::TimeZone, (GOOGLE_CREDIT / 0.005) as u16, Duration::from_secs(SECONDS_PER_MONTH))
     /// ```
-
     pub fn with_rate(&mut self, api: &Api, requests: u16, per_duration: Duration) -> &mut Self {
         self.rate_limit.with_rate(api, requests, per_duration);
         self

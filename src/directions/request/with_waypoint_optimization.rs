@@ -1,6 +1,4 @@
-use crate::directions::request::Request;
-
-impl<'a> Request<'a> {
+impl crate::directions::Request<'_> {
     /// Specifies whether the waypoint order should be optimized or not.
     ///
     /// ## Arguments
@@ -40,11 +38,10 @@ impl<'a> Request<'a> {
     /// ```rust
     /// .with_waypoint_optimization(true)
     /// ```
-
-    pub fn with_waypoint_optimization(
-        &'a mut self,
+    #[must_use] pub fn with_waypoint_optimization(
+        mut self,
         waypoint_optimization: impl Into<bool>
-    ) -> &'a mut Self {
+    ) -> Self {
         self.waypoint_optimization = waypoint_optimization.into();
         self
     } // fn

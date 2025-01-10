@@ -30,7 +30,7 @@ impl crate::Client {
     /// * The Google Maps API server returns an unexpected response, or data in
     ///   a format that's not expected.
     #[tracing::instrument(level = "info")]
-    pub(crate) async fn get<REQ, RSP, ERR>(
+    pub(crate) async fn get_request<REQ, RSP, ERR>(
         &self,
         request: REQ
     ) -> Result<RSP, Error>
@@ -43,7 +43,11 @@ impl crate::Client {
         tracing::info!("making HTTP GET request to {}", REQ::title());
 
         // Attempt to build the URL and query string for the HTTP `GET` request:
-        let url: String = request.query_url()?;
+        let url: String = request
+            .query_url()
+            .inspect_err(|error| tracing::error!(
+                "could not build HTTP request URL: {error}"
+            ))?;
 
         // Tracing output:
         tracing::debug!("{url}");
@@ -64,8 +68,10 @@ impl crate::Client {
                 // using the URL and query string:
                 Ok(request) => match self.reqwest_client.execute(request).await {
                     Ok(response) => if response.status().is_success() {
-                        match response.text().await.map(String::into_bytes) {
-                            Ok(mut bytes) => match simd_json::serde::from_slice::<RSP>(&mut bytes) {
+                        let text = response.text().await?;
+                        println!("{text:#?}");
+                        let mut bytes = text.into_bytes();
+                            match simd_json::serde::from_slice::<RSP>(&mut bytes) {
                                 Ok(deserialized) => {
                                     let result: Result<RSP, ERR> = deserialized.into();
                                     if let Err(error) = &result {
@@ -77,12 +83,7 @@ impl crate::Client {
                                     tracing::error!("JSON deserialization error: {error}");
                                     Err(Error::from(error))
                                 },
-                            }, // Ok
-                            Err(error) => {
-                                tracing::error!("HTTP request error: {error}");
-                                Err(Error::from(error))
-                            },
-                        } // match
+                            }
                     } else {
                         tracing::error!(
                             "Google Maps API HTTP request was not successful: {status}",
@@ -108,7 +109,7 @@ impl crate::Client {
             .retry(backon::ExponentialBuilder::default())
             .when(|e: &Error| e.classify().is_transient())
             .notify(|err, dur: std::time::Duration| {
-                tracing::debug!("error {} retrying after {:?}", err, dur);
+                tracing::warn!("error {} retrying after {:?}", err, dur);
             }).await?;
 
         // Return the response to the caller:

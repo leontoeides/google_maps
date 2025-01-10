@@ -1,7 +1,4 @@
-use crate::distance_matrix::request::Request;
-use crate::types::Language;
-
-impl<'a> Request<'a> {
+impl crate::distance_matrix::Request<'_> {
     /// Specify the language in which to return results.
     ///
     /// ## Arguments
@@ -44,11 +41,10 @@ impl<'a> Request<'a> {
     /// ```rust
     /// .with_language(Language::French)
     /// ```
-
-    pub fn with_language(
-        &'a mut self,
-        language: impl Into<Language>
-    ) -> &'a mut Self {
+    #[must_use] pub fn with_language(
+        mut self,
+        language: impl Into<crate::types::Language>
+    ) -> Self {
         self.language = Some(language.into());
         self
     } // fn

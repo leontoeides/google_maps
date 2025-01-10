@@ -1,8 +1,4 @@
-use crate::places::place_search::nearby_search::request::Request;
-
-// -----------------------------------------------------------------------------
-
-impl<'a> Request<'a> {
+impl crate::places::place_search::nearby_search::Request<'_> {
     /// Adds "open now" filter to the Places API _Nearby Search_ query.
     ///
     /// ## Arguments
@@ -11,10 +7,12 @@ impl<'a> Request<'a> {
     ///   the time the query is sent. Places that do not specify opening hours
     ///   in the Google Places database will not be returned if you include this
     ///   parameter in your query.
-
-    pub fn is_open_now(&'a mut self, opennow: bool) -> &'a mut Self {
+    #[must_use] pub fn is_open_now(
+        mut self,
+        opennow: impl Into<bool>,
+    ) -> Self {
         // Set "open now" filter in Request struct.
-        self.opennow = Some(opennow);
+        self.opennow = Some(opennow.into());
         // Return modified Request struct to caller.
         self
     } // fn

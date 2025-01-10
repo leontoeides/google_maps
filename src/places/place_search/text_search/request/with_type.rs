@@ -1,9 +1,4 @@
-use crate::places::place_search::text_search::request::Request;
-use crate::types::PlaceType;
-
-// -----------------------------------------------------------------------------
-
-impl<'a> Request<'a> {
+impl crate::places::place_search::text_search::Request<'_> {
     /// Adds the types parameter to the Places API _Text Search_ query.
     ///
     /// ## Arguments
@@ -20,11 +15,10 @@ impl<'a> Request<'a> {
     /// Note: Adding both `keyword` and `type` with the same value
     /// (`keyword=cafe&type=cafe` or `keyword=parking&type=parking`) can yield
     /// `ZERO_RESULTS`.
-
-    pub fn with_type(
-        &'a mut self,
-        place_type: impl Into<PlaceType>
-    ) -> &'a mut Self {
+    #[must_use] pub fn with_type(
+        mut self,
+        place_type: impl Into<crate::types::PlaceType>
+    ) -> Self {
         // Set location in Request struct.
         self.place_type = Some(place_type.into());
         // Return modified Request struct to caller.

@@ -1,9 +1,8 @@
-use crate::geocoding::reverse::ReverseRequest;
-use crate::types::location_type::LocationType;
+use crate::types::LocationType;
 
 // -----------------------------------------------------------------------------
 
-impl<'a> ReverseRequest<'a> {
+impl crate::geocoding::ReverseRequest<'_> {
     /// Restricts the results from the geocoder to the specified location
     /// type(s).
     ///
@@ -58,12 +57,11 @@ impl<'a> ReverseRequest<'a> {
     /// .with_location_type(LocationType::RoofTop)
     /// .with_location_type(LocationType::RangeInterpolated)
     /// ```
-
-    pub fn with_location_type(
-        &'a mut self,
+    #[must_use] pub fn with_location_type(
+        mut self,
         location_type: impl Into<LocationType>
-    ) -> &'a mut Self {
-        self.location_types = vec![location_type.into()];
+    ) -> Self {
+        self.location_types.push(location_type.into());
         // Return modified ReverseRequest struct to caller.
         self
     } // fn
@@ -101,16 +99,15 @@ impl<'a> ReverseRequest<'a> {
     /// intended to represent any collection that can be iterated over, and the
     /// `L` generic is for any type that can be converted to the `LocationType`
     /// type.
-
-    pub fn with_location_types<C, L>(
-        &'a mut self,
+    #[must_use] pub fn with_location_types<C, L>(
+        mut self,
         location_types: C
-    ) -> &'a mut Self
+    ) -> Self
     where
         C: IntoIterator<Item = L>,
         L: Into<LocationType> {
         // Add location types to ReverseRequest struct.
-        self.location_types = location_types.into_iter().map(Into::into).collect();
+        self.location_types.extend(location_types.into_iter().map(Into::into));
         // Return modified ReverseRequest struct to caller.
         self
     } // fn

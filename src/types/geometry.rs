@@ -50,7 +50,6 @@ impl Geometry {
     /// ```rust
     /// let bounds_southwest_lat = geocoding.geometry.get_bounds_southwest_lng();
     /// ```
-
     #[must_use]
     pub fn get_bounds_southwest_lat(&self) -> Option<Decimal> {
         self.bounds.as_ref().map(|bounds| bounds.southwest.lat)
@@ -65,7 +64,6 @@ impl Geometry {
     /// ```rust
     /// let bounds_southwest_lng = geocoding.geometry.get_bounds_southwest_lng();
     /// ```
-
     #[must_use]
     pub fn get_bounds_southwest_lng(&self) -> Option<Decimal> {
         self.bounds.as_ref().map(|bounds| bounds.southwest.lng)
@@ -80,7 +78,6 @@ impl Geometry {
     /// ```rust
     /// let bounds_northeast_lat = geocoding.geometry.get_bounds_northeast_lng();
     /// ```
-
     #[must_use]
     pub fn get_bounds_northeast_lat(&self) -> Option<Decimal> {
         self.bounds.as_ref().map(|bounds| bounds.northeast.lat)
@@ -95,7 +92,6 @@ impl Geometry {
     /// ```rust
     /// let bounds_northeast_lng = geocoding.geometry.get_bounds_northeast_lng();
     /// ```
-
     #[must_use]
     pub fn get_bounds_northeast_lng(&self) -> Option<Decimal> {
         self.bounds.as_ref().map(|bounds| bounds.northeast.lng)

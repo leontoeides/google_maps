@@ -19,6 +19,6 @@ impl crate::elevation::Request<'_> {
     pub async fn get(
         self
     ) -> Result<crate::elevation::Response, crate::Error> {
-        self.client.get(self).await
+        self.client.get_request(self).await
     } // fn
 } // impl

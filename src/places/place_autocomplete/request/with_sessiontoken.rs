@@ -1,8 +1,4 @@
-use crate::places::place_autocomplete::request::Request;
-
-// -----------------------------------------------------------------------------
-
-impl<'a> Request<'a> {
+impl crate::places::place_autocomplete::Request<'_> {
     /// Adds the session token parameter to the Place API _Place Autocomplete_
     /// query.
     ///
@@ -36,11 +32,10 @@ impl<'a> Request<'a> {
     /// * Be sure to pass a unique session token for each new session. Using the
     ///   same token for more than one session will result in each request being
     ///   billed individually.
-
-    pub fn with_sessiontoken(
-        &'a mut self,
+    #[must_use] pub fn with_sessiontoken(
+        mut self,
         sessiontoken: impl Into<String>
-    ) -> &'a mut Self {
+    ) -> Self {
         // Set session token in Request struct.
         self.sessiontoken = Some(sessiontoken.into());
         // Return modified Request struct to caller.

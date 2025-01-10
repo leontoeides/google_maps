@@ -41,6 +41,6 @@ impl crate::distance_matrix::Request<'_> {
     pub async fn execute(
         self
     ) -> Result<crate::distance_matrix::Response, crate::Error> {
-        self.client.get(self).await
+        self.client.get_request(self).await
     } // fn
 } // impl

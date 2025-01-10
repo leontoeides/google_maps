@@ -1,8 +1,4 @@
-use crate::places::place_details::request::Request;
-
-// -----------------------------------------------------------------------------
-
-impl<'a> Request<'a> {
+impl crate::places::place_details::Request<'_> {
     /// Specifies whether Google should provide translations of user reviews in
     /// the Places API _Place Details_ response.
     ///
@@ -17,11 +13,10 @@ impl<'a> Request<'a> {
     /// specified language as the preferred language for translation. If
     /// `language` is omitted, the API attempts to use the `Accept-Language`
     /// header as the preferred language.
-
-    pub fn with_no_review_translations(
-        &'a mut self,
+    #[must_use] pub fn with_no_review_translations(
+        mut self,
         no_translations: impl Into<bool>
-    ) -> &'a mut Self {
+    ) -> Self {
         // Set translations setting in Request struct.
         self.reviews_no_translations = Some(no_translations.into());
         // Return modified Request struct to caller.

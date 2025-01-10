@@ -19,7 +19,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! google_maps = "3.7"
+//! google_maps = "3.8"
 //! ```
 //!
 //! Optionally, add `rust_decimal = "1"` and `rust_decimal_macros = "1"` for
@@ -109,7 +109,7 @@
 //!
 //! ```toml
 //! google_maps = {
-//!     version = "3.7",
+//!     version = "3.8",
 //!     default-features = false,
 //!     features = [
 //!         "directions",
@@ -394,7 +394,6 @@
 #![warn(clippy::all, clippy::pedantic, clippy::nursery, clippy::cargo)]
 #![allow(
     clippy::cast_precision_loss,
-    clippy::empty_line_after_doc_comments, // bah!
     clippy::missing_errors_doc,
     clippy::module_name_repetitions,
     clippy::multiple_crate_versions,
@@ -442,6 +441,9 @@ pub mod roads;
 
 #[cfg(feature = "time_zone")]
 pub mod time_zone;
+
+#[cfg(feature = "address_validation")]
+pub mod address_validation;
 
 // -----------------------------------------------------------------------------
 //

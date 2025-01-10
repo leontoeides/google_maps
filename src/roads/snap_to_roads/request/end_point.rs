@@ -10,6 +10,7 @@ use crate::request_rate::api::Api;
 /// and rating-limiting.
 impl crate::traits::EndPoint for crate::roads::snap_to_roads::Request<'_> {
     fn service_url() -> &'static str { "https://roads.googleapis.com/v1/snapToRoads" }
+    fn output_format() -> std::option::Option<&'static str> { None }
     #[cfg(feature = "reqwest")]
     fn title() -> &'static str { "Roads API Snap to Roads" }
     #[cfg(feature = "reqwest")]

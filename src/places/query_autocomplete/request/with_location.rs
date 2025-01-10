@@ -1,9 +1,4 @@
-use crate::places::query_autocomplete::request::Request;
-use crate::types::LatLng;
-
-// -----------------------------------------------------------------------------
-
-impl<'a> Request<'a> {
+impl crate::places::query_autocomplete::Request<'_> {
     /// Adds the location and radius parameters to the Place API _Query
     /// Autocomplete_ query.
     ///
@@ -33,12 +28,11 @@ impl<'a> Request<'a> {
     ///           accepted, and will result in an `INVALID_REQUEST`.
     /// * Query Autocomplete: 50,000 meters
     /// * Text Search: 50,000 meters
-
-    pub fn with_location_and_radius(
-        &'a mut self,
-        location: impl Into<LatLng>,
+    #[must_use] pub fn with_location_and_radius(
+        mut self,
+        location: impl Into<crate::types::LatLng>,
         radius: u32
-    ) -> &'a mut Self {
+    ) -> Self {
         // Set location in Request struct.
         self.location = Some(location.into());
         // Set radius in Request struct.

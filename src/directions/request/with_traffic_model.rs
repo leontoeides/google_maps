@@ -1,6 +1,4 @@
-use crate::directions::request::{traffic_model::TrafficModel, Request};
-
-impl<'a> Request<'a> {
+impl crate::directions::Request<'_> {
     /// Specifies the assumptions to use when calculating time in traffic.
     ///
     /// ## Arguments
@@ -47,11 +45,10 @@ impl<'a> Request<'a> {
     /// ```rust
     /// .with_traffic_model(TrafficModel::Pessimistic)
     /// ```
-
-    pub fn with_traffic_model(
-        &'a mut self,
-        traffic_model: impl Into<TrafficModel>
-    ) -> &'a mut Self {
+    #[must_use] pub fn with_traffic_model(
+        mut self,
+        traffic_model: impl Into<crate::directions::TrafficModel>
+    ) -> Self {
         self.traffic_model = Some(traffic_model.into());
         self
     } // fn

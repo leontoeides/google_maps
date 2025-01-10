@@ -1,9 +1,8 @@
-use crate::places::place_autocomplete::request::Request;
 use crate::types::LatLng;
 
 // -----------------------------------------------------------------------------
 
-impl<'a> Request<'a> {
+impl crate::places::place_autocomplete::Request<'_> {
     /// Adds the location and radius parameters to the Place API _Place
     /// Autocomplete_ query.
     ///
@@ -33,12 +32,11 @@ impl<'a> Request<'a> {
     ///           accepted, and will result in an `INVALID_REQUEST`.
     /// * Query Autocomplete: 50,000 meters
     /// * Text Search: 50,000 meters
-
-    pub fn with_location_and_radius(
-        &'a mut self,
+    #[must_use] pub fn with_location_and_radius(
+        mut self,
         location: impl Into<LatLng>,
         radius: impl Into<u32>
-    ) -> &'a mut Self {
+    ) -> Self {
         // Set location in Request struct.
         self.location = Some(location.into());
         // Set radius in Request struct.
@@ -46,11 +44,7 @@ impl<'a> Request<'a> {
         // Return modified Request struct to caller.
         self
     } // fn
-} // impl
 
-// -----------------------------------------------------------------------------
-
-impl<'a> Request<'a> {
     /// Adds the location and radius parameters to the Place API _Place
     /// Autocomplete_ query.
     ///
@@ -73,12 +67,11 @@ impl<'a> Request<'a> {
     ///   the region defined by `location` and `radius`. This is a restriction,
     ///   rather than a bias, meaning that results outside this region will not
     ///   be returned even if they match the user input.
-
-    pub fn with_strict_location_and_radius(
-        &'a mut self,
+    #[must_use] pub fn with_strict_location_and_radius(
+        mut self,
         location: impl Into<LatLng>,
         radius: impl Into<u32>
-    ) -> &'a mut Self {
+    ) -> Self {
         // Set location in Request struct.
         self.location = Some(location.into());
         // Set radius in Request struct.

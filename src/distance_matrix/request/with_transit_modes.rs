@@ -1,7 +1,8 @@
-use crate::directions::request::transit_mode::TransitMode;
-use crate::distance_matrix::request::Request;
+use crate::directions::TransitMode;
 
-impl<'a> Request<'a> {
+// -----------------------------------------------------------------------------
+
+impl crate::distance_matrix::Request<'_> {
     /// Specify the preferred mode of transit.
     ///
     /// ## Arguments
@@ -48,13 +49,12 @@ impl<'a> Request<'a> {
     /// .with_transit_mode(TransitMode::Bus)
     /// .with_transit_mode(TransitMode::Subway)
     /// ```
-
-    pub fn with_transit_mode(
-        &'a mut self,
+    #[must_use] pub fn with_transit_mode(
+        mut self,
         transit_mode: impl Into<TransitMode>
-    ) -> &'a mut Self {
+    ) -> Self {
         // Add restiction to Request struct.
-        self.transit_modes = vec![transit_mode.into()];
+        self.transit_modes.push(transit_mode.into());
         // Return modified Request struct to caller.
         self
     } // fn
@@ -80,16 +80,15 @@ impl<'a> Request<'a> {
     /// intended to represent any collection that can be iterated over, and the
     /// `T` generic is for any type that can be converted to the `TransitMode`
     /// type.
-
-    pub fn with_transit_modes<C, T>(
-        &'a mut self,
+    #[must_use] pub fn with_transit_modes<C, T>(
+        mut self,
         transit_modes: C
-    ) -> &'a mut Self
+    ) -> Self
     where
         C: IntoIterator<Item = T>,
         T: Into<TransitMode> {
         // Add transit_modes to Request struct.
-        self.transit_modes = transit_modes.into_iter().map(Into::into).collect();
+        self.transit_modes.extend(transit_modes.into_iter().map(Into::into));
         // Return modified Request struct to caller.
         self
     } // fn

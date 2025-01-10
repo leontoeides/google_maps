@@ -18,6 +18,14 @@ pub enum Error {
     Type(#[from] crate::types::Error),
 
     /// Error originating from the Google Maps
+    /// [Address Validation API](https://developers.google.com/maps/documentation/address-validation)
+    /// client module or server.
+    #[cfg(feature = "address_validation")]
+    #[error(transparent)]
+    #[diagnostic(code(google_maps::address_validation))]
+    AddressValidation(#[from] crate::address_validation::Error),
+
+    /// Error originating from the Google Maps
     /// [Directions API](https://developers.google.com/maps/documentation/directions)
     /// client module or server.
     #[cfg(any(feature = "directions", feature = "distance_matrix"))]
@@ -83,6 +91,11 @@ pub enum Error {
     /// An HTTP status code returned by the remote server indicates an error.
     /// This represents a successful HTTP connection but an unsuccessful HTTP
     /// request or transaction with the server.
+    ///
+    /// * `403 Forbidden` · Ensure that a correct Google Maps API key is being
+    ///   supplied and that the [target API has been
+    ///   enabled](https://console.cloud.google.com/google/maps-apis/api-list)
+    ///   for this API key.
     #[cfg(feature = "reqwest")]
     #[error(transparent)]
     #[diagnostic(code(google_maps::http))]
@@ -90,6 +103,15 @@ pub enum Error {
 
     /// Error originating from the [simd-json](https://crates.io/crates/simd-json)
     /// crate.
+    ///
+    /// Generally this means that the Google Maps API returned data in an
+    /// unexpected format. A `struct` or `enum` may need to be changed in [this
+    /// crate](https://crates.io/crates/google_maps) to match what Google Maps
+    /// is returning.
+    ///
+    /// Please [file an issue](https://github.com/leontoeides/google_maps/issues)
+    /// and include as much information as possible, including the request and
+    /// the JSON response if available.
     #[error(transparent)]
     #[diagnostic(code(google_maps::json))]
     Json(#[from] simd_json::Error),
@@ -142,6 +164,15 @@ impl ClassifiableError<'_, Self> for Error {
     fn classify(&self) -> ClassifiedError<'_, Self> {
         match self {
             Self::Type(_type_error) => ClassifiedError::Permanent(self),
+
+            #[cfg(feature = "address_validation")]
+            Self::AddressValidation(address_validation_error) =>
+                if address_validation_error.classify().is_transient() {
+                    ClassifiedError::Transient(self)
+                } else {
+                    ClassifiedError::Permanent(self)
+                }, // AddressValidation
+
             #[cfg(any(feature = "directions", feature = "distance_matrix"))]
             Self::Directions(directions_error) =>
                 if directions_error.classify().is_transient() {
@@ -149,6 +180,7 @@ impl ClassifiableError<'_, Self> for Error {
                 } else {
                     ClassifiedError::Permanent(self)
                 }, // Directions
+
             #[cfg(feature = "distance_matrix")]
             Self::DistanceMatrix(distance_matrix_error) =>
                 if distance_matrix_error.classify().is_transient() {
@@ -156,6 +188,7 @@ impl ClassifiableError<'_, Self> for Error {
                 } else {
                     ClassifiedError::Permanent(self)
                 }, // DistanceMatrix
+
             #[cfg(feature = "elevation")]
             Self::Elevation(elevation_error) =>
                 if elevation_error.classify().is_transient() {
@@ -163,6 +196,7 @@ impl ClassifiableError<'_, Self> for Error {
                 } else {
                     ClassifiedError::Permanent(self)
                 }, // Elevation
+
             #[cfg(feature = "geocoding")]
             Self::Geocoding(geocoding_error) =>
                 if geocoding_error.classify().is_transient() {
@@ -170,6 +204,7 @@ impl ClassifiableError<'_, Self> for Error {
                 } else {
                     ClassifiedError::Permanent(self)
                 }, // Geocoding
+
             #[cfg(any(feature = "autocomplete", feature = "places"))]
             Self::Places(places_error) =>
                 if places_error.classify().is_transient() {
@@ -177,6 +212,7 @@ impl ClassifiableError<'_, Self> for Error {
                 } else {
                     ClassifiedError::Permanent(self)
                 }, // Places
+
             #[cfg(feature = "roads")]
             Self::Roads(roads_error) =>
                 if roads_error.classify().is_transient() {
@@ -184,6 +220,7 @@ impl ClassifiableError<'_, Self> for Error {
                 } else {
                     ClassifiedError::Permanent(self)
                 }, // Roads
+
             #[cfg(feature = "time_zone")]
             Self::TimeZone(time_zone_error) =>
                 if time_zone_error.classify().is_transient() {
@@ -191,6 +228,7 @@ impl ClassifiableError<'_, Self> for Error {
                 } else {
                     ClassifiedError::Permanent(self)
                 }, // TimeZone
+
             #[cfg(feature = "reqwest")]
             Self::Reqwest(reqwest_error) =>
                 if reqwest_error.classify().is_transient() {
@@ -198,6 +236,7 @@ impl ClassifiableError<'_, Self> for Error {
                 } else {
                     ClassifiedError::Permanent(self)
                 }, // Reqwest
+
             #[cfg(feature = "reqwest")]
             Self::Http(http_error) =>
                 if http_error.0.classify().is_transient() {
@@ -205,12 +244,14 @@ impl ClassifiableError<'_, Self> for Error {
                 } else {
                     ClassifiedError::Permanent(self)
                 }, // Http
+
             Self::Json(json_error) =>
                 if json_error.classify().is_transient() {
                     ClassifiedError::Transient(self)
                 } else {
                     ClassifiedError::Permanent(self)
                 }, // Http
+
             #[cfg(feature = "polyline")]
             Self::Polyline(polyline_error) => ClassifiedError::Permanent(self),
         } // match

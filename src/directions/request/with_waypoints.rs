@@ -1,6 +1,8 @@
-use crate::directions::request::{waypoint::Waypoint, Request};
+use crate::directions::Waypoint;
 
-impl<'a> Request<'a> {
+// -----------------------------------------------------------------------------
+
+impl crate::directions::Request<'_> {
     /// Specify pass throughs or stopovers at intermediate locations.
     ///
     /// ## Arguments
@@ -92,14 +94,12 @@ impl<'a> Request<'a> {
     /// // Orléans Sobeys, 2276 Tenth Line Rd, Orléans, ON K4A 0X4
     /// .with_waypoint(Waypoint::PlaceId(String::from("ChIJi5fWgmcSzkwRePJ_I9-xCRg")))
     /// ```
-
-    pub fn with_waypoint(
-        &'a mut self,
+    #[must_use] pub fn with_waypoint(
+        mut self,
         waypoint: impl Into<Waypoint>
-    ) -> &'a mut Self {
-        let waypoint: Waypoint = waypoint.into();
+    ) -> Self {
         // Add waypoint to Request struct.
-        self.waypoints = vec![waypoint];
+        self.waypoints.push(waypoint.into());
         // Return modified Request struct to caller.
         self
     } // fn
@@ -129,16 +129,15 @@ impl<'a> Request<'a> {
     /// This method uses generics to improve ergonomics. The `C` generic is
     /// intended to represent any collection that can be iterated over, and the
     /// `W` generic is for any type that can be converted to a `Waypoint` type.
-
-    pub fn with_waypoints<C, W>(
-        &'a mut self,
+    #[must_use] pub fn with_waypoints<C, W>(
+        mut self,
         waypoints: C
-    ) -> &'a mut Self
+    ) -> Self
     where
         C: IntoIterator<Item = W>,
         W: Into<Waypoint> {
         // Add waypoints to Request struct.
-        self.waypoints = waypoints.into_iter().map(Into::into).collect();
+        self.waypoints.extend(waypoints.into_iter().map(Into::into));
         // Return modified Request struct to caller.
         self
     } // fn

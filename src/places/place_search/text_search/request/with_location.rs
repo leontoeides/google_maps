@@ -1,9 +1,4 @@
-use crate::places::place_search::text_search::request::Request;
-use crate::types::LatLng;
-
-// -----------------------------------------------------------------------------
-
-impl<'a> Request<'a> {
+impl crate::places::place_search::text_search::Request<'_> {
     /// Adds the location and radius parameters to the Places API _Text Search_
     /// query.
     ///
@@ -16,11 +11,10 @@ impl<'a> Request<'a> {
     /// explicit location such as `Market in Barcelona`. Using quotes around the
     /// query may also influence the weight given to the `location` and
     /// `radius`.
-
-    pub fn with_location(
-        &'a mut self,
-        location: impl Into<LatLng>
-    ) -> &'a mut Self {
+    #[must_use] pub fn with_location(
+        mut self,
+        location: impl Into<crate::types::LatLng>
+    ) -> Self {
         // Set location in Request struct.
         self.location = Some(location.into());
         // Return modified Request struct to caller.

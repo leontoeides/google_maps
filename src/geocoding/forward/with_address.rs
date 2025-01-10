@@ -1,6 +1,4 @@
-use crate::geocoding::forward::ForwardRequest;
-
-impl<'a> ForwardRequest<'a> {
+impl crate::geocoding::ForwardRequest<'_> {
     /// Specifies the street address to geocode.
     ///
     /// ## Arguments
@@ -19,11 +17,10 @@ impl<'a> ForwardRequest<'a> {
     ///     "1313 Disneyland Dr, Anaheim, CA 92802, United States"
     /// ))
     /// ```
-
-    pub fn with_address(
-        &'a mut self,
+    #[must_use] pub fn with_address(
+        mut self,
         address: impl Into<String>
-    ) -> &'a mut Self {
+    ) -> Self {
         // Set address in ForwardRequest struct.
         self.address = Some(address.into());
         // Return modified ForwardRequest struct to caller.

@@ -1,6 +1,8 @@
-use crate::geocoding::forward::{component::Component, ForwardRequest};
+use crate::geocoding::Component;
 
-impl<'a> ForwardRequest<'a> {
+// -----------------------------------------------------------------------------
+
+impl crate::geocoding::ForwardRequest<'_> {
     /// Restricts the results from the geocoder to the specified component
     /// type(s).
     ///
@@ -62,13 +64,12 @@ impl<'a> ForwardRequest<'a> {
     /// .with_component(GeocodingComponent::Route(String::from("Downing Street")))
     /// .with_component(GeocodingComponent::Locality(String::from("London")))
     /// ```
-
-    pub fn with_component(
-        &'a mut self,
+    #[must_use] pub fn with_component(
+        mut self,
         component: impl Into<Component>
-    ) -> &'a mut Self {
+    ) -> Self {
         // Add component to ForwardRequest struct.
-        self.components = vec![component.into()];
+        self.components.push(component.into());
         // Return modified ForwardRequest struct to caller.
         self
     } // fn
@@ -95,16 +96,15 @@ impl<'a> ForwardRequest<'a> {
     /// intended to represent any collection that can be iterated over, and the
     /// `O` generic is for any type that can be converted to the `Component`
     /// type.
-
-    pub fn with_components<C, O>(
-        &'a mut self,
+    #[must_use] pub fn with_components<C, O>(
+        mut self,
         components: C
-    ) -> &'a mut Self
+    ) -> Self
     where
         C: IntoIterator<Item = O>,
         O: Into<Component> {
         // Add components to ForwardRequest struct.
-        self.components = components.into_iter().map(Into::into).collect();
+        self.components.extend(components.into_iter().map(Into::into));
         // Return modified ForwardRequest struct to caller.
         self
     } // fn

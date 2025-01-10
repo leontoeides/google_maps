@@ -1,6 +1,4 @@
-use crate::geocoding::forward::ForwardRequest;
-
-impl<'a> ForwardRequest<'a> {
+impl crate::geocoding::ForwardRequest<'_> {
     /// Specifies the place id to geocode.
     ///
     /// ## Arguments
@@ -21,11 +19,10 @@ impl<'a> ForwardRequest<'a> {
     ///     "ChIJd8BlQ2BZwokRAFUEcm_qrcA"
     /// )
     /// ```
-
-    pub fn with_place_id(
-        &'a mut self,
+    #[must_use] pub fn with_place_id(
+        mut self,
         place_id: impl Into<String>
-    ) -> &'a mut Self {
+    ) -> Self {
         // Set address in ForwardRequest struct.
         self.place_id = Some(place_id.into());
         // Return modified ForwardRequest struct to caller.

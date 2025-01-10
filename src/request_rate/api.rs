@@ -21,6 +21,7 @@ pub enum Api {
     TimeZone,
     Places,
     Roads,
+    AddressValidation,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -37,6 +38,7 @@ impl std::convert::From<&Api> for String {
             Api::TimeZone => Self::from("Time Zone"),
             Api::Places => Self::from("Places"),
             Api::Roads => Self::from("Roads"),
+            Api::AddressValidation => Self::from("Address Validation"),
         } // match
     } // fn
 } // impl

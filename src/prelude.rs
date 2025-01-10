@@ -11,8 +11,10 @@
     feature = "time_zone"
 ))]
 pub use chrono::{offset::TimeZone, DateTime, Duration, Local, NaiveDate, NaiveDateTime, Utc};
+
 #[cfg(any(feature = "directions", feature = "time_zone"))]
 pub use chrono_tz::Tz;
+
 pub use rust_decimal::Decimal;
 pub use rust_decimal_macros::dec;
 
@@ -300,4 +302,32 @@ pub use crate::roads::snap_to_roads::{
 pub use crate::roads::nearest_roads::{
     request::Request as NearestRoadsRequest,
     response::Response as NearestRoadsResponse,
+};
+
+// -----------------------------------------------------------------------------
+
+#[cfg(feature = "address_validation")]
+pub use crate::address_validation::{
+    Address,
+    AddressComponent as ValidationAddressComponent,
+    AddressMetadata,
+    ComponentName,
+    ConfirmationLevel,
+    Geocode,
+    Granularity,
+    LanguageOptions,
+    PlusCode as ValidationPlusCode,
+    PostalAddress,
+    ProvideValidationFeedbackRequest,
+    ProvideValidationFeedbackRequestQuery,
+    ProvideValidationFeedbackResponse,
+    UspsAddress,
+    UspsData,
+    ValidateAddressRequest,
+    ValidateAddressRequestQuery,
+    ValidateAddressResponse,
+    ValidationConclusion,
+    ValidationResult,
+    Verdict,
+    Viewport,
 };

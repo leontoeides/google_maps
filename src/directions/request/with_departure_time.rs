@@ -1,6 +1,4 @@
-use crate::directions::request::{departure_time::DepartureTime, Request};
-
-impl<'a> Request<'a> {
+impl crate::directions::Request<'_> {
     /// Specifies the desired departure time.
     ///
     /// ## Arguments
@@ -56,10 +54,10 @@ impl<'a> Request<'a> {
     /// ))
     /// ```
 
-    pub fn with_departure_time(
-        &'a mut self,
-        departure_time: impl Into<DepartureTime>
-    ) -> &'a mut Self {
+    #[must_use] pub fn with_departure_time(
+        mut self,
+        departure_time: impl Into<crate::directions::DepartureTime>
+    ) -> Self {
         self.departure_time = Some(departure_time.into());
         self
     } // fn

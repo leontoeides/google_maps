@@ -1,9 +1,4 @@
-use crate::places::place_details::request::Request;
-use crate::types::Region;
-
-// -----------------------------------------------------------------------------
-
-impl<'a> Request<'a> {
+impl crate::places::place_details::Request<'_> {
     /// Adds the region parameter to the Places API _Place Details_ query.
     ///
     /// ## Arguments
@@ -15,11 +10,10 @@ impl<'a> Request<'a> {
     ///   ccTLD is "uk" (.co.uk) while its ISO 3166-1 code is "gb" (technically
     ///   for the entity of "The United Kingdom of Great Britain and Northern
     ///   Ireland").
-
-    pub fn with_region(
-        &'a mut self,
-        region: impl Into<Region>
-    ) -> &'a mut Self {
+    #[must_use] pub fn with_region(
+        mut self,
+        region: impl Into<crate::types::Region>
+    ) -> Self {
         // Set region in Request struct.
         self.region = Some(region.into());
         // Return modified Request struct to caller.

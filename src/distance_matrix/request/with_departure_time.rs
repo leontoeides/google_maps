@@ -1,7 +1,4 @@
-use crate::directions::request::departure_time::DepartureTime;
-use crate::distance_matrix::request::Request;
-
-impl<'a> Request<'a> {
+impl crate::distance_matrix::Request<'_> {
     /// Specifies the desired departure time.
     ///
     /// ## Arguments
@@ -56,11 +53,10 @@ impl<'a> Request<'a> {
     ///     NaiveDate::from_ymd(2030, 1, 1).and_hms(12, 30, 0)
     /// ))
     /// ```
-
-    pub fn with_departure_time(
-        &'a mut self,
-        departure_time: impl Into<DepartureTime>
-    ) -> &'a mut Self {
+    #[must_use] pub fn with_departure_time(
+        mut self,
+        departure_time: impl Into<crate::directions::DepartureTime>
+    ) -> Self {
         self.departure_time = Some(departure_time.into());
         self
     } // fn

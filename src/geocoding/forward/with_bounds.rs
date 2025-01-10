@@ -1,9 +1,4 @@
-use crate::geocoding::forward::ForwardRequest;
-use crate::types::Bounds;
-
-// -----------------------------------------------------------------------------
-
-impl<'a> ForwardRequest<'a> {
+impl crate::geocoding::ForwardRequest<'_> {
     /// Specifies a bounding box for biasing results.
     ///
     /// ## Arguments
@@ -40,11 +35,10 @@ impl<'a> ForwardRequest<'a> {
     ///     northeast: LatLng::try_from_dec(dec!(51.503_440_5), dec!(-0.126_003_2))?,
     /// })
     /// ```
-
-    pub fn with_bounds(
-        &'a mut self,
-        bounds: impl Into<Bounds>
-    ) -> &'a mut Self {
+    #[must_use] pub fn with_bounds(
+        mut self,
+        bounds: impl Into<crate::types::Bounds>
+    ) -> Self {
         // Set bounds in ForwardRequest struct.
         self.bounds = Some(bounds.into());
         // Return modified ForwardRequest struct to caller.

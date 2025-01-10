@@ -41,6 +41,6 @@ impl crate::roads::nearest_roads::Request<'_> {
     pub async fn execute(
         self
     ) -> Result<crate::roads::nearest_roads::Response, crate::Error> {
-        self.client.get(self).await
+        self.client.get_request(self).await
     } // fn
 } // impl

@@ -1,7 +1,4 @@
-use crate::directions::request::transit_route_preference::TransitRoutePreference;
-use crate::distance_matrix::request::Request;
-
-impl<'a> Request<'a> {
+impl crate::distance_matrix::Request<'_> {
     /// Specifies the preference for transit routes.
     ///
     /// ## Arguments
@@ -31,11 +28,10 @@ impl<'a> Request<'a> {
     /// ```rust
     /// .with_transit_route_preference(TransitRoutePreference::FewerTransfers)
     /// ```
-
-    pub fn with_transit_route_preference(
-        &'a mut self,
-        transit_route_preference: impl Into<TransitRoutePreference>
-    ) -> &'a mut Self {
+    #[must_use] pub fn with_transit_route_preference(
+        mut self,
+        transit_route_preference: impl Into<crate::directions::TransitRoutePreference>
+    ) -> Self {
         self.transit_route_preference = Some(transit_route_preference.into());
         self
     } // fn

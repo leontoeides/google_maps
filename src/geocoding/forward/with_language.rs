@@ -1,6 +1,4 @@
-use crate::{geocoding::forward::ForwardRequest, types::Language};
-
-impl<'a> ForwardRequest<'a> {
+impl crate::geocoding::ForwardRequest<'_> {
     /// Specifies the language in which to return results.
     ///
     /// ## Arguments
@@ -43,11 +41,10 @@ impl<'a> ForwardRequest<'a> {
     /// ```rust
     /// .with_language(Language::French)
     /// ```
-
-    pub fn with_language(
-        &'a mut self,
-        language: impl Into<Language>
-    ) -> &'a mut Self {
+    #[must_use] pub fn with_language(
+        mut self,
+        language: impl Into<crate::types::Language>
+    ) -> Self {
         // Set language in ForwardRequest struct.
         self.language = Some(language.into());
         // Return modified ForwardRequest struct to caller.
