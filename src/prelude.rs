@@ -28,13 +28,13 @@ pub use crate::{
     types::error::Error as TypeError,
 };
 
-#[deprecated(note = "use `google_maps::prelude::Client` instead", since = "3.8.0")]
+#[deprecated(note = "use `google_maps::Client` instead", since = "3.8.0")]
 pub use crate::client::Client as ClientSettings;
 
-#[deprecated(note = "use `google_maps::prelude::Client` instead", since = "3.8.0")]
+#[deprecated(note = "use `google_maps::Client` instead", since = "3.8.0")]
 pub use crate::client::Client as GoogleMapsClient;
 
-#[deprecated(note = "use `google_maps::prelude::Error` instead", since = "3.8.0")]
+#[deprecated(note = "use `google_maps::Error` instead", since = "3.8.0")]
 pub use crate::error::Error as GoogleMapsError;
 
 #[cfg(any(feature = "geocoding", feature = "places"))]

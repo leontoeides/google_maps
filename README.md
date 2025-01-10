@@ -31,6 +31,7 @@ Additionally, usage of rustls for Reqwest is supported.
 
 ### Google Maps Client Feature Flags:
 
+* `address_validation` ‧ includes Google Maps Address Validation API
 * `autocomplete` ‧ includes Google Maps Places autocomplete API
 * `directions` ‧ includes Google Maps Directions API
 * `distance_matrix` ‧ includes Google Maps Distance Matrix API
@@ -66,6 +67,7 @@ By default, the Google Maps client includes all implemented Google Maps APIs. Re
 ```toml
 default = [
 	# google_maps default features:
+	"address_validation",
 	"directions",
 	"distance_matrix",
 	"elevation",
@@ -117,6 +119,43 @@ Releases [are available on GitHub](https://github.com/leontoeides/google_maps/re
 
 # Examples
 
+## Address Validation
+
+The Address Validation API validates an address and its components, standardizes
+the address for mailing, and determines the best known geocode for it.
+
+```rust
+use google_maps::prelude::*;
+
+let google_maps_client = google_maps::Client::try_new("YOUR_API_KEY_HERE")?;
+
+let postal_address = PostalAddress::builder()
+    .region_code(&Country::UnitedStates)
+    .address_lines(vec![
+        "1600 Amphitheatre Pkwy",
+        "Mountain View, CA, 94043"
+    ])
+    .build();
+
+let address_validation_response = google_maps_client
+    .validate_address()
+    .address(postal_address)
+    .build()
+    .execute()
+    .await?;
+
+google_maps_client
+    .provide_validation_feedback()
+    .conclusion(ValidationConclusion::Unused)
+    .response_id(address_validation_response.response_id())
+    .build()
+    .execute()
+    .await?;
+
+// Dump entire response:
+println!("{address_validation_response:#?}");
+```
+
 ## Directions API
 
 The Directions API is a service that calculates directions between locations.
@@ -126,7 +165,7 @@ transit, driving, walking, or cycling.
 ```rust
 use google_maps::prelude::*;
 
-let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+let google_maps_client = Client::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -154,7 +193,7 @@ start and end points.
 ```rust
 use google_maps::prelude::*;
 
-let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+let google_maps_client = Client::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -189,7 +228,7 @@ values).
 ```rust
 use google_maps::prelude::*;
 
-let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+let google_maps_client = Client::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -222,7 +261,7 @@ can use to place markers on a map, or position the map.
 ```rust
 use google_maps::prelude::*;
 
-let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+let google_maps_client = Client::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -251,7 +290,7 @@ into a human-readable address.
 ```rust
 use google_maps::prelude::*;
 
-let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+let google_maps_client = Client::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -290,7 +329,7 @@ UTC, and the daylight savings offset.
 ```rust
 use google_maps::prelude::*;
 
-let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE");
+let google_maps_client = Client::new("YOUR_GOOGLE_API_KEY_HERE");
 
 // Example request:
 
@@ -318,14 +357,6 @@ if let Some(time_zone_id) = time_zone.time_zone_id {
 }
 ```
 
-### [Geolocation API](https://developers.google.com/maps/documentation/geolocation/intro)
-
-Google's Geolocation API seems to be offline. While the online documentation
-is still available and the API appears configurable through the Google Cloud
-Platform console, the Geolocation API responds Status code `404 Not Found` with
-an empty body to all requests. This API cannot be implemented until the server
-responds as expected.
-
 ### Controlling Request Settings
 
 The Google Maps client settings can be used to change the request rate and
@@ -334,11 +365,11 @@ automatic retry parameters.
 ```rust
 use google_maps::prelude::*;
 
-let google_maps_client = GoogleMapsClient::new("YOUR_GOOGLE_API_KEY_HERE")
+let google_maps_client = Client::new("YOUR_GOOGLE_API_KEY_HERE")
     // For all Google Maps Platform APIs, the client will limit 2 sucessful
     // requests for every 10 seconds:
     .with_rate(Api::All, 2, std::time::Duration::from_secs(10))
-    // Returns the `GoogleMapsClient` struct to the caller. This struct is used
+    // Returns the `Client` struct to the caller. This struct is used
     // to make Google Maps Platform requests.
     .build();
 ```

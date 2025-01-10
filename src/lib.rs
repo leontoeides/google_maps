@@ -130,6 +130,44 @@
 //!
 //! # Examples
 //!
+//! ## Address Validation
+//!
+//! The Address Validation API validates an address and its components,
+//! standardizes the address for mailing, and determines the best known geocode
+//! for it.
+//!
+//! ```rust
+//! use google_maps::prelude::*;
+//!
+//! let google_maps_client = google_maps::Client::try_new("YOUR_API_KEY_HERE")?;
+//!
+//! let postal_address = PostalAddress::builder()
+//!     .region_code(&Country::UnitedStates)
+//!     .address_lines(vec![
+//!         "1600 Amphitheatre Pkwy",
+//!         "Mountain View, CA, 94043"
+//!     ])
+//!     .build();
+//!
+//! let address_validation_response = google_maps_client
+//!     .validate_address()
+//!     .address(postal_address)
+//!     .build()
+//!     .execute()
+//!     .await?;
+//!
+//! google_maps_client
+//!     .provide_validation_feedback()
+//!     .conclusion(ValidationConclusion::Unused)
+//!     .response_id(address_validation_response.response_id())
+//!     .build()
+//!     .execute()
+//!     .await?;
+//!
+//! // Dump entire response:
+//! println!("{address_validation_response:#?}");
+//! ```
+//!
 //! ## Directions API
 //!
 //! The Directions API is a service that calculates directions between
@@ -331,14 +369,6 @@
 //! }
 //! ```
 //!
-//! ### [Geolocation API](https://developers.google.com/maps/documentation/geolocation/intro)
-//!
-//! Google's Geolocation API seems to be offline. While the online documentation
-//! is still available and the API appears configurable through the Google Cloud
-//! Platform console, the Geolocation API responds Status code `404 Not Found`
-//! with an empty body to all requests. This API cannot be implemented until the
-//! server responds as expected.
-//!
 //! ### Controlling Request Settings
 //!
 //! The Google Maps client settings can be used to change the request rate and
@@ -351,7 +381,7 @@
 //!     // For all Google Maps Platform APIs, the client will limit 2 sucessful
 //!     // requests for every 10 seconds:
 //!     .with_rate(&Api::All, 2, std::time::Duration::from_secs(10))
-//!     // Returns the `GoogleMapsClient` struct to the caller. This struct is used
+//!     // Returns the `Client` struct to the caller. This struct is used
 //!     // to make Google Maps Platform requests.
 //!     .build();
 //! ```
@@ -459,7 +489,7 @@ pub use crate::{
 pub use crate::client::Client as ClientSettings;
 
 #[deprecated(note = "use `google_maps::Client` instead", since = "3.8.0")]
-pub use crate::client::Client as GoogleMapsClient;
+pub use crate::client::Client as Client;
 
 #[deprecated(note = "use `google_maps::Error` instead", since = "3.8.0")]
 pub use crate::error::Error as GoogleMapsError;
