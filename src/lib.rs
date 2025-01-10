@@ -492,7 +492,7 @@ pub use crate::{
 pub use crate::client::Client as ClientSettings;
 
 #[deprecated(note = "use `google_maps::Client` instead", since = "3.8.0")]
-pub use crate::client::Client as Client;
+pub use crate::client::Client as GoogleMapsClient;
 
 #[deprecated(note = "use `google_maps::Error` instead", since = "3.8.0")]
 pub use crate::error::Error as GoogleMapsError;
