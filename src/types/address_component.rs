@@ -27,7 +27,6 @@ use serde::{Deserialize, Serialize};
 /// To handle the array of components, you should parse the response and select
 /// appropriate values via expressions. See the guide to [parsing a
 /// response](https://developers.google.com/maps/documentation/geocoding/web-service-best-practices#Parsing).
-
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct AddressComponent {
     /// The full text description or name of the address component as returned

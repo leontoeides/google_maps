@@ -3,11 +3,10 @@ use crate::types::{AddressComponent, Geometry, PlaceType};
 use serde::{Deserialize, Serialize};
 
 // -----------------------------------------------------------------------------
-
+//
 /// When the geocoder returns results, it places them within a results array.
 /// Even if the geocoder returns no results (such as if the address doesn't
 /// exist) it still returns an empty results array.
-
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Geocoding {
     /// Array containing the separate components applicable to this address.
@@ -49,6 +48,7 @@ pub struct Geocoding {
     /// includes a misspelled address component, the geocoding service may
     /// suggest an alternative address. Suggestions triggered in this way will
     /// also be marked as a partial match.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub partial_match: Option<bool>,
 
@@ -66,6 +66,7 @@ pub struct Geocoding {
     /// codes can be used as a replacement for street addresses in places where
     /// they do not exist (where buildings are not numbered or streets are not
     /// named.)
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub plus_code: Option<PlusCode>,
 

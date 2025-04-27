@@ -8,11 +8,11 @@ use serde::{Deserialize, Serialize};
 //
 /// An object describing the opening hours of a place on special days or
 /// holidays.
-
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct PlaceSpecialDay {
     /// A date expressed in RFC3339 format in the local timezone for the place,
     /// for example 2010-12-31.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub date: Option<NaiveDate>,
 
@@ -22,6 +22,7 @@ pub struct PlaceSpecialDay {
     /// and `secondary_opening_hours` such as `periods`, `weekday_text`,
     /// `open_now`. The exceptions apply to the hours, and the hours are used to
     /// generate the other fields.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub exceptional_hours: Option<bool>,
 } // struct PlaceSpecialDay

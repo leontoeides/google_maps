@@ -8,10 +8,10 @@ use std::collections::HashSet;
 // -----------------------------------------------------------------------------
 //
 /// An object describing the opening hours of a place.
-
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct PlaceOpeningHours {
     /// A boolean value indicating if the place is open at the current time.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub open_now: Option<bool>,
 
@@ -36,6 +36,7 @@ pub struct PlaceOpeningHours {
     /// `DRIVE_THROUGH`, `HAPPY_HOUR`, `DELIVERY`, `TAKEOUT`, `KITCHEN`,
     /// `BREAKFAST`, `LUNCH`, `DINNER`, `BRUNCH`, `PICKUP`, `SENIOR_HOURS`). Set
     /// for `secondary_opening_hours` only.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub secondary_hours_type: Option<SecondaryHoursType>,
 

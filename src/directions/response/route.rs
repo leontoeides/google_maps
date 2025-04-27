@@ -15,18 +15,21 @@ use serde::{Deserialize, Serialize};
 /// [Response](https://developers.google.com/maps/documentation/javascript/reference/directions#DirectionsResult).
 /// Note that though this object is "JSON-like," it is not strictly JSON, as it
 /// directly and indirectly includes `LatLng` objects.
-
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct Route {
     /// The bounds for this route.
     pub bounds: Bounds,
+
     /// Copyrights text to be displayed for this route.
     pub copyrights: String,
+
     /// If present, contains the total fare (that is, the total ticket costs) on
     /// this route. This property is only returned for transit requests and only
     /// for routes where fare information is available for all transit legs.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fare: Option<TransitFare>,
+
     /// An array of `Legs`, each of which contains information about the steps
     /// of which it is composed. There will be one leg for each stopover
     /// waypoint or destination specified. So a route with no stopover waypoints
@@ -35,6 +38,7 @@ pub struct Route {
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub legs: Vec<Leg>,
+
     /// An [encoded polyline representation](https://developers.google.com/maps/documentation/utilities/polylinealgorithm)
     /// of the route. This polyline is an approximate (smoothed) path of the
     /// resulting directions.
@@ -42,14 +46,17 @@ pub struct Route {
     /// See also: the Google Encoded Polyline encoding & decoding crate called
     /// [polyline](https://crates.io/crates/polyline).
     pub overview_polyline: OverviewPolyline,
+
     /// Contains a short textual description for the route, suitable for naming
     /// and disambiguating the route from alternatives.
     pub summary: String,
+
     /// Contains an array of warnings to be displayed when showing these
     /// directions. You must handle and display these warnings yourself.
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub warnings: Vec<String>,
+
     /// If `optimizeWaypoints` was set to `true`, this field will contain the
     /// re-ordered permutation of the input waypoints. For example, if the input
     /// was:

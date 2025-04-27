@@ -2,25 +2,28 @@ use crate::{
     directions::response::{
         directions_distance::DirectionsDistance, directions_duration::DirectionsDuration,
         transit_fare::TransitFare,
-    }, // directions::response
+    },
     distance_matrix::response::element_status::ElementStatus,
-}; // use
+};
 use serde::{Deserialize, Serialize};
 
+// -----------------------------------------------------------------------------
+//
 /// The information about each origin-destination pairing is returned in an
 /// element entry.
-
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Element {
     /// The total distance of this route, expressed in meters (`value`) and as
     /// `text`. The textual value uses the unit system specified with the unit
     /// parameter of the original request, or the origin's region.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub distance: Option<DirectionsDistance>,
 
     /// The length of time it takes to travel this route, expressed in seconds
     /// (the `value` field) and as `text`. The textual representation is
     /// localized according to the query's language parameter.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub duration: Option<DirectionsDuration>,
 
@@ -30,12 +33,14 @@ pub struct Element {
     /// optimistic, pessimistic, or a best-guess estimate. The duration is
     /// expressed in seconds (the `value` field) and as `text`. The textual
     /// representation is localized according to the query's language parameter.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub duration_in_traffic: Option<DirectionsDuration>,
 
     /// If present, contains the total fare (that is, the total ticket costs) on
     /// this route. This property is only returned for transit requests and only
     /// for transit providers where fare information is available.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fare: Option<TransitFare>,
 

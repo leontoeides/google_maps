@@ -12,7 +12,6 @@ use serde::{Deserialize, Serialize};
 /// formatted address.
 ///
 /// See also: [PlaceAutocompleteStructuredFormat](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlaceAutocompleteStructuredFormat)
-
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct StructuredFormat {
     /// Contains the main text of a prediction, usually the name of the place.

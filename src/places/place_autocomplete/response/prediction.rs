@@ -2,7 +2,7 @@
 
 use crate::places::place_autocomplete::response::{
     matched_substring::MatchedSubstring, structured_format::StructuredFormat, term::Term,
-}; // crate::places::place_autocomplete::response
+};
 use crate::types::PlaceType;
 use serde::{Deserialize, Serialize};
 
@@ -14,7 +14,6 @@ use serde::{Deserialize, Serialize};
 /// array.
 ///
 /// See also: [PlaceAutocompletePrediction](https://developers.google.com/maps/documentation/places/web-service/autocomplete#PlaceAutocompletePrediction)
-
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct Prediction {
     /// Contains the human-readable name for the returned result. For
@@ -46,6 +45,7 @@ pub struct Prediction {
 
     /// The straight-line distance in meters from the origin.
     /// This field is only returned for requests made with an `origin`.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub distance_meters: Option<u64>,
 
@@ -68,6 +68,7 @@ pub struct Prediction {
     /// [Place IDs](https://developers.google.com/maps/documentation/places/web-service/place-id)
     /// overview.
     #[serde(alias = "place_id")]
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub place_id: Option<String>,
 

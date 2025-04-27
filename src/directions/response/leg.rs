@@ -14,45 +14,56 @@ use serde::{Deserialize, Serialize};
 /// in the leg may not be returned for all requests. Note that though this
 /// result is "JSON-like," it is not strictly JSON, as it directly and
 /// indirectly includes `LatLng` objects.
-
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct Leg {
     /// An estimated arrival time for this leg. Only applicable for
     /// `TravelMode::Transit` requests.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub arrival_time: Option<TransitTime>,
+
     /// An estimated departure time for this leg. Only applicable for
     /// `TravelMode::Transit` requests.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub departure_time: Option<TransitTime>,
+
     /// The total distance covered by this leg. This property may be undefined
     /// as the distance may be unknown.
     pub distance: DirectionsDistance,
+
     /// The total duration of this leg. This property may be undefined as the
     /// duration may be unknown.
     pub duration: DirectionsDuration,
+
     /// The total duration of this leg, taking into account the traffic
     /// conditions indicated by the `with_traffic_model()` method. This property
     /// may be undefined as the duration may be unknown. Only available to
     /// Premium Plan customers.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub duration_in_traffic: Option<DirectionsDuration>,
+
     /// The address of the destination of this leg.
     pub end_address: String,
+
     /// The Directions Service calculates directions between locations by using
     /// the nearest transportation option (usually a road) at the start and end
     /// locations. `end_location` indicates the actual geocoded destination,
     /// which may be different than the `end_location` of the last step if, for
     /// example, the road is not near the destination of this leg.
     pub end_location: LatLng,
+
     /// The address of the origin of this leg.
     pub start_address: String,
+
     /// The Directions Service calculates directions between locations by using
     /// the nearest transportation option (usually a road) at the start and end
     /// locations. `start_location` indicates the actual geocoded origin, which
     /// may be different than the `start_location` of the first step if, for
     /// example, the road is not near the origin of this leg.
     pub start_location: LatLng,
+
     /// An array of `Steps`, each of which contains information about the
     /// individual steps in this leg.
     #[serde(default)]

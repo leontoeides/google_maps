@@ -11,7 +11,6 @@ use serde::{Deserialize, Serialize};
 /// Contains the geocoded latitude/longitude, recommended viewport for
 /// displaying the returned result, the bounding box, and other additional
 /// data.
-
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Geometry {
     /// Contains the geocoded latitude, longitude value. For normal address
@@ -19,6 +18,7 @@ pub struct Geometry {
     pub location: LatLng,
 
     /// Stores additional data about the specified location.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub location_type: Option<LocationType>,
 
@@ -34,6 +34,7 @@ pub struct Geometry {
     /// islands](https://en.wikipedia.org/wiki/Farallon_Islands), which are
     /// technically part of the city, but probably should not be returned in the
     /// viewport.)
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub bounds: Option<Bounds>,
 } // struct

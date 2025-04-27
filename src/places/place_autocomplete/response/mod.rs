@@ -15,6 +15,8 @@ use crate::places::Error;
 use crate::places::place_autocomplete::response::{prediction::Prediction, status::Status};
 use serde::{Deserialize, Serialize};
 
+// -----------------------------------------------------------------------------
+//
 /// The response from the Google Maps Places API _Place Autocomplete_ request
 /// will be stored in this structure.
 ///
@@ -25,7 +27,6 @@ use serde::{Deserialize, Serialize};
 /// can be used to request more specific details about the place via a separate
 /// query. See [Place Details](https://developers.google.com/maps/documentation/places/web-service/details#PlaceDetailsRequests)
 /// requests.
-
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct Response {
     /// Contains an array of predictions.

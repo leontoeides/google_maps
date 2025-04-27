@@ -15,7 +15,6 @@ use serde::{Deserialize, Serialize};
 ///
 /// See [Place Details response](https://developers.google.com/maps/documentation/places/web-service/details#PlaceDetailsResponses)
 /// for more information
-
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct Response {
     /// May contain a set of attributions about this listing which must be
@@ -28,6 +27,7 @@ pub struct Response {
     ///
     /// See [Place](https://developers.google.com/maps/documentation/places/web-service/details#Place)
     /// for more information.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub result: Option<Place>,
 

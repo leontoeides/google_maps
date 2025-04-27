@@ -10,8 +10,8 @@ use crate::roads::{
     snapped_point::SnappedPoint,
     Status,
 };
-
 use serde::{Deserialize, Serialize};
+
 // -----------------------------------------------------------------------------
 //
 /// The response from the Google Maps _Nearest Roads_ request will be stored in
@@ -21,24 +21,27 @@ use serde::{Deserialize, Serialize};
 /// ------------------------------------------------------------------------------------------------
 /// For each valid request, the Roads API will return a response in the format
 /// indicated within the request URL such as the following JSON response.
-
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct Response {
     /// An array of snapped points. See
     /// [SnappedPoint](https://developers.google.com/maps/documentation/roads/nearest#SnappedPoint)
     /// for more information.
-    #[serde(alias = "snappedPoints")]
+    #[serde(rename = "snappedPoints")]
+    #[serde(alias = "snapped_points")]
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub snapped_points: Vec<SnappedPoint>,
 
     /// A string containing a user-visible warning.
-    #[serde(alias = "warningMessage")]
+    #[serde(rename = "warningMessage")]
+    #[serde(alias = "warning_message")]
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub warning_message: Option<String>,
 
     /// In the case of an error, a standard format error response body will be
     /// returned and the HTTP status code will be set to an error status.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub error: Option<ErrorResponse>,
 } // struct

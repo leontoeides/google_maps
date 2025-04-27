@@ -24,6 +24,7 @@ pub struct PlaceOpeningHoursPeriod {
     ///
     /// See [PlaceOpeningHoursPeriodDetail](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceOpeningHoursPeriodDetail)
     /// for more information.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub close: Option<PlaceOpeningHoursPeriodDetail>,
 } // struct PlaceOpeningHoursPeriod

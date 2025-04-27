@@ -34,41 +34,52 @@ use serde::{Deserialize, Serialize};
 /// Fitch St". That step will include detailed walking directions for that route
 /// in the inner steps array, such as: "Head north-west", "Turn left onto
 /// Arelious Walker", and "Turn left onto Innes Ave".
-
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct Step {
     /// The distance covered by this step. This property may be undefined as the
     /// distance may be unknown.
     pub distance: DirectionsDistance,
+
     /// The typical time required to perform this step in seconds and in text
     /// form. This property may be undefined as the duration may be unknown.
     pub duration: DirectionsDuration,
+
     /// The ending location of this step.
     pub end_location: LatLng,
+
     /// Instructions for this step.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub html_instructions: Option<String>,
+
     /// Contains the action to take for the current step (turn left, merge,
     /// straight, etc.). This field is used to determine which icon to display.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub maneuver: Option<DrivingManeuver>,
+
     /// Contains a single `points` object that holds an [encoded polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm) representation of the step. This polyline is an approximate (smoothed) path of the step. (Corresponds to `path` in the [Directions.Step interface](https://developers.google.com/maps/documentation/javascript/reference/directions#DirectionsStep).)
     ///
     /// See also: the Google Encoded Polyline encoding & decoding crate called
     /// [polyline](https://crates.io/crates/polyline).
     pub polyline: Polyline,
+
     /// The starting location of this step.
     pub start_location: LatLng,
+
     /// Contains detailed directions for walking or driving steps in transit
     /// directions. Substeps are only available when `travel_mode` is set to
     /// "transit". The inner steps array is of the same type as steps.
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub steps: Vec<Step>,
+
     /// Transit-specific details about this step. This property will be
     /// undefined unless the travel mode of this step is `TravelMode::Transit`.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub transit_details: Option<TransitDetails>,
+
     /// The mode of travel used in this step.
     pub travel_mode: TravelMode,
 } // struct

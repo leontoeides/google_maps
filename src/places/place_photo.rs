@@ -14,7 +14,6 @@ use serde::{Deserialize, Serialize};
 /// ```
 ///
 /// See [Place Photos](https://developers.google.com/places/web-service/photos) for more information.
-
 #[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct PlacePhoto {
     /// The height of the photo.

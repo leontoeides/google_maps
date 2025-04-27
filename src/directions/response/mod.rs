@@ -57,6 +57,7 @@ pub struct Response {
     ///
     /// **Note**: This field is not guaranteed to be always present, and its
     /// content is subject to change.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub error_message: Option<String>,
 

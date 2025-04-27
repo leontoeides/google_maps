@@ -11,9 +11,10 @@
 # 3.8.0
 
 * Important note: This release some has changes that are theoretically breaking
-  changes. This would apply to users who are tapping into the more internal
-  functions and destructuring `structs`. However, I don't believe most crate
-  end-users will notice a difference.
+  changes. These breaking changes mostly would apply to users who are tapping
+  into the more internal functions and actively destructuring internal
+  `structs`. However, I don't believe most crate end-users will notice a
+  difference.
 
 * 2024-01-10: Implemented Google Maps [Address Validation
   API](https://developers.google.com/maps/documentation/address-validation).

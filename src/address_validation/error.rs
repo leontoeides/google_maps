@@ -1,10 +1,10 @@
-//! Roads API error types and error messages.
+//! Address Validation API error types and error messages.
 
 use crate::address_validation::validate_address::request::postal_address::MAX_CHARS;
 
 // -----------------------------------------------------------------------------
 //
-/// An error produced by a Google Maps Roads API request.
+/// An error produced by a Google Maps Address Validation API request.
 #[derive(Clone, Debug, thiserror::Error, miette::Diagnostic)]
 pub enum Error {
     // -------------------------------------------------------------------------
@@ -19,7 +19,7 @@ pub enum Error {
     /// characters.
     #[error(
         "postal address contains too many chars:
-        max {MAX_CHARS} chars, counted {0} chars."
+        counted {0} chars, max {MAX_CHARS} chars."
     )]
     #[diagnostic(
         code(google_maps::address_validation::validate::too_many_chars),

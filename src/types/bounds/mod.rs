@@ -13,16 +13,16 @@ use crate::types::latlng::LatLng;
 use serde::{Deserialize, Serialize};
 
 // -----------------------------------------------------------------------------
-
+//
 /// Contains the recommended viewport for displaying the returned result,
 /// specified as two latitude & longitude pairs defining the southwest and
 /// northeast corner of the viewport bounding box. Generally the viewport is
 /// used to frame a result when displaying it to a user.
-
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Bounds {
     /// South-west or bottom-left corner of the bounding box.
     pub southwest: LatLng,
+
     /// North-east or top-right corner of the bounding box.
     pub northeast: LatLng,
 } // struct

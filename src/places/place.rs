@@ -24,6 +24,7 @@ pub struct Place {
 
     /// A representation of the place's address in the
     /// [adr microformat](http://microformats.org/wiki/adr).
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub adr_address: Option<String>,
 
@@ -32,10 +33,12 @@ pub struct Place {
     ///
     /// The allowed values include: `OPERATIONAL`, `CLOSED_TEMPORARILY`, and
     /// `CLOSED_PERMANENTLY`
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub business_status: Option<BusinessStatus>,
 
     /// Specifies if the business supports curbside pickup.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub curbside_pickup: Option<bool>,
 
@@ -47,14 +50,17 @@ pub struct Place {
     ///
     /// See [PlaceOpeningHours](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceOpeningHours)
     /// for more information.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub current_opening_hours: Option<PlaceOpeningHours>,
 
     /// Specifies if the business supports delivery.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub delivery: Option<bool>,
 
     /// Specifies if the business supports indoor or outdoor seating options.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub dine_in: Option<bool>,
 
@@ -64,6 +70,7 @@ pub struct Place {
     ///
     /// See [PlaceEditorialSummary](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceEditorialSummary)
     /// for more information.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub editorial_summary: Option<PlaceEditorialSummary>,
 
@@ -81,31 +88,37 @@ pub struct Place {
     /// Do not parse the formatted address programmatically. Instead you should
     /// use the individual address components, which the API response includes
     /// in addition to the formatted address field.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub formatted_address: Option<String>,
 
     /// Contains the place's phone number in its
     /// [local format](http://en.wikipedia.org/wiki/Local_conventions_for_writing_telephone_numbers).
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub formatted_phone_number: Option<String>,
 
     /// Contains the location and viewport for the location.
     ///
     /// See [Geometry](https://developers.google.com/maps/documentation/places/web-service/search-text#Geometry) for more information.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub geometry: Option<Geometry>,
 
     /// Contains the URL of a suggested icon which may be displayed to the user
     /// when indicating this result on a map.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub icon: Option<String>,
 
     /// Contains the default HEX color code for the place's category.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub icon_background_color: Option<String>,
 
     /// Contains the URL of a recommended icon, minus the `.svg` or `.png` file
     /// type extension.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub icon_mask_base_uri: Option<String>,
 
@@ -113,12 +126,14 @@ pub struct Place {
     /// format includes the country code, and is prefixed with the plus, +,
     /// sign. For example, the `international_phone_number` for Google's Sydney,
     /// Australia office is `+61 2 9374 4000`.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub international_phone_number: Option<String>,
 
     /// Contains the human-readable name for the returned result. For
     /// `establishment` results, this is usually the canonicalized business
     /// name.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
 
@@ -126,6 +141,7 @@ pub struct Place {
     ///
     /// See [PlaceOpeningHours](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceOpeningHours)
     /// for more information.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub opening_hours: Option<PlaceOpeningHours>,
 
@@ -145,6 +161,7 @@ pub struct Place {
     /// information about the place, pass this identifier in the `place_id`
     /// field of a Places API request. For more information about place IDs, see
     /// the [place ID overview](https://developers.google.com/maps/documentation/places/web-service/place-id).
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub place_id: Option<String>,
 
@@ -157,15 +174,18 @@ pub struct Place {
     /// * 2 Moderate
     /// * 3 Expensive
     /// * 4 Very Expensive
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub price_level: Option<u8>,
 
     /// Contains the place's rating, from 1.0 to 5.0, based on aggregated user
     /// reviews.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub rating: Option<Decimal>,
 
     /// Specifies if the place supports reservations.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub reservable: Option<bool>,
 
@@ -201,38 +221,47 @@ pub struct Place {
     ///
     /// See [PlaceOpeningHours](https://developers.google.com/maps/documentation/places/web-service/search-text#PlaceOpeningHours)
     /// for more information.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub secondary_opening_hours: Option<PlaceOpeningHours>,
 
     /// Specifies if the place serves beer.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub serves_beer: Option<bool>,
 
     /// Specifies if the place serves breakfast.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub serves_breakfast: Option<bool>,
 
     /// Specifies if the place serves brunch.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub serves_brunch: Option<bool>,
 
     /// Specifies if the place serves dinner.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub serves_dinner: Option<bool>,
 
     /// Specifies if the place serves lunch.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub serves_lunch: Option<bool>,
 
     /// Specifies if the place serves vegetarian food.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub serves_vegetarian_food: Option<bool>,
 
     /// Specifies if the place serves wine.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub serves_wine: Option<bool>,
 
     /// Specifies if the business supports takeout.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub takeout: Option<bool>,
 
@@ -246,10 +275,12 @@ pub struct Place {
     /// be the Google-owned page that contains the best available information
     /// about the place. Applications must link to or embed this page on any
     /// screen that shows detailed results about the place to the user.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub url: Option<String>,
 
     /// The total number of reviews, with or without text, for this place.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub user_ratings_total: Option<u64>,
 
@@ -258,6 +289,7 @@ pub struct Place {
     /// saving time this would be 660 (+11 hours from UTC), and for places in
     /// California outside of daylight saving time this would be -480 (-8 hours
     /// from UTC).
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub utc_offset: Option<i32>,
 
@@ -272,14 +304,17 @@ pub struct Place {
     ///
     /// This content is meant to be read as-is. Do not programmatically parse
     /// the formatted address.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub vicinity: Option<String>,
 
     /// The authoritative website for this place, such as a business' homepage.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub website: Option<String>,
 
     /// Specifies if the place has an entrance that is wheelchair-accessible.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub wheelchair_accessible_entrance: Option<bool>,
 } // struct Place

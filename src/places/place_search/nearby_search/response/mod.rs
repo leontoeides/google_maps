@@ -48,6 +48,7 @@ pub struct Response {
     /// contains more detailed information about thereasons behind the given
     /// status code. This field is not always returned, and its content is
     /// subject to change.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub error_message: Option<String>,
 
@@ -65,6 +66,7 @@ pub struct Response {
     /// results to display. The maximum number of results that can be returned
     /// is 60. There is a short delay between when a `next_page_token` is issued,
     /// and when it will become valid.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub next_page_token: Option<String>,
 } // struct

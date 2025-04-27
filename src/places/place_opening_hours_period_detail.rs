@@ -7,7 +7,6 @@ use serde::{Deserialize, Deserializer, Serialize};
 // -----------------------------------------------------------------------------
 //
 /// An object describing the opening hours of a place.
-
 #[derive(Clone, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 pub struct PlaceOpeningHoursPeriodDetail {
     /// A number from 0–6, corresponding to the days of the week, starting on
@@ -22,6 +21,7 @@ pub struct PlaceOpeningHoursPeriodDetail {
 
     /// A date expressed in RFC3339 format in the local timezone for the place,
     /// for example 2010-12-31.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub date: Option<NaiveDate>,
 
@@ -29,6 +29,7 @@ pub struct PlaceOpeningHoursPeriodDetail {
     /// the period starts before midnight on the date of the request and/or ends
     /// at or after midnight on the last day. This property indicates that the
     /// period for open or close can extend past this seven-day cutoff.
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub truncated: Option<bool>,
 } // struct PlaceOpeningHoursPeriodDetail

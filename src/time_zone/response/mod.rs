@@ -29,7 +29,9 @@ pub struct Response {
     /// The offset for daylight-savings time in seconds. This will be zero if
     /// the time zone is not in Daylight Savings Time during the specified
     /// `time`.
-    #[serde(alias = "dstOffset")]
+    #[serde(rename = "dstOffset")]
+    #[serde(alias = "dst_offset")]
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub dst_offset: Option<i16>,
 
@@ -38,13 +40,17 @@ pub struct Response {
     ///
     /// **Note**: This field is not guaranteed to be always present, and its
     /// content is subject to change.
-    #[serde(alias = "errorMessage")]
+    #[serde(rename = "errorMessage")]
+    #[serde(alias = "error_message")]
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub error_message: Option<String>,
 
     /// The offset from UTC (in seconds) for the given location. This does not
     /// take into effect daylight savings.
-    #[serde(alias = "rawOffset")]
+    #[serde(rename = "rawOffset")]
+    #[serde(alias = "raw_offset")]
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub raw_offset: Option<i16>,
 
@@ -57,16 +63,20 @@ pub struct Response {
     /// project](http://cldr.unicode.org/), and currently available in file
     /// [timezone.xml](http://unicode.org/repos/cldr/trunk/common/bcp47/timezone.xml).
     /// When a timezone has several IDs, the canonical one is returned. In
-    /// timezone.xml, this is the first alias of each timezone. For example,
+    /// timezone.xml, this is the first rename of each timezone. For example,
     /// `Asia/Calcutta` is returned, not `Asia/Kolkata`.
-    #[serde(alias = "timeZoneId")]
+    #[serde(rename = "timeZoneId")]
+    #[serde(alias = "time_zone_id")]
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub time_zone_id: Option<Tz>,
 
     /// A string containing the long form name of the time zone. This field will
     /// be localized if the language parameter is set. eg. "Pacific Daylight
     /// Time" or "Australian Eastern Daylight Time"
-    #[serde(alias = "timeZoneName")]
+    #[serde(rename = "timeZoneName")]
+    #[serde(alias = "time_zone_name")]
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub time_zone_name: Option<String>,
 } // struct
