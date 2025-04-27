@@ -24,11 +24,11 @@ pub struct MatchedSubstring {
 // -----------------------------------------------------------------------------
 
 impl std::str::FromStr for MatchedSubstring {
-    type Err = simd_json::Error;
+    type Err = serde_json::Error;
     /// Parse a Google Maps Places API _Place Autocomplete_ JSON
     /// `MatchedSubstring` response into a usable `MatchedSubstring` struct.
-    fn from_str(s: &str) -> Result<Self, simd_json::Error> {
+    fn from_str(s: &str) -> Result<Self, serde_json::Error> {
         let mut bytes = s.to_string().into_bytes();
-        simd_json::serde::from_slice(&mut bytes)
+        serde_json::from_slice(&mut bytes)
     } // fn from_str
 } // impl FromStr

@@ -27,11 +27,11 @@ pub struct Response {
 } // struct
 
 impl std::str::FromStr for Response {
-    type Err = simd_json::Error;
+    type Err = serde_json::Error;
     /// Parse a Google Maps Geolocation API JSON `String` into a `Response`
     /// usable `Response` struct.
-    fn from_str(s: &str) -> Result<Self, simd_json::Error> {
+    fn from_str(s: &str) -> Result<Self, serde_json::Error> {
         let mut bytes = s.to_string().into_bytes();
-        simd_json::serde::from_slice(&mut bytes)
+        serde_json::from_slice(&mut bytes)
     }
 }

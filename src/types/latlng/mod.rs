@@ -29,12 +29,14 @@ pub struct LatLng {
     #[serde(alias = "y")]
     #[serde(alias = "lat")]
     #[serde(alias = "latitude")]
+    #[serde(with = "rust_decimal::serde::float")]
     pub lat: Decimal,
     /// Longitude. A value between -180.0° and 180.0°.
     #[serde(alias = "x")]
     #[serde(alias = "lon")]
     #[serde(alias = "long")]
     #[serde(alias = "longitude")]
+    #[serde(with = "rust_decimal::serde::float")]
     pub lng: Decimal,
 } // struct
 

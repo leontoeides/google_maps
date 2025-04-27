@@ -10,6 +10,6 @@ impl crate::traits::RequestBody for crate::address_validation::validate_address:
     /// In this case, we'll be converting the `RequestQuery` struct into a JSON
     /// object which will be submitted inside the HTTP request's body.
     fn request_body(&self) -> Result<String, crate::Error> {
-        Ok(simd_json::serde::to_string(&RequestQuery::from(self))?)
+        Ok(serde_json::to_string(&RequestQuery::from(self))?)
     } // fn
 } // impl

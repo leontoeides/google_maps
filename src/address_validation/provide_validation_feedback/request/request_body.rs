@@ -8,6 +8,6 @@ impl crate::traits::RequestBody for crate::address_validation::provide_validatio
     /// convert the above defined `RequestBody` struct into JSON for submission
     /// to Google Maps.
     fn request_body(&self) -> Result<String, crate::Error> {
-        Ok(simd_json::serde::to_string(&RequestQuery::from(self))?)
+        Ok(serde_json::to_string(&RequestQuery::from(self))?)
     } // fn
 } // impl

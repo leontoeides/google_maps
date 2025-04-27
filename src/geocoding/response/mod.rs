@@ -44,18 +44,18 @@ pub struct Response {
 // -----------------------------------------------------------------------------
 
 impl std::convert::TryFrom<String> for Response {
-    type Error = simd_json::Error;
+    type Error = serde_json::Error;
     /// Convert a Google Maps API [JSON](https://en.wikipedia.org/wiki/JSON)
     /// `String` response into a `Response` struct.
     fn try_from(s: String) -> Result<Self, Self::Error> {
-        simd_json::serde::from_slice(&mut s.into_bytes())
+        serde_json::from_slice(&mut s.into_bytes())
     } // fn
 } // impl
 
 // -----------------------------------------------------------------------------
 
 impl std::str::FromStr for Response {
-    type Err = simd_json::Error;
+    type Err = serde_json::Error;
     /// Converts a Google Maps API [JSON](https://en.wikipedia.org/wiki/JSON)
     /// `&str` response into a `Response` struct.
     ///
@@ -63,13 +63,13 @@ impl std::str::FromStr for Response {
     ///
     /// * It's recommended to use the implemented `TryFrom` trait instead.
     ///
-    /// * The [simd_json](https://crates.io/crates/simd-json)'s `from_str`
+    /// * The [serde_json](https://crates.io/crates/simd-json)'s `from_str`
     ///   function implementation is unsafe and it's `from_slice` function
     ///   requires a mutable reference. Therefore this trait clones the `&str`
     ///   into a `String` to give `from_slice` mutable access to the string.
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut bytes = s.to_string().into_bytes();
-        simd_json::serde::from_slice(&mut bytes)
+        serde_json::from_slice(&mut bytes)
     } // fn
 } // impl
 

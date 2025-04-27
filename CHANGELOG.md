@@ -3,9 +3,22 @@
 * Release notes are available on
   [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+# 3.8.2
+
+* 2025-04-10: Reverted back to `serde_json` from `simd-json`.
+
+  There were issues with some Google Maps API JSON responses. They failed
+  validation according to [jsonlint.com](https://jsonlint.com/). `simd-json` was
+  having issues with this JSON.
+
+  `serde_json` seems to be more robust in handling (presumably) invalid JSON.
+
+* 2025-04-10: Ensured that all `serde` `skip_serializing_if` attributes have a
+  matching `default` attribute.
+
 # 3.8.1
 
-* 2024-01-10: A debug `println!` was accidentally left in the `Client`
+* 2025-01-10: A debug `println!` was accidentally left in the `Client`
   `get_request` method. This has been removed.
 
 # 3.8.0
@@ -16,7 +29,7 @@
   `structs`. However, I don't believe most crate end-users will notice a
   difference.
 
-* 2024-01-10: Implemented Google Maps [Address Validation
+* 2025-01-10: Implemented Google Maps [Address Validation
   API](https://developers.google.com/maps/documentation/address-validation).
   Basic example:
 

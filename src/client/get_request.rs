@@ -69,7 +69,7 @@ impl crate::Client {
                 Ok(request) => match self.reqwest_client.execute(request).await {
                     Ok(response) => if response.status().is_success() {
                         match response.text().await.map(String::into_bytes) {
-                            Ok(mut bytes) => match simd_json::serde::from_slice::<RSP>(&mut bytes) {
+                            Ok(bytes) => match serde_json::from_slice::<RSP>(&bytes) {
                                 Ok(deserialized) => {
                                     let result: Result<RSP, ERR> = deserialized.into();
                                     if let Err(error) = &result {

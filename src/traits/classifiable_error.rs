@@ -62,8 +62,8 @@ impl ClassifiableError<'_, Self> for reqwest::StatusCode {
 
 // -----------------------------------------------------------------------------
 
-impl ClassifiableError<'_, Self> for simd_json::Error {
-    /// Classifies a [simd_json](https://crates.io/crates/simd_json) error as a
+impl ClassifiableError<'_, Self> for serde_json::Error {
+    /// Classifies a [serde_json](https://crates.io/crates/serde_json) error as a
     /// `Transient` error or `Permanent` error.
     ///
     /// This classification will, in turn, be used to decide whether the HTTP

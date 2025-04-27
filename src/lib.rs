@@ -431,7 +431,7 @@
     clippy::missing_errors_doc,
     clippy::module_name_repetitions,
     clippy::multiple_crate_versions,
-    clippy::negative_feature_names, // suppress clippy warning re: `simd_json` crate
+    clippy::negative_feature_names, // suppress clippy warning re: `serde_json` crate
     clippy::too_long_first_doc_paragraph, // bah!
     clippy::too_many_lines
 )]

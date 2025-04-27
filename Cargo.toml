@@ -1,6 +1,6 @@
 [package]
 name = "google_maps"
-version = "3.8.1"
+version = "3.8.2"
 authors = ["Dylan Bowker <dylan.bowker@arkiteq.io>"]
 edition = "2021"
 categories = ["api-bindings"]
@@ -39,10 +39,6 @@ default = [
 
 	# rust_decimal default features:
 	"decimal-serde",
-
-	# simd-json default features:
-	"simd-json-beef",
-	"simd-json-known-key",
 ]
 # google_maps features:
 autocomplete = []
@@ -97,27 +93,16 @@ decimal-serde-arbitrary-precision = ["rust_decimal/serde-arbitrary-precision"]
 decimal-serde-with-float = ["rust_decimal/serde-with-float"]
 decimal-serde-with-str = ["rust_decimal/serde-with-str"]
 decimal-serde-with-arbitrary-precision = ["rust_decimal/serde-with-arbitrary-precision"]
-# simd-json features:
-simd-json-arraybackend = ["simd-json/arraybackend"]
-simd-json-value-no-dup-keys = ["simd-json/value-no-dup-keys"]
-simd-json-128bit = ["simd-json/128bit"]
-simd-json-beef = ["simd-json/beef"]
-simd-json-known-key = ["simd-json/known-key"]
-simd-json-swar-number-parsing = ["simd-json/swar-number-parsing"]
-simd-json-approx-number-parsing = ["simd-json/approx-number-parsing"]
-simd-json-serde_impl = ["simd-json/serde_impl"]
-simd-json-alloc = ["simd-json/alloc"]
-simd-json-hints = ["simd-json/hints"]
-simd-json-runtime-detection = ["simd-json/runtime-detection"]
 
 [dependencies]
 miette = "7.5"
 percent-encoding = "2.3"
 phf = { version = "0.11", features = ["macros"] }
-rust_decimal = { version = "1", features = ["serde"] }
+rust_decimal = { version = "1", features = ["serde", "serde-float"] }
 rust_decimal_macros = "1"
 serde = { version = "1.0", features = ["derive"] }
-simd-json = "0.14"
+# simd-json = "0.14"
+serde_json = "1.0"
 thiserror = "2.0"
 tracing = { version = "0.1", features = ["log"] }
 

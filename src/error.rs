@@ -114,7 +114,7 @@ pub enum Error {
     /// the JSON response if available.
     #[error(transparent)]
     #[diagnostic(code(google_maps::json))]
-    Json(#[from] simd_json::Error),
+    Json(#[from] serde_json::Error),
 
     /// Error originating from the [polyline](https://crates.io/crates/polyline)
     /// crate.
@@ -245,12 +245,7 @@ impl ClassifiableError<'_, Self> for Error {
                     ClassifiedError::Permanent(self)
                 }, // Http
 
-            Self::Json(json_error) =>
-                if json_error.classify().is_transient() {
-                    ClassifiedError::Transient(self)
-                } else {
-                    ClassifiedError::Permanent(self)
-                }, // Http
+            Self::Json(_json_error) => ClassifiedError::Permanent(self),
 
             #[cfg(feature = "polyline")]
             Self::Polyline(_polyline_error) => ClassifiedError::Permanent(self),
