@@ -79,6 +79,9 @@ impl crate::Client {
                                 },
                                 Err(error) => {
                                     tracing::error!("JSON deserialization error: {error}");
+                                    if let Ok(text) = String::from_utf8(bytes) {
+                                        tracing::trace!("{text}");
+                                    }
                                     Err(Error::from(error))
                                 },
                             }, // Ok
@@ -89,7 +92,7 @@ impl crate::Client {
                         } // match
                     } else {
                         tracing::error!(
-                            "Google Maps API HTTP request was not successful: {status}",
+                            "Google Maps API HTTP request unsuccessful: {status}",
                             status = response.status(),
                         );
                         Err(Error::from(response.status()))
