@@ -7,14 +7,17 @@
 
 * 2025-04-10: Reverted back to `serde_json` from `simd-json`.
 
-  There were issues with some Google Maps API JSON responses. They failed
-  validation according to [jsonlint.com](https://jsonlint.com/). `simd-json` was
-  having issues with this JSON.
+  Seemingly, there were issues with some Google Maps API JSON responses. Some
+  responses failed validation according to [jsonlint.com](https://jsonlint.com/).
+  The issue appears to be related to polyline strings.
 
-  `serde_json` seems to be more robust in handling (presumably) invalid JSON.
+  `simd-json` was not able to parse this JSON. `serde_json` seems to be more
+  robust in handling this allegedly invalid JSON.
 
 * 2025-04-10: Ensured that all `serde` `skip_serializing_if` attributes have a
   matching `default` attribute.
+
+* 2025-04-27: Dependencies bump.
 
 # 3.8.1
 

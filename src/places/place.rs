@@ -326,7 +326,7 @@ impl std::str::FromStr for Place {
     /// Parse a Google Maps Places API JSON response into a usable `Place`
     /// struct.
     fn from_str(s: &str) -> Result<Self, serde_json::Error> {
-        let mut bytes = s.to_string().into_bytes();
-        serde_json::from_slice(&mut bytes)
+        let bytes = s.to_string().into_bytes();
+        serde_json::from_slice(&bytes)
     } // fn from_str
 } // impl FromStr

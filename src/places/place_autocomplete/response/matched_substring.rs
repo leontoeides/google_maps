@@ -28,7 +28,7 @@ impl std::str::FromStr for MatchedSubstring {
     /// Parse a Google Maps Places API _Place Autocomplete_ JSON
     /// `MatchedSubstring` response into a usable `MatchedSubstring` struct.
     fn from_str(s: &str) -> Result<Self, serde_json::Error> {
-        let mut bytes = s.to_string().into_bytes();
-        serde_json::from_slice(&mut bytes)
+        let bytes = s.to_string().into_bytes();
+        serde_json::from_slice(&bytes)
     } // fn from_str
 } // impl FromStr

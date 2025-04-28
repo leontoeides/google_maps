@@ -402,13 +402,13 @@
 //!
 //! - [ ] Track both _requests_ and request _elements_ for rate limiting.
 //! - [ ] Convert explicit query validation to session types wherever
-//!     reasonable.
+//!   reasonable.
 //! - [ ] [Places API](https://developers.google.com/places/web-service/intro).
-//!     Only partly implemented. If you would like to have any missing pieces
-//!     implemented, please contact me.
+//!   Only partly implemented. If you would like to have any missing pieces
+//!   implemented, please contact me.
 //! - [ ] [Roads API](https://developers.google.com/maps/documentation/roads/intro).
-//!     Only partly implemented. If you would like to have any missing pieces
-//!     implemented, please contact me.
+//!   Only partly implemented. If you would like to have any missing pieces
+//!   implemented, please contact me.
 //!
 //! # Author's Note
 //!

@@ -7,7 +7,6 @@ pub mod status;
 // -----------------------------------------------------------------------------
 
 use crate::time_zone::{Error, Status};
-use chrono_tz::Tz;
 use serde::{Deserialize, Serialize};
 
 // -----------------------------------------------------------------------------
@@ -69,7 +68,7 @@ pub struct Response {
     #[serde(alias = "time_zone_id")]
     #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub time_zone_id: Option<Tz>,
+    pub time_zone_id: Option<chrono_tz::Tz>,
 
     /// A string containing the long form name of the time zone. This field will
     /// be localized if the language parameter is set. eg. "Pacific Daylight
@@ -88,7 +87,7 @@ impl std::convert::TryFrom<String> for Response {
     /// Convert a Google Maps API [JSON](https://en.wikipedia.org/wiki/JSON)
     /// `String` response into a `Response` struct.
     fn try_from(s: String) -> Result<Self, Self::Error> {
-        serde_json::from_slice(&mut s.into_bytes())
+        serde_json::from_slice(&s.into_bytes())
     } // fn
 } // impl
 
@@ -108,8 +107,8 @@ impl std::str::FromStr for Response {
     ///   requires a mutable reference. Therefore this trait clones the `&str`
     ///   into a `String` to give `from_slice` mutable access to the string.
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let mut bytes = s.to_string().into_bytes();
-        serde_json::from_slice(&mut bytes)
+        let bytes = s.to_string().into_bytes();
+        serde_json::from_slice(&bytes)
     } // fn
 } // impl
 
