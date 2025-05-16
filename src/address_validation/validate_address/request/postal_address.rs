@@ -32,7 +32,6 @@ pub struct PostalAddress {
     /// The schema revision of the `PostalAddress`. Any value other than 0 will
     /// cause the API to return an `INVALID_ARGUMENT` error.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[builder(into)]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub revision: Option<usize>,
@@ -48,7 +47,6 @@ pub struct PostalAddress {
     /// provide the region code again in this field. Supported regions can be
     /// found in the [FAQ](https://developers.google.com/maps/documentation/address-validation/coverage).
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[builder(into)]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub region_code: Option<String>,
@@ -57,7 +55,6 @@ pub struct PostalAddress {
     /// is ignored today. The API returns the address in the appropriate
     /// language for where the address is located.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[builder(into)]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub language_code: Option<String>,
@@ -67,7 +64,6 @@ pub struct PostalAddress {
     /// additional validation with other parts of the address (e.g. state/zip
     /// validation in the U.S.A.).
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[builder(into)]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub postal_code: Option<String>,
@@ -78,7 +74,6 @@ pub struct PostalAddress {
     /// number alone, representing the "sector code" (Jamaica), "delivery area
     /// indicator" (Malawi) or "post office indicator" (e.g. Côte d'Ivoire).
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[builder(into)]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub sorting_code: Option<String>,
@@ -90,7 +85,6 @@ pub struct PostalAddress {
     /// "Catalonia"). Many countries don't use an administrative area in postal
     /// addresses. E.g. in Switzerland this should be left unpopulated.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[builder(into)]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub administrative_area: Option<String>,
@@ -100,7 +94,6 @@ pub struct PostalAddress {
     /// where localities are not well defined or do not fit into this structure
     /// well, leave locality empty and use addressLines.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[builder(into)]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub locality: Option<String>,
@@ -108,7 +101,6 @@ pub struct PostalAddress {
     /// Optional. Sublocality of the address. For example, this can be
     /// neighborhoods, boroughs, districts.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[builder(into)]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub sublocality: Option<String>,
@@ -130,7 +122,6 @@ pub struct PostalAddress {
     /// opposed to guessing which parts of the address should be localities or
     /// administrative areas).
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     #[builder(default = Vec::new())]
     #[builder(with = |v: Vec<impl ToString>| v.into_iter().map(|s| s.to_string()).collect::<Vec<String>>())]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
@@ -141,7 +132,6 @@ pub struct PostalAddress {
     /// with this field set, the information will be discarded and will not be
     /// returned in the response.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     #[builder(default = Vec::new())]
     #[builder(with = |v: Vec<impl ToString>| v.into_iter().map(|s| s.to_string()).collect::<Vec<String>>())]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
@@ -152,7 +142,6 @@ pub struct PostalAddress {
     /// with this field set, the information will be discarded and will not be
     /// returned in the response.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[builder(into)]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub organization: Option<String>,

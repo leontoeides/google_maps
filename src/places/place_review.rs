@@ -29,7 +29,6 @@ pub struct PlaceReview {
 
     /// The URL to the user's Google Maps Local Guides profile, if available.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub author_url: Option<String>,
 
     /// An IETF language code indicating the language of the returned review.
@@ -38,7 +37,6 @@ pub struct PlaceReview {
     /// are tagged as 'en', and not 'en-AU' or 'en-UK' and so on. This field is
     /// empty if there is only a rating with no review text.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub language: Option<Language>,
 
     /// An IETF language code indicating the original language of the review. If
@@ -48,12 +46,10 @@ pub struct PlaceReview {
     /// tagged as 'en', and not 'en-AU' or 'en-UK' and so on. This field is
     /// empty if there is only a rating with no review text.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub original_language: Option<Language>,
 
     /// The URL to the user's profile photo, if available.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub profile_photo_url: Option<String>,
 
     /// The user's review. When reviewing a location with Google Places, text
@@ -61,7 +57,6 @@ pub struct PlaceReview {
     /// Note that this field may include simple HTML markup. For example, the
     /// entity reference `&amp;` may represent an ampersand character.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub text: Option<String>,
 
     /// A boolean value indicating if the review was translated from the
@@ -70,7 +65,6 @@ pub struct PlaceReview {
     /// this to your users. For example, you can add the following string,
     /// “Translated by Google”, to the review.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub translated: Option<bool>,
 } // struct PlaceReview
 

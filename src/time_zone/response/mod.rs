@@ -31,7 +31,6 @@ pub struct Response {
     #[serde(rename = "dstOffset")]
     #[serde(alias = "dst_offset")]
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub dst_offset: Option<i16>,
 
     /// More detailed information about the reasons behind the given status
@@ -42,7 +41,6 @@ pub struct Response {
     #[serde(rename = "errorMessage")]
     #[serde(alias = "error_message")]
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub error_message: Option<String>,
 
     /// The offset from UTC (in seconds) for the given location. This does not
@@ -50,7 +48,6 @@ pub struct Response {
     #[serde(rename = "rawOffset")]
     #[serde(alias = "raw_offset")]
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub raw_offset: Option<i16>,
 
     /// The status of the response.
@@ -67,7 +64,6 @@ pub struct Response {
     #[serde(rename = "timeZoneId")]
     #[serde(alias = "time_zone_id")]
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub time_zone_id: Option<chrono_tz::Tz>,
 
     /// A string containing the long form name of the time zone. This field will
@@ -76,7 +72,6 @@ pub struct Response {
     #[serde(rename = "timeZoneName")]
     #[serde(alias = "time_zone_name")]
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub time_zone_name: Option<String>,
 } // struct
 

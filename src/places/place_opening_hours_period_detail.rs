@@ -22,7 +22,6 @@ pub struct PlaceOpeningHoursPeriodDetail {
     /// A date expressed in RFC3339 format in the local timezone for the place,
     /// for example 2010-12-31.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub date: Option<NaiveDate>,
 
     /// True if a given period was truncated due to a seven-day cutoff, where
@@ -30,7 +29,6 @@ pub struct PlaceOpeningHoursPeriodDetail {
     /// at or after midnight on the last day. This property indicates that the
     /// period for open or close can extend past this seven-day cutoff.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub truncated: Option<bool>,
 } // struct PlaceOpeningHoursPeriodDetail
 

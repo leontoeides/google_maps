@@ -13,7 +13,6 @@ pub struct TransitAgency {
 
     /// Contains the phone number of the transit agency.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub phone: Option<String>,
 
     /// Contains the URL for the transit agency.

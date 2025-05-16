@@ -47,7 +47,6 @@ pub struct Response {
     /// waypoints. This field is not returned if one or more of the waypoints
     /// are `via:` waypoints.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub available_travel_modes: Vec<TravelMode>,
 
     /// When the status code is other than `OK`, there may be an additional
@@ -58,14 +57,12 @@ pub struct Response {
     /// **Note**: This field is not guaranteed to be always present, and its
     /// content is subject to change.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub error_message: Option<String>,
 
     /// Contains an array with details about the geocoding of origin,
     /// destination and waypoints. See [Geocoded
     /// Waypoints](https://developers.google.com/maps/documentation/directions/intro#GeocodedWaypoints).
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub geocoded_waypoints: Vec<GeocodedWaypoint>,
 
     /// Contains an array of routes from the origin to the destination. See
@@ -74,7 +71,6 @@ pub struct Response {
     /// [Legs](https://developers.google.com/maps/documentation/directions/intro#Legs)
     /// and [Steps](https://developers.google.com/maps/documentation/directions/intro#Steps).
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub routes: Vec<Route>,
 
     /// Contains metadata on the request. See [Status

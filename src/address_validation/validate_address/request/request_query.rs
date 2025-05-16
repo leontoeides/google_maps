@@ -52,7 +52,6 @@ pub struct RequestQuery {
     /// field with the responseId from the very first response in the validation
     /// sequence.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[builder(into)]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub previous_response_id: Option<String>,
@@ -83,7 +82,6 @@ pub struct RequestQuery {
     /// of the **address** must be provided as "Puerto Rico" (case-insensitive)
     /// or "PR".
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[builder(into)]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub enable_usps_cass: Option<bool>,
@@ -98,7 +96,6 @@ pub struct RequestQuery {
     ///
     /// Enables the Address Validation API to include additional information in the response.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub language_options: Option<LanguageOptions>,
 
@@ -123,7 +120,6 @@ pub struct RequestQuery {
     /// <https://developers.google.com/maps/documentation/places/web-service/session-pricing>
     /// for more details.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[builder(into)]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub session_token: Option<String>,

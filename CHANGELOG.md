@@ -3,9 +3,15 @@
 * Release notes are available on
   [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+# 3.8.3
+
+* 2025-05-16: Removed `skip_serializing_if`
+  [serde](https://crates.io/crates/serde) attributes. Some binary formats such
+  as  `rmp-serde` don't handle these attributes.
+
 # 3.8.2
 
-* 2025-04-10: Reverted back to `serde_json` from `simd-json`.
+* 2025-04-27: Reverted back to `serde_json` from `simd-json`.
 
   Seemingly, there were issues with some Google Maps API JSON responses. Some
   responses failed validation according to [jsonlint.com](https://jsonlint.com/).
@@ -14,7 +20,7 @@
   `simd-json` was not able to parse this JSON. `serde_json` seems to be more
   robust in handling this allegedly invalid JSON.
 
-* 2025-04-10: Ensured that all `serde` `skip_serializing_if` attributes have a
+* 2025-04-27: Ensured that all serde `skip_serializing_if` attributes have a
   matching `default` attribute.
 
 * 2025-04-27: Dependencies bump.

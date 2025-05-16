@@ -49,13 +49,11 @@ pub struct Step {
 
     /// Instructions for this step.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub html_instructions: Option<String>,
 
     /// Contains the action to take for the current step (turn left, merge,
     /// straight, etc.). This field is used to determine which icon to display.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub maneuver: Option<DrivingManeuver>,
 
     /// Contains a single `points` object that holds an [encoded polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm) representation of the step. This polyline is an approximate (smoothed) path of the step. (Corresponds to `path` in the [Directions.Step interface](https://developers.google.com/maps/documentation/javascript/reference/directions#DirectionsStep).)
@@ -71,13 +69,11 @@ pub struct Step {
     /// directions. Substeps are only available when `travel_mode` is set to
     /// "transit". The inner steps array is of the same type as steps.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub steps: Vec<Step>,
 
     /// Transit-specific details about this step. This property will be
     /// undefined unless the travel mode of this step is `TravelMode::Transit`.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub transit_details: Option<TransitDetails>,
 
     /// The mode of travel used in this step.

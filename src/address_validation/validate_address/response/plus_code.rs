@@ -23,7 +23,6 @@ pub struct PlusCode {
     /// the suffix of the global code and replacing the prefix with a formatted
     /// name of a reference entity.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub compound_code: Option<String>,
 } // struct

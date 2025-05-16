@@ -11,7 +11,6 @@ use serde::{Deserialize, Serialize};
 pub struct Geocoding {
     /// Array containing the separate components applicable to this address.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub address_components: Vec<AddressComponent>,
 
     /// A string containing the human-readable address of this location.
@@ -49,7 +48,6 @@ pub struct Geocoding {
     /// suggest an alternative address. Suggestions triggered in this way will
     /// also be marked as a partial match.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub partial_match: Option<bool>,
 
     /// A unique identifier that can be used with other Google APIs. For
@@ -67,7 +65,6 @@ pub struct Geocoding {
     /// they do not exist (where buildings are not numbered or streets are not
     /// named.)
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub plus_code: Option<PlusCode>,
 
     /// Array indicates the `type` of the returned result. This array contains a
@@ -76,7 +73,6 @@ pub struct Geocoding {
     /// indicates that "Chicago" is a city, and also returns "political" which
     /// indicates it is a political entity.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub types: Vec<PlaceType>,
 } // struct
 

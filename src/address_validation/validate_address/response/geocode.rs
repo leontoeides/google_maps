@@ -48,7 +48,6 @@ pub struct Geocode {
     /// `['locality', 'political']`. The full list of types can be found
     /// [here](https://developers.google.com/maps/documentation/geocoding/requests-geocoding#Types).
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub place_types: Vec<String>,
 } // struct Geocode

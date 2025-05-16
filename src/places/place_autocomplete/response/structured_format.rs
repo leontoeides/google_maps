@@ -26,7 +26,6 @@ pub struct StructuredFormat {
     /// for more information.
     #[serde(alias = "main_text_matched_substrings")]
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub main_text_matched_substrings: Vec<MatchedSubstring>,
 
     /// Contains the secondary text of a prediction, usually the location of the
@@ -42,7 +41,6 @@ pub struct StructuredFormat {
     /// for more information.
     #[serde(alias = "secondary_text_matched_substrings")]
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub secondary_text_matched_substrings: Vec<MatchedSubstring>,
 } // struct StructuredFormat
 

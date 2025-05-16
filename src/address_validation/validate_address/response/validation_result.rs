@@ -38,7 +38,6 @@ pub struct ValidationResult {
     /// guaranteed to be fully populated for every address sent to the Address
     /// Validation API.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub metadata: Option<AddressMetadata>,
 
@@ -51,7 +50,6 @@ pub struct ValidationResult {
     /// this property as the sole means to validate addresses, but instead check
     /// the verdict and address as well.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub usps_data: Option<UspsData>,
 
@@ -77,7 +75,6 @@ pub struct ValidationResult {
     /// language that uses a Latin script, the service returns that part in the
     /// local language associated with the address.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub english_latin_address: Option<Address>,
 } // struct ValidationResult

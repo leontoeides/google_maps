@@ -43,6 +43,5 @@ pub struct AddressComponent {
     /// [supported
     /// types](https://developers.google.com/places/web-service/supported_types).
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub types: Vec<PlaceType>,
 } // struct

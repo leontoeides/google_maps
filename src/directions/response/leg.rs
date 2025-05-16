@@ -19,13 +19,11 @@ pub struct Leg {
     /// An estimated arrival time for this leg. Only applicable for
     /// `TravelMode::Transit` requests.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub arrival_time: Option<TransitTime>,
 
     /// An estimated departure time for this leg. Only applicable for
     /// `TravelMode::Transit` requests.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub departure_time: Option<TransitTime>,
 
     /// The total distance covered by this leg. This property may be undefined
@@ -41,7 +39,6 @@ pub struct Leg {
     /// may be undefined as the duration may be unknown. Only available to
     /// Premium Plan customers.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub duration_in_traffic: Option<DirectionsDuration>,
 
     /// The address of the destination of this leg.
@@ -67,7 +64,6 @@ pub struct Leg {
     /// An array of `Steps`, each of which contains information about the
     /// individual steps in this leg.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub steps: Vec<Step>,
 } // struct
 

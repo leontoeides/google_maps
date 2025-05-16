@@ -35,7 +35,6 @@ pub struct Response {
     /// for more information.
     #[serde(alias = "predictions")]
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub predictions: Vec<Prediction>,
 
     /// Contains the status of the request, and may contain debugging
@@ -52,7 +51,6 @@ pub struct Response {
     /// status code. This field is not always returned, and its content is
     /// subject to change.
     #[serde(alias = "error_message")]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub error_message: Option<String>,
 
     /// When the service returns additional information about the request
@@ -62,7 +60,6 @@ pub struct Response {
     /// change.
     #[serde(alias = "info_messages")]
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub info_messages: Vec<String>,
 } // struct
 

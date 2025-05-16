@@ -29,7 +29,6 @@ pub struct UspsData {
 
     /// 2 digit delivery point code
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub delivery_point_code: Option<String>,
 
@@ -38,7 +37,6 @@ pub struct UspsData {
     /// digits of the `delivery_point_barcode`, `deliveryPointCheckDigit`,
     /// postal code, and ZIP+4 together should yield a number divisible by 10.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub delivery_point_check_digit: Option<String>,
 
@@ -59,7 +57,6 @@ pub struct UspsData {
     /// * Empty: If the response does not contain a dpvConfirmation value, the
     ///   address was not submitted for DPV confirmation.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub dpv_confirmation: Option<char>,
 
@@ -94,7 +91,6 @@ pub struct UspsData {
     /// * `Y`: The address is a CMRA
     /// * `N`: The address is not a CMRA
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub dpv_cmra: Option<char>,
 
@@ -103,7 +99,6 @@ pub struct UspsData {
     /// * `Y`: The address is vacant
     /// * `N`: The address is not vacant
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub dpv_vacant: Option<char>,
 
@@ -114,7 +109,6 @@ pub struct UspsData {
     /// * `Y`: The address is not active
     /// * `N`: The address is active
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub dpv_no_stat: Option<char>,
 
@@ -138,7 +132,6 @@ pub struct UspsData {
     ///
     /// * `6`: Secondary Required - The address requires secondary information.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub dpv_no_stat_reason_code: Option<u8>,
 
@@ -148,7 +141,6 @@ pub struct UspsData {
     /// * `Y`: The mail is delivered to a single receptable at a site.
     /// * `N`: The mail is not delivered to a single receptable at a site.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub dpv_drop: Option<char>,
 
@@ -159,7 +151,6 @@ pub struct UspsData {
     /// * `Y`: The mail is not delivered to the street address.
     /// * `N`: The mail is delivered to the street address.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub dpv_throwback: Option<char>,
 
@@ -170,7 +161,6 @@ pub struct UspsData {
     /// * `N`: No indication the mail delivery is not performed every day of the
     ///   week.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub dpv_non_delivery_days: Option<char>,
 
@@ -185,7 +175,6 @@ pub struct UspsData {
     /// * `0x02` – Friday is a non-delivery day
     /// * `0x01` – Saturday is a non-delivery day
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub dpv_non_delivery_days_values: Option<u8>,
 
@@ -196,7 +185,6 @@ pub struct UspsData {
     /// * `N`: No indication the package will not be left due to security
     ///   concerns.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub dpv_no_secure_location: Option<char>,
 
@@ -206,7 +194,6 @@ pub struct UspsData {
     /// * `Y`: The address was matched to PBSA record.
     /// * `N`: The address was not matched to PBSA record.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub dpv_pbsa: Option<char>,
 
@@ -216,7 +203,6 @@ pub struct UspsData {
     /// * `Y`: The door is not accessible.
     /// * `N`: No indication the door is not accessible.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub dpv_door_not_accessible: Option<char>,
 
@@ -239,7 +225,6 @@ pub struct UspsData {
     /// * `R`: Address confirmed but assigned to phantom route R777 and R779 and
     ///   USPS delivery is not provided.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub dpv_enhanced_delivery_code: Option<char>,
 
@@ -254,20 +239,17 @@ pub struct UspsData {
     /// * `B`: Post Office Box Section
     /// * `G`: General delivery unit
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub carrier_route: Option<String>,
 
     /// Carrier route rate sort indicator.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub carrier_route_indicator: Option<String>,
 
     /// The delivery address is matchable, but the EWS file indicates that an
     /// exact match will be available soon.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub ews_no_match: Option<bool>,
 
@@ -281,49 +263,41 @@ pub struct UspsData {
 
     /// Abbreviated city.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub abbreviated_city: Option<String>,
 
     /// FIPS county code.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub fips_county_code: Option<String>,
 
     /// County name.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub county: Option<String>,
 
     /// Enhanced Line of Travel (eLOT) number.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub elot_number: Option<String>,
 
     /// eLOT Ascending/Descending Flag (A/D).
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub elot_flag: Option<String>,
 
     /// LACSLink return code.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub lacs_link_return_code: Option<String>,
 
     /// LACSLink indicator.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub lacs_link_indicator: Option<String>,
 
     /// PO Box only postal code.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub po_box_only_postal_code: Option<bool>,
 
@@ -334,19 +308,16 @@ pub struct UspsData {
     /// * `A`: SuiteLink record match, business address improved.
     /// * `00`: No match, business address is not improved.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub suitelink_footnote: Option<String>,
 
     /// PMB (Private Mail Box) unit designator.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub pmb_designator: Option<String>,
 
     /// PMB (Private Mail Box) number.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub pmb_number: Option<String>,
 
@@ -369,14 +340,12 @@ pub struct UspsData {
     /// * `S`: STREET RECORD: This is a match to a Street record containing a
     ///   valid primary number range.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub address_record_type: Option<String>,
 
     /// Indicator that a default address was found, but more specific addresses
     /// exists.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub default_address: Option<bool>,
 
@@ -386,13 +355,11 @@ pub struct UspsData {
     ///
     /// The USPS data fields might not be populated when this error is present.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub error_message: Option<String>,
 
     /// Indicator that the request has been CASS processed.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get_copy = "pub", get_mut = "pub", set = "pub")]
     pub cass_processed: Option<bool>,
 } // struct UspsData

@@ -29,20 +29,17 @@ pub struct Response {
     #[serde(rename = "snappedPoints")]
     #[serde(alias = "snapped_points")]
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub snapped_points: Vec<SnappedPoint>,
 
     /// A string containing a user-visible warning.
     #[serde(rename = "warningMessage")]
     #[serde(alias = "warning_message")]
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub warning_message: Option<String>,
 
     /// In the case of an error, a standard format error response body will be
     /// returned and the HTTP status code will be set to an error status.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub error: Option<ErrorResponse>,
 } // struct
 

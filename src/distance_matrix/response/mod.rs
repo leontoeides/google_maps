@@ -25,7 +25,6 @@ pub struct Response {
     /// Contains an array of addresses as returned by the API from your original
     /// request. As with `origin_addresses`, these are localized if appropriate.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub destination_addresses: Vec<String>,
 
     /// When the status code is other than `OK`, there may be an additional
@@ -35,7 +34,6 @@ pub struct Response {
     ///
     /// **Note**: This field is not guaranteed to be always present, and its
     /// content is subject to change.
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub error_message: Option<String>,
 
     /// Contains an array of addresses as returned by the API from your original
@@ -44,13 +42,11 @@ pub struct Response {
     /// and localized according to the `language` parameter passed with the
     /// request.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub origin_addresses: Vec<String>,
 
     /// Contains an array of elements, which in turn each contain a `status`,
     /// `duration`, and `distance` element.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub rows: Vec<Row>,
 
     /// Contains metadata on the request.

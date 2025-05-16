@@ -14,12 +14,10 @@ use serde::{Deserialize, Serialize};
 pub struct PlaceEditorialSummary {
     /// The language of the previous fields. May not always be present.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub language: Option<Language>,
 
     /// A medium-length textual summary of the place.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub overview: Option<String>,
 } // struct PlaceEditorialSummary
 

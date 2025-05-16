@@ -25,14 +25,12 @@ pub struct Response {
     /// *Note: This field is not guaranteed to be always present, and its
     /// content is subject to change.*
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub error_message: Option<String>,
 
     /// When the geocoder returns results, it places them within a results
     /// array. Even if the geocoder returns no results (such as if the address
     /// doesn't exist) it still returns an empty results array.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub results: Vec<Geocoding>,
 
     /// The `status` field within the Geocoding response object contains the

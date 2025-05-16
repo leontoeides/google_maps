@@ -13,19 +13,16 @@ pub struct UspsAddress {
 
     /// Firm name.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub firm: Option<String>,
 
     /// Second address line.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub second_address_line: Option<String>,
 
     /// Puerto Rican urbanization name.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub urbanization: Option<String>,
 
@@ -43,13 +40,11 @@ pub struct UspsAddress {
 
     /// Postal code e.g. 10009.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub zip_code: Option<String>,
 
     /// 4-digit postal code extension e.g. 5023.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub zip_code_extension: Option<String>,
 } // struct UspsAddress

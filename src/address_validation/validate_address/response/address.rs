@@ -37,7 +37,6 @@ pub struct Address {
     /// Address components are not ordered in a particular way. Do not make any
     /// assumptions on the ordering of the address components in the list.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub address_components: Vec<AddressComponent>,
 
@@ -49,7 +48,6 @@ pub struct Address {
     /// Colorado, 80301, USA". The list of possible types can be found
     /// [here](https://developers.google.com/maps/documentation/geocoding/requests-geocoding#Types).
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub missing_component_types: Vec<String>,
 
@@ -63,7 +61,6 @@ pub struct Address {
     /// or the inferred flag is not set to `true`. The list of possible types
     /// can be found [here](https://developers.google.com/maps/documentation/geocoding/requests-geocoding#Types).
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub unconfirmed_component_types: Vec<String>,
 
@@ -73,7 +70,6 @@ pub struct Address {
     /// Guthrie Center IA 50115 US", the unresolved tokens might look like
     /// `["Parcel", "0000123123", "&", "0000456456"]`.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub unresolved_tokens: Vec<String>,
 } // struct Address

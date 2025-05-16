@@ -36,7 +36,6 @@ pub struct TransitDetails {
     /// same stop at this time. For example, with a headway value of 600, you
     /// would expect a ten minute wait if you should miss your bus.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub headway: Option<u16>,
 
     /// Contains information about the transit line used in this step.
@@ -54,6 +53,5 @@ pub struct TransitDetails {
     /// Amtrak train that leaves San Jose, CA at 15:10 on weekdays to
     /// Sacramento, CA.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub trip_short_name: Option<String>,
 } // struct

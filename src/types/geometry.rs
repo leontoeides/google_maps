@@ -19,7 +19,6 @@ pub struct Geometry {
 
     /// Stores additional data about the specified location.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub location_type: Option<LocationType>,
 
     /// Contains the recommended viewport for displaying the returned result,
@@ -35,7 +34,6 @@ pub struct Geometry {
     /// technically part of the city, but probably should not be returned in the
     /// viewport.)
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub bounds: Option<Bounds>,
 } // struct
 

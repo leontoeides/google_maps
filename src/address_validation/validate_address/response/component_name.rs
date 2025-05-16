@@ -15,7 +15,6 @@ pub struct ComponentName {
     /// The BCP-47 language code. This will not be present if the component name
     /// is not associated with a language, such as a street number.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     #[getset(get = "pub", get_mut = "pub", set = "pub")]
     pub language_code: Option<String>,
 } // struct ComponentName

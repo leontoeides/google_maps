@@ -7,13 +7,11 @@ use serde::{Deserialize, Serialize};
 pub struct GeocodedWaypoint {
     /// Indicates the status code resulting from the geocoding operation.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub geocoder_status: Option<GeocoderStatus>,
 
     /// Whether the geocoder did not return an exact match for the original
     /// waypoint, though it was able to match part of the requested address.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub partial_match: Option<bool>,
 
     /// The place ID associated with the waypoint. Place IDs uniquely identify a
@@ -21,7 +19,6 @@ pub struct GeocodedWaypoint {
     /// [Place IDs](https://developers.google.com/places/place-id) in the Places
     /// API developer guide.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub place_id: Option<String>,
 
     /// An array of strings denoting the type of the returned geocoded element.
@@ -29,6 +26,5 @@ pub struct GeocodedWaypoint {
     /// [Address Component Types](https://developers.google.com/maps/documentation/javascript/geocoding#GeocodingAddressTypes)
     /// section of the Developer's Guide.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub types: Vec<PlaceType>,
 } // struct

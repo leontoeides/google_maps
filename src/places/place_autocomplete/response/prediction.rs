@@ -31,7 +31,6 @@ pub struct Prediction {
     /// for more information.
     #[serde(alias = "matched_substrings")]
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub matched_substrings: Vec<MatchedSubstring>,
 
     /// Provides pre-formatted text that can be shown in your autocomplete
@@ -46,7 +45,6 @@ pub struct Prediction {
     /// The straight-line distance in meters from the origin.
     /// This field is only returned for requests made with an `origin`.
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub distance_meters: Option<u64>,
 
     /// Contains an array of terms identifying each section of the returned
@@ -59,7 +57,6 @@ pub struct Prediction {
     /// for more information.
     #[serde(alias = "terms")]
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub terms: Vec<Term>,
 
     /// A textual identifier that uniquely identifies a place. To retrieve
@@ -69,7 +66,6 @@ pub struct Prediction {
     /// overview.
     #[serde(alias = "place_id")]
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub place_id: Option<String>,
 
     /// Contains an array of types that apply to this place. For example:
@@ -78,7 +74,6 @@ pub struct Prediction {
     /// about [Place types](https://developers.google.com/maps/documentation/places/web-service/supported_types).
     #[serde(alias = "types")]
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub types: Vec<PlaceType>,
 } // struct Prediction
 
