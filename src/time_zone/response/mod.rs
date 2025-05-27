@@ -31,7 +31,7 @@ pub struct Response {
     #[serde(rename = "dstOffset")]
     #[serde(alias = "dst_offset")]
     #[serde(default)]
-    pub dst_offset: Option<i16>,
+    pub dst_offset: Option<i32>,
 
     /// More detailed information about the reasons behind the given status
     /// code, if other than `OK`.
@@ -48,7 +48,7 @@ pub struct Response {
     #[serde(rename = "rawOffset")]
     #[serde(alias = "raw_offset")]
     #[serde(default)]
-    pub raw_offset: Option<i16>,
+    pub raw_offset: Option<i32>,
 
     /// The status of the response.
     pub status: Status,
