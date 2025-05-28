@@ -9,6 +9,14 @@
   [serde](https://crates.io/crates/serde) attributes. Some binary formats such
   as  `rmp-serde` don't handle these attributes.
 
+* 2025-05-27: Correction to `google_maps::time_zone::response::mod.rs` -
+  `Pacific/Auckland` has a timezone offset of 43200, which is larger than an
+  `i16`.
+
+  Thank you to [tolfdog](https://github.com/tolfdog) for
+  [reporting](https://github.com/leontoeides/google_maps/pull/35) and correcting
+  this issue!
+
 # 3.8.2
 
 * 2025-04-27: Reverted back to `serde_json` from `simd-json`.
