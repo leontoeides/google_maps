@@ -16,314 +16,351 @@ use serde::{Deserialize, Serialize};
 use std::cmp::{Ord, Ordering};
 
 // -----------------------------------------------------------------------------
-
-/// Latitude and longitude values must correspond to a valid location on the
-/// face of the earth. Latitudes can take any value between -90 and 90 while
-/// longitude values can take any value between -180 and 180. If you specify an
-/// invalid latitude or longitude value, your request will be rejected as a bad
-/// request.
-
+//
+/// Represents a geographic coordinate on Earth's surface.
+///
+/// Stores latitude (north-south position) and longitude (east-west position) using `Decimal` types
+/// for precise coordinate representation.
+///
+/// This struct is used throughout the Google Maps API to specify locations, waypoints, and
+/// geographic bounds. Coordinates are validated to ensure they fall within valid ranges: latitude
+/// must be between -90° and 90°, longitude between -180° and 180°.
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct LatLng {
-    /// Latitude. A value between -90.0° and 90.0°.
+    /// Latitude coordinate in decimal degrees.
+    ///
+    /// Valid range: -90.0° (South Pole) to 90.0° (North Pole).
     #[serde(alias = "y")]
     #[serde(alias = "lat")]
     #[serde(alias = "latitude")]
     #[serde(with = "rust_decimal::serde::float")]
     pub lat: Decimal,
-    /// Longitude. A value between -180.0° and 180.0°.
+
+    /// Longitude coordinate in decimal degrees.
+    ///
+    /// Valid range: -180.0° (western hemisphere) to 180.0° (eastern hemisphere).
     #[serde(alias = "x")]
     #[serde(alias = "lon")]
     #[serde(alias = "long")]
     #[serde(alias = "longitude")]
     #[serde(with = "rust_decimal::serde::float")]
     pub lng: Decimal,
-} // struct
+}
 
-// -----------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
+//
+// Method Implementations
 
 impl LatLng {
-    /// Takes individual latitude & longitude `Decimal` coordinates and
-    /// converts them into a `LatLng` structure. If either the latitude
-    /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
-    /// function will return an error.
+    /// Creates a `LatLng` from `Decimal` coordinates with validation.
+    ///
+    /// This is the canonical constructor for creating validated coordinates from `Decimal` values.
+    ///
+    /// Use this when you already have `Decimal` values, typically from parsing or calculations.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if latitude is outside [-90, 90] or longitude is outside [-180, 180].
     pub fn try_from_dec(latitude: Decimal, longitude: Decimal) -> Result<Self, GoogleMapsError> {
-        if latitude < dec!(-90.0) || latitude > dec!(90.0) {
-            Err(TypeError::InvalidLatitude(latitude, longitude))?;
-        } // if
+        let lat_valid = latitude >= dec!(-90.0) && latitude <= dec!(90.0);
+        let lng_valid = longitude >= dec!(-180.0) && longitude <= dec!(180.0);
 
-        if longitude < dec!(-180.0) || longitude > dec!(180.0) {
-            Err(TypeError::InvalidLongitude(latitude, longitude))?;
-        } // if
+        if !lat_valid {
+            Err(TypeError::InvalidLatitude(latitude, longitude).into())
+        } else if !lng_valid {
+            Err(TypeError::InvalidLongitude(latitude, longitude).into())
+        } else {
+            Ok(Self {
+                lat: latitude,
+                lng: longitude,
+            })
+        }
+    }
 
-        Ok(Self {
-            lat: latitude,
-            lng: longitude,
-        })
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl LatLng {
-    /// Takes individual latitude & longitude `f32` coordinates and
-    /// converts them into a `LatLng` structure. If either the latitude
-    /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
-    /// function will return an error.
+    /// Creates a `LatLng` from `f32` coordinates with validation.
+    ///
+    /// Converts 32-bit floating point coordinates to `Decimal` representation and validates the
+    /// ranges.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if latitude is outside [-90, 90] or longitude is outside [-180, 180].
     pub fn try_from_f32(latitude: f32, longitude: f32) -> Result<Self, GoogleMapsError> {
-        let lat: Decimal = Decimal::from_f32(latitude)
+        let lat = Decimal::from_f32(latitude)
             .ok_or_else(|| TypeError::FloatToDecimalConversionError(latitude.to_string()))?;
 
-        let lng: Decimal = Decimal::from_f32(longitude)
+        let lng = Decimal::from_f32(longitude)
             .ok_or_else(|| TypeError::FloatToDecimalConversionError(longitude.to_string()))?;
 
-        if lat < dec!(-90.0) || lat > dec!(90.0) {
-            Err(TypeError::InvalidLatitude(lat, lng))?;
-        } // if
+        Self::try_from_dec(lat, lng)
+    }
 
-        if lng < dec!(-180.0) || lng > dec!(180.0) {
-            Err(TypeError::InvalidLongitude(lat, lng))?;
-        } // if
-
-        Ok(Self { lat, lng })
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl LatLng {
-    /// Takes individual latitude & longitude `f64` coordinates and
-    /// converts them into a `LatLng` structure. If either the latitude
-    /// (-90.0 to +90.0) or longitude (-180.0 to +180.0) are out of range, this
-    /// function will return an error.
+    /// Creates a `LatLng` from `f64` coordinates with validation.
+    ///
+    /// Converts 64-bit floating point coordinates to `Decimal` representation and validates the
+    /// ranges.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if latitude is outside [-90, 90] or longitude is outside [-180, 180].
     pub fn try_from_f64(latitude: f64, longitude: f64) -> Result<Self, GoogleMapsError> {
-        let lat: Decimal = Decimal::from_f64(latitude)
+        let lat = Decimal::from_f64(latitude)
             .ok_or_else(|| TypeError::FloatToDecimalConversionError(latitude.to_string()))?;
 
-        let lng: Decimal = Decimal::from_f64(longitude)
+        let lng = Decimal::from_f64(longitude)
             .ok_or_else(|| TypeError::FloatToDecimalConversionError(longitude.to_string()))?;
 
-        if lat < dec!(-90.0) || lat > dec!(90.0) {
-            Err(TypeError::InvalidLatitude(lat, lng))?;
-        } // if
+        Self::try_from_dec(lat, lng)
+    }
 
-        if lng < dec!(-180.0) || lng > dec!(180.0) {
-            Err(TypeError::InvalidLongitude(lat, lng))?;
-        } // if
+    /// Formats coordinates as a human-readable string with hemisphere indicators.
+    ///
+    /// Converts to an absolute value format with N/S/E/W indicators, making coordinates easier to
+    /// read and understand.
+    ///
+    /// For example, returns `37.7749° N 122.4194° W` instead of `37.7749,-122.4194`. Use this
+    /// when displaying coordinates to end users in UI elements.
+    #[must_use]
+    pub fn display(&self) -> String {
+        format!(
+            "{lat}°{lat_hem} {lng}°{lng_hem}",
+            lat = self.lat.abs().normalize(),
+            lat_hem = match self.lat.cmp(&dec!(0.0)) {
+                Ordering::Less => " S",
+                Ordering::Greater => " N",
+                Ordering::Equal => "",
+            },
+            lng = self.lng.abs().normalize(),
+            lng_hem = match self.lng.cmp(&dec!(0.0)) {
+                Ordering::Less => " W",
+                Ordering::Greater => " E",
+                Ordering::Equal => "",
+            },
+        )
+    }
 
-        Ok(Self { lat, lng })
-    } // fn
-} // impl
+    /// Returns a reference to the latitude coordinate.
+    ///
+    /// Alias for vertical/y-axis geographic position. Prefer using this method name when working
+    /// with Cartesian-style APIs.
+    #[must_use]
+    pub const fn y(&self) -> &Decimal {
+        &self.lat
+    }
 
-// -----------------------------------------------------------------------------
+    /// Returns a reference to the latitude coordinate.
+    ///
+    /// Short-form accessor for the north-south position.
+    #[must_use]
+    pub const fn lat(&self) -> &Decimal {
+        &self.lat
+    }
+
+    /// Returns a reference to the latitude coordinate.
+    ///
+    /// Full-name accessor for the north-south position. Use this for clarity in contexts where
+    /// abbreviated names might be ambiguous.
+    #[must_use]
+    pub const fn latitude(&self) -> &Decimal {
+        &self.lat
+    }
+
+    /// Returns a reference to the longitude coordinate.
+    ///
+    /// Alias for horizontal/x-axis geographic position. Prefer using this method name when working
+    /// with Cartesian-style APIs.
+    #[must_use]
+    pub const fn x(&self) -> &Decimal {
+        &self.lng
+    }
+
+    /// Returns a reference to the longitude coordinate.
+    ///
+    /// Short-form accessor for the east-west position.
+    #[must_use]
+    pub const fn lng(&self) -> &Decimal {
+        &self.lng
+    }
+
+    /// Returns a reference to the longitude coordinate.
+    ///
+    /// Alternative short-form accessor for the east-west position.
+    #[must_use]
+    pub const fn lon(&self) -> &Decimal {
+        &self.lng
+    }
+
+    /// Returns a reference to the longitude coordinate.
+    ///
+    /// Alternative accessor for the east-west position.
+    #[must_use]
+    pub const fn long(&self) -> &Decimal {
+        &self.lng
+    }
+
+    /// Returns a reference to the longitude coordinate.
+    ///
+    /// Full-name accessor for the east-west position. Use this for clarity in contexts where
+    /// abbreviated names might be ambiguous.
+    #[must_use]
+    pub const fn longitude(&self) -> &Decimal {
+        &self.lng
+    }
+
+    /// Returns both coordinates as a tuple `(latitude, longitude)`.
+    ///
+    /// Short-form accessor for both coordinates. Use this when you need to work with both values
+    /// simultaneously or when destructuring.
+    #[must_use]
+    pub const fn coords(&self) -> (&Decimal, &Decimal) {
+        (&self.lat, &self.lng)
+    }
+
+    /// Returns both coordinates as a tuple `(latitude, longitude)`.
+    ///
+    /// Full-name accessor for both coordinates. Prefer this for clarity in contexts where
+    /// abbreviated names might be ambiguous.
+    #[must_use]
+    pub const fn coordinates(&self) -> (&Decimal, &Decimal) {
+        (&self.lat, &self.lng)
+    }
+}
+
+// -------------------------------------------------------------------------------------------------
+//
+// Trait Implementations
 
 impl std::str::FromStr for LatLng {
-    // Error definitions are contained in the
-    // `google_maps\src\geocoding\error.rs` module.
     type Err = GoogleMapsError;
 
-    /// Attempts to get a `LatLng` struct from a borrowed `&str` that contains a
-    /// comma-delimited latitude & longitude pair.
+    /// Parses a comma-delimited string like "37.7749,-122.4194" into a `LatLng`.
+    ///
+    /// The expected format is "latitude,longitude" with whitespace allowed.
+    ///
+    /// This is commonly used when parsing coordinates from configuration files, URLs, or user
+    /// input.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the string format is invalid or coordinates are out of range.
     fn from_str(str: &str) -> Result<Self, Self::Err> {
         let coordinates: Vec<&str> = str.trim().split(',').collect();
 
-        if coordinates.len() == 2 {
+        let result = if coordinates.len() == 2 {
             let lat = Decimal::from_str(coordinates[0].trim());
             let lat = lat.map_err(|_| TypeError::InvalidLatLongString(str.to_owned()))?;
             let lon = Decimal::from_str(coordinates[1].trim());
             let lon = lon.map_err(|_| TypeError::InvalidLatLongString(str.to_owned()))?;
             Self::try_from_dec(lat, lon)
         } else {
-            Err(TypeError::InvalidLatLongString(str.to_owned()))?
-        } // if
-    } // fn
-} // impl
+            Err(TypeError::InvalidLatLongString(str.to_owned()).into())
+        };
 
-// -----------------------------------------------------------------------------
+        result
+    }
+}
 
 impl TryFrom<&str> for LatLng {
     type Error = GoogleMapsError;
-    /// Attempts to get a `LatLng` struct from a borrowed `&str` that contains a
-    /// comma-delimited latitude & longitude pair.
+
+    /// Converts a borrowed string slice to a `LatLng`.
     fn try_from(str: &str) -> Result<Self, Self::Error> {
         str.parse()
     }
-} // impl
+}
 
-// -----------------------------------------------------------------------------
 
 impl TryFrom<&String> for LatLng {
     type Error = GoogleMapsError;
-    /// Attempts to get a `LatLng` struct from a borrowed `&String` that
-    /// contains a comma-delimited latitude & longitude pair.
+
+    /// Converts a borrowed `String` reference to a `LatLng`.
     fn try_from(string: &String) -> Result<Self, Self::Error> {
         string.parse()
     }
-} // impl
+}
 
-// -----------------------------------------------------------------------------
 
 impl TryFrom<String> for LatLng {
     type Error = GoogleMapsError;
-    /// Attempts to get a `LatLng` struct from an owned `String` that contains a
-    /// comma-delimited latitude & longitude pair.
+
+    /// Converts an owned `String` to a `LatLng`.
     fn try_from(string: String) -> Result<Self, Self::Error> {
         string.parse()
     }
-} // impl
-
-// -----------------------------------------------------------------------------
+}
 
 impl<V: TryInto<Decimal>> TryFrom<(V, V)> for LatLng {
     type Error = GoogleMapsError;
-    /// Attempts to get a `LatLng` struct from a `(lat, lng)` tuple that
-    /// contains a `0` latitude and a `1` longitude (in that order).
-    fn try_from(coordinates: (V, V)) -> Result<Self, Self::Error> {
-        Self::try_from_dec(
-            coordinates.0.try_into().map_err(|_| TypeError::InvalidLatLongTuple)?,
-            coordinates.1.try_into().map_err(|_| TypeError::InvalidLatLongTuple)?
-        )
-    }
-} // impl
 
-// -----------------------------------------------------------------------------
+    /// Converts a tuple of `(latitude, longitude)` to a `LatLng`.
+    ///
+    /// Accepts any tuple where both elements can convert to `Decimal`.
+    ///
+    /// This is useful when working with numeric tuples from calculations or when destructuring
+    /// coordinate pairs. The order is latitude first, longitude second.
+    fn try_from(coordinates: (V, V)) -> Result<Self, Self::Error> {
+        let lat = coordinates.0
+            .try_into()
+            .map_err(|_| TypeError::InvalidLatLongTuple)?;
+
+        let lng = coordinates.1
+            .try_into()
+            .map_err(|_| TypeError::InvalidLatLongTuple)?;
+
+        Self::try_from_dec(lat, lng)
+    }
+}
 
 impl std::convert::From<&Self> for LatLng {
-    /// Converts a borrowed `&LatLng` enum into an owned `LatLng` enum by
-    /// copying it.
+    /// Copies a borrowed `LatLng` reference to an owned value.
+    ///
+    /// Since `LatLng` is `Copy`, this simply dereferences the pointer. This trait impl enables
+    /// seamless conversion in generic contexts.
     fn from(lat_lng: &Self) -> Self {
         *lat_lng
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
+    }
+}
 
 impl std::convert::From<&LatLng> for String {
-    /// Converts a borrowed `&LatLng` struct to a `String` that contains a
-    /// latitude/longitude pair.
+    /// Converts a `LatLng` to a comma-delimited string representation.
+    ///
+    /// Formats as "latitude,longitude" with normalized decimal values.
+    ////
+    /// This format is suitable for Google Maps API queries and for serializing coordinates to
+    /// configuration files or databases.
     fn from(lat_lng: &LatLng) -> Self {
         format!(
             "{latitude},{longitude}",
             latitude = lat_lng.lat.normalize(),
             longitude = lat_lng.lng.normalize(),
-        ) // format!
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
+        )
+    }
+}
 
 impl std::convert::From<LatLng> for String {
-    /// Converts an owned `LatLng` struct to a `String` that contains a
-    /// latitude/longitude pair.
+    /// Converts an owned `LatLng` to a comma-delimited string.
     fn from(lat_lng: LatLng) -> Self {
         Self::from(&lat_lng)
     }
-} // impl
-
-// -----------------------------------------------------------------------------
+}
 
 impl std::fmt::Display for LatLng {
-    /// Converts a `LatLng` struct to a string that contains a
-    /// latitude/longitude pair.
+    /// Formats a `LatLng` for display using comma-delimited coordinates.
+    ///
+    /// Enables using `LatLng` with format macros and string conversion.
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", String::from(self))
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
+    }
+}
 
 impl std::default::Default for LatLng {
-    /// Returns a reasonable default value for the `LatLng` struct.
+    /// Returns coordinates for [Null Island](https://en.wikipedia.org/wiki/Null_Island) (0°N, 0°E).
+    ///
+    /// Null Island is the point where the prime meridian crosses the equator in the Gulf of Guinea.
     fn default() -> Self {
         Self {
             lat: dec!(0.0),
             lng: dec!(0.0),
         }
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl LatLng {
-    /// Formats a `LatLng` struct into a string that is presentable to the end
-    /// user.
-    #[must_use]
-    pub fn display(&self) -> String {
-        // Display latitude and longitude as decimal degrees with some extra
-        // fixins'.
-        format!(
-            "{lat}°{lat_hem} {lng}°{lng_hem}",
-            lat = self.lat.abs().normalize(),
-            lat_hem = match self.lat.cmp(&dec!(0.0)) {
-                Ordering::Less => " S".to_string(),
-                Ordering::Greater => " N".to_string(),
-                Ordering::Equal => String::new(),
-            }, // match
-            lng = self.lng.abs().normalize(),
-            lng_hem = match self.lng.cmp(&dec!(0.0)) {
-                Ordering::Less => " W".to_string(),
-                Ordering::Greater => " E".to_string(),
-                Ordering::Equal => String::new(),
-            }, // match
-        ) // write!
-    } // fn
-} // impl
-
-// -----------------------------------------------------------------------------
-
-impl LatLng {
-    /// Returns the north-south latitudinal (or vertical) coordinate.
-    #[must_use]
-    pub const fn y(&self) -> &Decimal {
-        &self.lat
     }
-    /// Returns the north-south latitudinal (or vertical) coordinate.
-    #[must_use]
-    pub const fn lat(&self) -> &Decimal {
-        &self.lat
-    }
-    /// Returns the north-south latitudinal (or vertical) coordinate.
-    #[must_use]
-    pub const fn latitude(&self) -> &Decimal {
-        &self.lat
-    }
-
-    /// Returns the east-west longitudinal (or horizontal) coordinate.
-    #[must_use]
-    pub const fn x(&self) -> &Decimal {
-        &self.lng
-    }
-    /// Returns the east-west longitudinal (or horizontal) coordinate.
-    #[must_use]
-    pub const fn lng(&self) -> &Decimal {
-        &self.lng
-    }
-    /// Returns the east-west longitudinal (or horizontal) coordinate.
-    #[must_use]
-    pub const fn lon(&self) -> &Decimal {
-        &self.lng
-    }
-    /// Returns the east-west longitudinal (or horizontal) coordinate.
-    #[must_use]
-    pub const fn long(&self) -> &Decimal {
-        &self.lng
-    }
-    /// Returns the east-west longitudinal (or horizontal) coordinate.
-    #[must_use]
-    pub const fn longitude(&self) -> &Decimal {
-        &self.lng
-    }
-
-    /// Returns a tuple containing 1. the latitude (y) coordinate, and then 2.
-    /// the longitude (x) coordinate, in that order.
-    #[must_use]
-    pub const fn coords(&self) -> (&Decimal, &Decimal) {
-        (&self.lat, &self.lng)
-    }
-    /// Returns a tuple containing 1. the latitude (y) coordinate, and then 2.
-    /// the longitude (x) coordinate, in that order.
-    #[must_use]
-    pub const fn coordinates(&self) -> (&Decimal, &Decimal) {
-        (&self.lat, &self.lng)
-    }
-} // impl
+}

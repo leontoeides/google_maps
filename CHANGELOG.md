@@ -3,6 +3,13 @@
 * Release notes are available on
   [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+# 3.9.0
+
+* 2025-11-23: Added support for Google Maps Places (New) API which is turned on
+  by default. The legacy API is still available through `Cargo.toml` features.
+
+* 2025-11-23: Dependency bump.
+
 # 3.8.3
 
 * 2025-05-16: Removed `skip_serializing_if`

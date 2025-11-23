@@ -21,6 +21,9 @@ mod execute;
 #[cfg(feature = "reqwest")]
 mod get;
 
+#[cfg(feature = "reqwest")]
+mod request_headers;
+
 // -----------------------------------------------------------------------------
 //
 /// **Look at this `Request` struct for documentation on how to build your

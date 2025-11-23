@@ -20,7 +20,8 @@ pub trait EndPoint {
     /// Google Maps accepts `xml` and `json` formats. Currently, this crate only
     /// supports the `json` format and this function should only return `json`
     /// for now.
-    #[must_use] fn output_format() -> Option<&'static str> { Some("json") }
+    #[must_use]
+    fn output_format() -> Option<&'static str> { Some("json") }
 
     /// Title of the API request end-point. For example `Directions API` or
     /// `Elevation API`. This title will be output in `tracing` messages.

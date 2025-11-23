@@ -7,10 +7,30 @@
 mod build;
 mod impls;
 
-#[cfg(feature = "reqwest")]
+#[cfg(all(
+    feature = "reqwest",
+    any(
+        feature = "address_validation",
+        feature = "directions",
+        feature = "distance_matrix",
+        feature = "elevation",
+        feature = "geocoding",
+        feature = "time_zone",
+        feature = "roads",
+        // Places (Legacy) API:
+        feature = "autocomplete",
+        feature = "places",
+        // Places (New) API:
+        feature = "places-new-place-details",
+        feature = "places-new-place-photos",
+    )
+))]
 mod get_request;
 
-#[cfg(feature = "reqwest")]
+#[cfg(all(feature = "reqwest", feature = "places-new-place-photos"))]
+mod get_binary_request;
+
+#[cfg(all(feature = "reqwest", feature = "places-new-core"))]
 mod post_request;
 
 #[cfg(feature = "reqwest")]

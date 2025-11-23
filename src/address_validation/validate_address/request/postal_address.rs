@@ -155,8 +155,8 @@ impl PostalAddress {
     /// This is used to validate the request before sending it to the Google
     /// Maps server:
     ///
-    ///     **“The total length of the fields in this input must not exceed 280
-    ///     characters.”**
+    /// > **“The total length of the fields in this input must not exceed 280
+    /// > characters.”**
     #[must_use] pub fn len(&self) -> usize {
         let mut len: usize = 0;
 

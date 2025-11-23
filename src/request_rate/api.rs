@@ -19,9 +19,17 @@ pub enum Api {
     Elevation,
     Geocoding,
     TimeZone,
-    Places,
     Roads,
     AddressValidation,
+    // Places API (Legacy)
+    Places,
+    // Places API (New)
+    PlacesNew,
+    Autocomplete,
+    NearbySearch,
+    PlaceDetails,
+    PlacePhoto,
+    TextSearch,
 } // enum
 
 // -----------------------------------------------------------------------------
@@ -39,6 +47,12 @@ impl std::convert::From<&Api> for String {
             Api::Places => Self::from("Places"),
             Api::Roads => Self::from("Roads"),
             Api::AddressValidation => Self::from("Address Validation"),
+            Api::PlacesNew => Self::from("Places (New)"),
+            Api::Autocomplete => Self::from("Autocomplete"),
+            Api::NearbySearch => Self::from("Nearby Search"),
+            Api::PlaceDetails => Self::from("Place Details"),
+            Api::PlacePhoto => Self::from("Place Photo"),
+            Api::TextSearch => Self::from("Text Search"),
         } // match
     } // fn
 } // impl

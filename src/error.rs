@@ -66,6 +66,18 @@ pub enum Error {
     Places(#[from] crate::places::Error),
 
     /// Error originating from the Google Maps
+    /// [Places API (New)](https://developers.google.com/maps/documentation/places/web-service)
+    /// client module or server.
+    #[cfg(feature = "places-new-core")]
+    #[diagnostic(code(google_maps::places))]
+    #[error("Places API (New) error")]
+    PlacesNew {
+        #[from]
+        #[source]
+        source: crate::places_new::Error,
+    },
+
+    /// Error originating from the Google Maps
     /// [Roads API](https://developers.google.com/maps/documentation/roads)
     /// client module or server.
     #[cfg(feature = "roads")]
@@ -101,7 +113,21 @@ pub enum Error {
     #[diagnostic(code(google_maps::http))]
     Http(#[from] HttpErrorStatus),
 
-    /// Error originating from the [simd-json](https://crates.io/crates/simd-json)
+    /// Invalid HTTP header value.
+    ///
+    /// Occurs when attempting to create an HTTP header with an invalid value,
+    /// typically due to non-ASCII characters or other formatting issues that
+    /// violate HTTP header specifications.
+    #[error("invalid HTTP header value for header '{header_name}'")]
+    #[diagnostic(
+        code(google_maps::invalid_header_value),
+        help("ensure header values contain only valid ASCII characters")
+    )]
+    InvalidHeaderValue {
+        header_name: String,
+    },
+
+    /// Error originating from the [serde_json](https://crates.io/crates/serde_json)
     /// crate.
     ///
     /// Generally this means that the Google Maps API returned data in an
@@ -213,6 +239,15 @@ impl ClassifiableError<'_, Self> for Error {
                     ClassifiedError::Permanent(self)
                 }, // Places
 
+            #[cfg(feature = "places-new-core")]
+            Self::PlacesNew { source, .. } => {
+                if source.classify().is_transient() {
+                    ClassifiedError::Transient(self)
+                } else {
+                    ClassifiedError::Permanent(self)
+                }
+            }, // PlacesNew
+
             #[cfg(feature = "roads")]
             Self::Roads(roads_error) =>
                 if roads_error.classify().is_transient() {
@@ -245,10 +280,12 @@ impl ClassifiableError<'_, Self> for Error {
                     ClassifiedError::Permanent(self)
                 }, // Http
 
+            Self::InvalidHeaderValue { .. } => ClassifiedError::Permanent(self),
+
             Self::Json(_json_error) => ClassifiedError::Permanent(self),
 
             #[cfg(feature = "polyline")]
             Self::Polyline(_polyline_error) => ClassifiedError::Permanent(self),
-        } // match
-    } // fn
-} // impl
+        }
+    }
+}

@@ -24,7 +24,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 ///   the same fields. Place Search requests return a subset of the fields that
 ///   are returned by Place Details requests. If the field you want is not
 ///   returned by Place Search, you can use Place Search to get a `place_id`,
-///    then use that Place ID to make a Place Details request. For more
+///   then use that Place ID to make a Place Details request. For more
 ///   information on the fields that are unavailable in a Place Search request,
 ///   see [Places API fields
 ///   support](https://developers.google.com/maps/documentation/places/web-service/place-data-fields#places-api-fields-support).
@@ -42,8 +42,7 @@ pub enum Field {
     Icon = 5,
     IconMaskBaseUri = 6,
     IconBackgroundColor = 8,
-    #[default]
-    Name = 9,
+    #[default] Name = 9,
     Photo = 10,
     PlaceId = 11,
     PlusCode = 12,
@@ -346,5 +345,5 @@ impl Field {
             .map(String::from)
             .collect::<Vec<String>>()
             .join(",")
-    } // fn
-} // impl
+    }
+}

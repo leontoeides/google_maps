@@ -10,6 +10,7 @@ pub(super) mod request_query;
 mod end_point;
 mod query_string;
 mod request_body;
+mod request_headers;
 mod validatable;
 
 #[cfg(feature = "reqwest")]

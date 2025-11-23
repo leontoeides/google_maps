@@ -18,6 +18,9 @@ mod execute;
 #[cfg(feature = "reqwest")]
 mod get;
 
+#[cfg(feature = "reqwest")]
+mod request_headers;
+
 // -----------------------------------------------------------------------------
 
 use crate::elevation::Locations;

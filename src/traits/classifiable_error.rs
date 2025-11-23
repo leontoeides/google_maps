@@ -14,7 +14,7 @@ pub trait ClassifiableError<'a, E> {
     /// This classification will, in turn, be used to decide whether the request
     /// should be retried or not.
      fn classify(&self) -> ClassifiedError<'_, E>;
-} // trait
+}
 
 #[cfg(feature = "reqwest")]
 impl ClassifiableError<'_, Self> for reqwest::Error {
@@ -30,9 +30,9 @@ impl ClassifiableError<'_, Self> for reqwest::Error {
             ClassifiedError::Transient(self)
         } else {
             ClassifiedError::Permanent(self)
-        } // if
-    } // fn
-} // impl
+        }
+    }
+}
 
 // -----------------------------------------------------------------------------
 
@@ -56,19 +56,19 @@ impl ClassifiableError<'_, Self> for reqwest::StatusCode {
             // Any other type of error is considered permanent, and should not
             // be re-tried:
             ClassifiedError::Permanent(self)
-        } // if
-    } // fn
-} // impl
+        }
+    }
+}
 
 // -----------------------------------------------------------------------------
 
 impl ClassifiableError<'_, Self> for serde_json::Error {
-    /// Classifies a [serde_json](https://crates.io/crates/serde_json) error as a
-    /// `Transient` error or `Permanent` error.
+    /// Classifies a [serde_json](https://crates.io/crates/serde_json) error as
+    /// a `Transient` error or `Permanent` error.
     ///
     /// This classification will, in turn, be used to decide whether the HTTP
     /// request should be retried or not.
     fn classify(&self) -> ClassifiedError<'_, Self> {
         ClassifiedError::Permanent(self)
-    } // fn
-} // impl
+    }
+}

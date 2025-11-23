@@ -31,4 +31,4 @@ pub trait Validatable {
     ///   routes if waypoints have been set. This will cause a validation
     ///   failure.
     fn validate(&self) -> Result<(), crate::Error>;
-} // trait Validatable
+}

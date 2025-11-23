@@ -16,7 +16,7 @@ Configure the dependencies in your project's `Cargo.toml` file:
 
 ```toml
 [dependencies]
-google_maps = "3.8"
+google_maps = "3.9"
 ```
 
 Optionally, add `rust_decimal = "1"` and `rust_decimal_macros = "1"` for access to the `dec!` macro. This macro can be used to define decimal numbers in your program. 
@@ -32,12 +32,10 @@ Additionally, usage of rustls for Reqwest is supported.
 ### Google Maps Client Feature Flags:
 
 * `address_validation` ‧ includes Google Maps Address Validation API
-* `autocomplete` ‧ includes Google Maps Places autocomplete API
 * `directions` ‧ includes Google Maps Directions API
 * `distance_matrix` ‧ includes Google Maps Distance Matrix API
 * `elevation` ‧ includes Google Maps Elevation API
 * `geocoding` ‧ includes Google Maps Geocoding API
-* `places` ‧ includes Google Maps Places API
 * `roads` ‧ includes Google Maps Roads API
 * `time_zone` ‧ includes Google Maps Time Zone API
 * `reqwest` ‧ uses [reqwest](https://crates.io/crates/reqwest) for
@@ -47,6 +45,20 @@ Additionally, usage of rustls for Reqwest is supported.
 * `geo` ‧ support for the rust [geo](https://crates.io/crates/geo) ecosystem
 * `polyline` ‧ allows easy type conversions from a `Route` or `Step` to a geo
   [LineString](https://docs.rs/geo-types/0.7.13/geo_types/geometry/struct.LineString.html)
+
+#### Google Maps Places API (New) Features
+
+* `places-new` ‧ includes all Google Maps Places API (New) services
+* `places-new-autocomplete` ‧ Autocomplete service
+* `places-new-nearby-search` ‧ Nearby Search service
+* `places-new-place-details` ‧ Place Details service
+* `places-new-place-photos` ‧ Place Photos service
+* `places-new-text-search` ‧ Text Search service
+
+#### Google Maps Places API (Legacy) Features
+
+* `autocomplete` ‧ includes Google Maps Places API (Legacy) Autocomplete service
+* `places` ‧ includes Google Maps Places API (Legacy)
 
 Note: the `autocomplete` feature covers the Places API autocomplete-related services:
 [Place Autocomplete requests](https://docs.rs/google_maps/latest/google_maps/prelude/struct.ClientSettings.html#method.place_autocomplete)
@@ -58,11 +70,13 @@ All other Places API services are covered by the `places` feature.
 For use with `reqwest` only.
 
 * `reqwest-native-tls` ‧ Enables TLS functionality provided by `native-tls`.
-* `reqwest-rustls` ‧ Enables TLS functionality provided by `rustls`.
+* `reqwest-rustls-tls` ‧ Enables TLS functionality provided by `rustls`.
 
 ### Default Feature Flags
 
-By default, the Google Maps client includes all implemented Google Maps APIs. Reqwest will secure the connection using the system-native TLS (`native-tls`), and has gzip compression enabled (`gzip`).
+By default, the Google Maps client includes all implemented Google Maps APIs. Reqwest will secure
+the connection using the system-native TLS (`native-tls`), and has gzip compression
+enabled (`gzip`).
 
 ```toml
 default = [
@@ -73,11 +87,8 @@ default = [
 	"elevation",
 	"geocoding",
 	"time_zone",
-	# `autocomplete` covers the Places API autocomplete-related services.
-	# All other Places API services are under `places` feature.
-	"autocomplete",
 	"roads",
-	"places",
+	"places-new",
 
 	# reqwest default features:
 	"reqwest",
@@ -96,19 +107,14 @@ default = [
 
 #### Feature flag usage example
 
-This example will only include the Google Maps Directions API. Reqwest will secure the connection using the Rustls library, and has brotli compression enabled.
+This example will only include the Google Maps Directions API. Reqwest will secure the connection
+using the Rustls library, and has brotli compression enabled.
 
 ```toml
-google_maps = {
-	version = "3.8",
-	default-features = false,
-	features = [
-		"directions",
-		"reqwest",
-		"reqwest-rustls",
-		"reqwest-brotli"
-	]
-}
+[dependencies.google_maps]
+version = "3.9"
+default-features = false
+features = ["directions", "reqwest", "reqwest-rustls-tls", "reqwest-brotli"]
 ```
 
 # Release Notes
@@ -118,6 +124,129 @@ The [full changelog is available here](https://github.com/leontoeides/google_map
 Releases [are available on GitHub](https://github.com/leontoeides/google_maps/releases).
 
 # Examples
+
+## Autocomplete
+
+Autocomplete (New) is a web service that returns place predictions and query predictions in response
+to an HTTP request. In the request, specify a text search string and geographic bounds that controls
+the search area.
+
+Autocomplete (New) can match on full words and substrings of the input, resolving place names,
+addresses, and plus codes. Applications can therefore send queries as the user types, to provide
+on-the-fly place and query predictions.
+
+```rust
+let google_maps_client = google_maps::Client::try_new("YOUR_API_KEY_HERE")?;
+
+let response = google_maps_client
+    .autocomplete("pizza")
+    .included_primary_types(vec![google_maps::places_new::PlaceType::Restaurant])
+    .execute()
+    .await?;
+
+for suggestion in &response {
+    println!("{}", suggestion.to_html("mark"));
+}
+
+let response = google_maps_client
+    .next_autocomplete("pizza sicilian", response)
+    .await?;
+
+for suggestion in response {
+    println!("{}", suggestion.to_html("b"));
+}
+```
+
+## Text Search
+
+Text Search (New) returns information about a set of places based on a string (for example, "pizza
+in New York" or "shoe stores near Ottawa" or "123 Main Street").
+
+```rust
+let google_maps_client = google_maps::Client::try_new("YOUR_API_KEY_HERE")?;
+
+let response = google_maps_client
+    .text_search("Gas in Edmonton, Alberta")
+    .field_mask(google_maps::places_new::FieldMask::All)
+    .execute()
+    .await?;
+
+for place in response {
+    println!("{place:#?}");
+}
+```
+
+## Nearby Search
+
+A Nearby Search (New) request takes one or more place types, and returns a list of matching places
+within the specified area.
+
+```rust
+// Restaurants within a 5,000 m radius of the Bowker Building in Edmonton
+let response = google_maps_client
+    .nearby_search((53.53666, -113.50795, 5_000.0))?
+    .field_mask(google_maps::places_new::FieldMask::All)
+    .included_primary_types(vec![google_maps::places_new::PlaceType::Restaurant])
+    .execute()
+    .await?;
+
+for place in response {
+    println!("{place:#?}");
+}
+```
+
+## Place Details
+
+Once you have a place ID, you can request more details about a particular establishment or point of
+interest by initiating a Place Details (New) request.
+
+A Place Details (New) request returns more comprehensive information about the indicated place such
+as its complete address, phone number, user rating and reviews.
+
+There are many ways to obtain a place ID. You can use:
+
+* Text Search (New) or Nearby Search (New)
+* Geocoding API
+* Routes API
+* Address Validation API
+* Autocomplete (New)
+
+```rust
+let google_maps_client = google_maps::Client::try_new("YOUR_API_KEY_HERE")?;
+
+let place = google_maps_client
+    .place_details("ChIJ36QT7n8qz0wRDqVZ_UBlUlQ")?
+    .field_mask(google_maps::places_new::FieldMask::All)
+    .execute()
+    .await?;
+
+println!("{place:#?}");
+```
+
+## Place Photos
+
+The Place Photos (New) service is a read-only API that lets you add high quality photographic
+content to your application. Place Photos (New) gives you access to the millions of photos stored in
+the Places database.
+
+When you get place information using a Place Details (New), Nearby Search (New), or Text Search
+(New) request, you can also request photo resources for relevant photographic content. Using Place
+Photos (New), you can then access the referenced photos and resize the image to the optimal size for
+your application.
+
+```rust
+for place in response.into_iter().take(3) {
+    // Download and display photo as ASCII art. `places-new-ascii-art` feature must be enabled
+    if let Ok(photo) = google_maps_client
+        .place_photos_image(&place)?
+        .max_width_px(1_024)
+        .execute()
+        .await
+    {
+        println!("{}", photo.display_ansi(std::num::NonZero::new(180).unwrap())?);
+    }
+}
+```
 
 ## Address Validation
 

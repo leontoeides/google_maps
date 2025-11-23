@@ -1,62 +1,82 @@
 [package]
 name = "google_maps"
-version = "3.8.3"
+version = "3.9.0"
 authors = ["Dylan Bowker <dylan.bowker@arkiteq.io>"]
 edition = "2021"
-categories = ["api-bindings"]
+rust-version = "1.76.0"
+license = "MIT OR Apache-2.0"
 description = "An unofficial Google Maps Platform client library for the Rust programming language."
 documentation = "https://docs.rs/google_maps"
-keywords = ["directions", "distance", "elevation", "geocoding", "timezone"]
-license = "MIT OR Apache-2.0"
-publish = true
-readme = "README.md"
 repository = "https://github.com/leontoeides/google_maps"
-rust-version = "1.76.0"
+readme = "README.md"
+keywords = ["directions", "distance", "elevation", "geocoding", "timezone"]
+categories = ["api-bindings"]
+publish = true
 
 [lib]
 doctest = false
 
+# =============================================================================
+# Features
+# =============================================================================
+
 [features]
 default = [
-	# google_maps default features:
 	"address_validation",
 	"directions",
 	"distance_matrix",
 	"elevation",
 	"geocoding",
-	"time_zone",
-	# `autocomplete` covers the Places API autocomplete-related services.
-	# All other Places API services are under `places` feature.
-	"autocomplete",
-	"places",
 	"roads",
-
-	# reqwest default features:
+	"time_zone",
+	"places-new",
 	"reqwest",
 	"reqwest-default-tls",
 	"reqwest-http2",
 	"reqwest-brotli",
-
-	# rust_decimal default features:
 	"decimal-serde",
 ]
-# google_maps features:
-autocomplete = []
+
+# Core APIs
+tracing-instrumentation = []
+address_validation = ["bon", "getset", "strum", "strum_macros"]
 directions = ["chrono", "chrono-tz"]
 distance_matrix = ["chrono", "chrono-tz"]
 elevation = []
 geocoding = []
-places = ["chrono", "chrono-tz"]
 roads = []
 time_zone = ["chrono", "chrono-tz"]
-address_validation = ["bon", "getset", "strum", "strum_macros"]
-# geo features:
+
+# Places API (Legacy)
+places = ["chrono", "chrono-tz"]
+autocomplete = []
+
+# Places API (New)
+places-new = [
+	"places-new-core",
+	"places-new-autocomplete",
+	"places-new-nearby-search",
+	"places-new-place-details",
+	"places-new-place-photos",
+	"places-new-text-search",
+]
+places-new-core = ["bon", "getset", "strum", "strum_macros", "rust_iso3166", "icu_locale", "jiff", "iso_currency", "url"]
+places-new-autocomplete = ["places-new-core", "uuid"]
+places-new-nearby-search = ["places-new-core"]
+places-new-place-details = ["places-new-core", "uuid"]
+places-new-place-photos = ["places-new-core"]
+places-new-text-search = ["places-new-core"]
+places-new-ascii-art = ["artem", "image"]
+
+# Geo
 geo = ["geo-types"]
 polyline = ["dep:polyline"]
-# reqwest features:
+
+# Reqwest Core
 reqwest = ["dep:reqwest", "dep:backon", "dep:futures", "dep:stream_throttle"]
 enable-reqwest = ["reqwest"]
-reqwest-http2 = ["reqwest/http2"]
+
+# Reqwest TLS
 reqwest-default-tls = ["reqwest/default-tls"]
 reqwest-native-tls = ["reqwest/native-tls"]
 reqwest-native-tls-vendored = ["reqwest/native-tls-vendored"]
@@ -65,6 +85,9 @@ reqwest-rustls-tls = ["reqwest/rustls-tls"]
 reqwest-rustls-tls-manual-roots = ["reqwest/rustls-tls-manual-roots"]
 reqwest-rustls-tls-webpki-roots = ["reqwest/rustls-tls-webpki-roots"]
 reqwest-rustls-tls-native-roots = ["reqwest/rustls-tls-native-roots"]
+
+# Reqwest Options
+reqwest-http2 = ["reqwest/http2"]
 reqwest-blocking = ["reqwest/blocking"]
 reqwest-charset = ["reqwest/charset"]
 reqwest-cookies = ["reqwest/cookies"]
@@ -77,15 +100,17 @@ reqwest-multipart = ["reqwest/multipart", "reqwest-middleware/multipart"]
 reqwest-stream = ["reqwest/stream"]
 reqwest-socks = ["reqwest/socks"]
 reqwest-hickory-dns = ["reqwest/hickory-dns"]
-# reqwest-middleware features:
-reqwest-middleware = ["dep:reqwest-middleware", "dep:http", "dep:anyhow"] # "reqwest-maybe-middleware/middleware"
+
+# Reqwest Middleware
+reqwest-middleware = ["dep:reqwest-middleware", "dep:http", "dep:anyhow"]
 enable-reqwest-middleware = ["reqwest-middleware"]
 reqwest-middleware-multipart = ["reqwest-middleware/multipart", "reqwest-multipart"]
 reqwest-middleware-json = ["reqwest-middleware/json", "reqwest-json"]
 reqwest-middleware-charset = ["reqwest-middleware/charset", "reqwest-charset"]
 reqwest-middleware-http2 = ["reqwest-middleware/http2", "reqwest-http2"]
 reqwest-middleware-rustls-tls = ["reqwest-middleware/rustls-tls", "reqwest-rustls-tls"]
-# rust_decimal features:
+
+# Decimal
 decimal-serde = ["rust_decimal/serde"]
 decimal-serde-float = ["rust_decimal/serde-float"]
 decimal-serde-str = ["rust_decimal/serde-str"]
@@ -94,10 +119,15 @@ decimal-serde-with-float = ["rust_decimal/serde-with-float"]
 decimal-serde-with-str = ["rust_decimal/serde-with-str"]
 decimal-serde-with-arbitrary-precision = ["rust_decimal/serde-with-arbitrary-precision"]
 
+# =============================================================================
+# Dependencies
+# =============================================================================
+
 [dependencies]
+# Core
 miette = "7.6"
 percent-encoding = "2.3"
-phf = { version = "0.11", features = ["macros"] }
+phf = { version = "0.13", features = ["macros"] }
 rust_decimal = { version = "1", features = ["serde", "serde-float"] }
 rust_decimal_macros = "1"
 serde = { version = "1.0", features = ["derive"] }
@@ -105,38 +135,42 @@ serde_json = "1.0"
 thiserror = "2.0"
 tracing = { version = "0.1", features = ["log"] }
 
-# `directions`, `distance_matrix`, `places`, and `time_zone` features:
+# Time (directions, distance_matrix, places, time_zone)
 chrono = { version = "0.4", optional = true, default-features = false, features = ["clock", "serde", "std"] }
 chrono-tz = { version = "0.10", optional = true, features = ["serde"] }
 
-# `address_validation` feature:
-bon = { version = "3.6", optional = true }
+# Builders (address_validation, places-new)
+bon = { version = "3.8", optional = true }
 getset = { version = "0.1", optional = true }
-strum = { version = "0.27", optional = true }
+strum = { version = "0.27", optional = true, features = ["derive"] }
 strum_macros = { version = "0.27", optional = true }
 
-# `reqwest` feature:
-backon = { version = "1.5", optional = true, default-features = false, features = ["tokio-sleep"] }
+# Places API (New)
+icu_locale = { version = "2.1", optional = true, features = ["serde"] }
+iso_currency = { version = "0.5", optional = true, features = ["with-serde"] }
+jiff = { version = "0.2", optional = true, features = ["serde"] }
+rust_iso3166 = { version = "0.1", optional = true }
+url = { version = "2.5", optional = true, features = ["serde"] }
+uuid = { version = "1.18", optional = true, features = ["serde", "v4"] }
+
+# ASCII Art
+artem = { version = "3.0", optional = true }
+image = { version = "0.25", optional = true, features = ["jpeg", "png", "webp"] }
+
+# HTTP Client
+backon = { version = "1.6", optional = true, default-features = false, features = ["tokio-sleep"] }
 futures = { version = "0.3", optional = true }
 reqwest = { version = "0.12", optional = true, default-features = false }
 stream_throttle = { version = "0.5", optional = true }
 
-# `geo` feature:
-geo-types = { version = "0.7", optional = true, features = ["serde"] }
-
-# `polyline` feature:
-polyline = { version = "0.11", optional = true }
-
-# `reqwest-middleware` feature:
+# HTTP Middleware
+anyhow = { version = "1.0", optional = true }
+http = { version = "1", optional = true }
 reqwest-middleware = { version = "0.4", optional = true }
 
-# The author of `reqwest-maybe-middleware` is not currently merging PR requests
-# or updating the crate. This crate has been forked and integrated into
-# `google_maps`. Hopefully this is temporary.
-# reqwest-maybe-middleware = "0.3"
-# Dependencies for our integrated `reqwest-maybe-middleware`:
-http = { version = "1", optional = true }
-anyhow = { version = "1.0", optional = true }
+# Geo
+geo-types = { version = "0.7", optional = true, features = ["serde"] }
+polyline = { version = "0.11", optional = true }
 
 [badges]
 maintenance = { status = "passively-maintained" }
