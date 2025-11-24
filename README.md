@@ -49,11 +49,11 @@ Additionally, usage of rustls for Reqwest is supported.
 #### Google Maps Places API (New) Features
 
 * `places-new` ‧ includes all Google Maps Places API (New) services
-* `places-new-autocomplete` ‧ Autocomplete service
-* `places-new-nearby-search` ‧ Nearby Search service
-* `places-new-place-details` ‧ Place Details service
-* `places-new-place-photos` ‧ Place Photos service
-* `places-new-text-search` ‧ Text Search service
+* `places-new-autocomplete` ‧ Autocomplete service only
+* `places-new-nearby-search` ‧ Nearby Search service only
+* `places-new-place-details` ‧ Place Details service only
+* `places-new-place-photos` ‧ Place Photos service only
+* `places-new-text-search` ‧ Text Search service only
 
 #### Google Maps Places API (Legacy) Features
 
@@ -98,10 +98,6 @@ default = [
 
 	# rust_decimal default features:
 	"decimal-serde",
-
-	# simd-json default features:
-	"simd-json-beef",
-	"simd-json-known-key",
 ]
 ```
 
@@ -182,6 +178,8 @@ A Nearby Search (New) request takes one or more place types, and returns a list 
 within the specified area.
 
 ```rust
+let google_maps_client = google_maps::Client::try_new("YOUR_API_KEY_HERE")?;
+
 // Restaurants within a 5,000 m radius of the Bowker Building in Edmonton
 let response = google_maps_client
     .nearby_search((53.53666, -113.50795, 5_000.0))?
@@ -243,7 +241,9 @@ for place in response.into_iter().take(3) {
         .execute()
         .await
     {
-        println!("{}", photo.display_ansi(std::num::NonZero::new(180).unwrap())?);
+        println!("{}", photo.display_ansi(
+            std::num::NonZero::new(180).unwrap() // 180 columns wide
+        )?);
     }
 }
 ```

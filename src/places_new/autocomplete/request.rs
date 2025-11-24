@@ -1,7 +1,7 @@
 #![allow(clippy::ref_option, reason = "for the getset crate")]
 
-use crate::places_new::types::request::{LocationBias, LocationRestriction};
-use crate::places_new::{LatLng, PlaceType};
+use crate::places_new::types::request::{LocationBias, LocationRestriction, PlaceTypeSet};
+use crate::places_new::LatLng;
 use icu_locale::Locale;
 use rust_iso3166::CountryCode;
 
@@ -75,10 +75,10 @@ pub struct Request {
     /// only (regions), or only (cities). A Place is only returned if its primary type is included
     /// in this list. Up to 5 values can be specified. If no types are specified, all Place types
     /// are returned.
-    #[serde(default, skip_serializing_if = "Vec::is_empty")]
-    #[builder(default)]
+    #[serde(default, skip_serializing_if = "PlaceTypeSet::is_empty")]
+    #[builder(default, into)]
     #[getset(get = "pub", set = "pub", get_mut = "pub")]
-    pub included_primary_types: Vec<PlaceType>,
+    pub included_primary_types: PlaceTypeSet,
 
     /// Only include results in the specified regions.
     ///

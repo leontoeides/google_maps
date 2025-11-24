@@ -1,9 +1,7 @@
 #![allow(clippy::ref_option, reason = "for the getset crate")]
 
-// Imports
-
 use crate::places_new::FieldMask;
-use crate::places_new::types::request::{LocationRestriction, RankPreference};
+use crate::places_new::types::request::{LocationRestriction, PlaceTypeSet, RankPreference};
 use icu_locale::Locale;
 use rust_iso3166::CountryCode;
 
@@ -107,10 +105,10 @@ pub struct Request {
     ///
     /// > ℹ️ If both `included_types` and `included_primary_types` are set, results must satisfy at
     /// > least one condition from each list.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    #[builder(into)]
+    #[serde(default, skip_serializing_if = "PlaceTypeSet::is_empty")]
+    #[builder(default, into)]
     #[getset(get = "pub", set = "pub", get_mut = "pub")]
-    pub included_types: Option<Vec<crate::places_new::PlaceType>>,
+    pub included_types: PlaceTypeSet,
 
     /// Place types to exclude from results from
     /// [Table A](https://developers.google.com/maps/documentation/places/web-service/place-types#table-a).
@@ -125,10 +123,10 @@ pub struct Request {
     ///
     /// > ⚠️ If a type appears in both `included_types` and `excluded_types`, the API returns an
     /// > `INVALID_REQUEST` error.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    #[builder(into)]
+    #[serde(default, skip_serializing_if = "PlaceTypeSet::is_empty")]
+    #[builder(default, into)]
     #[getset(get = "pub", set = "pub", get_mut = "pub")]
-    pub excluded_types: Option<Vec<crate::places_new::PlaceType>>,
+    pub excluded_types: PlaceTypeSet,
 
     /// Primary place types to include in results from
     /// [Table A](https://developers.google.com/maps/documentation/places/web-service/place-types#table-a).
@@ -159,10 +157,10 @@ pub struct Request {
     ///
     /// > ℹ️ If both `included_types` and `included_primary_types` are set, results must satisfy at
     /// > least one condition from each list.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    #[builder(into)]
+    #[serde(default, skip_serializing_if = "PlaceTypeSet::is_empty")]
+    #[builder(default, into)]
     #[getset(get = "pub", set = "pub", get_mut = "pub")]
-    pub included_primary_types: Option<Vec<crate::places_new::PlaceType>>,
+    pub included_primary_types: PlaceTypeSet,
 
     /// Primary place types to exclude from results from
     /// [Table A](https://developers.google.com/maps/documentation/places/web-service/place-types#table-a).
@@ -185,10 +183,10 @@ pub struct Request {
     ///
     /// > ⚠️ If a type appears in both `included_primary_types` and `excluded_primary_types`, the
     /// > API returns an `INVALID_ARGUMENT` error.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    #[builder(into)]
+    #[serde(default, skip_serializing_if = "PlaceTypeSet::is_empty")]
+    #[builder(default, into)]
     #[getset(get = "pub", set = "pub", get_mut = "pub")]
-    pub excluded_primary_types: Option<Vec<crate::places_new::PlaceType>>,
+    pub excluded_primary_types: PlaceTypeSet,
 
     /// Language for results.
     ///
@@ -304,10 +302,10 @@ impl Request {
         Self {
             location_restriction: location_restriction.into(),
             field_mask: field_mask.into(),
-            included_types: None,
-            excluded_types: None,
-            included_primary_types: None,
-            excluded_primary_types: None,
+            included_types: PlaceTypeSet::default(),
+            excluded_types: PlaceTypeSet::default(),
+            included_primary_types: PlaceTypeSet::default(),
+            excluded_primary_types: PlaceTypeSet::default(),
             language: None,
             max_result_count: None,
             rank_preference: None,

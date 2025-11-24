@@ -38,34 +38,38 @@
 //! ### Google Maps Client Feature Flags:
 //!
 //! * `address_validation` ‧ includes Google Maps Address Validation API
-//! * `autocomplete` ‧ includes Google Maps Places autocomplete API
 //! * `directions` ‧ includes Google Maps Directions API
 //! * `distance_matrix` ‧ includes Google Maps Distance Matrix API
 //! * `elevation` ‧ includes Google Maps Elevation API
 //! * `geocoding` ‧ includes Google Maps Geocoding API
-//! * `places` ‧ includes Google Maps Places API
 //! * `roads` ‧ includes Google Maps Roads API
 //! * `time_zone` ‧ includes Google Maps Time Zone API
-//! * `reqwest` ‧ uses [reqwest](https://crates.io/crates/reqwest) for querying
-//!   the Google Maps API
+//! * `reqwest` ‧ uses [reqwest](https://crates.io/crates/reqwest) for
+//!   querying the Google Maps API
 //! * `reqwest-middleware` ‧ uses [reqwest-middleware](https://crates.io/crates/reqwest-middleware)
 //!   for querying the Google Maps API
 //! * `geo` ‧ support for the rust [geo](https://crates.io/crates/geo) ecosystem
 //! * `polyline` ‧ allows easy type conversions from a `Route` or `Step` to a geo
 //!   [LineString](https://docs.rs/geo-types/0.7.13/geo_types/geometry/struct.LineString.html)
 //!
-//! Note: the `autocomplete` feature covers the Places API autocomplete-related
-//! services:
+//! #### Google Maps Places API (New) Features
+//!
+//! * `places-new` ‧ includes all Google Maps Places API (New) services
+//! * `places-new-autocomplete` ‧ Autocomplete service only
+//! * `places-new-nearby-search` ‧ Nearby Search service only
+//! * `places-new-place-details` ‧ Place Details service only
+//! * `places-new-place-photos` ‧ Place Photos service only
+//! * `places-new-text-search` ‧ Text Search service only
+//!
+//! #### Google Maps Places API (Legacy) Features
+//!
+//! * `autocomplete` ‧ includes Google Maps Places API (Legacy) Autocomplete service
+//! * `places` ‧ includes Google Maps Places API (Legacy)
+//!
+//! Note: the `autocomplete` feature covers the Places API autocomplete-related services:
 //! [Place Autocomplete requests](https://docs.rs/google_maps/latest/google_maps/prelude/struct.ClientSettings.html#method.place_autocomplete)
 //! and [Query Autocomplete requests](https://docs.rs/google_maps/latest/google_maps/prelude/struct.ClientSettings.html#method.query_autocomplete).
 //! All other Places API services are covered by the `places` feature.
-//!
-//! ### Reqwest Feature Flags
-//!
-//! For use with `reqwest` only.
-//!
-//! * `reqwest-native-tls` ‧ Enables TLS functionality provided by `native-tls`.
-//! * `reqwest-rustls-tls` ‧ Enables TLS functionality provided by `rustls`.
 //!
 //! ### Default Feature Flags
 //!
@@ -93,10 +97,6 @@
 //!
 //!     # rust_decimal default features:
 //!     "decimal-serde",
-//!
-//!     # simd-json default features:
-//!     "simd-json-beef",
-//!     "simd-json-known-key",
 //! ]
 //! ```
 //!
@@ -186,6 +186,8 @@
 //! places within the specified area.
 //!
 //! ```rust
+//! let google_maps_client = google_maps::Client::try_new("YOUR_API_KEY_HERE")?;
+//!
 //! // Restaurants within a 5,000 m radius of the Bowker Building in Edmonton
 //! let response = google_maps_client
 //!     .nearby_search((53.53666, -113.50795, 5_000.0))?
@@ -247,7 +249,9 @@
 //!         .execute()
 //!         .await
 //!     {
-//!         println!("{}", photo.display_ansi(std::num::NonZero::new(180).unwrap())?);
+//!         println!("{}", photo.display_ansi(
+//!             std::num::NonZero::new(180).unwrap() // 180 columns wide
+//!         )?);
 //!     }
 //! }
 //! ```

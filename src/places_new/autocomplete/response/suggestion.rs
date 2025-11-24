@@ -147,6 +147,16 @@ impl Suggestion {
         }
     }
 
+    /// Returns the Place ID associated with the suggestion. If it's a place prediction this will
+    /// return `Some`, if it's a query prediction it will return `None`.
+    #[must_use]
+    pub fn place_id(&self) -> Option<&str> {
+        match self {
+            Self::PlacePrediction(place) => Some(place.place_id.as_str()),
+            Self::QueryPrediction(_query) => None,
+        }
+    }
+
     /// Formats the suggestion with a custom formatter function.
     ///
     /// Applies a custom formatting function to the text, distinguishing between matched and

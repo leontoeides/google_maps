@@ -88,3 +88,12 @@ impl std::fmt::Display for LocalizedText {
         write!(f, "{}", self.text)
     }
 }
+
+impl Default for LocalizedText {
+    fn default() -> Self {
+        Self {
+            text: String::new(),
+            language: Locale::UNKNOWN,
+        }
+    }
+}

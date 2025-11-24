@@ -2,7 +2,7 @@
 
 use crate::places_new::FieldMask;
 use crate::places_new::nearby_search::Response;
-use crate::places_new::types::request::{LocationRestriction, RankPreference};
+use crate::places_new::types::request::{LocationRestriction, PlaceTypeSet, RankPreference};
 use icu_locale::Locale;
 use reqwest::header::HeaderMap;
 use rust_iso3166::CountryCode;
@@ -115,10 +115,10 @@ pub struct RequestWithClient<'c> {
     ///
     /// > ℹ️ If both `included_types` and `included_primary_types` are set, results must satisfy at
     /// > least one condition from each list.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    #[builder(into)]
+    #[serde(default, skip_serializing_if = "PlaceTypeSet::is_empty")]
+    #[builder(default, into)]
     #[getset(get = "pub", set = "pub", get_mut = "pub")]
-    pub included_types: Option<Vec<crate::places_new::PlaceType>>,
+    pub included_types: PlaceTypeSet,
 
     /// Place types to exclude from results from
     /// [Table A](https://developers.google.com/maps/documentation/places/web-service/place-types#table-a).
@@ -133,10 +133,10 @@ pub struct RequestWithClient<'c> {
     ///
     /// > ⚠️ If a type appears in both `included_types` and `excluded_types`, the API returns an
     /// > `INVALID_REQUEST` error.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    #[builder(into)]
+    #[serde(default, skip_serializing_if = "PlaceTypeSet::is_empty")]
+    #[builder(default, into)]
     #[getset(get = "pub", set = "pub", get_mut = "pub")]
-    pub excluded_types: Option<Vec<crate::places_new::PlaceType>>,
+    pub excluded_types: PlaceTypeSet,
 
     /// Primary place types to include in results from
     /// [Table A](https://developers.google.com/maps/documentation/places/web-service/place-types#table-a).
@@ -167,10 +167,10 @@ pub struct RequestWithClient<'c> {
     ///
     /// > ℹ️ If both `included_types` and `included_primary_types` are set, results must satisfy at
     /// > least one condition from each list.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    #[builder(into)]
+    #[serde(default, skip_serializing_if = "PlaceTypeSet::is_empty")]
+    #[builder(default, into)]
     #[getset(get = "pub", set = "pub", get_mut = "pub")]
-    pub included_primary_types: Option<Vec<crate::places_new::PlaceType>>,
+    pub included_primary_types: PlaceTypeSet,
 
     /// Primary place types to exclude from results from
     /// [Table A](https://developers.google.com/maps/documentation/places/web-service/place-types#table-a).
@@ -193,10 +193,10 @@ pub struct RequestWithClient<'c> {
     ///
     /// > ⚠️ If a type appears in both `included_primary_types` and `excluded_primary_types`, the
     /// > API returns an `INVALID_ARGUMENT` error.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    #[builder(into)]
+    #[serde(default, skip_serializing_if = "PlaceTypeSet::is_empty")]
+    #[builder(default, into)]
     #[getset(get = "pub", set = "pub", get_mut = "pub")]
-    pub excluded_primary_types: Option<Vec<crate::places_new::PlaceType>>,
+    pub excluded_primary_types: PlaceTypeSet,
 
     /// Language for results.
     ///
@@ -592,7 +592,7 @@ impl crate::traits::Validatable for &RequestWithClient<'_> {
         }
 
         // Helper to validate that all types in a vec are Table A
-        let validate_table_a = |types: &[crate::places_new::PlaceType], field_name: &str| {
+        let validate_table_a = |types: &PlaceTypeSet, field_name: &str| {
             for place_type in types {
                 if place_type.is_table_b() {
                     let debug = format!("{field_name}: vec![..., PlaceType::{place_type}, ...]");
@@ -624,63 +624,46 @@ impl crate::traits::Validatable for &RequestWithClient<'_> {
         }
 
         // Validate all type filter fields contain only Table A types
-        if let Some(types) = &self.included_types {
-            validate_table_a(types, "included_types")?;
-        }
-
-        if let Some(types) = &self.excluded_types {
-            validate_table_a(types, "excluded_types")?;
-        }
-
-        if let Some(types) = &self.included_primary_types {
-            validate_table_a(types, "included_primary_types")?;
-        }
-
-        if let Some(types) = &self.excluded_primary_types {
-            validate_table_a(types, "excluded_primary_types")?;
-        }
+        validate_table_a(&self.included_types, "included_types")?;
+        validate_table_a(&self.excluded_types, "excluded_types")?;
+        validate_table_a(&self.included_primary_types, "included_primary_types")?;
+        validate_table_a(&self.excluded_primary_types, "excluded_primary_types")?;
 
         // Check for conflicts between included_types and excluded_types
-        if let (Some(included), Some(excluded)) = (&self.included_types, &self.excluded_types) {
-            for place_type in included {
-                if excluded.contains(place_type) {
-                    let debug = format!(
-                        "included_types: vec![..., PlaceType::{place_type}, ...], \
-                         excluded_types: vec![..., PlaceType::{place_type}, ...]"
-                    );
-                    let span = (0, debug.len());
-                    return Err(
-                        crate::places_new::nearby_search::Error::ConflictingPlaceTypes {
-                            place_type: place_type.to_string(),
-                            debug,
-                            span: span.into(),
-                        }
-                        .into(),
-                    );
-                }
+        for place_type in &self.included_types {
+            if self.excluded_types.contains(place_type) {
+                let debug = format!(
+                    "included_types: vec![..., PlaceType::{place_type}, ...], \
+                     excluded_types: vec![..., PlaceType::{place_type}, ...]"
+                );
+                let span = (0, debug.len());
+                return Err(
+                    crate::places_new::nearby_search::Error::ConflictingPlaceTypes {
+                        place_type: place_type.to_string(),
+                        debug,
+                        span: span.into(),
+                    }
+                    .into(),
+                );
             }
         }
 
         // Check for conflicts between included_primary_types and excluded_primary_types
-        if let (Some(included), Some(excluded)) =
-            (&self.included_primary_types, &self.excluded_primary_types)
-        {
-            for place_type in included {
-                if excluded.contains(place_type) {
-                    let debug = format!(
-                        "included_primary_types: vec![..., PlaceType::{place_type}, ...], \
-                         excluded_primary_types: vec![..., PlaceType::{place_type}, ...]"
-                    );
-                    let span = (0, debug.len());
-                    return Err(
-                        crate::places_new::nearby_search::Error::ConflictingPrimaryPlaceTypes {
-                            place_type: place_type.to_string(),
-                            debug,
-                            span: span.into(),
-                        }
-                        .into(),
-                    );
-                }
+        for place_type in &self.included_primary_types {
+            if self.excluded_primary_types.contains(place_type) {
+                let debug = format!(
+                    "included_primary_types: vec![..., PlaceType::{place_type}, ...], \
+                     excluded_primary_types: vec![..., PlaceType::{place_type}, ...]"
+                );
+                let span = (0, debug.len());
+                return Err(
+                    crate::places_new::nearby_search::Error::ConflictingPrimaryPlaceTypes {
+                        place_type: place_type.to_string(),
+                        debug,
+                        span: span.into(),
+                    }
+                    .into(),
+                );
             }
         }
 

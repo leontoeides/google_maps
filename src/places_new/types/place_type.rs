@@ -78,12 +78,14 @@ use strum::{AsRefStr, Display, EnumIter, EnumString, FromRepr, IntoStaticStr};
 /// the response body. Address component types are subject to change.
 #[derive(
     // std
-    Copy,
     Clone,
+    Copy,
     Debug,
     Eq,
     Hash,
+    Ord,
     PartialEq,
+    PartialOrd,
     // serde
     Serialize,
     Deserialize,
