@@ -155,6 +155,17 @@ pub use crate::places_new::types::review::Review;
 pub use crate::places_new::types::time_zone::TimeZone;
 pub use crate::places_new::types::viewport::Viewport;
 
+#[cfg(any(feature = "places-new-autocomplete", feature = "places-new-nearby-search", feature = "places-new-text-search"))]
+pub use crate::places_new::types::request::Circle;
+#[cfg(any(feature = "places-new-autocomplete", feature = "places-new-nearby-search"))]
+pub use crate::places_new::types::request::PlaceTypeSet;
+#[cfg(any(feature = "places-new-autocomplete", feature = "places-new-text-search"))]
+pub use crate::places_new::types::request::LocationBias;
+#[cfg(any(feature = "places-new-autocomplete", feature = "places-new-nearby-search", feature = "places-new-text-search"))]
+pub use crate::places_new::types::request::LocationRestriction;
+#[cfg(any(feature = "places-new-nearby-search", feature = "places-new-text-search"))]
+pub use crate::places_new::types::request::RankPreference;
+
 // -------------------------------------------------------------------------------------------------
 //
 // Enumerations

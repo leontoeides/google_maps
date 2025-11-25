@@ -152,6 +152,7 @@
 //!     println!("{}", suggestion.text());
 //! }
 //!
+//! // User adds "sicilian" to pizza search:
 //! let response = google_maps_client
 //!     .next_autocomplete("pizza sicilian", response)
 //!     .await?;
