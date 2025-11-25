@@ -107,13 +107,17 @@ mod photo_request;
 pub use crate::places_new::place_photos::photo_request::PhotoRequest;
 
 mod image;
-pub use crate::places_new::place_photos::image::PhotoImage;
-pub use crate::places_new::place_photos::image::Response as ImageResponse;
+pub use crate::places_new::place_photos::image::{
+	PhotoImage,
+	Response as ImageResponse
+};
 #[cfg(feature = "reqwest")]
 pub use crate::places_new::place_photos::image::Request as ImageRequest;
 
 mod uri;
-pub use crate::places_new::place_photos::uri::Response as UriResponse;
-pub use crate::places_new::place_photos::uri::PhotoUri;
+pub use crate::places_new::place_photos::uri::{
+	PhotoUri,
+	Response as UriResponse
+};
 #[cfg(feature = "reqwest")]
 pub use crate::places_new::place_photos::uri::Request as UriRequest;

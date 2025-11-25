@@ -96,5 +96,7 @@ mod request;
 pub use crate::places_new::place_photos::image::request::Request;
 
 mod response;
-pub use crate::places_new::place_photos::image::response::Response;
-pub use crate::places_new::place_photos::image::response::PhotoImage;
+pub use crate::places_new::place_photos::image::response::{
+	Response,
+	PhotoImage
+};

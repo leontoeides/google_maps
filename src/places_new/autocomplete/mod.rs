@@ -126,13 +126,21 @@ pub use crate::places_new::autocomplete::request::Request;
 #[cfg(feature = "reqwest")]
 mod request_with_client;
 #[cfg(feature = "reqwest")]
-pub use crate::places_new::autocomplete::request_with_client::RequestWithClient;
-#[cfg(feature = "reqwest")]
-pub use crate::places_new::autocomplete::request_with_client::RequestWithClientBuilder;
+pub use crate::places_new::autocomplete::request_with_client::{
+	RequestWithClient,
+	RequestWithClientBuilder
+};
 
 mod response;
-pub use crate::places_new::autocomplete::response::Response;
-pub use crate::places_new::autocomplete::response::Suggestion;
+pub use crate::places_new::autocomplete::response::{
+	FormattableText,
+	PlacePrediction,
+	QueryPrediction,
+	Response,
+	StringRange,
+	StructuredFormat,
+	Suggestion
+};
 
 mod response_with_context;
 pub use crate::places_new::autocomplete::response_with_context::ResponseWithContext;

@@ -141,7 +141,7 @@ let response = google_maps_client
     .await?;
 
 for suggestion in &response {
-    println!("{}", suggestion.to_html("mark"));
+    println!("{}", suggestion.text());
 }
 
 let response = google_maps_client
@@ -149,7 +149,7 @@ let response = google_maps_client
     .await?;
 
 for suggestion in response {
-    println!("{}", suggestion.to_html("b"));
+    println!("{}", suggestion.to_html("mark"));
 }
 ```
 
@@ -213,7 +213,7 @@ There are many ways to obtain a place ID. You can use:
 let google_maps_client = google_maps::Client::try_new("YOUR_API_KEY_HERE")?;
 
 let place = google_maps_client
-    .place_details("ChIJ36QT7n8qz0wRDqVZ_UBlUlQ")?
+    .place_details("ChIJyZXV1jsioFMRC8PGIBAJbKA")?
     .field_mask(google_maps::places_new::FieldMask::All)
     .execute()
     .await?;

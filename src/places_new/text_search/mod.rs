@@ -88,7 +88,10 @@ mod error;
 pub use crate::places_new::text_search::error::Error;
 
 mod request;
-pub use crate::places_new::text_search::request::{EvOptions, Request};
+pub use crate::places_new::text_search::request::{
+	EvOptions,
+	Request
+};
 
 #[cfg(feature = "reqwest")]
 mod request_with_client;
