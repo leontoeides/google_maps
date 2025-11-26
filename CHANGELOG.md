@@ -3,6 +3,12 @@
 * Release notes are available on
   [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+# 3.9.1
+
+* 2025-11-25: Some types weren't properly exposed.
+
+* 2025-11-25: Additional type conversion traits implemented for convenience.
+
 # 3.9.0
 
 * 2025-11-23: Added support for Google Maps Places (New) API which is turned on

@@ -210,6 +210,9 @@ There are many ways to obtain a place ID. You can use:
 * Address Validation API
 * Autocomplete (New)
 
+You can also experiment using the [Place ID
+Finder](https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder)
+
 ```rust
 let google_maps_client = google_maps::Client::try_new("YOUR_API_KEY_HERE")?;
 
@@ -536,7 +539,7 @@ implemented, please contact me.
 
 This crate is expected to work well and have the more important Google Maps
 features implemented. It should work well because
-[serde](https://crates.io/crates/serde), [simd-json](https://crates.io/crates/simd-json)
+[serde](https://crates.io/crates/serde), [serde-json](https://crates.io/crates/serde-json)
 and, by default, [reqwest](https://crates.io/crates/reqwest) do most of the
 heavy lifting!
 

@@ -332,6 +332,17 @@ impl std::convert::From<LatLng> for String {
     }
 }
 
+#[cfg(any(
+    feature = "address_validation",
+    feature = "autocomplete",
+    feature = "directions",
+    feature = "distance_matrix",
+    feature = "elevation",
+    feature = "geocoding",
+    feature = "places",
+    feature = "roads",
+    feature = "time_zone"
+))]
 impl std::convert::From<crate::LatLng> for LatLng {
     /// Converts an owned `crate::LatLng` struct to a `crate::places_new::LatLng` struct.
     fn from(lat_lng: crate::LatLng) -> Self {
@@ -342,6 +353,17 @@ impl std::convert::From<crate::LatLng> for LatLng {
     }
 }
 
+#[cfg(any(
+    feature = "address_validation",
+    feature = "autocomplete",
+    feature = "directions",
+    feature = "distance_matrix",
+    feature = "elevation",
+    feature = "geocoding",
+    feature = "places",
+    feature = "roads",
+    feature = "time_zone"
+))]
 impl std::convert::From<&crate::LatLng> for LatLng {
     /// Converts a borrowed `&crate::LatLng` struct to a `crate::places_new::LatLng` struct.
     fn from(lat_lng: &crate::LatLng) -> Self {
