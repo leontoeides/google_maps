@@ -147,8 +147,10 @@ impl Suggestion {
         }
     }
 
-    /// Returns the Place ID associated with the suggestion. If it's a place prediction this will
-    /// return `Some`, if it's a query prediction it will return `None`.
+    /// Returns the Place ID associated with the suggestion, if any.
+    ///
+    /// * If the suggestion is a a place prediction this will return `Some`
+    /// * If it's a query prediction it will return `None`
     #[must_use]
     pub fn place_id(&self) -> Option<&str> {
         match self {

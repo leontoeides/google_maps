@@ -50,8 +50,8 @@ impl LocationBias {
     /// Use this to bias results toward a map viewport area without excluding results outside the
     /// viewport.
     #[must_use]
-    pub const fn rectangle(viewport: Viewport) -> Self {
-        Self::Rectangle(viewport)
+    pub fn rectangle(viewport: impl Into<Viewport>) -> Self {
+        Self::Rectangle(viewport.into())
     }
 
     /// Creates a circular location bias from a circle.
@@ -59,8 +59,8 @@ impl LocationBias {
     /// Use this to bias results toward a point and radius without excluding results outside the
     /// circle.
     #[must_use]
-    pub const fn circle(circle: Circle) -> Self {
-        Self::Circle(circle)
+    pub fn circle(circle: impl Into<Circle>) -> Self {
+        Self::Circle(circle.into())
     }
 }
 

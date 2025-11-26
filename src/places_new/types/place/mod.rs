@@ -903,6 +903,15 @@ impl Place {
         self.good_for_watching_sports
     }
 
+    /// An alias to `place.id()` for convenience and consistency.
+    ///
+    /// `place_id` is the widely-used term and arguably clearer than `id`.
+    #[must_use]
+    #[inline]
+    pub fn place_id(&self) -> Option<&str> {
+        self.id.as_deref()
+    }
+
     /// Gets the resource name without the places/ prefix.
     ///
     /// Extracts just the place ID portion from the resource name for use in APIs that expect only

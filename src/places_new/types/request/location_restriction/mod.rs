@@ -49,8 +49,8 @@ impl LocationRestriction {
     /// Use this to strictly limit results to a viewport area, excluding all results outside the
     /// viewport.
     #[must_use]
-    pub const fn rectangle(viewport: Viewport) -> Self {
-        Self::Rectangle(viewport)
+    pub fn rectangle(viewport: impl Into<Viewport>) -> Self {
+        Self::Rectangle(viewport.into())
     }
 
     /// Creates a circular location restriction from a circle.
@@ -58,8 +58,8 @@ impl LocationRestriction {
     /// Use this to strictly limit results to a point and radius, excluding all results outside the
     /// circle.
     #[must_use]
-    pub const fn circle(circle: Circle) -> Self {
-        Self::Circle(circle)
+    pub fn circle(circle: impl Into<Circle>) -> Self {
+        Self::Circle(circle.into())
     }
 }
 

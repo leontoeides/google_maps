@@ -332,6 +332,100 @@ impl std::convert::From<LatLng> for String {
     }
 }
 
+impl std::convert::From<crate::LatLng> for LatLng {
+    /// Converts an owned `crate::LatLng` struct to a `crate::places_new::LatLng` struct.
+    fn from(lat_lng: crate::LatLng) -> Self {
+        Self {
+            latitude: lat_lng.lat,
+            longitude: lat_lng.lng,
+        }
+    }
+}
+
+impl std::convert::From<&crate::LatLng> for LatLng {
+    /// Converts a borrowed `&crate::LatLng` struct to a `crate::places_new::LatLng` struct.
+    fn from(lat_lng: &crate::LatLng) -> Self {
+        Self {
+            latitude: lat_lng.lat,
+            longitude: lat_lng.lng,
+        }
+    }
+}
+
+#[cfg(any(
+    feature = "address_validation",
+    feature = "autocomplete",
+    feature = "directions",
+    feature = "distance_matrix",
+    feature = "elevation",
+    feature = "geocoding",
+    feature = "places",
+    feature = "roads",
+    feature = "time_zone"
+))]
+impl std::convert::From<LatLng> for crate::types::latlng::LatLng {
+    /// Converts an owned `crate::places_new::LatLng` struct to a `crate::LatLng` struct.
+    fn from(lat_lng: LatLng) -> Self {
+        Self {
+            lat: lat_lng.latitude,
+            lng: lat_lng.longitude,
+        }
+    }
+}
+
+#[cfg(any(
+    feature = "address_validation",
+    feature = "autocomplete",
+    feature = "directions",
+    feature = "distance_matrix",
+    feature = "elevation",
+    feature = "geocoding",
+    feature = "places",
+    feature = "roads",
+    feature = "time_zone"
+))]
+impl std::convert::From<&LatLng> for crate::types::latlng::LatLng {
+    /// Converts a borrowed `&crate::places_new::LatLng` struct to a `crate::LatLng` struct.
+    fn from(lat_lng: &LatLng) -> Self {
+        Self {
+            lat: lat_lng.latitude,
+            lng: lat_lng.longitude,
+        }
+    }
+}
+
+#[cfg(any(feature = "directions", feature = "distance_matrix"))]
+impl std::convert::From<LatLng> for crate::directions::request::location::Location {
+    /// Converts a borrowed `&crate::places_new::LatLng` struct to a `Location` struct.
+    fn from(lat_lng: LatLng) -> Self {
+        Self::LatLng(lat_lng.into())
+    }
+}
+
+#[cfg(any(feature = "directions", feature = "distance_matrix"))]
+impl std::convert::From<&LatLng> for crate::directions::request::location::Location {
+    /// Converts a borrowed `&crate::places_new::LatLng` struct to a `Location` struct.
+    fn from(lat_lng: &LatLng) -> Self {
+        Self::LatLng(lat_lng.into())
+    }
+}
+
+#[cfg(any(feature = "directions", feature = "distance_matrix"))]
+impl std::convert::From<LatLng> for crate::directions::request::waypoint::Waypoint {
+    /// Converts a borrowed `LatLng` struct to a `Location` struct.
+    fn from(lat_lng: LatLng) -> Self {
+        Self::LatLng(lat_lng.into())
+    }
+}
+
+#[cfg(any(feature = "directions", feature = "distance_matrix"))]
+impl std::convert::From<&LatLng> for crate::directions::request::waypoint::Waypoint {
+    /// Converts a borrowed `&LatLng` struct to a `Location` struct.
+    fn from(lat_lng: &LatLng) -> Self {
+        Self::LatLng(lat_lng.into())
+    }
+}
+
 impl std::fmt::Display for LatLng {
     /// Formats a `LatLng` for display using comma-delimited coordinates.
     ///

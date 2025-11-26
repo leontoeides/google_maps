@@ -291,3 +291,67 @@ impl std::default::Default for Viewport {
         }
     }
 }
+
+#[cfg(any(
+    feature = "directions",
+    feature = "distance_matrix",
+    feature = "geocoding",
+    feature = "places"
+))]
+impl std::convert::From<crate::Bounds> for Viewport {
+    /// Converts an owned `crate::Bounds` struct to a `crate::places_new::Viewport` struct.
+    fn from(bounds: crate::Bounds) -> Self {
+        Self {
+            low: bounds.southwest.into(),
+            high: bounds.northeast.into()
+        }
+    }
+}
+
+#[cfg(any(
+    feature = "directions",
+    feature = "distance_matrix",
+    feature = "geocoding",
+    feature = "places"
+))]
+impl std::convert::From<&crate::Bounds> for Viewport {
+    /// Converts a borrowed `&crate::Bounds` struct to a `crate::places_new::Viewport` struct.
+    fn from(bounds: &crate::Bounds) -> Self {
+        Self {
+            low: bounds.southwest.into(),
+            high: bounds.northeast.into()
+        }
+    }
+}
+
+#[cfg(any(
+    feature = "directions",
+    feature = "distance_matrix",
+    feature = "geocoding",
+    feature = "places"
+))]
+impl std::convert::From<Viewport> for crate::Bounds {
+    /// Converts an owned `crate::places_new::Viewport` struct to a `crate::Bounds` struct.
+    fn from(viewport: Viewport) -> Self {
+        Self {
+            southwest: viewport.low.into(),
+            northeast: viewport.high.into(),
+        }
+    }
+}
+
+#[cfg(any(
+    feature = "directions",
+    feature = "distance_matrix",
+    feature = "geocoding",
+    feature = "places"
+))]
+impl std::convert::From<&Viewport> for crate::Bounds {
+    /// Converts a borrowed `&crate::places_new::Viewport` struct to a `crate::Bounds` struct.
+    fn from(viewport: &Viewport) -> Self {
+        Self {
+            southwest: viewport.low.into(),
+            northeast: viewport.high.into(),
+        }
+    }
+}
