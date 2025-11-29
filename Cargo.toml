@@ -1,6 +1,6 @@
 [package]
 name = "google_maps"
-version = "3.9.1"
+version = "3.9.2"
 authors = ["Dylan Bowker <dylan.bowker@arkiteq.io>"]
 edition = "2021"
 rust-version = "1.76.0"
@@ -40,12 +40,12 @@ default = [
 # Core APIs
 tracing-instrumentation = []
 address_validation = ["bon", "getset", "strum", "strum_macros"]
-directions = ["chrono", "chrono-tz"]
-distance_matrix = ["chrono", "chrono-tz"]
-elevation = []
-geocoding = []
-roads = []
-time_zone = ["chrono", "chrono-tz"]
+directions = ["chrono", "chrono-tz", "dep:phf"]
+distance_matrix = ["chrono", "chrono-tz", "dep:phf"]
+elevation = ["dep:phf"]
+geocoding = ["dep:phf"]
+roads = ["dep:phf"]
+time_zone = ["chrono", "chrono-tz", "dep:phf"]
 
 # Places API (Legacy)
 places = ["chrono", "chrono-tz"]
@@ -127,7 +127,7 @@ decimal-serde-with-arbitrary-precision = ["rust_decimal/serde-with-arbitrary-pre
 # Core
 miette = "7.6"
 percent-encoding = "2.3"
-phf = { version = "0.13", features = ["macros"] }
+phf = { version = "0.13", features = ["macros"], optional = true }
 rust_decimal = { version = "1", features = ["serde", "serde-float"] }
 rust_decimal_macros = "1"
 serde = { version = "1.0", features = ["derive"] }

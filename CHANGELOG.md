@@ -3,6 +3,10 @@
 * Release notes are available on
   [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+# 3.9.2
+
+* 2025-11-29: Corrected some feature-gates for `address-validation` and `phf`.
+
 # 3.9.1
 
 * 2025-11-25: Some types weren't properly exposed.
