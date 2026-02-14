@@ -88,7 +88,7 @@ impl Geocoding {
     pub fn get_global_plus_code(&self) -> Option<String> {
         self.plus_code
             .as_ref()
-            .map(|plus_code| plus_code.global_code.to_string())
+            .map(|plus_code| plus_code.global_code.clone())
     } // fn
 
     /// A helper function for destructuring the optional `compound_code`

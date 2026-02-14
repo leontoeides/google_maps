@@ -150,7 +150,7 @@ impl From<&String> for PhotoRequest {
     /// let request = PhotoRequest::from(&name);
     /// ```
     fn from(name: &String) -> Self {
-        Self::from(name.to_string())
+        Self::from(name.clone())
     }
 }
 
@@ -302,7 +302,7 @@ impl TryFrom<&Place> for PhotoRequest {
                 span: place
                     .id()
                     .as_ref()
-                    .map_or((0..0).into(), |place_id| (0..place_id.len()).into())
+                    .map_or_else(|| (0..0).into(), |place_id| (0..place_id.len()).into())
             })
     }
 }
@@ -337,7 +337,7 @@ impl TryFrom<Place> for PhotoRequest {
                 span: place
                     .id()
                     .as_ref()
-                    .map_or((0..0).into(), |place_id| (0..place_id.len()).into())
+                    .map_or_else(|| (0..0).into(), |place_id| (0..place_id.len()).into())
             })
     }
 }

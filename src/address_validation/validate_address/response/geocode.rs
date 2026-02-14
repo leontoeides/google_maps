@@ -1,3 +1,5 @@
+#![allow(clippy::doc_markdown, reason = "not a rust type")]
+
 use crate::address_validation::{PlusCode, Viewport};
 use crate::types::LatLng;
 use getset::{CopyGetters, Getters, MutGetters, Setters};
@@ -6,7 +8,6 @@ use serde::{Deserialize, Serialize};
 // -----------------------------------------------------------------------------
 //
 /// Contains information about the place the input was geocoded to.
-#[allow(clippy::doc_markdown)]
 #[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize, CopyGetters, Getters, MutGetters, Setters)]
 #[serde(rename_all = "camelCase")]
 pub struct Geocode {

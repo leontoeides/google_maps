@@ -1,3 +1,5 @@
+#![allow(unused_assignments, reason = "these unused fields are useful in debug printing")]
+
 use miette::SourceSpan;
 
 // -------------------------------------------------------------------------------------------------

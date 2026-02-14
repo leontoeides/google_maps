@@ -87,8 +87,6 @@ pub fn duration_to_string(duration: &Duration) -> String {
             DurationUnit::Seconds => String::from("second"),
             DurationUnit::Weeks => String::from("week"),
             DurationUnit::Years => String::from("year"),
-            // This can never be reached but it keeps the Rust compiler happy:
-            _ => adjusted_units.1.to_string(),
         } // match
     } else {
         match adjusted_units.1 {
@@ -100,8 +98,6 @@ pub fn duration_to_string(duration: &Duration) -> String {
             DurationUnit::Seconds => String::from("seconds"),
             DurationUnit::Weeks => String::from("weeks"),
             DurationUnit::Years => String::from("years"),
-            // This can never be reached but it keeps the Rust compiler happy:
-            _ => adjusted_units.1.to_string(),
         } // match
     }; // if
 

@@ -1,3 +1,5 @@
+#![allow(clippy::doc_markdown, reason = "not a rust type")]
+
 // -------------------------------------------------------------------------------------------------
 //
 /// Payment options that a place accepts.

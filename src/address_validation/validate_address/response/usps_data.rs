@@ -1,3 +1,5 @@
+#![allow(clippy::doc_markdown, reason = "not rust types")]
+
 use crate::address_validation::UspsAddress;
 use getset::{CopyGetters, Getters, MutGetters, Setters};
 use serde::{Deserialize, Serialize};

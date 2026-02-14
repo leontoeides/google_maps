@@ -69,7 +69,7 @@ pub struct Step {
     /// directions. Substeps are only available when `travel_mode` is set to
     /// "transit". The inner steps array is of the same type as steps.
     #[serde(default)]
-    pub steps: Vec<Step>,
+    pub steps: Vec<Self>,
 
     /// Transit-specific details about this step. This property will be
     /// undefined unless the travel mode of this step is `TravelMode::Transit`.

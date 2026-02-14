@@ -1,3 +1,5 @@
+#![allow(unused_assignments, reason = "these unused fields are useful in debug printing")]
+
 // -------------------------------------------------------------------------------------------------
 //
 /// Errors that can occur when using the Google Maps Places API (New) Autocomplete service.

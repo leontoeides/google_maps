@@ -137,10 +137,10 @@ impl crate::client::Client {
     #[cfg(feature = "directions")]
     #[must_use]
     pub fn directions(
-        &self,
+        &'_ self,
         origin: impl Into<Location>,
         destination: impl Into<Location>
-    ) -> crate::directions::Request {
+    ) -> crate::directions::Request<'_> {
         crate::directions::Request::new(self, origin.into(), destination.into())
     } // fn
 
@@ -184,10 +184,10 @@ impl crate::client::Client {
     #[cfg(feature = "distance_matrix")]
     #[must_use]
     pub fn distance_matrix<C, W>(
-        &self,
+        &'_ self,
         origins: C,
         destinations: C
-    ) -> crate::distance_matrix::Request
+    ) -> crate::distance_matrix::Request<'_>
     where
         C: IntoIterator<Item = W>,
         W: Into<Waypoint> {
@@ -208,7 +208,7 @@ impl crate::client::Client {
     /// the methods of the resulting type to set the parameters.
     #[cfg(feature = "elevation")]
     #[must_use]
-    pub const fn elevation(&self) -> crate::elevation::Request {
+    pub const fn elevation(&'_ self) -> crate::elevation::Request<'_> {
         crate::elevation::Request::new(self)
     } // fn
 
@@ -226,7 +226,7 @@ impl crate::client::Client {
     /// the methods of the resulting type to set the parameters.
     #[cfg(feature = "geocoding")]
     #[must_use]
-    pub const fn geocoding(&self) -> crate::geocoding::forward::ForwardRequest {
+    pub const fn geocoding(&'_ self) -> crate::geocoding::forward::ForwardRequest<'_> {
         crate::geocoding::forward::ForwardRequest::new(self)
     } // fn
 
@@ -257,9 +257,9 @@ impl crate::client::Client {
     #[cfg(feature = "geocoding")]
     #[must_use]
     pub fn reverse_geocoding(
-        &self,
+        &'_ self,
         location: impl Into<LatLng>
-    ) -> crate::geocoding::reverse::ReverseRequest {
+    ) -> crate::geocoding::reverse::ReverseRequest<'_> {
         crate::geocoding::reverse::ReverseRequest::new(self, location.into())
     } // fn
 
@@ -300,10 +300,10 @@ impl crate::client::Client {
     #[cfg(feature = "time_zone")]
     #[must_use]
     pub fn time_zone(
-        &self,
+        &'_ self,
         location: impl Into<LatLng>,
         timestamp: impl Into<DateTime<Utc>>
-    ) -> crate::time_zone::Request {
+    ) -> crate::time_zone::Request<'_> {
         crate::time_zone::Request::new(self, location.into(), timestamp.into())
     } // fn
 
@@ -610,9 +610,9 @@ impl crate::client::Client {
     #[cfg(feature = "roads")]
     #[must_use]
     pub fn snap_to_roads<C, L>(
-        &self,
+        &'_ self,
         path: C
-    ) -> crate::roads::snap_to_roads::Request
+    ) -> crate::roads::snap_to_roads::Request<'_>
     where
         C: IntoIterator<Item = L>,
         L: Into<LatLng> {
@@ -659,9 +659,9 @@ impl crate::client::Client {
     #[cfg(feature = "roads")]
     #[must_use]
     pub fn nearest_roads<C, L>(
-        &self,
+        &'_ self,
         points: C
-    ) -> crate::roads::nearest_roads::Request
+    ) -> crate::roads::nearest_roads::Request<'_>
     where
         C: IntoIterator<Item = L>,
         L: Into<LatLng> {

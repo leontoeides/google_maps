@@ -161,7 +161,7 @@ impl StructuredFormat {
         self.secondary_text
             .as_ref()
             .map_or_else(
-                || self.main_text.text().to_string(),
+                || self.main_text.text().clone(),
                 |secondary| format!(
                     "{main}, {secondary}",
                     main = self.main_text.text(),

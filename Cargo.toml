@@ -80,11 +80,7 @@ enable-reqwest = ["reqwest"]
 reqwest-default-tls = ["reqwest/default-tls"]
 reqwest-native-tls = ["reqwest/native-tls"]
 reqwest-native-tls-vendored = ["reqwest/native-tls-vendored"]
-reqwest-native-tls-alpn = ["reqwest/native-tls-alpn"]
-reqwest-rustls-tls = ["reqwest/rustls-tls"]
-reqwest-rustls-tls-manual-roots = ["reqwest/rustls-tls-manual-roots"]
-reqwest-rustls-tls-webpki-roots = ["reqwest/rustls-tls-webpki-roots"]
-reqwest-rustls-tls-native-roots = ["reqwest/rustls-tls-native-roots"]
+reqwest-rustls-tls = ["reqwest/rustls"]
 
 # Reqwest Options
 reqwest-http2 = ["reqwest/http2"]
@@ -108,7 +104,7 @@ reqwest-middleware-multipart = ["reqwest-middleware/multipart", "reqwest-multipa
 reqwest-middleware-json = ["reqwest-middleware/json", "reqwest-json"]
 reqwest-middleware-charset = ["reqwest-middleware/charset", "reqwest-charset"]
 reqwest-middleware-http2 = ["reqwest-middleware/http2", "reqwest-http2"]
-reqwest-middleware-rustls-tls = ["reqwest-middleware/rustls-tls", "reqwest-rustls-tls"]
+reqwest-middleware-rustls-tls = ["reqwest-middleware/rustls", "reqwest-rustls-tls"]
 
 # Decimal
 decimal-serde = ["rust_decimal/serde"]

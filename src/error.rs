@@ -1,5 +1,7 @@
 //! Google Maps Platform API error types and error messages.
 
+#![allow(unused_assignments, reason = "these unused fields are useful in debug printing")]
+
 // -----------------------------------------------------------------------------
 
 use miette::Diagnostic;

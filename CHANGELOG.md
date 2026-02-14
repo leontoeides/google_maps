@@ -12,6 +12,8 @@
 
 * 2025-02-14: Minor clean-up in rate limiting section.
 
+* 2025-02-14: Applied `clippy` suggestions.
+
 * 2025-02-14: Updates dependencies.
 
 * 2025-11-29: Corrected some feature-gates for `address-validation` and `phf`.

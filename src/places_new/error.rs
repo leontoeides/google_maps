@@ -1,3 +1,5 @@
+#![allow(unused_assignments, reason = "these unused fields are useful in debug printing")]
+
 use crate::ClassifiedError;
 use crate::places_new::LatLng;
 use rust_decimal::Decimal;

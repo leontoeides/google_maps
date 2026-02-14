@@ -247,7 +247,7 @@
 //! ```rust
 //! for place in response.into_iter().take(3) {
 //!     // Download and display photo as ASCII art.
-//!		// `places-new-ascii-art` feature must be enabled
+//!     // `places-new-ascii-art` feature must be enabled
 //!     if let Ok(photo) = google_maps_client
 //!         .place_photos_image(&place)?
 //!         .max_width_px(1_024)
@@ -255,7 +255,7 @@
 //!         .await
 //!     {
 //!         println!("{}", photo.display_ansi(
-//!				// 180 columns wide
+//!             // 180 columns wide
 //!             std::num::NonZero::new(180).unwrap()
 //!         )?);
 //!     }
