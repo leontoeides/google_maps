@@ -9,27 +9,28 @@ use serde::{Deserialize, Serialize};
 /// Client can be set to have different request rates for `Directions` and
 /// `Elevation` requests. This `enum` is used to select which Google Maps API
 /// you would like to configure.
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[repr(u8)]
 pub enum Api {
     /// This variant is used to select settings that are observed for _all_
     /// APIs. These settings are observed in addition to the per-API settings.
-    All,
-    Directions,
-    DistanceMatrix,
-    Elevation,
-    Geocoding,
-    TimeZone,
-    Roads,
-    AddressValidation,
+    All = 0,
+    Directions = 1,
+    DistanceMatrix = 2,
+    Elevation = 3,
+    Geocoding = 4,
+    TimeZone = 5,
+    Roads = 6,
+    AddressValidation = 7,
     // Places API (Legacy)
-    Places,
+    Places = 8,
     // Places API (New)
-    PlacesNew,
-    Autocomplete,
-    NearbySearch,
-    PlaceDetails,
-    PlacePhoto,
-    TextSearch,
+    PlacesNew = 9,
+    Autocomplete = 10,
+    NearbySearch = 11,
+    PlaceDetails = 12,
+    PlacePhoto = 13,
+    TextSearch = 14,
 } // enum
 
 // -----------------------------------------------------------------------------

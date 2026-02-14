@@ -7,43 +7,31 @@ use serde::{Deserialize, Serialize};
 /// A "Duration unit" is a "duration unit of time." By adjusting the scale of
 /// time when presenting information to the user, the presentation can be made
 /// easier to understand.
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Copy, Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[repr(u8)]
 pub enum DurationUnit {
-    /// A century is a period of 100 years.
-    Centuries,
     /// A day is the approximate time it takes for the Earth to complete one
     /// rotation. It is defined as exactly 86,400 seconds.
-    Days,
-    /// A decade is a period of 10 years.
-    Decades,
+    Days = 0,
     /// An hour is a unit of time equal to 60 minutes, or 3,600 seconds.
-    Hours,
-    /// A microsecond is one millionth of a second.
-    Microseconds,
-    /// A millenium is a period of 1,000 years.
-    Millenia,
+    Hours = 1,
     /// A millisecond is one thousandth of a second.
-    Milliseconds,
+    Milliseconds = 2,
     /// A minute is a unit of time equal to 60 seconds.
-    Minutes,
+    Minutes = 3,
     /// A month is 1/12th of a year. In the Gregorian calendar, an average month
     /// has exactly 30.436875 days. It was originally based on the time it takes
     /// for the moon to rotate the Earth.
-    Months,
-    /// A nanosecond is one billionth of a second.
-    Nanoseconds,
+    Months = 4,
     /// A second is the base unit of time. Originally, it was based on the
     /// length of the day, but it has since been standardized based on the
     /// radiation wavelength of caesium-133.
-    Seconds,
+    Seconds = 5,
     /// A week is a period of 7 days.
-    Weeks,
-    /// A typical work week is considered to be 40 hours: 8 hours a day for 5
-    /// days.
-    WorkWeeks,
+    Weeks = 6,
     /// In the Gregorian calendar, a year has on average 365.2425 days. It is
     /// based on the amount of time it takes for the Earth to rotate the sun.
-    Years,
+    Years = 7,
 } // enum
 
 impl std::convert::From<&DurationUnit> for String {
@@ -51,19 +39,13 @@ impl std::convert::From<&DurationUnit> for String {
     /// time name.
     fn from(duration_unit: &DurationUnit) -> Self {
         match duration_unit {
-            DurationUnit::Centuries => Self::from("centuries"),
             DurationUnit::Days => Self::from("days"),
-            DurationUnit::Decades => Self::from("decades"),
             DurationUnit::Hours => Self::from("hours"),
-            DurationUnit::Microseconds => Self::from("microseconds"),
-            DurationUnit::Millenia => Self::from("millenia"),
             DurationUnit::Milliseconds => Self::from("milliseconds"),
             DurationUnit::Minutes => Self::from("minutes"),
             DurationUnit::Months => Self::from("months"),
-            DurationUnit::Nanoseconds => Self::from("nanoseconds"),
             DurationUnit::Seconds => Self::from("seconds"),
             DurationUnit::Weeks => Self::from("weeks"),
-            DurationUnit::WorkWeeks => Self::from("work weeks"),
             DurationUnit::Years => Self::from("years"),
         } // match
     } // fn

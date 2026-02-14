@@ -3,49 +3,41 @@ use crate::request_rate::{
     duration_to_string::duration_to_string,
     RequestRate
 };
-use futures::future;
-use std::time::SystemTime;
+use std::time::Instant;
+
+// -----------------------------------------------------------------------------
+//
+/// Minimum wait time worth logging. Waits shorter than this are considered
+/// negligible and skipped to reduce log noise.
+const LOG_THRESHOLD_MS: u128 = 10;
 
 // -----------------------------------------------------------------------------
 
 impl RequestRate {
-    /// This method is not for public consumption. It is for internal use only.
+    /// Enforces rate limits for the specified APIs.
     ///
-    /// ## Description
-    ///
-    /// This method performs rate limiting, using the throttler under `rate_map`
-    /// specified by the list of apis, which was calculated using targeted
-    /// requests/duration rates during initialization. If the current rate
-    /// exceeds any of the targeted rate, this method will put the thread to
-    /// sleep until it is ready for the next request.
-    ///
-    /// ## Arguments
-    ///
-    /// * `apis` ‧ The APIs for which to observe the request rate limit.
+    /// Checks each API against its configured rate limiter and sleeps if
+    /// necessary to avoid exceeding the allowed request rate. All rate
+    /// limiters run concurrently, so the total wait time is determined by
+    /// whichever API needs the longest delay.
     pub async fn limit_apis(&self, apis: &[Api]) {
-        let mut limit_futures = Vec::new();
+        let limit_futures: Vec<_> = self
+            .rate_map
+            .iter()
+            .filter(|(key, _)| apis.contains(key))
+            .map(|(_, val)| val.limit())
+            .collect();
 
-        for (key, val) in &self.rate_map {
-            if apis.contains(key) {
-                limit_futures.push(val.limit());
-            }
-        }
+        let start = Instant::now();
+        futures::future::join_all(limit_futures).await;
+        let duration = start.elapsed();
 
-        let start = SystemTime::now();
-
-        future::join_all(limit_futures).await;
-
-        let wait_time = SystemTime::now().duration_since(start);
-
-        if let Ok(duration) = wait_time {
-            if duration.as_millis() > 10 {
-                tracing::trace!(
-                    "waited for {} under rate limiter",
-                    duration_to_string(&duration)
-                );
-            }
-        } else {
-            tracing::warn!("clock went backwards!");
+        if duration.as_millis() > LOG_THRESHOLD_MS {
+            tracing::trace!(
+                wait_duration_ms = duration.as_millis(),
+                wait_duration = %duration_to_string(&duration),
+                "rate limiter throttled request"
+            );
         }
     }
-} // impl
+}

@@ -60,7 +60,7 @@ impl RequestRate {
             // If not, initialize the structure:
             None => {
                 self.rate_map.insert(
-                    api.clone(),
+                    *api,
                     ApiRate {
                         target_rate: TargetRate { requests, duration },
                         throttle_pool,
