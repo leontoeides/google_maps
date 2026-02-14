@@ -5,6 +5,15 @@
 
 # 3.9.2
 
+* 2025-02-14: Correction for Brazil Portuguese language code.
+
+  Thank you to [Luiz Fernando O. C. Real](https://github.com/luiz) for the
+  [pull request](https://github.com/leontoeides/google_maps/pull/38)!
+
+* 2025-02-14: Minor clean-up in rate limiting section.
+
+* 2025-02-14: Updates dependencies.
+
 * 2025-11-29: Corrected some feature-gates for `address-validation` and `phf`.
 
 # 3.9.1
