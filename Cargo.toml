@@ -29,7 +29,7 @@ default = [
 	"geocoding",
 	"roads",
 	"time_zone",
-	"places",
+	"places-new",
 	"reqwest",
 	"reqwest-default-tls",
 	"reqwest-http2",
@@ -138,8 +138,8 @@ chrono-tz = { version = "0.10", optional = true, features = ["serde"] }
 # Builders (address_validation, places-new)
 bon = { version = "3.9", optional = true }
 getset = { version = "0.1", optional = true }
-strum = { version = "0.27", optional = true, features = ["derive"] }
-strum_macros = { version = "0.27", optional = true }
+strum = { version = "0.28", optional = true, features = ["derive"] }
+strum_macros = { version = "0.28", optional = true }
 
 # Places API (New)
 icu_locale = { version = "2.1", optional = true, features = ["serde"] }
@@ -147,7 +147,7 @@ iso_currency = { version = "0.5", optional = true, features = ["with-serde"] }
 jiff = { version = "0.2", optional = true, features = ["serde"] }
 rust_iso3166 = { version = "0.1", optional = true }
 url = { version = "2.5", optional = true, features = ["serde"] }
-uuid = { version = "1.21", optional = true, features = ["serde", "v4"] }
+uuid = { version = "1.22", optional = true, features = ["serde", "v4"] }
 
 # ASCII Art
 artem = { version = "3.0", optional = true }
