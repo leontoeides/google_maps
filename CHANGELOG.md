@@ -3,18 +3,30 @@
 * Release notes are available on
   [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+# 3.9.3
+
+* 2026-03-14: Switch from rust_decimal feature `serde-float` to
+  `serde-with-float`.
+
+  Thank you to [Francis Nimick](https://github.com/fnimick) for the
+  [pull request](https://github.com/leontoeides/google_maps/pull/40)!
+
+* 2026-03-14: Renamed several helper functions from `icon` to `emoji`.
+
+* 2026-03-14: Correct issue with building the Google Maps Places Legacy API.
+
 # 3.9.2
 
-* 2025-02-14: Correction for Brazil Portuguese language code.
+* 2026-02-14: Correction for Brazil Portuguese language code.
 
   Thank you to [Luiz Fernando O. C. Real](https://github.com/luiz) for the
   [pull request](https://github.com/leontoeides/google_maps/pull/38)!
 
-* 2025-02-14: Minor clean-up in rate limiting section.
+* 2026-02-14: Minor clean-up in rate limiting section.
 
-* 2025-02-14: Applied `clippy` suggestions.
+* 2026-02-14: Applied `clippy` suggestions.
 
-* 2025-02-14: Updates dependencies.
+* 2026-02-14: Updates dependencies.
 
 * 2025-11-29: Corrected some feature-gates for `address-validation` and `phf`.
 
