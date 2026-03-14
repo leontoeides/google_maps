@@ -3,6 +3,11 @@
 * Release notes are available on
   [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+# 3.9.4
+
+* 2026-03-14: Added `Other` variant for `PlaceType` enum. New and undocumented
+  place types won't cause errors.
+
 # 3.9.3
 
 * 2026-03-14: Switch from rust_decimal feature `serde-float` to

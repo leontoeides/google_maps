@@ -580,6 +580,9 @@ pub enum PlaceType {
     /// A bar specializing in wine.
     WineBar = 173,
 
+    /// A restaurant suitable for family dining.
+    FamilyRestaurant = 174,
+
     // ---------------------------------------------------------------------------------------------
     // Geographical Areas (180-189)
     // ---------------------------------------------------------------------------------------------
@@ -1216,6 +1219,13 @@ pub enum PlaceType {
 
     /// A public square or plaza in a town or city.
     TownSquare = 535,
+
+    // ---------------------------------------------------------------------------------------------
+    // New and undocumented types
+    // ---------------------------------------------------------------------------------------------
+
+    #[serde(other)]
+    Unknown = 65_535,
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -1461,6 +1471,6 @@ impl PlaceType {
     /// Autocomplete (New) request.
     #[must_use]
     pub const fn is_table_b(self) -> bool {
-        (self as u16) >= 500
+        (self as u16) >= 500 && (self as u16) < 65_535
     }
 }
