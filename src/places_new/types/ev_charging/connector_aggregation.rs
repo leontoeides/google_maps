@@ -354,12 +354,12 @@ impl ConnectorAggregation {
         }
     }
 
-    /// Returns an icon representation for the connector type.
+    /// Returns an emoji representation for the connector type.
     ///
     /// Provides visual indicators suitable for maps, mobile interfaces, and quick identification of
-    /// charging connector types. Returns generic icon if type is unknown.
+    /// charging connector types. Returns generic emoji if type is unknown.
     #[must_use]
-    pub fn connector_icon(&self) -> &'static str {
+    pub fn connector_emoji(&self) -> &'static str {
         self.connector_type.map_or("⚡", |ct| match ct {
             EvConnectorType::Chademo => "🔌",
             EvConnectorType::Tesla | EvConnectorType::Nacs => "🏎️",
@@ -659,17 +659,17 @@ mod tests {
     }
 
     #[test]
-    fn test_connector_icons() {
+    fn test_connector_emoji() {
         let ccs = ConnectorAggregation::new(Some(EvConnectorType::CcsCombo2), 150.0, 2);
-        assert_eq!(ccs.connector_icon(), "⚡");
+        assert_eq!(ccs.connector_emoji(), "⚡");
 
         let tesla = ConnectorAggregation::new(Some(EvConnectorType::Tesla), 120.0, 8);
-        assert_eq!(tesla.connector_icon(), "🏎️");
+        assert_eq!(tesla.connector_emoji(), "🏎️");
 
         let chademo = ConnectorAggregation::new(Some(EvConnectorType::Chademo), 50.0, 1);
-        assert_eq!(chademo.connector_icon(), "🔌");
+        assert_eq!(chademo.connector_emoji(), "🔌");
 
         let unknown = ConnectorAggregation::new(None, 50.0, 1);
-        assert_eq!(unknown.connector_icon(), "⚡");
+        assert_eq!(unknown.connector_emoji(), "⚡");
     }
 }

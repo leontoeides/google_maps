@@ -424,12 +424,12 @@ impl LandmarkCategory {
         }
     }
 
-    /// Returns an icon representation for this category.
+    /// Returns an emoji representation for this category.
     ///
     /// Provides appropriate symbols for visual representation of landmark categories in maps and
     /// user interfaces.
     #[must_use]
-    pub const fn icon(self) -> &'static str {
+    pub const fn emoji(self) -> &'static str {
         match self {
             Self::Healthcare => "🏥",
             Self::Education => "🎓",
@@ -704,8 +704,8 @@ mod tests {
     #[test]
     fn test_category_display() {
         assert_eq!(LandmarkCategory::Healthcare.display_name(), "Healthcare");
-        assert_eq!(LandmarkCategory::Transportation.icon(), "🚇");
-        assert_eq!(LandmarkCategory::Dining.icon(), "🍽️");
+        assert_eq!(LandmarkCategory::Transportation.emoji(), "🚇");
+        assert_eq!(LandmarkCategory::Dining.emoji(), "🍽️");
     }
 
     #[test]

@@ -185,12 +185,12 @@ impl SubDestination {
         )
     }
 
-    /// Gets an icon representation for this sub-destination type.
+    /// Gets an emoji representation for this sub-destination type.
     ///
     /// Provides appropriate emoji or symbol for visual representation of the sub-destination
     /// category in user interfaces and maps.
     #[must_use]
-    pub fn icon(&self) -> &'static str {
+    pub fn emoji(&self) -> &'static str {
         match self.category() {
             SubDestinationCategory::Terminal => "🚪",
             SubDestinationCategory::Parking => "🅿️", 
@@ -211,7 +211,7 @@ impl SubDestination {
             SubDestinationCategory::Terminal |
                 SubDestinationCategory::Parking |
                 SubDestinationCategory::Building |
-                SubDestinationCategory::Store => format!("{} {}", self.icon(), display),
+                SubDestinationCategory::Store => format!("{} {}", self.emoji(), display),
             SubDestinationCategory::Other => display,
         }
     }
@@ -413,21 +413,21 @@ mod tests {
     }
 
     #[test]
-    fn test_icon() {
+    fn test_emoji() {
         let terminal = SubDestination::new("Terminal B", "id1");
-        assert_eq!(terminal.icon(), "🚪");
+        assert_eq!(terminal.emoji(), "🚪");
 
         let parking = SubDestination::new("Parking Deck", "id2");
-        assert_eq!(parking.icon(), "🅿️");
+        assert_eq!(parking.emoji(), "🅿️");
 
         let building = SubDestination::new("Office Building", "id3");
-        assert_eq!(building.icon(), "🏢");
+        assert_eq!(building.emoji(), "🏢");
 
         let store = SubDestination::new("Gift Shop", "id4");
-        assert_eq!(store.icon(), "🏪");
+        assert_eq!(store.emoji(), "🏪");
 
         let other = SubDestination::new("Fountain", "id5");
-        assert_eq!(other.icon(), "📍");
+        assert_eq!(other.emoji(), "📍");
     }
 
     #[test]

@@ -246,12 +246,12 @@ impl FuelPrice {
         }
     }
 
-    /// Returns an icon representation for the fuel type.
+    /// Returns an emoji representation for the fuel type.
     ///
     /// Provides visual indicators suitable for maps, mobile interfaces, and quick identification of
-    /// fuel types in user interfaces. Returns generic fuel icon if type is unknown.
+    /// fuel types in user interfaces. Returns generic fuel emoji if type is unknown.
     #[must_use]
-    pub fn fuel_icon(&self) -> &'static str {
+    pub fn fuel_emoji(&self) -> &'static str {
         self.fuel_type.map_or("⛽", |ft| match ft {
             FuelType::Diesel | FuelType::DieselPlus | FuelType::BioDiesel | FuelType::TruckDiesel => "🚛",
             FuelType::E85 | FuelType::E80 | FuelType::E100 => "🌱",
@@ -545,34 +545,34 @@ mod tests {
     }
 
     #[test]
-    fn test_fuel_icons() {
+    fn test_fuel_emoji() {
         let gasoline = FuelPrice::new(
             Some(FuelType::RegularUnleaded),
             Money::from_amount("USD", 3.25).unwrap(),
             Timestamp::now()
         );
-        assert_eq!(gasoline.fuel_icon(), "⛽");
+        assert_eq!(gasoline.fuel_emoji(), "⛽");
 
         let diesel = FuelPrice::new(
             Some(FuelType::Diesel),
             Money::from_amount("USD", 3.45).unwrap(),
             Timestamp::now()
         );
-        assert_eq!(diesel.fuel_icon(), "🚛");
+        assert_eq!(diesel.fuel_emoji(), "🚛");
 
         let ethanol = FuelPrice::new(
             Some(FuelType::E85),
             Money::from_amount("USD", 2.95).unwrap(),
             Timestamp::now()
         );
-        assert_eq!(ethanol.fuel_icon(), "🌱");
+        assert_eq!(ethanol.fuel_emoji(), "🌱");
 
         let unknown = FuelPrice::new(
             None,
             Money::from_amount("USD", 3.25).unwrap(),
             Timestamp::now()
         );
-        assert_eq!(unknown.fuel_icon(), "⛽");
+        assert_eq!(unknown.fuel_emoji(), "⛽");
     }
 
     #[test]

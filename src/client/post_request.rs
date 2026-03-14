@@ -159,14 +159,17 @@ impl crate::Client {
 
         if !status.is_success() {
             // Try to get the response body for error details
+            #[cfg(feature = "places-new-core")]
             let error_body = response
                 .text()
                 .await
                 .unwrap_or_else(|_| "failed to read response body".to_string());
 
+            #[cfg(feature = "places-new-core")]
             let google_api_error: crate::places_new::GoogleApiError =
                 serde_json::from_str(&error_body)?;
 
+            #[cfg(feature = "places-new-core")]
             tracing::error!(
                 http.status_code = %status.as_u16(),
                 http.status_text = %status.canonical_reason().unwrap_or("unknown"),
@@ -174,7 +177,11 @@ impl crate::Client {
                 "request returned non-success status"
             );
 
+            #[cfg(feature = "places-new-core")]
             return Err(Error::from(crate::places_new::Error::from(google_api_error)));
+
+            #[cfg(not(feature = "places-new-core"))]
+            return Err(Error::from(status));
         }
 
         tracing::trace!(http.status_code = %status.as_u16(), "received successful response");

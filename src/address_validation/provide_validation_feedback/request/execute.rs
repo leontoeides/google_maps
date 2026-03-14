@@ -1,7 +1,4 @@
-use crate::address_validation::provide_validation_feedback::{
-    Request,
-    Response,
-};
+use crate::address_validation::provide_validation_feedback::{Request, Response};
 use crate::Error;
 
 // -----------------------------------------------------------------------------

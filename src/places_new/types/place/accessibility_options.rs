@@ -288,31 +288,31 @@ impl AccessibilityOptions {
         }
     }
 
-    /// Returns accessibility icons for visual display.
+    /// Returns accessibility emoji for visual display.
     ///
     /// Provides commonly recognized accessibility symbols for visual interfaces, maps, and quick
     /// identification of accessibility accommodations.
     #[must_use]
-    pub fn accessibility_icons(self) -> Vec<&'static str> {
-        let mut icons = Vec::new();
+    pub fn accessibility_emoji(self) -> Vec<&'static str> {
+        let mut emojis = Vec::new();
 
         match self.is_wheelchair_accessible() {
-            Some(true) => icons.push("♿"), // Universal accessibility symbol
-            Some(false) => icons.push("⚠️"), // Warning for limited accessibility
+            Some(true) => emojis.push("♿"), // Universal accessibility symbol
+            Some(false) => emojis.push("⚠️"), // Warning for limited accessibility
             None => {
                 if !self.available_features().is_empty() {
-                    icons.push("♿"); // Some accessibility features available
+                    emojis.push("♿"); // Some accessibility features available
                 }
             }
         }
 
         if self.wheelchair_accessible_parking == Some(true) {
-            icons.push("🅿️"); // Accessible parking indicator
+            emojis.push("🅿️"); // Accessible parking indicator
         }
 
         // Remove duplicates while preserving order
-        icons.dedup();
-        icons
+        emojis.dedup();
+        emojis
     }
 
     /// Returns an accessibility compliance score (0-4 scale).
@@ -601,19 +601,19 @@ mod tests {
     }
 
     #[test]
-    fn test_accessibility_icons() {
+    fn test_accessibility_emoji() {
         let accessible = AccessibilityOptions::fully_accessible();
-        let icons = accessible.accessibility_icons();
-        assert!(icons.contains(&"♿"));
-        assert!(icons.contains(&"🅿️"));
+        let emojis = accessible.accessibility_emojis();
+        assert!(emojis.contains(&"♿"));
+        assert!(emojis.contains(&"🅿️"));
 
         let limited = AccessibilityOptions::limited_accessibility();
-        let icons = limited.accessibility_icons();
-        assert!(icons.contains(&"⚠️"));
+        let emojis = limited.accessibility_emojis();
+        assert!(emojis.contains(&"⚠️"));
 
         let unknown = AccessibilityOptions::new();
-        let icons = unknown.accessibility_icons();
-        assert!(icons.is_empty());
+        let emojis = unknown.accessibility_emojis();
+        assert!(emojis.is_empty());
     }
 
     #[test]

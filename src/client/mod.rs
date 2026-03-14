@@ -30,7 +30,13 @@ mod get_request;
 #[cfg(all(feature = "reqwest", feature = "places-new-place-photos"))]
 mod get_binary_request;
 
-#[cfg(all(feature = "reqwest", feature = "places-new-core"))]
+#[cfg(all(
+    feature = "reqwest",
+    any(
+        feature = "places-new-core",
+        feature = "address_validation",
+    )
+))]
 mod post_request;
 
 #[cfg(feature = "reqwest")]

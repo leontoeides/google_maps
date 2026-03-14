@@ -248,30 +248,30 @@ impl PaymentOptions {
         }
     }
 
-    /// Returns payment method icons for visual display.
+    /// Returns payment method emoji for visual display.
     ///
-    /// Provides commonly recognized icons/symbols for payment methods, useful for visual interfaces
+    /// Provides commonly recognized emoji/icons for payment methods, useful for visual interfaces
     /// and international applications.
     #[must_use]
-    pub fn payment_icons(self) -> Vec<&'static str> {
-        let mut icons = Vec::new();
+    pub fn payment_emoji(self) -> Vec<&'static str> {
+        let mut emojis = Vec::new();
 
         if self.accepts_credit_cards == Some(true) {
-            icons.push("💳");
+            emojis.push("💳");
         }
         if self.accepts_debit_cards == Some(true) && self.accepts_credit_cards != Some(true) {
-            icons.push("💳"); // Same icon as credit, but only if credit cards not already added
+            emojis.push("💳"); // Same emoji as credit, but only if credit cards not already added
         }
         if self.accepts_cash_only == Some(true) {
-            icons.push("💵");
+            emojis.push("💵");
         }
         if self.accepts_nfc == Some(true) {
-            icons.push("📱");
+            emojis.push("📱");
         }
 
         // Remove duplicates while preserving order
-        icons.dedup();
-        icons
+        emojis.dedup();
+        emojis
     }
 
     /// Returns whether payment options are suitable for tourists.
@@ -504,18 +504,18 @@ mod tests {
     }
 
     #[test]
-    fn test_payment_icons() {
+    fn test_payment_emoji() {
         let all = PaymentOptions::accepts_all();
-        let icons = all.payment_icons();
-        assert!(icons.contains(&"💳"));
-        assert!(icons.contains(&"💵"));
-        assert!(icons.contains(&"📱"));
+        let emojis = all.payment_emojis();
+        assert!(emojis.contains(&"💳"));
+        assert!(emojis.contains(&"💵"));
+        assert!(emojis.contains(&"📱"));
         // Should not have duplicates
-        assert_eq!(icons.len(), 3);
+        assert_eq!(emojis.len(), 3);
 
         let cash_only = PaymentOptions::cash_only();
-        let icons = cash_only.payment_icons();
-        assert_eq!(icons, vec!["💵"]);
+        let emojis = cash_only.payment_emoji();
+        assert_eq!(emojis, vec!["💵"]);
     }
 
     #[test]

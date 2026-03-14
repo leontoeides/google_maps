@@ -37,7 +37,7 @@ pub enum Error {
     )]
     InvalidBusinessStatusCode(String),
 
-    /// Invalid [secondary hours type](<https://developers.google.com/maps/documentation/places/web-service/reference/rest/v1/places#secondaryhourstype>.
+    /// Invalid [secondary hours type](<https://developers.google.com/maps/documentation/places/web-service/reference/rest/v1/places#secondaryhourstype>).
     ///
     /// Valid codes are `DRIVE_THROUGH`, `HAPPY_HOUR`, `DELIVERY`, `TAKEOUT`,
     /// `KITCHEN`, `BREAKFAST`, `LUNCH`, `DINNER`, `BRUNCH`, `PICKUP`, and

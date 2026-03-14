@@ -2,7 +2,7 @@ use reqwest::header::HeaderMap;
 
 // -------------------------------------------------------------------------------------------------
 
-impl crate::traits::RequestHeaders for crate::places::place_autocomplete::Request<'_> {
+impl crate::traits::RequestHeaders for crate::places::place_details::Request<'_> {
     /// Returns a map of HTTP header names to values.
     ///
     /// These headers will be added to the HTTP request alongside the standard headers like

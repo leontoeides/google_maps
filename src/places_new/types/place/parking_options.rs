@@ -343,28 +343,28 @@ impl ParkingOptions {
         }
     }
 
-    /// Returns parking amenity icons for visual display.
+    /// Returns parking amenity emoji for visual display.
     ///
-    /// Provides commonly recognized icons/symbols for parking amenities, useful for visual
+    /// Provides commonly recognized emoji/symbols for parking amenities, useful for visual
     /// interfaces, maps, and quick recognition of parking features.
     #[must_use]
-    pub fn parking_icons(self) -> Vec<&'static str> {
-        let mut icons = Vec::new();
+    pub fn parking_emoji(self) -> Vec<&'static str> {
+        let mut emojis = Vec::new();
 
         if self.has_free_parking() == Some(true) {
-            icons.push("🅿️"); // Free parking indicator
+            emojis.push("🅿️"); // Free parking indicator
         }
         if self.has_covered_parking() == Some(true) {
-            icons.push("🏢"); // Covered parking
+            emojis.push("🏢"); // Covered parking
         }
         if self.valet_parking == Some(true) {
-            icons.push("🛎️"); // Valet service
+            emojis.push("🛎️"); // Valet service
         }
         if self.has_paid_parking() == Some(true) && self.has_free_parking() != Some(true) {
-            icons.push("💰"); // Paid parking only
+            emojis.push("💰"); // Paid parking only
         }
 
-        icons
+        emojis
     }
 
     /// Returns whether parking is suitable for events or large gatherings.
@@ -686,17 +686,17 @@ mod tests {
     }
 
     #[test]
-    fn test_parking_icons() {
+    fn test_parking_emoji() {
         let comprehensive = ParkingOptions {
             free_parking_lot: Some(true),
             paid_garage_parking: Some(true),
             valet_parking: Some(true),
             ..ParkingOptions::new()
         };
-        let icons = comprehensive.parking_icons();
-        assert!(icons.contains(&"🅿️")); // Free parking
-        assert!(icons.contains(&"🏢")); // Covered parking
-        assert!(icons.contains(&"🛎️")); // Valet
+        let emojis = comprehensive.parking_emoji();
+        assert!(emojis.contains(&"🅿️")); // Free parking
+        assert!(emojis.contains(&"🏢")); // Covered parking
+        assert!(emojis.contains(&"🛎️")); // Valet
 
         let paid_only = ParkingOptions {
             paid_parking_lot: Some(true),
@@ -705,8 +705,8 @@ mod tests {
             free_garage_parking: Some(false),
             ..ParkingOptions::new()
         };
-        let icons = paid_only.parking_icons();
-        assert!(icons.contains(&"💰")); // Paid parking only
+        let emojis = paid_only.parking_emoji();
+        assert!(emojis.contains(&"💰")); // Paid parking only
     }
 
     #[test]

@@ -137,7 +137,7 @@ impl crate::client::Client {
     #[cfg(feature = "directions")]
     #[must_use]
     pub fn directions(
-        &'_ self,
+        &self,
         origin: impl Into<Location>,
         destination: impl Into<Location>
     ) -> crate::directions::Request<'_> {
@@ -184,7 +184,7 @@ impl crate::client::Client {
     #[cfg(feature = "distance_matrix")]
     #[must_use]
     pub fn distance_matrix<C, W>(
-        &'_ self,
+        &self,
         origins: C,
         destinations: C
     ) -> crate::distance_matrix::Request<'_>
@@ -257,7 +257,7 @@ impl crate::client::Client {
     #[cfg(feature = "geocoding")]
     #[must_use]
     pub fn reverse_geocoding(
-        &'_ self,
+        &self,
         location: impl Into<LatLng>
     ) -> crate::geocoding::reverse::ReverseRequest<'_> {
         crate::geocoding::reverse::ReverseRequest::new(self, location.into())
@@ -300,7 +300,7 @@ impl crate::client::Client {
     #[cfg(feature = "time_zone")]
     #[must_use]
     pub fn time_zone(
-        &'_ self,
+        &self,
         location: impl Into<LatLng>,
         timestamp: impl Into<DateTime<Utc>>
     ) -> crate::time_zone::Request<'_> {
@@ -455,7 +455,7 @@ impl crate::client::Client {
         &self,
         query: impl Into<String>,
         radius: impl Into<u32>
-    ) -> crate::places::place_search::text_search::Request {
+    ) -> crate::places::place_search::text_search::Request<'_> {
         crate::places::place_search::text_search::Request::new(self, query, radius.into())
     } // fn
 
@@ -511,7 +511,7 @@ impl crate::client::Client {
         &self,
         location: impl Into<LatLng>,
         radius: impl Into<u32>
-    ) -> crate::places::place_search::nearby_search::Request {
+    ) -> crate::places::place_search::nearby_search::Request<'_> {
         crate::places::place_search::nearby_search::Request::new(
             self,
             location.into(),
@@ -553,7 +553,7 @@ impl crate::client::Client {
     pub fn place_details(
         &self,
         place_id: impl Into<String>
-    ) -> crate::places::place_details::Request {
+    ) -> crate::places::place_details::Request<'_> {
         crate::places::place_details::Request::new(
             self,
             place_id.into()
@@ -610,7 +610,7 @@ impl crate::client::Client {
     #[cfg(feature = "roads")]
     #[must_use]
     pub fn snap_to_roads<C, L>(
-        &'_ self,
+        &self,
         path: C
     ) -> crate::roads::snap_to_roads::Request<'_>
     where
@@ -659,7 +659,7 @@ impl crate::client::Client {
     #[cfg(feature = "roads")]
     #[must_use]
     pub fn nearest_roads<C, L>(
-        &'_ self,
+        &self,
         points: C
     ) -> crate::roads::nearest_roads::Request<'_>
     where
