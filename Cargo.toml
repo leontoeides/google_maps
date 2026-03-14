@@ -1,6 +1,6 @@
 [package]
 name = "google_maps"
-version = "3.9.2"
+version = "3.9.3"
 authors = ["Dylan Bowker <dylan.bowker@arkiteq.io>"]
 edition = "2021"
 rust-version = "1.76.0"
@@ -29,7 +29,7 @@ default = [
 	"geocoding",
 	"roads",
 	"time_zone",
-	"places-new",
+	"places",
 	"reqwest",
 	"reqwest-default-tls",
 	"reqwest-http2",

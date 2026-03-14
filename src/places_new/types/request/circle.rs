@@ -41,6 +41,7 @@ pub struct Circle {
     /// The radius of the circle in meters.
     ///
     /// Valid range: 0.0 to 50,000.0 meters.
+    #[serde(with = "rust_decimal::serde::float")]
     #[getset(get = "pub", set = "pub", get_mut = "pub")]
     pub radius: Decimal,
 }
