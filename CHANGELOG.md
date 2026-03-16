@@ -3,6 +3,10 @@
 * Release notes are available on
   [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+# 3.9.5
+
+* 2026-03-16: Corrected dependencies for legacy Places API.
+
 # 3.9.4
 
 * 2026-03-14: Added `Other` variant for `PlaceType` enum. New and undocumented
@@ -19,6 +23,8 @@
 * 2026-03-14: Renamed several helper functions from `icon` to `emoji`.
 
 * 2026-03-14: Correct issue with building the Google Maps Places Legacy API.
+
+* 2026-03-14: Dependency updates.
 
 # 3.9.2
 

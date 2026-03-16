@@ -1,6 +1,6 @@
 [package]
 name = "google_maps"
-version = "3.9.4"
+version = "3.9.5"
 authors = ["Dylan Bowker <dylan.bowker@arkiteq.io>"]
 edition = "2021"
 rust-version = "1.76.0"
@@ -48,8 +48,9 @@ roads = ["dep:phf"]
 time_zone = ["chrono", "chrono-tz", "dep:phf"]
 
 # Places API (Legacy)
-places = ["chrono", "chrono-tz"]
-autocomplete = []
+# It's recommended to use the new `places-new` feature instead.
+places = ["chrono", "chrono-tz", "dep:phf"]
+autocomplete = ["dep:phf"]
 
 # Places API (New)
 places-new = [
