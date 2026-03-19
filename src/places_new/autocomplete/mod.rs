@@ -121,7 +121,7 @@ mod error;
 pub use crate::places_new::autocomplete::error::Error;
 
 mod request;
-pub use crate::places_new::autocomplete::request::Request;
+pub use crate::places_new::autocomplete::request::{Request, RequestBuilder};
 
 #[cfg(feature = "reqwest")]
 mod request_with_client;

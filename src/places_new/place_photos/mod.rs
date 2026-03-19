@@ -100,24 +100,30 @@
 //! - **`width`** — The maximum width of the image.
 //! - **`html_attributions[]`** — Any required attributions. This field is always present, but might be empty.
 
-mod error;
+pub mod error;
 pub use crate::places_new::place_photos::error::Error;
 
-mod photo_request;
+pub mod photo_request;
 pub use crate::places_new::place_photos::photo_request::PhotoRequest;
 
-mod image;
+pub mod image;
 pub use crate::places_new::place_photos::image::{
 	PhotoImage,
-	Response as ImageResponse
+	Response as ImageResponse,
 };
 #[cfg(feature = "reqwest")]
-pub use crate::places_new::place_photos::image::Request as ImageRequest;
+pub use crate::places_new::place_photos::image::{
+    Request as ImageRequest,
+    // RequestBuilder as ImageRequestBuilder,
+};
 
-mod uri;
+pub mod uri;
 pub use crate::places_new::place_photos::uri::{
 	PhotoUri,
 	Response as UriResponse
 };
 #[cfg(feature = "reqwest")]
-pub use crate::places_new::place_photos::uri::Request as UriRequest;
+pub use crate::places_new::place_photos::uri::{
+    Request as UriRequest,
+    // RequestBuilder as UriRequestBuilder,
+};

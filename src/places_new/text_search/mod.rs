@@ -89,14 +89,18 @@ pub use crate::places_new::text_search::error::Error;
 
 mod request;
 pub use crate::places_new::text_search::request::{
-	EvOptions,
-	Request
+    EvOptions,
+    Request,
+    RequestBuilder,
 };
 
 #[cfg(feature = "reqwest")]
 mod request_with_client;
 #[cfg(feature = "reqwest")]
-pub use crate::places_new::text_search::request_with_client::RequestWithClient;
+pub use crate::places_new::text_search::request_with_client::{
+    RequestWithClient,
+    RequestWithClientBuilder,
+};
 
 mod response;
 pub use crate::places_new::text_search::response::Response;

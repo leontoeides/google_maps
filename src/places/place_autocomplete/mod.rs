@@ -45,7 +45,8 @@ pub mod response;
 pub use crate::places::place_autocomplete::{
     request::{
         autocomplete_type::AutocompleteType,
-        Request
+        Request,
+        RequestBuilder,
     },
     response::{
         matched_substring::MatchedSubstring,

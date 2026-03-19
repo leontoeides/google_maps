@@ -228,6 +228,18 @@ impl FromIterator<Field> for FieldMask {
     }
 }
 
+impl From<&[&Field]> for FieldMask {
+    fn from(fields: &[&Field]) -> Self {
+        Self::Specific(fields.iter().copied().cloned().collect())
+    }
+}
+
+impl<'a> FromIterator<&'a Field> for FieldMask {
+    fn from_iter<T: IntoIterator<Item = &'a Field>>(iter: T) -> Self {
+        Self::Specific(iter.into_iter().cloned().collect())
+    }
+}
+
 impl<const N: usize> From<[Field; N]> for FieldMask {
     /// Creates a `FieldMask` from a fixed-length array of fields.
     ///

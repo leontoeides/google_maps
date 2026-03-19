@@ -81,7 +81,7 @@
 #[cfg(feature = "reqwest")]
 mod request;
 #[cfg(feature = "reqwest")]
-pub use crate::places_new::place_details::request::Request;
+pub use crate::places_new::place_details::request::{Request, RequestBuilder};
 
 mod response;
 pub use crate::places_new::place_details::response::Response;

@@ -1,6 +1,6 @@
 [package]
 name = "google_maps"
-version = "3.9.5"
+version = "3.9.6"
 authors = ["Dylan Bowker <dylan.bowker@arkiteq.io>"]
 edition = "2021"
 rust-version = "1.76.0"
@@ -47,19 +47,14 @@ geocoding = ["dep:phf"]
 roads = ["dep:phf"]
 time_zone = ["chrono", "chrono-tz", "dep:phf"]
 
-# Places API (Legacy)
-# It's recommended to use the new `places-new` feature instead.
-places = ["chrono", "chrono-tz", "dep:phf"]
-autocomplete = ["dep:phf"]
-
 # Places API (New)
 places-new = [
-	"places-new-core",
-	"places-new-autocomplete",
-	"places-new-nearby-search",
-	"places-new-place-details",
-	"places-new-place-photos",
-	"places-new-text-search",
+    "places-new-core",
+    "places-new-autocomplete",
+    "places-new-nearby-search",
+    "places-new-place-details",
+    "places-new-place-photos",
+    "places-new-text-search",
 ]
 places-new-core = ["bon", "getset", "strum", "strum_macros", "rust_iso3166", "icu_locale", "jiff", "iso_currency", "url"]
 places-new-autocomplete = ["places-new-core", "uuid"]
@@ -68,6 +63,11 @@ places-new-place-details = ["places-new-core", "uuid"]
 places-new-place-photos = ["places-new-core"]
 places-new-text-search = ["places-new-core"]
 places-new-ascii-art = ["artem", "image"]
+
+# Places API (Legacy)
+# It's recommended to use the new `places-new` feature instead.
+places = ["chrono", "chrono-tz", "dep:phf"]
+autocomplete = ["dep:phf"]
 
 # Geo
 geo = ["geo-types"]
