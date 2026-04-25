@@ -100,6 +100,17 @@ pub enum Error {
     )]
     TransitRoutePreferenceIsForTransitOnly(String, String),
 
+    /// Missing departure time parameter.
+    ///
+    /// When specifying a traffic model, it must be accompanied by departure time. For example,
+    /// with `.with_departure_time(DepartureTime::Now)`.
+    #[error("request with a specified traffic model is missing the departure time")]
+    #[diagnostic(
+        code(google_maps::directions::parse::invalid_status_code),
+        help("when specifying a traffic model, it must be accompanied by departure time parameter")
+    )]
+    MissingDepartureTime,
+
     // Parse errors:
 
     /// Invalid avoid code.

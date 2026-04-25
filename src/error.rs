@@ -115,6 +115,18 @@ pub enum Error {
     #[diagnostic(code(google_maps::http))]
     Http(#[from] HttpErrorStatus),
 
+    /// An HTTP status code returned by the remote server indicates an error.
+    /// This represents a successful HTTP connection but an unsuccessful HTTP
+    /// request or transaction with the server.
+    #[error("HTTP error {status}: {body:?}")]
+    #[diagnostic(
+        code(google_maps::http_with_body),
+    )]
+    HttpWithBody {
+        status: HttpErrorStatus,
+        body: String
+    },
+
     /// Invalid HTTP header value.
     ///
     /// Occurs when attempting to create an HTTP header with an invalid value,
@@ -281,6 +293,14 @@ impl ClassifiableError<'_, Self> for Error {
                 } else {
                     ClassifiedError::Permanent(self)
                 }, // Http
+
+            #[cfg(feature = "reqwest")]
+            Self::HttpWithBody { status: http_error, body: _ } =>
+                if http_error.0.classify().is_transient() {
+                    ClassifiedError::Transient(self)
+                } else {
+                    ClassifiedError::Permanent(self)
+                }, // HttpWithBody
 
             Self::InvalidHeaderValue { .. } => ClassifiedError::Permanent(self),
 

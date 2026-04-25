@@ -93,7 +93,10 @@
 #[cfg(feature = "reqwest")]
 mod request;
 #[cfg(feature = "reqwest")]
-pub use crate::places_new::place_photos::image::request::Request;
+pub use crate::places_new::place_photos::image::request::{
+    Request,
+    RequestBuilder
+};
 
 mod response;
 pub use crate::places_new::place_photos::image::response::{

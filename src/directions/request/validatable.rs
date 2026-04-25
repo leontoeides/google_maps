@@ -108,6 +108,14 @@ impl crate::traits::Validatable for crate::directions::Request<'_> {
             } // if
         } // if
 
+        // If a traffic model has been set...
+        if self.traffic_model.is_some() {
+            // ...a departure time must be set:
+            if self.departure_time.is_none() {
+                return Err(Error::MissingDepartureTime)?;
+            }
+        }
+
         // If we made it to the bottom, all tests have passed. Return `Ok` to
         // caller:
         Ok(())

@@ -7,6 +7,8 @@
 
 * 2026-03-18: Ensure that `RequestBuilder` types are public.
 
+* 2026-04-25: Improved error messages.
+
 # 3.9.5
 
 * 2026-03-16: Corrected dependencies for legacy Places API.

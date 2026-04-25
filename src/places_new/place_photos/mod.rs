@@ -114,7 +114,7 @@ pub use crate::places_new::place_photos::image::{
 #[cfg(feature = "reqwest")]
 pub use crate::places_new::place_photos::image::{
     Request as ImageRequest,
-    // RequestBuilder as ImageRequestBuilder,
+    RequestBuilder as ImageRequestBuilder,
 };
 
 pub mod uri;
@@ -125,5 +125,5 @@ pub use crate::places_new::place_photos::uri::{
 #[cfg(feature = "reqwest")]
 pub use crate::places_new::place_photos::uri::{
     Request as UriRequest,
-    // RequestBuilder as UriRequestBuilder,
+    RequestBuilder as UriRequestBuilder,
 };

@@ -603,16 +603,16 @@ mod tests {
     #[test]
     fn test_accessibility_emoji() {
         let accessible = AccessibilityOptions::fully_accessible();
-        let emojis = accessible.accessibility_emojis();
+        let emojis = accessible.accessibility_emoji();
         assert!(emojis.contains(&"♿"));
         assert!(emojis.contains(&"🅿️"));
 
         let limited = AccessibilityOptions::limited_accessibility();
-        let emojis = limited.accessibility_emojis();
+        let emojis = limited.accessibility_emoji();
         assert!(emojis.contains(&"⚠️"));
 
         let unknown = AccessibilityOptions::new();
-        let emojis = unknown.accessibility_emojis();
+        let emojis = unknown.accessibility_emoji();
         assert!(emojis.is_empty());
     }
 

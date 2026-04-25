@@ -230,13 +230,13 @@ impl FromIterator<Field> for FieldMask {
 
 impl From<&[&Field]> for FieldMask {
     fn from(fields: &[&Field]) -> Self {
-        Self::Specific(fields.iter().copied().cloned().collect())
+        Self::Specific(fields.iter().copied().copied().collect())
     }
 }
 
 impl<'a> FromIterator<&'a Field> for FieldMask {
     fn from_iter<T: IntoIterator<Item = &'a Field>>(iter: T) -> Self {
-        Self::Specific(iter.into_iter().cloned().collect())
+        Self::Specific(iter.into_iter().copied().collect())
     }
 }
 

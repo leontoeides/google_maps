@@ -114,14 +114,26 @@ impl crate::Client {
                         } // match
                     } else {
                         let status = response.status();
-
-                        tracing::error!(
-                            http.status_code = %status.as_u16(),
-                            http.status_text = %status.canonical_reason().unwrap_or("unknown"),
-                            "request returned non-success status"
-                        );
-
-                        Err(Error::from(response.status()))
+                        match response.text().await {
+                            Ok(body) => {
+                                tracing::error!(
+                                    http.status_code = %status.as_u16(),
+                                    http.status_text = %status.canonical_reason().unwrap_or("unknown"),
+                                    http.response_body = %body,
+                                    "request returned non-success status"
+                                );
+                                Err(Error::HttpWithBody { status: status.into(), body })
+                            },
+                            Err(error) => {
+                                tracing::error!(
+                                    http.status_code = %status.as_u16(),
+                                    http.status_text = %status.canonical_reason().unwrap_or("unknown"),
+                                    "request returned non-success status (body unavailable)"
+                                );
+                                tracing::error!(error = %error, "failed to read error response body");
+                                Err(Error::from(status))
+                            },
+                        }
                     }, // Ok
                     Err(error) => {
                         tracing::error!(error = %error, "HTTP request error");

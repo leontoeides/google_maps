@@ -506,7 +506,7 @@ mod tests {
     #[test]
     fn test_payment_emoji() {
         let all = PaymentOptions::accepts_all();
-        let emojis = all.payment_emojis();
+        let emojis = all.payment_emoji();
         assert!(emojis.contains(&"💳"));
         assert!(emojis.contains(&"💵"));
         assert!(emojis.contains(&"📱"));
