@@ -13,6 +13,7 @@ use thiserror::Error;
 /// client.
 #[derive(Debug, Diagnostic, Error)]
 #[diagnostic(url(docsrs))]
+#[non_exhaustive]
 pub enum Error {
     /// Error originating from the types and structs in the `google_maps` crate.
     #[error(transparent)]
