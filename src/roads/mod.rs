@@ -39,13 +39,6 @@
 //!   closest road segment for each point. The points passed do not need to be
 //!   part of a continuous path.
 //!
-//! * [Speed limits](https://developers.google.com/maps/documentation/roads/speed-limits)
-//!   **(Not yet implemented in this client.)**
-//!   This service returns the posted speed limit for a road segment. The Speed
-//!   Limit service is available to all customers with an Asset Tracking license.
-//!   For [Google Maps Platform Premium Plan customers](https://developers.google.com/maps/premium)
-//!   who transitioned to pay-as-you-go pricing, the feature remains active.
-//!
 //! # [Client library](https://developers.google.com/maps/documentation/roads/overview#client_library)
 //!
 //! The Roads API is available with the [Java Client, Python Client, Go Client
