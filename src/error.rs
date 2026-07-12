@@ -118,6 +118,7 @@ pub enum Error {
     /// An HTTP status code returned by the remote server indicates an error.
     /// This represents a successful HTTP connection but an unsuccessful HTTP
     /// request or transaction with the server.
+    #[cfg(feature = "reqwest")]
     #[error("HTTP error {status}: {body:?}")]
     #[diagnostic(
         code(google_maps::http_with_body),
