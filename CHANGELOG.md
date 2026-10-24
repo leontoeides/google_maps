@@ -3,6 +3,16 @@
 * Release notes are available on
   [GitHub](https://github.com/leontoeides/google_maps/releases).
 
+# 3.10.1
+
+* 2026-10-24: Corrected the `geo` feature. Thank you
+  [Gerard Webb](https://github.com/joeblew999) for [issue
+  #48](https://github.com/leontoeides/google_maps/issues/48).
+
+* 2026-10-24: Applied `clippy` suggestions.
+
+* 2026-10-24: Dependency bumps.
+
 # 3.10.0
 
 * 2026-07-12: Support for Google's February 12, 2026 place types update. **Note
