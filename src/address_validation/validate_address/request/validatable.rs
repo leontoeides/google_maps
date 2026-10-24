@@ -25,7 +25,7 @@ impl crate::traits::Validatable for crate::address_validation::validate_address:
         // Check if the `PostalAddress` exceeds the maximum number of
         // characters.
         if self.address.len() > MAX_CHARS {
-            return Err(Error::PostalAddressTooManyChars(len))?;
+            Err(Error::PostalAddressTooManyChars(len))?;
         } // if
 
         // If we made it to the bottom, all tests have passed. Return `Ok` to

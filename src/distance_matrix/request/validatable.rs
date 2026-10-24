@@ -35,7 +35,7 @@ impl crate::traits::Validatable for crate::distance_matrix::Request<'_> {
             if *travel_mode != TravelMode::Transit {
                 // ...an arrival time cannot be set:
                 if let Some(arrival_time) = &self.arrival_time {
-                    return Err(Error::ArrivalTimeIsForTransitOnly(
+                    Err(Error::ArrivalTimeIsForTransitOnly(
                         travel_mode.to_string(),
                         arrival_time.format("%F %r").to_string(),
                     ))?; // Err
@@ -43,7 +43,7 @@ impl crate::traits::Validatable for crate::distance_matrix::Request<'_> {
 
                 // ...a transit mode cannot be set:
                 if !self.transit_modes.is_empty() {
-                    return Err(Error::TransitModeIsForTransitOnly(
+                    Err(Error::TransitModeIsForTransitOnly(
                         travel_mode.to_string(),
                         self.transit_modes
                             .iter()
@@ -55,7 +55,7 @@ impl crate::traits::Validatable for crate::distance_matrix::Request<'_> {
 
                 // ...a transit route preference cannot be set:
                 if let Some(transit_route_preference) = &self.transit_route_preference {
-                    return Err(Error::TransitRoutePreferenceIsForTransitOnly(
+                    Err(Error::TransitRoutePreferenceIsForTransitOnly(
                         travel_mode.to_string(),
                         transit_route_preference.to_string(),
                     ))?; // Err
@@ -67,7 +67,7 @@ impl crate::traits::Validatable for crate::distance_matrix::Request<'_> {
         if let Some(arrival_time) = &self.arrival_time {
             // ...a departure time cannot be set:
             if let Some(departure_time) = &self.departure_time {
-                return Err(Error::EitherDepartureTimeOrArrivalTime(
+                Err(Error::EitherDepartureTimeOrArrivalTime(
                     arrival_time.format("%F %r").to_string(),
                     departure_time.to_string(),
                 ))?; // Err

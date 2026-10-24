@@ -33,7 +33,7 @@ impl crate::traits::Validatable for crate::elevation::Request<'_> {
         if let Some(_locations) = &self.locations {
             // ...a "for sampled path request" cannot be set.
             if let Some(_path) = &self.path {
-                return Err(Error::EitherPositionalOrSampledPath)?;
+                Err(Error::EitherPositionalOrSampledPath)?;
             } // if
         } // if
 

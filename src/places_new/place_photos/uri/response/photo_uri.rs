@@ -492,7 +492,7 @@ impl PhotoUri {
         lazy_load: bool,
     ) -> String {
         let (width, height) = dimensions
-            .or_else(|| self.width_px.and_then(|w| self.height_px.map(|h| (w, h))))
+            .or_else(|| self.width_px.zip(self.height_px))
             .unwrap_or((800, 600)); // Default fallback
 
         // Build alt text from attributions

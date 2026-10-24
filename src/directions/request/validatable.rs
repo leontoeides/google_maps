@@ -34,14 +34,14 @@ impl crate::traits::Validatable for crate::directions::Request<'_> {
             if *travel_mode == TravelMode::Transit {
                 // ...waypoints cannot be set:
                 if !self.waypoints.is_empty() {
-                    return Err(Error::EitherWaypointsOrTransitMode(self.waypoints.len()))?;
+                    Err(Error::EitherWaypointsOrTransitMode(self.waypoints.len()))?;
                 } // if
 
             // If the transit mode is not set to TravelMode::Transit...
             } else {
                 // ...an arrival time cannot be set:
                 if let Some(arrival_time) = &self.arrival_time {
-                    return Err(Error::ArrivalTimeIsForTransitOnly(
+                    Err(Error::ArrivalTimeIsForTransitOnly(
                         travel_mode.to_string(),
                         arrival_time.format("%F %r").to_string(),
                     ))?; // Err
@@ -49,7 +49,7 @@ impl crate::traits::Validatable for crate::directions::Request<'_> {
 
                 // ...a transit mode cannot be set:
                 if !self.transit_modes.is_empty() {
-                    return Err(Error::TransitModeIsForTransitOnly(
+                    Err(Error::TransitModeIsForTransitOnly(
                         travel_mode.to_string(),
                         self.transit_modes
                             .iter()
@@ -61,7 +61,7 @@ impl crate::traits::Validatable for crate::directions::Request<'_> {
 
                 // ...a transit route preference cannot be set:
                 if let Some(transit_route_preference) = &self.transit_route_preference {
-                    return Err(Error::TransitRoutePreferenceIsForTransitOnly(
+                    Err(Error::TransitRoutePreferenceIsForTransitOnly(
                         travel_mode.to_string(),
                         transit_route_preference.to_string(),
                     ))?; // Err
@@ -74,14 +74,14 @@ impl crate::traits::Validatable for crate::directions::Request<'_> {
             // ...alternatives cannot be set to true:
             if let Some(alternatives) = &self.alternatives {
                 if !alternatives {
-                    return Err(Error::EitherAlternativesOrWaypoints(self.waypoints.len()))?;
+                    Err(Error::EitherAlternativesOrWaypoints(self.waypoints.len()))?;
                     // Err
                 } // if
             } // if
 
             // ...restrictions cannot be set:
             if !self.restrictions.is_empty() {
-                return Err(Error::EitherRestrictionsOrWaypoints(
+                Err(Error::EitherRestrictionsOrWaypoints(
                     self.waypoints.len(),
                     self.restrictions
                         .iter()
@@ -93,7 +93,7 @@ impl crate::traits::Validatable for crate::directions::Request<'_> {
 
             // ...ensure that the number of waypoints is equal to or less than 25:
             if self.waypoints.len() > 25 {
-                return Err(Error::TooManyWaypoints(self.waypoints.len()))?;
+                Err(Error::TooManyWaypoints(self.waypoints.len()))?;
             } // if
         } // if
 
@@ -101,7 +101,7 @@ impl crate::traits::Validatable for crate::directions::Request<'_> {
         if let Some(arrival_time) = &self.arrival_time {
             // ...a departure time cannot be set:
             if let Some(departure_time) = &self.departure_time {
-                return Err(Error::EitherDepartureTimeOrArrivalTime(
+                Err(Error::EitherDepartureTimeOrArrivalTime(
                     arrival_time.format("%F %r").to_string(),
                     departure_time.to_string(),
                 ))?; // Err
@@ -112,7 +112,7 @@ impl crate::traits::Validatable for crate::directions::Request<'_> {
         if self.traffic_model.is_some() {
             // ...a departure time must be set:
             if self.departure_time.is_none() {
-                return Err(Error::MissingDepartureTime)?;
+                Err(Error::MissingDepartureTime)?;
             }
         }
 

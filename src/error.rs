@@ -1,5 +1,6 @@
 //! Google Maps Platform API error types and error messages.
 
+#![allow(clippy::redundant_field_names, reason = "for `thiserror::Error`")]
 #![allow(unused_assignments, reason = "these unused fields are useful in debug printing")]
 
 // -----------------------------------------------------------------------------

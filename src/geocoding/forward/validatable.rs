@@ -31,7 +31,7 @@ impl crate::traits::Validatable for crate::geocoding::ForwardRequest<'_> {
     fn validate(&self) -> Result<(), crate::Error> {
         // If a positional request has been set...
         if self.address.is_none() && self.place_id.is_none() && self.components.is_empty() {
-            return Err(Error::AddressOrComponentsRequired)?;
+            Err(Error::AddressOrComponentsRequired)?;
         } // if
 
         // If we made it to the bottom, all tests have passed. Return `Ok` to
