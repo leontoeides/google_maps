@@ -6,7 +6,8 @@
 //! using `geo`, or when converting geometric bounds back to Google Maps viewport
 //! format.
 
-use crate::places_new::autocomplete::{Error, request::{LatLng, Viewport}};
+use crate::GoogleMapsError;
+use crate::places_new::{LatLng, Viewport};
 use geo_types::geometry::{Coord, Polygon, Rect};
 
 // -------------------------------------------------------------------------------------------------
@@ -14,7 +15,7 @@ use geo_types::geometry::{Coord, Polygon, Rect};
 // Rect → Viewport conversions
 
 impl TryFrom<&Rect> for Viewport {
-    type Error = Error;
+    type Error = GoogleMapsError;
 
     /// Converts a borrowed `geo_types::Rect` to a `Viewport`.
     ///
@@ -34,12 +35,12 @@ impl TryFrom<&Rect> for Viewport {
         let max_coordinate: Coord = rect.max();
         let low: LatLng = LatLng::try_from_f64(min_coordinate.y, min_coordinate.x)?;
         let high: LatLng = LatLng::try_from_f64(max_coordinate.y, max_coordinate.x)?;
-        Self::try_new(low, high)
+        Ok(Self::try_new(low, high)?)
     }
 }
 
 impl TryFrom<Rect> for Viewport {
-    type Error = Error;
+    type Error = GoogleMapsError;
 
     /// Converts an owned `geo_types::Rect` to a `Viewport`.
     ///
@@ -59,7 +60,7 @@ impl TryFrom<Rect> for Viewport {
 // Viewport → Rect conversions
 
 impl TryFrom<&Viewport> for Rect {
-    type Error = Error;
+    type Error = GoogleMapsError;
 
     /// Converts a borrowed `Viewport` to a `geo_types::Rect`.
     ///
@@ -80,7 +81,7 @@ impl TryFrom<&Viewport> for Rect {
 }
 
 impl TryFrom<Viewport> for Rect {
-    type Error = Error;
+    type Error = GoogleMapsError;
 
     /// Converts an owned `Viewport` to a `geo_types::Rect`.
     ///
@@ -100,7 +101,7 @@ impl TryFrom<Viewport> for Rect {
 // Viewport → Polygon conversions
 
 impl TryFrom<&Viewport> for Polygon {
-    type Error = Error;
+    type Error = GoogleMapsError;
 
     /// Converts a borrowed `Viewport` to a `geo_types::Polygon`.
     ///
@@ -119,7 +120,7 @@ impl TryFrom<&Viewport> for Polygon {
 }
 
 impl TryFrom<Viewport> for Polygon {
-    type Error = Error;
+    type Error = GoogleMapsError;
 
     /// Converts an owned `Viewport` to a `geo_types::Polygon`.
     ///

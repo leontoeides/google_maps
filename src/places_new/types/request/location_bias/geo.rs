@@ -3,16 +3,16 @@
 //! This module enables seamless interoperability with the [`geo`](https://crates.io/crates/geo)
 //! crate ecosystem.
 
-use crate::places_new::autocomplete::Error;
-use crate::types::{LatLng, Viewport};
-use geo_types::geometry::{Coord, Polygon, Rect};
+use crate::GoogleMapsError;
+use crate::places_new::{LocationBias, Viewport};
+use geo_types::geometry::Rect;
 
 // -------------------------------------------------------------------------------------------------
 //
 // Rect → LocationBias conversions
 
 impl TryFrom<Rect> for LocationBias {
-    type Error = Error;
+    type Error = GoogleMapsError;
 
     /// Converts an owned `geo_types::Rect` into a rectangular location bias.
     ///
@@ -30,7 +30,7 @@ impl TryFrom<Rect> for LocationBias {
 }
 
 impl TryFrom<&Rect> for LocationBias {
-    type Error = Error;
+    type Error = GoogleMapsError;
 
     /// Converts a borrowed `geo_types::Rect` into a rectangular location bias.
     ///

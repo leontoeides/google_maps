@@ -9,7 +9,8 @@
 //! geometries are composed of, while `Point` is a geometry type that wraps a `Coord` and
 //! participates in geometric algorithms.
 
-use crate::places_new::autocomplete::{Error, request::{LatLng, Viewport}};
+use crate::places_new::LatLng;
+use crate::{GoogleMapsError, TypeError};
 use geo_types::geometry::{Coord, Point};
 use rust_decimal::{prelude::FromPrimitive, prelude::ToPrimitive, Decimal};
 
@@ -37,7 +38,7 @@ impl TryFrom<&Coord> for LatLng {
         let lng = Decimal::from_f64(coordinate.x)
             .ok_or_else(|| TypeError::FloatToDecimalConversionError(coordinate.x.to_string()))?;
 
-        Self::try_from_dec(lat, lng)
+        Ok(Self::try_from_dec(lat, lng)?)
     }
 }
 
@@ -80,14 +81,14 @@ impl TryFrom<&LatLng> for Coord {
     /// * Returns an error if the coordinate conversion fails.
     fn try_from(lat_lng: &LatLng) -> Result<Self, Self::Error> {
         let x = lat_lng
-            .lng
+            .lng()
             .to_f64()
-            .ok_or(TypeError::InvalidLongitude(lat_lng.lat, lat_lng.lng))?;
+            .ok_or(TypeError::InvalidLongitude(lat_lng.latitude, lat_lng.longitude))?;
 
         let y = lat_lng
-            .lat
+            .lat()
             .to_f64()
-            .ok_or(TypeError::InvalidLatitude(lat_lng.lat, lat_lng.lng))?;
+            .ok_or(TypeError::InvalidLatitude(lat_lng.latitude, lat_lng.longitude))?;
 
         Ok(Self { x, y })
     }
@@ -136,7 +137,7 @@ impl TryFrom<&Point> for LatLng {
         let lng = Decimal::from_f64(point.x())
             .ok_or_else(|| TypeError::FloatToDecimalConversionError(point.x().to_string()))?;
 
-        Self::try_from_dec(lat, lng)
+        Ok(Self::try_from_dec(lat, lng)?)
     }
 }
 
@@ -181,14 +182,14 @@ impl TryFrom<&LatLng> for Point {
     /// * Returns an error if the coordinate conversion fails.
     fn try_from(lat_lng: &LatLng) -> Result<Self, Self::Error> {
         let x = lat_lng
-            .lng
+            .lng()
             .to_f64()
-            .ok_or(TypeError::InvalidLongitude(lat_lng.lat, lat_lng.lng))?;
+            .ok_or(TypeError::InvalidLongitude(lat_lng.latitude, lat_lng.longitude))?;
 
         let y = lat_lng
-            .lat
+            .lat()
             .to_f64()
-            .ok_or(TypeError::InvalidLatitude(lat_lng.lat, lat_lng.lng))?;
+            .ok_or(TypeError::InvalidLatitude(lat_lng.latitude, lat_lng.longitude))?;
 
         Ok(Self::new(x, y))
     }

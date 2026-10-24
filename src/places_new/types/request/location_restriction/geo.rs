@@ -3,15 +3,16 @@
 //! This module enables seamless interoperability with the [`geo`](https://crates.io/crates/geo)
 //! crate ecosystem.
 
-use crate::places_new::autocomplete::{Error, request::{LatLng, Viewport}};
-use geo_types::geometry::{Coord, Polygon, Rect};
+use crate::GoogleMapsError;
+use crate::places_new::{LocationRestriction, Viewport};
+use geo_types::geometry::Rect;
 
 // -------------------------------------------------------------------------------------------------
 //
 // Rect → LocationRestriction conversions
 
 impl TryFrom<Rect> for LocationRestriction {
-    type Error = Error;
+    type Error = GoogleMapsError;
 
     /// Converts an owned `geo_types::Rect` into a rectangular location restriction.
     ///
@@ -29,7 +30,7 @@ impl TryFrom<Rect> for LocationRestriction {
 }
 
 impl TryFrom<&Rect> for LocationRestriction {
-    type Error = Error;
+    type Error = GoogleMapsError;
 
     /// Converts a borrowed `geo_types::Rect` into a rectangular location restriction.
     ///
